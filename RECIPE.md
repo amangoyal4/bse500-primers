@@ -114,6 +114,11 @@ Include the refresh control in every primer (cover area), but **unwired**:
    `{ name, file, nse, bse, sector, accent, hook, tags[3], refreshed, status }`.
    - `hook` = one compelling sentence. `tags` = the 3 bespoke section themes
      (this is what surfaces the "different sections per company" on the catalog).
+   - `sector` MUST be the **NSE official classification** — read it from the
+     company's row in `data/worklist.json` (or `data/constituents.csv` "Industry"
+     column). Use NSE's names exactly (e.g. "Oil Gas & Consumable Fuels",
+     "Information Technology", "Capital Goods", "Fast Moving Consumer Goods"),
+     NOT generic/Yahoo sectors like "Energy"/"Technology"/"Industrials".
    - `status`: `"gold"` for hand-reviewed exemplars; `"published"` for
      auto-generated that cleared the gate.
 3. **Update `data/worklist.json`**: set the company's `status` to `done` (or
