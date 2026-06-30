@@ -61,6 +61,10 @@ sequential run is where quality silently erodes — guard against it).
 
 - **Self-contained HTML** — one file per company in `primers/<slug>.html`, all CSS
   inline in a `<style>` block. No external CSS/JS except Google Fonts.
+- **Back-home button** — immediately after `<body>`, include a fixed
+  "← Stock Primers" link back to the catalog: `<a href="../index.html"
+  class="sp-back" …>← Stock Primers</a>` (fixed top-right, dark pill, white text;
+  copy the exact element from any existing primer). Every primer must have it.
 - **Fonts:** `Sora` (headings), `Figtree` (body), `DM Mono` (labels/numbers).
 - **Per-company theme palette.** Choose accent colours that fit the business
   (solar blues+gold for Waaree; clinical teal+amber for Rainbow). Define them as
