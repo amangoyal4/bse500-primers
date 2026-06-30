@@ -3,8 +3,9 @@
 **This file is the single source of truth for how a BSE 500 primer is built.**
 Each scheduled run is a fresh Claude session with no memory of prior chats. Follow
 this exactly. The quality bar is the hand-crafted exemplars in `primers/` —
-especially `rainbow-childrens-medicare.html` and `waaree-energies.html`. If your
-output is not as good as Rainbow, it does not ship.
+especially `rainbow-childrens-medicare.html` (the style template, kept on disk
+but not in the catalog), plus the published `reliance-industries.html` and
+`hdfc-bank.html`. If your output is not as good as those, it does not ship.
 
 ---
 
