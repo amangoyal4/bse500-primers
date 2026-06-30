@@ -66,9 +66,13 @@ sequential run is where quality silently erodes — guard against it).
   class="sp-back" …>← Stock Primers</a>` (fixed top-right, dark pill, white text;
   copy the exact element from any existing primer). Every primer must have it.
 - **Fonts:** `Sora` (headings), `Figtree` (body), `DM Mono` (labels/numbers).
-- **Per-company theme palette.** Choose accent colours that fit the business
-  (solar blues+gold for Waaree; clinical teal+amber for Rainbow). Define them as
-  CSS variables in `:root`. Each primer looks distinct.
+- **Per-company theme palette — LIGHT background ALWAYS.** Every primer uses the
+  same light look: a light `--paper` (~#F4–F6 range), white `--card`, dark `--ink`
+  text. Vary ONLY the **accent** colours (`--brand`/`--gold`/accent vars) to fit
+  the business (solar blues+gold for Waaree; clinical teal+amber for Rainbow;
+  amber for Coal India). **NEVER a dark-mode / dark-background theme** — a dark
+  page makes it inconsistent with the rest of the library. Each primer is distinct
+  only via its accent, not its background.
 - **Structure (mirror Rainbow):**
   - Sticky left **TOC** (`nav.toc`) listing the numbered sections.
   - **Cover** (`header.cover`): kicker tags (incl. `NSE: … · BSE: …`), an `<h1>`
