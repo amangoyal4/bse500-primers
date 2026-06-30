@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bajaj Finserv — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1F2F8;
+    --paper-2:#FAFAFE;
+    --card:#FFFFFF;
+    --ink:#16162A;
+    --ink-soft:#52546E;
+    --ink-faint:#8A8CA6;
+    --brand:#2B2580;          /* Bajaj indigo (holdco) — distinct from BF deep-blue */
+    --brand-bright:#5A4FCF;   /* bright violet-indigo */
+    --gold:#C99A2E;           /* warm gold accent */
+    --c-fin:#3D6FE0;          /* Bajaj Finance arm — blue */
+    --c-life:#1F9E7A;         /* Life insurance — green */
+    --c-gen:#E07B3D;          /* General insurance — orange */
+    --c-new:#9B59C6;          /* New bets / AMC — purple */
+    --line:#D7D8E6;
+    --line-soft:#E6E7F1;
+    --good:#1F8A57;
+    --bad:#C23A28;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#ECEAFB;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:14px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#ECEAFB;border:1px solid #CFC9F2;border-left:3px solid var(--brand-bright);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#3a2f9e;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"❖";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#241f55;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F5FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 96px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E6E7F1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2B2580,#5A4FCF);}
+  .fill.gold{background:linear-gradient(90deg,#C99A2E,#E0B654);}
+  .fill.fin{background:linear-gradient(90deg,#3D6FE0,#5E8BEC);}
+  .fill.life{background:linear-gradient(90deg,#1F9E7A,#34B795);}
+  .fill.gen{background:linear-gradient(90deg,#E07B3D,#EC9A66);}
+  .fill.new{background:linear-gradient(90deg,#9B59C6,#B47CD8);}
+  .fill.bad{background:linear-gradient(90deg,#C23A28,#D8543F);}
+  .fill.ink{background:linear-gradient(90deg,#3a3a55,#5a5a7a);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 64px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* holdco tree */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-top{display:flex;justify-content:center;margin-bottom:6px;}
+  .holdco{background:var(--brand);color:#fff;border-radius:8px;padding:14px 22px;text-align:center;min-width:260px;}
+  .holdco .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:4px;}
+  .holdco .nname{font-weight:700;font-size:16px;font-family:"Sora",sans-serif;}
+  .holdco .nwho{font-size:11px;margin-top:4px;opacity:.92;}
+  .stem{height:22px;width:2px;background:var(--line);margin:0 auto;}
+  .flow-row{display:flex;align-items:stretch;gap:12px;flex-wrap:wrap;justify-content:center;}
+  .node{flex:1;min-width:138px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node .nstake{font-family:"DM Mono",monospace;font-size:11px;font-weight:500;margin-top:7px;background:rgba(255,255,255,.18);border-radius:3px;padding:2px 6px;display:inline-block;}
+  .node.fin{background:var(--c-fin);}
+  .node.life{background:var(--c-life);}
+  .node.gen{background:var(--c-gen);}
+  .node.new{background:var(--c-new);}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:16px;font-style:italic;text-align:center;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}}
+
+  .chain-fin{color:var(--c-fin);font-weight:600;}
+  .chain-life{color:var(--c-life);font-weight:600;}
+  .chain-gen{color:var(--c-gen);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEC;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2a1d;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF4E2;color:#4a3712;}
+  .note.gold b{color:#8a5c18;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#8a5c18;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#ECEAFB;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What a holdco is</a></li>
+    <li><a href="#p2"><span class="n">02</span> The holdco tree (SOTP)</a></li>
+    <li><a href="#p3"><span class="n">03</span> Company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> Bajaj Finance — the anchor</a></li>
+    <li><a href="#p5"><span class="n">05</span> Life insurance, explained</a></li>
+    <li><a href="#p6"><span class="n">06</span> General insurance, explained</a></li>
+    <li><a href="#p7"><span class="n">07</span> The Allianz full buyout</a></li>
+    <li><a href="#p8"><span class="n">08</span> The new growth bets</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; the SOTP</a></li>
+    <li><a href="#p10"><span class="n">10</span> The holdco discount</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: BAJAJFINSV · BSE: 532978</span>
+    <span class="tag gold">Built for a non-finance reader</span>
+  </div>
+  <h1>Bajaj Finserv, <em>the holding company that owns the Bajaj money machine</em></h1>
+  <p class="dek">A complete walk through India's largest financial-services holding company — the company that does not really "do" one business but <em>owns</em> several great ones: a ~51% slice of Bajaj Finance (the crown-jewel listed lender), now 100% of Bajaj Allianz Life and Bajaj Allianz General Insurance after buying out its German partner, plus a fast-growing mutual-fund, health and digital stable. Learn how a holding company is valued, how life and general insurance actually make money, why Bajaj paid ₹24,000 crore to take full control of its insurers, and why a holdco almost always trades below the sum of its parts.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹1.51 <small>lakh Cr</small></div><div class="l">Consol. total income (FY26) · +13%</div></div>
+    <div class="cell"><div class="v">₹9,801 <small>Cr</small></div><div class="l">Consol. net profit (FY26) · +10%</div></div>
+    <div class="cell"><div class="v">~₹2.82 <small>lakh Cr</small></div><div class="l">Market cap (Jun '26)</div></div>
+    <div class="cell"><div class="v">51.3% <small>+ 100%</small></div><div class="l">Stake: Bajaj Finance · both insurers</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">30 Jun 2026</b> · source: Q4 &amp; FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — consolidated income ₹1,50,530 Cr (+13%), PAT ₹9,801 Cr (+10%); the Allianz 26% buyout (₹24,180 Cr) completed and the insurers renamed Bajaj Life / Bajaj General; life VNB ₹709 Cr (+29%), general combined ratio ~97.9%; added the holdco-tree, insurance-economics and holdco-discount sections.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're actually buying when you buy Bajaj Finserv.</p>
+
+  <p class="lead">Bajaj Finserv is <strong>not an operating business in the everyday sense</strong> — it makes no loans of its own and sells no insurance policy under its own name. It is a <strong>holding company (a "holdco")</strong>: its main asset is its <em>ownership stakes</em> in the Bajaj group's financial-services businesses. Buy a share of Bajaj Finserv and you are really buying a basket — a slice of a giant lender, two whole insurance companies, and a clutch of younger ventures — wrapped in one listed share.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>Three big businesses sit underneath it.</strong> (1) A <strong>~51.3% stake in Bajaj Finance</strong> — India's most valuable retail NBFC, and by far the largest single chunk of Finserv's worth. (2) <strong>Bajaj Allianz Life Insurance</strong> (now "Bajaj Life") and (3) <strong>Bajaj Allianz General Insurance</strong> ("Bajaj General") — both of which Bajaj <em>fully owns</em> after a landmark 2025–26 buyout of its German partner Allianz. On top sit newer bets: a mutual-fund house, a health platform and a digital-finance marketplace.</li>
+    <li><strong>The numbers are large and growing.</strong> In FY26 (year ended March 2026), Bajaj Finserv's <strong>consolidated total income was ₹1,50,530 crore (+13%)</strong> and <strong>consolidated net profit was ₹9,801 crore (+10%)</strong> — an all-time high. Most of that profit is contributed by Bajaj Finance; the insurers add steadily; the new bets still lose money by design.</li>
+    <li><strong>It trades at a "holdco discount".</strong> Because you reach the underlying businesses <em>indirectly</em>, the market values Finserv at <strong>less than the sum of its parts</strong> — typically a 20–30% discount to the value of the stakes it holds. Understanding that discount — why it exists and what could shrink it — is the heart of the Finserv investment case.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of Bajaj Finserv as a <strong>"financial-services fund" with a fixed shopping list</strong>, run by the Bajaj family. Its biggest holding by miles is Bajaj Finance — so first-order, Finserv is "a way to own Bajaj Finance, plus two insurance companies thrown in." The job of the holdco is to <strong>allocate capital across the arms</strong> (feed the insurers, seed the new ventures, let Bajaj Finance compound) and to <strong>capture the value</strong> as each arm grows. The twist is that markets dislike owning things at one remove, so the whole package is priced at a discount to its pieces. The Finserv question, therefore, is two-layered: <em>are the underlying businesses great?</em> (mostly yes) and <em>is the discount on top of them too wide, or fair?</em></p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What a holding company actually is</h2></div>
+  <p class="part-sub">No finance degree required — the one structural idea behind the whole share.</p>
+
+  <p class="lead">Before any Bajaj-specific detail, you need one concept: the difference between an <strong>operating company</strong> and a <strong>holding company</strong>. Get this and the rest of the primer clicks into place.</p>
+
+  <ul class="clean">
+    <li><strong>An operating company does a thing.</strong> Bajaj Finance lends money and earns a spread. Bajaj General Insurance sells motor and health cover and earns underwriting profit. They have customers, revenue, costs, profit — the normal machinery of a business.</li>
+    <li><strong>A holding company owns the operating companies.</strong> Bajaj Finserv's "business" is holding shares in those operating companies. Its income is largely their <em>profits</em> flowing up — dividends from Bajaj Finance, the insurers' earnings consolidated in, and the rise in the <em>value</em> of those stakes over time. It is a layer above the action, not in it.</li>
+    <li><strong>Why hold this structure at all?</strong> It lets the Bajaj family <strong>control a whole financial-services empire from one listed vehicle</strong>, allocate capital between the arms, fund new ventures from the cash the mature ones throw off, and keep strategic decisions (like the Allianz buyout) under one roof — while each big arm can still be run, capitalised and even separately listed on its own terms.</li>
+  </ul>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The handful of terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (in this context)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Holdco / SOTP</td><td>A <strong>holding company</strong> owns stakes in other firms. To value it you do a <strong>sum-of-the-parts (SOTP)</strong>: value each underlying business, multiply by Finserv's % stake, add the pieces, subtract net debt.</td></tr>
+      <tr><td class="t-strong">Consolidated accounts</td><td>Because Finserv <em>controls</em> its subsidiaries (owns &gt;50%), accounting rules make it add up 100% of their revenue and profit line-by-line, then strip out the slice belonging to outside shareholders as "<strong>minority interest</strong>". That's why Finserv's ₹1.5 lakh Cr income looks huge — it includes all of Bajaj Finance's.</td></tr>
+      <tr><td class="t-strong">Holdco discount</td><td>The gap by which the holdco's market value sits <em>below</em> its SOTP. Typically 20–30% for Finserv. Section 10 explains why.</td></tr>
+      <tr><td class="t-strong">Embedded value / VNB</td><td>The two numbers used to value a <strong>life</strong> insurer (Section 5). Insurance profit is "locked up" for decades, so you value the future, not just this year.</td></tr>
+      <tr><td class="t-strong">Combined ratio / float</td><td>The two numbers used to value a <strong>general (non-life)</strong> insurer (Section 6) — how much it pays out per ₹100 of premium, and the pile of money it gets to invest in the meantime.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The mental model</div>
+    <p>A holding company is a <strong>wrapper</strong>. Its share price should, in theory, equal the value of everything inside the wrapper. In practice it almost never does — the wrapper itself is priced at a discount, because owning a business <em>through</em> a holdco is less attractive than owning it directly (you can't sell just the bit you want; the parent might tax or trap the cash; the family, not you, decides what to do with it). So a holdco analyst spends their time on two questions at once: <strong>how good is the stuff inside</strong>, and <strong>how big is the discount on the wrapper</strong> — and is that discount about to widen or narrow.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The holdco tree: what Finserv owns</h2></div>
+  <p class="part-sub">One diagram that captures the entire sum-of-the-parts.</p>
+
+  <p class="lead">Here is the whole company in one picture. Bajaj Finserv sits at the top; beneath it hang the operating businesses, each with the stake Finserv holds. The single most important fact: <strong>Bajaj Finance is the anchor</strong> — it is the largest, most valuable arm, and it alone usually accounts for the bulk of Finserv's entire value.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;text-align:center;">The Bajaj Finserv structure — a holdco over four financial-services arms</div>
+    <div class="flow-top">
+      <div class="holdco">
+        <div class="ntag">Listed holding company</div>
+        <div class="nname">Bajaj Finserv Ltd.</div>
+        <div class="nwho">NSE: BAJAJFINSV · ~₹2.82 lakh Cr market cap · Bajaj promoter ~58.8%</div>
+      </div>
+    </div>
+    <div class="stem"></div>
+    <div class="flow-row">
+      <div class="node fin"><div class="ntag">Arm 1 · the anchor</div><div class="nname">Bajaj Finance</div><div class="nwho">Listed NBFC. Largest, most valuable arm — the bulk of SOTP value.</div><div class="nstake">~51.3% (listed)</div></div>
+      <div class="node life"><div class="ntag">Arm 2</div><div class="nname">Bajaj Allianz Life ("Bajaj Life")</div><div class="nwho">Life insurer. Long-term savings + protection.</div><div class="nstake">100% (group)</div></div>
+      <div class="node gen"><div class="ntag">Arm 3</div><div class="nname">Bajaj Allianz General ("Bajaj General")</div><div class="nwho">Non-life insurer. Motor, health, property, crop.</div><div class="nstake">100% (group)</div></div>
+      <div class="node new"><div class="ntag">Arm 4 · the new bets</div><div class="nname">AMC · Health · Direct/Markets</div><div class="nwho">Mutual fund, health-tech, digital marketplace. Loss-making by design — the optionality.</div><div class="nstake">~100%</div></div>
+    </div>
+    <div class="flow-note">Stakes shown are the group's economic ownership after the Allianz buyout. Bajaj Finserv holds ~77.3% of the insurers <em>directly</em>; sister promoter entities (Bajaj Holdings, Jamnalal Sons) hold the rest, so the <em>group</em> owns 100% but Finserv itself does not — a nuance that matters for the SOTP.</div>
+  </div>
+
+  <h3>Reading the tree</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-fin">Bajaj Finance</span></strong> is separately listed (NSE: BAJFINANCE), so the market puts a live price on it every day. Finserv's ~51.3% stake can be valued precisely: take Bajaj Finance's market cap, multiply by 0.513. This stake alone is worth more than ₹3 lakh crore on a look-through basis — already <em>larger</em> than Finserv's own ₹2.82 lakh Cr market cap. That single fact is the holdco discount in a nutshell (Section 10).</li>
+    <li><strong><span class="chain-life">The two insurers</span></strong> are <em>unlisted</em>, so there's no daily price — analysts value them with the insurance yardsticks in Sections 5–6. After the Allianz buyout, Bajaj fully owns both, so 100% of their value (less the bit held by sister entities) accrues to Finserv shareholders.</li>
+    <li><strong>The new bets</strong> — AMC, Health, Markets — are small, still loss-making, and carried near book value; they are <em>optionality</em>, not today's value.</li>
+  </ul>
+
+  <div class="note gold"><b>The one-line takeaway:</b> Bajaj Finserv ≈ (51.3% of listed Bajaj Finance) + (100% of two insurers) + (small new bets) − (a holdco discount). The lender dominates the value; the insurers are the differentiator versus simply owning Bajaj Finance directly; the discount is the price you pay for the convenience of the wrapper.</div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A 2007 demerger that created two of India's most valuable financial stocks.</p>
+
+  <p class="lead">Bajaj Finserv is the financial-services arm of the <strong>Bajaj group</strong>, one of India's oldest and most respected business houses (the group marked its <strong>centenary in 2026</strong>). Finserv was carved out in a 2007 demerger that split the old Bajaj Auto into three: the two-wheeler maker (Bajaj Auto), a holding vehicle (Bajaj Holdings), and the financial-services company (Bajaj Finserv).</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2001</div><div class="ev">Bajaj enters insurance via two joint ventures with Germany's <strong>Allianz SE</strong> — Bajaj Allianz Life and Bajaj Allianz General. Bajaj holds 74%, Allianz 26% (the FDI cap at the time).</div></li>
+    <li class="major"><div class="yr">2007</div><div class="ev"><strong>Bajaj Finserv is born</strong> — the old Bajaj Auto is demerged into Bajaj Auto, Bajaj Holdings and Bajaj Finserv. Finserv becomes the listed home for finance + insurance.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Bajaj Finance (held under Finserv) transforms from a captive auto financier into India's premier retail lender, compounding ~30%+ a year — and becomes the dominant chunk of Finserv's value.</div></li>
+    <li><div class="yr">2023</div><div class="ev">Finserv launches its <strong>own mutual-fund house</strong> (Bajaj Finserv AMC) and scales newer bets — Bajaj Finserv Health and Bajaj Finserv Direct/Markets.</div></li>
+    <li class="major"><div class="yr">Mar 2025</div><div class="ev"><strong>The Allianz buyout is announced</strong> — Bajaj agrees to buy Allianz's entire 26% in both insurers for <strong>~₹24,180 crore</strong>, ending the 24-year partnership and taking the group to 100%.</div></li>
+    <li class="major"><div class="yr">Jan 2026</div><div class="ev"><strong>Buyout completes</strong> — Allianz exits; the insurers are renamed <strong>Bajaj Life Insurance</strong> and <strong>Bajaj General Insurance</strong>. Bajaj now fully owns its insurance future.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record results: consolidated income <strong>₹1,50,530 Cr</strong> (+13%), PAT <strong>₹9,801 Cr</strong> (+10%); a special centenary dividend declared. Insurers run for growth; new bets scale.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoter control:</strong> the Bajaj family/group holds <strong>~58.8%</strong> of Bajaj Finserv, through entities such as <strong>Bajaj Holdings &amp; Investment</strong> and <strong>Jamnalal Sons</strong> and family trusts. A stable, long-term, conservative promoter — a genuine asset in financial services, where governance and risk culture decide survival.</li>
+    <li><strong>The cross-holding web.</strong> The group is a <em>lattice</em>: Bajaj Holdings owns chunks of both Bajaj Finserv and Bajaj Auto; Finserv owns Bajaj Finance and the insurers. This is why there are <em>two</em> listed holding companies in the group (Finserv and Bajaj Holdings) — and why holdco-discount debates are a recurring feature (Section 10).</li>
+    <li><strong>Leadership:</strong> chaired and led by <strong>Sanjiv Bajaj</strong> (Chairman &amp; Managing Director of Finserv), with deep management continuity across the arms — Rajeev Jain remains the architect-figure at Bajaj Finance.</li>
+    <li><strong>Listing:</strong> Finserv is itself listed (NSE: BAJAJFINSV, BSE: 532978) and is an index heavyweight; its largest subsidiary Bajaj Finance is <em>also</em> separately listed — a parent-and-child both in the indices.</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Bajaj Finance — the anchor arm</h2></div>
+  <p class="part-sub">The crown jewel: where most of Finserv's value lives.</p>
+
+  <p class="lead">You cannot understand Bajaj Finserv without understanding that <strong>one arm dwarfs the rest</strong>. Bajaj Finance — the separately-listed NBFC (non-bank lender) that Finserv owns ~51.3% of — is India's largest and most valuable retail-focused lender. On a look-through basis it accounts for the <em>majority</em> of Finserv's intrinsic worth. This primer treats it briefly (it has its own dedicated primer); the point here is its scale within the holdco.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~₹5.1 L Cr</div><div class="msl">Bajaj Finance consolidated AUM (loan book), Mar '26, +22%</div></div>
+    <div class="ms"><div class="msv">₹5,464 Cr</div><div class="msl">Bajaj Finance Q4 FY26 net profit (+22% YoY)</div></div>
+    <div class="ms green"><div class="msv">~51.3%</div><div class="msl">Finserv's stake in the listed lender</div></div>
+  </div>
+
+  <h3>What it does, in one paragraph</h3>
+  <p>Bajaj Finance is an <strong>NBFC</strong> — a lender that is not a bank. It finances the TV or phone you buy on "zero-cost EMI" at a store checkout, then cross-sells you personal loans, gold loans, insurance, and an EMI card over years, turning a cheap point-of-sale customer into a long, profitable relationship. It earns a <em>spread</em> (the gap between what it pays to borrow and what it charges to lend), runs best-in-class returns (~19% return on equity), and keeps bad loans low (~1% gross NPAs) through disciplined underwriting. It also owns most of the separately-listed <strong>Bajaj Housing Finance</strong>. In Q4 FY26 it grew net total income 21% and profit 22% — the dependable compounder at the centre of the group.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the anchor matters to Finserv</div>
+    <p>Three consequences flow from Bajaj Finance being the anchor. <strong>First, Finserv's reported profit largely <em>is</em> Bajaj Finance's profit</strong> — when you read "Finserv PAT ₹9,801 Cr," remember the lender contributes the lion's share (the rest is the insurers and a drag from new bets). <strong>Second, Finserv's share price tracks Bajaj Finance closely</strong> — if the lender de-rates on a credit-cycle scare, Finserv falls with it. <strong>Third, the insurers are the "extra"</strong> — the reason to own Finserv <em>rather than</em> just buying Bajaj Finance directly is that Finserv also wraps in two wholly-owned insurance companies and the new bets, at a holdco discount. So the Finserv case is really: "Bajaj Finance, plus optionality on insurance and new ventures, bought at a discount."</p>
+  </div>
+</section>
+
+<!-- 05 — BESPOKE: life insurance economics -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Bajaj Life — how life insurance actually makes money</h2></div>
+  <p class="part-sub">The most counter-intuitive business in the group, decoded for a non-expert.</p>
+
+  <p class="lead">Life insurance is the hardest financial business for an outsider to read, because its profit is <strong>spread across decades and barely shows up in this year's income statement</strong>. A life insurer collects a premium today but may not pay a claim for 30 years; in between it invests the money. So you cannot judge it by annual profit alone — you need two special yardsticks: <strong>Value of New Business (VNB)</strong> and <strong>Embedded Value (EV)</strong>. Here's the whole thing in plain English.</p>
+
+  <h3>How a life insurer earns — the mechanism</h3>
+  <ul class="clean">
+    <li><strong>It sells long-term promises.</strong> You pay a premium (one-off, or every year) for cover or for a savings-cum-insurance product (like a ULIP or an endowment). The insurer promises a payout on death, maturity, or a guaranteed return.</li>
+    <li><strong>It profits in three ways.</strong> <em>Mortality</em> (it charges more for the risk of death than it actually pays out, on average); <em>investment spread</em> (it earns more investing your premium than it has promised you); and <em>expense margin</em> (it runs the operation for less than it loaded into the price). Sell a good mix of products to people who keep paying, and each policy is profitable over its life.</li>
+    <li><strong>The catch: the profit is back-loaded.</strong> In year one a policy often <em>loses</em> money (commissions, set-up costs are paid up front; premiums trickle in over years). So a fast-growing life insurer can look <em>unprofitable</em> on this year's accounts precisely <em>because</em> it is writing lots of valuable new business. This is why we don't judge it on annual PAT.</li>
+  </ul>
+
+  <h3>The two yardsticks that matter</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>How a life insurer is really valued — and Bajaj Life's FY26 numbers</caption>
+    <thead><tr><th>Yardstick</th><th>What it means</th><th>Bajaj Life FY26</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">New Business Premium (NBP)</td><td>Premium from <em>new</em> policies sold this year — the top-of-funnel growth measure.</td><td><strong>₹14,586 Cr</strong>, up ~19%.</td></tr>
+      <tr><td class="t-strong">VNB (Value of New Business)</td><td>The present value of all future profit expected from <em>this year's</em> new policies. The single best gauge of whether new sales create value. Profit recognised today for business that pays off over decades.</td><td><strong>₹709 Cr</strong>, up ~29% — driven by a better product mix and cost control.</td></tr>
+      <tr><td class="t-strong">Embedded Value (EV)</td><td>The insurer's "true net worth" to a long-term owner: its net assets <em>plus</em> the present value of profits already locked into its in-force book. The base on which VNB compounds.</td><td>Large &amp; rising; AUM (investments) of <strong>₹1.34 lakh Cr</strong> backs the book.</td></tr>
+      <tr><td class="t-strong">Persistency</td><td>The % of customers who keep paying renewals. High persistency = more years of profit per policy = higher EV/VNB. The quiet driver of everything.</td><td>Improving — renewal premium growth (~28% in Q1) reflects better retention.</td></tr>
+      <tr><td class="t-strong">Solvency ratio</td><td>Capital cushion vs. regulatory minimum (150%). High = safe and able to grow.</td><td><strong>266%</strong> — very comfortably capitalised.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">VNB and EV in one analogy</div>
+    <p>Imagine an orchard. The <strong>annual accounting profit</strong> is just the fruit you happened to pick this year — a poor guide to the orchard's worth. <strong>Embedded Value</strong> is the value of all the mature trees you already have, counting every future harvest they'll produce. <strong>VNB</strong> is the value of the <em>new saplings you planted this year</em> — the future harvests they will eventually give, valued today. A life insurer growing its VNB ~29% (as Bajaj Life did in FY26) is planting valuable new trees fast — even if this year's <em>picked fruit</em> (reported PAT of just ₹73 Cr) looks small. That gap between the trivial annual profit and the real value being created is exactly why life insurers need their own measuring stick. <strong>Persistency</strong> is whether your trees survive to bear fruit; a high-persistency book is an orchard that doesn't lose trees.</p>
+  </div>
+
+  <p>Bajaj Life is a <strong>top-tier private life insurer</strong> with a strong agency and bancassurance franchise. Within Finserv it is the arm whose value compounds quietly — small in reported profit, large in embedded value. The full Allianz buyout (Section 7) means <strong>100% of this compounding now accrues to Bajaj group shareholders</strong>, where before a quarter leaked to the German partner.</p>
+</section>
+
+<!-- 06 — BESPOKE: general insurance economics -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Bajaj General — how general insurance makes money</h2></div>
+  <p class="part-sub">A completely different economic engine from life — and arguably a simpler one.</p>
+
+  <p class="lead"><strong>General (or "non-life") insurance</strong> is the cover that lasts a year and renews: motor, health, home, travel, crop, marine, fire. Unlike life insurance, its economics are <em>short-cycle</em> — premiums in this year roughly match claims this year — so it has its own two-number toolkit: the <strong>combined ratio</strong> (did underwriting make or lose money?) and <strong>float</strong> (the investable cash it sits on). Once you grasp these, general insurance is genuinely intuitive.</p>
+
+  <h3>The two engines of a non-life insurer</h3>
+  <ul class="clean">
+    <li><strong>Underwriting profit — the combined ratio.</strong> Add up everything the insurer pays out per ₹100 of premium: claims + expenses + commissions. If that total is <strong>below 100</strong>, it made money simply by insuring; if <strong>above 100</strong>, the underwriting itself lost money. This is the <em>combined ratio</em>. Bajaj General's was <strong>~97.9%</strong> in FY26 — i.e. it paid out ~₹97.9 and kept ~₹2.1 of underwriting profit per ₹100, a real improvement on the prior year's loss-making ~101%.</li>
+    <li><strong>Investment profit — the float.</strong> Here's the beautiful part. An insurer collects premiums <em>now</em> and pays claims <em>later</em>. In between it holds a giant pool of other people's money — the <strong>float</strong> — which it invests and keeps the returns on. So even an insurer with a combined ratio of exactly 100 (breaking even on underwriting) can be very profitable purely from investing the float. Warren Buffett built Berkshire on exactly this idea.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">The combined ratio, visualised</div>
+    <div class="c-sub">Per ₹100 of premium — below 100 = underwriting profit; above 100 = underwriting loss (then float income must cover it)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Bajaj General FY26<small>underwriting profit</small></div><div class="track"><span class="fill life" style="width:97.9%"></span></div><div class="bval">~97.9</div></div>
+      <div class="bar-row"><div class="blab">Prior year<small>underwriting loss</small></div><div class="track"><span class="fill gen" style="width:100%"></span></div><div class="bval">~101.1</div></div>
+      <div class="bar-row"><div class="blab">Break-even line<small>claims = premium</small></div><div class="track"><span class="fill ink" style="width:99%"></span></div><div class="bval">100.0</div></div>
+    </div>
+    <div class="legend"><span>A combined ratio under 100 means the insurer was paid to hold money it then invested — the best possible position. Bajaj General moving from ~101% to ~97.9% is the swing from underwriting loss to underwriting profit.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~₹23,179 Cr</div><div class="msl">Bajaj General FY26 gross premium (+8% YoY)</div></div>
+    <div class="ms green"><div class="msv">~97.9%</div><div class="msl">FY26 combined ratio — underwriting profit</div></div>
+    <div class="ms"><div class="msv">100%</div><div class="msl">Owned by the Bajaj group post-Allianz buyout</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why general insurance is a quietly great business</div>
+    <p>A well-run non-life insurer is one of the best business models there is: customers <strong>pay you up front</strong>, you <strong>hold their money</strong> for months or years, you <strong>invest it and keep the returns</strong>, and — if you underwrite well — you <strong>give back less than you collected</strong> on top. That's getting paid to borrow. The discipline is in the underwriting: chase premium growth by under-pricing risk and the combined ratio blows past 100, wiping out years of float income (the FY25 ~101% was exactly that warning). Bajaj General's FY26 — modest ~8% premium growth but a <em>profitable</em> ~97.9% combined ratio — shows a deliberate choice to <strong>prioritise underwriting quality over headline growth</strong>. Within Finserv, this is the cash-generative, capital-light arm; and again, post-buyout, 100% of its profit now stays in the group.</p>
+  </div>
+</section>
+
+<!-- 07 — BESPOKE: the Allianz buyout -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The Allianz full buyout — the defining 2025–26 event</h2></div>
+  <p class="part-sub">The ₹24,000-crore decision to own the insurance future outright.</p>
+
+  <p class="lead">For 24 years, Bajaj's two insurers were <strong>joint ventures with Germany's Allianz SE</strong> — Bajaj held 74%, Allianz 26%. In 2025–26 that ended: Bajaj <strong>bought out Allianz's entire 26%</strong> in both companies, taking the group to <strong>100% ownership</strong>. This is the single most important strategic event in Finserv's recent history, and it reshapes the holdco's value.</p>
+
+  <h3>The deal, in numbers</h3>
+  <ul class="clean">
+    <li><strong>Price:</strong> ~<strong>₹24,180 crore</strong> for Allianz's 26% across both insurers — roughly <strong>₹13,780 Cr</strong> for the general insurer (BAGIC) and <strong>₹10,400 Cr</strong> for the life insurer (BALIC). For Allianz this was about EUR 2.6 billion — a clean exit from the JVs.</li>
+    <li><strong>How the 26% was split among Bajaj entities:</strong> not all of it went to Finserv. Bajaj Finserv itself picked up ~1% in each; <strong>Bajaj Holdings</strong> took ~20%; and <strong>Jamnalal Sons</strong> ~5%. So Finserv now <em>directly</em> holds ~<strong>77.3%</strong> of each insurer, while the wider <strong>Bajaj group owns 100%</strong>. (This split is a subtle but real point for the SOTP — see the note below.)</li>
+    <li><strong>Completion &amp; rebranding:</strong> the deal cleared regulators and <strong>completed in January 2026</strong>; Allianz tendered its shares in tranches, and the insurers were <strong>renamed Bajaj Life Insurance and Bajaj General Insurance</strong> — dropping "Allianz" from the names.</li>
+  </ul>
+
+  <h3>Why Bajaj did it — and what it means</h3>
+  <ul class="clean">
+    <li><strong>India's insurance market is a long, structural growth story.</strong> Insurance penetration in India is low and rising; Bajaj wanted to own <em>all</em> of that upside rather than share a quarter of it forever. Owning 100% means <strong>100% of future VNB, embedded-value growth and underwriting profit accrues to Bajaj</strong>, not Allianz.</li>
+    <li><strong>Full strategic control.</strong> With no JV partner, Bajaj can integrate the insurers tightly into its ecosystem (cross-sell through Bajaj Finance's 100m+ customers, the Finserv app, the AMC), set its own product and capital strategy, and even pursue an eventual <strong>separate listing</strong> of an insurer to crystallise value.</li>
+    <li><strong>The cost.</strong> ₹24,000 crore is real money; it consumed capital and the financing/accounting of the buyout created some near-term noise in the books. The bull sees a high-conviction bet on a structural-growth asset at a fair price; the bear notes it's a large cash outlay for stakes that were already consolidated, and that India insurance is fiercely competitive (LIC, SBI Life, HDFC Life, ICICI).</li>
+  </ul>
+
+  <div class="note gold"><b>The SOTP nuance:</b> because part of the 26% went to <em>sister</em> promoter entities (Bajaj Holdings, Jamnalal Sons) rather than to Bajaj Finserv itself, Finserv's <em>direct</em> economic interest in the insurers is ~77.3%, not 100% — even though the <em>group</em> owns 100%. A careful sum-of-the-parts therefore values the insurers at Finserv's ~77.3% share, not the full 100%. It's a reminder that "Bajaj owns 100%" and "Finserv shareholders own 100%" are not quite the same sentence.</div>
+
+  <div class="plain">
+    <div class="ptag">The simplest way to think about it</div>
+    <p>For two decades Bajaj built two excellent insurers but had to hand a quarter of the profits and the upside to a foreign partner. The 2025–26 buyout is Bajaj saying: <strong>"India's insurance growth is too good to share — we'll buy out the partner and own the whole future."</strong> It is a vote of confidence in the structural story, and it makes Bajaj Finserv a <em>purer, fuller</em> play on Indian insurance than it has ever been. The price tag and the competitive market are the honest counter-arguments.</p>
+  </div>
+</section>
+
+<!-- 08 — BESPOKE: the new bets -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The new growth bets — AMC, Health, Markets</h2></div>
+  <p class="part-sub">The deliberately loss-making seedlings that could be tomorrow's arms.</p>
+
+  <p class="lead">Beyond lending and insurance, Finserv has been planting a <strong>third generation of businesses</strong>: a mutual-fund house, a health platform, and a digital-finance marketplace. They are small and <strong>lose money today by design</strong> — Finserv reports their combined drag explicitly (~₹539 Cr of losses in FY26, up from ~₹429 Cr) — but they are the company's optionality on the next decade.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three emerging businesses</caption>
+    <thead><tr><th>Business</th><th>What it is</th><th>Why it could matter</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Bajaj Finserv AMC<br><span class="mono" style="font-size:11px;color:var(--ink-faint);">(mutual fund)</span></td><td>An asset-management company launched in 2023; ran <strong>~₹26,800 Cr of closing AUM</strong> (quarterly average ~₹30,600 Cr) by Mar 2026 — one of the fastest ramps among new AMCs.</td><td>Asset management is <strong>capital-light and highly profitable at scale</strong> — fees on a growing pool, little balance-sheet risk. If it reaches critical mass, it becomes a valuable annuity arm.</td></tr>
+      <tr><td class="t-strong">Bajaj Finserv Health</td><td>A health-tech platform — doctor discovery, tele-consults, digital health records, and a bridge into health insurance and wellness.</td><td>Plugs into the general insurer's health book and the group's huge customer base; a play on India's under-served, fast-digitising healthcare market.</td></tr>
+      <tr><td class="t-strong">Bajaj Finserv Direct / Bajaj Markets</td><td>A digital financial-services <strong>marketplace</strong> — distributing loans, cards, insurance and investments (the group's and partners') online.</td><td>A capital-light <strong>distribution layer</strong> that monetises the group's brand and traffic; the "front door" to cross-sell across all the arms.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to read the losses</div>
+    <p>New financial businesses lose money first and earn later — an AMC must build AUM before fees cover its costs; a marketplace must build traffic before it monetises. So the ~₹539 Cr drag is <strong>investment, not failure</strong> — Finserv is funding these from the cash its mature arms throw off. The right way to judge them is by <em>leading indicators</em> (AMC AUM growth, Health users, Markets traffic and take-rate), not current profit. The bull case: one or two of these become a third or fourth real arm — capital-light, high-margin — over the next decade, the way Bajaj Finance and the insurers matured before them. The bear case: they remain a perpetual cash drag in a brutally competitive field (the AMC, for instance, is a late entrant against dozens of incumbents). Either way, today they are small enough not to move the SOTP much — they are <strong>optionality, valued near zero</strong>.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; the sum-of-the-parts</h2></div>
+  <p class="part-sub">How the consolidated numbers add up — and how analysts value the pieces.</p>
+
+  <p class="lead">Finserv's consolidated accounts are <strong>dominated by Bajaj Finance</strong> (because Finserv controls it, all of the lender's income is consolidated in), with the insurers and the new bets layered on. Reading the consolidated statement is useful — but to <em>value</em> a holdco you must switch to a sum-of-the-parts.</p>
+
+  <div class="chart">
+    <div class="c-title">Consolidated trajectory</div>
+    <div class="c-sub">Total income and net profit, ₹ '000 Crore / ₹ Crore — FY26 a record year</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Total income FY25<small>₹ lakh Cr</small></div><div class="track"><span class="fill ink" style="width:88%"></span></div><div class="bval">₹1.33 L</div></div>
+      <div class="bar-row"><div class="blab">Total income FY26<small>₹ lakh Cr, +13%</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">₹1.51 L</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY25<small>₹ Cr</small></div><div class="track"><span class="fill ink" style="width:90%"></span></div><div class="bval">8,872</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY26<small>₹ Cr, +10%</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">9,801</div></div>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>FY26 — the arms, side by side (approx., headline figures)</caption>
+    <thead><tr><th>Arm</th><th>Key FY26 metric</th><th>Profit signal</th><th>Finserv stake</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Bajaj Finance</td><td>AUM ~₹5.1 lakh Cr (+22%)</td><td>Q4 PAT ₹5,464 Cr (+22%) — the engine</td><td class="num">~51.3%</td></tr>
+      <tr><td class="t-strong">Bajaj Life</td><td>NBP ₹14,586 Cr (+19%); VNB ₹709 Cr (+29%)</td><td>Small reported PAT, large EV growth</td><td class="num">~77.3%*</td></tr>
+      <tr><td class="t-strong">Bajaj General</td><td>Gross premium ~₹23,179 Cr (+8%)</td><td>Combined ratio ~97.9% — underwriting profit</td><td class="num">~77.3%*</td></tr>
+      <tr><td class="t-strong">New bets (AMC/Health/Markets)</td><td>AMC AUM ~₹26,800 Cr</td><td>~₹539 Cr loss (by design)</td><td class="num">~100%</td></tr>
+      <tr><td><strong>Consolidated Finserv</strong></td><td><strong>Total income ₹1,50,530 Cr (+13%)</strong></td><td><strong>PAT ₹9,801 Cr (+10%)</strong></td><td class="num">—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:12px;color:var(--ink-faint);margin-top:4px;">*Group owns 100% of the insurers; Finserv's <em>direct</em> economic interest is ~77.3% after part of the Allianz stake went to sister promoter entities.</p>
+
+  <div class="plain">
+    <div class="ptag">How analysts build the SOTP</div>
+    <p>A sum-of-the-parts for Finserv runs roughly like this: <strong>(1)</strong> Take Bajaj Finance's market value (it's listed, so use the live price) and multiply by ~51.3% — this is usually the <em>biggest single piece</em>, and on its own it can exceed Finserv's whole market cap. <strong>(2)</strong> Value Bajaj Life on an embedded-value/VNB multiple (the insurance way), then take Finserv's ~77.3% share. <strong>(3)</strong> Value Bajaj General on a P/E or P/book appropriate to a profitable non-life insurer, again ~77.3%. <strong>(4)</strong> Add the new bets near book value. <strong>(5)</strong> Adjust for Finserv's own net cash/debt. Add it up and you get the "gross asset value." The market then applies a <strong>holdco discount</strong> to that total — which is the entire subject of the next section.</p>
+  </div>
+</section>
+
+<!-- 10 — BESPOKE: the holdco discount -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The holdco discount — why the wrapper is cheap</h2></div>
+  <p class="part-sub">The defining valuation puzzle of every holding company — and Finserv is a textbook case.</p>
+
+  <p class="lead">Here is the puzzle that defines Bajaj Finserv as an <em>investment</em> (as opposed to its underlying businesses). Add up the value of Finserv's stakes — its ~51.3% of listed Bajaj Finance alone is worth <strong>more than ₹3 lakh crore</strong> on a look-through basis — and the total comfortably <em>exceeds</em> Finserv's own market cap of ~₹2.82 lakh crore. In other words, <strong>you can buy Finserv for less than the value of just its Bajaj Finance stake — and get the two insurers and the new bets effectively for free.</strong> That gap is the <strong>holdco discount</strong> (typically 20–30%). Why does it exist, and what could close it?</p>
+
+  <div class="chart">
+    <div class="c-title">The holdco discount, illustrated</div>
+    <div class="c-sub">Indicative — the wrapper trades below the value of what's inside it</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Value of the parts (SOTP)<small>stakes added up</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">100</div></div>
+      <div class="bar-row"><div class="blab">Bajaj Finance stake alone<small>~51.3%, look-through</small></div><div class="track"><span class="fill fin" style="width:78%"></span></div><div class="bval">~78</div></div>
+      <div class="bar-row"><div class="blab">Finserv market value<small>what you pay</small></div><div class="track"><span class="fill gold" style="width:73%"></span></div><div class="bval">~73</div></div>
+    </div>
+    <div class="legend"><span>Illustrative, not to scale. The point: Finserv's market value (~73) sits below the sum of the parts (100), and is close to the value of the Bajaj Finance stake alone (~78) — so the insurers + new bets are barely priced in. That ~20–30% gap is the holdco discount.</span></div>
+  </div>
+
+  <h3>Why a holdco trades at a discount</h3>
+  <ul class="clean">
+    <li><strong>You can't unbundle it.</strong> If you like the insurers but not the lender (or vice-versa), tough — you must own the whole wrapper. Investors pay less for a basket they can't break apart than for the freedom to pick the pieces.</li>
+    <li><strong>Cash can be "trapped."</strong> Profits sit inside subsidiaries; getting them up to the holdco and out to you can mean extra layers of tax and the family's discretion on dividends. A rupee of subsidiary profit is worth less than a rupee in your pocket.</li>
+    <li><strong>You don't control capital allocation — the promoter does.</strong> The Bajaj family decides whether to buy out Allianz, seed an AMC, or pay a dividend. That can be good (disciplined, long-term) but it removes your choice — and markets discount lost optionality.</li>
+    <li><strong>Double-counting fear &amp; complexity.</strong> With <em>two</em> listed holdcos in the group (Finserv and Bajaj Holdings) and cross-holdings, the structure is complex; complexity itself earns a discount.</li>
+  </ul>
+
+  <h3>What could narrow it</h3>
+  <ul class="clean">
+    <li><strong>Listing an insurer.</strong> If Bajaj IPOs Bajaj Life or Bajaj General, the market puts a hard, visible price on an asset that today is only an analyst estimate — usually shrinking the discount by making the SOTP undeniable.</li>
+    <li><strong>The insurers growing into "real" value.</strong> As the wholly-owned insurers compound (post-Allianz, 100% theirs), they become a bigger, more obvious slice of value that the discount is applied to — making the "free insurers" argument harder for the market to ignore.</li>
+    <li><strong>Simplification or higher payouts.</strong> Any move that unwinds cross-holdings, raises dividends, or clarifies the structure tends to compress the discount.</li>
+    <li><strong>Sheer size of the gap.</strong> The wider the discount runs, the more it attracts value investors arguing "you're getting two insurers for free" — which can itself be the catalyst.</li>
+  </ul>
+
+  <div class="note"><b>The honest tension:</b> a holdco discount can be a <em>bargain</em> (you buy great businesses cheaply) or a <em>value trap</em> (the discount never closes because the family never simplifies, lists an arm, or lifts payouts — so the "hidden value" stays hidden forever). Indian holdcos are notorious for discounts that persist for years. The Finserv bull bets the insurers' growth and an eventual listing force a re-rating; the bear notes that the same discount has been there a long time and may simply be the permanent price of the wrapper.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A blue-chip basket of financial-services businesses — wrapped at a discount.</p>
+
+  <p class="lead">Bajaj Finserv is a way to own a <strong>diversified, high-quality slice of Indian financial services</strong> in one share: the best retail lender, two now-wholly-owned insurers riding a structural growth story, and a set of capital-light new bets — backed by a conservative, century-old promoter. The debate is two-layered: the quality of the underlying arms (high) and the size and persistence of the holdco discount (the real variable).</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Owns the anchor</strong> — a ~51.3% stake in Bajaj Finance, India's premier compounding lender, plus diversification the lender alone can't give.</li>
+        <li><strong>100% of the insurers</strong> — post-Allianz, all future insurance growth (life VNB +29%, general now underwriting-profitable) accrues to the group; India's insurance penetration runway is long.</li>
+        <li><strong>Holdco discount = embedded margin of safety</strong> — you effectively get the insurers and new bets for free; a listing or simplification could re-rate the whole thing.</li>
+        <li><strong>Optionality from new bets</strong> — a fast-scaling AMC and digital/health platforms that could become tomorrow's arms, funded by today's cash flows.</li>
+        <li><strong>Promoter quality</strong> — a stable, conservative, long-horizon owner with a 100-year track record and deep financial-services expertise.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>The discount may never close</strong> — Indian holdco discounts persist for years; without a listing or simplification, the "hidden value" stays hidden.</li>
+        <li><strong>You're mostly buying Bajaj Finance anyway</strong> — Finserv's fate tracks the lender; a credit-cycle scare drags Finserv down with it, and you took the holdco discount to get there.</li>
+        <li><strong>Insurance is fiercely competitive</strong> — LIC, SBI Life, HDFC Life, ICICI Lombard; the ₹24,000 Cr buyout was a big cash outlay into a tough market.</li>
+        <li><strong>Complexity &amp; cross-holdings</strong> — two listed holdcos, sister-entity stakes in the insurers, and consolidated optics that obscure the parts.</li>
+        <li><strong>New bets are a real drag</strong> — ~₹539 Cr of losses and rising, in markets full of entrenched incumbents; they may not all mature.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Bajaj Finserv is a <strong>high-quality, diversified holding company</strong> over genuinely good financial-services businesses — a premier lender, two wholly-owned insurers on a long growth runway, and seedling new bets — under a trusted promoter. The <em>businesses</em> are strong; the <em>structure</em> is the question. The story over the next few years will turn on three things: <strong>how Bajaj Finance compounds</strong> (it's most of the value), <strong>how the now-100%-owned insurers grow VNB and underwriting profit</strong> (the differentiator), and — above all — <strong>whether the holdco discount narrows</strong> (a listing, a simplification, sheer insurer growth). Get those right and you own a basket of compounders bought below cost; if the discount simply endures, you own good businesses at a permanent markdown. Either way, the one number to watch that you <em>won't</em> see in any other primer is the gap between Finserv's market cap and its sum-of-the-parts.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Bajaj Finserv — Q4 &amp; FY26 results (year ended 31 Mar 2026); ScanX, "Bajaj Finserv achieves record FY26 performance with ₹1,50,530 crore total income" (Apr 2026).</li>
+    <li>APAC News Network — "Bajaj Finserv Q4 Results FY26: Profit up 5% YoY to ₹2,539 crore, total income rises 6%" (Apr 2026).</li>
+    <li>Bajaj Finserv — Q4 FY26 investor presentation &amp; segment disclosures (Bajaj Finance, Bajaj Life, Bajaj General, emerging businesses).</li>
+    <li>Whalesbook — "Bajaj Finserv: Life Insurance Premiums Soar in FY26, General Dips" (Bajaj Life NBP ₹14,586 Cr; Bajaj General gross direct premium ₹23,179 Cr).</li>
+    <li>Asia Insurance Post / Bajaj Life FY26 disclosures — net VNB ₹709 Cr (+29%), AUM ₹1.34 lakh Cr, solvency 266%, gross written premium ₹11,198 Cr, PAT ₹73 Cr.</li>
+    <li>PSU Connect — "Bajaj Finserv Q3 FY26 PAT ₹2,229 Cr; acquires full control of insurance subsidiaries" (combined ratio 97.9%; Allianz buyout completion).</li>
+    <li>Bajaj Group / Allianz SE — "Bajaj Finserv to buy Allianz's 26% stake in Bajaj Allianz Life and General for ₹24,000 crore" (Mar 2025); Allianz media releases (EUR 2.6bn, tranche completion, Jan 2026).</li>
+    <li>Acuity Law / Value Research — analysis of the Allianz exit, the ₹13,780 Cr (BAGIC) / ₹10,400 Cr (BALIC) split, and the Bajaj Finserv / Bajaj Holdings / Jamnalal Sons allocation.</li>
+    <li>Bajaj Finserv AMC disclosures — closing AUM ~₹26,819 Cr / average ~₹30,627 Cr (Mar 2026); emerging-business losses ~₹539 Cr in FY26.</li>
+    <li>Business Standard / Screener.in / Tickertape — BAJAJFINSV share price (~₹1,783, 30 Jun 2026), market cap ~₹2.82 lakh Cr, 51.32% Bajaj Finance &amp; 77.33% insurer stakes, holdco discount to NAV.</li>
+    <li>Trendlyne / Choice — Bajaj Finserv shareholding pattern (promoter ~58.8%); Bajaj Holdings &amp; Investment ownership context.</li>
+    <li>Companion primer: Bajaj Finance (Q4 &amp; FY26) — bajaj-finance.html in this library, for the anchor NBFC's full treatment.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; verify all numbers against primary sources before relying on them. Sum-of-the-parts and holdco-discount figures are illustrative analyst constructs, not company-reported numbers. The author may hold no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "BAJAJFINSV";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
