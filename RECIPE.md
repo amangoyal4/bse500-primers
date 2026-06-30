@@ -108,17 +108,26 @@ Include the refresh control in every primer (cover area), but **unwired**:
 
 ---
 
-## 6. Per-run loop (scheduled, every 5 hours, 6 companies)
+## 6. Per-run loop (scheduled, every 5 hours, up to 6 companies)
+
+**Generate ONE COMPANY AT A TIME — never in parallel.** Fully research, write,
+verify, and publish one primer before starting the next. Sequential is mandatory:
+it lets each primer's quality be locked before moving on. Do NOT spawn parallel
+sub-agents or batch multiple companies at once.
 
 ```
 read data/worklist.json
-take the next 6 with status == "pending" (worklist is pre-sorted: largest first)
-for each company, time-boxed to finish within the 5h window:
-    run §1 (research → cross-check → bespoke sections → write → self-verify)
-    if it clears the §0 gate: save, append to primers.json, mark done, commit
-    else: mark held, log why, continue
+take the next pending company (worklist is pre-sorted: largest first)
+repeat up to 6 times, time-boxed within the 5h window:
+    COMPANY = next pending
+    run §1 fully: research → cross-check → bespoke sections → write → self-verify
+    re-read the finished primer end-to-end; confirm it matches the Rainbow bar
+    if it clears the §0 gate: append to primers.json, mark done, commit + push
+    else: mark held, log why
+    only then move to the next company
 write a short run log to runs/<date>.md (companies done / held + notes)
 ```
 
-Target 6 per run; ship fewer rather than rush one below the bar. Never publish
+Target up to 6 per run, but **quality over count** — ship fewer rather than rush
+one below the bar. One excellent primer beats six rushed ones. Never publish
 half-finished work. Never repeat a company already `done`.
