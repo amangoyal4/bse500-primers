@@ -18,6 +18,19 @@ figures against a real source, you **do not** ship a shaky primer. You mark it
 `held` in the worklist and move on. A gap in the library is fine; a wrong number
 under the owner's name is not.
 
+**Depth = coverage + explanation (NOT a word count).** The bar is: does it
+*comprehensively cover* every important dimension of the business AND *explain the
+mechanisms* in plain English — the "why it matters," not just the "what" — so a
+non-expert truly understands it? Match the richness of the exemplars (the hand
+originals run ~4,800–5,500 words of real content; go LONGER for multi-segment
+companies — a conglomerate needs a proper section per business: e.g. ITC =
+cigarettes + FMCG + hotels + agri + paperboards; M&M = SUVs + tractors + Tech
+Mahindra + finance + EVs). Don't pad, but never skimp. A section that *names* a
+thing without explaining how it works or why it matters is a failure — expand it.
+**In a multi-company run, keep EACH company as rich as if it were the only one
+you were writing; do NOT get terser as the run goes on** (the tail of a long
+sequential run is where quality silently erodes — guard against it).
+
 ---
 
 ## 1. The fixed process (do every step, every company)
