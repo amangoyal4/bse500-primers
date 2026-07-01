@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Divi's Laboratories — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F5;
+    --paper-2:#FAFCFB;
+    --card:#FFFFFF;
+    --ink:#12211E;
+    --ink-soft:#4C5D58;
+    --ink-faint:#84968F;
+    --brand:#0E6E5B;          /* deep pharma teal */
+    --brand-bright:#12A184;   /* bright teal-green */
+    --gold:#C9862B;           /* warm amber - accent */
+    --api:#0E6E5B;            /* generic API teal */
+    --cram:#2E6FB5;           /* custom synthesis blue */
+    --nutra:#6FAF3A;          /* nutraceuticals green */
+    --china:#C0392B;          /* china+1 red */
+    --peptide:#8A5CB8;        /* peptides / GLP-1 violet */
+    --line:#DBE1DF;
+    --line-soft:#E7EBEA;
+    --good:#128560;
+    --bad:#C0392B;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4F3EF;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .provenance{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:18px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--brand-bright);border-radius:50%;}
+
+  .plain{background:#E9F4F0;border:1px solid #C4E2D8;border-left:3px solid var(--brand-bright);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#0c6b58;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#13332c;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F8F7;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E7ECEA;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0E6E5B,#12A184);}
+  .fill.gold{background:linear-gradient(90deg,#C9862B,#E0A44D);}
+  .fill.api{background:linear-gradient(90deg,#0E6E5B,#1B9179);}
+  .fill.cram{background:linear-gradient(90deg,#2E6FB5,#5A93D0);}
+  .fill.nutra{background:linear-gradient(90deg,#6FAF3A,#8FC95C);}
+  .fill.china{background:linear-gradient(90deg,#C0392B,#D55543);}
+  .fill.peptide{background:linear-gradient(90deg,#8A5CB8,#A87FD0);}
+  .fill.bad{background:linear-gradient(90deg,#C0392B,#D55543);}
+  .fill.ink{background:linear-gradient(90deg,#2f423d,#4C5D58);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 64px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.api{background:var(--api);}
+  .node.cram{background:var(--cram);}
+  .node.nutra{background:var(--nutra);}
+  .node.peptide{background:var(--peptide);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms.cram .msv{color:var(--cram);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEC;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2a22;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF4E6;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#E4F3EF;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What an API even is</a></li>
+    <li><a href="#p2"><span class="n">02</span> The two-engine model</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> Generic APIs: scale is the moat</a></li>
+    <li><a href="#p5"><span class="n">05</span> Custom synthesis / CRAMS</a></li>
+    <li><a href="#p6"><span class="n">06</span> The China+1 tailwind</a></li>
+    <li><a href="#p7"><span class="n">07</span> GLP-1, contrast media, Kakinada</a></li>
+    <li><a href="#p8"><span class="n">08</span> The financial profile</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The risks</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: DIVISLAB · BSE: 532488</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>Divi's Laboratories, <em>the "picks &amp; shovels" of global pharma</em></h1>
+  <p class="dek">A complete walk through one of the world's largest makers of active pharmaceutical ingredients — why Divi's sells the chemical guts of medicines rather than pills in a box, how being the low-cost, backward-integrated, trusted supplier to Big Pharma builds a real moat, why "China+1" and weight-loss drugs are lighting up demand, and why a bulk-chemicals business can somehow run at 33% margins with zero debt.</p>
+  <p class="provenance">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹10,560 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~33% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">₹2,568 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹1.75 <small>L Cr</small></div><div class="l">Market cap (Jun '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">01 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹10,560 Cr (+13%), EBITDA margin ~33%, net profit ₹2,568 Cr (+17%). Generic API : Custom Synthesis mix 45 : 55. Final dividend ₹30/share. Added GLP-1/peptide push, contrast-media ramp and the Kakinada (Unit-III) greenfield.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Divi's Laboratories is <strong>one of the world's largest manufacturers of active pharmaceutical ingredients (APIs)</strong> — the actual drug molecule inside a medicine — and a leading provider of <strong>custom synthesis</strong> (making advanced chemicals and patented APIs for the world's biggest drug companies). It does <em>not</em> sell branded pills to patients. It sells the chemical raw material of medicines, in bulk, to the companies that do. In FY26 (year ended March 2026) it earned <strong>₹10,560 Cr of revenue</strong> at roughly a <strong>33% EBITDA margin</strong> and <strong>₹2,568 Cr of net profit</strong> — with essentially <strong>no debt</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It's a "picks-and-shovels" business.</strong> In a gold rush, the reliable money is in selling shovels, not digging. Divi's supplies the essential input — the API — to hundreds of drugmakers worldwide. It wins whenever medicines get made, no matter whose brand is on the pack.</li>
+    <li><strong>Roughly 89–90% of sales are exports.</strong> Europe and the United States together are about three-quarters of revenue. Divi's is a genuinely global supplier run out of two campuses in Telangana and Andhra Pradesh, with a third greenfield site rising at Kakinada.</li>
+    <li><strong>Two engines, near-even split.</strong> FY26 revenue was about <strong>45% Generic APIs</strong> (bulk copies of off-patent molecules, sold on scale and cost) and <strong>55% Custom Synthesis / CRAMS</strong> (higher-value, contracted work for innovator Big Pharma). That mix is the whole story.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of the pharma supply chain as a kitchen. The branded drugmaker (Pfizer, Novartis, a Sun Pharma) is the restaurant with the famous name on the door. Divi's is the specialist ingredient supplier that grows and refines the one hard-to-make spice every kitchen needs. It's invisible to the diner, but if it stops shipping, the kitchens go dark. Divi's competes not on brand or marketing but on being the <em>cheapest, cleanest, most reliable</em> maker of that ingredient at industrial scale.</p>
+  </div>
+
+  <p>The rest of this primer explains what an API is, how the two engines actually make money, why global pharma is scrambling to buy <em>less</em> from China and more from India (the "China+1" wave), the new growth vectors — weight-loss-drug peptides, contrast media and the Kakinada plant — and why a bulk-chemicals maker can be this profitable, this cash-rich, and this expensively valued.</p>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What an API even is</h2></div>
+  <p class="part-sub">Pharma economics 101 — the piece of a medicine that Divi's makes.</p>
+
+  <p class="lead">Every medicine is really two things bolted together. There's the <strong>active pharmaceutical ingredient (API)</strong> — the molecule that actually does the medical work — and there's everything else: the fillers, binders, coatings, the tablet press, the box, the brand. That "everything else" is the <em>formulation</em>. Divi's lives entirely on the API side.</p>
+
+  <p>Take a common painkiller. The white powder that reduces your inflammation is the API — say, naproxen. On its own it's a fine chemical powder made in tonne quantities in a factory. To become a medicine, that powder is blended with inactive ingredients, pressed into a tablet, coated, tested, packed and branded. The company that does that last mile — and puts its name on the box — is the <strong>formulator</strong>. The company that made the naproxen powder in the first place is the <strong>API maker</strong>. That's Divi's.</p>
+
+  <div class="flow">
+    <div class="flow-row">
+      <div class="node api"><div class="ntag">Step 1</div><div class="nname">Basic chemicals</div><div class="nwho">Solvents, reagents, key starting materials — some made in-house (backward integration)</div></div>
+      <div class="arrow">→</div>
+      <div class="node api"><div class="ntag">Step 2</div><div class="nname">Intermediates</div><div class="nwho">Half-built molecules, several synthesis steps in — the hard chemistry</div></div>
+      <div class="arrow">→</div>
+      <div class="node cram"><div class="ntag">Step 3 · Divi's</div><div class="nname">The API</div><div class="nwho">The finished active molecule, high-purity, in bulk — Divi's core product</div></div>
+      <div class="arrow">→</div>
+      <div class="node peptide"><div class="ntag">Step 4 · Customer</div><div class="nname">The formulation</div><div class="nwho">Tablet / injection / cream, branded and boxed by the drugmaker</div></div>
+      <div class="arrow">→</div>
+      <div class="node nutra"><div class="ntag">Step 5</div><div class="nname">The patient</div><div class="nwho">A branded or generic medicine on a pharmacy shelf</div></div>
+    </div>
+    <div class="flow-note">Divi's occupies steps 1–3 of the chain — and the further left it reaches (making its own intermediates and starting materials), the more of the value and the supply security it controls.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>An API is the "active drug" as a raw chemical, before it becomes a pill. Making it well is a chemistry-and-scale problem: run a multi-step reaction, hit brutal purity standards (impurities in a drug can hurt people), pass regulatory inspections, and do it cheaper per kilogram than anyone else. Divi's is one of the handful of companies on earth that does this at the very top tier of scale and quality. That, not any consumer brand, is the business.</p>
+  </div>
+
+  <h3>Why the API layer is a good place to sit</h3>
+  <p>An API maker is one layer <em>upstream</em> of the branded-drug fight. It doesn't need a salesforce, doctors' relationships, or advertising. It doesn't carry the risk of a single blockbuster brand losing patent protection. Instead it supplies the molecule to <em>many</em> customers — often the innovator <em>and</em> the generic copycats of the same drug. When a medicine is a hit, Divi's benefits regardless of which brand wins the pharmacy shelf, because they may all buy the same active ingredient from the same trusted supplier.</p>
+
+  <p>This is exactly why it earns the "picks-and-shovels" label: it profits from the <em>activity</em> of the whole industry, not from betting on one product. The trade-off is that an API is closer to a commodity than a brand — so the edge has to come from being cheaper and more reliable at scale, which is precisely what Divi's has spent 35 years engineering.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The two-engine model</h2></div>
+  <p class="part-sub">Generic APIs and Custom Synthesis — different customers, different economics, one factory network.</p>
+
+  <p class="lead">Divi's runs two businesses that share the same chemists, plants and quality systems but sell to opposite ends of the drug world. In FY26 the split was roughly <strong>45% Generic APIs</strong> and <strong>55% Custom Synthesis</strong>. Understanding the difference is the key to the whole company.</p>
+
+  <div class="chart">
+    <div class="c-title">FY26 revenue mix — the two engines (plus nutra)</div>
+    <div class="c-sub">Consolidated revenue ~₹10,560 Cr · Custom Synthesis is now the larger, and faster-growing, engine</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Custom Synthesis (CRAMS)<small>work for innovator Big Pharma</small></div><div class="track"><span class="fill cram" style="width:55%"></span></div><div class="bval">~55%</div></div>
+      <div class="bar-row"><div class="blab">Generic APIs<small>bulk off-patent molecules</small></div><div class="track"><span class="fill api" style="width:45%"></span></div><div class="bval">~45%</div></div>
+      <div class="bar-row"><div class="blab">Nutraceuticals<small>within the above / adjacent</small></div><div class="track"><span class="fill nutra" style="width:9%"></span></div><div class="bval">~₹946 Cr</div></div>
+    </div>
+    <div class="legend"><span><i style="background:#2E6FB5"></i>Custom Synthesis</span><span><i style="background:#0E6E5B"></i>Generic APIs</span><span><i style="background:#6FAF3A"></i>Nutraceuticals (carotenoids, etc.)</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <caption>The two engines side by side</caption>
+      <thead><tr><th>Dimension</th><th>Generic APIs</th><th>Custom Synthesis (CRAMS)</th></tr></thead>
+      <tbody>
+        <tr><td class="t-strong">Who buys</td><td>Generic drugmakers worldwide (many small &amp; large formulators)</td><td>Innovator "Big Pharma" — patent-holders launching new drugs</td></tr>
+        <tr><td class="t-strong">What Divi's makes</td><td>APIs for old, off-patent molecules (naproxen, gabapentin, etc.)</td><td>Advanced intermediates &amp; patented APIs to the customer's spec</td></tr>
+        <tr><td class="t-strong">Basis of competition</td><td>Cost, scale, quality, reliability — a low-cost race</td><td>Trust, chemistry skill, secrecy, regulatory track record</td></tr>
+        <tr><td class="t-strong">Margin character</td><td>Solid but exposed to price erosion</td><td>Higher-value, stickier, project-based</td></tr>
+        <tr><td class="t-strong">Stickiness</td><td>Moderate — customers can switch suppliers</td><td>Very high — designed into the drug's regulatory filing</td></tr>
+        <tr><td class="t-strong">Growth driver</td><td>Volume + China+1 share gains</td><td>New molecule pipeline, GLP-1 peptides, exclusivity deals</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Generic APIs are the <em>volume</em> engine — win by being the world's cheapest, cleanest maker of a well-known molecule. Custom Synthesis is the <em>relationship</em> engine — win by becoming the secret, trusted supplier baked into a global drugmaker's newest product. The first is a scale game; the second is a trust game. Divi's is rare in being genuinely elite at both, which is why its margins beat almost every peer.</p>
+  </div>
+
+  <p>Sitting alongside both is a smaller <strong>nutraceuticals</strong> business — Divi's makes ingredients like beta-carotene and other carotenoids used in vitamins and food fortification (about ₹946 Cr of revenue in FY26). It uses the same fermentation and chemistry muscle and diversifies the customer base a little.</p>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company &amp; its owners</h2></div>
+  <p class="part-sub">A scientist-founder's company, still family-controlled, built on chemistry.</p>
+
+  <p class="lead">Divi's is unusual among large Indian pharma names: it was founded by a <strong>research chemist</strong>, not a marketer, and it has stayed close to its founding technical DNA. <strong>Dr. Murali Krishna Prasad Divi</strong> — a US-trained pharmaceutical scientist — set up Divi's Research Centre in 1990 and turned it into a manufacturer through the 1990s. He remains Chairman &amp; Managing Director; his son <strong>Kiran Divi</strong> is CEO &amp; Whole-Time Director, and daughter <strong>Nilima Motaparti</strong> is a director. The <strong>Divi family (promoters) hold about 51.9%</strong> of the company.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">1990</div><div class="msl">Founded in Hyderabad as Divi's Research Centre</div></div>
+    <div class="ms gold"><div class="msv">2003</div><div class="msl">IPO / listed on BSE &amp; NSE (Feb 2003)</div></div>
+    <div class="ms cram"><div class="msv">~51.9%</div><div class="msl">Promoter (Divi family) holding</div></div>
+  </div>
+
+  <p>The two production hubs are the heart of the company:</p>
+  <ul class="clean">
+    <li><strong>Unit-I — Choutuppal, Telangana</strong> (near Hyderabad): the original manufacturing campus, operational since the mid-1990s.</li>
+    <li><strong>Unit-II — Chippada, near Visakhapatnam, Andhra Pradesh</strong> (including the DSN SEZ export unit): the larger complex, often described as among the world's biggest single API manufacturing sites, and the export workhorse.</li>
+    <li><strong>Unit-III — Kakinada, Andhra Pradesh</strong> (greenfield): a large new site being built out on hundreds of acres to fuel the next decade of growth (see §07).</li>
+  </ul>
+
+  <ul class="timeline">
+    <li class="major"><span class="yr">1990</span><div class="ev">Dr. Murali Divi founds Divi's Research Centre in Hyderabad after a career as a pharma chemist in the US.</div></li>
+    <li><span class="yr">1994–95</span><div class="ev">Renamed Divi's Laboratories; first manufacturing facility set up at Choutuppal (Unit-I).</div></li>
+    <li><span class="yr">2002</span><div class="ev">Second, larger facility begins at Chippada near Visakhapatnam (Unit-II).</div></li>
+    <li class="major"><span class="yr">2003</span><div class="ev">Lists on BSE and NSE; becomes a public company.</div></li>
+    <li><span class="yr">2011</span><div class="ev">DSN SEZ export unit at Chippada commences commercial operations, deepening the export model.</div></li>
+    <li class="major"><span class="yr">2020–21</span><div class="ev">COVID era: Divi's makes molnupiravir API for MSD and becomes a China+1 poster child; capex cycle accelerates.</div></li>
+    <li><span class="yr">2023–26</span><div class="ev">Kakinada (Unit-III) greenfield build-out; big pushes into GLP-1/peptides and contrast media.</div></li>
+    <li class="major"><span class="yr">FY26</span><div class="ev">Revenue ₹10,560 Cr, PAT ₹2,568 Cr; Custom Synthesis 55% of mix; near debt-free.</div></li>
+  </ul>
+
+  <p>Ownership beyond the promoters is institution-heavy and India-centric: foreign institutional investors held about <strong>20.3%</strong> and domestic institutions about <strong>19.1%</strong> at last count — a sign that Divi's is a core "quality compounder" holding for many funds, prized for its balance-sheet cleanliness and returns.</p>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Generic APIs — where scale <em>is</em> the moat</h2></div>
+  <p class="part-sub">How a commodity-looking business is actually defensible.</p>
+
+  <p class="lead">On paper, a generic API sounds like a commodity: the molecule is off-patent, the recipe is known, anyone with a factory could make it. So how does Divi's earn good money — and keep it — in that game? The answer is that <strong>scale, backward integration and quality</strong> together form a moat that is far deeper than it looks.</p>
+
+  <h3>Divi's is genuinely dominant in its molecules</h3>
+  <p>Divi's isn't a marginal player in generic APIs — it is often <em>the</em> global leader. It holds a commanding <strong>65–85% share</strong> in several of its long-standing molecules such as <strong>naproxen</strong> (an anti-inflammatory), <strong>gabapentin</strong> (used for nerve pain and seizures) and <strong>dextromethorphan</strong> (a cough suppressant). Across its portfolio, it ranks among the <strong>top two producers worldwide for a large share of its generic molecules</strong>. When a company makes 70%+ of the world's supply of a given API, it effectively sets the cost curve — and no rational competitor wants to build capacity to fight a low-cost incumbent for a shrinking margin.</p>
+
+  <div class="chart">
+    <div class="c-title">Illustrative global share in flagship generic molecules</div>
+    <div class="c-sub">Divi's is the low-cost world leader in several long-standing APIs (approximate ranges)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Naproxen<small>anti-inflammatory</small></div><div class="track"><span class="fill api" style="width:80%"></span></div><div class="bval">65–85%</div></div>
+      <div class="bar-row"><div class="blab">Gabapentin<small>nerve pain / seizures</small></div><div class="track"><span class="fill api" style="width:78%"></span></div><div class="bval">65–85%</div></div>
+      <div class="bar-row"><div class="blab">Dextromethorphan<small>cough suppressant</small></div><div class="track"><span class="fill api" style="width:75%"></span></div><div class="bval">65–85%</div></div>
+      <div class="bar-row"><div class="blab">Newer molecules<small>levodopa, pregabalin, mesalamine</small></div><div class="track"><span class="fill nutra" style="width:28%"></span></div><div class="bval">20–30% &amp; rising</div></div>
+    </div>
+  </div>
+
+  <h3>Backward integration is the real weapon</h3>
+  <p>The deepest part of the moat is <strong>backward integration</strong> — making your own inputs. A typical API needs several "intermediate" chemicals, plus basic starting materials, historically bought from China. Divi's has spent heavily to make more of these <em>itself</em>. That does three powerful things at once:</p>
+  <ul class="clean">
+    <li><strong>Lower cost.</strong> Every step you make in-house is a margin someone else isn't taking. Divi's raw-material cost as a share of sales has run well below the industry norm (reportedly ~39% vs a 50–65% industry range) precisely because it controls so much of its own chemistry.</li>
+    <li><strong>Supply security.</strong> If you don't depend on a Chinese supplier for a key intermediate, you can't be squeezed on price or cut off — a decisive advantage in the China+1 era (§06).</li>
+    <li><strong>Quality control.</strong> Owning the chemistry end-to-end makes it easier to hit the punishing purity and consistency standards that regulators and Big Pharma demand.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Anyone can, in theory, copy an off-patent recipe. What they can't easily copy is a plant that makes a molecule at world-leading scale, from its own cheaper inputs, at a purity that passes every regulator, for decades. Building that costs a fortune and years of know-how — and once Divi's is the low-cost leader at 70% share, a challenger would have to lose money for years just to dent it. That's the moat: not the recipe, but the <em>industrial machine</em> around it.</p>
+  </div>
+
+  <p>The generic-API engine isn't without pressure. Off-patent molecules face <strong>price erosion</strong> over time — buyers push for lower prices each year — so value growth can lag volume growth. Divi's answer is to keep <em>adding</em> molecules (targeting a bigger share of newer generics like levodopa, pregabalin and mesalamine, where it holds 20–30% today and wants 60–70%) and to keep driving cost down through integration. Volume, share and cost — that's the flywheel.</p>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Custom synthesis (CRAMS) — the trust engine</h2></div>
+  <p class="part-sub">Why "being the innovators' quiet supplier" is the stickiest business in pharma.</p>
+
+  <p class="lead">The second, now-larger engine is <strong>Custom Synthesis</strong> — also called <strong>CRAMS</strong> (Contract Research And Manufacturing Services). Here Divi's works for the <em>innovators</em>: the Big Pharma companies that discover and patent new drugs. It makes the advanced intermediates and, increasingly, the patented APIs those drugs need — built to the customer's exact specification, often under strict secrecy and long-term supply contracts.</p>
+
+  <h3>Why this relationship is so hard to break</h3>
+  <p>When a drug company launches a new medicine, it must tell regulators (like the US FDA) <em>exactly</em> where and how every ingredient is made. Once Divi's is written into that regulatory filing as the approved supplier of a key intermediate or API, switching to a different supplier means re-doing chemistry, re-validating, and re-filing with regulators — expensive, slow and risky. So the innovator has every reason to <strong>stick with the supplier that's already qualified</strong>. That's why CRAMS relationships, once won, tend to last a decade or more.</p>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Imagine you're a global drugmaker with a billion-dollar medicine. The one company that quietly makes a critical building-block of that drug, reliably, at scale, and has passed every inspection for ten years — you do <em>not</em> casually replace them. The cost of a supply failure or a quality scandal on your flagship product dwarfs any saving from switching. That inertia is Divi's moat in CRAMS: it's not a contract, it's a dependency.</p>
+  </div>
+
+  <p>Divi's counts a large chunk of the world's biggest drug companies among its long-standing custom-synthesis customers — reportedly <strong>around 12 of the top 20 global pharma companies</strong>, many as 10-year-plus relationships across the US, Europe and Japan. During COVID it manufactured the API for <strong>molnupiravir</strong> (an antiviral) for MSD at scale — a showcase of how quickly and reliably it can spin up custom production for an innovator.</p>
+
+  <h3>Why CRAMS is the better half of the business</h3>
+  <ul class="clean">
+    <li><strong>Higher value, stickier.</strong> Patented-molecule work is less commoditised than generic APIs — you're paid for chemistry skill and reliability, not just cost.</li>
+    <li><strong>Project-based upside.</strong> A single new molecule reaching commercial launch can add meaningful revenue for years; being on multiple such programmes stacks the pipeline.</li>
+    <li><strong>Insulated from generic price erosion.</strong> While patents hold, there's no army of copycats bidding the price down.</li>
+    <li><strong>A gateway to the biggest new drugs.</strong> As §07 shows, it's the CRAMS relationships that put Divi's on the inside track for the GLP-1 (weight-loss) wave.</li>
+  </ul>
+
+  <p>Custom Synthesis has grown into the larger engine — around <strong>55% of FY26 revenue</strong>, and the faster-growing one. That shift matters: it means Divi's revenue is tilting toward the higher-value, more defensible half of the business, which supports the premium the market pays for the stock.</p>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The China+1 tailwind</h2></div>
+  <p class="part-sub">The single biggest structural force blowing at Divi's back.</p>
+
+  <p class="lead">For two decades, the world's pharma supply chain leaned heavily on <strong>China</strong> for cheap APIs and intermediates. COVID, geopolitics and repeated supply scares taught global drugmakers and governments a hard lesson: relying on one country for the chemical building-blocks of medicine is dangerous. The response is <strong>"China+1"</strong> — deliberately adding a second, non-Chinese source for critical ingredients. For a top-tier Indian API maker like Divi's, this is a once-in-a-generation tailwind.</p>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>"China+1" simply means buyers no longer want all their eggs in the Chinese basket. They want at least one high-quality alternative supplier they can trust — ideally already backward-integrated, so it isn't secretly dependent on China itself. Divi's is close to the perfect answer: huge scale, world-class quality, deep backward integration, and a long track record with Western regulators and Big Pharma. When a global buyer draws up its "+1" shortlist, Divi's is on it.</p>
+  </div>
+
+  <p>Two things make Divi's an especially clean beneficiary:</p>
+  <ul class="clean">
+    <li><strong>It makes its own intermediates.</strong> A "China+1" supplier that quietly buys its intermediates from China defeats the purpose. Divi's multi-year, multi-billion-rupee backward-integration programme (reportedly ~$2.5bn of investment since 2018) means it can offer genuinely China-independent supply — exactly what nervous buyers want.</li>
+    <li><strong>It already sells to the West.</strong> Roughly three-quarters of revenue is Europe and the US, and it has passed those regions' inspections for years. There's no leap of faith required: the relationship and the regulatory approvals already exist.</li>
+  </ul>
+
+  <p>China+1 shows up in the numbers as steady share gains: Divi's targets rising share in newer generic molecules (from 20–30% toward 60–70%) and a swelling custom-synthesis pipeline as innovators de-risk their supply chains. Western policy moves that favour "friendly" sourcing of medicines and their ingredients — and periodic tariff/policy noise aimed at Chinese chemicals — only sharpen the incentive to shift volume to suppliers like Divi's. It's a slow, structural migration rather than an overnight windfall, but it's a multi-year current running the right way.</p>
+
+  <div class="note gold"><b>Nuance:</b> China+1 is a tailwind, not a guarantee. Chinese API makers are formidable and low-cost, and some buyers still prize price above resilience. The shift is real and durable, but it plays out over years and unevenly across molecules — it strengthens Divi's hand rather than handing it the market.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>GLP-1, contrast media &amp; Kakinada — the new engines</h2></div>
+  <p class="part-sub">Where the next decade of growth is being built.</p>
+
+  <p class="lead">Divi's core engines are mature and dominant. The exciting part of the story is the <strong>three new growth vectors</strong> it is investing heavily behind — and it raised FY26 capital spending to roughly <strong>₹2,000 Cr</strong> to fund them, tied to major new long-term supply commitments.</p>
+
+  <h3>1 · GLP-1 / peptides — the weight-loss wave</h3>
+  <p>The biggest drug story of the decade is <strong>GLP-1 medicines</strong> — the weight-loss and diabetes blockbusters (think of the Ozempic/Wegovy/Mounjaro class). These are not simple small molecules; they are <strong>peptides</strong> — chains of amino acids that are far more complex to manufacture. Demand for them is exploding, and the innovators need vast, reliable supply of the peptide building-blocks and intermediates.</p>
+  <p>Divi's is investing to build <strong>peptide capability</strong> and is deliberately positioning on the <em>innovator</em> side — working with the patent-holders on GLP-1, GIP and GLP-2 analogs (making GLP-1 fragments to customer specifications), rather than chasing the generic peptide scramble. If even a slice of the GLP-1 supply chain lands at Divi's through its CRAMS relationships, it's a large, multi-year, high-value opportunity. This is the single most important "call option" embedded in the stock.</p>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Weight-loss drugs are the hottest thing in pharma, and they're hard to make because they're peptides, not ordinary pills. Whoever can reliably produce the peptide building-blocks at scale gets to ride that wave. Divi's is spending now to be one of those trusted suppliers — leaning on the exact same "trusted CRAMS partner to Big Pharma" advantage that already defines it.</p>
+  </div>
+
+  <h3>2 · Contrast media — a big, sticky adjacency</h3>
+  <p><strong>Contrast media</strong> are the agents injected before CT and MRI scans to make images clearer. It's a large, growing market (roughly $4–6 billion globally, growing double-digits) historically dominated by a few players. Divi's has entered it, developing proprietary technology (including iodine-recycling to cut cost) and qualifying iodine-based and gadolinium-based molecules with major customers. Volumes here have grown 20–30% year-on-year, with more molecules moving from qualification toward commercialisation — a promising second new leg alongside peptides.</p>
+
+  <h3>3 · Kakinada (Unit-III) — the capacity to grow into</h3>
+  <p>All this growth needs plants. The <strong>Kakinada greenfield</strong> in Andhra Pradesh is Divi's third major campus — a large site (hundreds of acres) being built out in phases. Its job is partly to add <em>new</em> capacity for peptides, contrast media and custom-synthesis projects, and partly to deepen <strong>backward integration</strong> (making more intermediates in-house) and free up capacity at the existing Vizag and Choutuppal units. Well over ₹1,000 Cr has already gone into Kakinada, with more to come — this is the physical foundation for the next decade.</p>
+
+  <div class="mini-stats">
+    <div class="ms cram"><div class="msv">GLP-1</div><div class="msl">Peptide capability for the weight-loss / diabetes wave — on the innovator side</div></div>
+    <div class="ms"><div class="msv">$4–6bn</div><div class="msl">Global contrast-media market Divi's is scaling into (20–30% volume growth)</div></div>
+    <div class="ms gold"><div class="msv">~₹2,000 Cr</div><div class="msl">FY26 capex — funding Kakinada &amp; the new molecule programmes</div></div>
+  </div>
+
+  <p>The through-line: Divi's is converting its <em>existing</em> strengths — trusted supplier to Big Pharma, deep chemistry, backward integration, clean balance sheet — into <em>new</em> high-value markets. It isn't reinventing itself; it's pointing the same machine at the biggest new demand pools in pharma.</p>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Why a bulk-chemicals maker earns like this</h2></div>
+  <p class="part-sub">Best-in-class margins, zero debt, high returns — and the reasons behind each.</p>
+
+  <p class="lead">Here's the puzzle that surprises newcomers: Divi's makes <em>bulk chemicals</em>, yet it runs at a <strong>~33% EBITDA margin</strong>, carries essentially <strong>no debt</strong>, sits on a large cash pile, and earns a <strong>~22% return on capital</strong>. Most commodity businesses can only dream of those numbers. Why can an API maker be this profitable?</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <caption>The financial profile — and the reason for each</caption>
+      <thead><tr><th>What you see</th><th>FY26 level</th><th>Why it's there</th></tr></thead>
+      <tbody>
+        <tr><td class="t-strong">EBITDA margin</td><td class="num">~33%</td><td>Backward integration (cheap own inputs), dominant scale in key molecules, and a rising mix of higher-value custom synthesis</td></tr>
+        <tr><td class="t-strong">Net debt</td><td class="num">~nil</td><td>Growth funded from internal cash; borrowings of only ~₹7 Cr against ₹16,700+ Cr of reserves</td></tr>
+        <tr><td class="t-strong">Return on capital (ROCE)</td><td class="num">~22%</td><td>High margins on an efficiently used asset base — it earns a lot per rupee of plant</td></tr>
+        <tr><td class="t-strong">Return on equity (ROE)</td><td class="num">~16–17%</td><td>Held down partly <em>because</em> of the huge idle cash on the balance sheet</td></tr>
+        <tr><td class="t-strong">Dividend payout</td><td class="num">~31%</td><td>Comfortably self-funding growth and still returning cash (final dividend ₹30/share)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The margins come from three sources working together:</p>
+  <ul class="clean">
+    <li><strong>Backward integration.</strong> Because Divi's makes so many of its own intermediates, its raw-material cost is unusually low as a share of sales — the single biggest reason its margins tower over typical bulk-drug peers.</li>
+    <li><strong>Scale &amp; dominance.</strong> Being the world's low-cost leader in molecules at 65–85% share means it sets the cost curve and earns the incumbent's margin.</li>
+    <li><strong>Mix shift to CRAMS.</strong> As higher-value custom synthesis grows past half of revenue, the blended margin gets structurally stronger.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Divi's is debt-free not because it can't borrow, but because it never needed to — it funds its own expansion out of profits and still has cash left over. That cash cushion is a strategic weapon: it can build a Kakinada, invest through a downturn, and never be forced to sell or cut corners. The flip side is that all that idle cash drags the return-on-equity down a bit — a "problem" most companies would love to have.</p>
+  </div>
+
+  <p>One honest wrinkle in FY26: reported profit was flattered by <strong>forex gains</strong> (a ₹211 Cr benefit for the year, up from ₹48 Cr) because Divi's earns most of its money in dollars and euros. That's real cash, but it's a swing factor that can reverse — so it's worth separating the <em>operating</em> engine (steady, high-margin) from the <em>currency</em> tailwind (lumpy) when judging the year.</p>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">The numbers, and the price the market puts on them.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <caption>Consolidated results — FY25 vs FY26 (₹ crore)</caption>
+      <thead><tr><th>Metric</th><th class="num">FY25</th><th class="num">FY26</th><th class="num">Change</th></tr></thead>
+      <tbody>
+        <tr><td>Revenue from operations</td><td class="num">9,360</td><td class="num">10,560</td><td class="num">+13%</td></tr>
+        <tr><td>Total income (incl. other)</td><td class="num">9,712</td><td class="num">11,067</td><td class="num">+14%</td></tr>
+        <tr><td>Operating profit (EBITDA)</td><td class="num">2,973</td><td class="num">3,441</td><td class="num">+16%</td></tr>
+        <tr><td>Operating margin</td><td class="num">~32%</td><td class="num">~33%</td><td class="num">+~1pt</td></tr>
+        <tr><td>Profit before tax</td><td class="num">2,916</td><td class="num">3,388</td><td class="num">+16%</td></tr>
+        <tr><td class="t-strong">Net profit (PAT)</td><td class="num t-strong">2,191</td><td class="num t-strong">2,568</td><td class="num t-strong">+17%</td></tr>
+        <tr><td>EPS (₹)</td><td class="num">82.5</td><td class="num">96.75</td><td class="num">+17%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Revenue &amp; profit trajectory</div>
+    <div class="c-sub">Steady double-digit growth; ~11% revenue CAGR and ~9% profit CAGR over the last decade</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25 revenue</div><div class="track"><span class="fill brand" style="width:89%"></span></div><div class="bval">₹9,360 Cr</div></div>
+      <div class="bar-row"><div class="blab">FY26 revenue</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">₹10,560 Cr</div></div>
+      <div class="bar-row"><div class="blab">FY25 net profit</div><div class="track"><span class="fill gold" style="width:85%"></span></div><div class="bval">₹2,191 Cr</div></div>
+      <div class="bar-row"><div class="blab">FY26 net profit</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">₹2,568 Cr</div></div>
+    </div>
+  </div>
+
+  <p>The <strong>Q4 FY26</strong> quarter capped the year: revenue of about <strong>₹2,831 Cr (+10% YoY)</strong> and net profit of <strong>₹751 Cr (+13% YoY)</strong>, with a final dividend of <strong>₹30 per share</strong> declared. Exports were roughly <strong>89–90%</strong> of sales, with Europe and the US together about <strong>three-quarters</strong> of revenue.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <caption>Balance sheet &amp; market snapshot (approx., Jun 2026)</caption>
+      <thead><tr><th>Item</th><th class="num">Value</th></tr></thead>
+      <tbody>
+        <tr><td>Borrowings (debt)</td><td class="num">~₹7 Cr (negligible)</td></tr>
+        <tr><td>Reserves</td><td class="num">~₹16,700 Cr</td></tr>
+        <tr><td>ROCE / ROE</td><td class="num">~22% / ~16–17%</td></tr>
+        <tr><td>Dividend (final, FY26)</td><td class="num">₹30 / share</td></tr>
+        <tr><td>Promoter holding</td><td class="num">~51.9%</td></tr>
+        <tr><td>Market cap</td><td class="num">~₹1.75 lakh Cr</td></tr>
+        <tr><td>P/E (trailing)</td><td class="num">~65×</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The valuation question</h3>
+  <p>Divi's trades at a <strong>rich multiple</strong> — around 65 times trailing earnings, far above the market and most pharma peers. That premium is the market paying up for quality: a debt-free balance sheet, best-in-class margins, high returns, a defensible two-engine moat, and the optionality of GLP-1 and contrast media. The catch is that a lot of good news is <em>already in the price</em>. At 65× earnings, the growth has to keep compounding to justify the tag — any stumble (a slow year, a margin dip, an FDA problem) can de-rate the stock sharply. You are buying a wonderful business, but you are paying a wonderful-business price.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The risks</h2></div>
+  <p class="part-sub">What could go wrong — read this as carefully as the bull case.</p>
+
+  <p class="lead">Divi's is a high-quality business, but it carries a specific set of concentration and regulatory risks that come with being an API/CRAMS supplier. None is fatal on its own; together they explain why even a great company can have bad years.</p>
+
+  <ul class="clean">
+    <li><strong>Customer concentration (Big Pharma).</strong> The prized custom-synthesis revenue comes from a relatively small number of large innovator customers. That stickiness is a strength — but if a major customer's drug fails, its programme is cancelled, or it insources/dual-sources, a chunk of high-value revenue can wobble. Divi's is exposed to decisions made in a handful of boardrooms.</li>
+    <li><strong>Product / molecule concentration.</strong> A meaningful slice of profit comes from a limited set of molecules (both the dominant generics and a few big CRAMS projects). A single molecule going off-patent unfavourably, facing new competition, or losing a customer can move the numbers more than the size of the company suggests.</li>
+    <li><strong>USFDA &amp; regulatory compliance.</strong> Because ~three-quarters of sales go to the US and Europe, Divi's plants must stay in good standing with the FDA and European regulators. An adverse inspection (a warning letter or import alert) at a key unit could disrupt supply and dent revenue quickly. Divi's track record here has generally been strong — but it is an ever-present tail risk for any exporter of medicines.</li>
+    <li><strong>Price erosion in generics.</strong> The generic-API engine faces continuous pricing pressure; buyers push prices down every year, so value growth can lag volume growth even when volumes are healthy.</li>
+    <li><strong>Forex.</strong> Most revenue is in dollars and euros while costs are largely in rupees. A stronger rupee squeezes margins; reported profit also swings with forex gains/losses (a ₹211 Cr benefit in FY26 that could reverse).</li>
+    <li><strong>Premium valuation.</strong> At ~65× earnings, expectations are high. If growth disappoints even modestly, the multiple — not just the earnings — can compress, amplifying the downside.</li>
+    <li><strong>China competition.</strong> China+1 is a tailwind, but Chinese API makers are large and cost-competitive. If price wins out over resilience for enough buyers, the share-shift could be slower than bulls hope.</li>
+  </ul>
+
+  <div class="note"><b>The one-line risk:</b> Divi's earns premium margins from a concentrated set of customers and molecules, sells almost entirely into two heavily-regulated export markets, and trades at a premium price. It is high quality, but it is <em>not</em> diversified or cheap — so it can have a poor year, and the stock can fall further than the business does.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>Future, bull &amp; bear</h2></div>
+  <p class="part-sub">Weighing it all up.</p>
+
+  <p class="lead">Divi's is a rare thing: a bulk-chemicals business with the margins, balance sheet and returns of a branded compounder — because it has turned scale, backward integration and Big-Pharma trust into a genuine moat. The debate isn't about quality; it's about <em>price</em> and whether the new engines fire.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>▲ Bull case</h4>
+      <ul class="clean">
+        <li><strong>China+1 is a multi-year current</strong> pushing global API/intermediate volume toward exactly the kind of clean, backward-integrated supplier Divi's is.</li>
+        <li><strong>GLP-1 / peptides</strong> is a potentially huge new demand pool, and Divi's is positioning on the high-value innovator side using its existing CRAMS trust.</li>
+        <li><strong>Custom synthesis is now 55%</strong> of revenue and growing — tilting the mix toward the stickier, higher-value engine.</li>
+        <li><strong>Fortress balance sheet:</strong> ~zero debt, big cash, ~22% ROCE — it can invest through any cycle without stress.</li>
+        <li><strong>Contrast media &amp; Kakinada</strong> add fresh capacity and new markets for the next decade of growth.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>▼ Bear case</h4>
+      <ul class="clean">
+        <li><strong>~65× earnings</strong> leaves little margin for error — any wobble can de-rate the stock hard.</li>
+        <li><strong>Concentration:</strong> a handful of customers and molecules drive an outsized share of high-value profit.</li>
+        <li><strong>USFDA / regulatory tail risk:</strong> one bad inspection at a key unit could disrupt supply and sentiment.</li>
+        <li><strong>Generic price erosion</strong> keeps grinding at nearly half the business.</li>
+        <li><strong>Forex and GLP-1 uncertainty:</strong> FY26 profit was helped by ₹211 Cr of forex gains, and the peptide opportunity is a promise, not yet a proven revenue line.</li>
+      </ul>
+    </div>
+  </div>
+
+  <blockquote>Divi's sells the shovels of the pharma gold rush — and it's the low-cost, debt-free, trusted supplier that global drugmakers keep coming back to. The business is close to best-in-class; the only real question is what you pay for it.</blockquote>
+
+  <p>The honest summary: Divi's is one of the highest-quality businesses in Indian pharma — a debt-free, high-return, moated API and custom-synthesis leader riding two powerful tailwinds (China+1 and GLP-1). The risks are concentration, regulation and, above all, a premium valuation that already assumes a lot goes right. For a long-term owner it is a classic "quality compounder"; the discipline required is on <em>price</em>, not on the business.</p>
+</section>
+
+<footer class="src">
+  <ol>
+    <li>Divi's Laboratories — Q4 &amp; FY26 results coverage, groww.in / InvestyWise / lemonn.co.in (revenue ₹10,560 Cr, PAT ₹2,568 Cr, PBT ₹3,388 Cr, EPS ₹96.75, final dividend ₹30/share, Q4 rev ₹2,831 Cr / PAT ₹751 Cr).</li>
+    <li>scanx.trade — "Divi's FY26 net profit rises 17% to ₹2,568 crore"; forex gain ₹211 Cr; exports ~89%.</li>
+    <li>Screener.in — Divi's Laboratories consolidated financials (sales ₹10,560 Cr, OPM ~33%, ROCE ~22%, ROE ~16.5%, borrowings ₹7 Cr, reserves ₹16,708 Cr, payout 31%, promoter 51.88%, FII 20.29%, DII 19.13%, market cap ₹1.75L Cr, P/E ~66).</li>
+    <li>Divi's Q2 FY26 earnings transcript / scanx.trade — mix 44% generics / 56% custom synthesis; exports 90%, Europe+US ~74%; nutraceuticals ₹242 Cr in quarter.</li>
+    <li>Company FY26 press release / concall — full-year mix 45% generics : 55% custom synthesis; nutraceuticals ~₹946 Cr.</li>
+    <li>Trendlyne — "Divi's is doubling down on its generic API play" (65–85% share in naproxen/gabapentin/dextromethorphan; top-2 globally in ~18 of 30 molecules; ~$2.5bn backward-integration investment since 2018; contrast media $4–6bn; ~12 of top-20 pharma as long-term CRAMS customers; molnupiravir for MSD).</li>
+    <li>Informist Media / Prabhudas Liladhar concall notes — FY26 capex raised to ~₹2,000 Cr; GLP-1/GIP/GLP-2 peptide focus on innovator side; contrast-media volume +20–30% YoY; Kakinada (Unit-III) phased build-out.</li>
+    <li>Wikipedia — Divi's Laboratories: founded 1990 (Divi's Research Centre), renamed 1994, IPO Feb 2003; MD Murali Krishna Prasad Divi, CEO Kiran Divi, director Nilima Motaparti; units at Choutuppal, Chippada/DSN (Vizag), Kakinada.</li>
+    <li>Forbes / company leadership pages — founder Dr. Murali Divi background; family ownership structure.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer for a non-specialist reader. It is <strong>not investment advice</strong> and not a recommendation to buy or sell any security. Figures are approximate, drawn from public sources as of July 2026, may be rounded or subsequently revised, and should be independently verified against Divi's Laboratories' filings, results and concall transcripts before any decision. Segment splits, market shares and capex figures are management/analyst estimates and vary by quarter. Auto-generated · figures self-verified against public sources · not investment advice.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  const REFRESH_ENDPOINT = "";
+  const COMPANY_SYMBOL = "DIVISLAB";
+  function requestRefresh(){
+    var btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      btn.classList.add('spinning');
+      setTimeout(function(){ btn.classList.remove('spinning'); alert('Live updates coming soon.'); }, 600);
+      return;
+    }
+  }
+</script>
+</body>
+</html>
