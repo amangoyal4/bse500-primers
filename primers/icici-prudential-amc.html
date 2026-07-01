@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICICI Prudential AMC — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4F1;
+    --paper-2:#FCFAF7;
+    --card:#FFFFFF;
+    --ink:#241A12;
+    --ink-soft:#5E5346;
+    --ink-faint:#948A7C;
+    --brand:#B3541E;          /* ICICI burnt orange */
+    --brand-bright:#D96A28;   /* brighter saffron-orange */
+    --gold:#C8912B;           /* warm gold accent */
+    --gold-deep:#96660F;
+    --equity:#B3541E;         /* equity - the hero asset class */
+    --debt:#4F6D8C;           /* debt - steel blue */
+    --liquid:#6C8A7A;         /* liquid - muted green */
+    --passive:#8A7CA8;        /* passive - violet */
+    --line:#E4DED6;
+    --line-soft:#EDE8E1;
+    --good:#2F7D52;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#FBEDE3;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .provenance{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF0E4;border:1px solid #EFD6B7;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#4a3512;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#FAF7F3;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EEE9E2;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#B3541E,#D96A28);}
+  .fill.gold{background:linear-gradient(90deg,#C8912B,#DFAF4B);}
+  .fill.equity{background:linear-gradient(90deg,#B3541E,#D96A28);}
+  .fill.debt{background:linear-gradient(90deg,#4F6D8C,#6C8BAB);}
+  .fill.liquid{background:linear-gradient(90deg,#6C8A7A,#87A695);}
+  .fill.passive{background:linear-gradient(90deg,#8A7CA8,#A596C0);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#4a3f34,#6E6151);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.n1{background:var(--debt);}
+  .node.n2{background:var(--liquid);}
+  .node.n3{background:var(--brand);}
+  .node.n4{background:var(--gold-deep);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold-deep);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF0E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#FBEDE3;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> How an AMC earns money</a></li>
+    <li><a href="#p2"><span class="n">02</span> Yield on AUM &amp; the mix</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The AUM &amp; market share</a></li>
+    <li><a href="#p5"><span class="n">05</span> The SIP &amp; financialisation engine</a></li>
+    <li><a href="#p6"><span class="n">06</span> Distribution &amp; the ICICI moat</a></li>
+    <li><a href="#p7"><span class="n">07</span> Market-linked earnings</a></li>
+    <li><a href="#p8"><span class="n">08</span> TER regulation &amp; the fee war</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> Industry &amp; rivals</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: ICICIAMC · BSE: 544658</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>ICICI Prudential AMC, <em>the annuity on India's savings</em></h1>
+  <p class="dek">A complete walk through India's largest active mutual-fund manager — a freshly-listed, capital-light, ~85%-return-on-equity machine that earns a tiny fee on a giant, growing pile of other people's money. How an AMC actually makes money (the "yield on AUM" measured in basis points), why the equity share of its ₹11 lakh crore book is what really drives profit, how India's once-in-a-generation shift of household savings into SIPs feeds it, the ICICI Bank distribution reach, and why SEBI's power to cut fees is the permanent cloud over the whole model.</p>
+
+  <div class="provenance">Auto-generated · figures self-verified against public sources · not investment advice</div>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹11.05 <small>lakh Cr</small></div><div class="l">Mutual-fund QAAUM (Q4 FY26)</div></div>
+    <div class="cell"><div class="v">13.5<small>%</small></div><div class="l">Industry AUM share (No. 2)</div></div>
+    <div class="cell"><div class="v">₹3,298 <small>Cr</small></div><div class="l">Net profit (FY26, +24%)</div></div>
+    <div class="cell"><div class="v">~85<small>%</small></div><div class="l">Return on equity (FY26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">1 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>Q4 &amp; FY26 results incorporated — QAAUM ₹11.05 lakh Cr (+25.6%), revenue ₹5,765 Cr, PAT ₹3,298 Cr (+24%), operating margin 37.6 bps, monthly SIP ₹5,104 Cr; added the yield-on-AUM, financialisation, ICICI-distribution and SEBI-TER sections after the Dec-2025 IPO.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">ICICI Prudential Asset Management Company is <strong>India's largest active mutual-fund manager</strong> and the second-largest overall — a joint venture between <strong>ICICI Bank</strong> (India's biggest private bank) and Britain's <strong>Prudential plc</strong>. It runs about <strong>₹11.05 lakh crore of mutual-fund assets</strong> (roughly ₹11 trillion, or ~US$130 billion) on behalf of <strong>17 million investors</strong>, and takes a small annual fee on all of it. In December 2025 it listed on the exchanges after a ₹10,603 crore IPO — one of the biggest of the year — but not a rupee of that went to the company: the entire offer was Prudential plc <em>selling down</em> its own stake.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is a capital-light annuity on a mountain of money.</strong> An AMC needs almost no physical assets — no factories, no branches of its own, barely any debt. It manages money and skims a fee. That is why ICICI Pru earns a scarcely-believable <strong>~85% return on equity</strong> and converts most of its profit to cash. FY26 revenue was <strong>₹5,765 Cr</strong> and net profit <strong>₹3,298 Cr (+24%)</strong> — a ~57% net margin.</li>
+    <li><strong>Equity is where the money is made.</strong> The fee ICICI Pru can charge varies wildly by product: about <strong>67 basis points</strong> on an equity fund but only <strong>~12 bps</strong> on a liquid (cash) fund. Because <strong>~59% of its book is equity/hybrid</strong> — the highest-margin bucket — its blended "yield on AUM" and profitability sit at the premium end of the industry. It holds the <strong>No. 1 share (14.2%) of India's equity mutual-fund market</strong>.</li>
+    <li><strong>The tailwind is India's savings revolution.</strong> Households are moving money out of bank deposits and gold into mutual funds, mostly through automatic monthly <strong>SIPs</strong>. ICICI Pru now collects <strong>~₹5,104 Cr of SIP flows every month (+31%)</strong> — a recurring, sticky river of inflows that grows the fee base whether or not markets rise. But the same regulator (SEBI) that oversees this boom can also <em>cut the fees</em> — and that is the model's one durable risk.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of ICICI Pru AMC as a <strong>toll booth on India's savings highway</strong>. It doesn't own the cars (the money belongs to investors) and it doesn't build the road (the markets go up and down on their own). It simply charges a tiny toll — well under 1% a year — on every rupee that passes through its funds. Because the volume of traffic is enormous and growing fast (₹11 lakh crore and climbing), and because the toll is collected on a pile that mostly sits in high-margin equity funds, a handful of fund managers and a lean back office throw off extraordinary profit and almost no capital is tied up. The two things that can go wrong: the markets fall (shrinking the pile the toll is charged on), or the government lowers the toll (SEBI cutting expense ratios). Everything else in this primer is a variation on those two forces.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>How an asset manager actually earns money</h2></div>
+  <p class="part-sub">No finance degree required — just the one equation that runs the whole business.</p>
+
+  <p class="lead">An AMC is one of the purest business models in the market: it is paid a <strong>percentage fee on the assets it manages</strong>, charged continuously, day after day, for as long as the money stays invested. There is no product to manufacture, no inventory, no receivables to chase. The entire company can be summarised in a single line.</p>
+
+  <blockquote>Revenue ≈ Average Assets Under Management × the fee rate (the "yield on AUM").</blockquote>
+
+  <p>So there are only two ways to grow revenue: <strong>manage more money</strong> (grow AUM) or <strong>earn a higher fee on it</strong> (lift the yield, mainly by holding more equity). Everything an AMC does — launching funds, delivering good returns, expanding distribution, marketing SIPs — is ultimately in service of those two levers.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only units you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and ICICI Pru's number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">AUM</td><td>"Assets Under Management" — the total pool of investor money in the funds. ICICI Pru's mutual-fund <strong>QAAUM was ₹11.05 lakh Cr</strong> (quarterly-average AUM, Q4 FY26), up ~26% in a year.</td></tr>
+      <tr><td class="t-strong">Yield on AUM</td><td>The fee earned per year as a fraction of AUM, quoted in <strong>basis points</strong> (1 bp = 0.01%). ICICI Pru's <strong>net operating revenue yield was ~48.3 bps</strong> in FY26 — i.e. it kept about ₹0.48 for every ₹100 it managed.</td></tr>
+      <tr><td class="t-strong">Operating margin</td><td>Profit left after running costs, also in bps. ICICI Pru earned <strong>~37.6 bps of AUM as operating profit</strong> (up from 35.9), because its costs run at only <strong>~10.6 bps</strong>. This is the operating leverage.</td></tr>
+      <tr><td class="t-strong">Net flows / SIPs</td><td>New money coming in minus money leaving. Positive flows grow AUM without markets having to rise. ICICI Pru pulls in <strong>~₹5,104 Cr of SIPs a month</strong>.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why this is such a beautiful business model</div>
+    <p>Three features make asset management structurally attractive. <strong>(1) It is capital-light.</strong> The AMC manages investors' money, not its own — so it needs very little balance sheet, which is why ROE can be ~85% (profit divided by a tiny equity base). <strong>(2) It has operating leverage.</strong> A fund manager who runs ₹5,000 Cr costs about the same as one who runs ₹50,000 Cr, so once AUM crosses a scale threshold, almost every extra rupee of fee drops to profit. <strong>(3) The fee is recurring and sticky.</strong> Money in a fund doesn't have to be re-sold every year; it stays and keeps paying the fee, and SIP money often stays for years. Add it up and you get a high-margin, high-return, low-capital annuity — as long as AUM keeps growing and the fee isn't cut.</p>
+  </div>
+
+  <h3>Where the costs go</h3>
+  <p>ICICI Pru's expense base is small and mostly people. The big buckets are <strong>employee costs</strong> (fund managers, analysts, sales), <strong>fees paid to distributors</strong> (banks and advisers who bring in the money), and administration/technology. Because these are largely fixed, the gap between the ~48 bps it earns and the ~10.6 bps it spends is what makes the model print money. The single most important cost dynamic to watch is <strong>distribution commissions</strong> — the slice paid away to whoever sold the fund.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>Yield on AUM and the all-important asset mix</h2></div>
+  <p class="part-sub">The single idea that separates a great AMC from an average one.</p>
+
+  <p class="lead">Not all AUM is equal. An equity fund can charge many times more than a cash fund for managing the same rupee, because equity investing requires more skill, carries more risk, and investors will pay for it. So a manager's <strong>profitability is dictated less by how <em>much</em> money it runs than by <em>what kind</em> of money it runs.</strong> This is the master key to understanding why ICICI Pru is more profitable than a debt-heavy rival of similar size.</p>
+
+  <div class="chart">
+    <div class="c-title">The fee ladder — margin by asset class (FY26)</div>
+    <div class="c-sub">Approx. revenue yield ICICI Pru earns per year, in basis points of AUM</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Equity funds<small>the profit engine</small></div><div class="track"><span class="fill equity" style="width:100%"></span></div><div class="bval">~67 bps</div></div>
+      <div class="bar-row"><div class="blab">Debt funds<small>bonds &amp; income</small></div><div class="track"><span class="fill debt" style="width:48%"></span></div><div class="bval">~32 bps</div></div>
+      <div class="bar-row"><div class="blab">Arbitrage<small>low-risk hybrid</small></div><div class="track"><span class="fill liquid" style="width:45%"></span></div><div class="bval">~30 bps</div></div>
+      <div class="bar-row"><div class="blab">Liquid funds<small>parked cash</small></div><div class="track"><span class="fill liquid" style="width:18%"></span></div><div class="bval">~12 bps</div></div>
+      <div class="bar-row"><div class="blab">Passive / index<small>ETFs, index funds</small></div><div class="track"><span class="fill passive" style="width:15%"></span></div><div class="bval">~10 bps</div></div>
+    </div>
+    <div class="legend"><span>An equity rupee earns roughly <b>6–7×</b> what a passive or liquid rupee earns. This is why the equity share of the book is the number that really matters.</span></div>
+  </div>
+
+  <p>Now look at how ICICI Pru's ₹11 lakh crore is actually split. It is <strong>tilted decisively toward the high-margin end</strong>: roughly <strong>59% equity and equity-oriented (including hybrid), ~14% debt, ~10% liquid and ~13% passive/ETF</strong>. Crucially, ICICI Pru is the <strong>No. 1 player in equity</strong> — its ₹6.2 lakh crore equity book is the largest of any AMC, giving it a 14.2% share of India's equity mutual-fund market and a commanding 26.7% share of equity-oriented hybrid funds.</p>
+
+  <div class="chart">
+    <div class="c-title">ICICI Pru's AUM mix (Q4 FY26, approx.)</div>
+    <div class="c-sub">The book is weighted toward the high-fee, high-margin buckets</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Equity &amp; equity-hybrid<small>₹8.4 lakh Cr · ~67 bps</small></div><div class="track"><span class="fill equity" style="width:100%"></span></div><div class="bval">~59%</div></div>
+      <div class="bar-row"><div class="blab">Debt<small>₹2.0 lakh Cr · ~32 bps</small></div><div class="track"><span class="fill debt" style="width:24%"></span></div><div class="bval">~14%</div></div>
+      <div class="bar-row"><div class="blab">Passive / ETF<small>₹1.8 lakh Cr · ~10 bps</small></div><div class="track"><span class="fill passive" style="width:22%"></span></div><div class="bval">~13%</div></div>
+      <div class="bar-row"><div class="blab">Liquid<small>parked cash · ~12 bps</small></div><div class="track"><span class="fill liquid" style="width:17%"></span></div><div class="bval">~10%</div></div>
+    </div>
+    <div class="legend"><span>Shares approximate; equity/hybrid drives the bulk of revenue despite being ~59% of assets, because its fee is several times higher.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the mix cuts both ways</div>
+    <p>The heavy equity tilt is ICICI Pru's superpower <em>and</em> its vulnerability. On the way up, it is pure leverage: rising equity markets swell the highest-fee bucket, so revenue climbs faster than the overall market, and SIP inflows pile fresh equity money on top. On the way down, the same wiring works in reverse — a falling market shrinks precisely the assets that earn the most, so profits fall faster than a debt-heavy rival's would. A second, slower threat is <strong>the drift to passive</strong>: index funds and ETFs charge almost nothing (~10 bps), so as Indian investors gradually adopt them, the industry's blended yield grinds lower. ICICI Pru's answer is to keep winning share in the active-equity segment where its brand and track record command a premium fee — but the passive shift is a structural headwind the whole industry must run against.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A 27-year-old joint venture between an Indian bank and a British insurer — newly public.</p>
+
+  <p class="lead">ICICI Prudential AMC is a <strong>joint venture formed in 1998</strong> between <strong>ICICI Bank</strong> and the UK's <strong>Prudential plc</strong> (via Prudential Corporation Holdings). It built the country's most trusted active-fund franchise over nearly three decades, and finally came to market in December 2025 — though in an unusual way that every investor should understand.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1998</div><div class="ev">ICICI Bank and Prudential plc form the asset-management joint venture — one of the first modern AMCs of India's mutual-fund era.</div></li>
+    <li><div class="yr">2000s–2010s</div><div class="ev">Builds scale and a reputation for <strong>process-driven, valuation-conscious investing</strong>; grows into one of the two or three largest fund houses in the country.</div></li>
+    <li><div class="yr">2018</div><div class="ev">A first attempt at an IPO is shelved; the company stays private and keeps compounding AUM through the SIP boom.</div></li>
+    <li class="major"><div class="yr">Dec 2025</div><div class="ev"><strong>IPO &amp; listing.</strong> A ₹10,603 Cr issue — the year's largest — priced at ₹2,165; lists on NSE &amp; BSE on 19 Dec 2025 at ₹2,600, a ~20% premium. The offer is <strong>100% an Offer for Sale by Prudential plc</strong> — no fresh capital to the company.</div></li>
+    <li><div class="yr">FY26</div><div class="ev">First full year as a public company: QAAUM ₹11.05 lakh Cr, PAT ₹3,298 Cr (+24%), monthly SIPs ₹5,104 Cr; declares ₹65.8/share of dividend.</div></li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Read this: it was an OFS, not a fundraise</div>
+    <p>The entire ₹10,603 crore IPO was an <strong>"Offer for Sale" — Prudential plc selling part of its own shareholding to the public.</strong> The company itself raised <em>zero</em> new money; it doesn't need any (it's already flush with cash and requires almost no capital to grow). So the listing was really about the British parent <strong>monetising its stake and creating a market price</strong>, not about funding expansion. Pre-IPO, ICICI Bank held ~51% and Prudential ~49%; after the sell-down, promoters together still control the great majority (~87.6%), with ICICI Bank remaining the largest single shareholder. The key takeaways: (1) don't expect the IPO cash to fuel growth — there was none; (2) watch for <strong>further stake sales</strong> by Prudential over time, which can weigh on the share price; and (3) the ICICI Bank relationship — brand, distribution, trust — is the strategic asset that endures.</p>
+  </div>
+
+  <h3>Ownership at a glance (post-IPO, ~Mar 2026)</h3>
+  <ul class="clean">
+    <li><strong>Promoters ~87.6%</strong> — ICICI Bank (the larger holder) plus Prudential plc. A blue-chip Indian bank and a global insurer behind the wheel.</li>
+    <li><strong>Domestic institutions ~7.2%, foreign institutions ~2.4%, public ~2.8%</strong> — the free float is still small, which can amplify share-price moves.</li>
+    <li><strong>Balance sheet:</strong> debt-free, cash-rich, capital-light — it funds itself and returns almost all profit as dividends (payout ~150%+, drawing down accumulated reserves).</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The AUM base and market-share position</h2></div>
+  <p class="part-sub">Second-biggest overall, and first in the segment that pays best.</p>
+
+  <p class="lead">In asset management, scale <em>is</em> the moat: bigger AUM means more fee revenue over a fixed cost base, more distributor reach, and a self-reinforcing brand that pulls in yet more money. ICICI Pru sits right at the top of the Indian league table — <strong>second by total assets, first in equity</strong> — and it is that equity leadership, not raw size, that makes it the most valuable AMC to own.</p>
+
+  <div class="chart">
+    <div class="c-title">India's largest fund houses by AUM</div>
+    <div class="c-sub">Approx. assets under management (₹ lakh Cr) — ICICI Pru is a clear No. 2</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">SBI Mutual Fund<small>No. 1 · PSU-bank backed</small></div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~12.8</div></div>
+      <div class="bar-row"><div class="blab">ICICI Prudential<small>No. 2 · No. 1 in equity</small></div><div class="track"><span class="fill brand" style="width:86%"></span></div><div class="bval">~11.1</div></div>
+      <div class="bar-row"><div class="blab">HDFC AMC<small>No. 3 · listed</small></div><div class="track"><span class="fill gold" style="width:65%"></span></div><div class="bval">~8.3</div></div>
+      <div class="bar-row"><div class="blab">Nippon India<small>No. 4 · listed</small></div><div class="track"><span class="fill debt" style="width:56%"></span></div><div class="bval">~7.2</div></div>
+    </div>
+    <div class="legend"><span>Figures are approximate (late-2025 / FY26). SBI MF leads on total assets, but ICICI Pru leads the higher-margin equity segment.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>ICICI Pru's market-share scorecard (Q4 FY26)</caption>
+    <thead><tr><th>Segment</th><th>AUM (approx.)</th><th class="num">Market share</th><th>Rank</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Overall mutual fund</td><td>₹11.05 lakh Cr</td><td class="num">~13.5%</td><td>No. 2</td></tr>
+      <tr><td class="t-strong">Active schemes</td><td>₹9.21 lakh Cr</td><td class="num">~13.7%</td><td>No. 1 / 2</td></tr>
+      <tr><td class="t-strong">Equity &amp; equity-oriented</td><td>₹6.20 lakh Cr</td><td class="num">~14.2%</td><td><strong>No. 1</strong></td></tr>
+      <tr><td class="t-strong">Equity-oriented hybrid</td><td>₹2.18 lakh Cr</td><td class="num">~26.7%</td><td><strong>No. 1</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note gold"><b>Beyond mutual funds:</b> ICICI Pru also runs an <em>alternates</em> business — PMS (portfolio management, ~₹27,000 Cr), AIFs (alternative investment funds, ~₹17,000 Cr) and advisory (~₹29,000 Cr) — plus new "specialised investment funds" (SIFs). These are smaller today but carry higher fees (PMS/AIF gross yield ~2%) and diversify the franchise beyond plain-vanilla funds. The April-2026 transfer of ICICI Venture's ~₹4,628 Cr AIF book adds to this leg.</div>
+</section>
+
+<!-- 05 — BESPOKE: the structural tailwind -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The SIP &amp; financialisation engine</h2></div>
+  <p class="part-sub">The once-in-a-generation force that feeds every Indian AMC — and why it's the whole bull case.</p>
+
+  <p class="lead">The single biggest reason to own an Indian AMC has nothing to do with any one fund's returns. It is a <strong>structural, decade-long shift in where Indians put their savings</strong> — out of bank deposits, gold and property, and into financial assets, above all equity mutual funds bought through automatic monthly <strong>SIPs</strong>. This "financialisation of savings" is the tide lifting the entire industry, and ICICI Pru is one of the biggest boats on it.</p>
+
+  <h3>The numbers that tell the story</h3>
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">₹81.6 <span style="font-size:16px">lakh Cr</span></div><div class="msl">Total industry AUM (May 2026) — up ~6× in a decade</div></div>
+    <div class="ms gold"><div class="msv">~₹31,000 <span style="font-size:16px">Cr</span></div><div class="msl">Industry SIP inflows — <em>every single month</em></div></div>
+    <div class="ms green"><div class="msv">~21%</div><div class="msl">MF AUM as % of India's GDP — up from ~7% a decade ago, still low vs the West</div></div>
+  </div>
+
+  <p>Three linked shifts drive it. First, a generation of Indians is discovering equity investing for the first time, helped by smartphones, digital KYC and fintech apps that make starting an SIP a two-minute job. Second, the share of household savings going into equity has jumped from about <strong>2% (FY12) to more than 15% (FY25)</strong>, while the share sitting in bank deposits has fallen from ~58% to ~35%. Third, mutual-fund penetration — AUM as a share of GDP — is still only ~21% in India versus 100%+ in developed markets, so the runway is long.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the SIP is the magic ingredient</div>
+    <p>A <strong>Systematic Investment Plan</strong> is an instruction to invest a fixed sum (say ₹5,000) into a fund automatically every month. For the AMC this is transformative, because it turns lumpy, sentiment-driven investing into a <strong>predictable, recurring, sticky river of inflows</strong> that keeps coming even when markets fall — which is exactly when new investors are most tempted to stop, and exactly when continued buying pays off most. ICICI Pru now gathers <strong>~₹5,104 crore of SIP flows a month, up ~31% year-on-year</strong>. That flow grows the fee-earning AUM independently of market direction, smooths earnings, and — because SIP investors tend to stay for years — builds a long-duration, low-churn asset base. The industry's SIP book is now ~₹16.85 lakh crore, over a fifth of all mutual-fund assets. For an AMC, a rising SIP book is the closest thing to a subscription business.</p>
+  </div>
+
+  <div class="note gold"><b>The honest caveat:</b> SIP flows are resilient but <em>not</em> unbreakable. In a prolonged bear market, SIP "stoppage ratios" rise as some investors pause or cancel, and monthly flows can plateau (as they did briefly in mid-2026). The structural story is intact for years, but it doesn't make ICICI Pru's earnings immune to a bad market — it just cushions them.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Distribution and the ICICI relationship</h2></div>
+  <p class="part-sub">Manufacturing funds is only half the job — someone has to sell them.</p>
+
+  <p class="lead">An AMC "manufactures" funds, but it needs a <strong>distribution army</strong> to place them with millions of investors. How money reaches an AMC — and how much it must pay away to whoever sold the fund — shapes both its growth and its margins. ICICI Pru's channel mix is unusually <strong>balanced</strong>, and its link to ICICI Bank is a genuine, if measured, advantage.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">How money reaches ICICI Pru's equity funds — the distribution channels</div>
+    <div class="flow-row">
+      <div class="node n1"><div class="ntag">~29% · self-serve</div><div class="nname">Direct</div><div class="nwho">Investors who buy directly (apps, website). No commission paid — best margin.</div></div>
+      <div class="arrow">+</div>
+      <div class="node n2"><div class="ntag">~37% · advisers</div><div class="nname">MFDs</div><div class="nwho">Mutual-fund distributors — the vast network of independent advisers.</div></div>
+      <div class="arrow">+</div>
+      <div class="node n3"><div class="ntag">~16% · large firms</div><div class="nname">National distributors</div><div class="nwho">Big broking / wealth platforms placing funds at scale.</div></div>
+      <div class="arrow">+</div>
+      <div class="node n4"><div class="ntag">~11% · banks</div><div class="nname">Banks (incl. ICICI ~8%)</div><div class="nwho">Bank branches selling funds — ICICI Bank is the anchor.</div></div>
+    </div>
+    <div class="flow-note">Equity-scheme distribution mix, FY26 (approx.). A diversified base — no single channel dominates, which reduces dependence on any one partner.</div>
+  </div>
+
+  <h3>The ICICI Bank angle — real, but not the whole story</h3>
+  <ul class="clean">
+    <li><strong>Brand &amp; trust.</strong> The "ICICI" name carries enormous credibility with Indian savers; a fund badged ICICI Prudential starts every conversation with trust already in the bank. That is worth more than any single sales channel.</li>
+    <li><strong>Bank distribution.</strong> ICICI Bank's branches and relationship managers actively sell the funds — the bank channel is ~11% of equity inflows, of which ICICI Bank itself is ~8%. Meaningful, but deliberately <em>not</em> a crutch: the bulk of money comes through independent advisers and direct.</li>
+    <li><strong>A healthy contrast with pure bancassurance.</strong> Unlike a life insurer that leans overwhelmingly on one bank's counters, ICICI Pru's spread across direct, MFDs, national distributors and banks makes it <strong>less hostage to any single distributor's economics</strong> — an underrated strength.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Direct vs regular — the margin dial</div>
+    <p>Every fund comes in two flavours: a <strong>"regular" plan</strong> sold through a distributor (who is paid a commission out of the fee), and a <strong>"direct" plan</strong> bought by the investor with no middleman (and so no commission). The more money that comes <strong>direct</strong>, the less the AMC pays away, and the more of the fee it keeps. As Indian investors grow more confident and go direct through apps, this quietly improves AMC economics — a slow tailwind for net yields that partly offsets the fee pressure elsewhere. Roughly 29% of ICICI Pru's equity money is already direct.</p>
+  </div>
+</section>
+
+<!-- 07 — BESPOKE: market-linked earnings sensitivity -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Market-linked earnings: the built-in leverage</h2></div>
+  <p class="part-sub">Why an AMC's profits are a geared bet on the stock market — for better and worse.</p>
+
+  <p class="lead">Here is the feature that most distinguishes an AMC from a bank or an insurer: because revenue is a <strong>percentage of equity-heavy AUM</strong>, and because AUM moves with the market, an AMC's earnings are <strong>directly geared to the level of the stock market</strong>. When the Sensex rises, ICICI Pru's fee base inflates automatically — no extra effort required. When it falls, the fee base deflates just as automatically. This is the double-edged sword baked into the model.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Two forces move AUM every quarter</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Effect on ICICI Pru</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Net flows (SIPs + lumpsum)</td><td>New money in minus money out — the part the company can grow through effort.</td><td>Positive and sticky (~₹5,104 Cr SIPs/month). Grows AUM regardless of market direction — the stabiliser.</td></tr>
+      <tr><td class="t-strong">Mark-to-market (market moves)</td><td>The rise or fall in the value of assets already invested — outside anyone's control.</td><td>The amplifier. A bull market swells the high-fee equity book; a correction shrinks it fastest.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The mechanism, made concrete</div>
+    <p>Suppose ICICI Pru manages ₹11 lakh crore, ~59% in equity. If Indian equities fall 20% in a downturn, roughly ₹1.3 lakh crore of value can evaporate from the <em>highest-fee</em> bucket — even before any investor sells a unit — and the fee ICICI Pru earns falls in lock-step. Because its costs are largely fixed, that revenue hit lands almost entirely on profit. In reverse, a strong bull run does the opposite: AUM and fees balloon, costs barely move, and profit surges. This is why AMC shares are <strong>high-beta plays on the market</strong> — they tend to rise more than the index in good years and fall more in bad ones. You even saw a mild version of it in Q4 FY26, when <strong>mark-to-market losses on the company's own investments dented reported "other income"</strong> and quarterly profit growth despite strong operating results.</p>
+  </div>
+
+  <div class="note"><b>What to hold in mind:</b> when you buy an AMC, you are partly buying a leveraged, fee-collecting position on Indian equities. The SIP flow provides a floor and the compounding of AUM provides the long-term climb, but do not expect the share price to be calm when markets are volatile — the earnings simply aren't, by design.</div>
+</section>
+
+<!-- 08 — BESPOKE: TER regulation, the permanent cloud -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>SEBI, expense ratios &amp; the fee war</h2></div>
+  <p class="part-sub">The regulator holds the dial on the AMC's revenue line — this is the model's defining risk.</p>
+
+  <p class="lead">Everything above depends on one number the AMC does <strong>not</strong> fully control: the fee it is <em>allowed</em> to charge. India's market regulator, <strong>SEBI</strong>, caps the "Total Expense Ratio" (TER) that a fund may levy — and it has a long, consistent history of pushing those caps <em>down</em> to protect investors. For an AMC, a TER cut is a direct hit to the top line with no offsetting effort possible. This is the permanent cloud over every fund house, and it is the bear case in one word.</p>
+
+  <div class="chart">
+    <div class="c-title">The TER cap falls as a fund gets bigger</div>
+    <div class="c-sub">Maximum equity-fund expense ratio by scheme size (illustrative, post-2026 rules)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Small fund<small>&lt; ₹500 Cr</small></div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">~2.10%</div></div>
+      <div class="bar-row"><div class="blab">Mid-size fund<small>a few thousand Cr</small></div><div class="track"><span class="fill gold" style="width:62%"></span></div><div class="bval">~1.3%</div></div>
+      <div class="bar-row"><div class="blab">Very large fund<small>&gt; ₹50,000 Cr</small></div><div class="track"><span class="fill debt" style="width:45%"></span></div><div class="bval">~0.95%</div></div>
+    </div>
+    <div class="legend"><span>The bigger the scheme, the lower the fee it may charge — so as an AMC's flagship funds swell, the <em>blended</em> yield naturally drifts down even without a rule change.</span></div>
+  </div>
+
+  <p>There are actually three squeezes on the fee line, stacked on top of each other:</p>
+  <ul class="clean">
+    <li><strong>The regulatory ratchet.</strong> SEBI periodically lowers TER caps. From 1 April 2026 it overhauled the whole framework — replacing the single TER with a "Base Expense Ratio" model, tightening brokerage caps, and cutting headline limits — a change described by analysts as <strong>broadly earnings-neutral for large AMCs</strong> (a GST exclusion offset the fee cut), but the direction of travel is unmistakably down.</li>
+    <li><strong>The size ratchet.</strong> Even with no rule change, the caps <em>fall as funds grow</em> — so ICICI Pru's own success in gathering assets slowly compresses its blended fee. Scale is both the reward and a mild self-limiting force.</li>
+    <li><strong>The passive ratchet.</strong> Index funds and ETFs charge a tenth of an active fund. As Indian investors adopt them, industry yields grind lower structurally.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why it's a cloud, not a thunderstorm — for now</div>
+    <p>Fee compression is <strong>real and permanent</strong>, but it has so far been a slow grind rather than a cliff, and the industry has repeatedly grown AUM fast enough to <em>more than offset</em> a lower fee rate. The maths is simple: if AUM grows ~20% but the fee rate slips ~3–4%, revenue still rises comfortably. ICICI Pru's defences are its <strong>scale</strong> (it can absorb lower fees on a fixed cost base better than a small rival), its <strong>equity leadership</strong> (the segment where investors still pay for performance), and its <strong>rising direct share</strong> (keeping more of each fee). The danger scenario is a <em>step-change</em> — a sharp, one-off TER cut combined with a weak market and an accelerating shift to passive all at once. That is the bear's nightmare, and the reason an AMC never quite escapes a valuation discount for regulatory risk.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Extraordinary returns on almost no capital — at a premium, freshly-listed price.</p>
+
+  <p class="lead">ICICI Pru's financials read like a textbook capital-light compounder: high-teens-to-twenties AUM growth, ~57% net margins, ~85% return on equity, no debt, and nearly all profit paid out as dividend. The only debate — as with every great business — is the price you pay for it.</p>
+
+  <div class="chart">
+    <div class="c-title">Profit trajectory</div>
+    <div class="c-sub">Net profit after tax (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:62%"></span></div><div class="bval">~2,051</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:80%"></span></div><div class="bval">2,651</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">3,298</div></div>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>FY26 at a glance (year ended March 2026)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY26</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue from operations</td><td class="num">₹5,765 Cr</td><td>Up ~19–20%; total income ~₹6,000 Cr incl. investment income.</td></tr>
+      <tr><td class="t-strong">Operating profit</td><td class="num">~₹4,528 Cr</td><td>Operating margin ~37.6 bps of AUM (up from 35.9).</td></tr>
+      <tr><td class="t-strong">Net profit (PAT)</td><td class="num">₹3,298 Cr</td><td><strong>+24%</strong> vs ₹2,651 Cr in FY25.</td></tr>
+      <tr><td class="t-strong">EPS</td><td class="num">~₹66.7</td><td>On ~49.4 Cr shares.</td></tr>
+      <tr><td class="t-strong">Net margin</td><td class="num">~57%</td><td>PAT as a share of total income — exceptional.</td></tr>
+      <tr><td class="t-strong">Return on equity</td><td class="num">~85%</td><td>The signature of a capital-light model.</td></tr>
+      <tr><td class="t-strong">Dividend / share (FY26)</td><td class="num">~₹65.8</td><td>Payout ~150%+ (drawing on reserves); ~3% yield.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~48.3 bps</div><div class="msl">Net revenue yield on AUM — premium, equity-led</div></div>
+    <div class="ms green"><div class="msv">Debt-free</div><div class="msl">Cash-rich, capital-light; near-full profit paid out</div></div>
+    <div class="ms red"><div class="msv">~49×</div><div class="msl">Trailing P/E (Jun '26) — a rich multiple to defend</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the ~49× multiple</div>
+    <p>At a market cap of about <strong>₹1.62 lakh crore</strong> (~₹3,270/share, June 2026) on ₹3,298 Cr of FY26 profit, ICICI Pru trades near <strong>49× trailing earnings</strong> — a premium even among high-quality financials, and a level that only makes sense if you underwrite years of high-teens AUM growth outrunning fee compression. The bull argues: this is the <em>best-positioned</em> AMC (No. 1 in the highest-margin segment), riding the strongest structural tailwind in Indian finance, with ~85% ROE and almost no capital needs — scarcity of this quality deserves a premium, and the SIP annuity gives earnings visibility few businesses can match. The bear argues: the multiple leaves no room for a market correction (which would hit the geared equity book hard), a sharper-than-expected TER cut, or accelerating passive adoption — any of which could de-rate a 49× stock quickly. As so often, both are right at different points in the cycle, which is why the numbers to track each quarter are <strong>AUM growth, the equity mix, net flows and the yield-on-AUM.</strong></p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A consolidating oligopoly with a huge tailwind — and intensifying fee competition.</p>
+
+  <p class="lead">Indian asset management is a <strong>scale-driven oligopoly</strong>: the top handful of AMCs control the bulk of the assets, and their lead compounds because size begets distribution begets more size. The industry is riding the financialisation wave together, but competing hard on brand, performance and — increasingly — fees. ICICI Pru is one of the two or three anchors of that structure.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs ICICI Pru</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">ICICI Prudential AMC</td><td>No. 2 overall; No. 1 in equity &amp; equity-hybrid</td><td><em>This company.</em> Best equity-mix, premium yield, ~85% ROE, freshly listed at a premium multiple.</td></tr>
+      <tr><td class="t-strong">SBI Mutual Fund</td><td>No. 1 by total AUM; SBI-bank distribution</td><td>Larger overall, backed by the country's biggest branch network; unlisted. The one bigger rival.</td></tr>
+      <tr><td class="t-strong">HDFC AMC</td><td>No. 3; long-listed, high-quality equity house</td><td>The closest listed comparable — similar economics and a strong equity brand; the market's other favourite AMC.</td></tr>
+      <tr><td class="t-strong">Nippon India MF</td><td>No. 4; strong in retail &amp; passive/ETFs</td><td>Aggressive folio growth and a big ETF footprint; competes hard on breadth and price.</td></tr>
+      <tr><td class="t-strong">Kotak, Aditya Birla SL, Axis, UTI, etc.</td><td>The chasing pack</td><td>Solid franchises but sub-scale vs the top four; the long tail the leaders take share from.</td></tr>
+      <tr><td class="t-strong">Passive-first &amp; fintech entrants</td><td>Low-cost index funds / ETFs, app-native platforms</td><td>The disruptive edge — competing on ultra-low fees, pressuring industry yields over time.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive tension to watch</div>
+    <p>Two dynamics matter. First, <strong>the passive/low-cost threat.</strong> ETFs and index funds are the way global asset management went — fees collapsing toward zero — and India is an early version of that story. The leaders' defence is that Indian investors still reward <em>active</em> equity performance with premium fees; ICICI Pru's whole value rests on that remaining true. Second, <strong>scale consolidation.</strong> The biggest AMCs keep taking share from smaller ones because distribution and brand compound with size — good for ICICI Pru as a top-two player, but it also means SBI MF and HDFC AMC are formidable, well-resourced rivals fighting for the same SIPs, advisers and shelf space. The strategic question for the next five years is whether ICICI Pru can keep <em>leading</em> the high-margin active-equity segment fast enough to outrun the industry's structural drift toward cheaper, passive products.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuinely exceptional business model — priced for it to keep executing.</p>
+
+  <p class="lead">ICICI Pru AMC is one of the cleanest compounding stories in Indian finance: a capital-light, ~85%-ROE annuity on a structurally growing pool of savings, led by the No. 1 franchise in the segment that pays best, backed by two blue-chip promoters. The investment debate is almost entirely about <strong>price, the market cycle, and the regulator</strong> — not business quality.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Best-in-class franchise</strong> — No. 2 overall, No. 1 in high-margin equity &amp; equity-hybrid; premium yield on AUM.</li>
+        <li><strong>Structural tailwind</strong> — India's financialisation of savings; MF/GDP still ~21%; a long, multi-decade runway.</li>
+        <li><strong>The SIP annuity</strong> — ~₹5,100 Cr of sticky monthly inflows growing ~31%, giving rare earnings visibility.</li>
+        <li><strong>Capital-light economics</strong> — ~85% ROE, ~57% net margins, debt-free, near-full payout — a cash machine.</li>
+        <li><strong>Scale &amp; brand moat</strong> — size compounds distribution reach and cushions fee cuts better than smaller rivals.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich valuation</strong> — ~49× earnings leaves little room for error; vulnerable to de-rating on any shock.</li>
+        <li><strong>Market-linked, geared earnings</strong> — an equity-heavy book means profits fall fast in a correction.</li>
+        <li><strong>TER / fee-cut risk</strong> — SEBI can lower the fee cap at will; the passive shift grinds yields down structurally.</li>
+        <li><strong>OFS overhang</strong> — the IPO was Prudential selling; further stake sales could weigh on the price; small free float.</li>
+        <li><strong>No fresh capital &amp; competitive intensity</strong> — the listing raised nothing; SBI MF, HDFC AMC and cheap passive players all fight for the same flows.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>ICICI Pru AMC is a <strong>structurally advantaged, capital-light leader</strong> of arguably the best theme in Indian finance — the movement of household savings into markets — with returns on capital most businesses can only dream of. The business risk is low; the <em>valuation</em> and <em>cyclical</em> risks are real. The story over the next few years will be written in four numbers each quarter — <strong>AUM growth</strong> (is the pile still swelling?), <strong>net flows / SIPs</strong> (is the annuity still filling?), <strong>the equity mix</strong> (is the high-margin book holding?), and <strong>the yield on AUM</strong> (is fee compression manageable?). Get those right and the compounding justifies the premium; a market correction stacked on a sharp TER cut, and a 49× stock has room to fall.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>ICICI Prudential AMC — Q4 &amp; FY26 results (year ended Mar 2026), investor-relations disclosures &amp; earnings presentation.</li>
+    <li>ICICI Prudential AMC — Q4 FY26 results analysis, Liquide (blog.liquide.life).</li>
+    <li>Multibagg / Market-Pulse — "ICICI Prudential AMC Delivers Robust Growth in Q4 FY26" and "FY26 Profit Jumps 24%".</li>
+    <li>Motilal Oswal — ICICI Prudential AMC 4QFY26 Results Update (14 Apr 2026).</li>
+    <li>ScanX / Morgan Stanley note — "ICICI Pru AMC Q4 FY26: AUM at ₹11.05 Trn".</li>
+    <li>Goodreturns — ICICI Prudential AMC FY26 dividend &amp; results.</li>
+    <li>Screener.in — ICICI Prudential AMC consolidated financials, ratios &amp; shareholding.</li>
+    <li>BSE India — ICICI Prudential AMC (scrip code 544658) listing &amp; corporate filings.</li>
+    <li>IPO details: Chittorgarh / Groww / Investorgain — ICICI Prudential AMC IPO (Dec 2025, ₹10,603 Cr OFS by Prudential Corporation Holdings).</li>
+    <li>AMFI — Industry AUM, SIP &amp; folio data (May 2026); ICICI Prudential AMC Industry Report (RHP annexure).</li>
+    <li>Cafemutual / Mondaq / Upstox — SEBI 2026 TER &amp; expense-ratio framework (effective 1 Apr 2026).</li>
+    <li>Economic Survey 2025-26 — financialisation of household savings; AMFI AUM/GDP penetration data.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; verify all numbers against primary sources before relying on them. The author may hold no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "ICICIAMC";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
