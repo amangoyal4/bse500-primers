@@ -137,10 +137,14 @@ Include the refresh control in every primer (cover area), but **unwired**:
 
 ## 6. Per-run loop (scheduled, every 5 hours, up to 6 companies)
 
-**Generate ONE COMPANY AT A TIME — never in parallel.** Fully research, write,
-verify, and publish one primer before starting the next. Sequential is mandatory:
-it lets each primer's quality be locked before moving on. Do NOT spawn parallel
-sub-agents or batch multiple companies at once.
+**Generate AT MOST 2 COMPANIES CONCURRENTLY — never more (hard cap).** The owner
+confirmed (2026-07-02) that running 2 primer agents at once does NOT compromise
+per-primer quality — each subagent researches, cross-checks, and writes its own
+primer in isolation, so concurrency doesn't dilute any single one. You MUST still
+fully verify AND publish each primer individually (the §0 gate applies per primer).
+Do NOT exceed 2 in flight: an earlier 7-concurrent run overloaded the runner and
+stalled agents at the watchdog. 1-at-a-time is always safe; 2 is the approved max
+for speed; 3+ is forbidden.
 
 ```
 read data/worklist.json
