@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GMR Airports — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F8;
+    --paper-2:#FAFBFC;
+    --card:#FFFFFF;
+    --ink:#132030;
+    --ink-soft:#516074;
+    --ink-faint:#8A97A6;
+    --brand:#123A63;          /* aviation navy */
+    --brand-bright:#2A6FB0;   /* runway / sky blue */
+    --gold:#E0912F;           /* amber - beacon / commercial */
+    --sky:#2A6FB0;            /* sky blue */
+    --aero:#4C86C4;           /* aeronautical - regulated */
+    --nonaero:#E0912F;        /* non-aero - commercial */
+    --realestate:#4E9A82;     /* aerocity green */
+    --intl:#8B6FB0;           /* international violet */
+    --line:#D9DEE4;
+    --line-soft:#E7EBEF;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7EFF7;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:66ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:26px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF2E3;border:1px solid #EFDCBB;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✈";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F9FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAEEF2;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#123A63,#2A6FB0);}
+  .fill.gold{background:linear-gradient(90deg,#E0912F,#EDAB55);}
+  .fill.aero{background:linear-gradient(90deg,#4C86C4,#6FA0D4);}
+  .fill.nonaero{background:linear-gradient(90deg,#E0912F,#EDAB55);}
+  .fill.re{background:linear-gradient(90deg,#4E9A82,#67B49B);}
+  .fill.intl{background:linear-gradient(90deg,#8B6FB0,#A588C6);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a5c,#516074);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.aero{background:var(--aero);}
+  .node.nonaero{background:var(--nonaero);}
+  .node.re{background:var(--realestate);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-aero{color:var(--aero);font-weight:600;}
+  .chain-nonaero{color:var(--nonaero);font-weight:600;}
+  .chain-re{color:var(--realestate);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF2E3;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a5e18;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#E4F1FA;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Airport economics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> Aero vs non-aero vs real estate</a></li>
+    <li><a href="#p3"><span class="n">03</span> The concession &amp; monopoly moat</a></li>
+    <li><a href="#p4"><span class="n">04</span> The passenger supercycle</a></li>
+    <li><a href="#p5"><span class="n">05</span> The airport portfolio</a></li>
+    <li><a href="#p6"><span class="n">06</span> Aerocity &amp; the land unlock</a></li>
+    <li><a href="#p7"><span class="n">07</span> The company, ADP &amp; owners</a></li>
+    <li><a href="#p8"><span class="n">08</span> Debt &amp; the deleveraging path</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; how it's valued</a></li>
+    <li><a href="#p10"><span class="n">10</span> Rivals &amp; the industry</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: GMRAIRPORT · BSE: 532754</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>GMR Airports, <em>India's landlord of the sky</em></h1>
+  <p class="dek">A complete walk through India's largest private airport operator — how an airport actually earns money from three very different tills (a <em>regulated</em> aeronautical toll, a high-margin <em>commercial</em> business, and a hidden <em>real-estate</em> land bank), why the passenger boom and the shops matter far more than landing fees, how a monopoly concession works, and why a company that only just turned its first profit in a decade — under a mountain of debt — is still worth over a lakh crore.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹15,201 <small>Cr</small></div><div class="l">Total income (FY26)</div></div>
+    <div class="cell"><div class="v">121.6 <small>mn</small></div><div class="l">Passengers · FY26 (record)</div></div>
+    <div class="cell"><div class="v">~52% <small>EBITDA</small></div><div class="l">Margin · ₹6,150 Cr (FY26)</div></div>
+    <div class="cell"><div class="v">~₹1.15 <small>L Cr</small></div><div class="l">Market cap (Jun '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">2 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — total income ₹15,201 Cr (+40%), revenue from operations ₹14,807 Cr, record EBITDA ₹6,150 Cr (~52% margin), group PAT ₹472 Cr (first positive annual profit in 10+ years, though a small loss still remains at the owners-of-parent level after minority interest); record 121.6 mn passengers; Delhi 78.7 mn, Hyderabad 30.5 mn, Goa/Mopa 5.4 mn; non-aero income per passenger up 62% to ₹600; net debt ~₹34,000 Cr (net-debt/EBITDA 5.5×, targeted below 4× in 18–24 months); Delhi 4th-control-period tariff hike live from Apr 2025; Nagpur airport added and Bhogapuram nearing commissioning; added the aero/non-aero/real-estate, concession-moat and deleveraging sections.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">GMR Airports <strong>designs, builds and runs airports</strong> — and it is <strong>India's largest private airport operator</strong>, handling roughly <strong>27% of all air passengers in the country</strong>. Its portfolio is anchored by <strong>Delhi (India's busiest airport)</strong> and <strong>Hyderabad</strong>, plus <strong>Goa (Mopa)</strong> and a growing international footprint (Indonesia, the Philippines, Greece), with new Indian airports (Bhogapuram, Nagpur) about to switch on. In FY26 its airports handled a record <strong>121.6 million passengers</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It's really three businesses in a trench-coat.</strong> An airport earns from (1) <span class="chain-aero">aeronautical</span> charges — landing, parking and passenger fees that a regulator <em>caps</em>; (2) <span class="chain-nonaero">non-aeronautical / commercial</span> revenue — duty-free, retail, F&amp;B, lounges, advertising, car parks — which is <em>unregulated and high-margin</em>; and (3) <span class="chain-re">real estate</span> — monetising the huge land bank around the airport (the "aerocity"). The equity value is created in items 2 and 3, <em>not</em> in landing fees.</li>
+    <li><strong>It just turned its first profit in a decade — barely.</strong> FY26 total income jumped ~40% to <strong>₹15,201 Cr</strong>, EBITDA rose ~47% to a record <strong>₹6,150 Cr</strong> (~52% margin), and the group posted a <strong>PAT of ₹472 Cr — its first positive annual profit in over ten years</strong>. But it's still barely profitable at the level attributable to GMR's own shareholders, and it sits under <strong>~₹34,000 Cr of net debt</strong>. This is a capital-devouring, interest-and-depreciation-heavy business by nature.</li>
+    <li><strong>It is not valued on profit.</strong> Because it's only just profitable, the ~₹1.15 lakh crore market cap is <em>not</em> a P/E story. Analysts value it on <strong>EV/EBITDA and a sum-of-the-parts (SOTP)</strong> that adds up each airport plus the hidden real-estate NAV. The whole investment case is: rising passengers × rising spend-per-head × a land unlock, minus a big debt pile that has to come down.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of GMR less as an "airline" (it flies nothing) and more as a <strong>toll-collecting landlord that happens to own the busiest doorways into India</strong>. It builds and runs the airport under a decades-long government concession — a regional monopoly — and then earns three ways: a <em>regulated</em> fee for the runway and terminal (kept deliberately low by the regulator), a <em>much fatter</em> cut from every coffee, perfume bottle, lounge pass and parking ticket inside the terminal, and rent from the offices, hotels and malls it builds on the spare land next door. The runway barely makes money; the shops and the land are where the profit hides. The catch: building airports costs a fortune, so the company is buried in debt, and the whole bet is that a booming India flies more, shops more, and lets GMR slowly pay that debt down while unlocking its land.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Airport economics 101: how an airport actually earns</h2></div>
+  <p class="part-sub">No aviation background needed — just how a terminal turns footfall into cash.</p>
+
+  <p class="lead">An airport is a <strong>capacity-and-footfall business</strong>. It has a fixed, expensive asset (runways, terminals, taxiways) built once and used for decades, and it earns by pushing as many passengers through it as possible — because almost every source of revenue scales with the number of people walking through the doors. The single most important operating number is therefore <strong>passenger traffic</strong>.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only units you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and GMR's number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Passengers (pax)</td><td>The master metric — every stream scales off it. GMR's network handled <strong>121.6 million</strong> in FY26 (Delhi 78.7 mn, Hyderabad 30.5 mn, Goa 5.4 mn).</td></tr>
+      <tr><td class="t-strong">Aeronautical revenue</td><td>Charges for the <em>flying</em> bit — landing &amp; parking fees (paid by airlines) and the <strong>UDF</strong> (User Development Fee, paid by passengers). <em>Regulated</em>. ~one-third of income.</td></tr>
+      <tr><td class="t-strong">Non-aeronautical revenue</td><td>Everything <em>commercial</em> inside the terminal — duty-free, retail, F&amp;B, lounges, advertising, car parks, cargo. <em>Unregulated, high-margin.</em> Over half of income.</td></tr>
+      <tr><td class="t-strong">Spend per pax</td><td>How much each passenger spends on commercial services. GMR's <strong>non-aero income per passenger jumped 62% to ~₹600 in FY26</strong> — the lever that compounds.</td></tr>
+      <tr><td class="t-strong">Concession</td><td>The long-term (30–60 year) government contract to build and operate the airport as a monopoly. The right to collect all of the above.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The simple revenue idea</div>
+    <p>Roughly: <strong>Commercial revenue ≈ Passengers × Spend-per-passenger</strong>. So GMR grows in two compounding ways at once — <strong>more people fly</strong> (traffic), and <strong>each person spends more</strong> inside the terminal (retail, duty-free, lounges). Because the airport's costs are mostly <em>fixed</em> (the terminal is already built, the staff are already there), once traffic crosses the break-even point almost every extra rupee of commercial revenue drops to profit. That's operating leverage — and it's why the market cares far more about non-aero spend-per-head than about the regulated landing fee. The regulated fee, as we'll see, is deliberately squeezed almost to a pass-through; the shops are where the money is made.</p>
+  </div>
+
+  <h3>Why airports are so capital-hungry (and why GMR loses money at the net line)</h3>
+  <p>Building a world-class terminal costs tens of thousands of crores, funded largely with <strong>debt</strong>. That creates two enormous non-cash and financing costs on the P&amp;L: <strong>depreciation</strong> (writing the asset down over its life) and <strong>interest</strong> (servicing the debt). An airport can be gushing operating cash — a ~52% EBITDA margin, in GMR's case — and <em>still</em> show a net loss once depreciation and interest are subtracted. That is exactly GMR's story for the past decade: healthy at the EBITDA line, loss-making at the bottom line. FY26 was the year the operating engine finally grew big enough to (just) cross into net profit at the group level.</p>
+</section>
+
+<!-- 02 — BESPOKE #1: the three-till model -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The three tills: regulated, commercial &amp; real estate</h2></div>
+  <p class="part-sub">The single most important idea in the whole primer — read this once and the equity story clicks.</p>
+
+  <p class="lead">Every rupee GMR earns falls into one of three buckets, and they behave <em>completely differently</em>. Understanding the split — and specifically why the <strong>regulated</strong> bucket is deliberately kept thin while the <strong>commercial</strong> and <strong>real-estate</strong> buckets are where value is created — is the key that unlocks how airports are analysed.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The three tills of an airport — value flows left to right</div>
+    <div class="flow-row">
+      <div class="node aero"><div class="ntag">Till 1 · Regulated</div><div class="nname">Aeronautical</div><div class="nwho">Landing, parking &amp; UDF. Capped by AERA. ~⅓ of income. Low margin by design.</div></div>
+      <div class="arrow">→</div>
+      <div class="node nonaero"><div class="ntag">Till 2 · Unregulated</div><div class="nname">Non-aeronautical</div><div class="nwho">Duty-free, retail, F&amp;B, lounges, ads, parking, cargo. &gt;50% of income. High margin — the value driver.</div></div>
+      <div class="arrow">→</div>
+      <div class="node re"><div class="ntag">Till 3 · Hidden asset</div><div class="nname">Real estate / aerocity</div><div class="nwho">Rent &amp; monetisation of the land bank around the airport. Optional, long-dated, high-NAV.</div></div>
+    </div>
+    <div class="flow-note">The further right you go, the higher the margin, the less regulation, and the more of the equity value it explains. The regulated till mostly keeps the lights on; the commercial and land tills create the shareholder return.</div>
+  </div>
+
+  <h3>Till 1 — Aeronautical: the regulated "just enough" business</h3>
+  <p>Aeronautical charges are set by an independent regulator, the <strong>Airports Economic Regulatory Authority (AERA)</strong>, on a <strong>regulated-return basis</strong>. In plain English: AERA looks at how much capital GMR has sunk into the airport (its "regulated asset base"), decides a fair rate of return on it, and then sets the landing/parking/UDF tariffs so the airport earns roughly <em>that return and no more</em> on the aeronautical side. It's the same logic as a regulated electricity utility. Tariffs are fixed for a multi-year <strong>"control period"</strong> (Delhi is in its <strong>4th control period, FY25–FY29</strong>), then reset.</p>
+  <ul class="clean">
+    <li><strong>Why this bucket is thin.</strong> Because the return is capped, GMR can't get rich just by charging airlines more to land. The regulator's whole job is to stop that.</li>
+    <li><strong>The tariff cycle still matters.</strong> Resets can be lumpy and huge: for Delhi's 4th control period, DIAL <em>asked</em> for a ~730% rise in charges; AERA granted ~140% (live from April 2025). Even a "trimmed" hike lifts aero revenue meaningfully and was a big reason FY26 profits jumped — but it's a step-change every few years, not a compounding driver.</li>
+    <li><strong>Dual-till vs hybrid-till.</strong> The crucial regulatory question is whether commercial profits get "cross-subsidised" back into lower aero charges. Under a pure <strong>single/dual-till</strong> debate, if the regulator uses your fat duty-free profits to force down landing fees, the shops stop being valuable to <em>you</em>. GMR's airports operate on terms that <strong>largely ring-fence non-aero profits for the operator</strong> — which is precisely what makes the commercial business the value driver.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "who keeps the shop profits" is the whole ballgame</div>
+    <p>Imagine two airports with identical duty-free sales. In airport A, the regulator says "your shops made ₹100, so I'll cut your landing fees by ₹100" — the passenger benefits, the operator gains nothing. In airport B, the operator <em>keeps</em> the ₹100. Same shops, wildly different equity value. India's framework for GMR's airports leans toward <strong>letting the operator keep the commercial upside</strong> (a "hybrid" arrangement rather than pure single-till). That single regulatory choice is why non-aeronautical revenue — not landing fees — is what airport investors obsess over, and why any move toward single-till regulation is a genuine bear risk.</p>
+  </div>
+
+  <h3>Till 2 — Non-aeronautical: the high-margin engine</h3>
+  <p>This is the real business. Over <strong>half of GMR's income</strong> now comes from non-aeronautical sources — duty-free, F&amp;B, retail concessions, lounges, advertising, car parking and cargo — and it is largely <em>unregulated</em>, so GMR keeps the upside. Crucially, it's a <strong>spend-per-passenger</strong> story: GMR's <strong>non-aero income per passenger rose 62% to ~₹600 in FY26</strong>, and Delhi's <em>duty-free spend per departing passenger</em> rose to ~₹1,063. As India's flyers get richer and terminals get more retail-dense, each passenger monetises harder — pure margin on a fixed asset. In FY26, GMR even <strong>took direct control of the Delhi Duty Free business</strong> to capture more of that value itself rather than share it with a concessionaire.</p>
+
+  <h3>Till 3 — Real estate: the hidden land bank</h3>
+  <p>Around each big airport sits a large tract of <strong>monetisable land</strong> — GMR is developing "<strong>aerocity</strong>" business districts (offices, hotels, retail, hospitals, logistics, SEZs) on roughly <strong>1,500 acres at Hyderabad</strong> and a marquee district at Delhi. This land was acquired cheaply as part of the airport concession and sits on the books far below its development value, so it's a classic <strong>hidden asset</strong>: monetising it (via long leases, joint developments and outright sales) throws off cash and crystallises value that the reported P&amp;L barely shows. It's covered in full in Section 06 — but for now, just hold the idea that GMR is <em>also</em> one of India's larger commercial real-estate landlords by stealth.</p>
+
+  <div class="chart">
+    <div class="c-title">Where FY26 income comes from (approx.)</div>
+    <div class="c-sub">Non-aero + real estate now outweigh the regulated aero till</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Non-aeronautical<small>duty-free, retail, F&amp;B, cargo, ads</small></div><div class="track"><span class="fill nonaero" style="width:100%"></span></div><div class="bval">&gt;50%</div></div>
+      <div class="bar-row"><div class="blab">Aeronautical<small>regulated — landing, parking, UDF</small></div><div class="track"><span class="fill aero" style="width:62%"></span></div><div class="bval">~⅓</div></div>
+      <div class="bar-row"><div class="blab">Real estate &amp; other<small>aerocity rent &amp; monetisation</small></div><div class="track"><span class="fill re" style="width:28%"></span></div><div class="bval">~15%</div></div>
+    </div>
+    <div class="legend"><span>Shares are approximate and shift with tariff resets and land deals. The direction of travel — non-aero and real estate growing faster than the capped aero till — is the whole margin story.</span></div>
+  </div>
+</section>
+
+<!-- 03 — BESPOKE #2: concession & monopoly moat -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The concession model &amp; the monopoly moat</h2></div>
+  <p class="part-sub">Why an airport is one of the most durable moats in infrastructure.</p>
+
+  <p class="lead">GMR doesn't own its airports outright — it holds them under long <strong>concessions</strong> (a build-operate-transfer, or BOT, contract). The government hands over the right to build and run an airport as a <strong>regional monopoly</strong> for a fixed number of decades, in return for a share of revenue and an obligation to invest. This structure is the source of GMR's deepest competitive advantage.</p>
+
+  <h3>How the concession works</h3>
+  <ul class="clean">
+    <li><strong>Exclusive &amp; long.</strong> A city gets essentially <em>one</em> major airport, and the concession runs for <strong>30–60 years</strong>. Delhi and Hyderabad were 30-year concessions (extendable); Bhogapuram is 40 years (extendable by 20 more); Nagpur is 30 years; Crete is 35 years. Once you hold the concession, no rival can build a competing airport next door.</li>
+    <li><strong>Revenue-share to the government.</strong> GMR typically pays the Airports Authority of India a percentage of gross revenue (e.g., DIAL pays a large revenue share). That's the price of the monopoly.</li>
+    <li><strong>Build obligation.</strong> The operator must invest to expand capacity as traffic grows (new terminals, runways). This is the capex that creates the debt — but also the regulated asset base on which aero returns are earned.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why this is such a strong moat</div>
+    <p>A monopoly airport combines three moats that rarely occur together. <strong>(1) Legal exclusivity</strong> — the concession locks out competitors for decades. <strong>(2) A natural monopoly</strong> — you can't build a second Delhi airport; the land, air-traffic rights and capital required are prohibitive. <strong>(3) Switching cost of zero for the customer but total capture for the operator</strong> — a passenger flying to Delhi <em>must</em> use GMR's terminal and walk past GMR's shops. Add the traffic tailwind and you get a rare asset: a toll booth on a road that only gets busier, with a contractually protected multi-decade runway. The trade-off is that the same contract makes you a <strong>price-taker on the regulated till</strong> and saddles you with heavy build obligations — the moat and the debt come from the same document.</p>
+  </div>
+
+  <blockquote>You cannot build a second airport for Delhi. That single sentence is the entire moat — and the reason a loss-making balance sheet still commands a premium valuation.</blockquote>
+</section>
+
+<!-- 04 — BESPOKE #3: passenger supercycle -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The passenger supercycle</h2></div>
+  <p class="part-sub">The structural tailwind that turns a capped-return utility into a growth compounder.</p>
+
+  <p class="lead">Because every revenue stream scales off passengers, the <strong>growth in Indian air travel</strong> is GMR's oxygen. And India is in the early innings of one of the world's great aviation booms: it is already the third-largest domestic aviation market, air penetration is still tiny versus developed economies, a fast-growing middle class is flying for the first time, and airlines have placed record aircraft orders to serve them.</p>
+
+  <div class="chart">
+    <div class="c-title">GMR network passenger traffic (millions)</div>
+    <div class="c-sub">FY26 hit a record 121.6 mn — the compounding base for every revenue till</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23<small>post-COVID recovery</small></div><div class="track"><span class="fill ink" style="width:74%"></span></div><div class="bval">~90</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:88%"></span></div><div class="bval">~107</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:99%"></span></div><div class="bval">~120.5</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>record</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">121.6</div></div>
+    </div>
+    <div class="legend"><span>FY26 growth (+0.9%) was unusually flat — capacity constraints at Delhi during terminal reconfiguration and softer international demand capped volumes. New airports (Bhogapuram, Nagpur) are expected to add ~5 mn pax in FY27. Earlier-year figures are approximate.</span></div>
+  </div>
+
+  <p>Two things about FY26's flat headline traffic are worth understanding, because they explain how the company still grew income ~40%:</p>
+  <ul class="clean">
+    <li><strong>Traffic was capacity-constrained, not demand-constrained.</strong> Delhi (the biggest airport) was mid-reconfiguration; the runway of growth is more about <em>terminal capacity coming online</em> (e.g., Delhi's T1 expansion) than about weak demand.</li>
+    <li><strong>Revenue decoupled from volume.</strong> Even with flat passengers, income rose sharply because of (a) the Delhi tariff hike (aero) and (b) the 62% jump in non-aero spend-per-passenger. This is the key insight: <strong>GMR can grow revenue via price and spend even when volumes pause</strong> — traffic and spend-per-head are two independent levers, and both compound.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Traffic × spend — why the two compound</div>
+    <p>Picture the maths. If passengers grow ~7–8% a year over a decade <em>and</em> spend-per-passenger keeps climbing (richer flyers, more retail, more lounges, direct control of duty-free), then commercial revenue can grow at a low-teens-plus rate for years — on a largely fixed cost base, so profit grows even faster. Layer in periodic aero tariff resets (step-ups every control period) and the aerocity land unlock, and you have several independent growth engines stacked on one monopoly asset. That stack is why the market looks past today's thin bottom line: the <em>trajectory</em> of EBITDA and cash flow is what's being bought.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The airport portfolio</h2></div>
+  <p class="part-sub">Two cash-cow crown jewels, a fast-growing Goa, and an international spread.</p>
+
+  <p class="lead">GMR's value is heavily concentrated in <strong>Delhi (DIAL)</strong> and <strong>Hyderabad (GHIAL)</strong> — the two mature "crown jewels" that generate the bulk of EBITDA — with <strong>Goa (Mopa)</strong> ramping, a set of <strong>international</strong> assets adding optionality, and <strong>new Indian airports</strong> about to come online.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The portfolio at a glance (FY26)</caption>
+    <thead><tr><th>Airport</th><th class="num">FY26 pax</th><th>Role &amp; why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Delhi — DIAL (IGI)</td><td class="num">78.7 mn</td><td><strong>The crown jewel.</strong> India's busiest airport; ~half the network's traffic and the single biggest EBITDA and land-monetisation engine. FY26 income ~₹7,653 Cr; turned profitable after the tariff hike.</td></tr>
+      <tr><td class="t-strong">Hyderabad — GHIAL (RGIA)</td><td class="num">30.5 mn</td><td>The second cash cow; highest-ever traffic and cargo; ~1,500-acre aerocity land bank. High-margin, steadily profitable, expanding capacity.</td></tr>
+      <tr><td class="t-strong">Goa — Mopa (Manohar)</td><td class="num">5.4 mn</td><td>Newest Indian greenfield hub; +15% traffic — a fast-ramping asset still climbing its J-curve toward maturity.</td></tr>
+      <tr><td class="t-strong">Medan — Kualanamu (Indonesia)</td><td class="num">int'l</td><td>GMR-led consortium operates it — the flagship overseas asset and a template for exporting the model.</td></tr>
+      <tr><td class="t-strong">Cebu — Mactan (Philippines)</td><td class="num">int'l</td><td>GMR acts as Technical Services Provider (to Dec 2026) — an operating-know-how, lower-capital engagement.</td></tr>
+      <tr><td class="t-strong">Crete — Heraklion (Greece)</td><td class="num">building</td><td>35-year greenfield concession under construction — European optionality, cash-consuming until it opens.</td></tr>
+      <tr><td class="t-strong">Bhogapuram &amp; Nagpur (India)</td><td class="num">FY27</td><td>Bhogapuram (AP, 40-yr) near commissioning; Nagpur (30-yr) just added. Together ~+5 mn pax expected in FY27.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Traffic concentration (FY26)</div>
+    <div class="c-sub">Delhi + Hyderabad are ~90% of network passengers — and even more of the value</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Delhi (DIAL)</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">78.7 mn</div></div>
+      <div class="bar-row"><div class="blab">Hyderabad (GHIAL)</div><div class="track"><span class="fill aero" style="width:39%"></span></div><div class="bval">30.5 mn</div></div>
+      <div class="bar-row"><div class="blab">Goa (Mopa)</div><div class="track"><span class="fill gold" style="width:7%"></span></div><div class="bval">5.4 mn</div></div>
+    </div>
+    <div class="legend"><span>Delhi alone is the highest-value asset — busiest traffic, biggest tariff base, largest aerocity. Its performance drives the group; its concentration is also the group's single-asset risk.</span></div>
+  </div>
+
+  <div class="note gold"><b>The concentration point:</b> Delhi and Hyderabad together are the overwhelming majority of GMR's value. That's a strength (two mature, monopoly cash cows) and a risk (regulatory or operational trouble at Delhi hits the whole group). The international and new-airport portfolio diversifies over time, but several of those assets are still cash-<em>consuming</em> greenfields, not yet contributors.</div>
+</section>
+
+<!-- 06 — BESPOKE: aerocity / land unlock -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Aerocity &amp; the land unlock</h2></div>
+  <p class="part-sub">The hidden asset that a P/E screen completely misses.</p>
+
+  <p class="lead">When GMR won its airport concessions, it also secured <strong>large tracts of adjoining land</strong> — far more than the runways and terminals need. Developing and monetising that land as an "<strong>aerocity</strong>" (an integrated business district next to the airport) is a value driver that sits almost invisibly on the balance sheet, because the land is carried at historic cost while its development value is a multiple higher.</p>
+
+  <h3>What an aerocity is</h3>
+  <ul class="clean">
+    <li><strong>Hyderabad Airport City</strong> — a ~<strong>1,500-acre</strong> integrated development billed as India's largest aerotropolis: offices, retail, hotels, education, healthcare, an aerospace &amp; industrial SEZ, and logistics. The SEZ alone is credited with tens of thousands of jobs.</li>
+    <li><strong>Delhi Aerocity</strong> — a marquee business, leisure and hospitality district beside IGI (hotels, offices, hospitals, retail) in one of the most valuable real-estate catchments in the country.</li>
+    <li><strong>How it's monetised</strong> — GMR doesn't usually build and sell flats; it <em>leases</em> land and space on long tenors, enters joint developments, and books upfront lease premiums. In FY26, GHIAL's real-estate entities generated healthy cash flow from such transactions.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why this is a genuine hidden asset</div>
+    <p>Two features make aerocity land unusually valuable. <strong>First, location scarcity:</strong> land immediately next to a major airport, with guaranteed footfall and connectivity, is almost impossible to replicate — it's the prime commercial real estate in the city, and GMR got it as part of the concession, cheaply. <strong>Second, accounting invisibility:</strong> because the land sits at historic cost, a simple earnings multiple sees none of it. Analysts capture it separately in an <strong>SOTP</strong> by putting a development-value / NAV on the land and <em>adding</em> it to the value of the operating airports. That's why bulls argue the "sum of the parts is greater than the whole" — the market price often reflects the airports but under-credits the land. The bear counter: land monetisation is lumpy, slow, and years out; you can't spend NAV that hasn't been realised, and it does nothing for today's debt-servicing.</p>
+  </div>
+
+  <div class="note gold"><b>Watch for:</b> the pace of land deals (lease premiums, JV announcements) and how much aerocity cash is used to <em>pay down debt</em> versus fund new capex. The land unlock is only as valuable as GMR's ability — and willingness — to convert it into cash on a sensible timeline.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The company, ADP &amp; who controls it</h2></div>
+  <p class="part-sub">A restructured, airport-pure entity co-promoted by the operator of Paris's airports.</p>
+
+  <p class="lead">The listed entity is a recently <strong>simplified, airport-only company</strong>. It was formerly "GMR Airports Infrastructure / GMR Infrastructure", a sprawling group that also held energy and roads. Through a multi-year restructuring, the non-airport businesses were demerged out and the airport holding company was folded in, and in <strong>September 2024 the entity was renamed GMR Airports Limited</strong> — now a clean, pure-play airport operator.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2006</div><div class="ev">GMR wins and modernises <strong>Delhi (DIAL)</strong> and <strong>Hyderabad (GHIAL)</strong> under long-term concessions — the foundation of the whole group.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Heavy airport capex drives up debt; the broader GMR Infrastructure group is stretched across airports, energy and roads and is persistently loss-making at the net level.</div></li>
+    <li class="major"><div class="yr">2020</div><div class="ev"><strong>Groupe ADP</strong> (operator of Paris's airports) buys a large stake in the airport holding company <strong>GMR Airports Ltd (GAL)</strong> — a strategic partner and co-promoter.</div></li>
+    <li><div class="yr">2021–22</div><div class="ev"><strong>NCLT approves the demerger</strong> of the non-airport (energy/EPC/urban infra) businesses — the group pivots to become airport-focused.</div></li>
+    <li><div class="yr">2022–23</div><div class="ev"><strong>Goa (Mopa)</strong> greenfield airport opens; international portfolio (Medan, Cebu technical services, Crete concession) builds out.</div></li>
+    <li class="major"><div class="yr">Sep 2024</div><div class="ev">Merger of the airport holdcos completes; entity <strong>renamed GMR Airports Limited</strong> — a pure-play listed airport operator (NSE: GMRAIRPORT).</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record 121.6 mn pax; Delhi tariff hike live; <strong>first positive group PAT (₹472 Cr) in over a decade</strong>; Nagpur added, Bhogapuram nearing commissioning.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; the ADP partnership</h3>
+  <ul class="clean">
+    <li><strong>Promoters ~66%.</strong> The <strong>GMR promoter group</strong> (founder G.M. Rao's family, via GMR Enterprises) holds the majority — ~66% of the listed company as of March 2026.</li>
+    <li><strong>Groupe ADP is the key strategic partner.</strong> The French group — which runs Paris Charles de Gaulle and Orly and holds airport stakes worldwide — is a <strong>co-promoter</strong> at the airport-holding level, with an economic interest of roughly <strong>43–46%</strong> in GAL (recently trimmed slightly as it sold a small tranche back toward GMR while staying a long-term partner). ADP brings operating expertise (retail, cargo, terminal design) and validation.</li>
+    <li><strong>Institutions ~25%.</strong> FIIs held ~20% and DIIs ~5% of the listed entity — a heavily institutionally-owned name.</li>
+    <li><strong>The minority-interest wrinkle.</strong> Because ADP and other partners own big stakes in the operating airports and the holding company, a large slice of profit is <em>attributable to minorities</em>. That's why FY26 can show a group PAT of ₹472 Cr yet still a small loss at the "attributable to owners of the parent" line — the profit that reaches GMR's own listed shareholders is thinner than the headline group number.</li>
+  </ul>
+</section>
+
+<!-- 08 — BESPOKE #4: debt & deleveraging -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The debt &amp; the deleveraging path</h2></div>
+  <p class="part-sub">The single biggest risk — and the clearest catalyst if it resolves.</p>
+
+  <p class="lead">GMR's balance sheet is the elephant in the room. Building airports on borrowed money has left it with <strong>~₹43,000 Cr of gross borrowings</strong> and <strong>~₹34,000 Cr of net debt</strong> — a leverage ratio (net debt / EBITDA) of about <strong>5.5×</strong> at the end of FY26. That interest burden is a big reason the company spent a decade loss-making, and it's the main thing standing between healthy EBITDA and healthy net profit.</p>
+
+  <div class="mini-stats">
+    <div class="ms red"><div class="msv">~₹34,000 Cr</div><div class="msl">Net debt (FY26) — the core risk on the balance sheet</div></div>
+    <div class="ms gold"><div class="msv">5.5×</div><div class="msl">Net debt / EBITDA — targeted below 4× in 18–24 months</div></div>
+    <div class="ms green"><div class="msv">~52%</div><div class="msl">EBITDA margin — the operating engine that services and pays down debt</div></div>
+  </div>
+
+  <h3>Why the leverage is (arguably) manageable</h3>
+  <ul class="clean">
+    <li><strong>Long-dated, asset-backed, and being refinanced cheaper.</strong> Airport debt is secured against monopoly cash flows and refinanced at lower rates as the assets mature — e.g., Hyderabad refinanced ₹2,100 Cr via 15-year debentures at a ~7.6% coupon. Lower rates directly lift net profit.</li>
+    <li><strong>EBITDA is growing into the debt.</strong> With EBITDA rising ~47% in FY26, the <em>ratio</em> falls even without paying down principal. Management targets net-debt/EBITDA <strong>below 4× within 18–24 months</strong>, largely by growing the denominator.</li>
+    <li><strong>Multiple deleveraging levers.</strong> Growing EBITDA (traffic + tariffs + spend), <strong>aerocity land monetisation</strong> (cash to pay down debt), and stake sales / partner capital (ADP) all reduce leverage without diluting the airport franchise.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The deleveraging virtuous circle</div>
+    <p>Here's the bull mechanism in one loop: rising traffic and spend lift <strong>EBITDA</strong> → higher EBITDA plus land-sale cash <strong>cuts net debt and the leverage ratio</strong> → lower leverage plus refinancing at maturing-asset rates <strong>cuts the interest bill</strong> → a smaller interest bill means <em>more of the EBITDA falls through to net profit</em>. FY26 was the first turn of that flywheel (the maiden group profit). If it keeps turning, the bottom line can improve far faster than revenue, because interest is the biggest drag being lifted. The bear mechanism is the same loop in reverse: if traffic stalls, a tariff reset disappoints, or land deals slip, the debt stays heavy, interest keeps eating the profit, and the whole re-rating thesis stalls.</p>
+  </div>
+
+  <div class="note"><b>The honest risk:</b> ₹34,000 Cr of net debt at 5.5× is <em>high</em>. It leaves limited margin for error — a demand shock, a rate spike, a regulatory setback or a capex overrun on the new airports could keep the company loss-making at the net line for longer. The deleveraging is a plan, not yet a fact; the next few years of the leverage ratio are the number to watch above all others.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; how it's valued</h2></div>
+  <p class="part-sub">Booming EBITDA, a whisker of net profit — and a valuation built on parts, not P/E.</p>
+
+  <p class="lead">The financial story is of a <strong>fast-growing operating engine dragged by depreciation and interest</strong>. Revenue and EBITDA compound strongly; the net line is only just above water. That's precisely why you can't value GMR on earnings — you value it on EV/EBITDA and a sum-of-the-parts.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory (₹ Crore)</div>
+    <div class="c-sub">Revenue from operations — a ~3× rise in five years</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill ink" style="width:31%"></span></div><div class="bval">4,601</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill brand" style="width:45%"></span></div><div class="bval">6,674</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:59%"></span></div><div class="bval">8,755</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:70%"></span></div><div class="bval">10,414</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">14,807</div></div>
+    </div>
+    <div class="legend"><span>Revenue from operations (Screener basis). Total income incl. other income was ~₹15,201 Cr in FY26.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Net profit / (loss) trajectory (₹ Crore)</div>
+    <div class="c-sub">A decade of losses — then FY26's maiden group profit</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">-1,131</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill bad" style="width:74%"></span></div><div class="bval">-840</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill bad" style="width:73%"></span></div><div class="bval">-828</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill bad" style="width:72%"></span></div><div class="bval">-817</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill re" style="width:42%"></span></div><div class="bval">+472</div></div>
+    </div>
+    <div class="legend"><span>FY26 group PAT of ₹472 Cr is the first positive annual figure in 10+ years. Note: after minority interest, the profit attributable to GMR's own equity holders was still marginally negative — the swing to black is real but early.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~52%</div><div class="msl">FY26 EBITDA margin (on total income) — record ₹6,150 Cr</div></div>
+    <div class="ms red"><div class="msv">₹-2.35</div><div class="msl">Book value / share — negative, from accumulated losses &amp; debt</div></div>
+    <div class="ms"><div class="msv">~22–33×</div><div class="msl">EV/EBITDA (Jun '26) — the multiple it's actually judged on</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why P/E is meaningless here — and what analysts use instead</div>
+    <p>With near-zero net profit (and negative book value from years of accumulated losses), the trailing P/E is a nonsense number (screens show it in the hundreds or negative). No serious analyst uses it. Instead they use two lenses. <strong>(1) EV/EBITDA</strong> — enterprise value (market cap <em>plus</em> the ₹34,000 Cr of net debt) divided by EBITDA — because it values the whole asset regardless of how it's financed, and airports globally trade on it. <strong>(2) SOTP (sum-of-the-parts)</strong> — value each airport separately on its own cash flows (often per-passenger or DCF), <em>add</em> the aerocity land NAV, then subtract net debt. JM Financial's ~₹120 target, for instance, is an SOTP. The bull thesis is literally that "the sum of the parts is worth more than the market gives the whole" — the crown-jewel airports plus hidden land are being obscured by the loss-making holding structure and the debt. The bear thesis: strip out the debt and the still-thin equity cash flow, and a lot of that SOTP is future, un-banked NAV.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The rivals &amp; the industry</h2></div>
+  <p class="part-sub">A privatised, consolidating airport sector — and a two-horse race for India's skies.</p>
+
+  <p class="lead">India's airports were historically run by the government's Airports Authority of India (AAI). Over the last two decades the biggest and busiest have been <strong>privatised under concessions</strong> — and the sector has effectively consolidated into <strong>two private champions</strong>: GMR and the Adani group.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs GMR</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">GMR Airports</td><td>India's largest private airport operator; ~27% of national traffic</td><td><em>This company.</em> The two crown jewels (Delhi, Hyderabad), the ADP partnership, and a head-start on aerocity monetisation.</td></tr>
+      <tr><td class="t-strong">Adani Airports</td><td>The fast-scaling challenger — Mumbai + 7 others + greenfield Navi Mumbai</td><td>Newer to airports but deep-pocketed; Navi Mumbai will directly rival Mumbai. The other half of the private duopoly. Delhi's tariff hike recently widened GMR's revenue lead.</td></tr>
+      <tr><td class="t-strong">AAI (govt.)</td><td>Still operates most smaller/regional airports</td><td>Not a commercial rival at the top end; increasingly the seller privatising airports to GMR/Adani.</td></tr>
+      <tr><td class="t-strong">AERA (regulator)</td><td>Sets aeronautical tariffs; not a competitor but the key external force</td><td>Determines the regulated till and the dual-till/single-till question — the biggest policy swing factor for every operator.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive dynamic that matters</div>
+    <p>Because airports are regional monopolies, GMR and Adani <em>rarely compete for the same passenger</em> — Delhi flyers use GMR, Mumbai flyers use Adani. The real competition is threefold: <strong>(1) bidding for new concessions</strong> (who wins the next privatised airport — deep pockets and aggressive bids matter, and can be value-destructive if overpaid); <strong>(2) the regulatory battle</strong> with AERA over tariffs and the single-vs-dual-till treatment of commercial profits, which sets the ceiling on returns for everyone; and <strong>(3) the race to monetise land and lift spend-per-passenger</strong>, where operating skill (and, for GMR, the ADP partnership) is the edge. GMR's advantage is incumbency at the two most valuable Indian airports plus a proven aerocity model; Adani's is balance-sheet firepower and a greenfield Navi Mumbai that could reshape the Mumbai market.</p>
+  </div>
+
+  <div class="note gold"><b>The regulatory backdrop:</b> the entire sector lives or dies on AERA's stance. A shift toward <strong>single-till</strong> regulation (using commercial profits to lower aero charges) would compress the value of the non-aero engine for every operator — the single biggest structural policy risk. Conversely, supportive multi-year tariff resets (like Delhi's FY25–29 order) are direct upgrades to cash flow.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A monopoly asset with a compounding tailwind — carrying a mountain of debt.</p>
+
+  <p class="lead">GMR Airports is a rare thing: a set of protected, monopoly, cash-generative infrastructure assets riding one of the world's strongest structural growth tailwinds. It is also heavily indebted, complex, and only just profitable. The debate is not whether the airports are good businesses — they plainly are — but whether the debt comes down and the hidden value gets crystallised fast enough to justify the price.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Monopoly moat</strong> — decades-long concessions on India's busiest airports; no rival can build next door.</li>
+        <li><strong>Twin compounders</strong> — passenger growth <em>and</em> spend-per-head both rising; non-aero income/pax +62% in FY26.</li>
+        <li><strong>Deleveraging flywheel</strong> — growing EBITDA + refinancing + land sales cut leverage, and interest relief flows straight to profit.</li>
+        <li><strong>Hidden real-estate NAV</strong> — ~1,500-acre Hyderabad aerocity + Delhi land, carried below value — the SOTP kicker.</li>
+        <li><strong>Blue-chip partner</strong> — Groupe ADP as co-promoter brings operating skill, capital and validation; pure-play post-restructuring.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>~₹34,000 Cr net debt at 5.5×</strong> — high leverage, thin equity cash flow, little margin for error.</li>
+        <li><strong>Barely profitable</strong> — a decade of losses; still marginally loss-making at the owners-of-parent line after minorities.</li>
+        <li><strong>Regulatory risk</strong> — AERA caps aero returns; a single-till shift would gut the non-aero value driver.</li>
+        <li><strong>Concentration</strong> — Delhi + Hyderabad are the vast majority of value; a Delhi shock hits the whole group.</li>
+        <li><strong>Valuation on the come</strong> — priced on EV/EBITDA and un-banked land NAV, not cash earnings; execution/land-monetisation must deliver, and new greenfields still burn cash.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>GMR owns some of the best infrastructure assets in India — monopoly gateways to a country that will fly far more over the next decade, with a commercial-and-land engine that turns footfall into high-margin cash. The business quality is not the question. The question is <strong>the balance sheet and the timeline</strong>: can rising EBITDA, cheaper refinancing and aerocity monetisation drag net debt/EBITDA below 4× and turn the maiden FY26 profit into durable, growing earnings that reach GMR's own shareholders? Get that right and a loss-making-looking stock re-rates as the hidden value surfaces; stumble — on traffic, tariffs, or debt — and a highly-levered, barely-profitable company stays exactly that. Watch three numbers each result: <strong>passenger traffic, non-aero spend-per-passenger, and the net-debt/EBITDA ratio</strong>. They tell you whether the flywheel is turning.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>GMR Airports Ltd — FY26 &amp; Q4FY26 results press release and investor presentation (year ended Mar 2026), investor.gmraero.com.</li>
+    <li>ITLN — "GMR Airports posts record ₹152 bn revenue, returns to profit in FY26."</li>
+    <li>ScanX / Business Standard — GMR Airports FY26 revenue ₹14,807 Cr; consolidated results and net-loss-to-owners detail.</li>
+    <li>Multibagg — "GMR Airports Q4 FY26: Profit Returns, Income Up 36%" (income, EBITDA, PAT, net debt, traffic).</li>
+    <li>Yahoo Finance / Quartr — GMR Airports Q4 2026 earnings-call highlights (net debt, deleveraging target, per-airport detail).</li>
+    <li>Tradebrains — "Duty Free, Retail or Car Parks: How Does GMR Airports Make Money?" and FY26 traffic record.</li>
+    <li>Screener.in — GMR Airports consolidated financials, borrowings, ROCE, shareholding.</li>
+    <li>Business Standard / Kotak / stockanalysis.com — GMR Airports share price &amp; market cap (Jun 2026).</li>
+    <li>Groupe ADP — investor disclosures on GAL economic interest, co-promoter role and stake transfer to GMR (2026).</li>
+    <li>AERA / ANIews / Daily Pioneer — Delhi (DIAL) 4th-control-period tariff order (FY25–FY29), UDF changes.</li>
+    <li>Construction World / Business Standard — NCLT demerger of GMR's non-airport business; entity renamed GMR Airports Ltd (Sep 2024).</li>
+    <li>GMR Group / GMR Aerocity — Hyderabad Airport City (~1,500 acres) &amp; Delhi Aerocity land development.</li>
+    <li>ANI / newkerala — GMR adds Nagpur airport; Bhogapuram near commissioning; international portfolio (Medan, Cebu, Crete) concession terms.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; verify all numbers against primary sources before relying on them. In particular, note the distinction between group PAT and profit attributable to owners of the parent, and that valuation multiples and net-debt figures vary by source and date. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "GMRAIRPORT";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
