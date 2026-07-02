@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siemens Limited — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F7;
+    --paper-2:#FAFCFD;
+    --card:#FFFFFF;
+    --ink:#101820;
+    --ink-soft:#4A5763;
+    --ink-faint:#82909C;
+    --brand:#0E4C6E;          /* deep petrol-blue - residual Siemens */
+    --brand-bright:#1682B4;   /* brighter cyan-blue accent */
+    --gold:#C98A22;           /* warm amber - orders / rail / current */
+    --di:#1682B4;             /* Digital Industries - cyan-blue */
+    --si:#0E4C6E;             /* Smart Infrastructure - deep petrol */
+    --mo:#C98A22;             /* Mobility - rail amber */
+    --lv:#5C7A8C;             /* Low-voltage / portfolio - slate */
+    --line:#DBE2E5;
+    --line-soft:#E7EDEF;
+    --good:#1F7A55;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E3F1F8;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#E4F1F8;border:1px solid #BBDCEC;border-left:3px solid var(--brand-bright);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#0c4964;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"⚙";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#123444;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F3F8FA;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E4EAED;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0E4C6E,#1682B4);}
+  .fill.gold{background:linear-gradient(90deg,#C98A22,#E0A845);}
+  .fill.di{background:linear-gradient(90deg,#1682B4,#2E9BCB);}
+  .fill.si{background:linear-gradient(90deg,#0E4C6E,#176A93);}
+  .fill.mo{background:linear-gradient(90deg,#C98A22,#E0A845);}
+  .fill.lv{background:linear-gradient(90deg,#5C7A8C,#7797A9);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#33424d,#4A5763);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 64px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.di{background:var(--di);}
+  .node.si{background:var(--si);}
+  .node.mo{background:var(--mo);}
+  .node.lv{background:var(--lv);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-di{color:var(--di);font-weight:600;}
+  .chain-si{color:var(--si);font-weight:600;}
+  .chain-mo{color:var(--mo);font-weight:600;}
+  .chain-lv{color:var(--lv);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FAF2E2;color:#5a4212;}
+  .note.gold b{color:#9a6814;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6814;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#E3F1F8;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> The demerger &amp; what Siemens is now</a></li>
+    <li><a href="#p2"><span class="n">02</span> What the company sells</a></li>
+    <li><a href="#p3"><span class="n">03</span> The three engines</a></li>
+    <li><a href="#p4"><span class="n">04</span> Orders, backlog &amp; how it earns</a></li>
+    <li><a href="#p5"><span class="n">05</span> The company &amp; its parent</a></li>
+    <li><a href="#p6"><span class="n">06</span> The automation + electrification supercycle</a></li>
+    <li><a href="#p7"><span class="n">07</span> The Mobility / railway engine</a></li>
+    <li><a href="#p8"><span class="n">08</span> Parent moat &amp; operating leverage</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; capital quality</a></li>
+    <li><a href="#p11"><span class="n">11</span> The valuation debate</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: SIEMENS · BSE: 500550</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>Siemens Limited, <em>the pure-play left after energy left home</em></h1>
+  <p class="dek">A complete walk through the <strong>residual, post-demerger Siemens Ltd</strong> — the automation, electrification and railway company that remained in 2025 after its energy business was spun off as Siemens Energy India. How a factory-automation + building-electrification + rail business actually earns money, why order intake and a ₹42,000 Cr backlog matter more than any one quarter, the three engines (Digital Industries, Smart Infrastructure, Mobility), the capex supercycle it rides, the €3 billion locomotive order that reshaped its Mobility arm — and why one of India's priciest capital-goods stocks trades where it does.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹17,364 <small>Cr</small></div><div class="l">Revenue (FY25, Sep · cont. ops)</div></div>
+    <div class="cell"><div class="v">₹42,253 <small>Cr</small></div><div class="l">Order backlog (Sep '25)</div></div>
+    <div class="cell"><div class="v">~11% <small>Op.</small></div><div class="l">Op. margin (FY25)</div></div>
+    <div class="cell"><div class="v">~₹1.29 <small>L Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">02 Jul 2026</b> · source: FY25 results (year ended Sep 2025) + quarters into FY26</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Update</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>Post-demerger FY25 (continuing operations ex-energy) incorporated — revenue ₹17,364 Cr (+8%), PAT ₹1,688 Cr, order backlog ₹42,253 Cr; Q4 FY25 revenue ₹5,171 Cr (+16%); added the €3 bn Dahod locomotive order, the Innomotics/LV-Motors divestment, and the automation-vs-mobility segment mix.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Siemens Limited (ticker <strong>SIEMENS</strong>) is the <strong>Indian flagship of Germany's Siemens AG — but a very different company today than a year ago</strong>. In 2025 it <strong>demerged its entire energy business</strong> (power transmission gear and large turbines) into a separately-listed company, Siemens Energy India (ENRIN). What you own in the SIEMENS ticker now is the <strong>residual, energy-free company</strong>: factory and industrial automation (<strong>Digital Industries</strong>), building tech and low- &amp; medium-voltage electrification (<strong>Smart Infrastructure</strong>), and railways &amp; metros (<strong>Mobility</strong>). It sells the switchgear, drives, controls, software, signalling and locomotives that electrify and automate India's factories, buildings, data-centres and trains.</p>
+
+  <p>A note on the calendar first: like its German parent, <strong>Siemens Ltd reports on a September fiscal year (October–September)</strong>, not the Indian March year-end. Its latest full year is therefore <strong>FY25, ended 30 September 2025</strong>, and the headline figures below are on that basis — and, crucially, on a <strong>"continuing operations" basis that excludes the demerged energy business</strong> (see section 01).</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>A leaner, re-shaped company post-demerger.</strong> On continuing operations, FY25 revenue was <strong>₹17,364 Cr (+8%)</strong> with a profit-from-operations margin around <strong>11%</strong> and reported PAT of <strong>~₹1,688 Cr</strong> — the profit line <em>fell</em> year-on-year, but that's largely a base effect (FY24 carried one-off gains and a bigger "other income" tail). The demerger, not weak trading, is the reason last year's numbers look nothing like this year's — the old combined Siemens (with energy) reported far higher totals.</li>
+    <li><strong>The order book is the forward story.</strong> Siemens Ltd sits on a <strong>₹42,253 Cr order backlog (Sep '25, +6%)</strong> — around <strong>2.4 years of revenue already contracted</strong> — anchored by a giant railway order. For an equipment-and-projects business, that backlog, not this quarter's sales, tells you how full the factories will be.</li>
+    <li><strong>A prime bet on India's automation, electrification &amp; rail capex.</strong> Data-centres, building electrification, metros and railways, and a hoped-for private-manufacturing capex revival all pour spend into exactly Siemens Ltd's shelves. That structural tailwind — plus a debt-free, net-cash, high-return balance sheet and the Siemens brand — is why the market pays a punchy <strong>~50× forward earnings</strong> for it, one of the richest multiples in Indian capital goods and the most contested feature of the stock.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of the new Siemens Ltd as an <strong>"arms dealer" for two of India's biggest building projects at once: automating its factories and moving its people</strong>. It doesn't run the factory or the metro — it sells the essential kit everyone building those things must buy: the drives and controls that run a production line, the switchgear and building systems that distribute power safely inside a data-centre or airport, and the locomotives, signalling and electrification that keep trains running. Last year Siemens made a big strategic call: it decided its slower, capital-heavy <em>energy</em> business (transformers, turbines, the grid) deserved to be a separate stock, so it split it off. This primer is about the <strong>half that stayed</strong> — the faster-turning, asset-lighter automation-electrification-and-rail company. Don't confuse it with the energy half (ENRIN); they now report separately and are different bets.</p>
+  </div>
+</section>
+
+<!-- 01 — BESPOKE: demerger & what Siemens is now -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>The demerger — and what Siemens Ltd <em>is</em> now</h2></div>
+  <p class="part-sub">The single event that re-shaped this company — and the "focus &amp; clarity" thesis behind it.</p>
+
+  <p class="lead">You cannot read Siemens Ltd's financials without first understanding that, in 2025, <strong>the company you're looking at got smaller on purpose</strong>. It carved its entire energy business out into a new, separately-listed company — Siemens Energy India Limited (ENRIN) — and what remains is a <em>focused</em> automation, electrification and mobility company. The <em>reason</em> for the split, and exactly which businesses went where, is the foundation of the whole case.</p>
+
+  <h3>What actually happened</h3>
+  <p>For decades, Siemens Ltd was a sprawling Indian conglomerate: factory automation and drives (Digital Industries), building &amp; distribution infrastructure (Smart Infrastructure), railways &amp; metros (Mobility), <em>and</em> a big, capital-heavy energy business (power-transmission gear + large turbines). Globally, Siemens had already spun its energy arm into a separately-listed <strong>Siemens Energy AG</strong> back in 2020. India followed suit. Through a Scheme of Arrangement <strong>sanctioned by the National Company Law Tribunal on 25 March 2025</strong> (appointed date <strong>1 March 2025</strong>), Siemens Ltd's <strong>energy business was demerged</strong> into Siemens Energy India. Every Siemens Ltd shareholder received one ENRIN share for each Siemens Ltd share (1:1), and ENRIN began trading on <strong>19 June 2025</strong>. In Siemens Ltd's own accounts, the energy business up to the appointed date is now reported as <strong>discontinued operations</strong> — which is exactly why FY25's "continuing operations" numbers look so much smaller than the old combined company.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What stayed vs. what left — get this right</caption>
+    <thead><tr><th>Stayed with Siemens Ltd (SIEMENS) — this primer</th><th>Left for Siemens Energy India (ENRIN) — separate stock</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Digital Industries — factory/industrial automation, drives, PLCs, motion control, industrial software</td><td>Power Transmission — transformers, GIS/AIS switchgear, HVDC, FACTS, substations</td></tr>
+      <tr><td class="t-strong" style="color:var(--brand)">Smart Infrastructure — low- &amp; medium-voltage electrification, switchgear, building technology, distribution</td><td>Power Generation — large gas &amp; steam turbines, generators, service</td></tr>
+      <tr><td class="t-strong" style="color:var(--brand)">Mobility — railways: rolling stock/locomotives, rail electrification, signalling, metros</td><td>Industrial Applications — industrial steam turbines, waste-heat recovery, process electrification</td></tr>
+      <tr><td class="t-strong" style="color:var(--brand)">Low-Voltage &amp; Products / portfolio (incl. the now-sold LV Motors business)</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note gold"><b>One-line rule of thumb:</b> if it makes electricity or moves bulk power across the grid (turbines, transformers, HVDC), it went to <strong>ENRIN</strong>. If it <em>uses</em> electricity to automate a factory, electrify a building, or run a train, it <strong>stayed in Siemens Ltd</strong>. This primer is the second one.</div>
+
+  <h3>Why split it — the "focus &amp; clarity" logic</h3>
+  <ul class="clean">
+    <li><strong>Different businesses deserve different valuations.</strong> Grid gear and turbines are capital-heavy, project-driven and cyclical; automation and building electrification are more asset-light, shorter-cycle and steadier. Bundled together, the market applied one blended multiple to a mixed bag. Splitting lets each be valued on its own merits — a cleaner automation-electrification-mobility company for one set of investors, a pure-play grid champion for another.</li>
+    <li><strong>Alignment with the global parent.</strong> The split mirrors the 2020 global separation of Siemens Energy AG from Siemens AG, letting each Indian arm sit cleanly under the right global strategy, product roadmap and technology stack.</li>
+    <li><strong>Sharper capital allocation.</strong> A focused company can pour capex and management attention into automation factories, a locomotive plant and building-tech capacity without an energy business competing internally for the same rupees.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The re-rating thesis, in one idea</div>
+    <p>The bull argument for a demerger is a <strong>"sum-of-the-parts unlock"</strong> — and here it cuts <em>both</em> ways. The energy half (ENRIN) got the loudest re-rating, because a pure grid-technology play riding the transmission supercycle is easy to fall in love with. But the residual Siemens Ltd also becomes a <em>cleaner</em> story: a diversified automation + electrification + railway compounder, without a lumpy turbine business muddying the picture. The catch for Siemens Ltd holders is that <em>this</em> half is the one that has to prove it can grow briskly on its own — its biggest single segment (Digital Industries factory automation) is also its most cyclical and, lately, its softest, hostage to a still-tentative private-capex revival. So the "clarity" is real, but the growth burden now sits squarely on automation, buildings and rail delivering.</p>
+  </div>
+
+  <div class="note gold"><b>A note on the reporting calendar:</b> Siemens Ltd's fiscal year <strong>ends 30 September</strong> (Oct–Sep), not the Indian March year-end. "FY25" means the year ended <strong>Sep 2025</strong> — the first full year reported without the energy business — and quarters run Dec / Mar / Jun / Sep. Watch the month, not just the "FY25/FY26" label, when comparing to other Indian companies; and note that FY24 comparatives are <em>restated</em> to strip out energy, so growth rates are best read on the continuing-operations basis.</div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What Siemens Ltd actually sells</h2></div>
+  <p class="part-sub">No engineering degree required — just follow the electricity from the wall into a factory, a building and a train.</p>
+
+  <p class="lead">The simplest way to understand the new Siemens Ltd is to follow what happens <strong>after</strong> electricity arrives somewhere. It has to be <em>distributed safely, converted into controlled motion, coordinated by software</em>, and — in the case of railways — used to move trains. Siemens Ltd makes the equipment for each of those jobs. (Notice what's <em>missing</em> versus a year ago: it no longer <em>makes</em> the electricity or moves it across the national grid — that's now ENRIN.)</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The four things Siemens Ltd does with electricity — and what it sells for each</caption>
+    <thead><tr><th>The job to be done</th><th>What Siemens Ltd makes for it</th><th>Segment</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Distribute &amp; manage power inside a building or plant</td><td>Low- &amp; medium-voltage switchgear, circuit breakers, busbars, building automation, fire/security, smart-metering, electrification for data-centres &amp; commercial buildings</td><td><span class="chain-si">Smart Infrastructure</span></td></tr>
+      <tr><td class="t-strong">Turn electricity into controlled, automated production</td><td>PLCs &amp; industrial controllers, variable-speed drives, motion control, industrial PCs, and the <strong>software</strong> (digital twin, PLM, MES) that designs &amp; runs factories</td><td><span class="chain-di">Digital Industries</span></td></tr>
+      <tr><td class="t-strong">Move people &amp; freight on rail</td><td>Electric locomotives &amp; rolling stock, rail electrification, signalling &amp; train-control, metro systems, and long-term maintenance</td><td><span class="chain-mo">Mobility</span></td></tr>
+      <tr><td class="t-strong">Everyday electrical products</td><td>Low-voltage products &amp; components sold through channels (and, until mid-2026, low-voltage motors — now divested)</td><td><span class="chain-lv">LV / Products</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why this framing matters</div>
+    <p>Almost everything Siemens Ltd makes is a <strong>"pick-and-shovel"</strong> input — essential, technical, and bought by <em>someone else</em> doing the visible work (building the data-centre, running the plant, laying the metro). That gives it two structural advantages. First, it is <strong>diversified across many end-markets</strong> — data-centres, autos, metals, cement, food &amp; beverage, pharma, railways, renewables, buildings — so no single customer or cycle makes or breaks it. Second, its products span the <strong>"short-cycle"</strong> (standardised switchgear, drives and components that ship in weeks and book fast) and the <strong>"long-cycle"</strong> (multi-year locomotive and metro projects). That blend of fast-turning products and slow, chunky projects is central to how the business behaves — and to why Digital Industries can wobble while Mobility's giant backlog keeps grinding out revenue.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The three engines, broken into parts</h2></div>
+  <p class="part-sub">Siemens Ltd now runs as three genuinely different businesses under one roof — each with its own customers, cycle and margin profile.</p>
+
+  <p class="lead">Post-demerger, Siemens Ltd reports around <strong>three core segments</strong> — Smart Infrastructure, Mobility and Digital Industries — plus a small Low-Voltage/Products tail. They are genuinely different businesses (a switchgear factory and a locomotive plant share little except the brand), so it pays to understand each on its own terms. On the latest year, <strong>Smart Infrastructure is the biggest and steadiest engine, Mobility is the fastest-growing and most visible, and Digital Industries is the highest-quality but most cyclical.</strong></p>
+
+  <div class="chart">
+    <div class="c-title">Approximate revenue mix — the new Siemens Ltd</div>
+    <div class="c-sub">Indicative segment shares (based on Q4 FY25 segment revenues; the annual mix is broadly similar). Smart Infrastructure leads, with Mobility and Digital Industries roughly matched.</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Smart Infrastructure<small>electrification, buildings, LV/MV</small></div><div class="track"><span class="fill si" style="width:100%"></span></div><div class="bval">~52%</div></div>
+      <div class="bar-row"><div class="blab">Mobility<small>rail, locos, signalling, metros</small></div><div class="track"><span class="fill mo" style="width:42%"></span></div><div class="bval">~22%</div></div>
+      <div class="bar-row"><div class="blab">Digital Industries<small>automation, drives, software</small></div><div class="track"><span class="fill di" style="width:40%"></span></div><div class="bval">~20%</div></div>
+      <div class="bar-row"><div class="blab">Low-Voltage / Products<small>incl. divested LV Motors</small></div><div class="track"><span class="fill lv" style="width:10%"></span></div><div class="bval">~5–6%</div></div>
+    </div>
+    <div class="legend"><span>Shares are approximate and shift quarter to quarter with project mix. The headline: Siemens Ltd is now <strong>more an "electrification + rail" company than a "factory-automation" company</strong> — the reverse of the impression the Siemens brand often gives.</span></div>
+  </div>
+
+  <h3>The menu, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-si">Smart Infrastructure</span></strong> — the biggest engine. Low- &amp; medium-voltage <strong>switchgear, circuit breakers, busbars and panels</strong>; building automation, fire safety, security and metering; and electrification solutions for <strong>data-centres, commercial buildings, airports, metros and industry</strong>. Shorter-cycle, broad-based, and directly plugged into India's building-and-data-centre boom. Decent, improving margins and steady execution — the ballast of the portfolio.</li>
+    <li><strong><span class="chain-mo">Mobility</span></strong> — railways. <strong>Electric locomotives and rolling stock, rail electrification, signalling &amp; train control, metros</strong>, plus decades-long maintenance contracts. Historically a modest slice, now transformed by a landmark €3 bn locomotive order (section 07). Lumpy and long-cycle, but extraordinarily high-visibility once won.</li>
+    <li><strong><span class="chain-di">Digital Industries</span></strong> — factory &amp; process automation: <strong>PLCs, drives, motion control, industrial PCs and industrial software</strong> (digital twin, PLM, MES). The highest-margin, most "tech" business — but the most cyclical, since it lives off <em>private-sector factory capex</em>, which has been muted; DI volumes were the soft spot through FY25 and are only tentatively recovering.</li>
+    <li><strong><span class="chain-lv">Low-Voltage &amp; Products</span></strong> — everyday electrical products sold through distribution. A steady, channel-driven tail. In a portfolio-sharpening move, Siemens Ltd agreed to <strong>sell its low-voltage motors business to Innomotics</strong> (see below), trimming the segment.</li>
+  </ul>
+
+  <div class="note gold"><b>Portfolio pruning:</b> Siemens Ltd agreed to divest its <strong>Low-Voltage Motors business to Innomotics India for an enterprise value of ~₹2,200 Cr</strong> (about <strong>50.5× FY25 EBITDA</strong> — a rich price), a deal that closed on <strong>1 June 2026</strong>. Management flagged it as roughly <strong>6% of volumes but only ~2% of profits</strong> — i.e. a low-margin business sold at a high multiple, freeing focus and capital for the higher-return automation, electrification and rail engines.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Orders, backlog and how a project business earns</h2></div>
+  <p class="part-sub">Why a single quarter's profit tells you less than the order book — and how the backlog turns into revenue.</p>
+
+  <p class="lead">Siemens Ltd is, at its core, an <strong>order-driven equipment-and-projects business</strong>. It <em>wins</em> orders (a switchgear supply, a metro signalling contract, a locomotive fleet), holds them in a <strong>backlog</strong>, and <em>converts</em> them into revenue over months or years as it manufactures, delivers and executes. That means three numbers matter more than a single quarter's sales: <strong>order intake</strong> (what it won), <strong>backlog</strong> (what's contracted but not yet delivered), and the <strong>book-to-bill</strong> ratio (orders ÷ revenue — above 1.0 means the pipeline is growing).</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">₹42,253 Cr</div><div class="msl">Order backlog at Sep 2025 (+6% YoY) — roughly 2.4 years of revenue already contracted</div></div>
+    <div class="ms gold"><div class="msv">~2.4×</div><div class="msl">Backlog ÷ FY25 revenue — high visibility, heavily anchored by one giant railway order</div></div>
+    <div class="ms green"><div class="msv">₹4,800 Cr</div><div class="msl">Q4 FY25 new orders (+10.5%) — order growth outpacing revenue in the latest quarter</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why backlog beats a single quarter</div>
+    <p>Because revenue is <em>recognised over time</em> as projects execute, any single quarter's sales can be noisy — a metro contract slips a month, a locomotive milestone lands early, a factory-automation customer delays an order. The <strong>backlog smooths through that</strong>: it tells you how much work is already sold and waiting to be delivered, so you can see the shape of the next two-plus years regardless of one quarter's wobble. Siemens Ltd's ₹42,000 Cr book is unusually large relative to its revenue — but read it with care, because a big chunk is <em>one</em> multi-year locomotive order (section 07) that will convert to revenue slowly over a decade, not evenly. High visibility, but back-ended.</p>
+  </div>
+
+  <h3>How a quarter actually reads</h3>
+  <p>Take Q4 FY25 (the quarter to Sep 2025) as an illustration of the mechanics. Revenue rose <strong>16% to ₹5,171 Cr</strong> and <strong>profit from operations rose ~14.6% to ₹566 Cr</strong> — solid operational momentum, driven by Mobility and Smart Infrastructure, while Digital Industries stayed muted. Yet <strong>reported PAT slipped ~7% to ₹485 Cr</strong>. Why the divergence? Because the prior-year quarter carried a <strong>one-off property-sale gain</strong> (and generally fatter "other income"), flattering the FY24 base. This is the recurring lesson with Siemens Ltd: look at <em>profit from operations and orders</em>, not the headline PAT, because non-operating items and the demerger restatement distort the year-on-year optics.</p>
+
+  <div class="note gold"><b>The execution tailwind to watch:</b> a big swing factor for a company this exposed to <em>government</em> orders (railways, metros, state power distribution) is how fast the government actually <em>executes</em> and pays. Management has pointed to public-capex execution improving markedly — order-to-delivery cycles that used to run at ~40–50% completion moving toward ~75–85% — which converts backlog into revenue faster. When public capex flows, Siemens Ltd's rail and infrastructure order book turns quicker; when it stalls, revenue recognition slows even with the backlog intact.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The company and its parent</h2></div>
+  <p class="part-sub">A German engineering lineage back to 1867, a 75% promoter block, and the moat that comes with the badge.</p>
+
+  <p class="lead">Siemens Ltd carries one of the deepest engineering pedigrees in Indian industry — Siemens laid its first groundwork in India in <strong>1867</strong> (the Indo-European telegraph line) and has built, automated and electrified Indian industry ever since. After the demerger its ownership is clean and simple: <strong>Siemens AG of Germany holds ~75%</strong>, with the remaining ~25% in public hands.</p>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Siemens AG holds ~75%</strong> — the German industrial giant (automation, digitalisation, mobility, smart infrastructure), a company generating well over €70 bn in global revenue. It is the technology, R&amp;D and brand engine behind the Indian arm.</li>
+    <li><strong>~25% free float</strong> — held by domestic institutions, foreign investors and public shareholders. A 75% promoter stake means a relatively thin float and the usual controlled-subsidiary dynamics (royalties, related-party sourcing/export pricing, brand fees) that minority holders ride alongside.</li>
+    <li><strong>Management:</strong> led by MD &amp; CEO <strong>Sunil Mathur</strong> (with a new operating leadership layer being built out post-demerger) — a long-tenured, professional management team, not a family promoter.</li>
+  </ul>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1867 / 1922</div><div class="ev">Siemens begins in India (Indo-European telegraph, 1867); Siemens (India) is formally established in 1922 — a century-plus of Indian operations.</div></li>
+    <li><div class="yr">1957</div><div class="ev">Siemens Limited incorporated in its modern form; over the decades builds automation, switchgear, healthcare, rail and energy businesses in India.</div></li>
+    <li><div class="yr">2020</div><div class="ev">Globally, <strong>Siemens Energy AG</strong> is spun off and separately listed from Siemens AG — the template India later follows. (Siemens Healthineers had already been separately listed in 2018.)</div></li>
+    <li class="major"><div class="yr">Aug 2023</div><div class="ev">Siemens wins its <strong>largest-ever Indian order</strong> — a ~€3 bn contract for 1,200 × 9,000 HP electric locomotives from Indian Railways (Dahod), reshaping the Mobility segment.</div></li>
+    <li class="major"><div class="yr">Mar 2025</div><div class="ev">NCLT sanctions the <strong>demerger of the energy business</strong> (appointed date 1 Mar 2025); energy becomes discontinued operations in Siemens Ltd's accounts.</div></li>
+    <li class="major"><div class="yr">19 Jun 2025</div><div class="ev">Siemens Energy India (<strong>ENRIN</strong>) lists separately; Siemens Ltd (SIEMENS) continues as the automation + electrification + mobility company.</div></li>
+    <li class="major"><div class="yr">FY25 (Sep '25)</div><div class="ev">First full year post-demerger (continuing ops): revenue ₹17,364 Cr (+8%), PAT ~₹1,688 Cr, order backlog ₹42,253 Cr.</div></li>
+    <li><div class="yr">Jun 2026</div><div class="ev">Completes sale of the <strong>Low-Voltage Motors business to Innomotics</strong> (~₹2,200 Cr EV, ~50.5× FY25 EBITDA) — sharpening the portfolio.</div></li>
+  </ul>
+
+  <h3>The parent relationship — why the badge is an edge</h3>
+  <ul class="clean">
+    <li><strong>Technology access.</strong> The Indian arm deploys Siemens AG's global IP — automation platforms (SIMATIC, SINAMICS), the Xcelerator industrial-software suite, digital-twin technology, building-tech and rail systems — that no domestic rival can independently develop.</li>
+    <li><strong>Brand &amp; trust.</strong> In mission-critical electrical and automation kit, buyers pay for reliability and track record; the Siemens name is a genuine order-winning asset, especially for data-centres, metros and complex plants.</li>
+    <li><strong>Export &amp; sourcing platform.</strong> India increasingly serves as a low-cost manufacturing and engineering hub for the global group, adding an export leg beyond the domestic tender cycle (section 08).</li>
+    <li><strong>The trade-off.</strong> A 75% parent means a thin float, and revenue/margin flows through related-party royalties, imports and export pricing set within the group — a governance variable minority holders should keep in view.</li>
+  </ul>
+</section>
+
+<!-- 06 — BESPOKE: automation + electrification supercycle -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The automation + electrification "supercycle" — the force behind two of the three engines</h2></div>
+  <p class="part-sub">Why India is spending a structural wave of money on automating factories and electrifying buildings — and how the demand actually reaches Siemens Ltd.</p>
+
+  <p class="lead">Two of Siemens Ltd's three engines — Digital Industries and Smart Infrastructure — ride the same broad force: a <strong>multi-year surge in spending on automating industry and electrifying the built environment</strong>. Understanding <em>why</em> that spend is happening, and how it splits into fast-turning products and slow projects, is the key to the growth case (and to why one engine can boom while the other stalls).</p>
+
+  <h3>The mechanism: five demand drivers, one company that supplies them all</h3>
+  <ul class="clean">
+    <li><strong>Data-centres (the AI build-out).</strong> Every new data-centre is, electrically, a small city — it needs vast amounts of switchgear, power distribution, cooling controls and building automation. This is a direct, fast-growing pull on Smart Infrastructure, and one of the loudest demand themes management points to.</li>
+    <li><strong>Building &amp; commercial electrification.</strong> New airports, metros, commercial towers, hospitals and campuses all need low- &amp; medium-voltage electrification and smart-building systems — again, Smart Infrastructure's core shelf.</li>
+    <li><strong>Factory automation &amp; "China+1".</strong> As global supply chains diversify manufacturing into India and Indian factories modernise, they buy PLCs, drives, motion control and software from Digital Industries. This is the highest-quality demand — but it depends on <em>private-sector capex</em>, which has been the slowest driver to fire.</li>
+    <li><strong>Renewables &amp; grid modernisation.</strong> The clean-energy build-out needs medium-voltage electrification and controls at the distribution and industrial edge (the bulk transmission gear itself now sits in ENRIN, not here).</li>
+    <li><strong>"Make in India" &amp; PLI-linked capex.</strong> Government incentive schemes pulling manufacturing (electronics, autos, batteries) into India create new factories — every one a customer for automation and electrification kit.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Short-cycle vs long-cycle — why it matters</div>
+    <p>Siemens Ltd's automation-and-electrification demand comes in two very different flavours, and mixing them up is the classic mistake. <strong>Short-cycle</strong> products — standardised switchgear, drives, controllers, components — are ordered by a contractor or distributor and shipped within weeks; they track the <em>current</em> pace of building and factory activity, and turn revenue fast. <strong>Long-cycle</strong> project work — a full building-automation system, a large industrial-automation rollout, a metro contract — is booked once and delivered over years. In an upswing, short-cycle recovers <em>first</em> (you see it in orders within a quarter or two) while long-cycle projects provide the steady multi-year base. Right now the tell-tale is Digital Industries: its short-cycle automation orders are the most sensitive barometer of whether India's <em>private</em> factory-capex cycle is genuinely turning — and management's caution there is why the market is watching DI order inflow so closely.</p>
+  </div>
+
+  <div class="note gold"><b>The honest nuance:</b> this is a <em>real but uneven</em> supercycle. Smart Infrastructure (data-centres, buildings, public infra) has been firing; Digital Industries (private factory automation) has lagged, dragged by muted private capex and a thin order backlog carried into the year. The bull case needs <em>both</em> to run; the current reality is one strong leg and one still-tentative one. That split is exactly why brokers have trimmed Digital Industries estimates even while staying constructive on the overall infrastructure story.</p></div>
+</section>
+
+<!-- 07 — BESPOKE: the Mobility / railway engine -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The Mobility / railway engine — a lumpy, high-visibility driver all its own</h2></div>
+  <p class="part-sub">One €3 billion order changed the shape of Siemens Ltd — here's why railways are a distinct force from the automation story.</p>
+
+  <p class="lead">If the automation-and-electrification supercycle (section 06) is the broad tailwind, <strong>Mobility is a separate, chunkier, more visible growth engine</strong> — driven not by private capex but by India's vast, policy-backed <strong>rail and metro build-out</strong>. And it was transformed by a single landmark contract that is now the anchor of the entire order book.</p>
+
+  <h3>The Dahod locomotive order — the crown jewel</h3>
+  <p>In 2023, Siemens Mobility won a contract to supply Indian Railways with <strong>1,200 electric locomotives of 9,000 HP each</strong>, to be assembled at the Indian Railways factory in <strong>Dahod, Gujarat</strong>. The details are what make it so significant:</p>
+  <ul class="clean">
+    <li><strong>~€3 billion (≈ ₹26,000+ Cr) in value</strong> — the <em>single largest order in Siemens Mobility's global history</em> and the largest ever for Siemens in India.</li>
+    <li><strong>Deliveries over ~11 years</strong> — a decade-plus of contracted, visible revenue that anchors the ₹42,000 Cr backlog and converts slowly and steadily.</li>
+    <li><strong>Plus 35 years of full-service maintenance</strong> — a very long tail of high-margin, recurring service revenue after the locomotives are built. This is the "razor-and-blades" logic: the machine is sold once, but serviced for decades.</li>
+    <li>India's <strong>first 9,000 HP freight locomotives</strong> — a technology and localisation showcase, built substantially in India.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why railways are a <em>different</em> driver from automation</div>
+    <p>Automation and building electrification (section 06) are <strong>broad, short-cycle-ish, private-and-public demand</strong> — many customers, many small-to-mid orders, sensitive to the economic cycle. Railways are the opposite: <strong>a few enormous, multi-year, government-backed orders</strong> that are lumpy to win but, once won, deliver a decade of near-guaranteed revenue and then decades of service. That gives Mobility a <em>distinct</em> risk-reward: order inflow is chunky and unpredictable quarter to quarter (you can't win a €3 bn order every year), but the <em>visibility</em> once you have it is unmatched. It also diversifies Siemens Ltd away from the private-capex cycle that Digital Industries depends on — when factory automation is soft, a decade-long locomotive contract keeps grinding out revenue regardless.</p>
+  </div>
+
+  <h3>The broader rail &amp; metro pipeline</h3>
+  <ul class="clean">
+    <li><strong>Vande Bharat &amp; rolling stock.</strong> Siemens is a propulsion/traction supplier into India's semi-high-speed Vande Bharat programme (supplying propulsion for a set of trainsets built with rail partners) — a growing rolling-stock opportunity.</li>
+    <li><strong>Metros.</strong> Rail electrification and signalling for expanding metro networks (e.g. consortium work with Gujarat Metro on the Ahmedabad Phase-2 and Surat Phase-1 lines) — a steady stream of urban-transit contracts as Indian cities build out mass transit.</li>
+    <li><strong>Rail electrification &amp; signalling.</strong> Indian Railways' near-complete electrification drive and its signalling/train-control modernisation (including indigenous train-protection systems) are a multi-year backdrop for Mobility's systems business.</li>
+  </ul>
+
+  <blockquote>A €3 billion, decade-long locomotive contract is the kind of order that doesn't just fill a factory — it re-rates a whole segment, turning a modest rail arm into a visible, multi-year growth engine.</blockquote>
+</section>
+
+<!-- 08 — BESPOKE: parent moat & operating leverage -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The parent moat, localisation &amp; the operating-leverage story</h2></div>
+  <p class="part-sub">Where Siemens Ltd's durable advantage comes from — and why the profit line can grow faster than sales.</p>
+
+  <p class="lead">Siemens Ltd's edge isn't a single product; it's the combination of a <strong>global technology parent, a trusted brand in mission-critical kit, a growing localisation/export footprint, and the operating leverage of a capital-light, high-return model</strong>. Together these are what let it charge premium prices and — in an upcycle — grow profit faster than revenue.</p>
+
+  <h3>The moat, in four parts</h3>
+  <ul class="clean">
+    <li><strong>Technology depth via Siemens AG.</strong> Automation platforms, the Xcelerator industrial-software stack, digital-twin technology, and rail/building systems that are among the best in the world — the Indian arm gets to deploy them without funding the R&amp;D.</li>
+    <li><strong>Brand &amp; reliability.</strong> In switchgear, drives, signalling and controls, failure is expensive (a plant trips, a train stops), so buyers stick with proven names. That's pricing power and repeat business.</li>
+    <li><strong>Localisation + the export hub.</strong> Siemens is deepening Indian manufacturing (switchgear, drives, locomotives, electronics) — cutting costs, meeting "Make in India" content rules, and increasingly <strong>exporting to the global Siemens group</strong>. Exports let it ride global demand, not just India's tender cycle — an extra, diversifying growth leg.</li>
+    <li><strong>Installed-base service.</strong> Decades of installed switchgear, automation and (now) locomotives generate recurring, high-margin service, spares and software revenue — sticky and counter-cyclical.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Operating leverage — where the profit growth comes from</div>
+    <p>Siemens Ltd's factories and engineering teams are largely <strong>fixed costs</strong>. Once volumes cross a certain level, a lot of each extra rupee of revenue drops through to profit — that's operating leverage. So in a genuine upcycle, if Smart Infrastructure and Mobility keep growing double digits <em>and</em> Digital Industries recovers, margins can expand while revenue rises, and profit compounds faster than sales. Layer on a <strong>richer mix</strong> (more software and service, more high-value automation, the long service tail on the loco order) and the margin runway is real. The catch — and it's the current reality — is that leverage cuts both ways: with Digital Industries soft and cost inflation (metals, wages, a new labour-code hit) biting, margins have been <em>under</em> pressure lately, not expanding. The FY25 profit dip is partly this. The bull bet is that as the cycle turns and mix improves, leverage flips back to expansion.</p>
+  </div>
+
+  <div class="note gold"><b>The related-party angle:</b> being 75%-owned means a chunk of economics flows through the parent relationship — <strong>royalties</strong> paid to Siemens AG, <strong>imported components</strong>, and the <strong>pricing of intra-group export work</strong>. These are set within the group rather than at arms length, so they're a lever the parent controls and a variable minority holders should track (watch royalty as a % of sales, and export share and margins together).</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A multi-front business, with a different competitor set in each engine.</p>
+
+  <p class="lead">Because Siemens Ltd spans automation, electrification and rail, it has <strong>no single rival</strong> — it competes with different companies in each segment. That breadth is a strength (diversification) and a challenge (it's fighting on several fronts against focused specialists). The most-watched comparison for investors is with <strong>ABB India</strong>, its closest multi-segment analogue.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape, by engine</caption>
+    <thead><tr><th>Battleground</th><th>Key rivals</th><th>Siemens Ltd's position</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Digital Industries<br>(factory automation, drives, software)</td><td>ABB India, Rockwell, Mitsubishi, Schneider, Honeywell; software vs PTC/Dassault/AutoDesk</td><td>Deep automation + industrial-software stack (Xcelerator); premium, tech-led — but exposed to the private-capex cycle.</td></tr>
+      <tr><td class="t-strong">Smart Infrastructure<br>(LV/MV, switchgear, buildings)</td><td>ABB India, Schneider Electric, Legrand, C&amp;S, L&amp;T (electrical), Honeywell (buildings)</td><td>Broad, trusted electrification &amp; building-tech portfolio; strong data-centre &amp; commercial pull.</td></tr>
+      <tr><td class="t-strong">Mobility<br>(rail, locos, signalling, metros)</td><td>Alstom, Wabtec, Hitachi Rail, BHEL/CLW, Titagarh, BEML, Medha (signalling)</td><td>Landmark €3 bn loco order; global rail systems &amp; propulsion — a top-tier player in Indian rail.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Siemens Ltd vs ABB India — the natural comparison</div>
+    <p>ABB India is the cleanest peer: both are ~75%-parent-owned, high-return, net-cash, premium-multiple capital-goods names riding the same automation-and-electrification supercycle. The differences worth knowing: <strong>ABB India is more purely an automation + electrification play</strong> (Electrification, Motion, Process Automation, Robotics) reporting on a <em>calendar year</em>, with no big railway rolling-stock business. <strong>Siemens Ltd adds Mobility (railways)</strong> — a large, lumpy, government-backed engine ABB lacks — and reports on a <em>September</em> year. So Siemens Ltd is the more diversified, more rail-exposed, more project-heavy of the two; ABB the more short-cycle, higher-margin, more "pure automation" one. And note: neither is the <em>energy/grid</em> play — that's ENRIN (Siemens Energy India) and Hitachi Energy, a separate universe. When you hear "Siemens vs ABB," it's this automation-electrification-mobility contest, not the grid one.</p>
+  </div>
+
+  <div class="note gold"><b>The structural backdrop:</b> India's capital-goods sector is riding a genuine multi-year investment cycle (infrastructure, manufacturing, electrification, rail), and the organised, technology-led players are taking share from unorganised and lower-tech competitors. That's a rising tide. The competitive question for Siemens Ltd is whether it can convert its brand and technology edge into share gains <em>and</em> margin expansion across three fronts at once, against specialists who each fight on only one.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; capital quality</h2></div>
+  <p class="part-sub">A fortress balance sheet and high returns — but a profit line distorted by the demerger and one-offs.</p>
+
+  <p class="lead">Read Siemens Ltd's financials with the demerger front of mind: FY25 "continuing operations" strip out the energy business, so the headline totals are much smaller than the old combined company, and FY24 comparatives are restated. Underneath the optics, the quality signals are strong — net cash, high returns, cash-generative — even though the reported profit line dipped on base effects.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory (continuing operations)</div>
+    <div class="c-sub">Revenue from operations, ₹ Crore, year ending September. FY24 restated ex-energy.</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24<small>restated, ex-energy</small></div><div class="track"><span class="fill ink" style="width:93%"></span></div><div class="bval">~16,082</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>continuing ops</small></div><div class="track"><span class="fill si" style="width:100%"></span></div><div class="bval">17,364</div></div>
+    </div>
+    <div class="legend"><span>Continuing-operations revenue grew ~8% in FY25. (For scale: the <em>old combined</em> Siemens Ltd, including energy, reported ~₹19–24k Cr in prior years — not comparable to the new company.)</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Quarterly revenue &amp; profit-from-operations — FY25</div>
+    <div class="c-sub">₹ Crore. Note the strong Q4; profit from ops rose even as headline PAT was flattered by prior-year one-offs.</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Q1 (Dec '24)</div><div class="track"><span class="fill di" style="width:65%"></span></div><div class="bval">3,360</div></div>
+      <div class="bar-row"><div class="blab">Q2 (Mar '25)</div><div class="track"><span class="fill di" style="width:78%"></span></div><div class="bval">4,029</div></div>
+      <div class="bar-row"><div class="blab">Q3 (Jun '25)</div><div class="track"><span class="fill di" style="width:84%"></span></div><div class="bval">4,347</div></div>
+      <div class="bar-row"><div class="blab">Q4 (Sep '25)</div><div class="track"><span class="fill si" style="width:100%"></span></div><div class="bval">5,171</div></div>
+    </div>
+    <div class="legend"><span>Q4 FY25: revenue +16%, profit from operations ₹566 Cr (+14.6%), new orders ₹4,800 Cr (+10.5%). Reported PAT ₹485 Cr (−7%) — depressed by a strong prior-year base with a property-sale gain.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms green"><div class="msv">Net cash</div><div class="msl">Debt-free — cash &amp; investments far exceed negligible borrowings; self-funds capex</div></div>
+    <div class="ms gold"><div class="msv">~21%</div><div class="msl">ROCE — high returns on capital, typical of a capital-light Siemens franchise</div></div>
+    <div class="ms"><div class="msv">~11%</div><div class="msl">FY25 profit-from-operations margin — room to expand as mix improves &amp; DI recovers</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to read these numbers</div>
+    <p>Three things matter. <strong>(1) The demerger dominates the optics.</strong> FY25 "continuing operations" revenue (₹17,364 Cr) and PAT (~₹1,688 Cr) are the <em>right</em> figures for the company you own today; ignore any headline that mixes in energy or treats a ₹22–25k Cr "Siemens" revenue as the ongoing business. <strong>(2) The balance sheet is a fortress.</strong> Siemens Ltd is <strong>net cash / debt-free</strong>, carries a large cash-and-investments pile, earns high returns on capital (~21% ROCE), and funds its capex internally — genuinely high quality. <strong>(3) The profit dip is mostly base effect, not decay.</strong> FY25 PAT fell ~16% largely because FY24 carried one-off gains and heavier other income; profit <em>from operations</em> was more resilient, and margins are pressured (not collapsing) by soft Digital Industries volumes and cost inflation. The real question is whether the operating-margin line re-expands as the cycle turns — not whether the business is durable (it is).</p>
+  </div>
+
+  <div class="note gold"><b>Two data caveats:</b> (1) Because of the demerger, growth rates and "FY24" comparatives are on a <em>restated, ex-energy</em> basis — treat exact year-on-year figures as indicative, not precise. (2) Different data sources quote different "FY25" totals for "Siemens Ltd" depending on whether they include the energy discontinued operations and non-operating income; the continuing-operations figures used here (revenue ₹17,364 Cr, PAT ₹1,688 Cr) are the relevant ones for the ongoing company.</div>
+</section>
+
+<!-- 11 — BESPOKE: valuation -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The valuation debate — why the market pays up (and the risk in it)</h2></div>
+  <p class="part-sub">A ~50× forward multiple isn't an accident — it's a specific bet. Here's what it's paying for.</p>
+
+  <p class="lead">No honest primer can dodge the elephant: even after the demerger, Siemens Ltd trades at a <strong>rich premium</strong> — roughly <strong>~50× forward (FY27E) earnings and ~9× book</strong>, among the pricier capital-goods names on the Indian market. Understanding why the market accepts it — and where it could go wrong — is the crux of the case.</p>
+
+  <div class="mini-stats">
+    <div class="ms red"><div class="msv">~50×</div><div class="msl">Forward P/E (FY27E) — a premium multiple that prices in years of steady growth</div></div>
+    <div class="ms"><div class="msv">~9×</div><div class="msl">Price-to-book — a scarcity/quality premium for a net-cash, high-ROCE franchise</div></div>
+    <div class="ms gold"><div class="msv">~2.4×</div><div class="msl">Order backlog ÷ FY25 revenue — the visibility underpinning the multiple</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the market pays such a premium</div>
+    <p>Four things justify the multiple in bulls' eyes. <strong>(1) Quality &amp; scarcity.</strong> A net-cash, ~21%-ROCE, debt-free, technology-led capital-goods franchise with the Siemens brand is a rare asset the market pays up to own. <strong>(2) Visibility.</strong> A ~2.4-year backlog — anchored by a decade-long €3 bn loco order — means a big chunk of near-term revenue is contracted, not speculative. <strong>(3) The supercycle length.</strong> Data-centres, building electrification, "Make in India," metros and railways are a decade-plus demand story, so the market is capitalising a long runway. <strong>(4) The margin/leverage runway.</strong> If Digital Industries recovers and mix richens (more software, service, high-value automation), operating leverage can lift margins and compound profit faster than sales — making today's multiple look less extreme on future earnings.</p>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the price is also the biggest risk</div>
+    <p>The flip side is stark: at ~50× forward earnings the stock is <strong>priced for years of dependable growth</strong>, with little room for a stumble. Notably, several brokers are <strong>Neutral</strong>, not Buy — e.g. Motilal Oswal has carried a Neutral rating with a target around ₹3,150 (roughly 45× Mar'28E earnings), arguing the ~11% revenue / ~13% EBITDA growth it models (FY24–28) is already largely in the price. Triggers for a de-rating: a <strong>prolonged Digital Industries slump</strong> if private capex doesn't revive; <strong>lumpy order inflow</strong> (you can't win a €3 bn order every year, so backlog growth can stall); <strong>margin pressure</strong> from cost inflation and mix; <strong>slower government execution</strong> on rail/metro; or simply a <strong>rotation away from expensive quality</strong>. When a ~50× stock disappoints, the multiple has a long way to compress.</p>
+  </div>
+
+  <div class="note"><b>The honest framing:</b> the business quality here is not really in dispute — a net-cash, high-return, technology-led automation-electrification-rail franchise riding a structural capex cycle is a genuinely good business. What's in dispute is <em>valuation and the pace of the recovery in its most cyclical leg</em>. A buyer at ~50× forward earnings isn't betting on whether the company does well; they're betting it does <em>well enough, fast enough</em> — especially in Digital Industries — to justify a price that already assumes a lot. That the closest peer (ABB India) and the demerged sibling (ENRIN) trade at similarly demanding-to-richer multiples tells you the whole premium-capital-goods cohort is priced for a lot to go right.</div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A high-quality franchise, freshly focused — trading at a price that leaves little room for error.</p>
+
+  <p class="lead">The new Siemens Ltd is a rare thing: a net-cash, high-return, technology-led industrial leader — just streamlined by the energy demerger — positioned in front of a multi-year automation, electrification and rail capex wave, with a global parent's technology behind it. The debate is largely about <strong>valuation and the pace of the Digital Industries recovery</strong>, not business quality.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Focused pure-play</strong> — post-demerger, a cleaner automation + electrification + rail company the market can value on its own merits, without a lumpy turbine/grid business attached.</li>
+        <li><strong>Twin supercycles</strong> — data-centres &amp; building electrification (Smart Infrastructure) plus factory automation (Digital Industries) ride a decade-long capex wave.</li>
+        <li><strong>Rail visibility</strong> — a €3 bn, 11-year locomotive order + 35-year service tail anchors a ₹42,000 Cr backlog (~2.4× revenue) — rare multi-year visibility.</li>
+        <li><strong>Parent moat</strong> — Siemens AG technology (Xcelerator software, automation platforms, rail systems), trusted brand, and a growing export/localisation hub.</li>
+        <li><strong>Fortress balance sheet</strong> — net cash, ~21% ROCE, self-funding capex; portfolio sharpened by the rich LV-Motors sale.</li>
+        <li><strong>Operating-leverage runway</strong> — margins can re-expand as DI recovers and mix shifts to software &amp; service.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich valuation</strong> — ~50× forward earnings prices in years of steady growth; multiple brokers are Neutral, and de-rating risk is real on any stumble.</li>
+        <li><strong>Digital Industries drag</strong> — the highest-quality segment is the softest, hostage to a still-tentative private-capex revival; estimates have been cut here.</li>
+        <li><strong>Lumpy order inflow</strong> — you can't win a €3 bn order every year, so backlog growth and book-to-bill can stall; results swing quarter to quarter.</li>
+        <li><strong>Margin &amp; cost pressure</strong> — metals inflation, wage/labour-code costs and mix have pressured margins; the FY25 profit line already dipped.</li>
+        <li><strong>Government &amp; execution dependence</strong> — rail/metro/utility demand hinges on public-capex execution and tender timing, which historically slip.</li>
+        <li><strong>Parent &amp; float</strong> — 75% promoter stake means a thin float and related-party royalty/import/export pricing set within the group.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Siemens Ltd is a <strong>focused, high-quality way to own India's automation, electrification and railway build-out</strong> — a net-cash, high-return, technology-led franchise, freshly simplified by the energy demerger, with a decade of rail visibility and a global parent's technology behind it. The <em>business</em> risk is modest; the <em>valuation</em> risk — and the pace of the Digital Industries recovery — are the real questions. Everything comes down to a few things each quarter: <strong>order inflow &amp; book-to-bill</strong> (is the pipeline still growing beyond the loco order?), <strong>Digital Industries volumes</strong> (has private factory capex genuinely turned?), and <strong>operating margin</strong> (is the leverage story re-expanding?). Get those right and the compounding can grow into even a demanding multiple; stumble, and a ~50× stock has a long way to fall. And whatever you do — don't confuse it with the energy half; that's a different company now.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Siemens Limited — Q4 &amp; FY25 results (year ended Sep 2025), press release: Q4 revenue ₹5,171 Cr (+16%), PAT ₹485 Cr, profit from operations ₹566 Cr (+14.6%), new orders ₹4,800 Cr (+10.5%), order backlog ₹42,253 Cr (+6%); continuing operations (ex-energy).</li>
+    <li>Siemens Limited — full-year FY25 continuing operations: revenue ₹17,364 Cr (+7.98% vs restated ₹16,082 Cr), PAT ~₹1,688 Cr; energy up to appointed date reported as discontinued operations.</li>
+    <li>Angel One / ScanX — Siemens Limited Q4 FY25 earnings summary: Q4 segment revenues — Smart Infrastructure ₹2,725 Cr, Mobility ₹1,135 Cr, Digital Industries ₹1,065 Cr, Low-Voltage Motors ₹273 Cr; base-effect on PAT (prior-year property-sale gain).</li>
+    <li>Siemens Limited press releases — Q3 FY25 (orders +13% to ₹5,680 Cr, backlog ₹42,845 Cr, PAT ₹423 Cr) and Q1 FY25 (orders +20%); "consolidated financials (continuing operations)."</li>
+    <li>Screener.in — Siemens Ltd (SIEMENS) consolidated financials, quarterly &amp; annual P&amp;L, balance sheet (net cash, borrowings ~₹310 Cr, cash/investments large), ROCE ~21%, ROE, P/E, price-to-book, promoter holding 75%.</li>
+    <li>Siemens Ltd Analyst/Investor Meet (12 Dec 2025) coverage — segment strategy for Digital Industries (service/installed base), Smart Infrastructure (data-centres, buildings, distribution), Mobility (rolling stock, signalling); FY26 outlook.</li>
+    <li>Siemens press release — "Siemens Mobility awarded a €3 billion project in India — largest locomotive order in company history": 1,200 × 9,000 HP locomotives, Dahod, ~11-year delivery, 35-year full-service maintenance.</li>
+    <li>Siemens Mobility India / International Railway Journal / Zee News — 9,000 HP locomotive programme; Vande Bharat propulsion; Gujarat Metro (Ahmedabad Phase-2, Surat Phase-1) rail-electrification consortium.</li>
+    <li>Siemens / NCLT — Scheme of Arrangement demerging the energy business into Siemens Energy India (appointed date 1 Mar 2025; NCLT sanction 25 Mar 2025; ENRIN listed 19 Jun 2025).</li>
+    <li>ScanX / analyst-meet coverage — sale of Low-Voltage Motors business to Innomotics India, EV ~₹2,200 Cr (~50.5× FY25 EBITDA; ~6% of volume, ~2% of profit); deal closed 1 Jun 2026.</li>
+    <li>Motilal Oswal — Siemens Ltd Neutral rating, target ~₹3,150 (≈45× Mar'28E EPS); ~11% revenue / ~13% EBITDA CAGR FY24–28; Digital Industries estimate cuts on muted private capex.</li>
+    <li>NSE / BSE / Bajaj Finserv / stockanalysis.com — Siemens Ltd (NSE: SIEMENS, BSE: 500550) price ~₹3,600–3,690 and market cap ~₹1.29 lakh crore (mid-2026); 52-week range ₹2,826–₹3,937.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. It covers the <strong>post-demerger, residual Siemens Limited (ex-energy)</strong> — not the separately-listed Siemens Energy India (ENRIN). Figures are approximate, drawn from company disclosures and third-party reports as of FY25 (year ended September 2025) and into FY26, on a continuing-operations basis; the demerger is recent and comparatives are restated, so some figures are derived and may contain errors or become outdated. Verify all numbers against primary sources before relying on them. The author may hold no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "SIEMENS";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Update will then trigger an on-demand, incremental refresh of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Update'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Update';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
