@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSW Energy — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F6F6;
+    --paper-2:#FAFCFC;
+    --card:#FFFFFF;
+    --ink:#0C1B22;
+    --ink-soft:#485B61;
+    --ink-faint:#7F9095;
+    --brand:#10505F;          /* deep energy teal */
+    --brand-bright:#178A8C;   /* bright turbine teal */
+    --gold:#2FA36B;           /* clean-energy green accent */
+    --gen:#8A6A46;            /* thermal / coal earth */
+    --re:#2FA36B;             /* renewables green */
+    --store:#C98A24;          /* storage / battery amber */
+    --hydro:#2E7FA6;          /* hydro blue */
+    --ppa:#5E93A6;            /* locked-in / PPA slate-teal */
+    --line:#DBE3E3;
+    --line-soft:#E8EEEE;
+    --good:#1F8E5A;
+    --bad:#C0492F;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#DBF0F0;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#04321F;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#E5F4EC;border:1px solid #BADFCA;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#0F6E43;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"⚡";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#0E3324;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F4F8F8;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 96px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E6ECEC;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#10505F,#178A8C);}
+  .fill.gold{background:linear-gradient(90deg,#2FA36B,#46C286);}
+  .fill.re{background:linear-gradient(90deg,#2FA36B,#46C286);}
+  .fill.hydro{background:linear-gradient(90deg,#2E7FA6,#4C9FC4);}
+  .fill.gen{background:linear-gradient(90deg,#8A6A46,#A98A63);}
+  .fill.store{background:linear-gradient(90deg,#C98A24,#E0A83F);}
+  .fill.ppa{background:linear-gradient(90deg,#5E93A6,#7BAFC0);}
+  .fill.bad{background:linear-gradient(90deg,#C0492F,#D96243);}
+  .fill.ink{background:linear-gradient(90deg,#33443f,#4f5e59);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 64px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.gen{background:var(--gen);}
+  .node.re{background:var(--re);}
+  .node.store{background:var(--store);}
+  .node.hydro{background:var(--hydro);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEA;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2f1f;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#E5F4EC;color:#0E3324;}
+  .note.gold b{color:#0F6E43;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF6F6;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> How a power generator earns</a></li>
+    <li><a href="#p2"><span class="n">02</span> The company &amp; owners</a></li>
+    <li><a href="#p3"><span class="n">03</span> The capacity engine: today's fleet</a></li>
+    <li><a href="#p4"><span class="n">04</span> The 30 GW / Strategy 3.0 ambition</a></li>
+    <li><a href="#p5"><span class="n">05</span> Energy storage: BESS &amp; pumped hydro</a></li>
+    <li><a href="#p6"><span class="n">06</span> Locked-in PPAs vs merchant</a></li>
+    <li><a href="#p7"><span class="n">07</span> C&amp;I &amp; the JSW-group captive engine</a></li>
+    <li><a href="#p8"><span class="n">08</span> Acquisition-led growth</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; the leverage question</a></li>
+    <li><a href="#p10"><span class="n">10</span> Valuation &amp; the premium debate</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: JSWENERGY · BSE: 533148</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>JSW Energy, <em>the growth-and-storage power play</em></h1>
+  <p class="dek">A full walk through the Sajjan Jindal group's power arm — how it makes money selling electricity, why it is racing to nearly triple its capacity to 30 GW by 2030 while building India's largest energy-storage pipeline, how long-term contracts and captive supply to JSW Steel turn a volatile power business into a stable annuity — and how a mountain of capex has pushed net debt past ₹65,000 crore and the stock onto a rich, growth-priced multiple.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹18,901 <small>Cr</small></div><div class="l">Revenue (FY26) · +61%</div></div>
+    <div class="cell"><div class="v">₹2,762 <small>Cr</small></div><div class="l">Net profit (FY26) · +39%</div></div>
+    <div class="cell"><div class="v">13.5 <small>GW</small></div><div class="l">Installed capacity · ~58% clean</div></div>
+    <div class="cell"><div class="v">~₹1.04 <small>L Cr</small></div><div class="l">Market cap (Jul 2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">2 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Update</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — record EBITDA ₹11,041 Cr (+81%), PAT ₹2,762 Cr (+39%), revenue ₹18,901 Cr; capacity +2.6 GW to 13.45 GW (~58% renewable); locked-in generation 32.1 GW, storage pipeline 29.6 GWh; net debt ₹65,834 Cr (net-debt/equity ~2.1×); ₹2/share dividend.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">JSW Energy is the <strong>power-generation arm of the Sajjan Jindal-led JSW group</strong> (the same group behind JSW Steel and JSW Infrastructure). It builds and runs power plants — coal, hydro, and, increasingly, <strong>wind and solar</strong> — and sells the electricity to state utilities, big industrial buyers, and its own sister companies. As of FY26 (year ended March 2026) it runs <strong>13.45 GW of generation capacity</strong>, of which roughly <strong>58% is now clean (renewables + hydro)</strong>, and it posted <strong>record EBITDA of ₹11,041 crore and net profit of ₹2,762 crore</strong> on ₹18,901 crore of revenue.</p>
+
+  <p>Three facts frame the whole story:</p>
+  <ul class="clean">
+    <li><strong>It is one of India's most aggressive power-capacity growth stories.</strong> Under "Strategy 3.0," management targets <strong>30 GW of generation capacity and 40 GWh of energy storage by 2030</strong> — more than doubling the fleet, with the mix shifting toward ~70% renewables. In FY26 alone it added 2.6 GW. This is not a sleepy utility; it is a company in a full-tilt build-out.</li>
+    <li><strong>It is India's energy-storage leader — the real differentiator.</strong> JSW Energy has a <strong>29.6 GWh locked-in storage pipeline</strong> (pumped-hydro + batteries) — larger than almost any peer. As India floods its grid with intermittent solar and wind, <em>storage</em> is what firms that power into round-the-clock supply. JSW is positioning to own that scarce, high-value layer of the grid.</li>
+    <li><strong>The growth is bought with a lot of debt.</strong> Net debt reached <strong>₹65,834 crore</strong> against a net worth of ₹30,752 crore — net-debt/equity of roughly <strong>2.1×</strong>. The bull case is a diversified green-growth utility with a storage moat; the bear case is a capital-hungry company on a rich (~48× earnings) multiple that must execute flawlessly to justify it.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of JSW Energy as a company that <strong>owns power stations and sells electricity</strong> — but which has made a big, bold bet: that the future of Indian power is <em>clean energy plus storage</em>. Solar and wind are cheap, but they only work when the sun shines and the wind blows. The missing piece is a giant "battery" that soaks up power when it's abundant and releases it when it isn't. JSW is racing to build both the clean farms <em>and</em> the biggest stock of those grid batteries in the country, aiming to roughly triple in size by 2030. It's an exciting growth story — but it's being paid for with heavy borrowing, and the stock already prices in a lot of that future success.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Power economics 101: how a generator actually earns</h2></div>
+  <p class="part-sub">No engineering degree required — just the two very different ways selling electricity makes money.</p>
+
+  <p class="lead">JSW Energy is, at its core, a <strong>power generator</strong> — it builds a plant and sells the electricity it produces. But "selling electricity" splits into <strong>two very different businesses</strong>, and the single most important thing to understand about JSW Energy is which one it is deliberately moving toward.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The two ways a generator sells power — and how risky each is</caption>
+    <thead><tr><th>Model</th><th>How it earns</th><th>Risk / who bears it</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Long-term contract (PPA)</td><td>Signs a <strong>Power Purchase Agreement</strong> — a 20–25-year contract to sell power to a state utility or a big industrial buyer at a pre-agreed tariff. The price and (usually) the volume are locked in for decades.</td><td><strong>Low.</strong> A predictable, annuity-like cash flow. The main risks are the buyer paying on time and (for coal) fuel cost. This is the "boring, bankable" bucket.</td></tr>
+      <tr><td class="t-strong">Merchant (spot / open market)</td><td>Sells power on the open exchange at whatever price the market is paying that hour or day — no long-term contract.</td><td><strong>High.</strong> Profit swings with market prices, demand, weather and fuel. Great in a tight market, brutal in a glut. This is where a "pure merchant" generator gets volatile.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The single idea that unlocks JSW Energy: "locked-in capacity"</div>
+    <p>Because a long-term PPA turns power into a <strong>predictable, bond-like income stream</strong>, investors value a rupee of contracted profit far more highly than a rupee of volatile merchant profit. JSW Energy's whole strategy is to <strong>shrink the merchant bucket and grow the locked-in bucket</strong>: by FY26 it had reduced open/merchant exposure to just <strong>~5% of operational capacity</strong>, and built a <strong>"locked-in" generation pipeline of 32.1 GW</strong> — capacity that is either operating or has a signed contract waiting for it. That is the difference between a fragile, price-taking generator and a stable annuity machine. Keep this "locked-in vs merchant" lens in mind — it runs through every section below.</p>
+  </div>
+
+  <p>For a <em>renewable</em> plant, the PPA model is even better than for coal: there is <strong>no fuel cost</strong> (sunlight and wind are free), so once the plant is built and contracted, the cash flow is close to a 25-year fixed-income bond. That is exactly why JSW — like the rest of the industry — is tilting hard toward contracted renewables. The catch, which we'll come to, is that renewables are <em>intermittent</em>, and that intermittency is what makes JSW's storage bet so central.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">From a Karnataka captive coal plant to the JSW group's clean-energy flagship.</p>
+
+  <p class="lead">JSW Energy is the <strong>energy vertical of the JSW group</strong>, one of India's largest industrial conglomerates, controlled by billionaire industrialist <strong>Sajjan Jindal</strong>. It began life powering the group's own steel operations and has grown — organically and through big acquisitions — into a diversified independent power producer (IPP) that is now firmly focused on the energy transition.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1994–2000</div><div class="ev">Incorporated to build captive power for the group's Vijayanagar steel works in Karnataka — power was, from the start, an <strong>enabler of the steel business</strong>.</div></li>
+    <li><div class="yr">2010</div><div class="ev"><strong>IPO</strong>; expands thermal generation with plants at <strong>Ratnagiri (Maharashtra)</strong> and <strong>Barmer (Rajasthan, lignite)</strong> — becoming a sizeable coal-based IPP.</div></li>
+    <li class="major"><div class="yr">2015</div><div class="ev">Acquires the <strong>Himachal hydro plants — Karcham Wangtoo (1,091 MW) + Baspa-II (300 MW)</strong> — for ~US$1.8 bn, adding clean, dispatchable hydro.</div></li>
+    <li class="major"><div class="yr">2020–2022</div><div class="ev">Carves out <strong>JSW Neo Energy</strong> as the renewables/new-energy vehicle; declares a green pivot and sets bold 2030 targets.</div></li>
+    <li class="major"><div class="yr">2023</div><div class="ev">Acquires <strong>Mytrah Energy's 1,753 MW</strong> operating wind/solar portfolio — a landmark step-change into renewables.</div></li>
+    <li class="major"><div class="yr">2024–2025</div><div class="ev">Agrees to buy <strong>O2 Power's 4.7 GW renewables platform (₹12,468 Cr)</strong> and completes the <strong>KSK Mahanadi 3,600 MW thermal</strong> acquisition (₹16,084 Cr) — buying capacity to hit targets.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record EBITDA ₹11,041 Cr &amp; PAT ₹2,762 Cr; capacity +2.6 GW to 13.45 GW (~58% clean); locked-in generation 32.1 GW, storage pipeline 29.6 GWh; "<strong>Strategy 3.0</strong>" (30 GW + 40 GWh by 2030) in execution.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoter — the JSW group / Sajjan Jindal:</strong> holds <strong>~66.5%</strong>. This is a tightly promoter-controlled company. The JSW umbrella brings a trusted brand, deep capital-markets access, execution muscle honed in steel and infrastructure — and, critically, a <strong>captive customer in JSW Steel</strong> (see §07).</li>
+    <li><strong>Leadership:</strong> Sajjan Jindal is Chairman; the company is run by a professional management team executing the Strategy 3.0 build-out.</li>
+    <li><strong>Institutional ownership:</strong> FIIs ~11%, DIIs ~16% — a meaningful institutional following, reflecting the market's interest in the green-growth thesis.</li>
+    <li><strong>Balance sheet:</strong> capital-intensive and <strong>heavily geared</strong> — net debt of ₹65,834 Cr against net worth of ₹30,752 Cr (net-debt/equity ~2.1×), with gross borrowings near ₹77,000 Cr. This is the single most important number to track as the capex ramps (see §09).</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the "group" matters more here than for most utilities</div>
+    <p>JSW Energy isn't just a standalone power company — it's <strong>one gear in a much larger industrial machine</strong>. JSW Steel needs enormous amounts of electricity (and, increasingly, <em>green</em> electricity to make "green steel"). JSW Energy can build renewable capacity and sell it straight to its sister company under long contracts — an in-house customer that de-risks demand. The group connection cuts both ways: it gives JSW Energy a captive market and cheap capital, but it also means related-party dealings and group priorities are always part of the picture. For an outside shareholder, the JSW ecosystem is both the tailwind and something to keep an eye on.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The capacity engine: today's fleet</h2></div>
+  <p class="part-sub">Thermal, hydro and a fast-growing renewables base — the four kinds of power JSW makes.</p>
+
+  <p class="lead">JSW Energy's <strong>13.45 GW</strong> of installed capacity is a deliberate mix of four generation types, each playing a different role. Roughly <strong>58% is now "clean"</strong> (renewables + hydro), a share that has climbed rapidly and is set to keep rising as every new gigawatt built is green.</p>
+
+  <div class="chart">
+    <div class="c-title">Generation capacity mix (FY26)</div>
+    <div class="c-sub">Installed capacity ~13.45 GW — renewables (incl. hydro) are now the majority</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Renewables<small>wind &amp; solar</small></div><div class="track"><span class="fill re" style="width:100%"></span></div><div class="bval">~6.4 GW</div></div>
+      <div class="bar-row"><div class="blab">Thermal<small>coal &amp; lignite</small></div><div class="track"><span class="fill gen" style="width:88%"></span></div><div class="bval">~5.6 GW</div></div>
+      <div class="bar-row"><div class="blab">Hydro<small>Himachal</small></div><div class="track"><span class="fill hydro" style="width:22%"></span></div><div class="bval">~1.4 GW</div></div>
+    </div>
+    <div class="legend"><span>Renewable capacity reached ~7,796 MW (~58% incl. hydro). The mix is tilting green: management targets ~70% renewables by 2030, and no new merchant coal is being added.</span></div>
+  </div>
+
+  <h3>The three legs of the fleet</h3>
+  <ul class="clean">
+    <li><strong>Thermal (coal &amp; lignite) — the legacy cash cow.</strong> The big plants are <strong>Vijayanagar (Karnataka, ~1,460 MW)</strong>, <strong>Ratnagiri (Maharashtra, 1,200 MW)</strong> and the lignite-fired <strong>Barmer (Rajasthan, 1,080 MW)</strong>, plus the newly acquired <strong>KSK Mahanadi (Chhattisgarh, 3,600 MW)</strong> plant. Thermal provides <em>dispatchable</em>, run-anytime power under long PPAs — a steady earnings base — but it is the part JSW is de-emphasising in mix terms.</li>
+    <li><strong>Hydro — clean and dispatchable.</strong> The Himachal plants, <strong>Karcham Wangtoo (1,091 MW)</strong> and <strong>Baspa-II (300 MW)</strong>, are prized assets: hydro is renewable <em>and</em> flexible (you can turn it up and down), which is increasingly valuable in a grid full of intermittent solar and wind.</li>
+    <li><strong>Renewables (wind + solar) — the growth core.</strong> Built organically and hugely expanded through the <strong>Mytrah</strong> and <strong>O2 Power</strong> acquisitions, the renewables base is where nearly all future growth sits. Renewable generation surged ~68% year-on-year in Q4 FY26 as new capacity came online.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "dispatchable" is the word that keeps coming up</div>
+    <p>Electricity has to be produced the instant it is consumed — the grid must balance supply and demand every second. A <strong>"dispatchable"</strong> plant (coal, hydro, a battery) can be dialled up or down on command to match demand. Solar and wind are <em>not</em> dispatchable — they produce whenever nature allows, not when you need it. This is the central tension of the whole energy transition: the cheapest power (solar/wind) is the least controllable. JSW Energy's edge is that it owns a <em>portfolio</em> — cheap-but-variable renewables, plus dispatchable hydro and thermal, plus (crucially) the storage to firm the renewables. That blend is what lets it promise buyers <strong>round-the-clock</strong> power, not just fair-weather power.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The 30 GW ambition — Strategy 3.0, the defining story</h2></div>
+  <p class="part-sub">The single thing an analyst leads with: an aggressive, capital-hungry build-out to nearly triple the company.</p>
+
+  <p class="lead">If you remember one thing about JSW Energy, make it this: it is in a <strong>full-tilt capacity build-out</strong>. Under its "<strong>Strategy 3.0</strong>" plan, management targets <strong>30 GW of generation capacity and 40 GWh of energy storage by 2030</strong> — up from 13.45 GW today. That is a company aiming to <em>more than double</em> its fleet in roughly five years, transforming from a thermal-heavy IPP into a diversified green-growth power company.</p>
+
+  <div class="chart">
+    <div class="c-title">The Strategy 3.0 growth ramp</div>
+    <div class="c-sub">Installed generation capacity (GW) — targeting 30 GW by 2030, ~70% renewable</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:24%"></span></div><div class="bval">~7.3 GW</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:36%"></span></div><div class="bval">~10.9 GW</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:45%"></span></div><div class="bval">13.45 GW</div></div>
+      <div class="bar-row"><div class="blab">2030 target</div><div class="track"><span class="fill re" style="width:100%"></span></div><div class="bval">30 GW</div></div>
+    </div>
+    <div class="legend"><span>Locked-in generation pipeline already stands at 32.1 GW — i.e. more than the entire 2030 target is either operating or contractually secured. The task is execution and funding, not finding demand.</span></div>
+  </div>
+
+  <h3>Why this is credible — the "locked-in" backstop</h3>
+  <p>An ambitious target is cheap; a <em>funded, contracted</em> one is not. JSW's key claim is that its <strong>locked-in generation pipeline is already 32.1 GW</strong> — meaning it has signed contracts or firm commitments for <em>more</em> capacity than its whole 2030 goal. The renewables aren't speculative merchant bets hoping for a buyer; they are largely <strong>tied to 25-year PPAs before a panel is even installed</strong>. That converts the growth story from "will they find customers?" into "can they build and fund it on time?" — a real risk, but a very different (and lower) kind of risk.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">30 GW</div><div class="msl">2030 generation target (from 13.45 GW today)</div></div>
+    <div class="ms"><div class="msv">32.1 GW</div><div class="msl">Locked-in generation pipeline (contracted / committed)</div></div>
+    <div class="ms green"><div class="msv">+2.6 GW</div><div class="msl">Capacity added in FY26 alone</div></div>
+  </div>
+
+  <div class="note gold"><b>What sets JSW apart from Tata Power and Adani Green:</b> Tata Power is an <em>integrated</em> utility (it also owns the wires and sells to 13m households); Adani Green is a <em>pure renewables</em> developer. JSW Energy is neither — it is a <strong>diversified generator</strong> combining thermal, hydro and renewables, and it leads on the one thing the other two do not dominate: <strong>energy storage</strong> (next section). Its pitch to buyers is complete, firm, round-the-clock green power — not just daytime solar.</div>
+
+  <h3>What the build-out costs</h3>
+  <p>Growth on this scale is a spending programme. FY26 alone carried a capex plan of ~₹20,000 crore, and the multi-year build to 30 GW plus 40 GWh of storage runs into far larger sums. That spend is funded by a mix of <strong>internal cash flow, project debt, and equity at the group/subsidiary level</strong> — and it is the reason net debt has climbed so sharply. The growth is real and largely contracted; the question every analyst asks is whether the <em>balance sheet</em> can carry it (see §09).</p>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Energy storage — BESS &amp; pumped hydro, the real moat</h2></div>
+  <p class="part-sub">The differentiator that separates JSW Energy from every other name in the sector.</p>
+
+  <p class="lead">This is JSW Energy's genuine competitive edge. It has built a <strong>29.6 GWh locked-in energy-storage pipeline</strong> — roughly <strong>26.4 GWh of pumped-hydro storage and 3.2 GWh of batteries</strong> — one of the largest storage portfolios in India, and it targets <strong>40 GWh by 2030</strong>. To understand why this matters, you have to understand why storage is about to become the most valuable layer of the Indian grid.</p>
+
+  <div class="plain">
+    <div class="ptag">First, in plain English: what storage is, and why the grid is desperate for it</div>
+    <p>Solar power is dirt cheap — but it all arrives in the middle of the day and vanishes at sunset, exactly when household demand <em>peaks</em>. Wind is cheap too, but gusts when it likes. So India is building enormous amounts of clean power that shows up at the wrong times. <strong>Storage solves the timing problem.</strong> It works like a giant rechargeable battery for the whole grid: soak up surplus solar at noon (when it's practically free), and release it back at 8pm (when everyone's home and prices spike). Without storage, you can only add so much solar and wind before the grid chokes on midday surplus and starves at night. With storage, clean energy becomes <em>round-the-clock</em> — which is why storage is widely called <strong>"the next structural theme"</strong> in Indian power. Whoever owns the most storage owns the ability to sell firm, on-demand green power at a premium.</p>
+  </div>
+
+  <h3>The two storage technologies — and what each does</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>How JSW Energy stores electricity</caption>
+    <thead><tr><th>Technology</th><th>How it works (plain English)</th><th>JSW Energy's position</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Pumped-storage hydro (PSP)</td><td>Two reservoirs, one high, one low. When power is cheap/surplus, pump water <em>uphill</em>; when power is needed, let it flow <em>down</em> through turbines to generate. A "water battery" — proven, long-duration, decades of life.</td><td>The bulk of the pipeline: <strong>~26.4 GWh</strong>, incl. large agreements with the Maharashtra (MSEDCL), Uttar Pradesh (UPPCL) and PCKL utilities. A leadership position — among India's top PSP developers alongside Greenko and Adani.</td></tr>
+      <tr><td class="t-strong">Battery storage (BESS)</td><td>Big banks of lithium-ion batteries (like a giant phone battery) that charge and discharge in seconds-to-hours. Fast, modular, ideal for short-duration balancing and peak-shaving.</td><td><strong>~3.2 GWh</strong> locked in and growing fast. A <strong>JV with Fluence</strong> (a global storage leader) and an in-house <strong>battery-assembly plant in Pune</strong> that shipped its first BESS containers in FY26 — vertical integration into the kit itself.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">How storage turns intermittent renewables into firm, round-the-clock power</div>
+    <div class="flow-row">
+      <div class="node re"><div class="ntag">Step 1 · Generate</div><div class="nname">Solar &amp; wind</div><div class="nwho">Cheap, clean — but only when the sun/wind cooperate.</div></div>
+      <div class="arrow">→</div>
+      <div class="node store"><div class="ntag">Step 2 · Store</div><div class="nname">BESS + pumped hydro</div><div class="nwho">Soak up surplus midday power; hold it for hours.</div></div>
+      <div class="arrow">→</div>
+      <div class="node hydro"><div class="ntag">Step 3 · Release</div><div class="nname">Firm supply</div><div class="nwho">Discharge at the evening peak, on demand.</div></div>
+      <div class="arrow">→</div>
+      <div class="node gen"><div class="ntag">Step 4 · Sell</div><div class="nname">Round-the-clock PPA</div><div class="nwho">Contracted green power, 24×7 — at a premium.</div></div>
+    </div>
+    <div class="flow-note">A pure solar developer sells "when the sun shines." JSW pairs renewables with storage to sell "whenever you need it" — a fundamentally more valuable product, and increasingly what large buyers and utilities demand.</div>
+  </div>
+
+  <blockquote>Renewables made clean power cheap. Storage is what makes it <em>reliable</em> — and reliability is what buyers actually pay for.</blockquote>
+
+  <p>The strategic logic is tight: JSW is building the renewables <em>and</em> the storage to firm them, so it can sell a bundled, dispatchable, round-the-clock renewable product. As India's grid absorbs tens of gigawatts of solar and wind this decade, the value of firm storage rises — and JSW's early, large, locked-in pipeline is a genuine head-start that a late mover cannot easily replicate (PSP sites are geographically scarce and take years to build).</p>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Locked-in PPAs vs merchant — the earnings-quality story</h2></div>
+  <p class="part-sub">Why JSW Energy's cash flows are far steadier than "a power company" sounds.</p>
+
+  <p class="lead">Recall the lesson from §01: contracted power is a stable annuity, merchant power is volatile. JSW Energy has spent years deliberately <strong>de-risking its revenue mix</strong> toward the contracted end — and it has largely succeeded. By FY26, <strong>merchant/open exposure was down to just ~5% of operational capacity</strong>, while <strong>long-term PPA generation grew ~25% to 8.6 billion units</strong>. The vast majority of what JSW sells is now under multi-decade contracts.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue quality: locked-in vs merchant (operational capacity, FY26)</div>
+    <div class="c-sub">The portfolio is now overwhelmingly contracted — the stable, annuity-like bucket</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Long-term PPA<small>state utilities + C&amp;I</small></div><div class="track"><span class="fill ppa" style="width:100%"></span></div><div class="bval">~95%</div></div>
+      <div class="bar-row"><div class="blab">Merchant / open<small>spot market</small></div><div class="track"><span class="fill bad" style="width:5%"></span></div><div class="bval">~5%</div></div>
+    </div>
+    <div class="legend"><span>Locked-in generation pipeline (operating + contracted-but-under-construction): 32.1 GW. A shrinking merchant tail leaves a small window for spot upside without the full downside.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the market pays up for "locked-in"</div>
+    <p>Investors pay a <strong>higher multiple for predictable earnings</strong> than for volatile ones — the same ₹100 of profit is worth more if you can bank on it next year. A merchant generator's profit can halve if power prices fall or a heatwave passes; a 25-year PPA delivers roughly the same cash whatever the weather. By pushing merchant exposure down to ~5% and locking in 32 GW of contracted pipeline, JSW converts most of its business into a <strong>bond-like annuity</strong> — and its renewables PPAs, with no fuel cost, are the purest annuities of all. That earnings quality is a big part of why the stock trades at a premium to old-line thermal generators. The trade-off: a heavily-contracted book gives up the occasional bonanza when spot prices spike — but in exchange for far steadier, more financeable cash flows, which is exactly what a company borrowing ₹65,000 crore needs.</p>
+  </div>
+
+  <p>One nuance: a small, deliberate merchant slice isn't a bug — it's a hedge that lets JSW capture upside in tight markets (like peak-summer demand) without exposing the whole fleet to price swings. The strategic direction, though, is unambiguous: <strong>locked-in is the goal, merchant is the residual.</strong></p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>C&amp;I supply &amp; the JSW-group captive engine</h2></div>
+  <p class="part-sub">The in-house customer that de-risks demand — and the fast-growing green-power-for-industry theme.</p>
+
+  <p class="lead">A big piece of JSW Energy's "locked-in" demand comes from an unusual, high-quality source: <strong>large industrial buyers, above all its own sister companies</strong>. This is the <strong>C&amp;I (commercial &amp; industrial) green-power business</strong>, and it is one of the fastest-growing, most defensible parts of the story.</p>
+
+  <h3>The C&amp;I book — and the captive core</h3>
+  <ul class="clean">
+    <li>JSW Energy's locked-in <strong>C&amp;I renewable capacity is ~3.1 GW</strong> — of which <strong>~2,654 MW is JSW-group captive</strong> (power sold to sister companies like JSW Steel) and <strong>~445 MW is third-party C&amp;I</strong> (other large industrial buyers).</li>
+    <li>The logic is powerful: big industrial users — steel plants, factories, data centres — want to <strong>green their electricity</strong> to meet decarbonisation goals and, increasingly, to keep export customers and lenders happy. They sign long "captive" or group-captive renewable contracts, giving the generator locked-in, creditworthy demand.</li>
+    <li>JSW Steel, in particular, has committed to a major renewables shift — and has signed an MoU with JSW Energy for green hydrogen/oxygen to make "green steel" by 2030. The energy arm is, in effect, the <strong>decarbonisation utility for the whole JSW group</strong>.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">What "group captive" means, and why it's such a good deal</div>
+    <p>A <strong>"captive"</strong> power arrangement is when a big electricity consumer effectively owns (or contracts as-if-it-owns) the power plant that supplies it — under Indian rules this can bring tariff and regulatory benefits. For JSW Energy, selling to <strong>JSW Steel</strong> under group-captive contracts is close to ideal: the customer is a <strong>known, creditworthy, long-term buyer inside the same family</strong>, the demand is huge and growing, and the contract is locked in for years. It removes the single biggest risk a merchant generator faces — <em>will someone buy my power, and will they pay?</em> Multiply that by the group's steel expansion and its green-steel ambitions, and JSW Energy has a captive growth annuity most independent generators can only dream of. The flip side, again: it's a related-party relationship, so pricing and terms deserve scrutiny.</p>
+  </div>
+
+  <p>Beyond the group, the third-party C&amp;I market is a large open field: thousands of Indian factories and commercial users are being pushed toward renewable power by cost, policy and their own customers' sustainability demands. JSW's ability to offer <strong>firm, round-the-clock green power (renewables + storage)</strong> — rather than intermittent daytime solar — is a real selling point to industrial buyers who need reliable supply.</p>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Acquisition-led growth — buying capacity to hit the target</h2></div>
+  <p class="part-sub">How much of the growth is built vs bought — and the integration and leverage risk that comes with it.</p>
+
+  <p class="lead">JSW Energy has not grown to 13.45 GW by organic construction alone — a large share of its jump has come from <strong>bold acquisitions</strong>. Buying operating capacity is faster than building it, and it has been central to hitting the aggressive targets. But acquisitions also front-load debt and carry integration risk, which is a core part of the leverage debate.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three landmark acquisitions</caption>
+    <thead><tr><th>Deal</th><th>What was bought</th><th>Size / price</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Mytrah Energy (2023)</td><td>An operating <strong>wind + solar</strong> portfolio — JSW's first big inorganic leap into renewables.</td><td class="num">1,753 MW</td></tr>
+      <tr><td class="t-strong">O2 Power (2024–25)</td><td>A large <strong>renewables platform</strong> (operating + under-construction wind/solar) via JSW Neo Energy — a major renewables step-up.</td><td class="num">4.7 GW · ₹12,468 Cr</td></tr>
+      <tr><td class="t-strong">KSK Mahanadi (2025)</td><td>A <strong>3,600 MW coal-thermal</strong> plant in Chhattisgarh, bought out of insolvency — adds large dispatchable base-load capacity.</td><td class="num">3,600 MW · ₹16,084 Cr</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Notice the mix: two big <strong>renewable</strong> buys (Mytrah, O2) that accelerate the green pivot, and one large <strong>thermal</strong> buy (KSK Mahanadi) that adds cheap, dispatchable base-load — consistent with the "round-the-clock" strategy of blending clean and firm power. Smaller bolt-ons (like a 300 MW coal plant, MCCPL) continue to fill in the fleet.</p>
+
+  <div class="plain">
+    <div class="ptag">The trade-off of "buy vs build"</div>
+    <p><strong>Buying</strong> capacity is faster than building it and gives you cash-generating assets from day one — a real advantage when you're racing to 30 GW. But it comes with two costs. First, you often <strong>pay up front and with debt</strong>, which is a big reason net debt has ballooned. Second, you inherit whatever comes with the asset — contracts, plant condition, integration headaches (a distressed-asset purchase like KSK Mahanadi especially needs turning around). So acquisitions are an accelerator with a price tag: they get JSW to scale faster, but they are a chunk of <em>why</em> the balance sheet is stretched, and their success depends on integrating and running the bought assets well. Bulls see disciplined, value-accretive deal-making; bears see a debt-funded land-grab whose returns still have to prove out.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; the leverage question</h2></div>
+  <p class="part-sub">Record profits and margins — sitting on a balance sheet that is the crux of the whole debate.</p>
+
+  <p class="lead">FY26 was a <strong>record year on almost every operating line</strong>: revenue up ~61% to ₹18,901 crore, EBITDA up ~81% to a record ₹11,041 crore (a fat ~53% margin), and net profit up 39% to ₹2,762 crore. New capacity — much of it acquired — drove the surge. But the same build-out that powered those numbers has also pushed net debt to ₹65,834 crore, and <em>that</em> is where the argument lives.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue &amp; EBITDA trajectory</div>
+    <div class="c-sub">₹ Cr — FY26 was a step-change, driven by new (largely acquired) capacity</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue FY24</div><div class="track"><span class="fill brand" style="width:61%"></span></div><div class="bval">11,486</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY25</div><div class="track"><span class="fill brand" style="width:62%"></span></div><div class="bval">11,745</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">18,901</div></div>
+      <div class="bar-row"><div class="blab">EBITDA FY26</div><div class="track"><span class="fill re" style="width:58%"></span></div><div class="bval">11,041</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Net profit (PAT) trajectory</div>
+    <div class="c-sub">₹ Cr — record FY26; note "cash PAT to shareholders" was ₹4,359 Cr (a different, cash-based measure)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill re" style="width:62%"></span></div><div class="bval">1,725</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill re" style="width:72%"></span></div><div class="bval">1,983</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">2,762</div></div>
+    </div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~53%</div><div class="msl">FY26 EBITDA margin (record)</div></div>
+    <div class="ms"><div class="msv">₹12.74</div><div class="msl">FY26 EPS</div></div>
+    <div class="ms red"><div class="msv">~2.1×</div><div class="msl">Net-debt / equity (₹65,834 Cr / ₹30,752 Cr)</div></div>
+  </div>
+
+  <h3>The leverage read — why it's the number that matters</h3>
+  <ul class="clean">
+    <li><strong>The scale of it.</strong> Net debt of ₹65,834 Cr against net worth of ₹30,752 Cr gives <strong>net-debt/equity ~2.1×</strong>. On EBITDA (excluding capital-work-in-progress that isn't earning yet), net-debt/EBITDA is around <strong>5.2×</strong> — elevated, reflecting the many plants still under construction that carry debt but don't yet produce cash.</li>
+    <li><strong>Why it's "not as scary as it looks."</strong> Most of the debt funds <em>contracted or captive</em> assets — a 25-year renewable PPA, a group-captive supply to JSW Steel, a regulated-style storage agreement. The debt is matched to predictable, long-dated income, which is far safer than borrowing to build merchant capacity on spec. As under-construction plants commission and start earning, EBITDA rises and the ratios should improve.</li>
+    <li><strong>Why the bears watch it anyway.</strong> High gearing amplifies everything. Rising interest costs already bit into Q4 profit (finance costs more than doubled year-on-year as acquired debt landed). If commissioning slips, tariffs disappoint, or rates stay high, the debt becomes a heavier drag — and there is less cushion than at a lightly-levered peer. A capital-hungry growth utility lives and dies on funding discipline.</li>
+  </ul>
+
+  <div class="note"><b>The honest tension:</b> JSW Energy's growth is genuine, largely contracted, and margin-rich — but it is <em>bought with leverage</em>. The whole investment case turns on a simple question: does the growing, contracted EBITDA outrun the growing debt? If the 30 GW / 40 GWh build commissions on time and earns its expected returns, the leverage de-risks itself as cash flows ramp. If execution or funding stumbles with net-debt/equity already at ~2.1×, there is little margin for error. Watch net-debt/EBITDA and the pace of commissioning above all else.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Valuation — the premium debate</h2></div>
+  <p class="part-sub">A growth-and-storage utility priced richly for the story to keep delivering.</p>
+
+  <p class="lead">JSW Energy trades at a <strong>clear premium to old-line thermal generators</strong>. At a share price around ₹565 and a market cap of roughly ₹1.04 lakh crore (July 2026), the stock sits on a trailing P/E near <strong>48×</strong>, price-to-book ~3.2×, and EV/EBITDA around ~18×. For comparison, a plain, slow-growth thermal utility might trade at a fraction of that. Investors are paying up for the <strong>growth + storage + earnings-quality</strong> package — and the debate is whether that premium is deserved.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Valuation snapshot (July 2026, approx.)</caption>
+    <thead><tr><th>Metric</th><th class="num">Value</th><th>Read</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Market cap</td><td class="num">~₹1.04 L Cr</td><td>Among India's larger power companies by value.</td></tr>
+      <tr><td class="t-strong">Share price</td><td class="num">~₹565</td><td>Analyst targets span widely — Kotak "Sell" ~₹455; median ~₹613; Jefferies "Buy" ~₹660.</td></tr>
+      <tr><td class="t-strong">P/E (trailing)</td><td class="num">~48×</td><td>A rich multiple — pricing in the growth ramp and storage optionality, not current earnings alone.</td></tr>
+      <tr><td class="t-strong">EV/EBITDA</td><td class="num">~18×</td><td>Below its own 3-yr average (~20×), but well above a mature thermal utility.</td></tr>
+      <tr><td class="t-strong">P/B</td><td class="num">~3.2×</td><td>Rich for a utility — reflects growth &amp; storage value, not book earnings.</td></tr>
+      <tr><td class="t-strong">ROE / ROCE</td><td class="num">~7.5% / ~8%</td><td>Modest today — a lot of capital is deployed in plants not yet fully earning. The bull case is these rise as capacity matures.</td></tr>
+      <tr><td class="t-strong">Dividend</td><td class="num">₹2 / share</td><td>Low yield (~0.35%) — cash is being reinvested into the build-out, not paid out.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why a 48× multiple on a "utility" — and why bears push back</div>
+    <p>A traditional utility is valued like a bond: steady, low-growth, cheap multiple. JSW Energy is being valued like a <strong>growth stock</strong> because the market is looking past today's ~7.5% ROE to a company that could be <em>more than twice its current size by 2030</em>, with a storage moat that lets it sell premium round-the-clock green power. If the 30 GW / 40 GWh build lands and earns good returns, today's earnings understate the future, and the rich multiple is on <em>tomorrow's</em> profit. That's the bull maths. The bears counter that (1) ROE is genuinely low <em>right now</em>, (2) the balance sheet is stretched at ~2.1× net-debt/equity, and (3) at ~48× trailing there is <strong>almost no margin for a commissioning delay, a tariff disappointment, or a funding hiccup</strong> — any stumble in the growth ramp could trigger a sharp de-rating (the stock fell ~8% even on strong Q4 FY26 results, as some investors flagged rich valuations). Both sides are staring at the same ambitious plan and disagreeing on the price.</p>
+  </div>
+
+  <blockquote>The market isn't pricing JSW Energy for what it earns today — it's pricing it for the company it's trying to become by 2030.</blockquote>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A credible green-growth-and-storage story — priced for the growth to actually arrive.</p>
+
+  <p class="lead">JSW Energy is one of the more compelling growth stories in Indian power: a well-backed IPP transforming into a diversified green-energy company with a genuine storage moat, largely contracted cash flows, and a captive customer in JSW Steel. The debate is not whether the transition is real — it plainly is — but about <strong>execution, funding, and the price you pay for it</strong>.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Aggressive, contracted growth</strong> — 30 GW / 40 GWh by 2030 with a 32.1 GW locked-in pipeline: growth that's already de-risked by signed contracts.</li>
+        <li><strong>Energy-storage leadership</strong> — 29.6 GWh pipeline (PSP + BESS), a scarce, high-value moat as India's grid demands firm, round-the-clock green power.</li>
+        <li><strong>High earnings quality</strong> — merchant exposure down to ~5%; ~95% locked-in PPAs + captive supply make cash flows annuity-like and financeable.</li>
+        <li><strong>JSW-group ecosystem</strong> — captive demand from JSW Steel's green-steel push, plus group brand, capital access and execution muscle.</li>
+        <li><strong>Record operating momentum</strong> — FY26 EBITDA +81% to ₹11,041 Cr at a ~53% margin; ratios should improve as under-construction plants commission.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Heavy leverage</strong> — net debt ₹65,834 Cr, net-debt/equity ~2.1×, net-debt/EBITDA ~5.2×; interest costs already biting, more capex to come.</li>
+        <li><strong>Rich valuation</strong> — ~48× P/E and ~3.2× book leave almost no room for a commissioning delay or funding hiccup (stock fell ~8% even on a strong Q4).</li>
+        <li><strong>Execution risk</strong> — building 30 GW + 40 GWh on time is hard; PSP projects and integrating distressed thermal (KSK Mahanadi) can slip.</li>
+        <li><strong>Low current returns</strong> — ROE ~7.5% today; the whole thesis needs new capacity to earn its cost of capital as it scales.</li>
+        <li><strong>Related-party &amp; thermal tails</strong> — reliance on JSW-group captive demand; coal assets carry policy, fuel and stranded-asset risk over time.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>JSW Energy is a <strong>genuine, well-executed bet on the two biggest structural themes in Indian power — clean-energy growth and storage</strong> — wrapped in the balance-sheet reality of a company borrowing heavily to get there first. The business risk is lower than a pure merchant generator's, thanks to ~95% contracted revenue and captive JSW-group demand; the <em>financial</em> and <em>valuation</em> risks are what dominate. The story over the next few years will be told in a handful of numbers: the <strong>pace of capacity commissioning</strong> (is the 30 GW on track?), the <strong>storage build-out</strong> (does the 40 GWh moat materialise?), and above all the <strong>net-debt/EBITDA trajectory</strong> (is the growth self-funding as plants switch on?). Deliver those, and a premium multiple is defensible; stumble on funding or execution with a ~48× stock, and there is a long way to fall.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>JSW Energy Ltd — Q4 &amp; FY26 results, investor presentation and integrated annual report (year ended Mar 2026), jswenergy.in.</li>
+    <li>SaurEnergy — "JSW Energy Reports 39% Revenue Growth in Q4 FY26 on Renewable Energy Expansion" (FY26 &amp; Q4 metrics, net debt, capacity).</li>
+    <li>PSU Connect — "JSW Energy Q4 &amp; FY26 Results: Net Profit at ₹2,762 Crore, Declares ₹2 Dividend."</li>
+    <li>Whalesbook Corporate News — JSW Energy FY26 record revenue &amp; EBITDA; PAT +39%; net debt vs net worth.</li>
+    <li>Univest — "JSW Energy Q4 Results FY26: PAT ₹574 Cr, Revenue ₹18,901 Cr" (quarterly detail).</li>
+    <li>Screener.in — JSW Energy Ltd, consolidated financials, valuation, borrowings, shareholding.</li>
+    <li>Business Today — "How JSW Energy is building round-the-clock renewable power solutions" (storage, Strategy 3.0, RE mix).</li>
+    <li>Groww — "JSW Energy Revises 2030 Ambition, Eyes 30 GW of Generation Capacity" (Strategy 3.0: 30 GW + 40 GWh).</li>
+    <li>Business Standard — "JSW Energy achieves total locked-in capacity of 20 GW"; C&amp;I / group-captive capacity detail.</li>
+    <li>AlCircle / Mission Energy — India pumped-storage build-out (Greenko, Adani, JSW); PSP pipeline context.</li>
+    <li>Power-technology / Energetica India — O2 Power (4.7 GW, ₹12,468 Cr) and KSK Mahanadi (3,600 MW, ₹16,084 Cr) acquisitions.</li>
+    <li>RenewableEnergyWorld — Karcham Wangtoo (1,091 MW) + Baspa-II (300 MW) hydro acquisition (~US$1.8 bn).</li>
+    <li>Wikipedia — JSW Barmer / Ratnagiri / Vijayanagar power stations (thermal plant capacities).</li>
+    <li>Business Today — "Target prices as valuations turn rich" (Tata Power, NTPC, JSW Energy et al.); analyst PT / rating context.</li>
+    <li>MarketsMojo / TradeBrains — Q4 FY26 finance-cost rise, share reaction, valuation commentary.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; capacity, pipeline and segment figures are indicative and definitions vary across sources (e.g. "cash PAT" vs reported PAT, locked-in vs installed capacity). Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "JSWENERGY";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Update will then trigger an on-demand, incremental refresh of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Update'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Update';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
