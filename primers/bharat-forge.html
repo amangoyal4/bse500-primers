@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bharat Forge — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F3;
+    --paper-2:#FBFAF7;
+    --card:#FFFFFF;
+    --ink:#161A1F;
+    --ink-soft:#556069;
+    --ink-faint:#8B959C;
+    --brand:#1C3A56;          /* deep steel blue */
+    --brand-bright:#2E5E86;   /* forged steel blue */
+    --gold:#D9611C;           /* molten forge ember */
+    --ember:#D9611C;          /* ember orange accent */
+    --steel:#5C7387;          /* cool steel */
+    --def:#7A3B2E;            /* defence / gunmetal rust */
+    --ind:#4E7A6B;           /* industrials green-steel */
+    --auto:#2E5E86;          /* automotive blue */
+    --line:#DCDED8;
+    --line-soft:#E8E9E3;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7EEF3;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#2a1305;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:66ch;line-height:1.45;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBEEE3;border:1px solid #F0D3BC;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#a8480f;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"⚒";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#4a2c14;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F8F4;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAECE5;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#1C3A56,#2E5E86);}
+  .fill.gold{background:linear-gradient(90deg,#D9611C,#E88544);}
+  .fill.auto{background:linear-gradient(90deg,#2E5E86,#4A7BA6);}
+  .fill.def{background:linear-gradient(90deg,#7A3B2E,#9A5241);}
+  .fill.ind{background:linear-gradient(90deg,#4E7A6B,#6A9887);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4650,#5C7387);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.raw{background:var(--steel);}
+  .node.forge{background:var(--gold);}
+  .node.mach{background:var(--brand-bright);}
+  .node.mkt{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-auto{color:var(--auto);font-weight:600;}
+  .chain-def{color:var(--def);font-weight:600;}
+  .chain-ind{color:var(--ind);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBEEE3;color:#4a2c14;}
+  .note.gold b{color:#a8480f;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#a8480f;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF1F5;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:14px;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What forging actually is</a></li>
+    <li><a href="#p2"><span class="n">02</span> The company &amp; the Kalyanis</a></li>
+    <li><a href="#p3"><span class="n">03</span> The business map</a></li>
+    <li><a href="#p4"><span class="n">04</span> The forging moat</a></li>
+    <li><a href="#p5"><span class="n">05</span> The defence transformation</a></li>
+    <li><a href="#p6"><span class="n">06</span> Diversifying off auto</a></li>
+    <li><a href="#p7"><span class="n">07</span> The auto cycle &amp; US trucks</a></li>
+    <li><a href="#p8"><span class="n">08</span> The overseas drag</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The re-rating debate</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: BHARATFORG · BSE: 500493</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>Bharat Forge, <em>from forge to firepower</em></h1>
+  <p class="dek">A complete walk through the Kalyani group's flagship — one of the world's largest forging companies, transforming from a cyclical auto-forgings exporter into a diversified defence, aerospace and industrials engineering house. This primer explains what forging actually is and why scale + metallurgy are a real moat; how the same furnaces that shape truck crankshafts now build 155mm artillery guns; why the ₹11,000-crore defence order book is re-rating the whole company; how a US-truck-cycle export book and troubled European subsidiaries are the drag on the other side; and why a re-rated defence-and-diversification story trades on a rich multiple with a depressed earnings base.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹16,812 <small>Cr</small></div><div class="l">Revenue (FY26 consol, +11.2%)</div></div>
+    <div class="cell"><div class="v">₹1,089 <small>Cr</small></div><div class="l">Net profit (FY26 consol)</div></div>
+    <div class="cell"><div class="v">~₹10,961 <small>Cr</small></div><div class="l">Defence order book (Mar '26)</div></div>
+    <div class="cell"><div class="v">~₹1.03 <small>lakh Cr</small></div><div class="l">Market cap (Jun '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">2 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — consolidated revenue ₹16,812 Cr (+11.2%), EBITDA ₹2,921 Cr (~17.4% margin), PAT ₹1,089 Cr (vs ₹913 Cr); standalone revenue ₹8,396 Cr (−5.1%) at a ~27.5% EBITDA margin; defence revenue ₹1,562 Cr with a ₹10,961 Cr order book (incl. 184 ATAGS howitzers); ₹4,814 Cr of new orders won; a ₹450 Cr impairment on the Kalyani Powertrain e-mobility (Tork Motors) investment and the start of a CDP Bharat Forge European steel restructuring; management guided ~25% FY27 growth for Indian manufacturing operations.</div>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Bharat Forge is, at its core, a <strong>metal-shaping company</strong> — one of the largest <strong>forging</strong> businesses on earth. Forging means shaping metal under enormous pressure to make parts that are exceptionally strong: crankshafts, front axles, connecting rods and chassis components for trucks and cars; drilling parts for oil rigs; components for mining machines, trains, power turbines and aircraft. It is the <strong>flagship of the Pune-based Kalyani group</strong>, run for over five decades by <strong>Babasaheb "Baba" Kalyani</strong>, and by tonnage it ranks among the world's top forging companies (long described as second only to Germany's thyssenkrupp).</p>
+
+  <p>Three facts frame everything that follows:</p>
+  <ul class="clean">
+    <li><strong>It is two companies in one — and mid-transformation.</strong> The legacy business is <strong>cyclical auto forgings</strong> — a big export book of engine and chassis parts sold to global truck and car makers, dangerously sensitive to the US Class-8 (heavy truck) cycle. The <em>new</em> Bharat Forge is a <strong>diversified defence + aerospace + industrials + e-mobility engineering house</strong>. FY26 (year ended March 2026) delivered <strong>₹16,812 Cr</strong> of consolidated revenue and <strong>₹1,089 Cr</strong> of net profit — but standalone auto exports were soft while <strong>defence and industrials carried the story</strong>.</li>
+    <li><strong>Defence is the re-rating engine.</strong> Through its subsidiary <strong>Kalyani Strategic Systems (KSSL)</strong>, Bharat Forge builds <strong>155mm artillery guns (the ATAGS howitzer)</strong>, armoured vehicles, ammunition and defence exports. FY26 defence revenue was <strong>~₹1,562 Cr</strong>, sitting on a <strong>~₹10,961 Cr order book</strong> — multi-year, high-margin, high-visibility work that is exactly why a cyclical forging company now trades like a defence stock.</li>
+    <li><strong>The two drags are the overseas subsidiaries and the auto cycle.</strong> The European/US forging operations have historically been lower-margin and loss-making; FY26 carried a <strong>₹450 Cr impairment on the e-mobility (Tork Motors) bet</strong> and the start of a <strong>European steel restructuring</strong>. Meanwhile US heavy-truck exports were down sharply for much of the year. Those one-offs depressed profit and are why the trailing P/E screens optically enormous.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Picture a giant, century-honed <strong>metalworking workshop</strong> that has spent decades pounding red-hot steel into the strongest bits of the world's trucks. That skill — heating metal and squeezing it under thousands of tonnes of force so its internal grain aligns and it becomes far tougher than cast or machined metal — is the same skill you need to make an <strong>artillery gun barrel</strong> or an <strong>aircraft component</strong>. Bharat Forge's whole story is that it is <strong>redirecting that furnace</strong>: away from a boom-and-bust dependence on how many American trucks get built this year, and toward long, sticky, high-margin defence and aerospace contracts. Get that pivot right and a cyclical exporter becomes a structural growth compounder. The market has already started paying for the pivot — which is the entire investment debate.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What forging actually is — and why it's a business, not a commodity</h2></div>
+  <p class="part-sub">No engineering degree required — just the one idea that explains the whole moat.</p>
+
+  <p class="lead">To understand Bharat Forge, you first have to understand <strong>forging</strong> — because it is the single capability that connects a truck axle, an oil-rig part and an artillery gun. Forging is the process of <strong>shaping metal by pressure</strong> — heating a billet of steel until it glows, then hammering or pressing it into shape between dies under thousands of tonnes of force. Unlike casting (pouring molten metal into a mould) or machining (cutting a part out of a solid block), forging <strong>reshapes the metal's internal grain structure</strong>, aligning it along the part's contours. The result is a component that is dramatically <strong>stronger, tougher and more fatigue-resistant</strong> than the same part made any other way.</p>
+
+  <p>That matters because forged parts are used precisely where <strong>failure is not an option</strong> — the crankshaft spinning thousands of times a minute inside an engine, the front axle beam holding up a fully-laden truck, the connecting rods, the landing-gear components on an aircraft, the barrel of a gun. These are "safety-critical" and "high-stress" parts. Nobody wants the cheapest crankshaft; they want one that will never crack.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three ways to make a metal part — and why forging wins for critical components</caption>
+    <thead><tr><th>Method</th><th>How it works</th><th>Where it's used</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Casting</td><td>Pour molten metal into a mould; cheap and flexible in shape, but weaker (internal porosity, random grain).</td><td>Complex, lower-stress shapes — engine blocks, housings.</td></tr>
+      <tr><td class="t-strong">Machining</td><td>Cut/mill a part out of a solid block. Precise but wasteful (metal removed) and grain isn't optimised.</td><td>Precision finishing, one-offs, final tolerances.</td></tr>
+      <tr><td class="t-strong" style="color:var(--gold)">Forging</td><td><strong>Press/hammer heated metal into shape under huge force; aligns the grain and packs the structure.</strong></td><td><strong>The strongest, most safety-critical parts — crankshafts, axles, gun barrels, aerospace forgings.</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why this is a high-barrier engineering business</div>
+    <p>Anyone can buy a hydraulic press. What's hard is the combination that Bharat Forge has spent 60 years assembling: <strong>(1) scale</strong> — some of the world's largest forging presses and single forging facilities, which let it make very big parts and huge volumes at low unit cost; <strong>(2) metallurgy</strong> — deep expertise in alloys, heat treatment and die design, so the part comes out with exactly the right strength and fatigue life; and <strong>(3) qualification</strong> — global truck and car makers, oil majors and defence ministries only buy safety-critical parts from suppliers they have <em>certified</em> over years of testing. Winning a crankshaft programme for a global engine can take years of validation; once you're in, you're in for the life of the platform. That certification wall is the moat — and, crucially, it is <strong>dual-use</strong>: the same presses, metallurgists and quality systems that qualify you for a Daimler axle also qualify you for an aircraft forging or an artillery barrel.</p>
+  </div>
+
+  <p>Hold on to that last point — <strong>dual-use</strong> — because it is the hinge of the entire Bharat Forge story. A company that has already mastered making the toughest metal parts for the world's automakers is one of the few in India already <em>equipped</em> to make the toughest metal parts for the world's militaries. The pivot from trucks to guns is not a leap into an unrelated business; it is pointing an existing, world-class capability at a new, far more attractive customer.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The company and the Kalyanis</h2></div>
+  <p class="part-sub">From a 1961 forge shop to a global engineering group — under one family for three generations.</p>
+
+  <p class="lead">Bharat Forge was founded in <strong>1961</strong> by <strong>Nilkanthrao "Neelkanth" Kalyani</strong> as a maker of forged components for India's fledgling automotive industry. The transformation into a global player is the work of his son, <strong>Babasaheb "Baba" Kalyani</strong>, an MIT-trained mechanical engineer who joined in 1972, started on the shop floor, and over five decades built the company from a small domestic forge into <strong>one of the world's largest forging groups</strong> and the flagship of the multi-billion-dollar <strong>Kalyani group</strong>.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1961</div><div class="ev">Nilkanthrao Kalyani founds <strong>Bharat Forge</strong> in Pune to make forged auto components for the Indian market.</div></li>
+    <li><div class="yr">1972</div><div class="ev"><strong>Baba Kalyani</strong> joins after MIT; drives modernisation, automation and a shift toward high-quality, export-grade forgings.</div></li>
+    <li><div class="yr">1990s–2000s</div><div class="ev">Becomes a <strong>global export powerhouse</strong> for auto forgings — crankshafts, axles, chassis parts for the world's truck and car makers — and acquires <strong>forging operations in Europe (Germany) and the US</strong> to sit close to customers.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Deliberate <strong>de-risking push</strong> begins — building the <strong>non-automotive / industrials</strong> book (oil &amp; gas, power, rail, construction) and laying the groundwork for <strong>defence and aerospace</strong>.</div></li>
+    <li class="major"><div class="yr">2016 onward</div><div class="ev">Steps up the <strong>defence programme</strong> — artillery (ATAGS), protected vehicles, ammunition — building indigenous capability under the "Make in India" / defence-indigenisation push.</div></li>
+    <li><div class="yr">2020–22</div><div class="ev">Enters <strong>e-mobility</strong> (Tork Motors electric motorcycles, e-axles/components) and expands <strong>aerospace</strong> and <strong>aluminium light-weighting</strong>; buys US aluminium forging assets.</div></li>
+    <li class="major"><div class="yr">FY25–26</div><div class="ev"><strong>Defence order book crosses ₹11,000 Cr</strong> (184 ATAGS howitzers, exports); consolidates the strategic business under <strong>Kalyani Strategic Systems</strong>; takes a <strong>₹450 Cr e-mobility impairment</strong> and begins a <strong>European steel restructuring</strong> — pruning the drags while feeding the growth engines.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; control</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the <strong>Kalyani family</strong> holds roughly <strong>44%</strong>, with <strong>Baba Kalyani</strong> as Chairman &amp; Managing Director. A founder-family that has run the business for three generations means the strategic pivot into defence and diversification is driven by owners with a very long horizon.</li>
+    <li><strong>Group context:</strong> Bharat Forge is the listed flagship of the <strong>Kalyani group</strong> (annual turnover over US$3 bn), which spans steel, forging, defence, renewables and speciality chemicals — giving the defence and industrial businesses a broader ecosystem to draw on.</li>
+    <li><strong>Structure:</strong> the listed entity reports both a <strong>standalone</strong> business (the core Indian forging operation, the highest-margin part) and a larger <strong>consolidated</strong> group that folds in the overseas subsidiaries, the defence entities, castings (JS Autocast), aluminium and e-mobility — which is why standalone and consolidated numbers can move in opposite directions.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Standalone vs consolidated — read this once</div>
+    <p>Bharat Forge reports two sets of numbers and they tell different stories. <strong>Standalone</strong> is the crown-jewel Indian forging plant — a ~27% EBITDA-margin operation, but small and export-exposed (FY26 standalone revenue actually <em>fell</em> ~5% to ₹8,396 Cr as US truck exports slumped). <strong>Consolidated</strong> adds everything else — the overseas forging units, defence, castings, aluminium and e-mobility — and grew ~11% to ₹16,812 Cr as defence and industrials offset the auto weakness. The overseas subsidiaries are lower-margin, so consolidated margins are structurally thinner than standalone. When you hear "Bharat Forge does ~27% margins", that's the standalone gem; the group as a whole runs closer to ~17%. Watch <em>both</em>: standalone shows the health of the core, consolidated shows the whole machine.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The business map — from crankshafts to cannons</h2></div>
+  <p class="part-sub">Four engines, one furnace. Here's how the revenue actually breaks down.</p>
+
+  <p class="lead">Bharat Forge is best understood as <strong>one core capability (forging + machining + engineering) pointed at four end-markets</strong>. Two are the legacy (auto and industrials); two are the future (defence and the newer bets). The mix is deliberately shifting from the first pair to the second.</p>
+
+  <h3>The value chain — how a billet becomes a sold part</h3>
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The forging value chain — value is added at every step</div>
+    <div class="flow-row">
+      <div class="node raw"><div class="ntag">Input</div><div class="nname">Steel / aluminium billet</div><div class="nwho">Raw metal — a commodity input.</div></div>
+      <div class="arrow">→</div>
+      <div class="node forge"><div class="ntag">Core skill</div><div class="nname">Forge under pressure</div><div class="nwho">Heat + press → grain aligned, super-strong shape.</div></div>
+      <div class="arrow">→</div>
+      <div class="node mach"><div class="ntag">Value-add</div><div class="nname">Machine &amp; finish</div><div class="nwho">Precision-machine to a ready-to-fit part.</div></div>
+      <div class="arrow">→</div>
+      <div class="node mkt"><div class="ntag">Customer</div><div class="nname">Auto · Industrials · Defence · Aero</div><div class="nwho">Sold as a qualified, safety-critical component.</div></div>
+    </div>
+    <div class="flow-note">The further right (more machining, more engineering, more certification), the higher the margin and the stickier the customer. Bharat Forge's push is up this chain — from "forge and ship" toward fully-engineered, assembled systems (a whole artillery gun, not just a barrel).</div>
+  </div>
+
+  <h3>The four end-markets</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Where Bharat Forge's revenue comes from</caption>
+    <thead><tr><th>Engine</th><th>What it makes</th><th>Character</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--auto)">Automotive forgings</td><td>Crankshafts, front axles, connecting rods, chassis &amp; transmission parts for CV (trucks) and PV (cars) — for global OEMs, big export book.</td><td>The <strong>legacy core</strong>. Large, but <em>cyclical</em> and tied to the US/Europe truck cycle. The part being de-emphasised.</td></tr>
+      <tr><td class="t-strong" style="color:var(--ind)">Industrials / non-auto</td><td>Oil &amp; gas (drilling components), construction &amp; mining, power, rail, general engineering.</td><td>The <strong>first diversification</strong> — spreads the cyclicality across different end-markets; grew strongly in FY26.</td></tr>
+      <tr><td class="t-strong" style="color:var(--def)">Defence (KSSL)</td><td>Artillery guns (ATAGS 155mm), armoured/protected vehicles (Kalyani M4), ammunition, defence exports.</td><td>The <strong>growth &amp; re-rating engine</strong> — high-margin, multi-year, order-book-backed. FY26 revenue ~₹1,562 Cr.</td></tr>
+      <tr><td class="t-strong">Aerospace &amp; new bets</td><td>Aerospace forgings, aluminium light-weighting, e-mobility (Tork EVs, e-axles, EV components).</td><td>The <strong>optionality</strong> — higher-margin aerospace scaling up; e-mobility reset after the FY26 impairment.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Standalone revenue: exports vs domestic (FY26, approx.)</div>
+    <div class="c-sub">The core Indian operation is roughly half export — which is where the US-truck sensitivity lives</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Exports<small>US &amp; Europe — auto + industrial</small></div><div class="track"><span class="fill auto" style="width:100%"></span></div><div class="bval">~51%</div></div>
+      <div class="bar-row"><div class="blab">Domestic<small>India — auto + industrial + defence</small></div><div class="track"><span class="fill ind" style="width:86%"></span></div><div class="bval">~44%</div></div>
+    </div>
+    <div class="legend"><span>Shares are approximate and shift quarter to quarter. In FY26, domestic grew while exports (especially US commercial-vehicle) fell — the auto-cycle drag in one picture.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one mix-shift to watch</div>
+    <p>The single most important trend in the numbers is the <strong>rising share of defence + industrials and the falling share of auto exports</strong>. In FY26 the auto business (both exports and domestic) was <em>down</em>, while industrials (oil &amp; gas, aerospace) and defence <em>grew</em> — and the group still delivered double-digit consolidated growth. That is the diversification thesis working in real time: the new engines are big enough to carry the company through an auto downturn. Each year the mix tilts further, the business becomes <strong>less cyclical and higher-margin</strong> — and, the bulls argue, deserves a higher multiple.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The forging moat — scale, metallurgy and the certification wall</h2></div>
+  <p class="part-sub">The first of the three forces that truly define Bharat Forge.</p>
+
+  <p class="lead">Everything Bharat Forge does rests on one hard-won asset: it is <strong>genuinely world-class at forging</strong>. That sounds obvious, but in an industry of commodity metal-bashers it is rare — and it is what lets the company charge a premium, win multi-year platforms, and credibly walk into defence and aerospace. The moat has three layers, and they compound.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">Top-tier</div><div class="msl">Among the world's largest forging companies by capacity (long ranked #2 globally)</div></div>
+    <div class="ms gold"><div class="msv">Dual-use</div><div class="msl">The same presses &amp; metallurgy serve autos, oil &amp; gas, aerospace AND defence</div></div>
+    <div class="ms"><div class="msv">~27%</div><div class="msl">Standalone EBITDA margin — proof the core is a high-value, not commodity, business</div></div>
+  </div>
+
+  <h3>Layer 1 — Scale</h3>
+  <p>Bharat Forge operates some of the <strong>largest forging presses and single forging facilities in the world</strong>. Scale does two things: it lets the company make <em>very large</em> forgings (big crankshafts, big industrial parts, gun components) that small forgers physically cannot; and it drives down unit cost, so it wins high-volume global programmes on price <em>and</em> capability. Capital-intensive plants like these are extraordinarily expensive to replicate — a would-be competitor needs hundreds of crores and years just to build the presses, before it has forged a single qualified part.</p>
+
+  <h3>Layer 2 — Metallurgy &amp; engineering</h3>
+  <p>The real difficulty in forging isn't the press — it's knowing <strong>which alloy, which heat treatment, which die design</strong> will give a part exactly the strength and fatigue life a customer's engineering spec demands. This is decades of accumulated know-how, backed by in-house R&amp;D, testing labs and increasingly by <strong>design capability</strong> — Bharat Forge doesn't just make to a drawing, it co-develops parts with customers. That engineering depth is what lets it move <em>up</em> the value chain, from raw forgings toward machined, assembled and even fully-engineered systems.</p>
+
+  <h3>Layer 3 — The certification wall</h3>
+  <p>This is the deepest moat. Global OEMs, oil majors and defence ministries buy safety-critical parts <strong>only from suppliers they have certified</strong> — a process that can take years of audits, sample testing and validation. Once a supplier is qualified onto a platform (an engine family, a truck programme, a weapon system), switching is costly and risky for the customer, so incumbents keep the business for the platform's whole life. Bharat Forge sits inside the qualified-supplier lists of a long roster of global truck and car makers — relationships that are, in effect, an annuity and a barrier to entry rolled into one.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the moat travels — the dual-use insight</div>
+    <p>Here's the point that makes Bharat Forge special. The three moat layers — scale, metallurgy, certification — were all built serving the <strong>auto industry</strong>. But they are <em>not auto-specific</em>. A press big enough for a heavy-truck crankshaft can forge an artillery component. The metallurgists who tune steel for a fatigue-critical axle can tune steel for a gun barrel that must survive thousands of firings. The quality systems that satisfy Daimler's audits are exactly what a defence ministry demands. So when Bharat Forge decided to enter defence and aerospace, it wasn't starting from zero — it was <strong>redeploying a world-class capability</strong> that very few companies anywhere possess. That is why the diversification is credible where, for a pure metal-basher, it would be fantasy.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The defence transformation and the order book</h2></div>
+  <p class="part-sub">The second defining force — and the reason a forging company is re-rating like a defence stock.</p>
+
+  <p class="lead">If forging is Bharat Forge's foundation, <strong>defence is its future</strong> — and the single biggest reason the stock has re-rated. Through <strong>Kalyani Strategic Systems (KSSL)</strong>, its defence subsidiary, Bharat Forge has built genuine, indigenous capability in the highest-value corner of defence manufacturing: <strong>artillery, armoured vehicles, ammunition and defence exports</strong>. In FY26 defence revenue reached <strong>~₹1,562 Cr</strong>, sitting on a <strong>~₹10,961 Cr order book</strong> — years of visible, high-margin work.</p>
+
+  <h3>What KSSL actually builds</h3>
+  <ul class="clean">
+    <li><strong>Artillery guns — the flagship.</strong> The <strong>ATAGS (Advanced Towed Artillery Gun System)</strong>, a 155mm/52-calibre towed howitzer that can fire shells ~48 km, co-developed with India's DRDO and built by Bharat Forge and Tata Advanced Systems. In March 2025 the Ministry of Defence signed a landmark <strong>~₹6,900 Cr</strong> order for 307 ATAGS guns; <strong>Bharat Forge/KSSL supplies 184 units (~60% of the order, worth ~₹4,000 Cr)</strong> — India's biggest indigenous artillery order.</li>
+    <li><strong>Defence exports.</strong> KSSL has exported the <strong>Kalyani-42</strong> and ATAGS-class 155mm systems — including orders from <strong>Armenia</strong> (6 ATAGS delivered, with intent for ~84 more) — proving the products can win in a global market, not just at home.</li>
+    <li><strong>Armoured / protected vehicles.</strong> The <strong>Kalyani M4</strong> mine-protected vehicle and related platforms.</li>
+    <li><strong>Ammunition &amp; systems.</strong> A growing ammunition line (incl. artillery shells and small-arms/carbine orders), plus naval systems and unmanned platforms — broadening beyond a single product.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">The defence order book — years of visibility</div>
+    <div class="c-sub">Defence order book (₹ Cr) has climbed steadily as artillery orders landed</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Q1 FY26</div><div class="track"><span class="fill def" style="width:86%"></span></div><div class="bval">~9,463</div></div>
+      <div class="bar-row"><div class="blab">Q3 FY26<small>Dec '25</small></div><div class="track"><span class="fill def" style="width:100%"></span></div><div class="bval">~11,100</div></div>
+      <div class="bar-row"><div class="blab">FY26 end<small>Mar '26</small></div><div class="track"><span class="fill def" style="width:99%"></span></div><div class="bval">~10,961</div></div>
+    </div>
+    <div class="legend"><span>An order book ~7× annual defence revenue means the business has multi-year, contracted visibility — the opposite of the auto book's quarter-to-quarter volatility. Management has guided ~30–40% defence growth in FY27.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why defence re-rates a cyclical forger</div>
+    <p>Three reasons the market treats defence revenue as worth far more per rupee than auto revenue. <strong>(1) Visibility.</strong> A ₹11,000 Cr order book is contracted, multi-year work — you can see the revenue coming years out, unlike auto exports that swing with the US truck cycle every quarter. <strong>(2) Margin.</strong> Fully-engineered defence systems (a complete artillery gun, not a raw forging) carry structurally higher margins than commodity auto parts. <strong>(3) Structural tailwind.</strong> India is on a multi-year <strong>defence-indigenisation drive</strong> — the government wants weapons made at home, not imported — and Bharat Forge is one of the few private players with the metallurgy and scale to deliver artillery-grade hardware. Stack visible, high-margin, structurally-growing revenue on top of a cyclical forging base, and the market stops valuing the whole company like a cyclical — it starts paying a defence-and-growth multiple. That mix-shift <em>is</em> the re-rating.</p>
+  </div>
+
+  <div class="note gold"><b>The nuance to keep in mind:</b> defence is powerful but still a <em>minority</em> of revenue today (~₹1,562 Cr of ~₹16,800 Cr consolidated). The order book promises a much bigger share over the next few years — but <em>execution</em> (delivering complex weapon systems on schedule and on budget) and <em>order-timing</em> (defence orders are lumpy and politically sensitive) are the real-world risks. The thesis is about the <strong>trajectory</strong>, not today's snapshot.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Diversifying away from cyclical auto</h2></div>
+  <p class="part-sub">The third defining force — the de-risking story that upgrades both growth and margins.</p>
+
+  <p class="lead">For most of its history, Bharat Forge <em>was</em> the US truck cycle — a forging exporter whose fortunes rose and fell with how many heavy trucks got built in North America and Europe. The company's most important strategic decision has been a deliberate, decade-long push to <strong>break that dependence</strong> — spreading revenue across industrials, defence, aerospace and e-mobility so that no single cyclical end-market can sink the whole ship.</p>
+
+  <h3>The de-risking, engine by engine</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-ind">Industrials / non-auto</span></strong> — oil &amp; gas (drilling and wellhead components), construction &amp; mining equipment, power (turbine forgings), rail. Different demand drivers than autos, so they smooth the cycle. In FY26 this book <em>grew</em> even as auto fell — proof of concept.</li>
+    <li><strong><span class="chain-def">Defence</span></strong> — the highest-value diversification (see §05): higher-margin, order-backed, structurally growing, and largely uncorrelated with the auto cycle.</li>
+    <li><strong>Aerospace</strong> — forgings and components for aircraft; a high-barrier, high-margin market where Bharat Forge's metallurgy and certification pedigree translate directly. Small today but scaling.</li>
+    <li><strong>E-mobility &amp; light-weighting</strong> — the "powertrain-agnostic" hedge: whether vehicles run on diesel, petrol or electricity, they still need forged parts. Bharat Forge makes <strong>e-axles and EV components</strong>, owns EV-maker <strong>Tork Motors</strong> (Kratos electric motorcycles), and is expanding <strong>aluminium light-weighting</strong> (lighter forged parts for fuel efficiency and EV range).</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "powertrain-agnostic" defuses the EV bomb</div>
+    <p>A big fear for any auto-parts maker is that the shift to electric vehicles destroys its product — no engine means no crankshaft, no connecting rod. Bharat Forge's answer is that <strong>forging is largely powertrain-agnostic</strong>: an EV still has axles, chassis, suspension and structural parts that must be forged, and it needs <em>new</em> forged parts too (e-axles, motor components, battery-tray structures, and lots of <strong>light-weighting</strong> — forged aluminium instead of heavy steel, to extend battery range). So while some engine-specific parts fade, the addressable content per vehicle doesn't collapse — it re-shapes. The catch, as FY26 showed, is that the <em>direct</em> EV bets (making whole electric vehicles via Tork) are a different, harder game than making forged EV components — and that's where the ₹450 Cr impairment landed (see §08).</p>
+  </div>
+
+  <div class="note gold"><b>The upgrade in one line:</b> every rupee of revenue that moves from cyclical auto forgings into defence, aerospace or industrials makes Bharat Forge <em>less</em> volatile and <em>higher-margin</em> — which is the mechanical reason the diversification story deserves a re-rating, quite apart from the growth it adds. The de-risking and the re-rating are two sides of the same coin.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The auto cycle and the US-truck sensitivity</h2></div>
+  <p class="part-sub">The risk side of the legacy — the boom-and-bust that the diversification is meant to escape.</p>
+
+  <p class="lead">To value Bharat Forge you have to respect its oldest vulnerability: a large chunk of the legacy business is tied to the <strong>North American and European heavy-truck (Class-8) cycle</strong>, which is one of the most violently cyclical markets in industry. When freight demand is strong, fleets order trucks in huge numbers and Bharat Forge's export order book booms; when freight softens or emission rules pause, orders collapse — and the export book collapses with them.</p>
+
+  <div class="chart">
+    <div class="c-title">The US Class-8 truck cycle — feast and famine</div>
+    <div class="c-sub">Illustrative swings in North American heavy-truck demand that drive Bharat Forge's export book</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Q3 FY26<small>US CV exports</small></div><div class="track"><span class="fill bad" style="width:32%"></span></div><div class="bval">−51% YoY</div></div>
+      <div class="bar-row"><div class="blab">Feb 2026<small>US Class-8 net orders</small></div><div class="track"><span class="fill ind" style="width:100%"></span></div><div class="bval">+159% YoY</div></div>
+    </div>
+    <div class="legend"><span>The same market swung from a deep destocking slump (exports down ~51% YoY) to a sharp rebound (US Class-8 net orders +159% YoY) within a year — the whipsaw that makes the auto export book so hard to forecast.</span></div>
+  </div>
+
+  <p>The FY26 story is exactly this cycle in action. For much of the year, <strong>US commercial-vehicle exports fell sharply</strong> — down ~51% year-on-year in Q3 FY26 — hit by fleet <strong>destocking</strong> (buyers running down inventory) and <strong>pauses in US emission policy</strong> (uncertainty over new rules made fleets delay orders), compounded by <strong>tariff</strong> uncertainty on parts entering the US. That is what dragged standalone revenue down ~5% for the year. Then, late in the year, the cycle began to turn — US Class-8 <strong>net orders surged ~159% YoY in February 2026</strong> — setting up the recovery that underpins management's confident FY27 guidance.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the cycle matters less than it used to — but still matters</div>
+    <p>Two things to hold together. First, the auto export book is <strong>still large enough to move the whole company</strong> — a fresh US-truck downturn would hurt a meaningful slice of revenue, and FY26 proved the drag is real. Second, and this is the whole point of the diversification, <strong>defence + industrials are now big enough to partly offset an auto slump</strong> — which is precisely why consolidated revenue rose ~11% in FY26 <em>even as</em> standalone (auto-heavy) revenue fell. So the cycle hasn't gone away; it has been <em>diluted</em>. Each year the auto share shrinks, the company's earnings become less hostage to a chart of American trucking freight. But until that mix-shift is complete, "how are US truck orders trending?" remains a question every Bharat Forge investor has to ask.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The overseas drag and the FY26 clean-up</h2></div>
+  <p class="part-sub">The other side of the ledger — the historically troubled subsidiaries, and the pruning under way.</p>
+
+  <p class="lead">Not everything Bharat Forge owns is a jewel. Its <strong>overseas forging subsidiaries</strong> — acquired over the years in Europe (Germany) and the US to sit close to customers — have historically been <strong>lower-margin and, at times, loss-making</strong>, a structural drag on consolidated returns. Alongside them, the <strong>e-mobility bet</strong> has proved harder than hoped. FY26 was, in large part, the year management got serious about <strong>cleaning up the drags</strong> — and the clean-up is exactly why reported profit looks depressed.</p>
+
+  <h3>The two FY26 one-offs to understand</h3>
+  <ul class="clean">
+    <li><strong>The ₹450 Cr e-mobility impairment.</strong> Bharat Forge wrote down ~₹450 Cr on its investment in <strong>Kalyani Powertrain's e-mobility division (including Tork Motors)</strong>, as global EV adoption came in slower and more uneven than expected. Baba Kalyani called it "an acceptance of the need to take a fresh look at how we address the EV opportunity." It is not a full exit — the group is reorienting toward <strong>EV components and platforms</strong> (e-axles, LCV EV platforms) rather than trying to be a vehicle maker — but it is an admission that the direct-EV bet disappointed.</li>
+    <li><strong>The European steel/forging restructuring.</strong> Bharat Forge began <strong>restructuring the steel business of CDP Bharat Forge in Europe</strong>, a process expected to run into end-2027, scaling down the European manufacturing footprint and pursuing alternative uses for it. This is the long-running "overseas subsidiary" problem being tackled head-on.</li>
+  </ul>
+
+  <div class="note"><b>Read the profit optics carefully.</b> Because of these exceptional items, FY26 <em>reported</em> profit is depressed relative to the underlying business, and the <strong>trailing P/E screens optically enormous</strong> (well over 80×). That is a distortion, not the true earnings power — the standalone core still earns ~27% EBITDA margins, and the exceptionals are (by design) one-time clean-ups. When judging valuation, look through to <em>forward</em> earnings on a normalised base, not the trailing multiple on a one-off-hit year (see §09–10).</div>
+
+  <div class="plain">
+    <div class="ptag">Why the clean-up is arguably good news</div>
+    <p>It's tempting to read impairments and restructuring as pure bad news — and in the short term they hurt reported profit. But strategically, <strong>pruning the drags is the flip side of feeding the growth engines</strong>. Money and management attention tied up in a struggling European steel unit or a sub-scale EV venture is money and attention <em>not</em> going into the high-return defence, aerospace and industrials businesses. By taking the write-downs and restructuring now — in a year when auto was weak anyway — management is cleaning the deck so that FY27 onward the reported numbers better reflect the higher-quality, diversified business underneath. The bull reads FY26's messy profit as a <strong>reset year</strong>; the bear worries the overseas problems recur.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A double-engine year — growth from defence and industrials, drag from auto and one-offs.</p>
+
+  <p class="lead">FY26 is a <strong>tale of two halves of the business</strong>: the auto-heavy standalone operation shrank on weak US exports, while the diversified consolidated group grew double-digits on defence and industrials — before exceptional items pulled reported profit lower. The financials only make sense once you separate the standalone gem from the consolidated whole, and the underlying earnings from the one-offs.</p>
+
+  <div class="chart">
+    <div class="c-title">Consolidated revenue trajectory</div>
+    <div class="c-sub">Group revenue (₹ Crore) — steady growth as diversification builds</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:77%"></span></div><div class="bval">12,910</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:93%"></span></div><div class="bval">15,682</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:90%"></span></div><div class="bval">15,123</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">16,812</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Consolidated net profit (PAT)</div>
+    <div class="c-sub">₹ Crore — FY26 rose despite the exceptional-item drag</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:47%"></span></div><div class="bval">508</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:84%"></span></div><div class="bval">910</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:84%"></span></div><div class="bval">913</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">1,089</div></div>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>FY26 at a glance (year ended March 2026)</caption>
+    <thead><tr><th>Metric</th><th class="num">Standalone</th><th class="num">Consolidated</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue</td><td class="num">₹8,396 Cr <small>(−5.1%)</small></td><td class="num">₹16,812 Cr <small>(+11.2%)</small></td></tr>
+      <tr><td class="t-strong">EBITDA</td><td class="num">₹2,312 Cr</td><td class="num">₹2,921 Cr <small>(+5.9%)</small></td></tr>
+      <tr><td class="t-strong">EBITDA margin</td><td class="num">~27.5%</td><td class="num">~17.4%</td></tr>
+      <tr><td class="t-strong">Net profit (PAT)</td><td class="num">—</td><td class="num">₹1,089 Cr <small>(vs ₹913)</small></td></tr>
+      <tr><td class="t-strong">EPS (consol)</td><td class="num">—</td><td class="num">~₹22.6</td></tr>
+      <tr><td class="t-strong">Net debt / equity</td><td class="num">~0.18×</td><td class="num">modest, group</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~27%</div><div class="msl">Standalone EBITDA margin — the high-quality core</div></div>
+    <div class="ms"><div class="msv">~₹1.03 L Cr</div><div class="msl">Market cap (Jun '26); share ~₹2,115; promoter ~44%</div></div>
+    <div class="ms red"><div class="msv">~50×+</div><div class="msl">Forward P/E on ~FY27 estimates (trailing screens far higher on one-offs)</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to read the valuation without being fooled</div>
+    <p>The trailing P/E — well over 80× (some screens show ~125×) — looks absurd for a forging company. But it's an artefact of the <strong>depressed one-off-hit FY26 profit base</strong> (the ₹450 Cr impairment and a soft auto year). Analysts value Bharat Forge on <strong>forward earnings</strong>: at ~₹2,115 the stock trades around <strong>~50× FY27 estimated earnings</strong> — still a rich, "priced-for-the-pivot" multiple, but a very different number from the trailing one. The stock has already re-rated hard (up ~60%+ over the prior year) as the market bought the defence-and-diversification story. So the debate isn't "is this cheap?" — it isn't — it's "does the defence/industrials growth and margin upgrade justify a multiple this far above a normal auto-parts maker?" That is the crux of §10.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The re-rating debate</h2></div>
+  <p class="part-sub">Two ways to see the same company — and the multiple sits in the tension between them.</p>
+
+  <p class="lead">Bharat Forge is one of the most argued-over names on the exchange precisely because you can tell two entirely coherent, opposite stories about it — and the share price reflects the market currently siding with the first.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The two lenses on Bharat Forge</caption>
+    <thead><tr><th>The re-rated story</th><th>The cyclical-legacy story</th></tr></thead>
+    <tbody>
+      <tr><td>A <strong>defence + aerospace + industrials</strong> engineering house with a ₹11,000 Cr order book, structural growth and rising margins — deserves a growth/defence multiple.</td><td>A <strong>cyclical auto-forgings exporter</strong> with troubled overseas ops, hostage to the US truck cycle — should trade like a mid-cycle auto-parts maker.</td></tr>
+      <tr><td>Defence is high-margin, order-backed, and growing 30–40%; industrials are diversifying the cycle away; the mix-shift is real and accelerating.</td><td>Defence is still only ~9% of revenue; orders are lumpy and political; the bulk of the business is still auto and overseas subsidiaries that keep disappointing.</td></tr>
+      <tr><td>Management guides <strong>~25% FY27 growth</strong> for Indian manufacturing ops as the US truck cycle turns up and defence ramps — earnings should inflect.</td><td>A ~50× forward multiple leaves <strong>no room for error</strong>: any defence-order delay, execution slip, or fresh auto downturn and the stock de-rates hard.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <blockquote>The whole investment case is a bet on the <em>direction</em> of the revenue mix — that each passing year, Bharat Forge looks less like an auto-parts cyclical and more like a diversified defence-and-engineering compounder.</blockquote>
+
+  <div class="plain">
+    <div class="ptag">The honest synthesis</div>
+    <p>Both stories are true at once — that's what makes the stock hard. Today, Bharat Forge <em>is</em> still majority-cyclical-auto, with real overseas drag; but the <em>trajectory</em> is unmistakably toward defence, aerospace and industrials, and management is actively pruning the drags to get there. The market has chosen to pay ahead of that transition, giving the stock a rich multiple on the promise. The bull is buying the destination; the bear is pointing at the current address and the price of the ticket. The way this resolves is simple to state and hard to predict: <strong>does defence + industrials growth (and the auto recovery) show up in the numbers fast enough to grow into the multiple — or does a stumble arrive first?</strong> Watch the defence order book, defence execution/deliveries, and the US truck cycle each quarter; those three tell you which story is winning.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A world-class capability mid-pivot — priced for the pivot to succeed.</p>
+
+  <p class="lead">Bharat Forge is a genuinely rare asset — a world-class forging capability being redirected from a cyclical commodity end-market toward structural, high-margin defence and engineering. The business transformation is real; the investment debate is almost entirely about <strong>pace and price</strong>: how fast the mix shifts, how cleanly the overseas drags are resolved, and whether the growth justifies a multiple already paying for success.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Forging moat</strong> — top-tier global scale, deep metallurgy, and a certification wall that few can cross; genuinely dual-use across auto, industrial, aerospace and defence.</li>
+        <li><strong>Defence re-rating engine</strong> — a ~₹11,000 Cr order book (184 ATAGS howitzers + exports), 30–40% guided growth, high-margin and multi-year — riding India's indigenisation wave.</li>
+        <li><strong>De-risking mix-shift</strong> — industrials, aerospace and defence steadily displacing cyclical auto, lifting both growth and margins and lowering volatility.</li>
+        <li><strong>Auto-cycle turning up</strong> — US Class-8 orders rebounding; ~25% FY27 growth guided for Indian manufacturing ops as the export drag reverses.</li>
+        <li><strong>Aligned, long-horizon owners</strong> — the Kalyani family (~44%), three generations deep, driving the pivot.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich valuation</strong> — ~50× forward earnings prices in the pivot's success; little margin for error, vulnerable to de-rating.</li>
+        <li><strong>Still majority cyclical-auto</strong> — defence is only ~9% of revenue today; a fresh US/Europe truck downturn still moves the whole company.</li>
+        <li><strong>Overseas &amp; EV drag</strong> — European subsidiaries have chronically disappointed; the FY26 ₹450 Cr e-mobility impairment shows the new bets can misfire.</li>
+        <li><strong>Defence execution &amp; lumpiness</strong> — turning a big order book into delivered, profitable systems on schedule is hard; defence orders are politically timed and uneven.</li>
+        <li><strong>One-off-distorted earnings</strong> — trailing profit is depressed and messy; the "clean" earnings power is a management/analyst estimate, not yet a reported fact.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Bharat Forge is a <strong>high-quality engineering franchise in the middle of a genuine transformation</strong> — from a cyclical auto-forgings exporter into a diversified defence, aerospace and industrials company, powered by a dual-use forging moat that very few companies possess. The business risk is manageable and the strategic direction is compelling; the <em>valuation</em> risk is the real one, because the market has already paid up for the pivot to work. The story over the next few years will be written in three numbers each quarter: the <strong>defence order book and its execution</strong> (is the growth engine delivering?), the <strong>revenue mix</strong> (is auto's share really shrinking?), and the <strong>US truck cycle</strong> (is the legacy drag turning to tailwind?). Get those right and a cyclical forger keeps re-rating into a defence-and-engineering compounder; stumble on any of them, and a richly-priced stock has room to fall.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Bharat Forge Ltd — Q4 &amp; FY26 results and earnings-call highlights (year ended Mar 2026); results coverage via ScanX, The Machine Maker, EquityBulls.</li>
+    <li>Bharat Forge — "Strong Sequential Recovery in Q4 FY26; FY27 Outlook" summary (Pune Prahar, May 2026).</li>
+    <li>Whalesbook — "Bharat Forge FY26 Revenue ₹16,812 Crore as Defense, Aerospace Fuel Growth" and FY26 profit / dividend notes.</li>
+    <li>Groww / ET Now — Bharat Forge Q4 FY26 results (PAT ₹232.57 Cr, ₹6.50 dividend).</li>
+    <li>Autocar Professional — "Bharat Forge Takes ₹450-Crore EV Hit, Begins Europe Steel Restructuring" (2026).</li>
+    <li>Whalesbook — "Bharat Forge Posts Big EV Loss, Bets on Defence for FY27 Growth" (2026).</li>
+    <li>PIB / The Bridge Chronicle / Organiser — MoD ₹6,900 Cr ATAGS &amp; towing-vehicle contract (Mar 2025); Quwa on the ~$830m ATAGS deal.</li>
+    <li>Wikipedia — ATAGS (howitzer); Bharat Forge; Kalyani Group; Baba Kalyani.</li>
+    <li>MarketSetup / Mobility Outlook / Autocar Professional — Q1–Q3 FY26 segment mix, exports vs domestic, US Class-8 exposure.</li>
+    <li>Screener.in — Bharat Forge consolidated financials, EPS, market cap, promoter holding, ratios.</li>
+    <li>Business Standard — "Bharat Forge stock rides global truck demand rebound, defence spend boom" (Mar 2026); KSSL–AM General artillery partnership (Jun 2026).</li>
+    <li>Bharat Forge investor presentations &amp; press releases, bharatforge.com; Kalyani Strategic Systems, kssl.in.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; standalone, consolidated and segment figures come from different disclosures and are not always directly comparable. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed
+  const COMPANY_SYMBOL = "BHARATFORG";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
