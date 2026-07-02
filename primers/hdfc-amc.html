@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HDFC AMC — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F5F7;
+    --paper-2:#FAFBFC;
+    --card:#FFFFFF;
+    --ink:#141C26;
+    --ink-soft:#4B586A;
+    --ink-faint:#8794A5;
+    --brand:#123B6D;          /* HDFC deep navy blue */
+    --brand-bright:#1E62B0;   /* brighter royal blue */
+    --gold:#0E8F86;           /* teal secondary accent */
+    --gold-deep:#0A6F68;      /* deep teal */
+    --equity:#123B6D;         /* equity - the hero asset class (navy) */
+    --debt:#5C7699;           /* debt - muted steel blue */
+    --liquid:#8593A6;         /* liquid - grey-blue */
+    --passive:#B08A3E;        /* others/passive - muted gold */
+    --line:#DEE4EB;
+    --line-soft:#E9EDF2;
+    --good:#1F7A54;
+    --bad:#C0472F;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7EFF8;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#E7FBF8;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .provenance{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#E9F3F1;border:1px solid #BEDFDA;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#0a6f68;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#15413c;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F8FA;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E7ECF1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#123B6D,#1E62B0);}
+  .fill.gold{background:linear-gradient(90deg,#0E8F86,#12B0A4);}
+  .fill.equity{background:linear-gradient(90deg,#123B6D,#1E62B0);}
+  .fill.debt{background:linear-gradient(90deg,#5C7699,#7A93B2);}
+  .fill.liquid{background:linear-gradient(90deg,#8593A6,#A3AEBD);}
+  .fill.passive{background:linear-gradient(90deg,#B08A3E,#C9A860);}
+  .fill.bad{background:linear-gradient(90deg,#C0472F,#D66144);}
+  .fill.ink{background:linear-gradient(90deg,#2C3A4B,#4B586A);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.n1{background:var(--brand);}
+  .node.n2{background:var(--debt);}
+  .node.n3{background:var(--gold-deep);}
+  .node.n4{background:var(--passive);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold-deep);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEDEA;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2c1e;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#E9F3F1;color:#154039;}
+  .note.gold b{color:#0a6f68;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#0a6f68;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#E7EFF8;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> The retail-quality franchise</a></li>
+    <li><a href="#p2"><span class="n">02</span> How an AMC earns money</a></li>
+    <li><a href="#p3"><span class="n">03</span> Yield, mix &amp; margin lead</a></li>
+    <li><a href="#p4"><span class="n">04</span> The company &amp; owners</a></li>
+    <li><a href="#p5"><span class="n">05</span> AUM, share &amp; the recovery</a></li>
+    <li><a href="#p6"><span class="n">06</span> SIP &amp; financialisation</a></li>
+    <li><a href="#p7"><span class="n">07</span> Distribution &amp; the HDFC channel</a></li>
+    <li><a href="#p8"><span class="n">08</span> Market-linked earnings</a></li>
+    <li><a href="#p9"><span class="n">09</span> SEBI, TER &amp; the fee squeeze</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Industry &amp; rivals</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: HDFCAMC · BSE: 541729</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>HDFC AMC, <em>the retail toll booth on India's savings</em></h1>
+  <p class="dek">A complete walk through one of India's largest and most profitable mutual-fund managers — a capital-light, ~33%-return-on-equity annuity that skims a tiny fee on ₹9.3 lakh crore of other people's money. Why HDFC AMC's unusually <em>retail</em>, individual-heavy, high-equity book is a higher-quality, higher-margin engine than an institution- or debt-led rival; how it clawed its way back after losing the top equity spot; how India's once-in-a-generation shift of household savings into SIPs feeds it; and why the two clouds over the whole model are the stock market and SEBI's power to cut fees.</p>
+
+  <div class="provenance">Auto-generated · figures self-verified against public sources · not investment advice</div>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹9.28 <small>lakh Cr</small></div><div class="l">Mutual-fund QAAUM (Q4 FY26)</div></div>
+    <div class="cell"><div class="v">11.4<small>%</small></div><div class="l">Industry AUM share (No. 3)</div></div>
+    <div class="cell"><div class="v">₹2,859 <small>Cr</small></div><div class="l">Net profit (FY26, +16%)</div></div>
+    <div class="cell"><div class="v">~33<small>%</small></div><div class="l">Return on equity (FY26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">2 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>Q4 &amp; FY26 results incorporated — QAAUM ₹9.28 lakh Cr (+20%), equity-oriented QAAUM ₹6.05 lakh Cr, revenue ₹4,118 Cr (+18%), PAT ₹2,859 Cr (+16%), operating margin 35 bps, SIP+STP ₹4,880 Cr/month; 16.7 mn unique investors, individual-AUM share 68% vs industry 60%; 1:1 bonus (Nov 2025) reflected in per-share figures; ₹54 final dividend.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">HDFC Asset Management Company is <strong>one of India's three largest mutual-fund managers</strong> and one of its most profitable — the investment manager to HDFC Mutual Fund, majority-owned by <strong>HDFC Bank</strong>, the country's biggest private-sector bank. It runs about <strong>₹9.28 lakh crore of quarterly-average mutual-fund assets</strong> (₹9.3 trillion, ~US$108 billion) on behalf of <strong>16.7 million unique investors</strong> across 30 million accounts, and takes a small annual fee on all of it. In FY26 (year to March 2026) it earned <strong>₹4,118 crore of operating revenue</strong> and <strong>₹2,859 crore of net profit</strong>, on a return on equity of about <strong>33%</strong> and almost no capital employed.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is a capital-light annuity on a mountain of money.</strong> An AMC needs almost no physical assets — no factories, barely any balance sheet, no debt. It manages money and skims a fee. That is why HDFC AMC earns a <strong>~33% return on equity</strong>, converts nearly all its profit to cash, and pays out ~80% as dividend. Its operating profit runs at <strong>35 basis points of the assets it manages</strong> — an industry-leading margin.</li>
+    <li><strong>The <em>quality</em> of the money is HDFC AMC's edge.</strong> Its book is unusually <strong>retail</strong>: individuals own <strong>68% of its assets versus 60% for the industry</strong>, and <strong>65% of its book is equity</strong> — the highest-fee, stickiest kind of money. A granular, individual, high-equity, SIP-fed book earns more per rupee and stays longer than an institution- or debt-heavy one. That is the whole story of why HDFC AMC is a premium asset.</li>
+    <li><strong>The tailwind is India's savings revolution.</strong> Households are shifting money out of bank deposits and gold into mutual funds, mostly through automatic monthly <strong>SIPs</strong>. HDFC AMC now collects <strong>~₹4,880 Cr of systematic flows every month (+33%)</strong> — a recurring, sticky river of inflows that grows the fee base whether or not markets rise. But the same regulator (SEBI) that oversees this boom can also <em>cut the fees</em> — and that, plus the market itself, is where the risk lives.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of HDFC AMC as a <strong>toll booth on India's savings highway</strong> — but one that has deliberately parked itself on the lane with the best traffic. It doesn't own the cars (the money belongs to investors) and it doesn't build the road (markets rise and fall on their own). It simply charges a tiny toll — under 0.5% a year — on every rupee that passes through its funds. What makes HDFC AMC special isn't the size of the pile so much as <em>who</em> the money belongs to: a huge share of it is ordinary Indians putting in a fixed sum every month via SIPs, into equity funds, and staying put for years. That kind of money pays the highest toll and rarely leaves — so a lean set of fund managers throws off extraordinary profit on almost no capital. The two things that can go wrong: the market falls (shrinking the pile the toll is charged on) or the government lowers the toll (SEBI cutting expense ratios). Everything else in this primer is a variation on those two forces.</p>
+  </div>
+</section>
+
+<!-- 01 — BESPOKE: retail-quality franchise (the lead) -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>The retail-quality franchise — HDFC AMC's real edge</h2></div>
+  <p class="part-sub">Why <em>whose</em> money you manage matters more than how much — and why HDFC AMC has the best kind.</p>
+
+  <p class="lead">Every AMC quotes its total AUM, but the number that actually separates a great fund house from an average one is <strong>the composition of that money</strong> — who it belongs to, what it's invested in, and how long it stays. On all three counts HDFC AMC sits at the premium end of the Indian industry, and this is the single most important thing to understand about the company. It is <strong>more <em>retail</em>, more <em>equity</em>, and more <em>sticky</em> than the average AMC</strong>, and that trio is what makes its economics so good.</p>
+
+  <div class="chart">
+    <div class="c-title">HDFC AMC vs the industry — the quality gap</div>
+    <div class="c-sub">Share of assets that come from the high-quality buckets (Mar 2026, monthly-average AUM)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Individual investors<small>HDFC AMC</small></div><div class="track"><span class="fill equity" style="width:68%"></span></div><div class="bval">68.2%</div></div>
+      <div class="bar-row"><div class="blab">Individual investors<small>Industry</small></div><div class="track"><span class="fill ink" style="width:60%"></span></div><div class="bval">59.7%</div></div>
+      <div class="bar-row"><div class="blab">Equity-oriented<small>HDFC AMC (closing)</small></div><div class="track"><span class="fill equity" style="width:66%"></span></div><div class="bval">66.1%</div></div>
+      <div class="bar-row"><div class="blab">Equity-oriented<small>Industry (closing)</small></div><div class="track"><span class="fill ink" style="width:57%"></span></div><div class="bval">57.0%</div></div>
+      <div class="bar-row"><div class="blab">Beyond top-30 cities<small>HDFC AMC B-30</small></div><div class="track"><span class="fill gold" style="width:19%"></span></div><div class="bval">19.2%</div></div>
+    </div>
+    <div class="legend"><span>HDFC AMC is measurably more individual, more equity-tilted and better-penetrated into smaller-town India than the average AMC — precisely the mix that earns the most and churns the least.</span></div>
+  </div>
+
+  <h3>Why each of these is worth money</h3>
+  <ul class="clean">
+    <li><strong>Individual (retail) money is higher-quality than institutional money.</strong> Companies, banks and treasuries park cash in low-fee liquid and debt funds and yank it out at quarter-ends; ordinary savers put money into equity funds and leave it for years. HDFC AMC's individual customers hold <strong>~84% of their money in equity</strong> and stay invested far longer — so its individual-heavy book is both higher-fee and lower-churn. Individuals are <strong>68% of HDFC AMC's assets vs ~60% for the industry.</strong></li>
+    <li><strong>Equity money earns several times the fee of cash money.</strong> An equity rupee earns HDFC AMC ~58–59 basis points a year; a liquid (cash) rupee earns ~12–13. Because <strong>65% of HDFC AMC's QAAUM is equity-oriented</strong> — well above the ~56% industry norm — its blended fee and profitability sit near the top of the table.</li>
+    <li><strong>B-30 penetration is granular, sticky, higher-incentive money.</strong> "B-30" means the towns and districts beyond India's 30 biggest cities. HDFC AMC has a <strong>19.2% B-30 share (a 12% market share in B-30 assets)</strong>, serves <strong>~98% of India's pincodes</strong>, and runs <strong>196 of its 280 offices in B-30 locations</strong>. This smaller-town money tends to be smaller-ticket, longer-held SIP money — the granular base every AMC covets and few build.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "retail-heavy" is the higher-margin, higher-quality book</div>
+    <p>Imagine two AMCs of identical size. One runs ₹9 lakh crore that is mostly corporate treasuries in liquid funds; the other runs ₹9 lakh crore that is mostly individuals' SIPs in equity funds. They look the same on a league table — but they are completely different businesses. The corporate-heavy one earns a thin fee, sees money slosh in and out with interest-rate cycles, and has to keep re-winning the same mandates. The retail-heavy one earns a fat fee, sees money arrive automatically every month and sit for years, and compounds a base that barely leaves. HDFC AMC is decisively the second kind. That is why "AUM" alone tells you little, and why HDFC AMC's <strong>individual-plus-equity-plus-SIP mix is the quiet moat</strong> that justifies its premium multiple far more than its raw size does.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>How an asset manager actually earns money</h2></div>
+  <p class="part-sub">No finance degree required — just the one equation that runs the whole business.</p>
+
+  <p class="lead">An AMC is one of the purest business models in the market: it is paid a <strong>percentage fee on the assets it manages</strong>, charged continuously, day after day, for as long as the money stays invested. There is no product to manufacture, no inventory, no receivables to chase. The entire company can be summarised in a single line.</p>
+
+  <blockquote>Revenue ≈ Average Assets Under Management × the fee rate (the "yield on AUM").</blockquote>
+
+  <p>So there are only two ways to grow revenue: <strong>manage more money</strong> (grow AUM) or <strong>earn a higher fee on it</strong> (lift the yield, mainly by holding more equity). Everything an AMC does — launching funds, delivering good returns, expanding distribution, marketing SIPs — is ultimately in service of those two levers.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only units you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and HDFC AMC's number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">AUM / QAAUM</td><td>"Assets Under Management" — the total pool of investor money in the funds. HDFC AMC's <strong>QAAUM was ₹9.28 lakh Cr</strong> (quarterly-average AUM, Q4 FY26), up ~20% in a year; closing AUM ₹8.44 lakh Cr.</td></tr>
+      <tr><td class="t-strong">Yield on AUM</td><td>The fee earned per year as a fraction of AUM, quoted in <strong>basis points</strong> (1 bp = 0.01%). HDFC AMC's <strong>blended operating-revenue yield is ~46 bps</strong> — i.e. it keeps about ₹0.46 for every ₹100 it manages.</td></tr>
+      <tr><td class="t-strong">Operating margin</td><td>Profit left after running costs, also in bps. HDFC AMC earns <strong>~35 bps of AUM as operating profit</strong>, because its costs run at only ~10–11 bps. This is the operating leverage — and one of the best margins in the industry.</td></tr>
+      <tr><td class="t-strong">Systematic flows / SIPs</td><td>New money coming in automatically each month, minus money leaving. Positive flows grow AUM without markets having to rise. HDFC AMC pulls in <strong>~₹4,880 Cr of SIP+STP a month</strong>.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why this is such a beautiful business model</div>
+    <p>Three features make asset management structurally attractive. <strong>(1) It is capital-light.</strong> The AMC manages investors' money, not its own — so it needs very little balance sheet, which is why ROE can be ~33% even after the company sits on a big pile of its own cash and investments. <strong>(2) It has operating leverage.</strong> A fund manager who runs ₹5,000 Cr costs about the same as one who runs ₹50,000 Cr, so once AUM crosses a scale threshold, almost every extra rupee of fee drops to profit. <strong>(3) The fee is recurring and sticky.</strong> Money in a fund doesn't have to be re-sold every year; it stays and keeps paying the fee, and SIP money often stays for years. Add it up and you get a high-margin, high-return, low-capital annuity — as long as AUM keeps growing and the fee isn't cut.</p>
+  </div>
+
+  <h3>Where the costs go</h3>
+  <p>HDFC AMC's expense base is small and mostly people. In FY26 its <strong>total operating expenses were only ₹907 Cr</strong> against ₹4,118 Cr of operating revenue. The big buckets are <strong>employee costs</strong> (fund managers, analysts, sales), <strong>fees paid to distributors</strong> (banks and advisers who bring in the money), and technology/administration. Because these are largely fixed, the gap between the ~46 bps it earns and the ~10–11 bps it spends is what makes the model print money. The single most important cost dynamic to watch is <strong>distribution commissions</strong> — the slice paid away to whoever sold the fund — which HDFC AMC has flagged as its main lever to absorb the 2026 fee changes.</p>
+</section>
+
+<!-- 03 — BESPOKE: yield, mix & the margin lead -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>Yield on AUM, the mix, and the margin lead</h2></div>
+  <p class="part-sub">The single idea that separates a great AMC from an average one — and where HDFC AMC wins.</p>
+
+  <p class="lead">Not all AUM is equal. An equity fund can charge many times more than a cash fund for managing the same rupee, because equity investing requires more skill, carries more risk, and investors will pay for it. So a manager's <strong>profitability is dictated less by how <em>much</em> money it runs than by <em>what kind</em> of money it runs.</strong> This is the master key to understanding why HDFC AMC is one of the highest-margin AMCs in the country.</p>
+
+  <div class="chart">
+    <div class="c-title">The fee ladder — HDFC AMC's yield by asset class (FY26)</div>
+    <div class="c-sub">Approx. revenue yield earned per year, in basis points of AUM (per management)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Equity funds<small>the profit engine</small></div><div class="track"><span class="fill equity" style="width:100%"></span></div><div class="bval">~58–59 bps</div></div>
+      <div class="bar-row"><div class="blab">Debt funds<small>bonds &amp; income</small></div><div class="track"><span class="fill debt" style="width:47%"></span></div><div class="bval">~27–28 bps</div></div>
+      <div class="bar-row"><div class="blab">Liquid funds<small>parked cash</small></div><div class="track"><span class="fill liquid" style="width:21%"></span></div><div class="bval">~12–13 bps</div></div>
+      <div class="bar-row"><div class="blab">Blended book<small>the weighted average</small></div><div class="track"><span class="fill gold" style="width:79%"></span></div><div class="bval">~46 bps</div></div>
+    </div>
+    <div class="legend"><span>An equity rupee earns roughly <b>4–5×</b> what a liquid rupee earns. This is why the equity share of the book is the number that really matters — and why a heavily-equity book like HDFC AMC's carries a premium blended yield.</span></div>
+  </div>
+
+  <p>Now look at how HDFC AMC's book is actually split. It is <strong>tilted decisively toward the high-margin end</strong>: on a quarterly-average basis, roughly <strong>65% equity-oriented, ~19% debt, ~9% liquid and ~7% "others"</strong> (ETFs, arbitrage, fund-of-funds). Its equity tilt of ~65% sits well above the ~56% industry average — and critically, HDFC AMC has kept its passive/ETF slice small (~7% vs the industry's ~18%), which protects its blended yield from the low-fee drag that passive brings.</p>
+
+  <div class="chart">
+    <div class="c-title">HDFC AMC's AUM mix (QAAUM, Q4 FY26)</div>
+    <div class="c-sub">The book is weighted toward the high-fee, high-margin equity bucket — and light on low-fee passive</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Equity-oriented<small>₹6.05 lakh Cr · ~58 bps</small></div><div class="track"><span class="fill equity" style="width:100%"></span></div><div class="bval">~65%</div></div>
+      <div class="bar-row"><div class="blab">Debt<small>₹1.76 lakh Cr · ~27 bps</small></div><div class="track"><span class="fill debt" style="width:29%"></span></div><div class="bval">~19%</div></div>
+      <div class="bar-row"><div class="blab">Liquid<small>₹0.79 lakh Cr · ~12 bps</small></div><div class="track"><span class="fill liquid" style="width:13%"></span></div><div class="bval">~9%</div></div>
+      <div class="bar-row"><div class="blab">Others / ETF<small>arbitrage, FoF, ETF · low fee</small></div><div class="track"><span class="fill passive" style="width:11%"></span></div><div class="bval">~7%</div></div>
+    </div>
+    <div class="legend"><span>Shares approximate (QAAUM). Equity drives the bulk of revenue despite being ~65% of assets, because its fee is several times higher.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The margin lead — and why the mix cuts both ways</div>
+    <p>HDFC AMC's <strong>~35 bps operating margin is among the very best in the Indian AMC industry</strong> — the reward for a lean cost base sitting on a high-equity, retail-heavy, low-passive book. But the same heavy equity tilt is both its superpower <em>and</em> its vulnerability. On the way up it is pure leverage: rising equity markets swell the highest-fee bucket, so revenue climbs faster than the overall market, and SIP inflows pile fresh equity money on top. On the way down, the wiring works in reverse — a falling market shrinks precisely the assets that earn the most, so profit falls faster than a debt-heavy rival's would. A second, slower threat is <strong>the industry drift to passive</strong>: index funds and ETFs charge almost nothing, so as Indian investors adopt them, the industry's blended yield grinds lower. HDFC AMC's answer is to keep its own passive slice small and win share in active equity where its brand and track record command a premium fee — but the passive shift is a structural headwind the whole industry must run against.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">Built by two giants of Indian finance, now anchored by HDFC Bank — and abrdn is gone.</p>
+
+  <p class="lead">HDFC Asset Management Company was founded in <strong>1999</strong> and built the country's flagship mutual-fund franchise over more than two decades. Its ownership has changed shape twice in recent years, and understanding today's shareholder register — and one name that has <em>left</em> it — matters for the investment case.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1999–2000</div><div class="ev">HDFC AMC incorporated; launches HDFC Mutual Fund and, via the 2003 acquisition of Zurich India's fund business, quickly becomes one of India's largest fund houses.</div></li>
+    <li><div class="yr">2001</div><div class="ev">Standard Life (later part of <strong>abrdn</strong>) comes in as the foreign JV partner alongside HDFC Ltd — a two-decade minority holding.</div></li>
+    <li class="major"><div class="yr">2018</div><div class="ev"><strong>IPO &amp; listing.</strong> HDFC AMC lists on NSE &amp; BSE at ₹1,100 in one of the year's most sought-after issues, at a rich multiple that signalled the market's love of the capital-light AMC model.</div></li>
+    <li><div class="yr">2019–2021</div><div class="ev">HDFC AMC's <strong>value-tilted equity funds lag the growth-led rally</strong>; it loses the No. 1 equity spot and cedes some overall share — the low point that frames the recovery story.</div></li>
+    <li><div class="yr">2022–2023</div><div class="ev"><strong>abrdn sells down and fully exits</strong> its stake (a 6% block in 2022, the remaining ~10.2% in 2023) — removing a long-standing overhang. Meanwhile HDFC Ltd merges into HDFC Bank (2023), so <strong>HDFC Bank becomes HDFC AMC's promoter.</strong></div></li>
+    <li class="major"><div class="yr">Nov 2025</div><div class="ev"><strong>1:1 bonus issue.</strong> One free share for every share held; all per-share figures (EPS, dividend) are now on a post-bonus basis.</div></li>
+    <li><div class="yr">FY26</div><div class="ev">QAAUM ₹9.28 lakh Cr, PAT ₹2,859 Cr (+16%), ROE ~33%; equity share recovering; declares ₹54/share final dividend (post-bonus).</div></li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Read this: the abrdn overhang is gone, and HDFC Bank is now the anchor</div>
+    <p>Two ownership changes reshaped HDFC AMC. First, <strong>abrdn (formerly Standard Life Aberdeen) has completely exited</strong> — after trimming in 2022 it sold its remaining stake in 2023 — which removed years of "will the foreign partner keep selling?" overhang that had periodically weighed on the stock. Second, when HDFC Ltd merged into HDFC Bank in mid-2023, <strong>HDFC Bank inherited the promoter stake</strong>. So today's controlling shareholder is India's largest private bank, which brings the "HDFC" brand, a vast branch and relationship-manager network, and deep credibility with savers. The key takeaways: (1) the seller-overhang chapter is closed; (2) the promoter is a blue-chip bank whose distribution and brand are strategic assets; and (3) with abrdn gone and HDFC Bank holding just over half, the free float is large and liquid — a healthy contrast to a tightly-held, freshly-listed rival.</p>
+  </div>
+
+  <h3>Ownership at a glance (~Mar 2026)</h3>
+  <ul class="clean">
+    <li><strong>Promoter — HDFC Bank ~52.4%.</strong> The single controlling shareholder; India's biggest private bank behind the wheel. (Down from ~62.8% three years ago as the register broadened.)</li>
+    <li><strong>Foreign institutions ~24.4%, domestic institutions ~14.4%, public ~8.8%</strong> — a broad, liquid free float, with foreign-institutional interest having risen sharply (from ~7.5% in 2023) as abrdn's block was absorbed by the wider market.</li>
+    <li><strong>Balance sheet:</strong> debt-free, cash-rich (~₹9,400 Cr of investments), capital-light — it funds itself and returns ~80% of profit as dividend.</li>
+  </ul>
+</section>
+
+<!-- 05 — BESPOKE: AUM, share & the recovery -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>AUM, market share, and the recovery story</h2></div>
+  <p class="part-sub">A top-three house that stumbled, lost the equity crown, and clawed its way back.</p>
+
+  <p class="lead">In asset management, scale <em>is</em> a moat: bigger AUM means more fee revenue over a fixed cost base, more distributor reach, and a self-reinforcing brand that pulls in yet more money. HDFC AMC has always been one of the top three Indian fund houses — but its recent history is a genuine <strong>fall-and-recovery arc</strong> that is central to the story and sets it apart from rivals that simply compounded.</p>
+
+  <div class="chart">
+    <div class="c-title">India's largest fund houses by total AUM</div>
+    <div class="c-sub">Approx. assets under management (₹ lakh Cr) — HDFC AMC is a clear No. 3</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">SBI Mutual Fund<small>No. 1 · PSU-bank backed</small></div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~12.5</div></div>
+      <div class="bar-row"><div class="blab">ICICI Prudential<small>No. 2 · No. 1 in equity</small></div><div class="track"><span class="fill debt" style="width:88%"></span></div><div class="bval">~11.0</div></div>
+      <div class="bar-row"><div class="blab">HDFC AMC<small>No. 3 · retail-heavy</small></div><div class="track"><span class="fill brand" style="width:74%"></span></div><div class="bval">~9.3</div></div>
+      <div class="bar-row"><div class="blab">Nippon India<small>No. 4 · strong in passive/ETF</small></div><div class="track"><span class="fill gold" style="width:58%"></span></div><div class="bval">~7.3</div></div>
+    </div>
+    <div class="legend"><span>Figures approximate (FY26). SBI MF and ICICI Pru lead on total assets; HDFC AMC is No. 3 overall and a strong No. 2/3 in the higher-margin active-equity segment.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>HDFC AMC's market-share scorecard (Q4 FY26, QAAUM)</caption>
+    <thead><tr><th>Segment</th><th>AUM (approx.)</th><th class="num">Market share</th><th>Trend</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Overall mutual fund</td><td>₹9.28 lakh Cr</td><td class="num">11.4%</td><td>Stable; +20% YoY AUM</td></tr>
+      <tr><td class="t-strong">Overall ex-ETF</td><td>₹8.85 lakh Cr</td><td class="num">12.6%</td><td>Higher, as HDFC AMC is light on low-fee ETFs</td></tr>
+      <tr><td class="t-strong">Actively-managed equity</td><td>₹5.66 lakh Cr</td><td class="num">13.0%</td><td><strong>Recovering</strong> — up ~79 bps since Mar-2022</td></tr>
+      <tr><td class="t-strong">Debt</td><td>₹1.76 lakh Cr</td><td class="num">12.9%</td><td>Steady</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The recovery, in plain English</div>
+    <p>HDFC AMC's equity funds are run with a <strong>valuation-conscious, value-leaning style</strong>. That style badly lagged in the 2019–2021 rally, when expensive growth stocks led the market — investors chasing hot returns pulled money toward rivals, and HDFC AMC <em>lost the No. 1 equity crown it had long held</em>. Then the cycle turned. As value came back into favour from 2022, its funds' performance recovered, flows returned, and its <strong>active-equity market share has been climbing again — up roughly 79 basis points since March 2022</strong>, with equity-oriented AUM growing ~23% in the latest year. The lesson: an AMC's share is not permanent; it swings with fund performance, which swings with style cycles. HDFC AMC's story right now is one of a franchise that stumbled, kept its process, and is winning share back — a different, and arguably more interesting, setup than a rival that never fell.</p>
+  </div>
+
+  <div class="note gold"><b>Beyond mutual funds:</b> HDFC AMC also runs a small but higher-fee <em>alternatives</em> business — PMS (portfolio management, ~₹106 bn), AIFs (~₹25 bn of commitments) and advisory — and has won institutional mandates from bodies like the <strong>EPFO</strong> (the national provident fund). It has also set up a GIFT-City subsidiary for offshore/international money. These legs are tiny today but carry richer fees and diversify the franchise beyond plain-vanilla funds.</div>
+</section>
+
+<!-- 06 — BESPOKE: SIP & financialisation -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The SIP &amp; financialisation engine</h2></div>
+  <p class="part-sub">The once-in-a-generation force that feeds every Indian AMC — and why it's the whole bull case.</p>
+
+  <p class="lead">The single biggest reason to own an Indian AMC has nothing to do with any one fund's returns. It is a <strong>structural, decade-long shift in where Indians put their savings</strong> — out of bank deposits, gold and property, and into financial assets, above all equity mutual funds bought through automatic monthly <strong>SIPs</strong>. This "financialisation of savings" is the tide lifting the entire industry, and HDFC AMC — with its retail, individual, high-equity book — is one of the best-positioned boats on it.</p>
+
+  <h3>The numbers that tell the story</h3>
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">₹81.6 <span style="font-size:16px">lakh Cr</span></div><div class="msl">Total industry AUM (May 2026) — up ~6× in a decade</div></div>
+    <div class="ms gold"><div class="msv">~₹31,000 <span style="font-size:16px">Cr</span></div><div class="msl">Industry SIP inflows — <em>every single month</em></div></div>
+    <div class="ms green"><div class="msv">~21%</div><div class="msl">MF AUM as % of India's GDP — up from ~7% a decade ago, still low vs the West</div></div>
+  </div>
+
+  <p>Three linked shifts drive it. First, a generation of Indians is discovering equity investing for the first time, helped by smartphones, digital KYC and fintech apps that make starting an SIP a two-minute job. Second, the share of household savings flowing into equity has risen sharply over the past decade while the share sitting idle in bank deposits has fallen. Third, mutual-fund penetration — AUM as a share of GDP — is still only ~21% in India versus 100%+ in developed markets, so the runway is long. The industry now has <strong>~27.6 crore folios</strong> and its <strong>SIP book has crossed ₹16 lakh crore.</strong></p>
+
+  <div class="plain">
+    <div class="ptag">Why the SIP is the magic ingredient — and why HDFC AMC's is unusually good</div>
+    <p>A <strong>Systematic Investment Plan</strong> is an instruction to invest a fixed sum (say ₹5,000) into a fund automatically every month. For the AMC this is transformative, because it turns lumpy, sentiment-driven investing into a <strong>predictable, recurring, sticky river of inflows</strong> that keeps coming even when markets fall — exactly when new investors are most tempted to stop, and exactly when continued buying pays off most. HDFC AMC now gathers <strong>~₹4,880 crore of systematic (SIP+STP) flows a month, up ~33% year-on-year</strong>, and sits on a <strong>SIP AUM of ~₹2.01 lakh crore.</strong> Because HDFC AMC's SIP money is disproportionately <em>individual</em> and <em>equity</em>, its flows are among the highest-quality in the industry — high-fee, low-churn, long-duration. That flow grows the fee-earning AUM independently of market direction, smooths earnings, and builds a long-duration asset base. For an AMC, a rising SIP book is the closest thing to a subscription business — and HDFC AMC's is a premium one.</p>
+  </div>
+
+  <div class="note gold"><b>The honest caveat:</b> SIP flows are resilient but <em>not</em> unbreakable. In a prolonged bear market, SIP "stoppage ratios" rise as some investors pause or cancel, and monthly flows can plateau — as industry equity inflows did in mid-2026. The structural story is intact for years, but it doesn't make HDFC AMC's earnings immune to a bad market — it just cushions them.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Distribution and the HDFC channel</h2></div>
+  <p class="part-sub">Manufacturing funds is only half the job — someone has to sell them.</p>
+
+  <p class="lead">An AMC "manufactures" funds, but it needs a <strong>distribution army</strong> to place them with millions of investors. How money reaches an AMC — and how much it must pay away to whoever sold the fund — shapes both its growth and its margins. HDFC AMC's channel mix is notably <strong>direct-heavy and well-diversified</strong>, and its link to HDFC Bank is a genuine, if measured, advantage rather than a crutch.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">How money reaches HDFC AMC's funds — the distribution channels (total AUM, Mar-2026)</div>
+    <div class="flow-row">
+      <div class="node n1"><div class="ntag">~45% · self-serve</div><div class="nname">Direct</div><div class="nwho">Investors who buy directly (apps, website). No commission paid — best margin.</div></div>
+      <div class="arrow">+</div>
+      <div class="node n2"><div class="ntag">~24% · advisers</div><div class="nname">MFDs</div><div class="nwho">Mutual-fund distributors — the vast network of independent advisers.</div></div>
+      <div class="arrow">+</div>
+      <div class="node n3"><div class="ntag">~22% · large firms</div><div class="nname">National distributors</div><div class="nwho">Big broking / wealth platforms placing funds at scale.</div></div>
+      <div class="arrow">+</div>
+      <div class="node n4"><div class="ntag">~10% · banks</div><div class="nname">Banks (incl. HDFC ~5%)</div><div class="nwho">Bank branches selling funds — HDFC Bank is the anchor.</div></div>
+    </div>
+    <div class="flow-note">Total-AUM distribution mix, Mar-2026 (approx.). Direct is nearly half; no single external partner dominates, which reduces dependence on any one channel and lifts net margin.</div>
+  </div>
+
+  <h3>The HDFC Bank angle — real, but not the whole story</h3>
+  <ul class="clean">
+    <li><strong>Brand &amp; trust.</strong> The "HDFC" name carries enormous credibility with Indian savers; a fund badged HDFC starts every conversation with trust already in the bank. That is worth more than any single sales channel.</li>
+    <li><strong>Bank distribution.</strong> HDFC Bank's branches and relationship managers actively sell the funds — banks are ~10% of total-AUM inflows, of which HDFC Bank itself is ~5%. Meaningful, but deliberately <em>not</em> a crutch: the vast majority of money comes through direct, independent advisers and national distributors.</li>
+    <li><strong>A wide, granular reach.</strong> HDFC AMC empanels <strong>109,000+ distribution partners</strong> and serves ~98% of India's pincodes — a breadth few rivals match, and the physical backbone of its B-30 penetration.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Direct vs regular — the margin dial</div>
+    <p>Every fund comes in two flavours: a <strong>"regular" plan</strong> sold through a distributor (who is paid a commission out of the fee), and a <strong>"direct" plan</strong> bought by the investor with no middleman (and so no commission). The more money that comes <strong>direct</strong>, the less the AMC pays away, and the more of the fee it keeps. HDFC AMC's direct share is unusually high — <strong>~45% of total AUM and ~31% of equity AUM</strong> — and rising, helped by a strong digital stack (97% of FY26 transactions were digital). As Indian investors grow more confident and go direct through apps, this quietly improves AMC economics — a slow tailwind for net yields that partly offsets the fee pressure elsewhere.</p>
+  </div>
+</section>
+
+<!-- 08 — BESPOKE: market-linked earnings -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Market-linked earnings: the built-in leverage</h2></div>
+  <p class="part-sub">Why an AMC's profits are a geared bet on the stock market — for better and worse.</p>
+
+  <p class="lead">Here is the feature that most distinguishes an AMC from a bank or an insurer: because revenue is a <strong>percentage of an equity-heavy AUM</strong>, and because AUM moves with the market, an AMC's earnings are <strong>directly geared to the level of the stock market</strong>. When the Sensex rises, HDFC AMC's fee base inflates automatically — no extra effort required. When it falls, the fee base deflates just as automatically. This is the double-edged sword baked into the model, and it is sharper for an equity-heavy house like HDFC AMC.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Two forces move AUM every quarter</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Effect on HDFC AMC</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Net flows (SIPs + lumpsum)</td><td>New money in minus money out — the part the company can grow through effort.</td><td>Positive and sticky (~₹4,880 Cr systematic/month). Grows AUM regardless of market direction — the stabiliser.</td></tr>
+      <tr><td class="t-strong">Mark-to-market (market moves)</td><td>The rise or fall in the value of assets already invested — outside anyone's control.</td><td>The amplifier. A bull market swells the high-fee equity book; a correction shrinks it fastest.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The mechanism, made concrete</div>
+    <p>Suppose HDFC AMC manages ₹9.3 lakh crore, ~65% in equity. If Indian equities fall 20% in a downturn, roughly ₹1.2 lakh crore of value can evaporate from the <em>highest-fee</em> bucket — even before any investor sells a unit — and the fee HDFC AMC earns falls in lock-step. Because its costs are largely fixed, that revenue hit lands almost entirely on profit. In reverse, a strong bull run does the opposite: AUM and fees balloon, costs barely move, and profit surges. This is why AMC shares are <strong>high-beta plays on the market</strong> — they tend to rise more than the index in good years and fall more in bad ones. You saw a version of it in HDFC AMC's own results this year: <strong>"other income" swung wildly quarter-to-quarter</strong> — from ₹159 Cr in Q3 to just ₹11 Cr in Q4 FY26 as market moves marked its own treasury book up and down — which dragged reported quarterly profit down ~19% sequentially even as the <em>core</em> asset-management business grew steadily. The lesson: judge an AMC on operating profit and AUM, not on a single quarter's headline PAT.</p>
+  </div>
+
+  <div class="note"><b>What to hold in mind:</b> when you buy an AMC, you are partly buying a leveraged, fee-collecting position on Indian equities. The SIP flow provides a floor and the compounding of AUM provides the long-term climb, but do not expect the share price to be calm when markets are volatile — the earnings simply aren't, by design.</div>
+</section>
+
+<!-- 09 — BESPOKE: SEBI, TER & the fee squeeze -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>SEBI, expense ratios &amp; the fee squeeze</h2></div>
+  <p class="part-sub">The regulator holds the dial on the AMC's revenue line — this is the model's defining risk.</p>
+
+  <p class="lead">Everything above depends on one number the AMC does <strong>not</strong> fully control: the fee it is <em>allowed</em> to charge. India's market regulator, <strong>SEBI</strong>, caps the "Total Expense Ratio" (TER) that a fund may levy — and it has a long, consistent history of pushing those caps <em>down</em> to protect investors. For an AMC, a TER cut is a direct hit to the top line with no offsetting effort possible. This is the permanent cloud over every fund house, and it is the bear case in one word.</p>
+
+  <div class="chart">
+    <div class="c-title">The TER cap falls as a fund gets bigger</div>
+    <div class="c-sub">Maximum equity-fund expense ratio by scheme size (illustrative)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Small fund<small>&lt; ₹500 Cr</small></div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">~2.10%</div></div>
+      <div class="bar-row"><div class="blab">Mid-size fund<small>a few thousand Cr</small></div><div class="track"><span class="fill gold" style="width:62%"></span></div><div class="bval">~1.3%</div></div>
+      <div class="bar-row"><div class="blab">Very large fund<small>&gt; ₹50,000 Cr</small></div><div class="track"><span class="fill debt" style="width:45%"></span></div><div class="bval">~0.95%</div></div>
+    </div>
+    <div class="legend"><span>The bigger the scheme, the lower the fee it may charge — so as HDFC AMC's flagship funds swell, the <em>blended</em> yield naturally drifts down even without a rule change.</span></div>
+  </div>
+
+  <p>There are actually three squeezes on the fee line, stacked on top of each other:</p>
+  <ul class="clean">
+    <li><strong>The regulatory ratchet.</strong> SEBI periodically lowers TER caps and tightens the rules. From <strong>1 April 2026</strong> it overhauled the framework — moving toward a "Base Expense Ratio" model that unbundles costs, and sharply cutting brokerage caps (cash from 12→6 bps, derivatives 5→2 bps). Management pegged the <strong>gross hit to its existing book at ~3–4 bps</strong>, which it plans to "largely offset" through commission optimisation and cost control — but the direction of travel is unmistakably down.</li>
+    <li><strong>The size ratchet.</strong> Even with no rule change, the caps <em>fall as funds grow</em> — so HDFC AMC's own success in gathering assets slowly compresses its blended fee. Scale is both the reward and a mild self-limiting force.</li>
+    <li><strong>The passive ratchet.</strong> Index funds and ETFs charge a tenth of an active fund. As Indian investors adopt them, industry yields grind lower structurally — though HDFC AMC has limited its own exposure by keeping its passive slice small.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why it's a cloud, not a thunderstorm — for now</div>
+    <p>Fee compression is <strong>real and permanent</strong>, but it has so far been a slow grind rather than a cliff, and the industry has repeatedly grown AUM fast enough to <em>more than offset</em> a lower fee rate. The maths is simple: if AUM grows ~20% but the fee rate slips ~3–4%, revenue still rises comfortably — which is exactly what happened in FY26 (revenue +18% despite the yield drifting down). HDFC AMC's defences are its <strong>scale</strong> (it can absorb lower fees on a fixed cost base better than a small rival), its <strong>equity leadership and retail mix</strong> (the segment where investors still pay for performance), its <strong>rising direct share</strong> (keeping more of each fee), and its lever to <strong>renegotiate distributor commissions.</strong> The danger scenario is a <em>step-change</em> — a sharp, one-off TER cut combined with a weak market and an accelerating shift to passive all at once. That is the bear's nightmare, and the reason an AMC never quite escapes a valuation discount for regulatory risk.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Extraordinary returns on almost no capital — at a premium price.</p>
+
+  <p class="lead">HDFC AMC's financials read like a textbook capital-light compounder: high-teens revenue growth, ~62% net margins, ~33% return on equity, no debt, and ~80% of profit paid out as dividend. The only debate — as with every great business — is the price you pay for it.</p>
+
+  <div class="chart">
+    <div class="c-title">Profit trajectory</div>
+    <div class="c-sub">Net profit after tax (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:68%"></span></div><div class="bval">~1,946</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:86%"></span></div><div class="bval">2,461</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">2,859</div></div>
+    </div>
+    <div class="legend"><span>PAT +16% in FY26. Core operating profit (a cleaner read, stripping out volatile treasury income) grew a steadier +18% to ₹3,211 Cr.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>FY26 at a glance (year ended March 2026)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY26</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue from operations</td><td class="num">₹4,118 Cr</td><td>Up ~18%; total income ~₹4,617 Cr incl. investment/other income.</td></tr>
+      <tr><td class="t-strong">Operating profit (core AM)</td><td class="num">₹3,211 Cr</td><td>Up ~18%; operating margin ~35 bps of AAUM — industry-leading.</td></tr>
+      <tr><td class="t-strong">Net profit (PAT)</td><td class="num">₹2,859 Cr</td><td><strong>+16%</strong> vs ₹2,461 Cr in FY25.</td></tr>
+      <tr><td class="t-strong">EPS (post-bonus)</td><td class="num">~₹66.8</td><td>On ~42.8 Cr shares (after the 1:1 bonus of Nov 2025).</td></tr>
+      <tr><td class="t-strong">Net margin</td><td class="num">~62%</td><td>PAT as a share of total income — exceptional.</td></tr>
+      <tr><td class="t-strong">Return on equity</td><td class="num">~32.9%</td><td>The signature of a capital-light model (held down by a large cash pile).</td></tr>
+      <tr><td class="t-strong">Dividend / share (FY26)</td><td class="num">₹54</td><td>Final dividend, post-bonus; payout ~81%; ~2% yield.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~46 bps</div><div class="msl">Blended operating-revenue yield — premium, equity-led</div></div>
+    <div class="ms green"><div class="msv">Debt-free</div><div class="msl">Cash-rich, capital-light; ~80% of profit paid out</div></div>
+    <div class="ms red"><div class="msv">~40×</div><div class="msl">Trailing P/E (Jul '26) — a rich multiple to defend</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the ~40× multiple</div>
+    <p>At a market cap of about <strong>₹1.14–1.18 lakh crore</strong> (~₹2,660–2,760/share, July 2026) on ₹2,859 Cr of FY26 profit, HDFC AMC trades near <strong>40× trailing earnings</strong> — a premium among Indian financials, and a level that only makes sense if you underwrite years of high-teens AUM growth outrunning fee compression. The bull argues: this is one of the <em>highest-quality</em> AMCs — the best retail/individual/equity mix, an industry-leading 35 bps operating margin, ~33% ROE, a recovering equity franchise, and the strongest structural tailwind in Indian finance; scarcity of this quality deserves a premium, and the SIP annuity gives earnings visibility few businesses can match. The bear argues: the multiple leaves little room for a market correction (which would hit the geared equity book hard), a sharper-than-expected TER cut, or accelerating passive adoption — any of which could de-rate a 40× stock quickly. As so often, both are right at different points in the cycle, which is why the numbers to track each quarter are <strong>AUM growth, the equity mix, systematic flows and the yield-on-AUM.</strong></p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A consolidating oligopoly with a huge tailwind — and intensifying fee competition.</p>
+
+  <p class="lead">Indian asset management is a <strong>scale-driven oligopoly</strong>: the top handful of AMCs control the bulk of the assets, and their lead compounds because size begets distribution begets more size. The industry is riding the financialisation wave together, but competing hard on brand, performance and — increasingly — fees. HDFC AMC is one of the three anchors of that structure.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs HDFC AMC</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">HDFC AMC</td><td>No. 3 overall; strong No. 2/3 in equity</td><td><em>This company.</em> Best retail/individual/equity mix, industry-leading ~35 bps margin, ~33% ROE, recovering equity share.</td></tr>
+      <tr><td class="t-strong">SBI Mutual Fund</td><td>No. 1 by total AUM; SBI-bank distribution</td><td>Larger overall, backed by the country's biggest branch network; unlisted. The scale leader.</td></tr>
+      <tr><td class="t-strong">ICICI Prudential AMC</td><td>No. 2 overall; No. 1 in equity; freshly listed</td><td>The closest listed peer — similar capital-light economics and premium multiple; leads the equity segment HDFC AMC is chasing.</td></tr>
+      <tr><td class="t-strong">Nippon India MF</td><td>No. 4; strong in retail folios &amp; passive/ETFs</td><td>Aggressive folio growth and a big ETF footprint; competes hard on breadth and price.</td></tr>
+      <tr><td class="t-strong">Kotak, Aditya Birla SL, UTI, Axis, etc.</td><td>The chasing pack</td><td>Solid franchises but sub-scale vs the top four; the long tail the leaders take share from.</td></tr>
+      <tr><td class="t-strong">Passive-first &amp; fintech entrants</td><td>Low-cost index funds / ETFs, app-native platforms</td><td>The disruptive edge — competing on ultra-low fees, pressuring industry yields over time.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive tension to watch</div>
+    <p>Two dynamics matter. First, <strong>the passive/low-cost threat.</strong> ETFs and index funds are the way global asset management went — fees collapsing toward zero — and India is an early version of that story. HDFC AMC's defence is that Indian investors still reward <em>active</em> equity performance with premium fees, and it has kept its own passive exposure small; its whole value rests on active outperformance remaining a paid-for skill. Second, <strong>scale consolidation.</strong> The biggest AMCs keep taking share from smaller ones because distribution and brand compound with size — but among the top three, SBI MF and ICICI Pru are formidable, well-resourced rivals fighting for the same SIPs, advisers and shelf space. The strategic question for the next five years is whether HDFC AMC can keep <em>winning back</em> active-equity share fast enough to outrun the industry's structural drift toward cheaper, passive products.</p>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuinely high-quality business model — priced for it to keep executing.</p>
+
+  <p class="lead">HDFC AMC is one of the cleanest compounding stories in Indian finance: a capital-light, ~33%-ROE annuity on a structurally growing pool of savings, with the best retail/individual/equity mix in the industry, an industry-leading margin, and a recovering equity franchise, anchored by HDFC Bank. The investment debate is almost entirely about <strong>price, the market cycle, and the regulator</strong> — not business quality.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Best-quality book</strong> — most individual (68% vs 60%), most equity (~65%), strong B-30; the highest-margin, lowest-churn mix.</li>
+        <li><strong>Margin leadership</strong> — ~35 bps operating margin, among the best in the industry; ~33% ROE, ~62% net margin.</li>
+        <li><strong>Structural tailwind</strong> — India's financialisation of savings; MF/GDP still ~21%; a long, multi-decade runway.</li>
+        <li><strong>The SIP annuity</strong> — ~₹4,880 Cr of sticky monthly systematic flows growing ~33%, giving rare earnings visibility.</li>
+        <li><strong>Recovery &amp; clean register</strong> — equity share climbing back; abrdn overhang gone; HDFC Bank anchor; debt-free, near-full payout.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich valuation</strong> — ~40× earnings leaves little room for error; vulnerable to de-rating on any shock.</li>
+        <li><strong>Market-linked, geared earnings</strong> — an equity-heavy book means profits fall fast in a correction (and treasury income is volatile).</li>
+        <li><strong>TER / fee-cut risk</strong> — SEBI can lower the fee cap at will; the 2026 rules trim ~3–4 bps; the passive shift grinds yields down.</li>
+        <li><strong>Style risk</strong> — its value-tilted equity funds can lag in a growth-led rally, as they did in 2019–21, costing share.</li>
+        <li><strong>Competitive intensity</strong> — SBI MF, ICICI Pru and cheap passive players all fight for the same flows and shelf space.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>HDFC AMC is a <strong>structurally advantaged, capital-light leader</strong> of arguably the best theme in Indian finance — the movement of household savings into markets — and it owns the <em>highest-quality version</em> of that book: more individual, more equity, more SIP-fed, and higher-margin than its peers, with a genuine recovery in equity share underway. The business risk is low; the <em>valuation</em> and <em>cyclical</em> risks are real. The story over the next few years will be written in four numbers each quarter — <strong>AUM growth</strong> (is the pile still swelling?), <strong>systematic flows</strong> (is the annuity still filling?), <strong>the equity mix &amp; share</strong> (is the high-margin book holding and winning?), and <strong>the yield on AUM</strong> (is fee compression manageable?). Get those right and the compounding justifies the premium; a market correction stacked on a sharp TER cut, and a 40× stock has room to fall.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>HDFC AMC — Q4 &amp; FY26 Earnings Presentation (Shareholders Presentation, quarter ended 31 Mar 2026), hdfcfund.com.</li>
+    <li>HDFC AMC — Q4 FY26 &amp; FY26 results; Financials Summary, Operating Margin, ROE &amp; Dividend slides (year ended Mar 2026).</li>
+    <li>HDFC AMC Q4 FY26 earnings-call transcript &amp; analysis — yield-by-asset-class (~58–59/27–28/12–13 bps), TER impact (~3–4 bps).</li>
+    <li>Multibagg / Market-Pulse — "HDFC AMC Q4 FY26: steady share, rising profits, and a sharper digital engine."</li>
+    <li>ScanX / Business Upturn / MarketsMojo — HDFC AMC Q4 &amp; FY26 results (revenue, PAT, other-income swing).</li>
+    <li>Whalesbook / Cafemutual — "HDFC AMC Q4 FY26: AUM ₹9.3 Tn; margin strategy amid TER changes."</li>
+    <li>Screener.in — HDFC AMC financials, ratios, shareholding trend (HDFC Bank 52.4%, FII 24.4%, DII 14.4%).</li>
+    <li>BSE India / NSE — HDFC AMC (scrip 541729 / HDFCAMC) filings, 1:1 bonus (record date 26 Nov 2025), ₹54 dividend.</li>
+    <li>MarketScreener / abrdn disclosures — abrdn (Standard Life Aberdeen) sell-down &amp; full exit of HDFC AMC (2022–2023).</li>
+    <li>AMFI — Industry AUM (₹81.6 lakh Cr, May 2026), SIP flows (~₹31,000 Cr/month), folios (~27.6 Cr), investor category &amp; B-30 data.</li>
+    <li>Nomura / Nuvama / Motilal Oswal / ICICI Direct — HDFC AMC coverage; equity-share recovery (~+79 bps since Mar-2022).</li>
+    <li>Cafemutual / Mondaq — SEBI 2026 TER &amp; Base-Expense-Ratio framework (effective 1 Apr 2026); brokerage-cap changes.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; per-share figures reflect the November 2025 1:1 bonus. Verify all numbers against primary sources before relying on them. The author may hold no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "HDFCAMC";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
