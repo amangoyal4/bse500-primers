@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indus Towers — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F5F7;
+    --paper-2:#FAFBFC;
+    --card:#FFFFFF;
+    --ink:#16202B;
+    --ink-soft:#54606C;
+    --ink-faint:#8A96A2;
+    --brand:#1F4E7A;          /* tower steel / signal blue - deep */
+    --brand-bright:#2E77B8;   /* brighter signal blue accent */
+    --gold:#D98A2B;           /* warm infrastructure amber */
+    --steel:#5C7A93;          /* steel grey-blue */
+    --airtel:#C2331C;         /* Airtel red (owner + customer) */
+    --vi:#8A4FA0;             /* Vi purple */
+    --line:#DEE4EA;
+    --line-soft:#EAEEF2;
+    --good:#217A57;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7F0F8;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2606;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .provenance{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:18px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E2;border:1px solid #F1DCB9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#4a3512;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F9FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 96px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E9EDF1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#1F4E7A,#2E77B8);}
+  .fill.gold{background:linear-gradient(90deg,#D98A2B,#EBAA55);}
+  .fill.steel{background:linear-gradient(90deg,#5C7A93,#7E99AE);}
+  .fill.airtel{background:linear-gradient(90deg,#C2331C,#D6543E);}
+  .fill.vi{background:linear-gradient(90deg,#8A4FA0,#A56FB8);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.good{background:linear-gradient(90deg,#217A57,#2FA073);}
+  .fill.ink{background:linear-gradient(90deg,#2a3642,#54606C);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 66px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:120px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.a{background:var(--steel);}
+  .node.b{background:var(--brand-bright);}
+  .node.c{background:var(--brand);}
+  .node.d{background:var(--gold);}
+  .node.g{background:var(--good);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:#b57414;}
+  .ms.steel .msv{color:var(--steel);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF3E6;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#E7F0F8;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> How a tower company earns</a></li>
+    <li><a href="#p2"><span class="n">02</span> The tenancy-ratio engine</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; its history</a></li>
+    <li><a href="#p4"><span class="n">04</span> Who owns Indus now</a></li>
+    <li><a href="#p5"><span class="n">05</span> The Vodafone Idea saga</a></li>
+    <li><a href="#p6"><span class="n">06</span> Customer concentration</a></li>
+    <li><a href="#p7"><span class="n">07</span> 5G densification &amp; growth</a></li>
+    <li><a href="#p8"><span class="n">08</span> The numbers (FY26)</a></li>
+    <li><a href="#p9"><span class="n">09</span> Cash returns &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> Competition &amp; new frontiers</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: INDUSTOWER · BSE: 534816</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>Indus Towers, <em>the landlord of India's mobile network</em></h1>
+  <p class="dek">A clear-eyed walk through India's largest telecom-tower company — how a business that <em>rents steel and space</em> to mobile operators became one of the most stable, high-margin cash machines on the market; why the single number that governs its economics is the <em>tenancy ratio</em>; and why its fate has been tied, more than any peer's, to the survival of one troubled customer: Vodafone Idea.</p>
+  <p class="provenance">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹32,493 <small>Cr</small></div><div class="l">Revenue (FY26, +7.9%)</div></div>
+    <div class="cell"><div class="v">~2,64,500</div><div class="l">Towers (Mar 2026)</div></div>
+    <div class="cell"><div class="v">1.62</div><div class="l">Tenancy ratio (co-locations/tower)</div></div>
+    <div class="cell"><div class="v">~₹1.05 <small>L·Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">02 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Update</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ~₹32,493 Cr (+7.9%), reported EBITDA ~₹18,000 Cr, PAT ₹7,145 Cr (−28% on a huge FY25 Vi write-back base; +13% ex one-offs), ~2,64,500 towers, ~4,28,000 co-locations, tenancy ratio 1.62; net cash ~₹4,900 Cr; ₹14/share dividend resumed after 3 years; Vi receivables largely normalised; Africa (Zambia/Uganda/Nigeria) entry underway. Added the tenancy-economics, Vi-saga and Airtel-control sections.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're actually looking at — read this before anything else.</p>
+
+  <p class="lead">Indus Towers is <strong>India's largest telecom-tower company</strong> — a "passive infrastructure" business that owns roughly <strong>2,64,500 mobile towers</strong> and rents space on them to telecom operators (Bharti Airtel, Vodafone Idea, Reliance Jio, BSNL) on long-term contracts. It doesn't sell mobile plans, spectrum or handsets; it is the <strong>landlord that owns the steel, land, power and back-up systems</strong> the operators bolt their antennas onto. That makes it a rare thing in telecom: a <strong>stable, annuity-like, high-margin, cash-generative</strong> business rather than a subscriber-churning, price-warring one.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>This is an annuity, not a growth stock.</strong> Indus earns <strong>long-term rent per tenant per tower</strong> under multi-year contracts. FY26 revenue was ~<strong>₹32,493 crore</strong> with a reported EBITDA margin around <strong>55%</strong> and a pre-tax return on capital of ~<strong>20%</strong>. The economics are governed by one master number — the <strong>tenancy ratio</strong> (tenants per tower, currently <strong>1.62</strong>) — because each extra tenant on an <em>existing</em> tower is almost pure profit (§2).</li>
+    <li><strong>Its owner is also its biggest customer.</strong> <strong>Bharti Airtel controls Indus</strong> (~48–50% stake) after Vodafone Group fully exited in 2024 — and Airtel (with Bharti Hexacom) is <em>also</em> Indus's largest tenant. That dual role of owner-and-customer is both a strength (a committed anchor) and a governance nuance (§4).</li>
+    <li><strong>The Vodafone Idea saga is the defining risk.</strong> Indus's other big customer, <strong>Vodafone Idea (Vi)</strong>, spent years in financial distress, ran up huge overdue rent, and forced Indus to book <strong>massive doubtful-debt provisions that crushed reported profits</strong> — then, as Vi got funding, Indus <em>wrote those provisions back</em>, inflating a later year's profit. FY26's optically ugly "−28% PAT" is mostly this base effect. Whether Vi survives and keeps paying is the single biggest swing factor in Indus's earnings (§5).</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of Indus as the owner of tens of thousands of tall steel poles dotted across India, each on a patch of land with a power supply and a diesel/battery back-up. Mobile companies don't want to build and maintain their own poles everywhere — it's cheaper to <em>rent</em> space on Indus's. So Indus signs long leases and collects rent, month after month, like a commercial landlord. The magic is that a single pole can host <em>several</em> tenants at once: the pole costs roughly the same whether one operator or three hang their antennas on it, so every extra tenant is nearly free money. That is the whole business. The one thing that can go wrong: a big tenant that can't pay its rent. For years, that tenant was Vodafone Idea — and its troubles are the reason Indus's reported profits have swung so wildly.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>How a tower company actually earns — the annuity model</h2></div>
+  <p class="part-sub">Forget subscribers and ARPU. A tower company is a landlord, and it's judged like one.</p>
+
+  <p class="lead">To understand Indus you have to stop thinking about it as a "telecom" company and start thinking about it as <strong>commercial real estate for radio signals</strong>. A mobile operator needs somewhere high to put its antennas, with power and back-up so the signal never drops. Building and running that infrastructure everywhere is enormously expensive. So operators <strong>outsource it</strong> — they rent space on a shared tower company's sites and pay a monthly fee. Indus is that shared tower company, at national scale.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The tower-company dashboard — the terms that actually matter</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters for Indus)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Tower (site)</td><td>The physical structure — steel mast, land, power, diesel/battery back-up. Indus had <strong>~2,64,500 towers</strong> at March 2026. Building one costs money once; it then earns rent for years.</td></tr>
+      <tr><td class="t-strong">Tenant / co-location</td><td>Each operator that mounts its equipment on a tower is a <strong>tenant</strong> (a "co-location"). One tower can hold several. Indus had <strong>~4,28,000 co-locations</strong> — i.e. it rents its towers out ~4.28 lakh times over.</td></tr>
+      <tr><td class="t-strong">Tenancy ratio</td><td>Co-locations ÷ towers = tenants per tower. At <strong>1.62</strong>, the average Indus tower carries 1.62 operators. <em>This is the single most important number in the business</em> — decoded fully in §2.</td></tr>
+      <tr><td class="t-strong">Rental revenue</td><td>The recurring monthly rent each tenant pays under a <strong>long-term (typically ~15-year, MLA-based) contract</strong>, usually with inflation-linked escalations and exit penalties. This "core revenue" (~₹20,900 Cr in FY26) is the annuity.</td></tr>
+      <tr><td class="t-strong">Energy pass-through</td><td>Indus also recovers the cost of powering sites (diesel, grid, solar) from tenants. This inflates headline revenue but is largely a pass-through — which is why analysts watch <em>core/rental</em> revenue, not gross.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Because the contracts are long and the customers are the country's biggest operators, the revenue is <strong>remarkably predictable</strong>. Once an antenna is installed on a tower and connected into a network, moving it is expensive and disruptive — so tenants tend to <em>stay</em>. That stickiness, plus contractual escalations, is what makes tower revenue an <strong>annuity</strong>: a stream of payments you can forecast years out, far more stable than the operators' own subscriber revenue.</p>
+
+  <div class="plain">
+    <div class="ptag">Why "annuity" and "operating leverage" are the two words to remember</div>
+    <p>An <strong>annuity</strong> is a steady, contracted stream of cash — the opposite of a boom-and-bust business. Indus has one because rent keeps coming whether the operator gains or loses subscribers that month. <strong>Operating leverage</strong> means most of Indus's costs are <em>fixed</em> — the tower, the land lease, the maintenance crew cost roughly the same regardless of how many tenants are on the mast. When you add fixed costs and rising revenue, profit grows <em>faster</em> than revenue. Together these two properties explain the whole appeal of a tower company: dependable cash today, and a profit engine that gets more efficient every time another tenant is added. The next section shows exactly how powerful that second effect is.</p>
+  </div>
+</section>
+
+<!-- 02 — BESPOKE: the tenancy-ratio engine -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The tenancy-ratio engine — why one number rules everything</h2></div>
+  <p class="part-sub">The master lever of tower economics. Read this section slowly — it explains the whole business.</p>
+
+  <p class="lead">If you learn one thing about Indus, learn this: <strong>the tenancy ratio is the master lever of its profitability</strong>. A tower costs almost the same to build and run whether it carries one tenant or three. But each tenant pays rent. So <strong>every additional tenant on an <em>existing</em> tower drops almost entirely to profit</strong> — the fixed cost is already paid. Raising the tenancy ratio, not just building more towers, is how a tower company gets dramatically more profitable without spending much more.</p>
+
+  <div class="chart">
+    <div class="c-title">The tenancy-ratio effect (illustrative economics of one tower)</div>
+    <div class="c-sub">Same tower, same fixed cost — profit per tower rises sharply as tenants are added</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">1 tenant<small>rent barely covers the tower</small></div><div class="track"><span class="fill steel" style="width:30%"></span></div><div class="bval">low margin</div></div>
+      <div class="bar-row"><div class="blab">2 tenants<small>2nd rent ≈ pure profit</small></div><div class="track"><span class="fill brand" style="width:66%"></span></div><div class="bval">high margin</div></div>
+      <div class="bar-row"><div class="blab">3 tenants<small>3rd rent ≈ pure profit</small></div><div class="track"><span class="fill good" style="width:100%"></span></div><div class="bval">very high</div></div>
+    </div>
+    <div class="legend"><span>Illustrative, not Indus's exact numbers. The point: the tower's cost is fixed; extra tenants add revenue with almost no extra cost, so margin and return-on-capital climb steeply with the tenancy ratio.</span></div>
+  </div>
+
+  <h3>Why raising the ratio is so much better than building towers</h3>
+  <ul class="clean">
+    <li><strong>Building a new tower</strong> requires fresh capital (land, steel, power, permits) <em>and</em> starts life at a tenancy of 1.0 — low-margin until a second tenant arrives. It grows the business but dilutes the average return until it fills up.</li>
+    <li><strong>Adding a tenant to an existing tower</strong> requires almost no new capital. The second and third tenants pay rent against a cost base already funded by the first. That is why analysts obsess over <em>net co-location additions</em> and the <em>tenancy ratio</em> — they measure the high-return growth, not the capital-hungry kind.</li>
+    <li><strong>The math of the annuity.</strong> Indus's pre-tax return on capital employed runs around <strong>20%</strong> and its EBITDA margin around <strong>55%</strong> precisely <em>because</em> a chunk of its tenants are "free-rider" second/third tenants riding on already-paid-for towers.</li>
+  </ul>
+
+  <div class="note gold"><b>The tension in FY26:</b> Indus is <em>adding towers fast</em> (~15,200 in FY26) but its tenancy ratio has been <strong>stuck around 1.62</strong> and organic co-location additions actually softened. In plain terms, it's building lots of single-tenant towers (to grab Airtel/BSNL rollout and rural coverage) faster than it's <em>filling</em> them with extra tenants. That grows revenue but keeps the <em>quality</em> of growth — the high-margin second-tenant kind — from improving. A rising tenancy ratio is the bull case; a flat one is the bears' chief complaint (§11).</div>
+
+  <blockquote>A tower company doesn't get rich by building towers. It gets rich by <em>filling</em> them. The tenancy ratio is the scoreboard.</blockquote>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and how it got here</h2></div>
+  <p class="part-sub">Built by rivals to share infrastructure — then reshaped by a landmark merger.</p>
+
+  <p class="lead">Indus Towers was born in <strong>2007</strong> as a genuinely unusual idea: three fierce competitors — <strong>Bharti Airtel</strong> (via Bharti Infratel), <strong>Vodafone</strong> and <strong>Idea Cellular</strong> — pooled their towers into a <em>shared, neutral</em> infrastructure company that would rent capacity back to all of them, and to others, on non-discriminatory terms. Sharing towers is far cheaper than each operator building its own everywhere, so the model spread fast. In <strong>November 2020</strong>, Indus merged with <strong>Bharti Infratel</strong> (the listed tower arm of Airtel), creating one of the world's largest tower companies outside China and putting the combined entity on the stock exchange under the Indus Towers name.</p>
+
+  <h3>Timeline — from shared-tower experiment to Airtel subsidiary</h3>
+  <ul class="timeline">
+    <li><div class="yr">2007</div><div class="ev"><strong>Indus Towers founded</strong> by Bharti Infratel, Vodafone Essar and Idea Cellular to share passive telecom infrastructure on neutral terms.</div></li>
+    <li class="major"><div class="yr">Apr 2018</div><div class="ev">Airtel, Vodafone Group and Vodafone Idea agree to <strong>merge Bharti Infratel with Indus Towers</strong> — combining the two big tower estates into one listed giant.</div></li>
+    <li class="major"><div class="yr">Nov 2020</div><div class="ev"><strong>Merger completes.</strong> Bharti Infratel is renamed Indus Towers; it becomes the world's largest tower company outside China. Post-merger Airtel ~36.7%, Vodafone Group ~28.1%.</div></li>
+    <li><div class="yr">2021–23</div><div class="ev">The <strong>Vodafone Idea receivables crisis</strong> builds — Vi falls behind on rent; Indus books large doubtful-debt provisions (e.g. a ₹2,298 Cr provision in Q3 FY23) that hammer reported profit.</div></li>
+    <li class="major"><div class="yr">2024</div><div class="ev"><strong>Vodafone Group exits.</strong> In stages through 2024, Vodafone Plc sells its entire Indus stake (partly to fund Vi and repay its own debt); Indus becomes a <strong>Bharti Airtel subsidiary</strong>. Indus also buys ~16,000 towers from Airtel/Hexacom and runs a ~₹2,640 Cr buyback.</div></li>
+    <li><div class="yr">FY25</div><div class="ev"><strong>The great write-back.</strong> As Vi raises funding and clears overdue dues, Indus <em>reverses</em> earlier provisions — a ~₹5,100 Cr write-back that inflates FY25 profit and creates a high base.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ~₹32,493 Cr (+7.9%); reported PAT ₹7,145 Cr (−28% on the FY25 write-back base, but +13% ex one-offs); <strong>dividend resumed at ₹14/share</strong> after a 3-year pause; Africa entry (Zambia/Uganda/Nigeria) begins.</div></li>
+  </ul>
+
+  <div class="note gold"><b>The structural irony:</b> Indus was created by three rivals to be a <em>neutral</em> host. Today it is controlled by <em>one</em> of them (Airtel), while another (Vodafone, via Vi) is a strained customer, and the market leader (Jio) is a modest and reluctant tenant. The "neutral shared-infrastructure" origin now sits somewhat awkwardly with an Airtel-controlled cap table — a nuance we unpack next.</div>
+</section>
+
+<!-- 04 — BESPOKE: ownership / owner-is-also-customer -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Who owns Indus now — the owner that is also the customer</h2></div>
+  <p class="part-sub">Bharti Airtel controls Indus and rents from it. That dual role is central to the story.</p>
+
+  <p class="lead">After a decade of shared ownership, Indus's cap table has consolidated around <strong>one controlling shareholder: Bharti Airtel</strong>, which holds roughly <strong>48–50%</strong>. Crucially, <strong>Airtel is not just the owner — it is also Indus's largest tenant</strong>. Vodafone Group, the co-founder that once held ~28%, <strong>fully exited by December 2024</strong>, selling down partly to fund the ailing Vodafone Idea and repay its own debt. Understanding this owner-is-also-customer structure is essential to reading Indus correctly.</p>
+
+  <div class="chart">
+    <div class="c-title">Indus Towers ownership (approx., FY26)</div>
+    <div class="c-sub">Airtel controls it; Vodafone has gone; the rest is institutional and public</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Bharti Airtel<small>promoter / control · also largest customer</small></div><div class="track"><span class="fill airtel" style="width:100%"></span></div><div class="bval">~48–50%</div></div>
+      <div class="bar-row"><div class="blab">FII / DII / public<small>everyone else</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~50–52%</div></div>
+      <div class="bar-row"><div class="blab">Vodafone Group<small>fully exited by Dec 2024</small></div><div class="track"><span class="fill vi" style="width:1%"></span></div><div class="bval">0%</div></div>
+    </div>
+    <div class="legend"><span>Airtel's economic stake sits around 48–50% after Vodafone's full exit and secondary sell-downs (KKR/CPPIB). Exact splits move each quarter. The key point is control + customer status both rest with Airtel.</span></div>
+  </div>
+
+  <h3>Why "owner is also customer" cuts both ways</h3>
+  <ul class="clean">
+    <li><strong>The strength:</strong> Airtel is a <em>committed anchor tenant</em>. As both owner and biggest customer, Airtel has every incentive to keep loading tenancies onto Indus towers, to keep Indus well-run, and to route its own network expansion through Indus — a rock-solid demand base most tower companies would envy. Airtel has also <em>sold</em> towers into Indus (e.g. ~16,000 Airtel/Hexacom sites), growing the estate.</li>
+    <li><strong>The nuance:</strong> when the landlord is controlled by its biggest tenant, <em>related-party pricing</em> matters. The rent Airtel pays Indus is, in effect, money moving within a group Airtel part-owns. Minority shareholders rely on the contracts (Master Lease Agreements) and independent directors to ensure terms are fair — Indus's neutral-host origins and regulatory oversight are meant to protect this, but it is a governance point to keep in view.</li>
+    <li><strong>The Vodafone exit's meaning:</strong> Vodafone leaving wasn't a vote against Indus's business — it was Vodafone raising cash for its own and Vi's survival. But it removed a co-founding counterweight and cemented Airtel's control, tilting Indus further toward being "Airtel's tower arm" in market perception.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Imagine a shopping-mall landlord whose biggest tenant also owns the mall. That tenant will keep the mall full, well-maintained and prosperous — great for the other shopkeepers (minority shareholders). But you'd also want to be sure the big tenant isn't quietly paying itself a sweetheart rent at the others' expense. That's Indus. Airtel's control is mostly a <em>positive</em> — a deep-pocketed, aligned anchor that wants the towers busy — but it means the fairness of related-party rents and capital decisions is something a careful investor keeps an eye on. It also means Indus's fortunes are now closely hitched to Airtel's own network strategy.</p>
+  </div>
+</section>
+
+<!-- 05 — BESPOKE: the Vodafone Idea saga -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The Vodafone Idea saga — the receivables story that defines the stock</h2></div>
+  <p class="part-sub">The single biggest reason Indus's reported profits have swung so violently. Read this closely.</p>
+
+  <p class="lead">No force has shaped Indus's reported earnings more than the financial distress of one customer: <strong>Vodafone Idea (Vi)</strong>. Because Vi is one of Indus's two largest tenants, when Vi couldn't pay its rent, Indus faced a brutal accounting reality — it had to assume some of that rent might <em>never</em> be collected, and set aside <strong>huge "doubtful-debt provisions"</strong> that gutted reported profit. Then, as Vi got funding and started paying, Indus <em>reversed</em> those provisions — a <strong>"write-back"</strong> that inflated a later year's profit. This provision-then-write-back rollercoaster is why Indus's headline PAT looks so erratic — and why FY26's "−28%" is misleading.</p>
+
+  <h3>How the mechanism works — provisioning and write-backs, decoded</h3>
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The receivables rollercoaster — step by step</div>
+    <div class="flow-row">
+      <div class="node b"><div class="ntag">Step 1</div><div class="nname">Vi falls behind</div><div class="nwho">Vi is billed rent but can't pay in full — overdue receivables pile up on Indus's books.</div></div>
+      <div class="arrow">→</div>
+      <div class="node d"><div class="ntag">Step 2</div><div class="nname">Indus provisions</div><div class="nwho">Accounting prudence: Indus books a "doubtful-debt" charge assuming some rent won't be collected — slashing reported profit.</div></div>
+      <div class="arrow">→</div>
+      <div class="node g"><div class="ntag">Step 3</div><div class="nname">Vi raises funds</div><div class="nwho">Vi's FPO, govt equity conversions &amp; part-payments let it clear overdue dues and pay current bills.</div></div>
+      <div class="arrow">→</div>
+      <div class="node c"><div class="ntag">Step 4</div><div class="nname">Indus writes back</div><div class="nwho">The earlier provision is reversed — a one-off gain that inflates that year's profit (FY25).</div></div>
+    </div>
+    <div class="flow-note">A "provision" is not a cash loss — it's a book estimate that money may not arrive. A "write-back" is reversing that estimate when the money does arrive. Both hit reported profit hard, in opposite directions — which is why you must look <em>through</em> them.</div>
+  </div>
+
+  <h3>The numbers behind the saga</h3>
+  <ul class="clean">
+    <li><strong>The provisions.</strong> As Vi's distress deepened, Indus booked repeated doubtful-debt charges — for example a <strong>₹2,298 Cr provision in Q3 FY23</strong> — and flagged that Vi's status as a "going concern" depended on it raising funds. At its peak, doubtful receivables tied to Vi ran into the <strong>thousands of crores</strong> (~₹5,386 Cr at March 2024, falling to ~₹3,548 Cr by Sept 2024 as Vi paid down).</li>
+    <li><strong>The partial recovery.</strong> Vi resumed paying its <em>monthly</em> bills from January 2023 and cleared chunks of overdue dues (e.g. ₹2,328 Cr of arrears around Q2 FY25), helped by its ₹18,000 Cr FPO and the government converting Vi's dues into equity. That let Indus <strong>write back ~₹5,100 crore</strong> of earlier provisions in FY25.</li>
+    <li><strong>The FY26 base effect.</strong> That FY25 write-back created an <em>artificially high</em> profit base. So when FY26 came in clean (no big write-back), reported EBITDA fell ~14% and PAT fell ~28% <em>versus that inflated base</em>. Strip the one-offs out and the underlying business actually <strong>grew EBITDA ~11% and PAT ~13%</strong>. The "decline" is an accounting illusion.</li>
+  </ul>
+
+  <div class="note"><b>Why Vi's survival is existential for Indus:</b> Vi is not just a debtor — it is a large, recurring <em>tenant</em> whose rent is baked into Indus's revenue run-rate. If Vi were to <em>collapse and vacate</em> its tenancies, Indus would lose a big slug of high-margin rental revenue that can't easily be replaced, and would have to re-provision uncollected dues. That is why the market treats every twist in Vi's rescue — government equity conversions, AGR relief, funding rounds — as directly relevant to <em>Indus</em>. Indus's fortunes are hostage to whether Vi keeps paying and keeps operating.</div>
+
+  <div class="plain">
+    <div class="ptag">The one habit that keeps you from being fooled</div>
+    <p>When you read Indus's results, <strong>always ask: was there a big provision or write-back this period?</strong> A tower company's underlying business changes slowly (rent trickles in, tenancies inch up), so any <em>violent</em> move in reported profit is almost always the Vi receivables line, not the business. Judge Indus on its <em>normalised</em> EBITDA and PAT (ex-one-offs), its core/rental revenue, its net co-location additions and its tenancy ratio — and treat the Vi provision/write-back swings as balance-sheet noise layered on top. That single habit turns Indus's confusing headline numbers into a clear picture.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE: customer concentration -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Customer concentration — two tenants carry almost the whole business</h2></div>
+  <p class="part-sub">A short customer list is Indus's greatest strength and its greatest vulnerability.</p>
+
+  <p class="lead">India's telecom market consolidated into a handful of giant operators, and Indus's customer base consolidated with it. The result: <strong>Indus depends overwhelmingly on Bharti Airtel and Vodafone Idea</strong>, with Reliance Jio and BSNL as smaller tenants. This concentration is a double-edged sword — it delivers huge, dependable anchor demand, but it means the fortunes of just two companies drive most of Indus's revenue.</p>
+
+  <div class="chart">
+    <div class="c-title">Indus's tenant base (indicative revenue skew, FY26)</div>
+    <div class="c-sub">Airtel dominates; Vi is the critical second; Jio &amp; BSNL are smaller</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Bharti Airtel<small>+ Hexacom · owner &amp; anchor tenant</small></div><div class="track"><span class="fill airtel" style="width:100%"></span></div><div class="bval">largest</div></div>
+      <div class="bar-row"><div class="blab">Vodafone Idea<small>the critical, at-risk tenant</small></div><div class="track"><span class="fill vi" style="width:52%"></span></div><div class="bval">2nd largest</div></div>
+      <div class="bar-row"><div class="blab">Reliance Jio<small>modest, reluctant tenant</small></div><div class="track"><span class="fill steel" style="width:24%"></span></div><div class="bval">smaller</div></div>
+      <div class="bar-row"><div class="blab">BSNL / others<small>state operator, rural push</small></div><div class="track"><span class="fill ink" style="width:16%"></span></div><div class="bval">smallest</div></div>
+    </div>
+    <div class="legend"><span>Indicative skew, not disclosed exact splits. Indus does not publish a precise per-customer revenue breakdown, but Airtel + Vi together account for the large majority of tenancies and rent; Jio (which owns much of its own tower estate via a separate InvIT) is a smaller Indus tenant.</span></div>
+  </div>
+
+  <ul class="clean">
+    <li><strong>Airtel — the anchor.</strong> As owner <em>and</em> largest tenant, Airtel is a bedrock of demand. Its own 4G/5G expansion and rural rollout translate directly into new Indus tenancies and tower orders. This is the most reliable pillar of the business.</li>
+    <li><strong>Vodafone Idea — the swing factor.</strong> Vi's tenancies are large and high-margin, but its ability to pay has been the central uncertainty (§5). Every improvement in Vi's finances de-risks Indus; every relapse re-introduces provisioning risk.</li>
+    <li><strong>Jio — the structural gap.</strong> Reliance Jio built much of its own tower network and houses it in a separate infrastructure vehicle, so Jio is only a <em>partial</em> Indus tenant. Winning more Jio loading would diversify Indus away from the Airtel/Vi pair — a genuine upside lever, but not one Indus controls.</li>
+    <li><strong>BSNL &amp; new demand.</strong> The revival of state-owned BSNL's network and rural-coverage mandates offer incremental tenancy demand that is less tied to the big-two.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why concentration is the flip side of the annuity</div>
+    <p>The same thing that makes Indus's revenue <em>stable</em> — a handful of huge, long-contracted operators — is what makes it <em>concentrated</em>. With only three-to-four possible customers in the entire country, losing or impairing even one is a material event. A diversified landlord with a thousand small tenants can shrug off a few defaults; Indus cannot, because two tenants are the business. That's why "customer concentration" and "the Vi receivables saga" are really the same risk viewed from two angles — and why the health of India's telecom operators <em>is</em> the health of Indus.</p>
+  </div>
+</section>
+
+<!-- 07 — BESPOKE: 5G densification & growth -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The 5G-densification &amp; rural tailwind — where new tenancies come from</h2></div>
+  <p class="part-sub">The structural reason a mature tower estate can still grow: more antennas per square kilometre.</p>
+
+  <p class="lead">A tower company in a "3-player, saturated-subscriber" market might look like it has nowhere to grow. But India's shift to <strong>5G and deeper rural coverage</strong> is quietly a powerful tailwind — because 5G needs <em>far more, and denser,</em> radio sites than 4G, and rural India still needs coverage. Both create demand for exactly what Indus sells: places to hang antennas. This is the engine that can lift tenancies and, ideally, the tenancy ratio.</p>
+
+  <h3>Why 5G means more towers and more tenants</h3>
+  <ul class="clean">
+    <li><strong>Higher frequencies travel shorter distances.</strong> 5G often uses higher-frequency spectrum that covers a smaller area per cell, so operators must install <em>more</em> sites (densification) to blanket the same geography — more sites means more Indus tenancies.</li>
+    <li><strong>Data explosion needs capacity.</strong> India's data consumption grew ~<strong>29% YoY</strong> in FY26 and 5G already accounts for ~40% of data traffic on a base of 500,000+ 5G base stations across networks. Handling that traffic requires continuous network loading — new co-locations and upgrades on existing towers.</li>
+    <li><strong>Rural &amp; 4G catch-up.</strong> Beyond 5G, Vi's 4G expansion, BSNL's revival and government rural-coverage goals all add tower and tenancy demand in areas that were previously under-served.</li>
+  </ul>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~15,200</div><div class="msl">Net towers added in FY26 (base +6.1% YoY)</div></div>
+    <div class="ms gold"><div class="msv">~22,500</div><div class="msl">Net co-locations added in FY26 (+5.6% YoY)</div></div>
+    <div class="ms steel"><div class="msv">+29%</div><div class="msl">India data-traffic growth (FY26) — the densification driver</div></div>
+  </div>
+
+  <p>Indus is leaning into this with <strong>record tower additions</strong>, "leaner tower" designs for cheaper sites, and a big sustainability push (solar at ~42,400 sites, ~7% lower diesel use even as sites grew) that cuts the energy cost of each tower. It is also diversifying: <strong>fibre, small cells and in-building solutions</strong> extend the "landlord" model beyond macro towers into the denser, urban 5G layer.</p>
+
+  <div class="note gold"><b>The catch — additions vs. filling:</b> the FY26 growth is real, but it is <em>tower-led</em> (more masts) more than <em>tenant-led</em> (more tenants per mast). Organic co-location additions actually softened and the tenancy ratio stayed at 1.62. The bull case needs 5G densification to eventually flow into a <em>rising tenancy ratio</em> — extra tenants on existing towers — which is where the high-margin growth lives. So far the tailwind is filling the order book more than it is lifting the ratio.</div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The numbers — FY26 in full</h2></div>
+  <p class="part-sub">A stable, high-margin, cash-generative business — read through the one-offs.</p>
+
+  <p class="lead">Indus's FY26 financials tell two stories at once: a <strong>steadily growing underlying business</strong> and a <strong>headline distorted by the prior-year Vi write-back</strong>. Revenue grew ~8%, margins stayed high near 55%, cash generation was strong — yet reported profit "fell" because FY25 had been inflated by one-off write-backs. On a like-for-like, one-off-adjusted basis, both EBITDA and PAT <em>grew double digits</em>.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Indus Towers — key financials (consolidated, FY26 vs FY25)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY26</th><th class="num">FY25</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Total revenue</td><td class="num">~₹32,493 Cr</td><td class="num">~₹30,124 Cr</td><td>+7.9% YoY; incl. energy pass-through</td></tr>
+      <tr><td class="t-strong">Core / rental revenue</td><td class="num">~₹20,900 Cr</td><td class="num">~₹19,150 Cr</td><td>+9% YoY — the true annuity</td></tr>
+      <tr><td class="t-strong">Reported EBITDA</td><td class="num">~₹18,000 Cr</td><td class="num">~₹20,900 Cr</td><td>−14% reported; <b>+11% ex one-offs</b></td></tr>
+      <tr><td class="t-strong">EBITDA margin</td><td class="num">~55%</td><td class="num">~59%*</td><td>*FY25 flattered by write-back</td></tr>
+      <tr><td class="t-strong">Reported PAT</td><td class="num">₹7,145 Cr</td><td class="num">~₹9,935 Cr</td><td>−28% reported; <b>+13% ex one-offs</b></td></tr>
+      <tr><td class="t-strong">EPS (approx.)</td><td class="num">~₹27</td><td class="num">~₹37</td><td>trailing, on reported PAT</td></tr>
+      <tr><td class="t-strong">Free cash flow</td><td class="num">~₹3,760 Cr</td><td class="num">—</td><td>fully distributed as dividend</td></tr>
+      <tr><td class="t-strong">Net cash</td><td class="num">~₹4,900 Cr</td><td class="num">—</td><td>net cash positive — a rarity</td></tr>
+      <tr><td class="t-strong">ROCE (pre-tax) / ROE</td><td class="num">~20% / ~20%</td><td class="num">—</td><td>high-return infrastructure</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:12px;color:var(--ink-faint);margin-top:2px;">Figures in ₹ crore; converted from company's ₹ billion disclosures and cross-checked against Screener/Trendlyne. FY25 comparatives are approximate and include the ~₹5,100 Cr Vi provision write-back that inflates the base. Rounded.</p>
+
+  <div class="chart">
+    <div class="c-title">Reported vs normalised growth (FY26 YoY)</div>
+    <div class="c-sub">The one-off write-back in FY25 makes the reported decline misleading</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">EBITDA — reported</div><div class="track"><span class="fill bad" style="width:14%"></span></div><div class="bval">−14%</div></div>
+      <div class="bar-row"><div class="blab">EBITDA — ex one-offs</div><div class="track"><span class="fill good" style="width:55%"></span></div><div class="bval">+11%</div></div>
+      <div class="bar-row"><div class="blab">PAT — reported</div><div class="track"><span class="fill bad" style="width:28%"></span></div><div class="bval">−28%</div></div>
+      <div class="bar-row"><div class="blab">PAT — ex one-offs</div><div class="track"><span class="fill good" style="width:65%"></span></div><div class="bval">+13%</div></div>
+    </div>
+    <div class="legend"><span>The normalised (ex-one-off) numbers are the honest read of the underlying business: high-single/double-digit growth, not a decline.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Indus in FY26 quietly did well: it collected more rent, kept its margins near 55%, threw off healthy cash and sat on <em>net cash</em> (more cash than debt — unusual for infrastructure). The scary-looking "profit down 28%" is almost entirely because the <em>previous</em> year had a big one-time boost from reversing Vi provisions. Compare FY26 to a <em>clean</em> FY25 and profit rose ~13%. So the takeaway is: the machine is running fine; the accounting optics are noisy. Watch core revenue, tenancy ratio and net cash — they say "steady, healthy annuity," not "declining business."</p>
+  </div>
+</section>
+
+<!-- 09 — cash returns & valuation -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Cash returns &amp; valuation — the dividend debate</h2></div>
+  <p class="part-sub">A cash machine that stopped paying dividends — and has just started again.</p>
+
+  <p class="lead">A mature tower company generating steady free cash flow should, in theory, be a <strong>dividend machine</strong>. Indus was — until the Vi crisis forced it to <em>hoard cash</em> as a buffer against uncollected rent and to fund tower buys and buybacks. It paused dividends for three years (FY23–FY25). In FY26, with Vi largely paying and receivables normalised, Indus <strong>resumed dividends at ₹14/share</strong>, distributing essentially all of its ~₹3,760 Cr free cash flow. How it returns cash — dividend vs buyback — is now a live debate.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">₹14</div><div class="msl">FY26 dividend/share — first payout in 3 years (~100% of FCF)</div></div>
+    <div class="ms"><div class="msv">~16×</div><div class="msl">Trailing P/E (mid-2026) — modest for the quality</div></div>
+    <div class="ms steel"><div class="msv">~7×</div><div class="msl">EV/EBITDA — infrastructure-style multiple</div></div>
+  </div>
+
+  <h3>The valuation picture (mid-2026)</h3>
+  <ul class="clean">
+    <li><strong>Market cap ~₹1.05 lakh crore</strong>, share price in the ~₹390–430 band, trailing <strong>P/E ~16×</strong> and forward ~15× — inexpensive for a business with 55% margins and 20% returns, reflecting the market's caution on Vi risk and flat tenancy growth.</li>
+    <li><strong>EV/EBITDA ~7×</strong> — a classic infrastructure/utility-style multiple. Enterprise value is only modestly above market cap because Indus carries little net debt (it's net-cash), unlike most tower companies globally which are heavily levered.</li>
+    <li><strong>The buyback vs dividend twist.</strong> India's 2026 Budget changed how buyback proceeds are taxed (now as capital gains in shareholders' hands), reshaping the math. Indus has used <em>both</em> — a ~₹2,640 Cr buyback in 2024 and now a resumed dividend — and management has signalled a "steady and progressive" distribution policy tied to free cash flow.</li>
+    <li><strong>Analyst spread is wide.</strong> Targets have ranged from ~₹345 (bearish, worried about flat tenancy and Jio overhang) to ~₹580 (bullish on 5G loading and cash return) — a spread that itself tells you the debate is about <em>growth quality and Vi</em>, not the stability of the annuity.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the multiple is low for the quality</div>
+    <p>On paper, a 55%-margin, 20%-return, net-cash annuity should command a premium. Indus trades at a fairly ordinary ~16× earnings because the market prices in three discounts: (1) <strong>customer risk</strong> — the Vi overhang and reliance on just two big tenants; (2) <strong>flat tenancy growth</strong> — the concern that Indus is building towers faster than it's filling them, so per-tower economics aren't improving; and (3) <strong>the Airtel/Jio backdrop</strong> — a saturated, three-player market with limited new-operator demand. If Vi keeps stabilising and the tenancy ratio starts rising, those discounts can narrow — which is the essence of the bull case (§11).</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Competition and new frontiers</h2></div>
+  <p class="part-sub">Where Indus sits in the tower market — and where it's trying to grow next.</p>
+
+  <p class="lead">Indus is the clear <strong>#1 tower company in India</strong> by a wide margin, but it is not the only game. Its competitive position rests on <em>scale and Airtel anchoring</em>; its growth frontiers lie in <strong>new tenants, adjacent infrastructure, and — for the first time — overseas expansion into Africa</strong>.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The tower &amp; passive-infrastructure landscape (India)</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Indus</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Indus Towers</td><td>#1 independent tower company, ~2.64 lakh towers, Airtel-controlled</td><td>The scale leader and the reference point for the sector.</td></tr>
+      <tr><td class="t-strong">Reliance Jio infra (Brookfield/Jio InvIT)</td><td>Jio's own tower estate, held in a separate infrastructure trust</td><td>Captive to Jio; why Jio is only a partial Indus tenant. Both a rival host and a potential customer.</td></tr>
+      <tr><td class="t-strong">Summit Digitel / others</td><td>Independent/InvIT tower assets</td><td>Smaller; the market is effectively Indus + Jio's captive estate.</td></tr>
+      <tr><td class="t-strong">In-house operator towers</td><td>Towers operators still own directly</td><td>The pool Indus can still acquire (as with Airtel's ~16,000-site sale).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>The growth frontiers</h3>
+  <ul class="clean">
+    <li><strong>Loading existing towers (the best growth).</strong> Winning more Jio/BSNL tenancies and 5G small-cell loading onto already-built towers — the high-margin, tenancy-ratio-lifting kind of growth.</li>
+    <li><strong>Adjacent infrastructure.</strong> Fibre, small cells, in-building solutions and smart-city infrastructure extend the "neutral host" model into the dense urban 5G layer beyond macro towers.</li>
+    <li><strong>Africa — the new bet.</strong> Indus is entering <strong>Zambia, Uganda and Nigeria</strong>, securing licences and lining up anchor customers — its first move outside India, chasing higher-growth, under-towered markets. Early-stage and small, but a strategic diversification away from the saturated, two-tenant Indian base.</li>
+    <li><strong>Energy &amp; sustainability as a cost moat.</strong> Aggressive solarisation (~42,400 solar sites) and diesel reduction cut the running cost of each tower — improving margins and ESG standing simultaneously.</li>
+  </ul>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>Future, risks, and the bull/bear case</h2></div>
+  <p class="part-sub">A high-quality annuity whose upside hinges on tenancy growth and Vi's health.</p>
+
+  <p class="lead">Indus is one of the most <strong>stable, high-margin, cash-generative</strong> businesses in the Indian large-cap universe — a genuine infrastructure annuity with net cash and ~20% returns. The debate is not about whether the business is <em>good</em>; it's about whether it can <em>grow</em> the high-margin way (rising tenancy ratio) and whether its customer risk (Vi) is truly behind it. Here is the case on both sides.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Annuity quality.</strong> Long-term contracted rent, ~55% EBITDA margins, ~20% returns, net cash — an unusually defensive, predictable cash machine.</li>
+        <li><strong>Vi de-risking.</strong> With Vi paying monthly, provisions written back and receivables normalised, the single biggest historical risk has materially eased.</li>
+        <li><strong>5G densification runway.</strong> Data +29%, dense 5G loading and rural/BSNL rollout can lift tenancies — and, crucially, the tenancy ratio — for years.</li>
+        <li><strong>Cash returns resumed.</strong> ₹14/share dividend back after 3 years, with a progressive-distribution signal; a net-cash balance sheet supports steady returns.</li>
+        <li><strong>Cheap for the quality.</strong> ~16× P/E and ~7× EV/EBITDA under-price a 55%-margin, 20%-return annuity if growth and Vi stay on track.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Tenancy ratio stuck at 1.62.</strong> Growth is tower-led, not tenant-led; organic co-location adds softened — the high-margin engine isn't accelerating.</li>
+        <li><strong>Vi is not fully cured.</strong> Vi still carries enormous government dues and going-concern uncertainty; any relapse re-opens the provisioning risk that gutted profits before.</li>
+        <li><strong>Two-tenant concentration.</strong> Airtel + Vi are the business; there is no diversified tenant base to cushion the loss or impairment of either.</li>
+        <li><strong>Jio overhang &amp; saturation.</strong> A saturated three-player market with Jio largely self-hosting caps new-tenant demand and long-run growth (analysts model just ~3–8% earnings CAGR).</li>
+        <li><strong>Capex &amp; related-party questions.</strong> Rising capex on single-tenant towers, plus Airtel-controlled related-party pricing, are governance/return-quality watch-items.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Indus Towers is <strong>the landlord of India's mobile network</strong> — a stable, high-margin, annuity-like infrastructure business whose economics are governed by one number, the <strong>tenancy ratio</strong>, and whose reported earnings have been whipsawed by one relationship, its <strong>Vodafone Idea receivables</strong>. The underlying machine is excellent: contracted rent, ~55% margins, ~20% returns, net cash, and a resumed dividend. The two open questions are quality of growth (can it <em>fill</em> towers, not just build them, and lift the tenancy ratio?) and customer health (is Vi truly stabilised, or one funding scare from re-provisioning?). This is not a high-growth story; it is a <strong>defensive, cash-returning infrastructure annuity</strong> with a specific, well-defined risk. Track four things each quarter — <strong>core/rental revenue, net co-location additions, the tenancy ratio, and Vi's payment status</strong>. They will tell you whether the annuity is quietly compounding or merely holding.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Indus Towers — Q4 &amp; FY26 results (year ended Mar 2026); Business Standard ("Indus Towers reports marginal rise in Q4 FY26 profit").</li>
+    <li>ScanX / Sahi — "Indus Towers Q4 FY26 earnings call: strong co-location growth, ₹14 dividend and Africa expansion" (revenue, EBITDA, PAT, FCF, net cash, towers, co-locations, tenancy ratio, capex).</li>
+    <li>InvestyWise — "Indus Towers Q4 FY26 earnings call transcript" (FY26 gross ₹325bn, core ₹209bn, EBITDA ₹180bn, PAT ₹71.4bn; normalised +11%/+13%; ₹51bn FY25 write-back).</li>
+    <li>GuruFocus — "Indus Towers (BOM:534816) Q4 2026 earnings call highlights: strong co-location additions amid profitability challenges."</li>
+    <li>Free Press Journal / NewsX — Q4 FY26 PAT ₹1,793 Cr, revenue +4.8% YoY, ₹14 dividend.</li>
+    <li>Screener.in / Trendlyne / StockAnalysis — Indus Towers consolidated financials, P/E, EV/EBITDA, EPS, market cap, share price (mid-2026).</li>
+    <li>Business Standard — "Indus Towers makes ₹2,298-crore provision for Vodafone Idea receivables" (Jan 2023).</li>
+    <li>India Infoline — "Indus Towers' doubtful receivables from Vodafone Idea slips in Q2" (₹5,386 Cr Mar 2024 → ₹3,548 Cr Sep 2024; Vi part-payments; monthly billing from Jan 2023).</li>
+    <li>IndianWeb2 / Business Standard — "Indus Towers now a Bharti Airtel subsidiary as Vodafone Group made complete exit" (Dec 2024); Airtel ~50% stake; KKR/CPPIB sell-downs.</li>
+    <li>Wikipedia — "Indus Towers" &amp; "Bharti Infratel" (founding 2007; ownership history; Nov 2020 merger; passive-infrastructure model; customer base).</li>
+    <li>Vodafone — "Merger of Bharti Infratel and Indus Towers"; TowerXchange/Capacity — Airtel/Hexacom ~16,000-tower sale to Indus.</li>
+    <li>Business Standard / Tradebrains / Whalesbook — Indus Towers dividend resumption (₹14, first in 3 years), buyback (₹2,640 Cr, 2024), 2026 Budget buyback-tax change; TelecomTalk/TradeBrains — 5G densification, data-traffic +29%, tenancy outlook.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and have been converted from the company's ₹-billion reporting to ₹-crore where noted; several figures (segment/customer splits, normalised-vs-reported earnings, exact provision/write-back amounts, and the precise share of revenue from Airtel vs Vodafone Idea) are estimates or are not separately disclosed by the company and may contain errors or become outdated. Indus Towers carries meaningful customer-concentration risk (notably its exposure to Vodafone Idea, a financially distressed operator) and related-party considerations arising from Bharti Airtel's dual role as controlling shareholder and largest customer. Verify all numbers against primary sources (company results, investor presentation and concall) before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "INDUSTOWER";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Update will then trigger an on-demand, incremental refresh of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Update'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Update';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
