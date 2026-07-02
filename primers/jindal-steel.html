@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jindal Steel — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F4F1;
+    --paper-2:#FBFAF7;
+    --card:#FFFFFF;
+    --ink:#1D1A17;            /* graphite / near-black steel ink */
+    --ink-soft:#585048;
+    --ink-faint:#8E867C;
+    --brand:#B14A18;          /* molten-steel orange - primary */
+    --brand-bright:#D2691C;   /* brighter furnace orange */
+    --molten:#E0842A;         /* molten glow */
+    --graphite:#3A3F45;       /* industrial graphite / slate */
+    --ore:#8C4A2F;            /* iron-ore brown-red */
+    --rail:#2E5E73;           /* rail / infra steel-teal */
+    --coal:#4A4038;           /* coal / carbon */
+    --line:#DEDAD3;
+    --line-soft:#E9E5DE;
+    --good:#2C7D52;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--brand);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#FBEEE4;border-color:var(--brand);}
+  .tag.molten{background:var(--molten);color:#3a2206;border-color:var(--molten);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .provenance{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:18px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--brand);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--brand);border-radius:50%;}
+
+  .plain{background:#FBEEE2;border:1px solid #F0D6BE;border-left:3px solid var(--brand);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a3d10;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"▮";font-size:12px;}
+  .plain p{margin:0;font-size:15px;color:#4a2c14;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F5F1;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:172px 1fr 110px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAE6DF;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#B14A18,#D2691C);}
+  .fill.molten{background:linear-gradient(90deg,#E0842A,#F0A250);}
+  .fill.ore{background:linear-gradient(90deg,#8C4A2F,#A96A4E);}
+  .fill.rail{background:linear-gradient(90deg,#2E5E73,#468196);}
+  .fill.coal{background:linear-gradient(90deg,#4A4038,#6A5D52);}
+  .fill.graphite{background:linear-gradient(90deg,#3A3F45,#5A6069);}
+  .fill.good{background:linear-gradient(90deg,#2C7D52,#46A46E);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  @media(max-width:560px){.bar-row{grid-template-columns:104px 1fr 72px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:112px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.n1{background:var(--ore);}
+  .node.n2{background:var(--coal);}
+  .node.n3{background:var(--brand);}
+  .node.n4{background:var(--graphite);}
+  .node.n5{background:var(--rail);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .spread-box{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:22px 24px;}
+  .spread-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-family:"Sora",sans-serif;font-size:15px;}
+  .spread-pill{border-radius:6px;padding:10px 16px;color:#fff;font-weight:600;font-size:14px;line-height:1.2;}
+  .spread-pill small{display:block;font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.05em;opacity:.85;font-weight:400;margin-top:3px;text-transform:uppercase;}
+  .spread-pill.price{background:var(--rail);}
+  .spread-pill.cost{background:var(--ore);}
+  .spread-pill.spread{background:var(--brand);}
+  .spread-op{font-family:"Sora",sans-serif;font-size:22px;font-weight:700;color:var(--ink-soft);}
+  .spread-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--brand);border-color:var(--brand);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--brand);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.molten .msv{color:var(--molten);}
+  .ms.rail .msv{color:var(--rail);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.molten{border-color:var(--brand);background:#FBEEE2;color:#4a2c14;}
+  .note.molten b{color:#9a3d10;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--brand);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a3d10;} .rb-status.stale .dot{background:var(--molten);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#FBEEE4;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Steel economics &amp; the spread</a></li>
+    <li><a href="#p2"><span class="n">02</span> The captive-integration moat</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> Long products &amp; the rails franchise</a></li>
+    <li><a href="#p5"><span class="n">05</span> The product mix</a></li>
+    <li><a href="#p6"><span class="n">06</span> The Angul mega-expansion</a></li>
+    <li><a href="#p7"><span class="n">07</span> The steel cycle &amp; China</a></li>
+    <li><a href="#p8"><span class="n">08</span> The India demand engine</a></li>
+    <li><a href="#p9"><span class="n">09</span> Deleveraging &amp; the balance sheet</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: JINDALSTEL · BSE: 532286</span>
+    <span class="tag molten">Built for a non-specialist reader</span>
+  </div>
+  <h1>Jindal Steel, <em>the low-cost integrator building India's biggest steel plant</em></h1>
+  <p class="dek">A complete walk through Naveen Jindal's integrated steelmaker — how a tonne of steel actually earns money (the "spread" between the steel price and raw-material cost), why owning your own iron-ore and coal mines is the whole game, why this company is India's <strong>only private rail-maker</strong> and a leader in <strong>long products</strong> for infrastructure, and the one story that towers over the rest: the <strong>Angul mega-expansion</strong> that is roughly doubling crude-steel capacity toward <strong>~15.9 MTPA now and 25+ MTPA by 2030</strong> — the world's largest single-location steel plant in the making. The company (renamed from <strong>Jindal Steel &amp; Power</strong> to <strong>Jindal Steel</strong> in July 2025) booked FY26 gross revenue of <strong>₹62,412 crore</strong>, PAT of <strong>₹3,361 crore</strong>, and cut net debt to a comfortable <strong>1.66× EBITDA</strong>.</p>
+  <p class="provenance">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹62,412 <small>Cr</small></div><div class="l">Gross revenue (FY26, +8%)</div></div>
+    <div class="cell"><div class="v">9.25 <small>MT</small></div><div class="l">Steel production (FY26, +14%)</div></div>
+    <div class="cell"><div class="v">₹9,099 <small>Cr</small></div><div class="l">Adj. EBITDA (FY26)</div></div>
+    <div class="cell"><div class="v">1.66× <small>ND/EBITDA</small></div><div class="l">Net debt / EBITDA (Mar '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">2 Jul 2026</b> · source: Q4 &amp; FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — gross revenue ₹62,412 Cr (+8%), adjusted EBITDA ₹9,099 Cr, EBITDA/tonne ₹10,482, PAT ₹3,361 Cr (+18%), production 9.25 MT (+14%), sales 8.68 MT; Angul expansion executed from 6 to 12 MTPA lifting group crude-steel capacity to 15.6 MTPA; net debt ₹16,019 Cr at 1.66× EBITDA; value-added sales 61% of Q4 volume; FY27 output guided to 11.0–11.5 MT; ₹2/share final dividend.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Jindal Steel is a <strong>large integrated steel producer</strong> — part of the O.P. Jindal group, controlled by <strong>Naveen Jindal</strong> — with its heart in Odisha and Chhattisgarh. It digs up much of its own iron ore and coal, fires them into molten metal, and rolls out the steel that becomes railway tracks, bridges, beams, plates, rebar and, increasingly, flat sheet for cars and appliances. In FY26 (year ended March 2026) it produced <strong>9.25 million tonnes</strong> of steel, sold <strong>8.68 MT</strong>, booked <strong>₹62,412 crore of gross revenue</strong>, and earned <strong>₹9,099 crore of EBITDA</strong> and <strong>₹3,361 crore of profit</strong>. But the two things that truly define this company are its <em>cost position</em> and its <em>growth pipeline</em>.</p>
+
+  <p>Five facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is a commodity-spread business — and it owns the cost side.</strong> Steel is largely undifferentiated; what a steelmaker really earns is the <em>spread</em> between the price it gets for a tonne and the cost of the ore, coal and energy that went into it. Jindal Steel's edge is that it holds <strong>captive iron-ore and coal mines</strong> — so it insulates the cost side of that spread and aims to be among <strong>India's lowest-cost producers</strong>. This is the single most important structural fact about the company.</li>
+    <li><strong>The defining story is the Angul mega-expansion.</strong> Jindal Steel is in the middle of the most aggressive capacity build in Indian steel: its <strong>Angul complex in Odisha doubled from 6 to 12 MTPA</strong> in FY26, taking group crude-steel capacity to <strong>15.6 MTPA</strong>, and the roadmap runs all the way to <strong>~25 MTPA at Angul alone by 2030</strong> — which would make it the world's largest single-location steel plant. Volume growth, not price, is the near-term earnings driver.</li>
+    <li><strong>It leads in long products and is India's only private rail-maker.</strong> Unlike flat-heavy rivals, Jindal Steel is the domestic champion of <strong>rails, structurals, plates and parallel-flange beams</strong> — the steel that infrastructure is built from. It is the <strong>only private company in India that makes railway rails</strong>, a genuinely differentiated, high-value franchise tied to India's capex boom. It is now also expanding hard into <strong>flat products</strong>.</li>
+    <li><strong>It deleveraged out of a stressed past.</strong> A decade ago this was one of India's most over-indebted companies. It has since transformed the balance sheet: net debt is down to <strong>₹16,019 crore</strong>, or a comfortable <strong>1.66× EBITDA</strong> (debt/equity just 0.43×) — low enough to fund the giant expansion largely from its own cash flow.</li>
+    <li><strong>It is a promoter-controlled, single-country story.</strong> The Jindal/Naveen Jindal promoter group owns <strong>~61%+</strong>. Crucially — and unlike Tata Steel — Jindal Steel has <strong>no loss-making overseas steel business</strong> dragging it down; its earnings are an almost pure play on <em>Indian</em> steel and the Indian capex cycle.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of Jindal Steel as <strong>a low-cost Indian steel factory that owns its own quarry and coal pit — and is in the middle of building a second factory twice the size of the first</strong>. Because it digs up much of its own raw material, each tonne of steel costs it less than a rival who has to buy ore and coal at market prices — so its profit-per-tonne is fatter and steadier through the ups and downs of the steel cycle. It specialises in the "long" steel that builds railways and infrastructure (it's the only private firm in India that makes rail tracks), and it's now moving into "flat" sheet steel too. The whole investment case is the collision of two forces: a <em>cost advantage</em> that protects margins, and a <em>doubling of capacity</em> at Angul in Odisha that could make it one of the biggest steel plants on earth. Get the expansion filled and sold profitably, and volumes carry earnings up for years; stumble on the steel cycle or the execution, and a heavy build becomes a heavy risk. Master those two ideas — captive integration and the Angul expansion — and you understand Jindal Steel better than most headlines will tell you.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Steel economics &amp; the spread — the one idea that runs everything</h2></div>
+  <p class="part-sub">No metallurgy degree required — just the single mechanism that drives every steelmaker's year.</p>
+
+  <p class="lead">A steel company is, financially, a <strong>spread business</strong>. It buys raw materials at a price set by global commodity markets, converts them into steel at a largely fixed cost, and sells that steel at a price <em>also</em> set by markets. The profit on each tonne is the gap — the <strong>spread</strong> — between the selling price and the all-in cost. Everything about Jindal Steel, from its mines to its multiple, comes back to this one subtraction.</p>
+
+  <div class="spread-box">
+    <div class="eyebrow" style="margin-bottom:14px;">The metallic spread — the engine of every steelmaker's profit</div>
+    <div class="spread-row">
+      <span class="spread-pill price">Steel selling price<small>per tonne · set by the market</small></span>
+      <span class="spread-op">−</span>
+      <span class="spread-pill cost">Raw-material + conversion cost<small>iron ore + coal + energy + labour</small></span>
+      <span class="spread-op">=</span>
+      <span class="spread-pill spread">The spread<small>≈ EBITDA per tonne</small></span>
+    </div>
+    <div class="spread-note">Both sides of the subtraction move on world markets the company barely controls — which is why the spread (and therefore profit) is so volatile. Jindal Steel's edge is that it <em>owns much of the cost side</em> (captive ore and coal), so its spread is fatter and steadier than an un-integrated rival's. In FY26 it earned ₹10,482 of EBITDA per tonne.</div>
+  </div>
+
+  <h3>How rock becomes a margin</h3>
+  <p>The physical process is simple to picture. <strong>Iron ore</strong> (rich in iron oxide) and a source of carbon are combined at intense heat to strip the oxygen out of the ore, producing molten iron. There are two main routes. The classic one is the <strong>blast furnace</strong>, where iron ore and <strong>coking coal</strong> (baked into "coke") are fired together into molten <strong>hot metal</strong>. The other, which Jindal Steel pioneered in India, is <strong>Direct Reduced Iron (DRI)</strong> — using gas rather than coke to reduce the ore into solid "sponge iron". Either way, that iron is then refined in a furnace (a <strong>basic oxygen furnace</strong>, or BOF) into liquid <strong>crude steel</strong>, cast into slabs or billets, and rolled into finished products — plates, rails, beams, rebar, wire rod, and hot-rolled coil. The iron-making step is the expensive, energy-guzzling, hard-to-build heart of a steel plant — which is why two things matter enormously: <strong>raw-material integration</strong> (owning your ore and coal makes your cost cheaper and steadier — see §02) and <strong>scale</strong> (bigger, newer plants spread fixed costs over more tonnes — see §06).</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">From mine to rail — Jindal Steel's value chain</div>
+    <div class="flow-row">
+      <div class="node n1"><div class="ntag">Stage 1 · Mine</div><div class="nname">Iron ore + coal</div><div class="nwho">Captive mines (Tensa, Kasia, Gare Palma, Utkal) — a cheaper, secured input.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n2"><div class="ntag">Stage 2 · Reduce</div><div class="nname">Blast furnace / DRI</div><div class="nwho">Ore + coal/gas → molten iron or sponge iron. The energy-heavy core.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n3"><div class="ntag">Stage 3 · Refine</div><div class="nname">Crude steel &amp; slabs</div><div class="nwho">Oxygen furnace makes liquid steel; cast into slabs/billets. 9.25 MT in FY26.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n4"><div class="ntag">Stage 4 · Roll</div><div class="nname">Long &amp; flat products</div><div class="nwho">Rails, plates, beams, rebar, wire rod, hot-rolled coil. Sold by the tonne.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n5"><div class="ntag">Stage 5 · Value-add</div><div class="nname">Specialty &amp; coated steel</div><div class="nwho">Head-hardened rails, Q&amp;T plates, galvanised coil — higher price, fatter spread.</div></div>
+    </div>
+    <div class="flow-note">The two structural cost levers are owning the raw material (Stage 1) and pushing product up the value ladder (Stage 5). Jindal Steel plays both: it is unusually integrated on Stage 1, and its rails and specialty plates sit high on Stage 5.</div>
+  </div>
+
+  <h3>Why steel is brutally cyclical</h3>
+  <p>Here is the quirk that shapes the whole industry: in steel, <strong>both the price you sell at and the cost of what you buy are set by global markets you don't control</strong> — and the two don't move in step. When demand booms worldwide, steel prices spike faster than input costs and the spread balloons; when demand sags or China floods the world with surplus metal, prices crash while ore and coal can stay stubbornly high, and the spread collapses. The result is a business whose profits don't drift gently — they <strong>heave</strong>, sometimes swinging by multiples from one year to the next on exactly the same plants.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the cycle is so violent — the operating-leverage trap</div>
+    <p>Two things make steel earnings whip around far more than revenue does. <strong>First, fixed costs.</strong> A steel plant's biggest costs — the furnaces, the financing, much of the labour — don't shrink when prices fall. So when the selling price drops ₹2,000 a tonne, almost the entire drop falls straight to profit; there's little variable cost to cushion it. The same leverage runs in reverse on the way up, which is why steel profits can <em>multiply</em> in a good year. <strong>Second, price and cost are set separately.</strong> Steel prices are driven by global demand and Chinese exports (§07); iron-ore and coal prices are driven by their <em>own</em> supply-and-demand. In a bad cycle you can get the worst of both — falling steel prices <em>and</em> rising coal. That's the structural reason a steelmaker is treated as a <strong>cyclical</strong>, not a steady compounder: you are buying a leveraged claim on a spread the company can influence at the margin but never set. Jindal Steel's chief defence against the cycle is precisely its cost position (§02) — when prices fall, a low-cost, integrated mill stays profitable while un-integrated rivals bleed. That's why FY26 is instructive: even as steel prices stayed soft and its EBITDA-per-tonne slipped ~11%, the company still earned a healthy ₹10,482/tonne and grew profit 18% — because rising <em>volumes</em> from the expansion offset weaker <em>prices</em>.</p>
+  </div>
+
+  <div class="note molten"><b>The takeaway for a non-specialist:</b> don't judge Jindal Steel on a single year's profit — judge it on the <em>through-cycle</em> EBITDA-per-tonne and on volume growth. The cycle is the weather; Jindal Steel's job is to be the best-built, lowest-cost house in the storm, and to keep adding rooms (capacity) that it can fill profitably.</div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The captive-integration moat — the real reason to own this stock</h2></div>
+  <p class="part-sub">The single most important thing to understand about Jindal Steel. Read this section twice.</p>
+
+  <p class="lead">If the spread is everything (§01), then the cost side of it is decided largely by two raw materials: <strong>iron ore and coal</strong>. The biggest structural difference between steelmakers is how much of that ore and coal they <strong>own ("captive")</strong> versus <strong>buy on the open market or import</strong>. Jindal Steel has spent years building one of the more integrated raw-material positions in Indian steel — and that integration is the central reason it can aim to be a <em>lowest-cost</em> producer and hold its margins when the cycle turns down.</p>
+
+  <h3>What "captive" actually means — and why it's worth so much</h3>
+  <p>When a steelmaker owns its own mine, it gets its iron ore or coal at the <em>cost of digging it out of the ground</em>, not the <em>market price</em>. In a normal year that's a useful discount. In a <em>spike</em> year — when global ore or coking-coal prices double — it's a lifeline: the integrated producer's cost barely moves while the un-integrated rival's cost explodes. That does two things at once: it makes the average margin <strong>fatter</strong>, and it makes the margin <strong>steadier</strong> across the cycle. For a violently cyclical business, steadiness is worth almost as much as size.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Jindal Steel's captive raw-material base</caption>
+    <thead><tr><th>Asset</th><th>Type</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Tensa &amp; Kasia</td><td>Iron-ore mines (Odisha)</td><td>Feed the Odisha plants with captive ore, cutting exposure to volatile Odisha ore prices. Kasia is a large new source ramping up.</td></tr>
+      <tr><td class="t-strong">Gare Palma IV/6</td><td>Thermal coal mine (Chhattisgarh)</td><td>Captive power fuel — cheaper, secured energy for the plants and DRI.</td></tr>
+      <tr><td class="t-strong">Utkal B1 &amp; B2, Utkal C</td><td>Coal mines (Odisha)</td><td>Further thermal/coking-coal security close to Angul — the raw-material engine for the mega-expansion.</td></tr>
+      <tr><td class="t-strong">Jindal Paradip Port</td><td>Captive port (Odisha)</td><td>Owns its own import/export gateway — cutting logistics cost on imported coking coal and exported steel.</td></tr>
+      <tr><td class="t-strong">Slurry pipeline &amp; coal conveyor</td><td>Logistics infrastructure</td><td>An 18-MT, ~200 km ore-slurry pipeline (Barbil→Angul) and coal pipe-conveyors slash the cost of moving raw material to the plant.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>The Angul twist — turning cheap local coal into steel</h3>
+  <p>India is short of the high-grade <strong>coking coal</strong> that blast furnaces need, and imports most of it — an expensive, volatile cost. Jindal Steel's answer at Angul is genuinely distinctive: it built the <strong>world's first MXCOL® coal-gasification DRI plant</strong>, which takes cheap, locally-available <strong>high-ash Indian coal</strong>, turns it into a synthesis gas ("syngas"), and uses that gas to make iron — <em>bypassing imported coking coal altogether</em>. In April 2026 the company said it had become the first in India to deploy coal gasification <strong>across its entire steel value chain</strong>. This isn't just a green story; it's a <strong>cost story</strong> — using domestic coal instead of imported coke structurally lowers and de-risks the input bill.</p>
+
+  <div class="plain">
+    <div class="ptag">Why integration is the moat — the mechanism in plain terms</div>
+    <p>Imagine two bakeries selling identical bread at the same price. One buys flour at the shop; the other owns the wheat field. In a normal year the field-owner earns a bit more. But when a drought sends flour prices soaring, the shop-buyer's costs jump and its profit vanishes — while the field-owner barely notices, because its "cost" of wheat is just the cost of harvesting. Now scale that up to millions of tonnes of iron ore and coal, in a business where the selling price is set globally and swings wildly. <strong>That is the captive-integration moat.</strong> By owning mines (ore and coal), a captive port, and slurry/conveyor logistics — plus the MXCOL trick of running on cheap Indian coal — Jindal Steel keeps the cost side of its spread lower and steadier than rivals who buy everything at market. The payoff shows up exactly when it matters most: in a <em>weak</em> steel market, an integrated low-cost mill stays comfortably profitable while high-cost, un-integrated players slide toward losses. It is the difference between a business that merely rides the cycle and one that can keep expanding through it.</p>
+  </div>
+
+  <div class="note molten"><b>The honest caveat:</b> integration is a powerful edge, not a force-field. Captive mines still need government clearances and face regulatory/royalty risk; a mine can under-deliver on grade or volume; and no amount of cost advantage fully protects a steelmaker from a savage collapse in selling prices. Integration <em>compresses</em> the downside and <em>fattens</em> the upside — it doesn't repeal the cycle. But among Indian steelmakers, Jindal Steel's raw-material position is a real, durable structural advantage, and it is the first thing an analyst points to.</div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">From a stressed, over-levered past to a focused, deleveraged steel pure-play.</p>
+
+  <p class="lead">Jindal Steel is the flagship steel business of <strong>Naveen Jindal</strong>, one of the branches of the sprawling <strong>O.P. Jindal group</strong> (which also includes the separately-listed JSW group under Sajjan Jindal and Jindal Stainless — <em>different companies, don't confuse them</em>). The business rose fast in the 2000s, over-borrowed during the last capex boom, was caught in the coal-block cancellations and the steel downturn of the mid-2010s, and has spent the years since <strong>cleaning up its balance sheet and sharpening its focus purely on steel</strong>. The July 2025 name change from "Jindal Steel &amp; Power" to just "Jindal Steel" is the symbolic seal on that focus.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1990s–2000s</div><div class="ev">Naveen Jindal builds the Raigarh (Chhattisgarh) steel and power complex; pioneers plates, rails and DRI in India under Jindal Steel &amp; Power (JSPL).</div></li>
+    <li class="major"><div class="yr">2014</div><div class="ev">Commissions the world's first <strong>MXCOL® coal-gasification DRI plant</strong> at Angul, Odisha — running on cheap local high-ash coal instead of imported coke.</div></li>
+    <li><div class="yr">2014–17</div><div class="ev">The <strong>stressed years</strong>: Supreme Court coal-block cancellations, a brutal steel downturn and a heavy debt load push JSPL into one of Indian steel's most over-levered positions.</div></li>
+    <li><div class="yr">2018–22</div><div class="ev"><strong>The deleveraging.</strong> Ramps Angul, sells non-core assets (incl. Oman steel and, later, moves to hive off the power business), and slashes net debt from crippling levels toward a healthy ratio.</div></li>
+    <li class="major"><div class="yr">2021</div><div class="ev">Incorporates <strong>Jindal Steel Odisha Limited (JSOL)</strong> to build the giant Angul expansion — the vehicle for the march toward 15.9 and then 25+ MTPA.</div></li>
+    <li class="major"><div class="yr">Jul 2025</div><div class="ev">Renamed <strong>Jindal Steel Limited</strong> — reflecting a sharpened, dedicated focus on steel (CIN and legacy unchanged).</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Doubles Angul from <strong>6 to 12 MTPA</strong>, lifting group crude-steel capacity to <strong>15.6 MTPA</strong>; production 9.25 MT; net debt down to 1.66× EBITDA.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; the "power" question</h3>
+  <ul class="clean">
+    <li><strong>Promoter control:</strong> the Naveen Jindal promoter group owns <strong>~61%+</strong> — a high, aligned stake that means the founder-family's capital and the public shareholder's capital move together, and gives the company a long-horizon owner willing to fund a decade-long expansion.</li>
+    <li><strong>The name change &amp; the power business:</strong> the shift from "Jindal Steel &amp; Power" to "Jindal Steel" signals that the company is now a <strong>steel pure-play</strong>. The captive and merchant power operations (historically <strong>Jindal Power Limited, JPL</strong>) have been progressively separated/de-emphasised from the listed steel entity — the intent is a clean steel story, with power treated as an input/adjacency rather than a headline segment. <em>(For the reader: what matters is that the listed company you're analysing is now overwhelmingly a steelmaker, not a diversified power-and-steel conglomerate.)</em></li>
+    <li><strong>No overseas drag:</strong> unlike Tata Steel (its loss-making European arm) or a globally-sprawling major, Jindal Steel today is essentially an <strong>India-only steel business</strong> — a cleaner, more direct bet on Indian steel and the Indian capex cycle, with the earlier overseas ventures largely exited.</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Long products &amp; the rails franchise — the differentiated edge</h2></div>
+  <p class="part-sub">What sets Jindal Steel apart from flat-heavy peers — and why India's infrastructure boom flows through it.</p>
+
+  <p class="lead">Steel comes in two broad families. <strong>Flat products</strong> — hot-rolled coil, cold-rolled and galvanised sheet — go into cars, appliances, pipes and packaging. <strong>Long products</strong> — rails, structural beams, rebar, wire rod, plates — go into <em>infrastructure</em>: railways, bridges, buildings, transmission towers, industrial construction. Most large Indian steelmakers (JSW, Tata) are <strong>flat-heavy</strong>. Jindal Steel is different: it is the country's <strong>long-products champion</strong>, and it owns a franchise no other private player has.</p>
+
+  <h3>India's only private rail-maker</h3>
+  <p>The standout is <strong>rails</strong>. Jindal Steel is the <strong>only private company in India that manufactures railway rails</strong> — historically the near-exclusive preserve of the state-owned Steel Authority of India (SAIL). Its Raigarh rail mill (~1 MTPA) produces <strong>long, head-hardened and specialty rails</strong> — including the high-grade rails used across India's metros and the new Regional Rapid Transit System (RRTS) — and it is adding a large <strong>rail-and-heavy-structural mill at Angul (~1.2 MTPA)</strong>, which would roughly double its rail capacity toward ~2.2 MTPA.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the rails franchise is so valuable</div>
+    <p>Rails are the opposite of a commodity. They are a <strong>safety-critical, precision-engineered, quality-certified product</strong> — long welded lengths that must meet exacting metallurgical standards, and that only a handful of mills worldwide can even make. That gives them three attractions a plain steel coil lacks: <strong>(1) a fatter, more stable margin</strong> (buyers pay for reliability, not the cheapest tonne); <strong>(2) a captive, growing customer</strong> — the Indian Railways' record capex, dedicated freight corridors, high-speed rail and metro build-out all need enormous tonnages of rail; and <strong>(3) a near-impregnable competitive position</strong> — being the <em>only</em> private domestic supplier means Jindal Steel isn't fighting a price war with a dozen rivals. In a business where most players sell an undifferentiated product into a brutal cycle, rails are a genuine specialty island of pricing power. The same logic extends, more mildly, to its structurals, parallel-flange beams and Q&amp;T (quenched-and-tempered) plates — high-spec long products for bridges, high-rises and heavy engineering.</p>
+  </div>
+
+  <h3>The infrastructure link — why this mix is well-timed</h3>
+  <ul class="clean">
+    <li><strong>Rails &amp; structurals</strong> ride the Indian Railways' capex super-cycle, dedicated freight corridors, metros and RRTS.</li>
+    <li><strong>Plates &amp; beams</strong> feed bridges, shipbuilding, industrial plant, defence and heavy construction — Jindal Steel has supplied marquee projects like the Chenab bridge, Atal Setu and major refinery expansions.</li>
+    <li><strong>Rebar &amp; wire rod</strong> ride broad construction and real estate.</li>
+    <li><strong>The strategic add:</strong> having led in longs, Jindal Steel is now building out <strong>flat products</strong> too (a Hot Strip Mill and CRM complex at Angul) — widening its market and lifting the value-added share of its mix.</li>
+  </ul>
+
+  <div class="note molten"><b>The distinction from peers:</b> where flat-heavy steelmakers live and die by auto and consumer-durable demand, Jindal Steel's centre of gravity is <em>infrastructure</em> — arguably the strongest structural demand theme in India for the next decade. And the rails business is a moat that rivals simply cannot copy quickly. The flip side: longs can be lower-margin than premium auto flats in a good flat-steel year, which is exactly why the push into flats matters for balance.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The product mix, broken into parts</h2></div>
+  <p class="part-sub">Long-products heritage, a growing flats business, and a rising value-added share.</p>
+
+  <p class="lead">Jindal Steel's portfolio is deliberately weighted toward <strong>value-added and specialty products</strong> — a lever that lifts the average price per tonne (and therefore the spread) above what a plain-commodity mill earns. Management flagged <strong>value-added sales at 61% of volume in Q4FY26</strong>, with <strong>flat products at 52%</strong> of that quarter's sales as the new Angul flat lines ramp up — a portfolio that now straddles both steel families.</p>
+
+  <div class="chart">
+    <div class="c-title">The product portfolio — a long-products base going broader</div>
+    <div class="c-sub">Illustrative shape of the mix; value-added &amp; specialty command the fattest spreads</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Flat products<small>HRC, CRC, galvanised — ramping at Angul</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~52% (Q4)</div></div>
+      <div class="bar-row"><div class="blab">Plates &amp; Q&amp;T plates<small>bridges, defence, heavy engg.</small></div><div class="track"><span class="fill ore" style="width:52%"></span></div><div class="bval">high-value</div></div>
+      <div class="bar-row"><div class="blab">Rails &amp; structurals<small>the differentiated franchise</small></div><div class="track"><span class="fill rail" style="width:46%"></span></div><div class="bval">specialty</div></div>
+      <div class="bar-row"><div class="blab">Rebar &amp; wire rod<small>construction longs</small></div><div class="track"><span class="fill coal" style="width:40%"></span></div><div class="bval">commodity</div></div>
+      <div class="bar-row"><div class="blab">Pellets &amp; semis<small>iron pellets, billets, slabs</small></div><div class="track"><span class="fill graphite" style="width:28%"></span></div><div class="bval">intermediate</div></div>
+    </div>
+    <div class="legend"><span>Shares are indicative and shift each quarter as the Angul flat lines ramp. The strategic direction is clear: more value-added, more flats, a rising specialty share — all of which lift realisation per tonne.</span></div>
+  </div>
+
+  <h3>The value ladder (jargon decoded)</h3>
+  <ul class="clean">
+    <li><strong>Rails &amp; head-hardened rails</strong> — safety-critical track for railways, metros and RRTS. The crown jewel; India's only private supply.</li>
+    <li><strong>Parallel-flange beams &amp; structurals</strong> — the "H" and "I" sections that frame buildings, bridges and industrial plant. High-spec, infrastructure-linked.</li>
+    <li><strong>Plates &amp; Q&amp;T (quenched-and-tempered) plates</strong> — thick, high-strength steel for bridges, shipbuilding, defence, pressure vessels and heavy machinery. Rockhard-grade plates are a premium line.</li>
+    <li><strong>Flat products (HRC/CRC/coated)</strong> — the new growth arm from Angul's Hot Strip Mill and CRM complex; opens up autos, appliances, pipes and packaging.</li>
+    <li><strong>Rebar &amp; wire rod</strong> — the bread-and-butter construction longs; more commoditised but high-volume.</li>
+    <li><strong>Iron pellets &amp; semis</strong> — intermediate products (pellets feed the company's own furnaces or are sold; billets/slabs are semi-finished steel).</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the mix is the quiet margin lever</div>
+    <p>A tonne of plain rebar and a tonne of head-hardened rail cost roughly the same to make, but sell at very different prices. So <strong>the richer the product mix, the higher the average realisation — and, because costs are similar, the fatter the spread.</strong> That's why "value-added share" (61% in Q4FY26) is a number management highlights: shifting the portfolio toward rails, specialty plates and premium flats lifts profit-per-tonne <em>without</em> needing steel prices to rise. It's the same operating-leverage idea as filling capacity, but pulled through the product menu rather than the order book — a lever Jindal Steel controls even when the cycle doesn't cooperate.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE #2: the Angul mega-expansion -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The Angul mega-expansion — the growth story that defines the stock</h2></div>
+  <p class="part-sub">The most aggressive capacity build in Indian steel — and the reason volumes, not prices, drive near-term earnings.</p>
+
+  <p class="lead">If integration (§02) is why you'd own Jindal Steel through the cycle, the <strong>Angul expansion</strong> is why you'd own it for growth. The company is in the middle of roughly <strong>doubling its steelmaking capacity</strong>, centred on its integrated complex at <strong>Angul, Odisha</strong> — and the ambition runs far beyond the current phase, toward a plant that would be the <strong>largest single-location steelworks on earth</strong>.</p>
+
+  <div class="chart">
+    <div class="c-title">The capacity march — Angul is the growth engine</div>
+    <div class="c-sub">Crude-steel capacity (MTPA) — group total, with Angul doing the heavy lifting</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Group, pre-expansion<small>~FY24</small></div><div class="track"><span class="fill graphite" style="width:38%"></span></div><div class="bval">~9.6</div></div>
+      <div class="bar-row"><div class="blab">Group, FY26<small>Angul now 12 MTPA</small></div><div class="track"><span class="fill brand" style="width:62%"></span></div><div class="bval">15.6</div></div>
+      <div class="bar-row"><div class="blab">Next milestone<small>Phase-1 target</small></div><div class="track"><span class="fill molten" style="width:63%"></span></div><div class="bval">~15.9</div></div>
+      <div class="bar-row"><div class="blab">Angul by ~2030<small>single-site vision</small></div><div class="track"><span class="fill rail" style="width:100%"></span></div><div class="bval">~24–25</div></div>
+    </div>
+    <div class="legend"><span>Angul alone doubled from 6 to 12 MTPA in FY26 (BF2 4.6 MTPA + BOF2/BOF3 3 MTPA each), taking the <em>group</em> to 15.6 MTPA. The longer roadmap targets ~25 MTPA at Angul by ~2030 — which would make it the world's largest single-location steel plant.</span></div>
+  </div>
+
+  <h3>What's been built, and what's next</h3>
+  <ul class="clean">
+    <li><strong>FY26 — the doubling:</strong> Angul commissioned a <strong>4.6 MTPA blast furnace (BF2)</strong> plus two <strong>3 MTPA basic-oxygen furnaces (BOF2, BOF3)</strong>, along with a Hot Strip Mill, CRM complex, coal pipe-conveyor and captive power — taking the complex from 6 to <strong>12 MTPA</strong>.</li>
+    <li><strong>Under construction:</strong> a second <strong>DRI unit (2 MTPA)</strong> and <strong>Pellet Plant 2</strong> — deepening integration and feeding the new furnaces.</li>
+    <li><strong>The long game:</strong> the Angul roadmap runs to <strong>~25 MTPA by 2030</strong> (via JSOL), positioned as the <strong>world's largest and greenest single-location steel plant</strong>, with hydrogen-ready and coal-gasification technology at its core.</li>
+    <li><strong>The volume payoff:</strong> FY26 output was 9.25 MT; FY27 is guided to <strong>11.0–11.5 MT</strong> — a step-change that carries revenue and profit even if steel prices stay flat.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why a capacity build is such a powerful — and risky — lever</div>
+    <p>In a fixed-cost business, <strong>volume is the cheapest form of growth</strong>. Once the furnaces are paid for, every extra tonne you make and sell spreads the same fixed costs over more output, so profit-per-tonne rises and the whole plant gets more efficient. That's why doubling capacity — <em>if you can fill and sell it</em> — is a multi-year earnings engine that doesn't depend on steel prices going up. Jindal Steel funds this largely from its own cash flow plus a measured mix of debt, targeting a project pre-tax return on capital of ~18–20%. <strong>But the same lever cuts both ways.</strong> A giant build is a giant bet: you sink tens of thousands of crores into furnaces that must then be <em>filled with profitable orders</em>. If the steel cycle turns down just as new capacity switches on — the classic curse of commodity expansions — you're left with under-utilised plants and fresh debt to service. The whole investment debate on Jindal Steel comes down to this: <strong>can it fill 15.9 → 25 MTPA of new steel profitably, and keep leverage in check while doing so?</strong> Its cost advantage (§02) and its differentiated longs/rails demand (§04) are precisely what tilt the odds in its favour — but execution risk on a build this size is real.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms molten"><div class="msv">6 → 12</div><div class="msl">Angul crude-steel capacity, MTPA — doubled in FY26</div></div>
+    <div class="ms"><div class="msv">₹9,574 Cr</div><div class="msl">FY26 capex — the expansion in flight</div></div>
+    <div class="ms rail"><div class="msv">~25 MTPA</div><div class="msl">Angul target by ~2030 — world's largest single site</div></div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The steel cycle &amp; China — the force that moves prices</h2></div>
+  <p class="part-sub">Why the whole industry watches Beijing — and how imports and duties swing Jindal Steel's spread.</p>
+
+  <p class="lead">Steel is a <strong>global commodity</strong>, and one country dominates it: <strong>China makes and consumes over half the world's steel</strong>. So when China's economy — and especially its property sector — sneezes, the whole global steel market catches cold. Understanding the China dynamic is understanding the single biggest swing factor on the <em>price</em> side of Jindal Steel's spread.</p>
+
+  <h3>The China oversupply mechanism</h3>
+  <p>China built vast steel capacity for a property and infrastructure boom that has now cooled sharply — its real-estate sector has been in structural decline for years. With domestic demand weak but the mills still running, China's surplus steel gets <strong>exported</strong> onto world markets, often at cut-throat prices. Those cheap exports drag down steel prices <em>everywhere</em> — including in India, where imported steel competes directly with domestic producers. When Chinese steel floods in, Indian prices soften and Jindal Steel's realisation-per-tonne comes under pressure; that's exactly the backdrop that squeezed EBITDA-per-tonne across FY26.</p>
+
+  <div class="chart">
+    <div class="c-title">Why India is the bright spot in a soft global market</div>
+    <div class="c-sub">Approximate steel-demand growth outlook (YoY %), CY26 — India leads the world</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">India<small>capex + infra driven</small></div><div class="track"><span class="fill good" style="width:100%"></span></div><div class="bval">~7–8%</div></div>
+      <div class="bar-row"><div class="blab">EU &amp; UK<small>modest recovery</small></div><div class="track"><span class="fill graphite" style="width:20%"></span></div><div class="bval">~1–3%</div></div>
+      <div class="bar-row"><div class="blab">USA<small>steady</small></div><div class="track"><span class="fill graphite" style="width:22%"></span></div><div class="bval">~2%</div></div>
+      <div class="bar-row"><div class="blab">China<small>property drag</small></div><div class="track"><span class="fill bad" style="width:8%"></span></div><div class="bval">~0 to −1%</div></div>
+    </div>
+    <div class="legend"><span>Directional, per World Steel Association short-range outlook cited by the company. India's growth is expected to offset China's degrowth — the structural reason a domestically-focused Indian producer is better placed than a China-exposed global peer.</span></div>
+  </div>
+
+  <h3>The duty shield</h3>
+  <p>Governments respond to import floods with <strong>trade defences</strong> — safeguard duties, anti-dumping duties and minimum import prices that make cheap foreign steel less competitive. India has periodically imposed such measures (including safeguard duties on certain steel imports) to protect domestic mills. For Jindal Steel, a well-timed safeguard duty is a <em>direct support to the price side of the spread</em> — it props up domestic realisations against Chinese dumping. Notably, India turned a <strong>net steel exporter in FY26</strong> after two years, a sign the domestic industry was holding its own.</p>
+
+  <div class="plain">
+    <div class="ptag">Putting the cycle together — in plain terms</div>
+    <p>Here's the full picture of what moves Jindal Steel's profit. On the <strong>demand side</strong>, its home market — India — is the fastest-growing large steel market on earth, powered by railways, roads, housing and industrial capex; that's a genuine tailwind and the best structural position a steelmaker can have. On the <strong>price side</strong>, though, it's still exposed to the global weather: cheap Chinese exports can drag Indian steel prices down regardless of how strong local demand is, and the government's willingness to impose (and keep) safeguard/anti-dumping duties is a swing factor it doesn't control. On the <strong>cost side</strong>, its captive mines (§02) give it more control than most. So the mental model is: <strong>Jindal Steel sits in the world's best steel <em>demand</em> market, with a strong <em>cost</em> position, but a <em>price</em> that is still hostage to China and trade policy.</strong> In a year when China dumps and duties lapse, even India's demand can't fully protect margins — which is why FY26 saw softer per-tonne profit despite record volumes. In a year when duties bite and China stabilises, the same plants can earn far more. That price sensitivity is the cyclicality you're signing up for.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The India demand engine — the tailwind behind the build</h2></div>
+  <p class="part-sub">Why doubling capacity into Indian infrastructure is a bet on a structural, not cyclical, story.</p>
+
+  <p class="lead">A capacity build only makes sense if there's demand to fill it. Jindal Steel's expansion is, at heart, a leveraged bet on <strong>India's steel-consumption catch-up</strong> — and the numbers behind that bet are unusually favourable. India is the world's second-largest steel producer, yet its <strong>per-capita steel consumption is a fraction of the global average</strong>, and its demand is growing <strong>~7–9% a year</strong> — the fastest of any major economy.</p>
+
+  <h3>What's driving Indian steel demand</h3>
+  <ul class="clean">
+    <li><strong>Government infrastructure capex</strong> — record spending on railways, highways, ports, metros and urban infrastructure, much of it steel-intensive and much of it in <em>long</em> products (Jindal Steel's home turf).</li>
+    <li><strong>Railways super-cycle</strong> — track renewal, new lines, dedicated freight corridors, high-speed rail and metros/RRTS — a direct, sustained pull on Jindal Steel's rails and structurals.</li>
+    <li><strong>Housing &amp; real estate</strong> — a recovering property cycle drives rebar and structural demand.</li>
+    <li><strong>Manufacturing &amp; "Make in India"</strong> — capital-goods, autos, appliances, defence and shipbuilding lift both flat and specialty-plate demand — the market Jindal Steel's new flat lines target.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "low per-capita consumption" is the whole bull thesis</div>
+    <p>The single most powerful long-term argument for Indian steel is embarrassingly simple: <strong>Indians use far less steel per person than the world does, and as the country builds out its infrastructure and industry, that gap closes.</strong> Every kilometre of railway, every flyover, every metro line, every factory and high-rise pulls in tonnes of steel — and India is doing all of these at once, from a low base. That's a <em>structural</em> demand story that can run for a decade or more, largely independent of the year-to-year price cycle. It's why an Indian steelmaker doubling capacity looks very different from a European or Chinese one doing the same: the Europeans and Chinese are adding capacity into <em>flat-to-shrinking</em> markets, while Jindal Steel is adding it into arguably the <em>fastest-growing large steel market on the planet</em>. The demand tailwind doesn't eliminate the price cycle — cheap Chinese imports can still spoil a given year — but it means the new tonnes have a natural home, which is the essential precondition for a capacity build to pay off.</p>
+  </div>
+
+  <div class="note molten"><b>The nuance:</b> strong <em>demand</em> and strong <em>prices</em> aren't the same thing. India's steel <em>volumes</em> can grow 8% while steel <em>prices</em> fall, if Chinese imports flood the market — which is roughly what FY26 looked like (record Jindal Steel volumes, softer per-tonne margins). The demand engine underwrites the <em>volume</em> half of the growth story; the price half still depends on the global cycle and trade policy (§07).</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Deleveraging &amp; the balance sheet — from stress to strength</h2></div>
+  <p class="part-sub">How a once-over-levered company earned the right to build big — and why leverage is the number to watch.</p>
+
+  <p class="lead">A decade ago, debt was the story at Jindal Steel — and not a good one. The company over-borrowed during the last boom, then got caught by coal-block cancellations and the mid-2010s steel downturn, ending up as one of Indian steel's most stressed balance sheets. The turnaround since is one of the most important, and least-appreciated, facts about the company: it has <strong>deleveraged decisively</strong>, which is precisely what lets it self-fund the giant Angul build today.</p>
+
+  <div class="chart">
+    <div class="c-title">The deleveraging — net debt / EBITDA back to comfort</div>
+    <div class="c-sub">Consolidated net-debt-to-EBITDA (×); lower is safer</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">The stressed era<small>mid-2010s, indicative</small></div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">&gt; 4× (peak)</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill graphite" style="width:37%"></span></div><div class="bval">~1.48×</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill molten" style="width:43%"></span></div><div class="bval">~1.72×</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>despite record capex</small></div><div class="track"><span class="fill good" style="width:41%"></span></div><div class="bval">1.66×</div></div>
+    </div>
+    <div class="legend"><span>From a crippling &gt;4× in the stressed years to a comfortable ~1.66× now. The small FY25 uptick reflects the peak of the expansion capex; management targets keeping net debt/EBITDA <strong>below 1.5× through the cycle</strong>.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">₹16,019 Cr</div><div class="msl">Net debt at Mar-26 (total debt ₹22,268 Cr, cash ₹6,249 Cr)</div></div>
+    <div class="ms molten"><div class="msv">0.43×</div><div class="msl">Debt/equity — a conservative balance sheet</div></div>
+    <div class="ms green"><div class="msv">&lt; 1.5×</div><div class="msl">Net debt/EBITDA target through the cycle</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why this is the linchpin of the whole story</div>
+    <p>Here's the tension a commodity expander must navigate: a giant capacity build costs enormous cash, but so does servicing debt — and a steelmaker with too much debt can be <em>forced</em> to cut capex or sell assets at the bottom of the cycle, exactly when it should be investing. Jindal Steel's hard-won, deleveraged balance sheet is what breaks that trap. With net debt at a comfortable 1.66× EBITDA and debt/equity at 0.43×, it can <strong>fund the Angul expansion largely from its own cash flow</strong> rather than piling on risky new borrowing — and it can survive a downturn without a crisis. That's the difference between a build that compounds value and one that ends in distress. The number to watch every year is precisely this ratio: as long as net debt/EBITDA stays around or below ~1.5–2× while capacity ramps, the growth story is on track; if leverage creeps up sharply (a weak-price year colliding with heavy spend), the risk profile changes. The company having lived through — and escaped — a debt crisis once is, ironically, part of why it manages leverage so carefully now.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Resilient volume growth through a soft-price year — priced as a cyclical grower.</p>
+
+  <p class="lead">FY26 was a telling year: steel <em>prices</em> were soft (per-tonne EBITDA slipped), yet Jindal Steel still grew revenue, volumes <em>and</em> profit — because the expansion delivered more tonnes and the cost base stayed low. That's the signature of a business whose growth is being carried by capacity and cost, not by the price cycle.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>FY26 vs FY25 — key consolidated numbers</caption>
+    <thead><tr><th>Metric</th><th class="num">FY25</th><th class="num">FY26</th><th>Change</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Steel production (MT)</td><td class="num">8.12</td><td class="num">9.25</td><td>+14%</td></tr>
+      <tr><td class="t-strong">Steel sales (MT)</td><td class="num">7.97</td><td class="num">8.68</td><td>+9%</td></tr>
+      <tr><td class="t-strong">Gross revenue (₹ Cr)</td><td class="num">58,044</td><td class="num">62,412</td><td>+8%</td></tr>
+      <tr><td class="t-strong">Adjusted EBITDA (₹ Cr)</td><td class="num">9,339</td><td class="num">9,099</td><td>−3%</td></tr>
+      <tr><td class="t-strong">EBITDA / tonne (₹)</td><td class="num">11,712</td><td class="num">10,482</td><td>−11%</td></tr>
+      <tr><td class="t-strong">PAT (₹ Cr)</td><td class="num">2,846</td><td class="num">3,361</td><td>+18%</td></tr>
+      <tr><td class="t-strong">Net debt / EBITDA (×)</td><td class="num">~1.72</td><td class="num">1.66</td><td>improving</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Revenue &amp; profit trajectory</div>
+    <div class="c-sub">Gross revenue and PAT (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Gross revenue FY25</div><div class="track"><span class="fill graphite" style="width:93%"></span></div><div class="bval">58,044</div></div>
+      <div class="bar-row"><div class="blab">Gross revenue FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">62,412</div></div>
+      <div class="bar-row"><div class="blab">PAT FY25</div><div class="track"><span class="fill molten" style="width:85%"></span></div><div class="bval">2,846</div></div>
+      <div class="bar-row"><div class="blab">PAT FY26</div><div class="track"><span class="fill good" style="width:100%"></span></div><div class="bval">3,361</div></div>
+    </div>
+    <div class="legend"><span>Gross revenue includes GST and other income; net sales (Screener basis) were ~₹53,225 Cr in FY26. Adjusted EBITDA is stated after a one-off FX gain of ₹561 Cr in FY26.</span></div>
+  </div>
+
+  <h3>Valuation</h3>
+  <ul class="clean">
+    <li><strong>Market cap ~₹1.06 lakh crore</strong> (mid-2026), share price ~<strong>₹1,040–1,140</strong>.</li>
+    <li><strong>P/E ~26×</strong> on trailing earnings (EPS ~₹33 in FY26) — a mid-cycle multiple for a growing, deleveraged integrated steelmaker.</li>
+    <li><strong>ROCE ~9–10%, ROE ~8%</strong> — modest today because a large chunk of capital is tied up in expansion projects not yet fully earning; the bull case is that returns rise as new capacity fills.</li>
+    <li><strong>Book value ~₹499/share</strong> — the stock trades around ~2× book.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">How to think about the multiple — a "growth on the come" cyclical</div>
+    <p>Valuing a cyclical steelmaker is tricky, because earnings swing so much that a single year's P/E can mislead — a low multiple can signal a peak-earnings year (cheap-looking but risky), and a high one a trough year. Jindal Steel is a special case: it's a cyclical <em>and</em> a grower. A big slice of its capital is currently sunk in Angul projects that aren't yet producing full profits, which <strong>depresses today's returns (ROCE ~10%) and flatters nothing about the current multiple</strong>. The bull case is that this is <em>temporary</em>: as the new 15.9 → 25 MTPA of capacity fills with profitable tonnes, EBITDA rises, returns on that parked capital climb, and the earnings base steps up — so today's ~26× is really paying for tomorrow's much larger, higher-return business. The bear case is that steel is steel: if the cycle turns down as capacity ramps, the extra tonnes arrive into weak prices, returns stay stuck, and the market re-rates a leveraged commodity expander <em>down</em>, not up. Both hinge on the same variables — steel prices, execution, and how fast the new capacity earns. The numbers to track each year: <strong>EBITDA-per-tonne</strong> (is the spread holding?), <strong>capacity utilisation</strong> (is the new steel selling?), and <strong>net debt/EBITDA</strong> (is the build staying funded?).</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A low-cost integrator with a huge growth runway — riding a cycle it doesn't control.</p>
+
+  <p class="lead">Jindal Steel is, at its core, a <strong>bet on Indian steel with two structural edges</strong>: a captive-integration cost advantage that protects margins, and an aggressive, self-funded capacity build into the world's fastest-growing large steel market. What it can't escape is the commodity cycle — its selling price will always be hostage to global steel prices and China. The investment debate is the tension between those structural strengths and that cyclical vulnerability.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Low-cost integration</strong> — captive iron ore, coal, port and coal-gasification (MXCOL) give a durable cost edge that fattens and steadies the spread through the cycle.</li>
+        <li><strong>Volume super-cycle</strong> — Angul doubling to 12 MTPA (group 15.6), roadmap to ~25 MTPA by 2030; growth that doesn't need higher steel prices to show up.</li>
+        <li><strong>Differentiated demand</strong> — India's only private rail-maker, a long-products/infra leader riding the strongest structural demand theme in India.</li>
+        <li><strong>Deleveraged &amp; self-funding</strong> — net debt 1.66× EBITDA, D/E 0.43×; can build big from its own cash flow.</li>
+        <li><strong>Clean India pure-play</strong> — no loss-making overseas steel; a direct bet on the Indian capex cycle, with an aligned 61%+ promoter.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Cyclical price risk</strong> — realisations are hostage to global steel prices and Chinese dumping; a soft-price year squeezes margins regardless of volumes (see FY26's −11% EBITDA/tonne).</li>
+        <li><strong>Execution &amp; timing risk</strong> — a build this size (toward 25 MTPA) is a giant bet; new tonnes arriving into a weak cycle could sit under-utilised.</li>
+        <li><strong>Leverage creep</strong> — heavy capex plus a bad-price year could push net debt/EBITDA up; the past debt crisis is a cautionary tale.</li>
+        <li><strong>Regulatory/mining risk</strong> — captive mines depend on clearances, royalties and policy; coal-block history shows the tail risk.</li>
+        <li><strong>Modest current returns</strong> — ROCE ~10% today; the re-rating case relies on new capacity earning well, which isn't guaranteed.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Jindal Steel is one of the better-positioned Indian steelmakers: a <strong>low-cost, integrated producer</strong> with a genuinely differentiated long-products/rails franchise, a clean India-only balance sheet, and the most aggressive credible growth pipeline in the sector. If Indian steel demand keeps compounding and the company fills its new Angul capacity at a decent spread while keeping leverage in check, the volume-plus-cost story can carry earnings up for years and justify a re-rating. But it remains, unavoidably, a <strong>cyclical commodity business</strong> — its price is set by a global market dominated by China, and a downturn arriving mid-build is the scenario that keeps bears honest. The story over the next few years will be written in three numbers each year: <strong>EBITDA-per-tonne</strong> (is the spread holding?), <strong>utilisation</strong> (is the new steel selling?), and <strong>net debt/EBITDA</strong> (is the build staying funded?). Get those right, and a low-cost integrator becomes a much bigger low-cost integrator; get the cycle wrong at the wrong moment, and even the best cost position can't fully save a year's earnings.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Jindal Steel Limited — Q4 &amp; FY26 Earnings Presentation (year ended Mar 2026), investor relations (docs.jindalsteel.in).</li>
+    <li>Jindal Steel Limited — FY26 results &amp; final-dividend announcement (BSE/NSE filings, May 2026).</li>
+    <li>Jindal Steel — "Jindal Steel &amp; Power Limited renamed as Jindal Steel Limited" (press release &amp; NSE circular, Jul 2025).</li>
+    <li>Screener.in — Jindal Steel consolidated financials (JINDALSTEL).</li>
+    <li>Jindal Steel — Mining &amp; Odisha/Angul pages (captive mines, JSOL, slurry pipeline), jindalsteel.in.</li>
+    <li>Global Energy Monitor / India Investment Grid — JSOL Angul steel plant (6.3 MTPA expansion; 25.2 MTPA by 2030).</li>
+    <li>Business Standard — "Jindal Steel doubles Angul complex capacity to 12 MTPA" (Mar 2026).</li>
+    <li>Jindal Steel — Rails page &amp; reporting on India's only private rail producer; 1.2 MTPA Angul rail-and-structural mill.</li>
+    <li>Reporting on MXCOL® coal-gasification DRI and its cost/CO₂ benefits (AIST; company disclosures, Apr 2026).</li>
+    <li>World Steel Association — Short Range Outlook (Apr 2026), cited in company presentation (India vs China demand).</li>
+    <li>Wikipedia — Jindal Steel; Naveen Jindal (group structure, promoter, history).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; note that "gross revenue" includes GST and differs from net-sales figures, and EBITDA is company-adjusted. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "JINDALSTEL";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
