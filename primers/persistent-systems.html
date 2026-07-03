@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persistent Systems — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F4F7;
+    --paper-2:#FBFAFE;
+    --card:#FFFFFF;
+    --ink:#181528;
+    --ink-soft:#585470;
+    --ink-faint:#8C88A4;
+    --brand:#3B2A9E;          /* deep digital indigo */
+    --brand-bright:#6D4AE0;   /* electric violet */
+    --gold:#E08A2E;           /* warm amber - accent / signal */
+    --bfsi:#3B2A9E;           /* BFSI indigo */
+    --hls:#2E9E8B;            /* healthcare teal-green */
+    --hitech:#6D4AE0;         /* software/hi-tech violet */
+    --ai:#C2536E;             /* AI / GenAI rose */
+    --line:#DEDCE8;
+    --line-soft:#EAE9F1;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#ECE7FB;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#402406;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .provenance{font-family:"DM Mono",monospace;font-size:11px;color:var(--ink-faint);margin-top:16px;letter-spacing:.02em;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F7FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EBEAF2;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#3B2A9E,#6D4AE0);}
+  .fill.gold{background:linear-gradient(90deg,#E08A2E,#EDA957);}
+  .fill.bfsi{background:linear-gradient(90deg,#3B2A9E,#5340C4);}
+  .fill.hls{background:linear-gradient(90deg,#2E9E8B,#3FB6A2);}
+  .fill.hitech{background:linear-gradient(90deg,#6D4AE0,#8A6DEB);}
+  .fill.ai{background:linear-gradient(90deg,#C2536E,#D46E87);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a3652,#585470);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.n1{background:var(--gold);}
+  .node.n2{background:var(--hitech);}
+  .node.n3{background:var(--brand);}
+  .node.n4{background:var(--hls);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-bfsi{color:var(--bfsi);font-weight:600;}
+  .chain-hls{color:var(--hls);font-weight:600;}
+  .chain-hitech{color:var(--hitech);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#ECE7FB;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Why Persistent is different</a></li>
+    <li><a href="#p2"><span class="n">02</span> How an IT-services firm earns</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The three business units</a></li>
+    <li><a href="#p5"><span class="n">05</span> Clients, concentration &amp; TCV</a></li>
+    <li><a href="#p6"><span class="n">06</span> The AI / GenAI question</a></li>
+    <li><a href="#p7"><span class="n">07</span> The margin-expansion journey</a></li>
+    <li><a href="#p8"><span class="n">08</span> People: headcount &amp; attrition</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> The road to $2bn → $5bn</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: PERSISTENT · BSE: 533179</span>
+    <span class="tag gold">Built for a non-technical reader</span>
+  </div>
+  <h1>Persistent Systems, <em>the digital-engineering compounder</em></h1>
+  <p class="dek">A complete walk through India's fastest-growing large mid-cap IT company — not a classic services-and-BPO giant but a software-product-engineering house that turned Outsourced Product Development into a $1.65bn digital-engineering franchise. How it actually earns, its three business units, the handful of big accounts it leans on, the AI question that is both its engine and its threat, and why a 24-quarter growth streak trades at a rich ~38–44× earnings.</p>
+  <p class="provenance">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">$1,654 <small>M</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">+17.4% <small>YoY</small></div><div class="l">USD growth · +23.5% INR</div></div>
+    <div class="cell"><div class="v">15.6% <small>EBIT</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹74,000 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">3 Jul 2026</b> · source: Q4 &amp; FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 results incorporated — revenue $1,654.4M (+17.4%), 24th straight quarter of growth, EBIT margin 15.6%, PAT ₹1,865 Cr, FY26 dividend ₹40, TTM TCV $1.47bn; added the AI/GenAI and margin-walk sections.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Persistent Systems is an Indian <strong>digital-engineering and software-services company</strong> — but with a distinctive DNA. It did not grow up running back-office processes or maintaining legacy IT for banks. It grew up <strong>building software products for the world's technology companies</strong> (Outsourced Product Development, or "OPD"), and that engineering-first heritage still shapes everything: the client base, the skills, and the premium the market pays for the stock.</p>
+
+  <p>Three facts frame the whole story:</p>
+  <ul class="clean">
+    <li><strong>It is the growth leader of the mid-cap IT pack.</strong> FY26 revenue was <strong>$1,654.4M, up 17.4% year-on-year</strong> (up 23.5% in rupee terms to ₹14,748 Cr) — a pace roughly double the large-cap Indian IT majors, and its <strong>24th consecutive quarter of sequential growth</strong>. That consistency, in a soft demand environment for the industry, is Persistent's calling card.</li>
+    <li><strong>Three verticals, a few very large accounts.</strong> Revenue splits across <strong>Software, Hi-Tech &amp; Emerging Industries (~40%)</strong>, <strong>Banking, Financial Services &amp; Insurance / BFSI (~35%)</strong> and <strong>Healthcare &amp; Life Sciences (~25%)</strong>. Its top handful of accounts — anchored by a long-standing IBM relationship, hyperscalers and independent software vendors (ISVs) — drive a large share of revenue, which is both an efficiency and a concentration risk.</li>
+    <li><strong>Priced for continued excellence.</strong> Profit (PAT) rose ~33% to <strong>₹1,865 Cr in FY26</strong>; EPS ₹118. At a ~₹74,000 Cr market cap the stock trades around <strong>~38–44× earnings</strong> — a clear premium to peers that only holds if the company keeps compounding revenue in the high teens and walks its EBIT margin higher toward its stated ambition.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of Persistent as an <strong>engineering shop for software itself</strong>. When a bank, a healthcare company, or a software vendor needs to build a new digital platform, modernise a creaking system, or wire artificial intelligence into its products, Persistent supplies the engineers, the accelerator tools and the delivery muscle to do it. Unlike a classic outsourcer that competes on the cheapest headcount, Persistent leads with <em>product and platform engineering</em> — deeper, more technical work that grows faster and (in theory) resists commoditisation. The market loves the growth streak and pays a premium for it. The debate is whether AI makes that engineering work more valuable (Persistent sells more of it) or cheaper (clients need fewer engineers) — and whether a business leaning on a few big accounts can keep the streak alive.</p>
+  </div>
+</section>
+
+<!-- 01 — BESPOKE lead -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Why Persistent isn't a mini-TCS</h2></div>
+  <p class="part-sub">The single most important thing to understand before anything else.</p>
+
+  <p class="lead">Most Indian IT companies you have heard of — TCS, Infosys, Wipro, HCLTech — are, at heart, <strong>enterprise IT-services and BPO giants</strong>: they run and maintain the technology estates of large corporations, do application development and maintenance, and (historically) some business-process work. Persistent's origin story is different, and that difference explains its faster growth, its client base and its valuation.</p>
+
+  <h3>The OPD heritage</h3>
+  <p>Persistent was built as an <strong>Outsourced Product Development (OPD)</strong> partner. Its earliest and most important customers were not banks needing their payroll systems maintained — they were <strong>software and technology companies</strong> (ISVs and, most famously, IBM) that needed help <em>building their own products</em>. That is a fundamentally more technical, higher-value kind of work than running someone's IT helpdesk. It seeded three durable advantages:</p>
+  <ul class="clean">
+    <li><strong>An engineering-first culture and talent pool</strong> — the firm is stacked with software engineers who build products, not just support tickets. That is exactly the skill set the current "digital engineering" wave demands.</li>
+    <li><strong>Deep, sticky relationships with technology companies and hyperscalers</strong> — Persistent is a preferred partner to Microsoft, AWS, Google Cloud, IBM, Salesforce, Snowflake and others, giving it early access to new platforms and a channel to sell into <em>their</em> customers.</li>
+    <li><strong>A "products-and-platforms" mindset</strong> — Persistent doesn't just deploy people; it builds reusable accelerators and its own AI platforms (SASVA, iAURA) that it layers on top of client engagements.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why this framing matters for the numbers</div>
+    <p>The OPD/digital-engineering positioning is the reason Persistent grows at ~17% while the large-caps grow low-single-digits. Enterprise IT budgets (the giants' bread and butter) are mature and slow; <strong>digital engineering, cloud modernisation and AI enablement — Persistent's turf — are the fastest-growing slices of tech spend</strong>. It is a mid-cap (~$1.65bn revenue vs TCS's ~$30bn) growing off a smaller base into faster-growing pools, run by engineers who like building software. That is a genuinely distinct animal from a generic Indian-IT writeup — and it is why the market awards it a growth multiple rather than a value multiple.</p>
+  </div>
+
+  <div class="note gold"><b>The flip side of the same coin:</b> being engineering-led and concentrated in technology/ISV clients also means Persistent is <em>more</em> exposed to the AI-productivity question (§06) than a process-heavy outsourcer — its work is precisely the software-building activity that AI coding tools automate. The bull says AI is a tailwind (more software gets built); the bear says it is the thing eating Persistent's own core. Hold that tension in mind — it recurs throughout this primer.</div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>How an IT-services firm actually earns</h2></div>
+  <p class="part-sub">No coding required — just the handful of levers that drive every rupee.</p>
+
+  <p class="lead">An IT-services company is, financially, a <strong>people-and-utilisation business</strong>: it hires engineers, bills their time and skills to clients, and profits on the gap between what it charges and what it costs to employ and support them. A few numbers explain almost everything.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only levers you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and Persistent's number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue in USD</td><td>Most clients are in the US/Europe, so revenue is reported in dollars first. FY26: <strong>$1,654.4M</strong>. The rupee number (₹14,748 Cr) moves with the exchange rate too.</td></tr>
+      <tr><td class="t-strong">Constant-currency (CC) growth</td><td>Growth stripped of currency swings — the truest read of underlying demand. FY26: <strong>~17.4% (USD reported)</strong>, the metric analysts obsess over.</td></tr>
+      <tr><td class="t-strong">TCV / order bookings</td><td>"Total Contract Value" of new deals signed — the forward fuel tank. Trailing-twelve-month new TCV was <strong>$1,465.8M</strong>; Q4 alone booked $600.8M.</td></tr>
+      <tr><td class="t-strong">Headcount &amp; utilisation</td><td>The number of billable engineers and how fully they're deployed. <strong>~27,502 employees</strong> at FY26-end. Higher utilisation = more billing on the same wage bill.</td></tr>
+      <tr><td class="t-strong">EBIT margin</td><td>Operating profit as a % of revenue — the efficiency scorecard. FY26: <strong>15.6%</strong> (Q4 exit 16.3%). Every point is worth a lot of profit.</td></tr>
+      <tr><td class="t-strong">Attrition</td><td>The % of staff who leave each year. Lower is better (recruiting and re-training cost money and disrupt delivery). FY26 exit: <strong>~13%</strong>.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The simple profit equation</div>
+    <p>Roughly: <strong>Revenue ≈ Billable engineers × Utilisation × Billing rate</strong>, and <strong>profit ≈ that revenue minus wages and overhead</strong>. So an IT-services firm grows three ways — <strong>add engineers</strong>, <strong>keep them busy</strong> (utilisation), and <strong>charge more per hour</strong> (rate, driven by moving into higher-value work). Margins expand when the firm bills more work per person, offshores more of it to lower-cost locations, and stops being dragged down by half-empty new accounts. Because the biggest cost is salaries, wage inflation, the rupee, and the mix of onshore-vs-offshore work swing margins quarter to quarter. Watch <strong>CC growth, TCV, utilisation and margin</strong> together — they tell you if the machine is accelerating or stalling.</p>
+  </div>
+
+  <h3>The pyramid — and why AI threatens its base</h3>
+  <p>Traditionally, IT-services firms run a <strong>"pyramid"</strong>: a broad base of cheap junior engineers doing routine coding, narrowing up to a few expensive senior architects. Profit comes from leverage — lots of low-cost juniors billed at a healthy markup. The reason the AI question (§06) is existential for the whole industry is that <strong>AI coding assistants automate exactly the routine work at the base of that pyramid</strong>. For an engineering-led firm like Persistent, that is simultaneously the biggest opportunity (do more with fewer people, sell AI transformation) and the biggest threat (clients pay for fewer bodies).</p>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who runs it</h2></div>
+  <p class="part-sub">A founder-led engineering house, now professionally managed by a growth-focused CEO.</p>
+
+  <p class="lead">Persistent is a <strong>founder-built, engineer-led business</strong>. Computer scientist <strong>Dr. Anand Deshpande</strong> founded it in Pune in 1990, grew it as a product-engineering specialist, listed it in 2010, and — crucially — handed operational control to a professional CEO while staying on as chairman. That founder-plus-professional-management structure is a big part of the culture and the growth discipline.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1990</div><div class="ev"><strong>Dr. Anand Deshpande</strong> founds Persistent Systems in Pune as a software-product-engineering company — the OPD roots that still define it.</div></li>
+    <li><div class="yr">1990s–2000s</div><div class="ev">Builds deep <strong>outsourced product development</strong> relationships with global software companies and technology firms, most notably a long-running <strong>IBM</strong> partnership.</div></li>
+    <li class="major"><div class="yr">2010</div><div class="ev"><strong>IPO</strong> — lists on the NSE &amp; BSE, one of India's first pure-play product-engineering listings.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Pivots from pure OPD toward <strong>"digital engineering"</strong> — cloud, data &amp; analytics, enterprise modernisation and customer-experience platforms — broadening beyond ISV clients into BFSI and Healthcare.</div></li>
+    <li class="major"><div class="yr">2020</div><div class="ev"><strong>Sandeep Kalra</strong> becomes CEO; Deshpande continues as Chairman &amp; Managing Director. A sharp acceleration in growth and deal-making follows.</div></li>
+    <li><div class="yr">2023–24</div><div class="ev">Crosses <strong>$1bn</strong> in annual revenue; launches the <strong>SASVA</strong> AI-led delivery platform; sets the public ambition of <strong>$2bn by FY27 and $5bn by FY31</strong>.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue <strong>$1,654.4M (+17.4%)</strong>, EBIT margin 15.6%, PAT ₹1,865 Cr; <strong>24th straight quarter of growth</strong>; targets a $2bn exit run-rate by Q4 FY27.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Chairman &amp; founder:</strong> <strong>Dr. Anand Deshpande</strong> — Chairman &amp; Managing Director; the technologist-founder who sets the long-term direction and remains the anchor of the culture.</li>
+    <li><strong>CEO:</strong> <strong>Sandeep Kalra</strong> — Chief Executive Officer &amp; Executive Director since 2020; the architect of the aggressive growth-and-deals strategy and the $2bn→$5bn roadmap.</li>
+    <li><strong>Promoter holding:</strong> ~<strong>30.3%</strong> (Mar 2026). Institutions own a large slice — FIIs ~22% and DIIs ~30% — reflecting heavy institutional conviction in the growth story. The relatively modest promoter stake means the market, not a controlling family, largely disciplines the stock.</li>
+    <li><strong>Balance sheet:</strong> essentially <strong>net cash</strong> — negligible debt (~₹477 Cr, mostly leases) against ~₹7,760 Cr of reserves and ~₹2,762 Cr of cash &amp; investments — funding growth and dividends internally with high returns on capital (ROCE ~34%, ROE ~27%).</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The three business units</h2></div>
+  <p class="part-sub">One engineering engine, pointed at three big industries.</p>
+
+  <p class="lead">Persistent organises its revenue into <strong>three verticals (business units)</strong>. The same core capability — digital engineering, data/AI, cloud modernisation, customer experience — is sold into three different industries, each with its own demand drivers and its own competitive dynamics.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue by business unit (FY26)</div>
+    <div class="c-sub">Approximate share of ₹14,748 Cr total revenue</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Software, Hi-Tech &amp; Emerging<small>ISVs, tech, hyperscalers</small></div><div class="track"><span class="fill hitech" style="width:100%"></span></div><div class="bval">~40%</div></div>
+      <div class="bar-row"><div class="blab">BFSI<small>banks, fintech, insurance</small></div><div class="track"><span class="fill bfsi" style="width:86%"></span></div><div class="bval">~35%</div></div>
+      <div class="bar-row"><div class="blab">Healthcare &amp; Life Sciences<small>payers, providers, pharma</small></div><div class="track"><span class="fill hls" style="width:64%"></span></div><div class="bval">~25%</div></div>
+    </div>
+    <div class="legend"><span>Shares approximate, computed from segment revenue: Software/Hi-Tech ₹5,883 Cr, BFSI ₹5,093 Cr, Healthcare &amp; Life Sciences ~₹3,772 Cr. BFSI was the fastest-growing vertical in FY26 (~24–28% YoY).</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three engines, decoded</caption>
+    <thead><tr><th>Business unit</th><th>What Persistent does there</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--hitech)">Software, Hi-Tech &amp; Emerging Industries</td><td>Builds and modernises software <em>products</em> for ISVs and technology companies; the OPD heritage; hyperscaler/partner work; emerging areas (telecom, industrials, semis)</td><td>The largest unit (~40%) and the historical core. Closest to the AI question — this is where product engineering, and hyperscaler partnerships, live.</td></tr>
+      <tr><td class="t-strong" style="color:var(--bfsi)">Banking, Financial Services &amp; Insurance (BFSI)</td><td>Digital platforms, core modernisation, data &amp; risk, payments and wealth systems for banks, fintechs, brokerages and insurers</td><td>~35% of revenue and the <strong>growth star</strong> (~24–28% YoY in FY26). Serves top-4-of-5 US and Indian banks, top global fintechs, and leading wealth/retirement players.</td></tr>
+      <tr><td class="t-strong" style="color:var(--hls)">Healthcare &amp; Life Sciences</td><td>Digital systems for payers, providers, pharma and med-tech — claims, interoperability, clinical data, drug-development tech</td><td>~25% of revenue; grew despite sector headwinds. A defensive, regulation-driven demand pool that diversifies the tech-heavy mix.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>How the same capability is sold three ways</h3>
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">One engineering engine → three industry demand pools</div>
+    <div class="flow-row">
+      <div class="node n1"><div class="ntag">The engine</div><div class="nname">Digital engineering &amp; AI</div><div class="nwho">Product/platform build, cloud, data &amp; AI, CX — the reusable core.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n2"><div class="ntag">Pool 1</div><div class="nname">Software &amp; Hi-Tech</div><div class="nwho">Build products for the product companies. ~40%.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n3"><div class="ntag">Pool 2</div><div class="nname">BFSI</div><div class="nwho">Modernise banks &amp; fintech. Fastest-growing. ~35%.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n4"><div class="ntag">Pool 3</div><div class="nname">Healthcare &amp; Life Sciences</div><div class="nwho">Payers, providers, pharma. Defensive. ~25%.</div></div>
+    </div>
+    <div class="flow-note">The advantage of one engine, three pools: capability, tools and AI accelerators built for one vertical get reused in the others — and if one industry's budget softens, the others can carry growth.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the three-unit structure is a strength</div>
+    <p>Diversification across industries is a genuine shock-absorber. In FY26, US tech spending was choppy and healthcare faced its own headwinds, yet <strong>BFSI surged ~24–28%</strong> and carried the group. Because the underlying <em>capability</em> is common — engineers who build software and wire in AI — Persistent can shift emphasis toward whichever vertical is spending, and cross-pollinate its accelerators. The risk it does <em>not</em> solve is <strong>client concentration</strong> (§05): even across three verticals, a handful of very large accounts still move the needle.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Clients, concentration &amp; the order book</h2></div>
+  <p class="part-sub">A few very large accounts, a widening base — and the deal pipeline that fuels it all.</p>
+
+  <p class="lead">Persistent's revenue quality rests on two things pulling in opposite directions: a <strong>small number of very large, deep accounts</strong> that give it scale and efficiency, and a <strong>broadening long tail of clients</strong> that reduces dependence over time. The tension between the two is one of the most important things to track.</p>
+
+  <h3>The concentration question</h3>
+  <ul class="clean">
+    <li><strong>The anchor accounts.</strong> Persistent's largest relationships historically centre on a long-standing <strong>IBM</strong> partnership plus <strong>hyperscalers</strong> (Microsoft, AWS, Google) and large <strong>ISVs</strong>. Its top-5 accounts span healthcare, technology and financial-services clients. These deep relationships are efficient — big, repeatable engagements — but they concentrate risk.</li>
+    <li><strong>The FY26 soft spot.</strong> Management flagged that the <strong>top-5 accounts saw softness</strong> during FY26, tied to clients extracting "promised cost savings and offshoring" — a reminder that when a giant account pushes for efficiency, it directly dents Persistent's revenue and pricing.</li>
+    <li><strong>The offsetting broadening.</strong> Persistent has been steadily adding and scaling <strong>million-dollar-plus accounts</strong> — the "$1M / $5M / $20M / $50M / $100M client" buckets the industry tracks — so growth increasingly comes from a wider base and new logos, not just the anchors.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">The order book — forward fuel (FY26)</div>
+    <div class="c-sub">New total contract value (TCV) signed, USD millions</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">TTM new TCV<small>trailing twelve months</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">$1,465.8M</div></div>
+      <div class="bar-row"><div class="blab">TTM new ACV<small>annual contract value</small></div><div class="track"><span class="fill hitech" style="width:68%"></span></div><div class="bval">$994.7M</div></div>
+      <div class="bar-row"><div class="blab">Q4 FY26 TCV<small>single quarter</small></div><div class="track"><span class="fill gold" style="width:41%"></span></div><div class="bval">$600.8M</div></div>
+      <div class="bar-row"><div class="blab">Q4 FY26 ACV<small>single quarter</small></div><div class="track"><span class="fill gold" style="width:30%"></span></div><div class="bval">$445.1M</div></div>
+    </div>
+    <div class="legend"><span>TCV = total value of new contracts signed; ACV = the annualised (per-year) portion. TCV comfortably above revenue signals the pipeline is refilling faster than it is being consumed — the pre-condition for continued growth.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why TCV is the number to watch</div>
+    <p>Revenue tells you what Persistent earned <em>last</em> quarter; <strong>TCV tells you what it has lined up for the <em>next</em> several</strong>. When trailing-twelve-month new TCV ($1.47bn) runs close to or above annual revenue, the tank is refilling — the growth streak has fuel. If TCV were to sag for a couple of quarters while revenue kept rising, that would be the early warning that the 24-quarter streak is at risk. Management itself noted Q4 bookings "moderated" on normal seasonality, so the trend across quarters matters more than any single print. Pair TCV with the top-5-account commentary: strong new bookings offsetting soft anchor accounts is exactly the rotation the bull case needs.</p>
+  </div>
+
+  <div class="note gold"><b>The concentration trade-off in one line:</b> big anchor accounts (IBM, hyperscalers, top ISVs) give Persistent scale, repeat work and privileged access to new platforms — but they also mean a single client's cost-cutting drive, or the loss of one marquee relationship, can visibly dent growth. The de-risking is the widening client base; watch whether the million-dollar-account buckets keep climbing.</div>
+</section>
+
+<!-- 06 — BESPOKE: the AI question -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The AI / GenAI question — engine or eraser?</h2></div>
+  <p class="part-sub">The defining force for an engineering-led IT firm — and Persistent sits right in the blast radius.</p>
+
+  <p class="lead">Every IT company now talks about AI, but for Persistent the question is unusually sharp. Because its core business is <strong>building software</strong> — the exact activity that AI coding assistants make faster and cheaper — generative AI is simultaneously the biggest opportunity and the biggest threat it faces. How this resolves will do more to determine the stock's next five years than any other single factor.</p>
+
+  <h3>The threat: cannibalisation</h3>
+  <p>Classic Indian IT profits on <strong>billable engineer-hours</strong>. If an AI assistant lets one engineer do the work of two — or lets a client's own staff do work they used to outsource — then the number of billed hours falls. For a firm whose product is <em>software engineering itself</em>, that is a direct hit to the base of the pyramid (§02). The bear's version: AI compresses the very work Persistent sells, forcing rates and headcount down faster than new demand appears.</p>
+
+  <h3>The engine: AI-led delivery and platforms</h3>
+  <p>Persistent's answer is to get ahead of the tool, not be replaced by it. Its response has three prongs:</p>
+  <ul class="clean">
+    <li><strong>SASVA</strong> — Persistent's proprietary <strong>AI-led software-engineering platform</strong> (now in its 4.x generation), designed to embed AI agents into the delivery process and boost engineering productivity. Rather than let clients capture all the AI savings, Persistent uses SASVA to deliver projects faster and win more of them — selling <em>outcomes and platforms</em>, not just bodies.</li>
+    <li><strong>iAURA and a widening AI stack</strong> — additional platforms and a "3C" (Core, Context, Coordination) framework for enterprise AI transformation, plus <strong>120+ AI patents filed</strong> — evidence it is building intellectual property, not just reselling others' models.</li>
+    <li><strong>Hyperscaler &amp; ISV partnerships</strong> — deep alliances with <strong>Microsoft, AWS, Google Cloud, IBM, Salesforce and Snowflake</strong> mean Persistent is a go-to partner when those platforms' AI capabilities need to be implemented at enterprise clients — turning the AI wave into a demand channel.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The bull-vs-bear mechanism, spelled out</div>
+    <p>Here is the crux. <strong>If AI mostly expands the pie</strong> — enterprises build far more software because it's cheaper to, and they need a partner to do AI transformation, data readiness and modernisation at scale — then Persistent sells more, higher-value work, and SASVA lets it deliver at better margins. Growth and margins both rise. <strong>If AI mostly shrinks the effort per project</strong> without a matching surge in volume — clients simply need fewer engineers — then billed hours and pricing fall, and even a productivity platform can't fully offset it. The honest truth is that <em>nobody yet knows which effect dominates</em>, and it may differ by vertical and over time. What we <em>can</em> observe: Persistent is still growing ~17% and booking record TCV, which suggests that <strong>so far</strong> the pie-expanding effect is winning. The bear's rejoinder is that the reckoning is deferred, not avoided.</p>
+  </div>
+
+  <div class="note"><b>Why this is existential, not incremental:</b> an engineering-led shop like Persistent is <em>more</em> exposed to this than a process-outsourcing firm — its revenue <em>is</em> the software-building activity being automated. That cuts both ways: it is first in the firing line, but also best-positioned to sell AI-transformation work because it has the engineering depth clients need. Track two things each quarter — <strong>revenue growth vs headcount growth</strong> (if revenue grows much faster than heads, AI is helping margins) and <strong>TCV</strong> (is AI-related demand refilling the pipeline?).</div>
+</section>
+
+<!-- 07 — BESPOKE: margin walk -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The margin-expansion journey</h2></div>
+  <p class="part-sub">Fast growth has come at a lower margin than peers — closing that gap is the second half of the story.</p>
+
+  <p class="lead">Persistent's revenue growth is best-in-class, but its <strong>operating margin has historically trailed the large-cap Indian IT majors</strong> (who run low-20s EBIT margins). Persistent's FY26 EBIT margin was <strong>15.6%</strong>. Management's explicit ambition is to <strong>walk that margin up by ~200–300 basis points</strong> even as it keeps growing fast — and how credibly it does so is central to the profit trajectory and the valuation.</p>
+
+  <div class="chart">
+    <div class="c-title">The EBIT-margin walk</div>
+    <div class="c-sub">Operating (EBIT) margin, % — the gap to peers is the opportunity</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:80%"></span></div><div class="bval">~14.4%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:82%"></span></div><div class="bval">~14.7%</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:87%"></span></div><div class="bval">15.6%</div></div>
+      <div class="bar-row"><div class="blab">Q4 FY26 exit</div><div class="track"><span class="fill gold" style="width:91%"></span></div><div class="bval">16.3%</div></div>
+      <div class="bar-row"><div class="blab">Aspiration<small>+200–300 bps</small></div><div class="track"><span class="fill hls" style="width:100%"></span></div><div class="bval">~18%+</div></div>
+    </div>
+    <div class="legend"><span>The Q4 FY26 exit margin of 16.3% is above the full-year average — a positive signal that the walk is underway. The stated ambition is to add roughly 200–300 bps over the medium term.</span></div>
+  </div>
+
+  <h3>Where the extra margin is supposed to come from</h3>
+  <ul class="clean">
+    <li><strong>Operating leverage on scale</strong> — as revenue grows past $1.65bn toward $2bn, fixed costs (management, infrastructure, brand) spread over a bigger base.</li>
+    <li><strong>Higher utilisation and pyramid optimisation</strong> — keeping more engineers billable, and rebalancing the mix of senior-to-junior staff.</li>
+    <li><strong>AI-led delivery (SASVA)</strong> — if AI accelerators let Persistent deliver the same outcome with fewer hours, some of that saving can be retained as margin rather than passed entirely to clients.</li>
+    <li><strong>Offshore mix and cost discipline</strong> — shifting more work to lower-cost offshore locations and holding sub-contractor and travel costs down.</li>
+    <li><strong>Improving deal quality</strong> — richer, platform-led engagements at better pricing than pure staff-augmentation work.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the margin walk is the swing factor for profits</div>
+    <p>Here's the leverage. On ~$1.65bn of revenue, <strong>every 100 bps of EBIT margin is worth roughly $16–17M of operating profit</strong> — and it drops almost straight to the bottom line. So the combination Persistent is chasing — <em>keep growing revenue in the high teens <strong>and</strong> add 200–300 bps of margin</em> — would compound profit much faster than revenue. That is precisely the recipe a premium multiple is paying for. The catch is the tension with growth: fast-growing new accounts and aggressive hiring can <em>dilute</em> margin in the short run (new work starts less efficient), so the walk tends to be gradual and lumpy, not a straight line. Q4 FY26's 16.3% exit margin says the direction is right; the question is pace.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>People — the raw material</h2></div>
+  <p class="part-sub">In a services business, the engineers <em>are</em> the product. Two numbers matter.</p>
+
+  <p class="lead">Because Persistent sells engineering talent, its two most important operational metrics after revenue are <strong>how many people it has</strong> and <strong>how many it is losing</strong>. Attrition and headcount growth are the pulse of the delivery machine.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~27,502</div><div class="msl">Total employees (FY26-end), up ~791 in Q4 — hiring to feed growth</div></div>
+    <div class="ms gold"><div class="msv">~13%</div><div class="msl">Attrition (FY26 exit) — down from ~13.5%, a healthy, moderating level</div></div>
+    <div class="ms green"><div class="msv">~34% / 27%</div><div class="msl">ROCE / ROE — high returns on the capital and equity deployed</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why attrition and headcount move the P&amp;L</div>
+    <p>When attrition is high, a firm spends heavily to recruit and re-train replacements, loses productivity while new hires ramp, and sometimes has to pay up to retain scarce skills — all of which squeeze margin. Persistent's attrition easing to ~13% is therefore a <em>margin-friendly</em> signal. Headcount growth tells the opposite side of the story: a firm hiring aggressively is signalling confidence in future demand — but if revenue does <em>not</em> keep pace with the wage bill, utilisation and margin fall. The metric to watch in the AI era (§06) is <strong>revenue-per-employee</strong>: if Persistent can grow revenue faster than headcount, it means AI-led delivery is lifting productivity — the single cleanest proof that AI is an engine rather than an eraser.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">Where Persistent sits in the crowded Indian-IT landscape.</p>
+
+  <p class="lead">Indian IT is a vast, mature export industry. Persistent's competitive position is best understood by <strong>size tier</strong> and by <strong>style</strong> — it is a mid-cap that competes on <em>digital-engineering depth and growth</em>, not on the sheer scale-and-price of the large-caps.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Persistent</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Persistent Systems</td><td>Fast-growing mid-cap, digital-engineering / product-engineering-led</td><td><em>This company.</em> ~$1.65bn revenue, ~17% growth, engineering-first, premium multiple.</td></tr>
+      <tr><td class="t-strong">Coforge</td><td>Similar-tier fast-growing mid-cap</td><td>The closest peer on growth and valuation; strong in BFSI, travel and insurance. Both are the "growth" names of mid-cap IT.</td></tr>
+      <tr><td class="t-strong">LTIMindtree, Mphasis, Hexaware</td><td>Larger mid-caps / smaller large-caps</td><td>Broader services mix; some overlap in BFSI and hi-tech. Bigger scale, generally slower growth than Persistent.</td></tr>
+      <tr><td class="t-strong">TCS, Infosys, Wipro, HCLTech</td><td>Large-cap IT-services &amp; BPO majors</td><td>10–20× Persistent's size; low-single-digit growth but ~20–25% margins. They compete on scale and price; Persistent on engineering depth and speed.</td></tr>
+      <tr><td class="t-strong">EPAM, Globant, Endava, Thoughtworks</td><td>Global digital-engineering specialists</td><td>The truest "style" peers — engineering-led like Persistent, competing for the same product-engineering and AI-transformation work worldwide.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive tension to watch</div>
+    <p>Persistent lives in a happy but exposed spot. It is <strong>small enough to grow fast</strong> (off a ~$1.65bn base into fast-growing digital pools) yet <strong>large enough to win serious enterprise deals</strong> — the mid-cap sweet spot. The threats come from two directions. From <em>above</em>, the large-caps are pouring resources into digital and AI and can undercut on price using their scale. From the <em>side</em>, global engineering specialists (EPAM, Globant, Endava) chase the same premium work. Persistent's defence is its OPD-rooted engineering culture, its hyperscaler/ISV partnerships, and its speed — but in a slowing-industry, AI-disrupted environment, everyone is fishing in the same shrinking near-term budget pool. The growth <em>gap</em> Persistent maintains over peers is the single clearest scorecard of whether its differentiation is real.</p>
+  </div>
+
+  <div class="note gold"><b>The industry backdrop:</b> Indian IT export demand has been soft for two years — clients cautious on discretionary spend amid macro uncertainty, higher-for-longer rates and now AI-driven budget reallocation. Persistent's ability to keep compounding through that softness is exactly why it stands out; it also means any broad industry recovery would be an added tailwind, and any deepening of the slowdown a shared headwind.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Best-in-class growth, improving margins — and a premium price to defend.</p>
+
+  <p class="lead">Persistent's financial record is a textbook growth compounder: rapid, remarkably consistent revenue growth, faster-still profit growth as margins inch up, strong cash generation and a debt-free balance sheet. The debate, as with all quality-growth stocks, is the price.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:67%"></span></div><div class="bval">9,822</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:81%"></span></div><div class="bval">11,939</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">14,748</div></div>
+    </div>
+    <div class="legend"><span>USD revenue: $1,654.4M in FY26 (+17.4% YoY). 5-year sales CAGR ~29%; 10-year ~20%.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit (PAT) trajectory</div>
+    <div class="c-sub">Net profit after tax (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:59%"></span></div><div class="bval">1,093</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill hls" style="width:75%"></span></div><div class="bval">1,400</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill hls" style="width:100%"></span></div><div class="bval">1,865</div></div>
+    </div>
+    <div class="legend"><span>PAT grew ~33% in FY26 — faster than revenue, as margins expanded. EPS ~₹118. 5-year profit CAGR ~36%.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">15.6%</div><div class="msl">FY26 EBIT margin (16.3% Q4 exit) — walking toward ~18%+</div></div>
+    <div class="ms green"><div class="msv">Net cash</div><div class="msl">Debt-free; ROCE ~34%, ROE ~27% — high-quality economics</div></div>
+    <div class="ms red"><div class="msv">~38–44×</div><div class="msl">Trailing P/E (Jul '26) — a rich multiple to defend</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the multiple</div>
+    <p>At a ~₹74,000 Cr market cap on ~₹1,865 Cr of FY26 profit, Persistent trades around <strong>38–44× trailing earnings</strong> (the exact figure moves with the share price) — a large premium to the large-cap Indian IT majors, which sit closer to 20–30×. That premium <em>only</em> makes sense if you believe Persistent keeps doing two things at once: <strong>compounding revenue in the mid-to-high teens</strong> (double the majors) <em>and</em> <strong>expanding margins ~200–300 bps</strong>, so profit grows even faster. Bulls argue a debt-free, ~34%-ROCE, engineering-led growth leader with a 24-quarter streak deserves a scarcity premium. Bears argue the multiple prices in near-perfection: any slowdown in growth (a soft top-5 account, an AI air-pocket, an industry downturn) or a stumble in the margin walk, and a 40× stock can de-rate hard. Both can be right at different points — which is why <strong>CC growth, TCV and margin</strong> are the numbers to watch every quarter.</p>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Key figures at a glance (FY26 / as of Jul 2026)</caption>
+    <thead><tr><th>Metric</th><th class="num">Value</th><th>Note / source</th></tr></thead>
+    <tbody>
+      <tr><td>Revenue (USD)</td><td class="num">$1,654.4M</td><td>+17.4% YoY · company results</td></tr>
+      <tr><td>Revenue (INR)</td><td class="num">₹14,748 Cr</td><td>+23.5% YoY · company results</td></tr>
+      <tr><td>EBIT margin</td><td class="num">15.6%</td><td>Q4 exit 16.3% · company results</td></tr>
+      <tr><td>PAT</td><td class="num">₹1,865 Cr</td><td>~+33% YoY · Screener / results</td></tr>
+      <tr><td>EPS (FY26)</td><td class="num">~₹118</td><td>Screener</td></tr>
+      <tr><td>New TCV (TTM)</td><td class="num">$1,465.8M</td><td>concall</td></tr>
+      <tr><td>Headcount</td><td class="num">~27,502</td><td>FY26-end · concall</td></tr>
+      <tr><td>Attrition</td><td class="num">~13%</td><td>FY26 exit · concall</td></tr>
+      <tr><td>Dividend (FY26)</td><td class="num">₹40/sh</td><td>incl. ₹18 final · results</td></tr>
+      <tr><td>Promoter holding</td><td class="num">~30.3%</td><td>Mar 2026 · Screener</td></tr>
+      <tr><td>Market cap</td><td class="num">~₹74,000 Cr</td><td>Jul 2026 · Screener</td></tr>
+      <tr><td>Stock P/E</td><td class="num">~38–44×</td><td>varies with price · Screener</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The road to $2bn → $5bn</h2></div>
+  <p class="part-sub">The public ambition that anchors the growth narrative.</p>
+
+  <p class="lead">Under CEO Sandeep Kalra, Persistent has set a clear, public destination: <strong>$2bn in annual revenue by FY27, and $5bn by FY31</strong>. These targets are not idle slogans — they frame how management runs the business, and they set the bar the market is measuring Persistent against.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The stated roadmap</caption>
+    <thead><tr><th>Milestone</th><th>Target</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">$1bn</td><td>Achieved (~FY23)</td><td>The base camp — proof the digital-engineering model scaled past a billion dollars.</td></tr>
+      <tr><td class="t-strong">$2bn</td><td>Exit run-rate by Q4 FY27</td><td>With FY26 at $1.65bn and ~17% growth, a $2bn exit run-rate is within reach barring a macro shock — the near-term credibility test.</td></tr>
+      <tr><td class="t-strong">$5bn</td><td>By FY31</td><td>Requires sustaining ~20%+ CAGR for years — an ambitious doubling-and-more that assumes AI-transformation demand and share gains compound. The long-term "why own it" case.</td></tr>
+      <tr><td class="t-strong">Margin</td><td>+200–300 bps EBIT</td><td>Growth <em>and</em> margin together — the combination that would compound profit far faster than revenue.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Three engines behind the roadmap</h3>
+  <ul class="clean">
+    <li><strong>Vertical depth</strong> — pushing further into BFSI (the FY26 star), Healthcare &amp; Life Sciences and Hi-Tech, deepening the top accounts while broadening the client base.</li>
+    <li><strong>AI-led transformation demand</strong> — positioning SASVA and the partner ecosystem to capture enterprise spend on AI enablement, data readiness and modernisation — turning the disruptor into a demand source.</li>
+    <li><strong>Deal momentum</strong> — a TCV engine ($1.47bn TTM) that keeps the pipeline refilling faster than it empties, plus selective acquisitions to add capability and scale.</li>
+  </ul>
+
+  <blockquote>The next chapter is less about proving the model works and more about proving it scales — can a mid-cap engineering house keep growing at double the industry rate all the way to $5bn, while lifting margins, in the teeth of the AI transition?</blockquote>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuinely excellent growth business — priced to keep being excellent.</p>
+
+  <p class="lead">Persistent is one of the cleanest growth stories in Indian IT: an engineering-led, debt-free, high-ROCE mid-cap that has out-grown the industry for six straight years and 24 straight quarters, run by a founder-plus-professional team with a clear ambition. The investment debate is almost entirely about <strong>durability of growth, the AI transition, and price</strong> — not business quality.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Growth leadership</strong> — ~17% USD growth and a 24-quarter streak, roughly double the large-cap majors, in a soft market.</li>
+        <li><strong>Right side of the mix</strong> — engineering-led, aimed at the fastest-growing digital, cloud and AI pools, not mature legacy IT.</li>
+        <li><strong>Margin runway</strong> — a clear ~200–300 bps EBIT-expansion path (16.3% Q4 exit) that would compound profit faster than revenue.</li>
+        <li><strong>AI as an engine</strong> — SASVA/iAURA platforms, 120+ AI patents, and deep hyperscaler/ISV alliances position it to sell AI transformation.</li>
+        <li><strong>Pristine economics</strong> — debt-free, ROCE ~34%, ROE ~27%, strong cash, rising dividend (₹40 FY26).</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich valuation</strong> — ~38–44× earnings leaves little room for error; highly de-rating-prone on any disappointment.</li>
+        <li><strong>The AI cannibalisation risk</strong> — an engineering-led firm is first in line if AI shrinks billable software work faster than it expands demand.</li>
+        <li><strong>Client concentration</strong> — a few large accounts (IBM/hyperscalers/ISVs) drive revenue; FY26 already saw top-5 softness on client cost-cutting.</li>
+        <li><strong>Industry softness &amp; margin-vs-growth tension</strong> — cautious IT budgets; margin walk can stall when fast growth dilutes it.</li>
+        <li><strong>Currency &amp; wage/macro swings</strong> — USD/INR moves and wage inflation can whipsaw reported growth and margins quarter to quarter.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Persistent is a <strong>structurally advantaged, engineering-led growth compounder</strong> in the most attractive slices of IT — with a balance sheet and returns profile that let it self-fund the ambition. The business risk is low relative to peers; the <em>valuation</em> and <em>AI-transition</em> risks are real. The story over the next few years is written in a handful of numbers each quarter: <strong>constant-currency growth</strong> (is it still lapping the majors?), <strong>TCV</strong> (is the pipeline refilling?), <strong>EBIT margin</strong> (is the walk to ~18% happening?), and <strong>revenue-per-employee</strong> (is AI helping or hurting?). Get those right and the premium is justified by years of double-digit compounding toward $2bn and beyond; stumble on any of them, and a ~40× multiple has a long way to fall.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Persistent Systems — "Persistent Reports $1,654.4M FY26 Revenue with 17.4% Y-o-Y Growth and 15.6% EBIT Margin", Q4 &amp; FY26 results press release (year ended Mar 2026).</li>
+    <li>Persistent Systems — Q4 FY26 Analyst Call Transcript (Apr 2026), investor relations.</li>
+    <li>Persistent Systems — Q4 FY26 earnings-call highlights (GuruFocus / Investing.com), covering TCV, segments, headcount, attrition.</li>
+    <li>Screener.in — Persistent Systems consolidated financials, market cap, P/E, ROCE/ROE, shareholding (as of Jul 2026).</li>
+    <li>Persistent Systems — Q1/Q2/Q3 FY26 results press releases (revenue $389.7M / $406.2M / $422.5M).</li>
+    <li>Univest / Zeebiz / Multibagg — Persistent Q4 FY26 results coverage (PAT ₹529 Cr Q4, dividend ₹18 final / ₹40 FY26).</li>
+    <li>Persistent Systems — SASVA / Persistent.AI platform pages and "3C" AI framework; hyperscaler &amp; ISV partnership disclosures.</li>
+    <li>BW Businessworld — "Sandeep Kalra's $2 Bn Powerplay For Persistent Systems"; margin +200–300 bps and $2bn FY27 / $5bn FY31 ambition.</li>
+    <li>Company investor-relations disclosures and factsheet, persistent.com/investors.</li>
+    <li>Industry context: reporting on Indian IT demand environment and AI's impact on services (2025–26).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026) and July 2026 market data, and may contain errors or become outdated; segment shares and P/E are approximate and move with the share price; verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "PERSISTENT";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
