@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suzlon Energy — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F6F7;
+    --paper-2:#F9FCFC;
+    --card:#FFFFFF;
+    --ink:#0C1E24;
+    --ink-soft:#48606A;
+    --ink-faint:#7C9299;
+    --brand:#0E6E8C;          /* deep sky-blue (wind/sky) */
+    --brand-bright:#1B9AC4;   /* bright sky */
+    --gold:#1FA97A;           /* fresh wind-green / teal-green accent */
+    --wtg:#0E6E8C;            /* turbines / manufacturing — sky-blue */
+    --om:#1FA97A;             /* O&M / service — green */
+    --cash:#2FA36B;           /* net cash green */
+    --debt:#C0492F;           /* debt red */
+    --wind:#5BB8D6;           /* wind pale blue */
+    --line:#D8E4E7;
+    --line-soft:#E7EFF0;
+    --good:#1B8E5A;
+    --bad:#C0492F;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#DBF0F6;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#04321F;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#E1F4EC;border:1px solid #B4E0CD;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#0C7350;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"⚡";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#0C3325;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F3F8F9;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 96px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E4ECEE;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0E6E8C,#1B9AC4);}
+  .fill.gold{background:linear-gradient(90deg,#1FA97A,#3ECB98);}
+  .fill.wtg{background:linear-gradient(90deg,#0E6E8C,#1B9AC4);}
+  .fill.om{background:linear-gradient(90deg,#1FA97A,#3ECB98);}
+  .fill.wind{background:linear-gradient(90deg,#5BB8D6,#8AD0E6);}
+  .fill.cash{background:linear-gradient(90deg,#2FA36B,#46C286);}
+  .fill.bad{background:linear-gradient(90deg,#C0492F,#D96243);}
+  .fill.ink{background:linear-gradient(90deg,#33443f,#4f5e59);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 64px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.wind{background:var(--wind);}
+  .node.om{background:var(--om);}
+  .node.cash{background:var(--cash);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline li.bad::before{background:var(--bad);border-color:var(--bad);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEA;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2f1f;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#E1F4EC;color:#0C3325;}
+  .note.gold b{color:#0C7350;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF6F9;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What Suzlon actually sells</a></li>
+    <li><a href="#p2"><span class="n">02</span> The near-death-to-net-cash turnaround</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The India wind-revival supercycle</a></li>
+    <li><a href="#p5"><span class="n">05</span> The order book — forward visibility</a></li>
+    <li><a href="#p6"><span class="n">06</span> The O&amp;M installed-base annuity</a></li>
+    <li><a href="#p7"><span class="n">07</span> The S144 turbine &amp; vertical integration</a></li>
+    <li><a href="#p8"><span class="n">08</span> The competitive set</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; the net-cash balance sheet</a></li>
+    <li><a href="#p10"><span class="n">10</span> Valuation &amp; the rich-multiple debate</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: SUZLON · BSE: 532667</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>Suzlon Energy, <em>the wind giant that came back from the dead</em></h1>
+  <p class="dek">A full walk through India's largest wind-turbine maker — how it earns money building turbines and servicing a huge fleet, how it nearly collapsed under ₹13,000 crore of debt and emerged debt-free and net-cash, why a record multi-gigawatt order book and India's wind revival give it years of forward visibility, how a sticky, high-margin operations-and-maintenance business quietly de-risks the lumpy turbine cycle — and why a re-rated turnaround stock now carries a rich, expectation-loaded multiple.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹16,679 <small>Cr</small></div><div class="l">Revenue (FY26) · +54%</div></div>
+    <div class="cell"><div class="v">₹3,163 <small>Cr</small></div><div class="l">Net profit (FY26) · +54%</div></div>
+    <div class="cell"><div class="v">~6.4 <small>GW</small></div><div class="l">Order book (record) · ~₹40k Cr+</div></div>
+    <div class="cell"><div class="v">~₹79k <small>Cr</small></div><div class="l">Market cap (Jul 2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">3 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Update</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹16,679 Cr (+54%), EBITDA ₹3,022 Cr (~18.1% margin), PAT ₹3,163 Cr (incl. ₹742 Cr deferred-tax credit), EPS ₹2.33; record India WTG deliveries of 2,456 MW; net cash ₹2,384 Cr (near debt-free, borrowings ~₹556 Cr); order book ~5.9 GW at year-end, since grown to a record ~6.4 GW (66% PSU + C&amp;I); O&amp;M fleet 15+ GW; ROE ~40%.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Suzlon Energy is <strong>India's largest wind-turbine manufacturer</strong> — it designs, builds, installs and then maintains the giant windmills (wind turbine generators, or "WTGs") that convert wind into electricity. It is also one of the great <strong>corporate turnaround stories</strong> in Indian markets: a company that a decade ago was drowning in over ₹13,000 crore of debt and staring at bankruptcy, and which in FY26 (year ended March 2026) posted <strong>record revenue of ₹16,679 crore (+54%), net profit of ₹3,163 crore, and — crucially — a net-cash balance sheet</strong>, having wiped out the debt that nearly killed it.</p>
+
+  <p>Three facts frame the whole story:</p>
+  <ul class="clean">
+    <li><strong>It went from near-bankruptcy to net cash — this is THE defining arc.</strong> Suzlon over-expanded in the 2000s (above all the disastrous €1.3bn buy of Germany's REpower/Senvion), got crushed by debt when the 2008 crisis hit, spent a decade in painful restructuring, rights issues and QIPs, and emerged <strong>debt-free with ₹2,384 crore of net cash</strong> by FY26. A clean balance sheet is now the <em>foundation</em> that lets it grow again.</li>
+    <li><strong>It sits on a record order book at the start of an India wind supercycle.</strong> India added a record ~6 GW of wind in FY26 and targets 100 GW by 2030. Suzlon's order book has climbed to a <strong>record ~6.4 GW</strong> — roughly ₹40,000 crore+ of contracted future work, ~66% from creditworthy PSU and corporate (C&amp;I) buyers — giving it multi-year forward visibility rare for a manufacturer.</li>
+    <li><strong>A high-margin service business quietly stabilises it.</strong> Suzlon operates &amp; maintains <strong>15+ GW of installed wind fleet</strong> — a recurring, sticky, annuity-like O&amp;M business that earned a ~30% segment margin in FY26 and cushions the inherently lumpy turbine-sales cycle. The bull case is a debt-free re-rated growth machine; the bear case is a richly-valued (~25× earnings, ~13× book) stock that must execute a huge order book flawlessly.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of Suzlon as a company that <strong>makes windmills, plants them in the ground, and then looks after them for decades</strong>. It nearly died once — it borrowed far too much money in a global buying spree, and when the world stopped ordering turbines in 2008, it couldn't pay the loans back. It took more than ten years of cost-cutting, asset sales and raising fresh money from shareholders to dig out. Today the debt is gone, there's cash in the bank, and India is in the middle of a huge push to build wind farms — so Suzlon has more orders on its books than ever. The catch: the stock has already soared on this recovery, so a lot of good news is baked into the price, and now the company has to <em>deliver</em> on that giant order book.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What Suzlon actually sells — the three engines</h2></div>
+  <p class="part-sub">No engineering degree required — just the three very different ways a wind company earns.</p>
+
+  <p class="lead">"Suzlon makes windmills" is true but incomplete. The business is really <strong>three distinct engines</strong> stacked on top of each other, and understanding how they differ — especially how <em>lumpy</em> one is and how <em>steady</em> another is — is the single most important lens for the whole primer.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three engines of Suzlon — and how each earns</caption>
+    <thead><tr><th>Engine</th><th>How it earns</th><th>Character</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">1 · WTG manufacturing</td><td>Designs and builds wind turbines (the <strong>S144 3.x MW</strong> flagship), and typically sells a full package — the machine plus site development, erection and grid connection. This is the core; FY26 WTG-segment revenue was <strong>~₹14,040 Cr</strong> (≈84% of the total).</td><td><strong>Big but lumpy.</strong> Revenue depends on how many megawatts get delivered each quarter, which swings with orders, approvals, land and grid readiness. Margins are thinner (WTG contribution margin ~23%).</td></tr>
+      <tr><td class="t-strong">2 · O&amp;M / service</td><td>Operates and maintains the installed fleet under long multi-year contracts — spares, repairs, servicing, performance guarantees. FY26 O&amp;M revenue ~<strong>₹2,484 Cr</strong> on a <strong>15+ GW</strong> serviced fleet.</td><td><strong>Small but golden.</strong> Recurring, sticky, annuity-like — and <em>high-margin</em> (FY26 segment profit ~₹759 Cr, ≈30% margin). This is the quality ballast that steadies the lumpy turbine cycle (see §06).</td></tr>
+      <tr><td class="t-strong">3 · Components / forging &amp; foundry</td><td>In-house making of key turbine parts (nacelles, blades, tubular towers) plus the recently-acquired multi-brand O&amp;M capability (Renom). Vertical integration that captures more of the value chain and controls quality/cost.</td><td><strong>Enabler.</strong> Not a standalone profit story so much as the <em>moat</em> that makes the WTG business cost-competitive and the O&amp;M business scalable across brands (see §07).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one idea that unlocks Suzlon: lumpy turbines, steady service</div>
+    <p>A turbine sale is a <strong>one-off, big-ticket, project-shaped</strong> event: an order is won, then months later megawatts are delivered and revenue lands in a lump. Miss a quarter's delivery target — because land isn't ready, or the grid connection slips — and the reported numbers wobble, even though the long-term story is intact. The <strong>O&amp;M business is the opposite</strong>: once a turbine is spinning, Suzlon collects a service fee year after year for 5–20 years, whatever the order cycle is doing. So the more turbines Suzlon installs, the bigger its annuity base grows — a flywheel where the lumpy business feeds the steady one. Keep this "lumpy vs annuity" split in mind; it explains why analysts obsess over both the <em>order book</em> (future lumps) and the <em>installed fleet</em> (the annuity).</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The near-death-to-net-cash turnaround — the defining story</h2></div>
+  <p class="part-sub">The single thing an analyst leads with: how Suzlon nearly went bankrupt, and how a clean balance sheet became the launchpad.</p>
+
+  <p class="lead">You cannot understand Suzlon without understanding how close it came to the grave. This is not decoration — it is the <strong>central fact</strong> that makes today's numbers meaningful. A company that once owed banks and bondholders over <strong>₹13,000 crore</strong> and defaulted on its debt now sits on <strong>net cash</strong>. Here is, honestly, how that happened — and why a clean balance sheet is the whole growth thesis's foundation.</p>
+
+  <h3>How it nearly collapsed</h3>
+  <ul class="clean">
+    <li><strong>Over-expansion, funded by debt.</strong> In the 2000s boom, founder Tulsi Tanti expanded aggressively — culminating in the <strong>2007 acquisition of Germany's REpower</strong> (later Senvion), partly financed with ~US$760m of foreign-currency convertible bonds (FCCBs) and heavy borrowing. Suzlon took on far more leverage than a cyclical manufacturer could safely carry.</li>
+    <li><strong>The 2008 crash pulled the rug.</strong> When the Global Financial Crisis hit, orders from Europe and the US — the biggest wind markets — froze. Revenue collapsed just as the debt bill came due. Quality issues (blade cracks) in the US hurt too. The classic trap: <strong>fixed debt costs meeting collapsing cyclical revenue</strong>.</li>
+    <li><strong>Default and restructuring.</strong> In 2012 Suzlon <strong>defaulted on ~US$221m of FCCBs</strong> — one of India's largest such defaults. In 2013 a 19-bank consortium led by SBI restructured roughly ₹9,500 crore of loans (a "corporate debt restructuring", or CDR). Debt peaked well above ₹13,000 crore.</li>
+  </ul>
+
+  <h3>How it dug out</h3>
+  <ul class="clean">
+    <li><strong>Sold the crown-jewel mistake.</strong> Suzlon divested its entire REpower/Senvion stake to Centerbridge Partners for ~€1 billion (~₹7,200 crore) — using the proceeds to cut debt. Selling the very acquisition that broke it was the hard, necessary reset.</li>
+    <li><strong>Years of equity infusions.</strong> Through the late 2010s and early 2020s Suzlon repeatedly raised fresh equity — a one-time settlement with lenders, then a <strong>₹1,200 crore rights issue and a QIP</strong> where shareholders put in real cash — to clear debt for good. This dilutes existing owners (there are far more shares now) but it was the price of survival.</li>
+    <li><strong>Net debt-free by late 2023, net cash by FY26.</strong> The restructuring finished the job: gross borrowings are down to ~₹556 crore against a much larger cash pile, leaving <strong>~₹2,384 crore of net cash</strong> at March 2026. The debt that nearly killed it is gone.</li>
+  </ul>
+
+  <ul class="timeline">
+    <li><div class="yr">1995</div><div class="ev">Founded by <strong>Tulsi Tanti</strong> in Gujarat — a textile entrepreneur who got into wind to power his own mills, then built India's wind-turbine champion.</div></li>
+    <li class="major"><div class="yr">2007</div><div class="ev">Acquires Germany's <strong>REpower (Senvion)</strong> for ~€1.3bn — a debt-funded global land-grab at the top of the cycle.</div></li>
+    <li class="bad"><div class="yr">2008–2012</div><div class="ev">Global crisis freezes orders; revenue collapses against fixed debt. <strong>2012: defaults on ~US$221m of FCCBs</strong> — near-bankruptcy.</div></li>
+    <li class="bad"><div class="yr">2013</div><div class="ev">19-bank SBI-led consortium restructures ~₹9,500 Cr of debt (CDR). Total debt peaks above <strong>₹13,000 Cr</strong>.</div></li>
+    <li><div class="yr">2015</div><div class="ev">Dilip Shanghvi (Sun Pharma) group invests ₹1,800 Cr — a lifeline and vote of confidence.</div></li>
+    <li class="major"><div class="yr">2015</div><div class="ev">Sells <strong>Senvion</strong> to Centerbridge for ~€1bn; uses proceeds to slash debt.</div></li>
+    <li class="bad"><div class="yr">2019–2020</div><div class="ev">Debt stress returns; another lender settlement/restructuring. Founder Tulsi Tanti passes away in 2022.</div></li>
+    <li class="major"><div class="yr">2022–2023</div><div class="ev"><strong>₹1,200 Cr rights issue + QIP</strong> clears remaining debt. Suzlon turns <strong>net debt-free</strong>.</div></li>
+    <li class="major"><div class="yr">FY24–FY26</div><div class="ev">Profitable, cash-generative, record order book. FY26: revenue ₹16,679 Cr, PAT ₹3,163 Cr, <strong>net cash ₹2,384 Cr</strong>. The turnaround is complete.</div></li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why a clean balance sheet is the whole thesis, not a footnote</div>
+    <p>For a cyclical manufacturer, <strong>debt is the thing that turns a bad year into a fatal one</strong>. When you owe billions and demand suddenly drops, you still have to pay interest — so a downturn that a debt-free company would simply ride out can instead push a levered one into default. That is <em>exactly</em> what happened to Suzlon in 2008. Being <strong>net-cash now flips the risk profile completely</strong>: Suzlon can invest in new capacity, bid for large orders (customers trust a financially-sound supplier), fund working capital for big projects, and survive the next industry wobble — all without the sword of debt over its head. The turnaround isn't just a nice story about redemption; the clean balance sheet is the <em>enabler</em> that makes every other part of the growth case (the order book, the capacity ramp, the O&amp;M expansion) fundable and credible. That's why it leads the primer.</p>
+  </div>
+
+  <div class="note gold"><b>A reader's caution on the turnaround:</b> two nuances keep it honest. First, survival came at the cost of <em>enormous dilution</em> — the share count ballooned during the rescue, so per-share value was rebuilt from a low base. Second, some of FY26's headline PAT is flattered by a <strong>₹742 crore deferred-tax credit</strong> (a non-cash accounting item from recognising past losses as future tax shields) — the underlying operating story is strong, but the reported profit growth is not entirely "clean" cash earnings. Judge the business on operating metrics (deliveries, order book, EBITDA, cash), not just the bottom line.</div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A promoter-founded champion — now with a much-reduced founding-family stake.</p>
+
+  <p class="lead">Suzlon was built by the <strong>Tanti family</strong>, founded by the late <strong>Tulsi Tanti</strong> in 1995. Today it is run by the next generation and a professional team, but one striking feature sets it apart from most Indian promoter companies: after the years of debt-driven dilution and restructuring, <strong>the founding family's stake is now unusually low</strong>.</p>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoter — the Tanti family &amp; trusts: ~11.7%.</strong> A far cry from the majority stake founders usually hold. Two forces shrank it: (1) the <em>dilution</em> from years of rescue equity raises, and (2) <em>block-deal sales</em> — including a ~₹1,295 crore promoter block sale in June 2025 — which further reduced the family holding. Vinod Tanti (Tulsi's brother) chaired the recovery; the family remains at the helm but with a minority economic interest.</li>
+    <li><strong>A largely public / institutional register.</strong> With promoters at ~11.7%, the rest is broadly held: <strong>FIIs ~23.8%, DIIs ~9.2%, and public/retail ~55%.</strong> A huge, enthusiastic retail following has made Suzlon one of India's most-traded, most-discussed stocks — which cuts both ways (deep liquidity, but also sentiment-driven volatility).</li>
+    <li><strong>Leadership:</strong> a professional management team (with the Tantis in key board/leadership roles) executing the growth ramp. Governance and disclosure have improved through the recovery, though the low promoter stake and history mean investors watch it closely.</li>
+    <li><strong>Balance sheet:</strong> the defining strength — <strong>net cash of ~₹2,384 Cr</strong>, gross borrowings ~₹556 Cr, ROE ~40% and ROCE ~35% in FY26 (see §09).</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the low promoter stake matters — and why it's double-edged</div>
+    <p>In India, a high promoter stake usually signals "skin in the game" — the founding family's wealth rises and falls with yours. Suzlon is unusual: the family owns only ~12%, mostly because survival <em>required</em> issuing shares to raise cash. The upside is a <strong>widely-held, liquid, institution-followed</strong> company that isn't run purely for one family's benefit. The flip side: a small promoter holding means <strong>less concentrated commitment</strong> and, historically, some pledged shares and block sales that make the market nervous. It also makes Suzlon more of a "float" stock driven by broad sentiment. Neither good nor bad on its own — but it's a genuinely different ownership shape from a typical family-controlled Indian champion, and worth understanding.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The India wind-revival supercycle — the growth engine</h2></div>
+  <p class="part-sub">The tailwind an analyst leads with after the turnaround: India is building wind farms again, at record pace.</p>
+
+  <p class="lead">Suzlon's recovery is not happening in a vacuum — it is riding a genuine <strong>revival in Indian wind energy</strong>. After years in the shadow of ultra-cheap solar, wind is back, and building fast: India added a <strong>record ~6.05 GW of wind capacity in FY26</strong> (up ~46% year-on-year, the highest annual addition ever), crossing 56 GW of total installed wind. The government targets <strong>100 GW of wind by 2030</strong> and 156 GW by 2036. For India's largest turbine maker, this is the demand wave the whole growth thesis rides on.</p>
+
+  <div class="chart">
+    <div class="c-title">India annual wind capacity addition (GW)</div>
+    <div class="c-sub">FY26 was a record year — the wind revival is real, and Suzlon is the largest domestic OEM to serve it</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill wind" style="width:36%"></span></div><div class="bval">~2.3 GW</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill wind" style="width:52%"></span></div><div class="bval">~3.3 GW</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:65%"></span></div><div class="bval">~4.1 GW</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~6.05 GW</div></div>
+    </div>
+    <div class="legend"><span>Target: 100 GW of installed wind by 2030 (from ~56 GW) — implying years of elevated annual builds. ~75% of FY26 additions were driven by C&amp;I / captive buyers.</span></div>
+  </div>
+
+  <h3>Why wind is reviving — the four drivers</h3>
+  <ul class="clean">
+    <li><strong>Round-the-clock &amp; hybrid demand.</strong> Solar is cheap but only works by day; wind often blows hardest in the evening and monsoon. Grid planners increasingly want <strong>wind + solar hybrids</strong> and firm, round-the-clock renewable power — which needs wind in the mix. That structurally lifts wind demand after a decade of pure-solar dominance.</li>
+    <li><strong>The C&amp;I and captive boom.</strong> Around <strong>75% of FY26 wind additions came from commercial &amp; industrial (C&amp;I) and captive buyers</strong> — factories, data centres and corporates going green via "open access" rules. This is high-quality, price-insensitive demand, and it's exactly where Suzlon's order book is concentrated.</li>
+    <li><strong>PSU and IPP mega-orders.</strong> State utilities, PSUs (like NTPC, SJVN, ONGC) and independent power producers are placing large multi-hundred-MW wind orders under competitive auctions — big, creditworthy, visible demand.</li>
+    <li><strong>Policy support.</strong> Concessional customs duty on turbine components, waiver of inter-state transmission charges (till 2028), competitive bidding and renewable-purchase obligations all tilt the field toward wind — and toward <em>domestic</em> manufacturers with local content.</li>
+  </ul>
+
+  <div class="note gold"><b>How Suzlon differs from Waaree (solar) and the power developers:</b> Waaree Energies <em>manufactures solar panels</em>; JSW Energy and Adani Green <em>own and operate</em> power plants and sell electricity. Suzlon does neither — it is a <strong>wind-turbine capital-goods maker</strong>: it sells the <em>machines</em> (and services them), earning on equipment and O&amp;M rather than on selling power. It's the "picks and shovels" of the wind boom. Its fortunes track <em>how many megawatts India installs</em>, not power tariffs — a different, order-driven business model.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The order book — the forward-visibility metric that matters most</h2></div>
+  <p class="part-sub">For a project-based manufacturer, the order book is the single best guide to the next two-plus years.</p>
+
+  <p class="lead">If the O&amp;M fleet is the annuity, the <strong>order book is the growth</strong> — and for a company that earns in lumps, it is the most important forward number Suzlon reports. It has climbed to a <strong>record ~6.4 GW</strong> (from ~5.9 GW at the FY26 close), worth roughly <strong>₹40,000 crore+</strong> of contracted future revenue — several years of work at current delivery rates. That backlog is what converts "India is building wind" from a hope into <em>booked, contracted</em> visibility.</p>
+
+  <div class="chart">
+    <div class="c-title">Suzlon order book (GW) — record and climbing</div>
+    <div class="c-sub">A multi-year backlog gives rare forward visibility for a project-shaped manufacturer</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24 end</div><div class="track"><span class="fill brand" style="width:53%"></span></div><div class="bval">~3.3 GW</div></div>
+      <div class="bar-row"><div class="blab">FY25 end</div><div class="track"><span class="fill brand" style="width:80%"></span></div><div class="bval">~5.1 GW</div></div>
+      <div class="bar-row"><div class="blab">FY26 end</div><div class="track"><span class="fill gold" style="width:92%"></span></div><div class="bval">~5.9 GW</div></div>
+      <div class="bar-row"><div class="blab">Latest (mid-2026)</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~6.4 GW</div></div>
+    </div>
+    <div class="legend"><span>~66% of the order book is from PSU + C&amp;I customers — creditworthy, high-quality demand. Against ~2.5 GW of annual deliveries, this is 2.5×+ of forward coverage.</span></div>
+  </div>
+
+  <h3>Why this order book is high-quality, not just big</h3>
+  <ul class="clean">
+    <li><strong>The customer mix is strong.</strong> Around <strong>66% is PSU and C&amp;I</strong> — government-backed utilities and large corporates, not thinly-capitalised speculators. That reduces the risk of orders being cancelled or payments delayed. Marquee wins span Tata Power Renewables, NTPC, Jindal Renewables, Juniper Green, Sunsure and others.</li>
+    <li><strong>It's overwhelmingly the new S144 platform.</strong> The vast majority of the backlog is for the modern <strong>S144 3.x MW turbine</strong> — cumulative S144 order intake has crossed ~9 GW. Newer, larger turbines mean more megawatts (and more revenue) per unit installed.</li>
+    <li><strong>It underwrites the capacity ramp.</strong> A firm backlog gives Suzlon the confidence (and the cash, thanks to the clean balance sheet) to expand manufacturing to 4.5 GW/year and beyond. Order book and capacity feed each other.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why an order book is worth more than a single quarter's revenue</div>
+    <p>A quarter's revenue tells you what Suzlon delivered in the <em>past</em> three months — and for a lumpy business, that can be noisy (a slipped grid connection can dent it). The <strong>order book tells you what's coming</strong>: contracts already signed, waiting to be built. A backlog of ~6.4 GW against ~2.5 GW of annual deliveries means Suzlon has <strong>more than two years of work already booked</strong> — so even a soft quarter doesn't threaten the medium-term trajectory. That's why the market reacts more to <em>order wins and book size</em> than to any single quarter's print. The risk flips accordingly: it's no longer "will there be demand?" but "<strong>can Suzlon execute — build, deliver and connect — fast enough</strong> to turn this backlog into revenue on schedule?" Execution, not demand, is now the swing factor.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The O&amp;M installed-base annuity — the hidden gem</h2></div>
+  <p class="part-sub">The quiet, high-margin service business that de-risks the lumpy turbine cycle.</p>
+
+  <p class="lead">This is the part of Suzlon most casual observers miss — and it may be the highest-quality piece of the whole business. Suzlon doesn't just <em>sell</em> turbines; it <strong>operates and maintains a 15+ GW installed fleet</strong> — the largest wind O&amp;M business in India — earning a recurring, sticky, high-margin service fee year after year. In FY26 the O&amp;M segment made ~<strong>₹759 crore of profit on ~₹2,484 crore of revenue — a ~30% margin</strong>, roughly double the WTG segment's margin.</p>
+
+  <div class="chart">
+    <div class="c-title">FY26 segment split — small in revenue, mighty in margin</div>
+    <div class="c-sub">O&amp;M is ~15% of revenue but a disproportionate, high-margin, recurring share of profit</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">WTG revenue<small>manufacturing</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">₹14,040 Cr</div></div>
+      <div class="bar-row"><div class="blab">O&amp;M revenue<small>service</small></div><div class="track"><span class="fill om" style="width:18%"></span></div><div class="bval">₹2,484 Cr</div></div>
+      <div class="bar-row"><div class="blab">WTG profit<small>~13% margin</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">₹1,854 Cr</div></div>
+      <div class="bar-row"><div class="blab">O&amp;M profit<small>~30% margin</small></div><div class="track"><span class="fill om" style="width:41%"></span></div><div class="bval">₹759 Cr</div></div>
+    </div>
+    <div class="legend"><span>O&amp;M earns roughly ₹1 of profit for every ₹3.3 of revenue — vs ~₹1 per ₹7.6 for WTG. It is the margin ballast of the business.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the O&amp;M annuity is such a stable, sticky, high-margin cash engine</div>
+    <p>Here's the mechanism. Every turbine Suzlon installs spins for <strong>20–25 years</strong> — and over that life it needs constant care: servicing, spare parts, blade repairs, gearbox overhauls, software (SCADA) monitoring. Suzlon signs <strong>long O&amp;M contracts (5–20 years)</strong> to do exactly that, often with performance guarantees. Three things make this golden:</p>
+    <p><strong>1. It's recurring and predictable.</strong> Unlike a one-off turbine sale, the service fee arrives every single year regardless of the order cycle — a bond-like annuity. <strong>2. It's sticky.</strong> The manufacturer that built the turbine is the natural, cheapest, most-trusted party to maintain it — switching is disruptive, so customers rarely leave. <strong>3. It's high-margin.</strong> Once the fleet exists, servicing it is a light-asset, spares-and-labour business earning ~30% margins — far above the capital-heavy manufacturing side. And it <em>compounds</em>: every new gigawatt Suzlon installs permanently enlarges the annuity base. So the lumpy turbine business is quietly building a growing, steady, cash-rich service annuity underneath it — the definition of a hidden gem.</p>
+  </div>
+
+  <p>Suzlon has doubled down here by acquiring a <strong>51% stake in Renom Energy Services</strong> (Sept 2024) — India's largest <em>multi-brand</em> O&amp;M company, with assets under management crossing 3 GW. "Multi-brand" is the key word: Renom services turbines made by <em>other</em> manufacturers too, so Suzlon can now earn O&amp;M income across the whole installed base of Indian wind — not just its own machines. That widens the annuity moat well beyond Suzlon's own fleet.</p>
+
+  <blockquote>Selling a turbine is a transaction. Maintaining it for 25 years is a relationship — and the relationship is where the steady, high-margin money is.</blockquote>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The S144 turbine &amp; vertical integration — the product moat</h2></div>
+  <p class="part-sub">The flagship machine, the manufacturing base, and why making the parts in-house matters.</p>
+
+  <p class="lead">A wind company lives or dies on its turbine. Suzlon's growth is built on the <strong>S144 — a 3.x MW machine</strong> (extendable to ~3.15 MW) with a 144-metre rotor and hub heights of 140–160 metres. It is one of the largest turbines built in India, designed to squeeze more energy out of India's <em>low-to-medium wind</em> sites — the taller and wider a turbine, the more wind it catches and the more power it makes per unit.</p>
+
+  <h3>Why the S144 is the right machine at the right time</h3>
+  <ul class="clean">
+    <li><strong>More megawatts per turbine.</strong> Moving from older ~2 MW machines to the 3.x MW S144 means each installed turbine produces far more power — better project economics for customers and more revenue per unit for Suzlon. It's why the S144 dominates the order book (cumulative intake ~9 GW).</li>
+    <li><strong>Built for Indian wind.</strong> The big rotor and tall towers are tuned for India's specific, often modest wind speeds — a genuine engineering fit that international designs (built for windier Europe) don't always match.</li>
+    <li><strong>Certified and scaling.</strong> The S144 3.x MW series has the required domestic certification (MNRE RLMM listing), and Suzlon has added production lines and expanded nacelle capacity at Daman and Pondicherry to build it at volume.</li>
+  </ul>
+
+  <h3>Vertical integration — the cost-and-quality moat</h3>
+  <p>Suzlon is unusually <strong>vertically integrated</strong> for a turbine maker: it manufactures <strong>nacelles and blades in-house</strong> across ~14 facilities in India, makes tubular towers, and runs R&amp;D centres in Germany, the Netherlands, Denmark and India. Its manufacturing capacity is <strong>~4.5 GW/year</strong> and expanding. Making the key parts itself gives Suzlon three edges: <strong>cost control</strong> (a 20–25% cost advantage from local sourcing and lower logistics), <strong>quality control</strong> (critical after the historical blade issues), and a <strong>dense domestic supply chain</strong> that international rivals struggle to replicate. The Renom acquisition (§06) extends this integration downstream into multi-brand O&amp;M.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">Suzlon's integrated value chain — from part to power to annuity</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Step 1 · Make</div><div class="nname">Blades &amp; nacelles</div><div class="nwho">In-house across ~14 India sites — cost &amp; quality control.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wind"><div class="ntag">Step 2 · Assemble</div><div class="nname">S144 3.x MW turbine</div><div class="nwho">Flagship machine tuned for Indian low-wind sites.</div></div>
+      <div class="arrow">→</div>
+      <div class="node cash"><div class="ntag">Step 3 · Install</div><div class="nname">Site + erection + grid</div><div class="nwho">Full-package EPC: land, foundations, connection.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Step 4 · Service</div><div class="nname">O&amp;M for 20–25 yrs</div><div class="nwho">Recurring, sticky, high-margin annuity income.</div></div>
+    </div>
+    <div class="flow-note">Suzlon captures value at every step — and each turbine it installs permanently grows the O&amp;M annuity at the end of the chain.</div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The competitive set — who else builds India's wind turbines</h2></div>
+  <p class="part-sub">A concentrated market where domestic scale and local content are winning.</p>
+
+  <p class="lead">India's wind-turbine market is <strong>concentrated among a handful of players</strong>, and the competitive dynamics have recently shifted <em>in favour</em> of domestic manufacturers like Suzlon. Together, Suzlon and Inox Wind captured roughly <strong>70% of 2025 turbine contracts</strong>, aided by a 20–25% cost advantage from local sourcing.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape in Indian wind turbines</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Read</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Suzlon</td><td>Largest domestic OEM; ~1/3 market share; record order book; huge O&amp;M fleet; net cash.</td><td>The scale leader — turnaround complete, integrated, and best-placed on the O&amp;M annuity.</td></tr>
+      <tr><td class="t-strong">Inox Wind</td><td>The other strong domestic player; also net-debt-reduced and growing fast; strong in the sub-3 MW space.</td><td>The closest peer/rival — the two dominate domestic contracts between them.</td></tr>
+      <tr><td class="t-strong">Envision (China)</td><td>Global turbine giant with a growing India presence; cited as holding significant share.</td><td>The main foreign challenger — brings scale and technology; a real competitive threat.</td></tr>
+      <tr><td class="t-strong">Siemens Gamesa</td><td>Once the India market leader; has been divesting/trimming its onshore Indian business.</td><td>A retreating incumbent — its pullback has <em>opened space</em> for Suzlon and Inox.</td></tr>
+      <tr><td class="t-strong">GE / Vestas</td><td>International OEMs that have trimmed onshore India exposure (GST/import cost pressures).</td><td>Focusing more on larger/offshore machines; less head-to-head onshore competition.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the field currently tilts Suzlon's way</div>
+    <p>Two structural shifts help Suzlon right now. First, <strong>international OEMs are retreating</strong> from India's onshore wind market — Siemens Gamesa selling down, Vestas and GE trimming exposure under import-cost and GST pressures — which removes competition and hands share to domestic players. Second, <strong>local content is a real cost advantage</strong>: Suzlon's Indian supply chain gives it a 20–25% edge over import-reliant rivals, and policy (customs duty, RLMM local-certification rules) rewards domestic manufacturing. The main watch-item is <strong>Envision and other Chinese players</strong>, who bring formidable scale and could compete hard on price and technology. But for now, Suzlon's combination of scale, integration, a clean balance sheet and the O&amp;M moat leaves it the strongest-positioned domestic name.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; the net-cash balance sheet</h2></div>
+  <p class="part-sub">Record profits, fat returns on equity, and the debt-free balance sheet that anchors it all.</p>
+
+  <p class="lead">FY26 was a <strong>record year across the board</strong>: revenue up ~54% to ₹16,679 crore, EBITDA up ~63% to ₹3,022 crore (an ~18.1% margin, +100bps), and net profit up ~54% to ₹3,163 crore. Underneath the headline, profit before tax rose 67% to ₹2,422 crore — and the balance sheet, once the company's death sentence, is now its greatest asset.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue &amp; EBITDA trajectory</div>
+    <div class="c-sub">₹ Cr — FY26 was a step-change, driven by record ~2.5 GW of India WTG deliveries</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue FY24</div><div class="track"><span class="fill brand" style="width:36%"></span></div><div class="bval">6,041</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY25</div><div class="track"><span class="fill brand" style="width:65%"></span></div><div class="bval">10,851</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">16,679</div></div>
+      <div class="bar-row"><div class="blab">EBITDA FY26</div><div class="track"><span class="fill om" style="width:18%"></span></div><div class="bval">3,022</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Net profit (PAT) trajectory</div>
+    <div class="c-sub">₹ Cr — record FY26; note ₹742 Cr of the FY26 PAT is a non-cash deferred-tax credit</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill om" style="width:20%"></span></div><div class="bval">660</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill om" style="width:65%"></span></div><div class="bval">2,048</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">3,163</div></div>
+    </div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~18.1%</div><div class="msl">FY26 EBITDA margin (+100bps)</div></div>
+    <div class="ms"><div class="msv">₹2.33</div><div class="msl">FY26 EPS</div></div>
+    <div class="ms green"><div class="msv">+₹2,384 Cr</div><div class="msl">Net cash (vs ₹13,000 Cr+ debt at the depths)</div></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>FY26 financial snapshot (consolidated)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY26</th><th>Read</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue</td><td class="num">₹16,679 Cr</td><td>+54% YoY — record, driven by 2,456 MW of India WTG deliveries (highest ever).</td></tr>
+      <tr><td class="t-strong">EBITDA</td><td class="num">₹3,022 Cr</td><td>+63%; ~18.1% margin. Operating leverage + O&amp;M mix lifting margins.</td></tr>
+      <tr><td class="t-strong">PBT</td><td class="num">₹2,422 Cr</td><td>+67% — a cleaner read on operating strength than PAT.</td></tr>
+      <tr><td class="t-strong">PAT</td><td class="num">₹3,163 Cr</td><td>+54%, but <em>includes a ₹742 Cr non-cash deferred-tax credit</em> — adjust for this.</td></tr>
+      <tr><td class="t-strong">EPS</td><td class="num">₹2.33</td><td>Low absolute rupee EPS reflects the very large post-dilution share count.</td></tr>
+      <tr><td class="t-strong">Net cash</td><td class="num">+₹2,384 Cr</td><td>Borrowings ~₹556 Cr against a larger cash pile — the defining strength.</td></tr>
+      <tr><td class="t-strong">ROE / ROCE</td><td class="num">~40% / ~35%</td><td>Exceptional — reflects light capital intensity plus the deferred-tax boost to earnings.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note gold"><b>Read the profit carefully:</b> FY26 PAT of ₹3,163 Cr is <em>higher</em> than PBT of ₹2,422 Cr — because of the ₹742 Cr <strong>deferred-tax credit</strong> (a non-cash accounting gain from recognising past accumulated losses as a future tax shield). It's real and legitimate, but it's <em>not</em> recurring cash profit and it inflates the reported ROE. For the true operating trajectory, watch <strong>EBITDA, PBT, deliveries and order book</strong> — all of which are genuinely strong on their own.</div>
+
+  <p>The working-capital picture is worth a note: turbine projects tie up cash (FY26 trade receivables were ~₹6,269 Cr), so a fast-growing WTG book consumes working capital even as it grows profit. The net-cash balance sheet is precisely what lets Suzlon fund that growth comfortably — a levered company at this growth rate would be under strain.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Valuation — the rich-multiple debate</h2></div>
+  <p class="part-sub">A re-rated turnaround priced for the order book to keep delivering.</p>
+
+  <p class="lead">Suzlon's stock has been one of India's great re-rating stories — up many-fold from its penny-stock depths as the turnaround played out. At a share price around <strong>₹57 and a market cap of ~₹79,000 crore</strong> (July 2026), it trades on a trailing <strong>P/E of ~25×</strong> and a striking <strong>price-to-book of ~13×</strong>. For a capital-goods manufacturer, those are <em>high</em> multiples — the market is paying up for the growth, the order book and the clean balance sheet, and the debate is whether that premium is deserved.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Valuation snapshot (July 2026, approx.)</caption>
+    <thead><tr><th>Metric</th><th class="num">Value</th><th>Read</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Market cap</td><td class="num">~₹79,000 Cr</td><td>Among India's larger capital-goods / renewables names by value.</td></tr>
+      <tr><td class="t-strong">Share price</td><td class="num">~₹57</td><td>A low nominal price on a very large share count — a favourite of retail investors.</td></tr>
+      <tr><td class="t-strong">P/E (trailing)</td><td class="num">~25×</td><td>Rich for a manufacturer — and flattered by the deferred-tax-boosted PAT; on PBT it's higher.</td></tr>
+      <tr><td class="t-strong">P/B</td><td class="num">~13×</td><td>Very high — book value is thin after the dilution history; the market values the franchise, not the book.</td></tr>
+      <tr><td class="t-strong">ROE / ROCE</td><td class="num">~40% / ~35%</td><td>Genuinely strong, though the deferred-tax credit lifts reported ROE above the sustainable run-rate.</td></tr>
+      <tr><td class="t-strong">Net cash</td><td class="num">+₹2,384 Cr</td><td>A rare, valuable feature — de-risks the balance sheet and funds growth.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why a manufacturer trades at ~25× / ~13× book — and why bears push back</div>
+    <p>Ordinarily a cyclical capital-goods maker trades on a modest multiple, because its earnings swing with the cycle. Suzlon is priced like a <strong>structural growth story</strong> instead: the market is looking past today's numbers to a company with a record and growing order book, riding a multi-year India wind supercycle, with a debt-free balance sheet and a compounding high-margin O&amp;M annuity. If deliveries scale toward the company's ambition (it has talked of a path to ~10 GW of annual renewable sales and a 15 GW order book by FY31), today's earnings badly understate the future — and the rich multiple is on <em>tomorrow's</em> profit. That's the bull maths.</p>
+    <p>The bears counter with three points: (1) it's still a <strong>cyclical, project-based manufacturer</strong> — turbine cycles turn, and one soft year could compress the multiple hard; (2) reported earnings and ROE are <strong>flattered by the non-cash deferred-tax credit</strong>, so the "real" P/E is higher than it looks; and (3) at ~25× earnings and ~13× book, <strong>there is little room for a delivery slip, a margin wobble, or a demand pause</strong> — Suzlon is a high-beta, sentiment-driven stock, and any stumble in the order-book execution could trigger a sharp de-rating. Both sides stare at the same order book and disagree on the price.</p>
+  </div>
+
+  <blockquote>The market isn't pricing Suzlon for what it earns today — it's pricing it for the wind supercycle it's betting Suzlon will ride for years.</blockquote>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuine turnaround riding a real tailwind — priced for the execution to arrive.</p>
+
+  <p class="lead">Suzlon is one of the most complete turnaround-plus-growth stories in Indian markets: a company that survived near-death, cleaned its balance sheet, and now sits on a record order book at the start of an India wind supercycle, with a high-margin service annuity underneath. The debate is not whether the recovery is real — it plainly is — but about <strong>execution, cyclicality, and the price you pay for it</strong>.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Turnaround complete</strong> — from ₹13,000 Cr+ debt to ₹2,384 Cr net cash; a clean balance sheet that funds growth and survives cycles.</li>
+        <li><strong>Record order book</strong> — ~6.4 GW (~₹40k Cr+), 66% PSU/C&amp;I, 2.5×+ forward coverage: booked, high-quality, multi-year visibility.</li>
+        <li><strong>India wind supercycle</strong> — record ~6 GW added in FY26, 100 GW target by 2030; Suzlon is the largest domestic OEM to serve it.</li>
+        <li><strong>O&amp;M annuity moat</strong> — 15+ GW serviced fleet at ~30% margin, extended multi-brand via Renom; recurring, sticky, compounding.</li>
+        <li><strong>Structural share gains</strong> — foreign OEMs retreating; local content gives a 20–25% cost edge; the S144 is the right machine for India.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich valuation</strong> — ~25× earnings and ~13× book leave little margin for error; a high-beta, sentiment-driven stock prone to sharp swings.</li>
+        <li><strong>Earnings quality</strong> — FY26 PAT and ROE are flattered by a ₹742 Cr non-cash deferred-tax credit; the "clean" P/E is higher than it looks.</li>
+        <li><strong>Cyclical &amp; lumpy</strong> — a project-based manufacturer whose quarters swing on land, grid and approval timing; execution of the big order book is the risk.</li>
+        <li><strong>Competition</strong> — Inox Wind at home and Chinese scale (Envision) could pressure share and pricing over time.</li>
+        <li><strong>Ownership optics</strong> — a low ~11.7% promoter stake, past block sales and a chequered governance history keep some investors cautious.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Suzlon is a <strong>genuine, hard-won turnaround</strong> — a company that clawed back from the edge of bankruptcy, wiped out its debt, and now rides one of the strongest structural tailwinds in Indian energy with a record order book and a high-quality service annuity. The <em>business</em> is in the best shape of its life. What dominates the investment case is no longer survival or demand — it's <strong>execution and price</strong>. The story over the next few years will be told in a handful of numbers: the pace of <strong>WTG deliveries</strong> (can it convert the ~6.4 GW backlog on time?), the <strong>order-book trajectory</strong> (does the supercycle keep feeding it?), and the <strong>O&amp;M fleet growth</strong> (does the annuity keep compounding?). Deliver those, and a premium multiple can be defended; stumble on execution with a ~25× / ~13×-book stock, and there is a long way to fall. A remarkable comeback — now priced to keep performing.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Suzlon Energy Ltd — Q4 &amp; FY26 results, investor presentation and press releases (year ended Mar 2026), suzlon.com.</li>
+    <li>ScanX / Business news — "Suzlon Energy FY26 PAT rises to ₹3,153 crore, revenue up 54%" (FY26 revenue, PAT, deferred-tax, deliveries).</li>
+    <li>DSIJ Insights — "Suzlon Energy Reports Strong FY26 Results; Revenue Jumps 54%, Order Book Nears 5.9 GW" (FY26/Q4 detail, PBT, order book, PSU/C&amp;I mix).</li>
+    <li>Power Peak Digest — "Suzlon Energy FY26 revenue jumps 54% to ₹16,679 crore" (segment split: WTG ₹14,040 Cr / O&amp;M ₹2,484 Cr, net cash ₹2,384 Cr).</li>
+    <li>Screener.in — Suzlon Energy Ltd, consolidated financials, EPS, ROE/ROCE, borrowings, market cap, P/E, P/B, shareholding pattern.</li>
+    <li>IndiaOne Finance — "Back from the brink of bankruptcy — The Great Turnaround Story of Suzlon Energy" (debt history, FCCB default, ₹13,000 Cr+, Senvion sale, rights/QIP).</li>
+    <li>Suzlon.com — S144 3.x MW wind turbine generator product page &amp; MNRE RLMM listing press release (turbine specs, hub heights, certification).</li>
+    <li>Suzlon.com — "Suzlon acquires 51% stake in Renom, India's largest Multi-Brand O&amp;M service company" (Renom, AUM >3 GW, multi-brand O&amp;M).</li>
+    <li>Suzlon Newsroom / Services pages — O&amp;M business, 15+ GW serviced fleet, multi-year contracts, high-margin recurring revenue.</li>
+    <li>DD News / Enerdata / BW Businessworld — "India adds record 6.05 GW wind capacity in FY26; targets 100 GW by 2030"; C&amp;I ~75% of additions.</li>
+    <li>Reslink Energy — India wind revival, wind-solar hybrids, open-access C&amp;I demand.</li>
+    <li>Machine Maker — "Suzlon Charts Path to 10 GW Annual Sales" (4.5 GW manufacturing capacity, S144 lines, FY31 ambitions: 10 GW sales, 15 GW order book, 70 GW AUM).</li>
+    <li>RKWindmast / BlackridgeResearch / GreentechLead — India wind-turbine competitive landscape (Suzlon, Inox Wind, Envision, Siemens Gamesa, Vestas, GE; ~70% domestic share).</li>
+    <li>Outlook Business — "Suzlon promoters offload ₹1,295-Cr stake via block deal" (Tanti family reduced stake, ~11.7% promoter holding).</li>
+    <li>PSU Connect / InvestyWise / Sahi — Q4 FY26 results detail (Q4 revenue, PAT, installations 830 MW).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; segment, order-book, capacity and fleet figures are indicative and definitions vary across sources (e.g. reported PAT includes a non-cash deferred-tax credit; order-book size and ₹-value estimates differ by source and date). Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "SUZLON";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Update will then trigger an on-demand, incremental refresh of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Update'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Update';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
