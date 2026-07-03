@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Torrent Power — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F6F6;
+    --paper-2:#FAFCFC;
+    --card:#FFFFFF;
+    --ink:#0C1E22;
+    --ink-soft:#4A5D61;
+    --ink-faint:#83979A;
+    --brand:#0E5A6B;          /* deep Torrent teal-blue */
+    --brand-bright:#17879E;   /* bright grid teal */
+    --gold:#2FA46A;           /* clean-energy green accent */
+    --gen:#8A6A44;            /* thermal / gas generation earth */
+    --re:#2FA46A;             /* renewables green */
+    --td:#0E5A6B;             /* transmission & distribution teal */
+    --dist:#4E86A3;           /* distribution slate-blue */
+    --stor:#6A5FA6;           /* storage / hydro violet */
+    --reg:#4E86A3;            /* regulated annuity slate-blue */
+    --line:#DAE2E2;
+    --line-soft:#E8EEEE;
+    --good:#1E8E58;
+    --bad:#C0492F;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E1F1F4;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#04321E;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#E4F3EA;border:1px solid #BADFC9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#127048;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"⚡";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#123528;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F4F8F8;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 96px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E6ECEC;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0E5A6B,#17879E);}
+  .fill.gold{background:linear-gradient(90deg,#2FA46A,#45C285);}
+  .fill.re{background:linear-gradient(90deg,#2FA46A,#45C285);}
+  .fill.td{background:linear-gradient(90deg,#0E5A6B,#3D8296);}
+  .fill.dist{background:linear-gradient(90deg,#4E86A3,#6BA1BB);}
+  .fill.gen{background:linear-gradient(90deg,#8A6A44,#A9885C);}
+  .fill.stor{background:linear-gradient(90deg,#6A5FA6,#8A80C0);}
+  .fill.reg{background:linear-gradient(90deg,#4E86A3,#6BA1BB);}
+  .fill.bad{background:linear-gradient(90deg,#C0492F,#D96243);}
+  .fill.ink{background:linear-gradient(90deg,#37484b,#54666a);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 64px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.gen{background:var(--gen);}
+  .node.re{background:var(--re);}
+  .node.td{background:var(--td);}
+  .node.dist{background:var(--dist);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEA;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2f1f;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#E4F3EA;color:#123528;}
+  .note.gold b{color:#127048;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3F0;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> How a power company earns</a></li>
+    <li><a href="#p2"><span class="n">02</span> The integrated value chain</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The distribution annuity</a></li>
+    <li><a href="#p5"><span class="n">05</span> The franchise model</a></li>
+    <li><a href="#p6"><span class="n">06</span> Gas generation &amp; LNG</a></li>
+    <li><a href="#p7"><span class="n">07</span> The renewables mega-build</a></li>
+    <li><a href="#p8"><span class="n">08</span> Storage, hydrogen &amp; thermal</a></li>
+    <li><a href="#p9"><span class="n">09</span> The capex &amp; the balance sheet</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: TORNTPOWER · BSE: 532779</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>Torrent Power, <em>the annuity that turned growth machine</em></h1>
+  <p class="dek">A full walk through one of India's most respected private power utilities — how it makes steady, low-risk money delivering electricity to millions of homes in Gujarat, Maharashtra and Agra under a government-set return; how that boring, annuity-like distribution business is now bankrolling a ₹60,000-crore-plus pivot into renewables, pumped storage, green hydrogen and even more coal — and what the swing-factor gas plants and the rising capex mean for the story.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹28,966 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">₹2,469 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~70%</div><div class="l">EBITDA from regulated biz</div></div>
+    <div class="cell"><div class="v">~₹69,000 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">3 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Update</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹28,966 Cr, EBITDA ₹5,864 Cr, PAT ₹2,469 Cr (down YoY on a high FY25 base that carried a ₹637 Cr one-off tax gain and stronger merchant gas). Distribution losses at a record-low 2.33%; net-debt/equity a comfortable 0.67×; ₹3,500 Cr QIP done; ~10 GW renewable + 3 GW pumped-storage pipeline and the ₹6,889 Cr Nabha coal acquisition underway.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Torrent Power is <strong>one of India's largest and best-run private integrated power utilities</strong> — the flagship power arm of the Ahmedabad-based <strong>Torrent group</strong> (the Mehta family, the same promoters behind Torrent Pharma, though this is a completely separate company). It does the whole electricity job end to end: it <strong>generates</strong> power (gas, coal and a fast-growing renewables fleet), it <strong>transmits</strong> it, and — this is the crown jewel — it <strong>distributes and sells</strong> electricity to <strong>~4.2 million customers</strong> across Ahmedabad, Surat and other parts of Gujarat, plus franchise territories in Bhiwandi, Agra and Shil-Mumbra-Kalwa (Maharashtra/UP). In FY26 it earned a net profit of <strong>₹2,469 crore</strong> on revenue of <strong>₹28,966 crore</strong>.</p>
+
+  <p>Three facts frame the whole story:</p>
+  <ul class="clean">
+    <li><strong>The heart of the company is a regulated annuity, not a power plant.</strong> Around <strong>70% of Torrent's EBITDA comes from its regulated + franchise distribution business</strong> — supplying power to homes and factories under tariffs that let it earn a government-assured <strong>~14–15.5% return on equity</strong>. That is a steady, contracted, bond-like cash stream that most generators simply don't have. It is what makes Torrent Power a low-risk utility rather than a volatile merchant.</li>
+    <li><strong>It runs India's most efficient discom operation.</strong> Torrent's <strong>distribution losses of 2.33%</strong> in its licensed areas are <em>among the lowest in the country</em> (many state discoms lose 15–25%), and it has topped national DISCOM rankings. This operational excellence is the moat — and it lets Torrent take over broken utilities and fix them for a franchise fee (Agra went from ~59% losses at takeover to ~7%).</li>
+    <li><strong>That stable cash is now funding a big growth bet.</strong> Torrent is deploying <strong>₹60,000 crore-plus of capex over FY26–32</strong> to nearly treble its clean footprint: a renewables pipeline toward <strong>~10 GW</strong> (solar + wind + hybrid), a <strong>3 GW pumped-storage project</strong>, green hydrogen, plus more thermal (a ₹6,889 Cr acquisition of the 1,400 MW Nabha coal plant). The bull case is a re-rating on that growth; the bear case is the leverage and execution it demands.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Picture Torrent Power as a <strong>toll road that owns the power grid of several cities</strong>. Every month, millions of customers in Ahmedabad, Surat and beyond pay their electricity bill — and the regulator guarantees Torrent a fixed return on the money it sinks into wires, meters and substations. That's the toll: predictable, legally protected, and it grows as the network grows. Torrent runs that grid so well that it loses almost no power to theft or leakage, which is where the real profit hides. Now it's taking that dependable toll income and pouring it into a very different business — building giant solar and wind farms, a huge "water battery" (pumped storage), and even green hydrogen — to become a clean-energy growth company. The safe half pays for the ambitious half.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Power economics 101: how a utility actually earns</h2></div>
+  <p class="part-sub">No engineering degree required — just the three different ways electricity makes money.</p>
+
+  <p class="lead">"Making money from electricity" is not one business — it is <strong>three very different businesses</strong> bolted together, each with its own risk profile. This is the single most useful idea for understanding Torrent Power, because it does all three, but the market treats them very differently — and Torrent deliberately leans on the <em>safest</em> one.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three ways a power company earns — and how risky each is</caption>
+    <thead><tr><th>Activity</th><th>How it earns</th><th>Risk / who bears it</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Generation (regulated / PPA)</td><td>Builds a plant and signs a long-term Power Purchase Agreement (PPA) at a fixed tariff for 20–25 years, or earns a regulated return.</td><td><strong>Low</strong> — price and volume largely locked in. Main risk is fuel cost and the buyer paying on time.</td></tr>
+      <tr><td class="t-strong">Generation (merchant)</td><td>Sells power on the open market/exchange at whatever price the market pays that day. Torrent's gas plants often run this way when demand spikes.</td><td><strong>High</strong> — profit swings with market prices, demand and fuel costs. This is the volatile "swing" part of Torrent.</td></tr>
+      <tr><td class="t-strong">Transmission &amp; distribution</td><td>Runs the wires that carry and deliver power. A regulator sets a tariff that lets the company earn a fixed <em>return on equity</em> (RoE) on the assets it builds.</td><td><strong>Very low</strong> — a regulated annuity. Invest capital, run efficiently, and the return is effectively legislated.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The single idea that unlocks Torrent: "regulated return"</div>
+    <p>In the wires-and-supply business, Torrent can't charge whatever it likes — a state regulator (the Gujarat Electricity Regulatory Commission, and its peers) decides the tariff using a formula. The regulator lets the utility <strong>recover its costs plus earn a fixed percentage return — roughly 14–15.5% post-tax — on the equity it has invested</strong> in poles, wires, meters and substations. So the more Torrent <em>invests</em> in approved grid assets, the more absolute profit it is <em>allowed</em> to earn — like a landlord whose rent is set by law at a guaranteed yield on every building they put up. That is why distribution is a <strong>"regulated annuity"</strong>: boring, predictable, and it compounds as the asset base grows. It's the opposite of a merchant gas plant, whose profit can vanish overnight if power prices or gas costs move.</p>
+  </div>
+
+  <p>Torrent's whole strategy sits on this table. Its <strong>de-risked base</strong> is the regulated distribution annuity (bottom row) — ~70% of group EBITDA. On top of that stable platform it runs the <strong>volatile bit</strong> (merchant gas, middle row) as an upside swing, and is now <strong>building out the contracted bit</strong> (long-PPA renewables, top row) as the growth engine. Keep that structure in mind — it is the thread through every section that follows.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The integrated value chain — but weighted to the safe end</h2></div>
+  <p class="part-sub">Why Torrent, unlike most, makes most of its money at the customer-facing end of the chain.</p>
+
+  <p class="lead">Most power companies do <em>one</em> thing: NTPC and Adani Power are mostly <strong>generators</strong>; Power Grid is a <strong>transmission</strong> company; a state discom is a <strong>distributor</strong>. Torrent Power, like Tata Power, is <strong>vertically integrated</strong> — it owns every link from the power plant to the plug. But its centre of gravity is unusual: unlike a typical integrated player, Torrent earns the <em>bulk</em> of its profit at the <strong>distribution (delivery) end</strong>, the safest link in the chain.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The electricity value chain — Torrent operates every stage, and profits most from the last one</div>
+    <div class="flow-row">
+      <div class="node gen"><div class="ntag">Stage 1 · Make</div><div class="nname">Generation</div><div class="nwho">Gas, coal &amp; renewables. ~5.1 GW today, building to ~12 GW.</div></div>
+      <div class="arrow">→</div>
+      <div class="node td"><div class="ntag">Stage 2 · Carry</div><div class="nname">Transmission</div><div class="nwho">High-voltage lines evacuating RE from Khavda &amp; Solapur.</div></div>
+      <div class="arrow">→</div>
+      <div class="node dist"><div class="ntag">Stage 3 · Deliver &amp; sell</div><div class="nname">Distribution</div><div class="nwho">~4.2m customers. ~70% of group EBITDA. THE crown jewel.</div></div>
+    </div>
+    <div class="flow-note">A pure generator lives and dies at Stage 1's volatile economics. Torrent makes most of its money — and nearly all its <em>predictable</em> money — at Stage 3, where a regulated/franchise return de-risks the whole group.</div>
+  </div>
+
+  <h3>Why this structure matters — three concrete benefits</h3>
+  <ul class="clean">
+    <li><strong>Earnings stability.</strong> When merchant gas profits wobble (a bad quarter for demand or gas prices — exactly what happened in Q4 FY26), the <strong>regulated distribution annuity keeps paying</strong>. Regulated businesses have delivered ~70% of EBITDA over the last three years — a large, steady base that absorbs the generation swings.</li>
+    <li><strong>Fuel-cost pass-through.</strong> In its licensed distribution areas, most of the cost of buying power is <em>passed through</em> to customers via the tariff. So Torrent isn't betting its supply margin on power-price movements the way a merchant generator is — its distribution margin is a regulated return, not a trading spread.</li>
+    <li><strong>A platform to grow.</strong> Because it runs a rock-solid, cash-generating distribution utility, Torrent has the balance-sheet strength and credibility (AA+/AAA-band ratings) to raise cheap debt and fund a large renewables + storage build-out — something a pure merchant player can't do as safely.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The plain-English payoff</div>
+    <p>A pure gas generator is a <strong>speed-boat</strong>: fast when conditions are good, but tossed around by every wave (gas prices, demand, merchant tariffs). Torrent is a <strong>large ship with a speed-boat lashed to the deck</strong>. The ship — the regulated distribution business — sails a steady course whatever the weather, which is why even in a soft quarter for gas the group stays solidly profitable and keeps paying dividends. The speed-boat (merchant gas) adds bursts of speed in good times; the new sails being hoisted (renewables + storage) are meant to make the whole vessel go faster over the next decade. That ballast is exactly why Torrent trades as a quality utility, not a punt on power prices.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">From an Ahmedabad electricity licensee to the Torrent group's energy powerhouse.</p>
+
+  <p class="lead">Torrent Power is the power business of the <strong>Torrent group</strong>, one of India's most respected family-owned conglomerates, founded by the late <strong>U. N. Mehta</strong> and today led by the second and third generations of the <strong>Mehta family</strong> (Sudhir and Samir Mehta at group level; <strong>Jinal Mehta</strong> is Managing Director of Torrent Power). The group also owns Torrent Pharma, Torrent Gas and other businesses — but Torrent Power is a distinct, separately-listed company.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1997</div><div class="ev">Torrent acquires the <strong>Ahmedabad Electricity Company (AEC)</strong> and the <strong>Surat Electricity Company (SEC)</strong> from the Gujarat government — buying its way into the coveted, licensed <strong>city distribution</strong> business that remains its core to this day.</div></li>
+    <li><div class="yr">2005–2006</div><div class="ev">Group floats Torrent Power Generation; in <strong>2006</strong> the three arms (Torrent Power AEC, SEC and Generation) merge to form <strong>Torrent Power Limited</strong> — one integrated generation-to-distribution utility.</div></li>
+    <li><div class="yr">2010</div><div class="ev">Wins the <strong>Agra distribution franchise</strong> — a broken UP utility losing ~59% of its power. Torrent's turnaround of Agra becomes the template for the franchise model.</div></li>
+    <li><div class="yr">2012–2014</div><div class="ev">Commissions its large gas-based combined-cycle plants — <strong>SUGEN (Surat)</strong> and <strong>DGEN (Dahej)</strong> — becoming one of India's biggest gas-power operators, just as domestic gas dried up.</div></li>
+    <li class="major"><div class="yr">2019–2021</div><div class="ev">Takes the <strong>Bhiwandi</strong> franchise deeper and wins <strong>Shil-Mumbra-Kalwa (SMK)</strong> near Mumbai; wins the Dholera SIR &amp; Dahej SEZ licences — extending the distribution footprint.</div></li>
+    <li class="major"><div class="yr">2024–2025</div><div class="ev">Launches the big pivot: a <strong>~10 GW renewables ambition</strong>, a <strong>3 GW pumped-storage</strong> project and green hydrogen; completes a <strong>maiden ₹3,500 Cr QIP</strong> (the group's first equity raise in ~30 years); signs the <strong>₹6,889 Cr Nabha Power (1,400 MW coal)</strong> acquisition from L&amp;T.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ₹28,966 Cr, PAT ₹2,469 Cr; distribution losses at a record-low <strong>2.33%</strong>; net-debt/equity a comfortable <strong>0.67×</strong>; ₹20/share total dividend; ₹60,000 Cr+ FY26–32 capex plan under way.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoter — the Mehta family (Torrent group):</strong> holds <strong>~51%</strong> directly (via Torrent Investments / Torrent Pvt Ltd), with the wider <strong>Mehta Family Trust structure controlling ~53–54%</strong>. This is a committed, long-term family owner with deep operating expertise — an advantage in a business where patient capital and execution discipline matter.</li>
+    <li><strong>Leadership:</strong> <strong>Jinal Mehta (MD)</strong> and a professional management team have run one of India's most efficient distribution operations for years — the low-loss discom track record is the group's calling card.</li>
+    <li><strong>Reputation &amp; ratings:</strong> Torrent is regarded as a <strong>blue-chip, conservatively-run private utility</strong> with strong credit ratings, which lowers its cost of capital for the capex build-out.</li>
+    <li><strong>Balance sheet:</strong> historically <strong>lightly leveraged for a utility</strong> — net-debt/equity of just <strong>0.67×</strong> and net-debt/EBITDA ~2.06× at FY26 — giving it room to gear up for growth. This is a key contrast with more heavily-indebted peers (watch it rise as capex ramps — see §09).</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The distribution annuity — the core of everything</h2></div>
+  <p class="part-sub">The low-risk, cash-gushing engine that ~70% of the company's profit rests on.</p>
+
+  <p class="lead">If you understand one thing about Torrent Power, understand this: its <strong>licensed power-distribution business is the crown jewel</strong>. Torrent is the <strong>sole distribution licensee</strong> — a legal monopoly to supply power — across some of India's most industrialised, high-demand urban areas, and it earns a <strong>government-assured return</strong> on the capital it puts into that network. This is the annuity that de-risks the whole group.</p>
+
+  <h3>The licensed footprint — a monopoly on prosperous cities</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Torrent's licensed distribution areas (sole-licensee monopolies)</caption>
+    <thead><tr><th>Area</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Ahmedabad &amp; Gandhinagar</td><td>Gujarat's largest city + the state capital — Torrent's historic AEC home turf.</td></tr>
+      <tr><td class="t-strong">Surat</td><td>India's diamond &amp; textile hub — a dense, industrial, high-consumption city (the former SEC).</td></tr>
+      <tr><td class="t-strong">Dahej SEZ &amp; Dholera SIR</td><td>Two of Gujarat's flagship industrial zones — greenfield demand as they build out.</td></tr>
+      <tr><td class="t-strong">Dadra &amp; Nagar Haveli / Daman &amp; Diu</td><td>Union-territory distribution licence — added industrial catchment.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Across these licensed areas Torrent serves <strong>more than 4.2 million consumers</strong> and distributes roughly <strong>30 billion units</strong> of electricity a year. Because these are <em>licensed monopolies</em> in growing, industrial regions, demand grows structurally with the local economy — and every new factory, mall or housing society is a new, captive customer.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the regulated-RoE model is such a good business</div>
+    <p>The regulator's job is to protect consumers from a monopoly — so it caps the tariff. But it does so with a formula that <em>guarantees the utility a fair profit</em>: Torrent is allowed to <strong>recover its efficient costs and earn a fixed post-tax return (roughly 14–15.5%) on the equity it has invested in the network</strong>, and it passes through the cost of the power it buys. So Torrent's distribution profit grows in two low-risk ways: <strong>(1) invest more capital</strong> into the network (bigger regulated asset base → bigger allowed profit — hence ~₹2,000 Cr a year of distribution capex planned), and <strong>(2) run more efficiently than the regulator assumed.</strong> That second lever is where Torrent shines.</p>
+  </div>
+
+  <h3>The efficiency moat — losing almost nothing</h3>
+  <p>Every utility "loses" some power between the plant and the meter — through theft, faulty meters, un-billed supply and technical leakage. This is measured as <strong>distribution / AT&amp;C losses</strong> ("Aggregate Technical &amp; Commercial"). For most Indian state discoms it is a chronic wound: 15–25% of all power generated is never paid for. That's the difference between a distributor that makes money and one that bankrupts a state government.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">2.33%</div><div class="msl">Distribution losses in licensed areas (FY26) — among the lowest in India</div></div>
+    <div class="ms green"><div class="msv">~4.2m</div><div class="msl">Consumers served across licensed + franchise areas</div></div>
+    <div class="ms"><div class="msv">#1</div><div class="msl">Ranked top DISCOM nationally (among 65) for operations &amp; reliability</div></div>
+  </div>
+
+  <p>Torrent's licensed-area losses of just <strong>2.33%</strong> are world-class — a fraction of the national average. This matters enormously to profit: when the regulator sets the tariff, it <em>assumes</em> a certain (higher) loss level. Every percentage point Torrent beats that assumption drops <strong>straight to the bottom line</strong>. Decades of investment in metering, network quality and collection discipline have made Torrent the most efficient large private distributor in the country — and that operational edge <em>is</em> the moat. It's also the credential that lets Torrent win franchises to fix <em>other</em> people's broken utilities, which is the next section.</p>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The franchise model — renting out the turnaround skill</h2></div>
+  <p class="part-sub">A clever, capital-light way to earn from distribution networks Torrent doesn't even own.</p>
+
+  <p class="lead">Beyond its <em>owned</em> licensed cities, Torrent runs <strong>distribution franchises</strong> — a distinctive model where it takes over the running of a <em>state-owned</em> discom's network for a period, invests to fix it, and keeps the margin between the (low) rate it pays the state for power and what it collects from customers. It doesn't own the wires; it rents out its <strong>turnaround expertise</strong>. This is Torrent's operational excellence, monetised.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Torrent's distribution franchises — turnaround stories</caption>
+    <thead><tr><th>Franchise</th><th>Location</th><th>The turnaround</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Agra</td><td>Uttar Pradesh</td><td>Taken over in 2010 with <strong>~59% AT&amp;C losses</strong>; driven down to a historic-low <strong>~6.9%</strong> — one of India's great discom turnarounds.</td></tr>
+      <tr><td class="t-strong">Bhiwandi</td><td>Maharashtra</td><td>India's first-ever distribution franchise (from 2007); the model that proved private operators could rescue a discom.</td></tr>
+      <tr><td class="t-strong">Shil-Mumbra-Kalwa (SMK)</td><td>Maharashtra (near Mumbai)</td><td>Taken over in 2021 with <strong>~45% losses</strong>; already cut to ~28% and falling — the newest turnaround in progress.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How the franchise model actually makes money</div>
+    <p>Imagine a leaky, badly-run water utility. The city government keeps it but says: <em>"whoever can plug the leaks and collect the bills can keep the difference for 10–20 years."</em> That's a franchise. Torrent takes over a discom losing, say, half its power to theft and non-payment, and <strong>buys power from the state at an agreed rate ("input-based" franchise)</strong>. Then it invests in new meters, replaces stolen connections, digitises billing and cracks down on theft. As losses fall — Agra went from <strong>59% to under 7%</strong> — the <em>same</em> amount of power bought now generates far more collected revenue. Torrent keeps that widening gap. The beauty: it earns strong returns on <em>relatively little</em> asset ownership (it's the state's network), and every franchise is a repeatable use of a skill Torrent already has. The risk: franchises are time-limited contracts, and negotiating fair terms with cash-strapped state governments can be fraught.</p>
+  </div>
+
+  <blockquote>Owned licences give Torrent a guaranteed return on capital; franchises give it a return on <em>competence</em>. Both rest on the same thing — being the best in India at running a discom.</blockquote>
+
+  <p>Together, the licensed + franchise distribution business is why Torrent is often called a "distribution company that also generates power," rather than the other way round. It is the stable, annuity-like, low-risk cash engine that funds — and de-risks — everything the company is now building.</p>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Gas generation &amp; LNG — the swing factor</h2></div>
+  <p class="part-sub">The most volatile piece of Torrent — a big gas fleet whose fortunes rise and fall with demand and fuel.</p>
+
+  <p class="lead">Torrent is <strong>one of India's largest gas-based power generators</strong>. Its ~5.1 GW of operating capacity is dominated by two big <strong>gas-fired combined-cycle plants</strong> — <strong>SUGEN (~1,148 MW) at Surat and DGEN (~1,200 MW) at Dahej</strong> — plus the smaller Sabarmati (AMGEN) coal station (362 MW) and its growing renewables. The gas fleet is efficient and modern; the problem has never been the plants — it's the <strong>fuel</strong>.</p>
+
+  <div class="chart">
+    <div class="c-title">Operating generation capacity mix (FY26)</div>
+    <div class="c-sub">~5,094 MW total — gas-dominated today, but every new gigawatt being built is renewable</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Gas-based<small>SUGEN + DGEN</small></div><div class="track"><span class="fill gen" style="width:100%"></span></div><div class="bval">2,730 MW</div></div>
+      <div class="bar-row"><div class="blab">Renewables<small>solar + wind</small></div><div class="track"><span class="fill re" style="width:73%"></span></div><div class="bval">2,002 MW</div></div>
+      <div class="bar-row"><div class="blab">Coal<small>Sabarmati / AMGEN</small></div><div class="track"><span class="fill dist" style="width:13%"></span></div><div class="bval">362 MW</div></div>
+    </div>
+    <div class="legend"><span>Gas is ~54% of today's fleet but a shrinking share of the future: the growth is all in renewables, storage and the incoming Nabha coal plant.</span></div>
+  </div>
+
+  <h3>The gas problem — great plants, unreliable fuel</h3>
+  <p>India lacks enough affordable domestic natural gas, so plants like DGEN must run on <strong>imported LNG</strong>, which is expensive and price-volatile. For years this left DGEN <strong>partly stranded</strong> — it had no long-term PPA and couldn't profitably run on costly LNG, so it operated at low utilisation (a <strong>plant load factor, or PLF, of only ~9–15%</strong> in recent years). A plant sitting idle earns little.</p>
+
+  <div class="plain">
+    <div class="ptag">Why gas is the "swing factor" — the good years and the bad</div>
+    <p>Here's the mechanism. When India's power demand <strong>surges</strong> (a hot summer, a supply crunch), electricity prices on the merchant exchange spike — and the government can invoke <strong>Section 11 of the Electricity Act</strong> to compel gas plants to run. In those windows, Torrent fires up SUGEN and DGEN and sells power at <em>high merchant prices</em>, earning a fat, one-off profit. That's what happened in FY25, lifting earnings. But when demand is soft or gas is dear (as in <strong>Q4 FY26, when the generation segment actually swung to a small EBIT loss</strong>), that upside evaporates. So gas is Torrent's <strong>swing factor</strong>: it can add a lot of profit in a tight market and drag in a loose one. This is exactly the volatility the regulated distribution annuity is there to absorb — and why a weak gas quarter (like Q4 FY26) doesn't threaten the group, it just trims the upside.</p>
+  </div>
+
+  <div class="note gold"><b>Reading the FY26 numbers correctly:</b> Torrent's headline profit <em>fell</em> in FY26 (PAT ₹2,469 Cr vs ₹3,059 Cr), and Q4 PAT dropped ~70% to ₹318 Cr — which looks alarming until you unpack it. Most of the fall is a <strong>high base, not a broken business</strong>: FY25 carried a <strong>₹637 Cr one-off deferred-tax reversal gain</strong> and a <strong>strong merchant-gas contribution</strong> that didn't repeat. Adjusted for the one-off tax item, FY26's underlying comprehensive income actually edged <em>up</em>. The soft spot was purely the swing-factor gas business in a looser market — the regulated core kept compounding.</p></div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The renewables mega-build — the growth engine</h2></div>
+  <p class="part-sub">The transformation from a gas-heavy utility into a clean-energy growth company.</p>
+
+  <p class="lead">If distribution is the stable heart and gas is the swing, <strong>renewables are Torrent's future</strong>. The company is executing one of the more ambitious clean-energy build-outs among India's private utilities — aiming to take its renewable footprint toward <strong>~10 GW</strong>, and its total generation-plus-storage portfolio toward <strong>~12 GW of generation and 3 GW of pumped storage</strong>. This is the growth thesis, and it is a genuine strategic pivot, not a slogan.</p>
+
+  <div class="chart">
+    <div class="c-title">Renewables: from ~2 GW today toward ~10 GW</div>
+    <div class="c-sub">Operational vs pipeline (solar + wind + hybrid + firm-and-dispatchable RE), indicative GW</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Operational today<small>solar + wind</small></div><div class="track"><span class="fill re" style="width:20%"></span></div><div class="bval">~2.0 GW</div></div>
+      <div class="bar-row"><div class="blab">Under construction<small>next 2–3 yrs</small></div><div class="track"><span class="fill gold" style="width:40%"></span></div><div class="bval">~3.8 GW</div></div>
+      <div class="bar-row"><div class="blab">Target ambition<small>toward end-decade</small></div><div class="track"><span class="fill td" style="width:100%"></span></div><div class="bval">~10 GW</div></div>
+    </div>
+    <div class="legend"><span>The renewables pipeline alone carries a project outlay of roughly ₹24,000–28,000 Cr. Every RE megawatt is long-PPA — contracted, predictable, low-fuel-risk earnings.</span></div>
+  </div>
+
+  <h3>Why renewables fit Torrent so well</h3>
+  <ul class="clean">
+    <li><strong>They swap volatile earnings for contracted ones.</strong> A solar or wind farm sells power under a <strong>25-year PPA</strong> at a fixed tariff, with sunlight/wind as free fuel. That is the <em>opposite</em> of merchant gas — it's stable, bankable cash flow. As renewables grow, they steadily dilute the gas-driven volatility and add to the "predictable" bucket alongside distribution.</li>
+    <li><strong>They ride India's structural tailwind.</strong> India is adding tens of gigawatts of solar and wind a year to hit its 2030 clean-energy targets. Torrent, with its balance-sheet strength, execution record and in-house transmission arm, is well-placed to win and build this capacity — including large projects in Gujarat's giant <strong>Khavda</strong> renewable zone.</li>
+    <li><strong>They leverage the whole group.</strong> Torrent can build the generation, string the <strong>transmission line to evacuate it</strong> (its grid arm won lines for 4.5 GW of Khavda RE and 1,500 MW at Solapur), and — via storage — firm it up. Owning the chain is a real edge as the grid absorbs intermittent power.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The transformation in one sentence</div>
+    <p>For a decade, Torrent was a <strong>gas-and-distribution</strong> company whose growth was capped by the availability of affordable gas. The renewables build changes the plot: it gives Torrent a <strong>large, contracted, low-risk growth runway</strong> that doesn't depend on LNG prices at all. If it executes — commissioning the ~3.8 GW under construction on time and on budget, then scaling toward 10 GW — Torrent stops being "a gas utility with a great discom" and becomes "a clean-energy growth utility with a great discom." That re-rating potential is the whole bull case. The catch is execution and funding at scale (see §09).</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Storage, hydrogen &amp; the new coal — firming the portfolio</h2></div>
+  <p class="part-sub">The pieces that make the renewables build actually work — plus a pragmatic return to coal.</p>
+
+  <p class="lead">Solar and wind have one flaw: they only produce when the sun shines or the wind blows. To build a <em>reliable</em> clean utility, you need ways to store and firm that power — and Torrent is investing in exactly that, alongside a pragmatic addition of dependable thermal capacity.</p>
+
+  <h3>Pumped storage — the "water battery"</h3>
+  <p>Torrent's flagship storage bet is a <strong>3 GW pumped-storage hydro project in Raigad district, Maharashtra</strong>, at an estimated cost of ~<strong>₹14,000 crore</strong>, targeted for commissioning around <strong>October 2028</strong>. Pumped storage is the world's most proven grid-scale battery: when power is cheap/surplus (midday solar), it <em>pumps</em> water uphill to a reservoir; when power is scarce/expensive (evening peak), it lets the water fall back down through turbines to <em>generate</em>. It's a giant rechargeable battery made of water and gravity — and it earns by buying low and selling high, or under long-term storage contracts.</p>
+
+  <h3>Green hydrogen — the early option</h3>
+  <p>Torrent has secured <strong>18 KTPA (kilo-tonnes per annum) of green-hydrogen capacity under the government's PLI (production-linked incentive) scheme</strong> and inaugurated an early green-hydrogen facility. This is a small, optional bet today — green hydrogen (made by splitting water with renewable electricity) is a nascent, next-generation clean fuel — but it positions Torrent early in a potentially large future market. Treat it as cheap optionality, not a core earnings driver.</p>
+
+  <h3>Nabha Power — the pragmatic coal addition</h3>
+  <p>In a move that surprised some, Torrent is <strong>acquiring the 1,400 MW Nabha Power coal plant (in Punjab) from L&amp;T for an enterprise value of ₹6,889 crore</strong>, and is also planning a new ~1,600 MW coal project in Madhya Pradesh. Why add coal in a green-pivot story? Because <strong>India still needs firm, always-available "baseload" power</strong> to keep the grid stable as it adds intermittent renewables — and Nabha is a high-quality, well-run plant (PLF ~94%) with a <strong>long-term PPA</strong>, i.e. contracted, low-risk cash flow. It's a return-focused, de-risked addition, not a bet on merchant coal.</p>
+
+  <div class="plain">
+    <div class="ptag">How the pieces fit together</div>
+    <p>Think of Torrent building a <strong>balanced clean-power system</strong>, not just solar farms. <strong>Renewables</strong> provide cheap, green energy but only intermittently. <strong>Pumped storage</strong> shifts that energy from when it's abundant to when it's needed — turning "sometimes" power into "on-demand" power. <strong>Firm thermal (Nabha)</strong> and gas provide the always-on backbone. And <strong>green hydrogen</strong> is a long-dated call option on a future fuel. Stitched together, this is a portfolio designed to sell <em>reliable</em> power around the clock — which is worth far more than raw intermittent solar. It's a more sophisticated growth plan than "just build solar," and it plays directly to Torrent's engineering and grid strengths.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The ₹60,000-crore-plus capex &amp; the balance-sheet question</h2></div>
+  <p class="part-sub">The mega-build that defines the next few years — and the leverage it will add.</p>
+
+  <p class="lead">Torrent's transformation carries a price tag: a <strong>capital-spending programme exceeding ₹60,000 crore over FY26–32</strong>, spanning renewables, pumped storage, transmission, distribution and thermal. How that money is spent — and funded — is the crux of the investment case, because it will move Torrent from an <em>under</em>-geared utility toward a normally-geared one.</p>
+
+  <div class="chart">
+    <div class="c-title">Where the FY26–32 capex is going (indicative)</div>
+    <div class="c-sub">Growth is renewables-led, with a large storage bet and steady grid/distribution spend</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Renewables<small>~3.8 GW+ pipeline</small></div><div class="track"><span class="fill re" style="width:100%"></span></div><div class="bval">~₹24–28k Cr</div></div>
+      <div class="bar-row"><div class="blab">Pumped storage<small>3 GW, Raigad</small></div><div class="track"><span class="fill stor" style="width:56%"></span></div><div class="bval">~₹14,000 Cr</div></div>
+      <div class="bar-row"><div class="blab">Thermal (Nabha + new)<small>firm baseload</small></div><div class="track"><span class="fill gen" style="width:30%"></span></div><div class="bval">~₹7,000 Cr+</div></div>
+      <div class="bar-row"><div class="blab">Distribution &amp; T'mission<small>regulated network</small></div><div class="track"><span class="fill td" style="width:42%"></span></div><div class="bval">~₹2,000 Cr/yr</div></div>
+    </div>
+    <div class="legend"><span>The bulk goes into <em>contracted or regulated</em> assets — renewables (PPA), storage, regulated wires, PPA-backed thermal — i.e. spend matched to predictable income, not speculation.</span></div>
+  </div>
+
+  <h3>How it's funded — and why leverage is the number to watch</h3>
+  <ul class="clean">
+    <li><strong>A strong starting point.</strong> Unusually for a utility about to spend big, Torrent <em>begins</em> lightly geared: <strong>net-debt/equity of just 0.67× and net-debt/EBITDA of ~2.06×</strong> at FY26, with borrowings of ~₹14,000 Cr. That headroom is precisely why it can afford an ambitious plan — it's growing <em>into</em> a normal balance sheet, not stretching a stretched one.</li>
+    <li><strong>The maiden equity raise.</strong> In 2025 Torrent completed a <strong>₹3,500 Cr QIP at ₹1,503/share</strong> — the <em>first equity raise by the Torrent group in ~three decades</em> — using a large chunk to cut debt and prime the balance sheet for capex. A future listing/monetisation of the renewables arm is a widely-discussed potential funding lever.</li>
+    <li><strong>Debt-funded, but matched to cash flows.</strong> Management guides the build will be financed at roughly a <strong>70:30 debt-to-equity ratio</strong>. Debt will rise — that's the point of the plan — but most of it funds <em>assets that produce contracted or regulated cash</em> (a solar PPA, a regulated wire, a PPA-backed coal plant), so the borrowing is matched to predictable income rather than a merchant gamble.</li>
+  </ul>
+
+  <div class="note"><b>The honest tension:</b> the build is genuinely value-creating <em>if</em> every gigawatt earns its expected return and gets funded without over-stretching the balance sheet. But leverage will climb from today's comfortable 0.67× as the ₹60,000 Cr+ deploys, interest costs will rise, and big projects (pumped storage, giant RE) carry execution and timing risk. The bull watches the growing regulated-plus-contracted asset base; the bear watches net-debt/EBITDA and whether returns hold up as Torrent builds outside its home turf. Both are staring at the same capex plan.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A steady, cash-generative utility — priced for the growth pivot to deliver.</p>
+
+  <p class="lead">FY26 was a <strong>solid-but-optically-softer year</strong>: revenue was roughly flat and reported profit fell — but the fall was almost entirely a <em>high prior-year base</em> (a one-off tax gain plus strong merchant gas in FY25), not a deterioration in the underlying business. The regulated core kept compounding; the swing factor swung down.</p>
+
+  <div class="chart">
+    <div class="c-title">Consolidated revenue trajectory</div>
+    <div class="c-sub">Revenue (₹ Cr) — broadly stable; the growth is coming in future years from the capex build</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:94%"></span></div><div class="bval">27,183</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">29,165</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill td" style="width:99%"></span></div><div class="bval">28,966</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Net profit (PAT) trajectory — read it with the one-offs in mind</div>
+    <div class="c-sub">Net profit (₹ Cr) — FY25 was flattered by a ₹637 Cr one-off tax gain + strong merchant gas</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill re" style="width:62%"></span></div><div class="bval">1,896</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill re" style="width:100%"></span></div><div class="bval">3,059</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:81%"></span></div><div class="bval">2,469</div></div>
+    </div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">₹5,864 Cr</div><div class="msl">FY26 EBITDA (broadly flat YoY)</div></div>
+    <div class="ms"><div class="msv">₹47.95</div><div class="msl">FY26 EPS (face value ₹10)</div></div>
+    <div class="ms green"><div class="msv">0.67×</div><div class="msl">Net-debt / equity — conservatively geared</div></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Valuation snapshot (mid-2026, approx.)</caption>
+    <thead><tr><th>Metric</th><th class="num">Value</th><th>Read</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Market cap</td><td class="num">~₹69,000 Cr</td><td>One of India's most valuable private power companies.</td></tr>
+      <tr><td class="t-strong">Share price</td><td class="num">~₹1,366</td><td>Off its highs after a soft Q4 FY26; the market weighs growth vs the earnings dip.</td></tr>
+      <tr><td class="t-strong">P/E (trailing)</td><td class="num">~28×</td><td>A premium to a plain generator — paying for the regulated quality + the renewables growth.</td></tr>
+      <tr><td class="t-strong">P/B</td><td class="num">~3.6×</td><td>Rich for a utility — reflects the low-loss discom moat and growth optionality.</td></tr>
+      <tr><td class="t-strong">ROE / ROCE</td><td class="num">~13% / ~14%</td><td>Healthy for a utility — the regulated returns show up here; capex may dilute near-term.</td></tr>
+      <tr><td class="t-strong">Dividend yield</td><td class="num">~1.5%</td><td>₹20/share FY26 (200% payout) — a real dividend, though cash is tilting toward capex.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the market pays ~28× for a "utility"</div>
+    <p>On the surface, ~28× earnings looks steep for a power company. But investors are paying for two things a plain generator lacks. <strong>First, earnings <em>quality</em>:</strong> ~70% of EBITDA is a regulated/franchise distribution annuity — bond-like, predictable cash that deserves a higher multiple than volatile merchant profit. <strong>Second, <em>growth</em>:</strong> the ₹60,000 Cr+ pivot into renewables and storage promises to grow the earnings base substantially over the next 5–7 years, and to add more <em>contracted</em> (high-quality) profit as it does. So the bull pays up for "a safe base <em>plus</em> a credible growth runway." The bear counters that ~28× and ~3.6× book leave little room if the gas swing keeps dragging, if the capex crimps near-term returns, or if leverage climbs faster than the new assets earn. That tension — quality-and-growth versus the price and the build risk — <em>is</em> the Torrent Power debate.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A best-in-class utility using its stable base to buy a growth story — priced for it to work.</p>
+
+  <p class="lead">Torrent Power is a rare thing: a <strong>genuinely well-run, cash-generative regulated utility</strong> that is <em>also</em> attempting a real growth transformation, from its position of balance-sheet strength. The debate isn't about whether the distribution annuity is good — it plainly is. It's about <strong>execution, funding and the price you pay</strong> for the renewables-and-storage build layered on top.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Best-in-class distribution annuity</strong> — ~70% of EBITDA from regulated/franchise supply at a ~14–15.5% assured RoE, with India's lowest losses (2.33%). A rare, low-risk cash engine.</li>
+        <li><strong>The turnaround skill compounds</strong> — the franchise model (Agra 59%→7%) is a repeatable way to grow distribution with little capital.</li>
+        <li><strong>Credible growth pivot</strong> — a ~10 GW renewables ambition + 3 GW pumped storage + green hydrogen, all long-contracted, adding high-quality earnings.</li>
+        <li><strong>Conservatively geared to start</strong> — 0.67× net-debt/equity gives real room to fund the ₹60,000 Cr+ plan; maiden ₹3,500 Cr QIP done.</li>
+        <li><strong>Blue-chip owner &amp; ratings</strong> — a disciplined Mehta-family group, strong credit, and a re-rating call-option if the pivot lands.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Gas volatility</strong> — merchant-gas earnings swing hard (Q4 FY26 generation slipped to an EBIT loss); the "good years" don't repeat on demand.</li>
+        <li><strong>Rising leverage</strong> — the ₹60,000 Cr+ build will lift debt from today's comfortable base; interest and execution risk grow with it.</li>
+        <li><strong>Valuation</strong> — ~28× P/E and ~3.6× book price in success; a stumble in the ramp or a soft gas patch bites.</li>
+        <li><strong>Building outside its comfort zone</strong> — large RE, pumped storage and out-of-state coal are further from the home-turf discom expertise.</li>
+        <li><strong>Regulatory dependence</strong> — the annuity relies on regulators granting fair returns and timely true-ups; adverse orders or franchise-term disputes hurt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Torrent Power is a <strong>high-quality regulated utility using a rock-solid distribution annuity to fund a credible clean-energy growth pivot</strong> — and it's doing it from a position of unusual financial strength for the sector. The business risk in the core is genuinely low; the <em>valuation, funding and execution</em> risks in the growth layer are what matter. The story over the next few years will be told in a handful of numbers: the <strong>pace of renewable + storage commissioning</strong> (is the ~10 GW / 3 GW pipeline on track?), the <strong>net-debt/EBITDA trajectory</strong> (is the build affordable?), and the <strong>gas/merchant contribution</strong> (does it swing back up or keep dragging?). Get those right and a premium multiple on a rare quality utility is defensible; stumble on the build or the leverage, and a ~28× stock has room to cool. The safe half of Torrent is as good as it gets in Indian power; the whole thesis rides on the ambitious half.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Torrent Power Ltd — FY26 &amp; Q4 FY26 results media release (May 2026), torrentpower.com.</li>
+    <li>SolarQuarter — "Torrent Power Reports FY26 Results, Announces Expansion Across Renewable, Thermal and Storage Energy Segments" (May 2026).</li>
+    <li>Business Standard — "Torrent Power Q4 FY26 results: Net profit declines 70% to ₹318 crore"; "…net profit declines 69.97% in the March 2026 quarter" (generation segment EBIT detail).</li>
+    <li>Screener.in — Torrent Power Ltd, consolidated financials, valuation, borrowings, promoter holding, EPS ₹47.95.</li>
+    <li>CRISIL Ratings — Torrent Power Limited rating rationale (Feb 2026): distribution RoE 14–15.5%, ~70% of EBITDA from regulated business, licensed/franchise footprint, leverage.</li>
+    <li>Mercom India — "Torrent Power Raises ₹35 Billion (₹3,500 Cr) in Qualified Institutional Placement" (₹1,503/share; group's first equity raise in ~30 years).</li>
+    <li>Torrent Power Q4 FY26 earnings conference-call transcript (13 May 2026), torrentpower.com — capex, distribution, gas &amp; renewables commentary.</li>
+    <li>Univest / TheMachineMaker / InvestyWise — FY26 revenue ₹28,966 Cr, EBITDA ₹5,864 Cr, PAT ₹2,469 Cr, dividend ₹20, net-debt/equity 0.67×, net-debt/EBITDA 2.06×.</li>
+    <li>Electrical Mirror / Whalesbook — Torrent Power to acquire Nabha Power (1,400 MW coal) from L&amp;T for EV ₹6,889 Cr; PLF ~94%.</li>
+    <li>tndindia / Power Line / Construction World — ₹60,000 Cr+ FY26–32 capex; ~3.8 GWp RE under implementation (~₹24–28k Cr); 3 GW pumped storage (Raigad, ~₹14,000 Cr, SCOD Oct 2028); Khavda/Solapur transmission wins.</li>
+    <li>SolarQuarter / scanx — distribution losses 2.33% (licensed), top-ranked among 65 DISCOMs; green-hydrogen 18 KTPA PLI capacity.</li>
+    <li>CRISIL / company disclosures — franchise turnarounds: Agra ~59%→~7% AT&amp;C, SMK ~45%→~28%; Bhiwandi first-ever franchise.</li>
+    <li>Wikipedia / Torrent group — corporate history (AEC/SEC acquisition 1997, TPL formation 2006), founder U. N. Mehta, Mehta-family ownership.</li>
+    <li>Trendlyne / Groww / Business Today — market cap ~₹69,000–71,500 Cr, price ~₹1,366, P/E ~28×, ROE ~13.2%, dividend yield ~1.5% (mid-2026).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; segment figures are indicative and some capex/pipeline numbers are guidance that may change. Torrent Power is a distinct company from Torrent Pharmaceuticals (same promoter group). Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "TORNTPOWER";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Update will then trigger an on-demand, incremental refresh of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Update'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Update';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
