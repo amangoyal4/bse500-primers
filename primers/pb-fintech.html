@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PB Fintech (Policybazaar &amp; Paisabazaar) — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F5F7;
+    --paper-2:#F9FBFC;
+    --card:#FFFFFF;
+    --ink:#152230;
+    --ink-soft:#4C5E6E;
+    --ink-faint:#8395A3;
+    --brand:#0E6E8C;          /* Policybazaar trust-teal / insurance blue */
+    --brand-bright:#1497BE;   /* brighter cyan-teal accent */
+    --gold:#D98A2B;           /* warm amber - accent / premium */
+    --lime:#3FA9A0;           /* soft teal-green for charts */
+    --sky:#4A90C4;            /* trust blue - credit / Paisabazaar */
+    --violet:#7C6FC0;         /* new initiatives */
+    --coral:#D8654E;          /* risk / regulatory */
+    --line:#D7E0E6;
+    --line-soft:#E6EDF1;
+    --good:#0E8F6E;
+    --bad:#C24A32;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E6F4F8;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .provenance{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:20px;padding:7px 0 0;border-top:1px dashed var(--line);}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:22px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E3;border:1px solid #EFD9B4;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F4F9FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 96px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E6EEF1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0E6E8C,#1497BE);}
+  .fill.gold{background:linear-gradient(90deg,#D98A2B,#E7A854);}
+  .fill.lime{background:linear-gradient(90deg,#2E8F87,#3FA9A0);}
+  .fill.sky{background:linear-gradient(90deg,#4A90C4,#6AA8D6);}
+  .fill.violet{background:linear-gradient(90deg,#7C6FC0,#9A88D2);}
+  .fill.coral{background:linear-gradient(90deg,#D8654E,#E4826E);}
+  .fill.bad{background:linear-gradient(90deg,#C24A32,#D86A52);}
+  .fill.ink{background:linear-gradient(90deg,#33475A,#4C5E6E);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 66px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.acq{background:var(--gold);}
+  .node.trade{background:var(--brand);}
+  .node.float{background:var(--sky);}
+  .node.wealth{background:var(--violet);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E3;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF6F9;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Insurance-marketplace 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> How PB Fintech makes money</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The under-penetration tailwind</a></li>
+    <li><a href="#p5"><span class="n">05</span> The renewal annuity</a></li>
+    <li><a href="#p6"><span class="n">06</span> The path to profitability</a></li>
+    <li><a href="#p7"><span class="n">07</span> Paisabazaar &amp; New Initiatives</a></li>
+    <li><a href="#p8"><span class="n">08</span> The data-brand-scale moat</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> Regulation &amp; the rivals</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: POLICYBZR · BSE: 543390</span>
+    <span class="tag gold">Built for a non-finance reader</span>
+  </div>
+  <h1>PB Fintech, <em>India's insurance marketplace, now profitable</em></h1>
+  <p class="dek">A complete walk through PB Fintech — the parent of Policybazaar (India's largest online insurance marketplace) and Paisabazaar (its online credit marketplace). How a business that helps you <em>compare and buy</em> insurance earns a commission on every rupee of premium; why insurance distribution is a capital-light, high-margin, structural-growth business as India's very low insurance penetration rises; how a company that burned ₹800 Cr a year turned profitable; and why the renewals of policies already sold quietly compound into an annuity that is the real prize.</p>
+
+  <div class="provenance">Auto-generated · figures self-verified against public sources · not investment advice</div>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹6,794 <small>Cr</small></div><div class="l">Revenue (FY26) · +37%</div></div>
+    <div class="cell"><div class="v">₹29,934 <small>Cr</small></div><div class="l">Total premium sourced · +42%</div></div>
+    <div class="cell"><div class="v">₹670 <small>Cr</small></div><div class="l">PAT (FY26) · +115%</div></div>
+    <div class="cell"><div class="v">~₹73,700 <small>Cr</small></div><div class="l">Market cap (Jun '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">3 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Live updates coming soon.</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹6,794 Cr (+37%), PAT ₹670 Cr (+115%), adjusted EBITDA ₹725 Cr (+118%); total insurance premium sourced ₹29,934 Cr (+42%); core insurance premium ₹20,390 Cr (+39%) at ~21% adjusted-EBITDA margin; renewal ARR ~₹1,126 Cr (+63%); Paisabazaar EBITDA-positive in Q4; PB Healthcare seed of $218M; New Initiatives adj-EBITDA margin −9%→−4%.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead"><strong>PB Fintech Limited</strong> is the listed parent of two of India's best-known money brands: <strong>Policybazaar</strong> — the online marketplace where crores of Indians <em>compare and buy</em> life, health and motor insurance — and <strong>Paisabazaar</strong> — the online marketplace where they compare and take loans and credit cards, and check their credit score. PB Fintech does <em>not</em> sell you a product of its own: it is a <strong>digital distributor</strong> that connects consumers to insurers and lenders and earns a <strong>fee/commission</strong> for every policy or loan it helps source. It listed in November 2021 (NSE: POLICYBZR · BSE: 543390).</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is, first and foremost, an insurance marketplace.</strong> In FY26 (year to March 2026), PB Fintech's platforms sourced <strong>₹29,934 Cr of insurance premium</strong> (up 42%) for its insurer partners, and Policybazaar is India's largest online insurance aggregator by a wide margin. On that flow it booked <strong>₹6,794 Cr of revenue</strong> (up 37%). Insurance broking is <strong>~92% of quarterly operating revenue</strong> — this is an insurance-distribution business with a credit business attached.</li>
+    <li><strong>It finally makes money — and the profit is inflecting fast.</strong> After years of heavy losses (−₹833 Cr in FY22), FY26 delivered <strong>₹670 Cr of net profit</strong> (up 115%) and <strong>₹725 Cr of adjusted EBITDA</strong> (up 118%). The mechanism is simple: the high-margin "Core" (Policybazaar + Paisabazaar) is scaling and throwing off operating leverage, while smaller "New Initiatives" still absorb investment. PAT margin roughly doubled to ~10%.</li>
+    <li><strong>Its two biggest levers are both structural.</strong> Upside: India is <em>chronically under-insured</em>, so the pool of premium to distribute grows for a decade — and every policy sold seeds a high-margin <strong>renewal annuity</strong>. Downside: it is a <strong>richly-valued</strong> stock (~110× earnings) whose commissions the regulator, IRDAI, could one day cap. The whole debate is durability versus price.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of Policybazaar as the <strong>"price-comparison website for insurance"</strong> — the place you go to line up ten health-insurance plans side by side, understand them without a pushy agent, and buy the one you want. PB Fintech doesn't carry the risk on that policy (the insurer does); it's the <em>matchmaker</em>, and the insurer pays it a slice of your premium for bringing the customer. That is a beautiful business model when it works at scale: it needs very little capital (no factories, no risk on its books), the margins are high, and — the clever part — when you <em>renew</em> that policy next year, PB often earns a commission again, without spending a rupee to re-acquire you. Stack up years of renewals and you build a compounding, annuity-like income. Paisabazaar does the same thing for loans and credit cards. The reason the stock is exciting <em>and</em> nerve-wracking: the runway is enormous (most Indians own almost no insurance), but the price already assumes years of that runway is delivered, and one regulator holds a lever over the commissions that are its lifeblood.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Insurance-marketplace 101: how the model actually works</h2></div>
+  <p class="part-sub">No finance degree needed — just the handful of terms that explain the whole business.</p>
+
+  <p class="lead">Policybazaar sits between two parties: <strong>consumers</strong> who want insurance, and <strong>insurers</strong> who want to sell it. It is a <strong>web-aggregator / insurance broker</strong> — a licensed intermediary that helps you compare and buy, and gets paid by the insurer, not by you. To read PB Fintech's numbers, you only need six words. Get these and every figure in this primer clicks into place.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only vocabulary you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters for PB Fintech)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Premium sourced</td><td>The <em>total value of insurance</em> bought by customers through the platform — the headline volume metric. FY26: <strong>₹29,934 Cr</strong> (+42%). Bigger premium flow → bigger commissions → bigger revenue. This is the number to watch, like "GMV" for an e-commerce firm.</td></tr>
+      <tr><td class="t-strong">Commission / take rate</td><td>The insurer pays PB a percentage of the premium it sources. That percentage is the <em>take rate</em>. Revenue (₹6,794 Cr) ÷ premium (₹29,934 Cr) implies a blended take of ~20–23% — high for protection products, lower for savings/investment-linked policies.</td></tr>
+      <tr><td class="t-strong">Protection vs savings</td><td><em>Protection</em> = pure health &amp; term life (you pay a premium purely for cover). <em>Savings/ULIP</em> = insurance-cum-investment. Protection is smaller-ticket but far <strong>higher-margin and higher-commission</strong> — and it is PB's fastest-growing line (+57% in FY26).</td></tr>
+      <tr><td class="t-strong">Renewal / trail commission</td><td>When a customer <em>renews</em> a previously-sold policy, the insurer often pays PB a commission again — with almost no new cost to acquire. This recurring, high-margin income is the <strong>renewal annuity</strong> (see §05). FY26 renewal run-rate: ~₹1,126 Cr (+63%).</td></tr>
+      <tr><td class="t-strong">Core vs New Initiatives</td><td><em>Core</em> = the mature Policybazaar + Paisabazaar marketplaces (profitable). <em>New Initiatives</em> = the investment bets — PB Partners, UAE, healthcare, etc. (still loss-making but improving). The whole profit story is Core scaling faster than New burns (§06).</td></tr>
+      <tr><td class="t-strong">Web-aggregator / broker</td><td>PB's licence type. It is regulated by <strong>IRDAI</strong> (the insurance regulator). Its main entity holds a <em>composite insurance broker</em> licence (upgraded in 2024), letting it place life, general <em>and</em> reinsurance business.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "distribution" is a lovely business — and why "manufacturing" isn't PB's game</div>
+    <p>An insurer (like HDFC Life or Star Health) is an <em>insurance manufacturer</em>: it takes your premium, carries the risk that you'll claim, and must hold large amounts of capital against that risk. PB Fintech deliberately does <strong>none of that</strong>. It is pure <em>distribution</em>: it finds the customer, helps them choose, and hands the policy to the insurer, keeping a commission. Because it carries no insurance risk and needs no risk capital, distribution is <strong>capital-light</strong> — PB can grow premium sourced without raising huge amounts of money, and its returns on capital can be very high once it covers its fixed costs. The trade-off is that PB is dependent on insurers' willingness to pay commissions — which is exactly why the regulatory debate in §10 matters so much. (PB has said it <em>could</em> consider an insurance-manufacturing licence if its distribution model were ever disrupted — but that is a contingency, not the current strategy, and its board has not taken it up.)</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>How PB Fintech actually makes money</h2></div>
+  <p class="part-sub">Follow the rupee — the revenue mix is the single most useful thing to understand here.</p>
+
+  <p class="lead">PB Fintech's revenue is overwhelmingly <strong>insurance commission</strong>. In Q4 FY26, insurance broking was <strong>~₹1,901 Cr of ₹2,061 Cr operating revenue — about 92%</strong>. The rest is Paisabazaar's credit fees, plus a modest stream of treasury income earned on the company's large cash pile. Understanding this mix tells you exactly what makes the numbers move: it moves with <em>premium sourced</em>, and above all with the <em>mix</em> of high-commission protection business.</p>
+
+  <div class="chart">
+    <div class="c-title">Where the revenue comes from (FY26, approximate)</div>
+    <div class="c-sub">Share of revenue by source — insurance commission is the engine</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Insurance commission<small>Policybazaar broking</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~88%</div></div>
+      <div class="bar-row"><div class="blab">Credit marketplace<small>Paisabazaar fees</small></div><div class="track"><span class="fill sky" style="width:9%"></span></div><div class="bval">~7%</div></div>
+      <div class="bar-row"><div class="blab">Treasury / other income<small>interest on the cash pile</small></div><div class="track"><span class="fill gold" style="width:6%"></span></div><div class="bval">~5%</div></div>
+    </div>
+    <div class="legend"><span>Shares are approximate, blended from FY26 disclosures. The takeaway: this is an <em>insurance-distribution</em> business first — the credit marketplace is a meaningful but much smaller second engine, and treasury income is a bonus on the balance-sheet cash.</span></div>
+  </div>
+
+  <h3>The three revenue machines, decoded</h3>
+  <ul class="clean">
+    <li><strong>Insurance commission (the core engine)</strong> — for every policy sourced, the insurer pays PB a commission on the premium. New protection business (health &amp; term) carries the fattest commissions and is growing fastest; savings/ULIP policies are bigger-ticket but thinner-margin. This line is a function of <em>premium sourced × take rate × protection mix</em>.</li>
+    <li><strong>Renewal commission (the compounding tail)</strong> — the highest-quality slice of the above. Once a policy is on the books, renewals earn commission again year after year with near-zero incremental cost. This is why PB's margins <em>rise</em> as the book ages (see §05).</li>
+    <li><strong>Paisabazaar credit fees</strong> — lenders pay PB a fee when it sources a loan or credit-card customer. PB also earns from its free credit-score service (which brings customers in cheaply) and value-added services. In FY26 Paisabazaar disbursed ~₹31,000 Cr of credit and turned EBITDA-positive again in Q4.</li>
+  </ul>
+
+  <div class="note gold"><b>The one-line quality map:</b> not all revenue is equal. <strong>New protection premium</strong> is the most valuable (high commission + it seeds future renewals); <strong>renewals</strong> are the most profitable (almost pure margin); <strong>savings/ULIP</strong> is bulky but thin; <strong>treasury income</strong> is a by-product of the cash hoard. Watch the <em>protection mix</em> and the <em>renewal run-rate</em> each quarter — they, more than headline revenue, tell you whether the earnings quality is improving.</div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">From a 2008 comparison site to a listed, promoter-less, cash-rich fintech.</p>
+
+  <p class="lead">PB Fintech is a <strong>founder-built, professionally-managed</strong> company with an unusual ownership quirk: <em>it has no "promoter" at all</em>. Founder-CEO <strong>Yashish Dahiya</strong> (ex-Bain, ex-ebookers) and co-founder <strong>Alok Bansal</strong> built Policybazaar from 2008 and Paisabazaar from 2014, but by listing they held modest stakes classified as <em>public</em> — so the company is legally "professionally managed with no identifiable promoter." Ownership sits with a broad base of institutions.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">2008</div><div class="ev">Yashish Dahiya, Alok Bansal &amp; team launch <strong>Policybazaar.com</strong> — India's first serious insurance price-comparison site, when buying insurance meant a pushy agent and no transparency.</div></li>
+    <li><div class="yr">2014</div><div class="ev">Launch <strong>Paisabazaar.com</strong> — the same comparison model applied to loans, credit cards and free credit scores.</div></li>
+    <li><div class="yr">2015–20</div><div class="ev">Big venture rounds from <strong>SoftBank, Tencent, Info Edge (Naukri), Tiger Global</strong> and others fund a decade of growth — and heavy losses to build scale and brand.</div></li>
+    <li class="major"><div class="yr">Nov 2021</div><div class="ev"><strong>IPO</strong> — PB Fintech lists on NSE &amp; BSE (15 Nov 2021), raising ~₹5,700 Cr in one of the year's marquee tech listings; leaves the company very cash-rich.</div></li>
+    <li><div class="yr">FY24</div><div class="ev"><strong>First full-year profit</strong> (~₹64 Cr PAT) — the loss-making marketplace crosses into the black as the Core scales.</div></li>
+    <li><div class="yr">Feb 2024</div><div class="ev">Policybazaar Insurance Brokers gets IRDAI nod to become a <strong>composite insurance broker</strong> (adds reinsurance) — a licence upgrade widening the addressable market.</div></li>
+    <li><div class="yr">Jan–May 2026</div><div class="ev">Incorporates <strong>PB Healthcare Services</strong>; the venture raises a <strong>$218M seed</strong> led by General Catalyst — one of India's largest seed rounds — signalling a big new bet.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev"><strong>₹6,794 Cr revenue, ₹670 Cr PAT</strong> (+115%); premium sourced ₹29,934 Cr; adjusted EBITDA ₹725 Cr; Paisabazaar back to EBITDA-positive; UAE turns profitable.</div></li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The "no promoter" structure — why it matters</div>
+    <p>Most large Indian companies have a <em>promoter</em> — a founding family or group that holds a controlling stake and effectively runs the show. PB Fintech does not: after years of dilution across many venture rounds and the IPO, no single shareholder or founder holds a controlling block, and Dahiya and Bansal's stakes are counted as ordinary public holdings. The company is therefore <strong>"professionally managed with no identifiable promoter."</strong> The upside is strong institutional governance and no promoter-pledging or related-party overhang. The watch-item is that a widely-held company can see persistent selling by early venture backers (SoftBank, Tencent and others have trimmed over time — Tencent fully exited, and the founders themselves have sold small blocks), which creates a supply overhang even as the business does well.</p>
+  </div>
+
+  <h3>Ownership &amp; balance sheet</h3>
+  <ul class="clean">
+    <li><strong>Institution-owned</strong> — as of early 2026, <strong>FIIs held ~40% and DIIs ~37%</strong>, with the public/retail the rest. The old venture backers (SoftBank, Tencent, Info Edge, Tiger Global) have progressively reduced; Tencent exited its residual stake via a block deal.</li>
+    <li><strong>Founder-operators still at the helm</strong> — Yashish Dahiya (Chairman &amp; Group CEO) and Alok Bansal continue to run the business they built; alignment is via ESOPs rather than a promoter block (which is why <em>ESOP cost</em> is a real line item — see §09).</li>
+    <li><strong>Fortress balance sheet</strong> — essentially <strong>net-cash</strong>, with a large treasury (investments of a few thousand crore) from the IPO and now internal cash generation, and minimal borrowings. That cash both funds the New Initiatives and earns treasury income.</li>
+  </ul>
+</section>
+
+<!-- 04 — BESPOKE: the structural tailwind -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>India's insurance under-penetration — the decade-long tailwind</h2></div>
+  <p class="part-sub">The first defining force — why the pool of premium PB distributes should grow for years.</p>
+
+  <p class="lead">The single best reason to own PB Fintech for the long run is that <strong>India is chronically under-insured</strong>. Insurance penetration — premiums as a share of GDP — sits far below developed-market levels, and health-insurance coverage in particular is thin: a large majority of Indians have little or no private health cover, exposing families to catastrophic medical bills. As incomes rise, awareness grows (COVID was a wake-up call), and the middle class expands, the <strong>pool of insurance premium that someone has to distribute grows for a decade or more</strong> — and Policybazaar is the largest, most trusted online on-ramp to that pool.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">₹29,934 Cr</div><div class="msl">Premium PB sourced in FY26 (+42%) — the flow it earns commission on, still a small slice of the total market</div></div>
+    <div class="ms"><div class="msv">+57%</div><div class="msl">FY26 growth in new protection (health &amp; term) premium — the highest-margin, fastest-growing line</div></div>
+    <div class="ms green"><div class="msv">Low</div><div class="msl">India's insurance penetration vs developed markets — years of structural runway left</div></div>
+  </div>
+
+  <p>The logic is structural. Insurance is a "sold, not bought" product in India — historically pushed by agents, opaque and distrusted. Policybazaar changed that: it made buying insurance <strong>transparent, comparable and self-service</strong>, which is exactly what a rising, digitally-native middle class wants. Each year brings a fresh cohort of first-time buyers of health and term cover — and PB captures a large share of the online channel. Even if any one policy is small, the sheer <em>number</em> of new policies, and the <em>upgrade</em> of families from no cover to real cover, compounds premium sourced over time.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the tailwind favours PB specifically, not just "insurance"</div>
+    <p>India's insurers will grow regardless. What makes PB Fintech a <em>leveraged</em> play on the theme is that the growth is increasingly <strong>online and comparison-led</strong>, and PB owns that channel. When a young family finally decides to buy health cover, the modern default is to open Policybazaar, compare plans, and buy — not to wait for an agent. As penetration rises, more of the <em>incremental</em> premium flows through digital marketplaces, and PB's scale, brand and data (see §08) make it the natural winner of that channel shift. So PB benefits twice: from the market growing, <em>and</em> from distribution moving online where it is dominant. The risk (§04's mirror image) is that penetration rises more slowly than the ~40% premium growth the market is pricing in — or that the highest-margin protection segment, where PB is strongest, faces its own competitive or regulatory pressures.</p>
+  </div>
+</section>
+
+<!-- 05 — BESPOKE: the renewal annuity -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The renewal annuity — the quiet compounding machine</h2></div>
+  <p class="part-sub">The second defining force — why policies already sold are the real prize.</p>
+
+  <p class="lead">Here is the mechanism that separates a <em>great</em> insurance-distribution business from a merely good one. When Policybazaar sources a policy, it earns a commission that year. But many policies — especially annual health and term cover — get <strong>renewed year after year</strong>, and on those renewals PB frequently earns a <strong>trail commission again, with almost no cost to acquire the customer a second time</strong>. Every year of new business therefore lays down a fresh layer of high-margin, recurring renewal income on top of last year's — an <strong>annuity that compounds</strong>.</p>
+
+  <div class="chart">
+    <div class="c-title">The renewal book is inflecting</div>
+    <div class="c-sub">Insurance renewal revenue, annualised run-rate (₹ Crore, approximate)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25 exit ARR<small>renewal run-rate a year ago</small></div><div class="track"><span class="fill ink" style="width:61%"></span></div><div class="bval">~₹690 Cr</div></div>
+      <div class="bar-row"><div class="blab">FY26 exit ARR<small>renewal run-rate now, +63% YoY</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~₹1,126 Cr</div></div>
+    </div>
+    <div class="legend"><span>Figures approximate, blended from FY26 disclosures. The point is the <em>trajectory</em>: renewal income is compounding at 60%+ and is almost pure margin — a growing floor under the P&amp;L that requires no fresh customer-acquisition spend.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why renewals change the economics entirely</div>
+    <p>Acquiring an insurance customer is expensive — you pay for advertising, for the comparison technology, for the sales support. In year one, a chunk of the commission is eaten by that acquisition cost, so a <em>new</em> customer isn't very profitable. But in year two, three and four, when that same customer renews, PB earns commission again <strong>without spending anything to win them back</strong> — the acquisition cost was already paid. So renewal income drops almost entirely to the bottom line. As PB's book of live policies grows, this stack of renewals gets bigger every year and pulls the whole company's margin up. It is the same reason a subscription software business or an asset manager is prized: <strong>recurring revenue that compounds is worth far more than one-off revenue</strong>. The renewal annuity is the single most under-appreciated reason PB's profitability is inflecting — and the reason the business gets structurally <em>more</em> profitable the longer it operates, even before it grows a single new customer.</p>
+  </div>
+
+  <div class="note gold"><b>Read it as a floor that keeps rising:</b> even in a year where new-business growth slowed, the renewal book — now running above ₹1,100 Cr and growing 60%+ — would keep throwing off high-margin cash. That recurring base is what turns PB from a "growth story that might make money someday" into a business with a hard, compounding profit floor underneath the growth.</div>
+</section>
+
+<!-- 06 — BESPOKE: the path to profitability -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The path to profitability — Core vs New Initiatives</h2></div>
+  <p class="part-sub">The third and defining force — how a loss-making marketplace turned profitable.</p>
+
+  <p class="lead">The defining investment story of PB Fintech is its <strong>turn from cash-burn to profit</strong>. For years it lost hundreds of crore a year building scale and brand. The mechanism of the turnaround is worth understanding precisely, because it explains both the recent profit surge and where profits go from here: PB splits itself into <strong>"Core"</strong> (the mature Policybazaar + Paisabazaar marketplaces) and <strong>"New Initiatives"</strong> (the growth bets it is still funding). The Core is now solidly profitable and scaling; New Initiatives lose money but are narrowing their losses fast. Profit = Core profit growing faster than New burns.</p>
+
+  <div class="chart">
+    <div class="c-title">From deep losses to real profit — PAT trajectory</div>
+    <div class="c-sub">Consolidated net profit / (loss) after tax (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">−833</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill bad" style="width:59%"></span></div><div class="bval">−488</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill lime" style="width:8%"></span></div><div class="bval">+64</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill lime" style="width:42%"></span></div><div class="bval">+353</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:80%"></span></div><div class="bval">+670</div></div>
+    </div>
+    <div class="legend"><span>The inflection is unmistakable: two years of ~₹500–800 Cr losses, then a clean crossover in FY24 and a rapid ramp to ₹670 Cr in FY26 (+115% YoY). Bar widths scale the <em>absolute</em> figure (loss bars from the left).</span></div>
+  </div>
+
+  <h3>The two-speed engine, explained</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Core vs New Initiatives — the profit machine and the investment machine</caption>
+    <thead><tr><th>Segment</th><th>What's in it</th><th>FY26 economics &amp; role</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Core online insurance</td><td>Policybazaar's own-platform insurance sales (health, term, motor, savings) — the mature, dominant marketplace.</td><td>Premium ~₹20,390 Cr (+39%); adjusted-EBITDA margin ~<strong>21%</strong>. The profit engine — scaling with strong operating leverage as fixed costs are spread over more premium.</td></tr>
+      <tr><td class="t-strong" style="color:var(--sky)">Core online credit</td><td>Paisabazaar's own-platform loans, credit cards &amp; credit-score business.</td><td>Turned <strong>EBITDA-positive again in Q4 FY26</strong>; FY26 disbursals ~₹31,000 Cr, 3.5 lakh cards. A recovering second Core engine.</td></tr>
+      <tr><td class="t-strong" style="color:var(--violet)">New Initiatives</td><td>PB Partners (agent platform), PB UAE/international, PB for Business, PB Healthcare, and other bets.</td><td>FY26 revenue +43%; adjusted-EBITDA margin improved from <strong>−9% to −4%</strong>. Still loss-making, but the drag is shrinking fast; contains most of the optionality (§07).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Operating leverage — the "why" behind the sudden profits</div>
+    <p>Here is the crux, in plain English. A marketplace like Policybazaar has large <em>fixed</em> costs — the technology platform, the brand advertising, the salaried sales and support teams. Those costs don't rise much when it sources <em>more</em> premium. So once premium sourced crosses the level that covers those fixed costs, almost every extra rupee of commission drops to profit. That is <strong>operating leverage</strong>, and it is why PB's profit is growing <em>far faster</em> than its revenue (PAT +115% on revenue +37%): revenue is compounding, the cost base isn't, and the gap is pure profit. Add the near-zero-cost renewal income (§05) piling up on top, and you get an earnings line that inflects sharply upward once the business tips past break-even — exactly what FY24–FY26 shows. The strategic art is in the New Initiatives: management deliberately spends the Core's profits on new bets (UAE, healthcare, the agent platform), so <em>reported</em> profit is Core profit <em>minus</em> deliberate investment. If it ever wanted to maximise near-term profit, it could simply stop funding New Initiatives — the market therefore watches the New-Initiatives loss to judge how much "hidden" Core profit is being reinvested.</p>
+  </div>
+</section>
+
+<!-- 07 — BESPOKE: the two-marketplace platform + optionality -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Paisabazaar &amp; New Initiatives — the optionality</h2></div>
+  <p class="part-sub">The two-marketplace platform, plus the growth bets that could become the next Core.</p>
+
+  <p class="lead">PB Fintech is not <em>only</em> Policybazaar. It runs a <strong>second marketplace</strong> — Paisabazaar, for credit — and a portfolio of <strong>New Initiatives</strong> that use its capital, data and brand to open new fronts. None of these is large next to the insurance Core today, but together they are the story of how PB deploys its cash pile and hedges its single-product concentration.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The second marketplace and the growth bets</caption>
+    <thead><tr><th>Business</th><th>What it is</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--sky)">Paisabazaar (credit)</td><td>India's large online <strong>credit marketplace</strong> — compare &amp; take personal loans, credit cards, loans-against-property; plus a free credit-score service used by tens of millions.</td><td>The <em>same</em> comparison model as Policybazaar, applied to lending. ~₹31,000 Cr disbursed in FY26; EBITDA-positive again in Q4. The free credit score is a cheap top-of-funnel acquisition tool.</td></tr>
+      <tr><td class="t-strong" style="color:var(--violet)">PB Partners</td><td>An <strong>agent-aggregator platform</strong> — an app that lets India's small insurance advisors (POSPs) sell any insurer's products, with PB providing the tech, comparison and payout rails.</td><td>Reaches the <em>offline</em>, small-town market PB's website can't. Now <strong>400,000+ advisors</strong> across ~99% of India's pin codes — an enormous distribution footprint in Tier-4/5 towns.</td></tr>
+      <tr><td class="t-strong" style="color:var(--brand)">PB UAE / international</td><td>Policybazaar's model exported to the Gulf's insurance market.</td><td>UAE premium grew ~54% and the business turned <strong>profitable for the first time</strong> in FY26 — proof the model travels, and a template for further international expansion.</td></tr>
+      <tr><td class="t-strong" style="color:var(--gold)">PB Healthcare</td><td>A 2026 foray into healthcare delivery (hospitals/health services), housed in a new subsidiary.</td><td>Raised a <strong>$218M seed</strong> (led by General Catalyst) — one of India's biggest. A bold, capital-hungry adjacency that could deepen the health-insurance ecosystem (or prove a costly distraction).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Optionality vs. distraction — how to weigh the New Initiatives</div>
+    <p>Every New Initiative is the same bet in a different shape: <em>PB owns a giant base of consumers, insurer/lender relationships, data, and a trusted brand — can it use those assets to open a new, profitable business?</em> PB Partners is the most proven: it has quietly become one of India's largest insurance-advisor platforms and extends PB's reach into the offline, small-town market it couldn't otherwise serve. UAE is proof the comparison model exports. Paisabazaar is a real, recovering second marketplace. The wild card is <strong>PB Healthcare</strong> — moving from <em>distributing</em> insurance to actually <em>delivering</em> healthcare is a very different, far more capital-intensive game, and a $218M seed round signals real ambition <em>and</em> real spend. The bull reads all of this as <strong>free options on the Core's cash flow</strong>: cheap to try, huge if any one works. The bear reads it as <strong>a profitable core subsidising a scatter of loss-making experiments</strong> that dilute focus and defer profits. The honest answer: PB Partners and UAE have earned the benefit of the doubt; healthcare is unproven and worth watching closely.</p>
+  </div>
+</section>
+
+<!-- 08 — BESPOKE: the moat -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The data + brand + scale moat</h2></div>
+  <p class="part-sub">Why the dominant online insurance marketplace is hard to unseat.</p>
+
+  <p class="lead">Insurance-distribution economics reward the leader. Policybazaar's advantage isn't one thing — it's a <strong>reinforcing loop of brand, scale, data and insurer relationships</strong> that a challenger struggles to replicate. Understanding this loop is understanding why PB, not a newer entrant, keeps winning the online channel.</p>
+
+  <h3>The self-reinforcing flywheel</h3>
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">Policybazaar's moat — each stage makes the next cheaper and stronger</div>
+    <div class="flow-row">
+      <div class="node acq"><div class="ntag">Stage 1 · Brand</div><div class="nname">The default place to compare</div><div class="nwho">"Policybazaar" = insurance comparison. Low-cost, high-intent traffic.</div></div>
+      <div class="arrow">→</div>
+      <div class="node trade"><div class="ntag">Stage 2 · Scale</div><div class="nname">Most premium sourced</div><div class="nwho">Biggest volume → best commissions &amp; product access from insurers.</div></div>
+      <div class="arrow">→</div>
+      <div class="node float"><div class="ntag">Stage 3 · Data</div><div class="nname">Best pricing &amp; matching</div><div class="nwho">Millions of quotes/claims → sharper comparison, conversion &amp; risk insight.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wealth"><div class="ntag">Stage 4 · Renewals</div><div class="nname">Compounding annuity</div><div class="nwho">A growing renewal book funds more brand spend — back to Stage 1.</div></div>
+    </div>
+    <div class="flow-note">The loop pays for itself: renewals fund the brand, the brand brings cheap traffic, scale wins better insurer terms, and data improves conversion — which a sub-scale rival cannot match on unit economics.</div>
+  </div>
+
+  <h3>Why the moat holds — three reinforcing effects</h3>
+  <ul class="clean">
+    <li><strong>Brand &amp; intent.</strong> For a huge share of Indians, "Policybazaar" <em>is</em> the verb for comparing insurance. That brand recall means high-intent visitors arrive largely for free (organic/word-of-mouth), giving PB a structurally lower customer-acquisition cost than a challenger who must buy every click.</li>
+    <li><strong>Scale &amp; insurer relationships.</strong> Because PB sources the most premium, insurers give it the best commercial terms, the widest product access, and dedicated support. A new entrant can't offer insurers the same volume, so can't win the same terms — a chicken-and-egg problem that protects the incumbent.</li>
+    <li><strong>Data.</strong> Years of quotes, purchases, renewals and claims give PB a data advantage in matching customers to the right product, pricing, and predicting conversion — improving both the customer experience and its own economics in ways a smaller rival can't replicate.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why this is a genuine network effect, not just "being big"</div>
+    <p>The moat is self-reinforcing, which is what makes it durable. More customers → more premium sourced → better terms and wider product shelf from insurers → a better, cheaper comparison for the next customer → more customers. Layer the renewal annuity (§05) on top and the leader's advantage compounds: its growing renewal book funds the brand advertising that keeps acquisition cheap, which a sub-scale challenger — who has no renewal base and must pay full price for every new customer — simply cannot afford to match. That is why online insurance distribution has tended toward a <strong>winner-takes-most</strong> shape, and why Policybazaar's lead has widened rather than eroded. The caveat: the moat protects PB against <em>other marketplaces</em>, but not necessarily against insurers building their own direct-online channels, or against a regulator changing the commission economics for everyone at once (§10).</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Fast growth, a sharp profit inflection — and a price that assumes both continue.</p>
+
+  <p class="lead">PB Fintech's financials read like a fintech that just crossed the profitability line: rapid revenue growth, a profit line inflecting far faster than revenue, a fortress balance sheet — and a valuation that already prices in years of that continuing. The debate is not whether the business is good; it clearly is. It is whether ~110× earnings is the right price for a company whose commissions a regulator could reshape.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue from operations (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill ink" style="width:21%"></span></div><div class="bval">1,425</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:38%"></span></div><div class="bval">2,558</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:51%"></span></div><div class="bval">3,438</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:73%"></span></div><div class="bval">4,977</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">6,794</div></div>
+    </div>
+    <div class="legend"><span>Revenue has compounded ~48% a year over four years, while losses turned to profit — a rare combination of scale <em>and</em> a profit inflection.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">₹725 Cr</div><div class="msl">FY26 adjusted EBITDA (+118% YoY) — the profit engine ramping via operating leverage</div></div>
+    <div class="ms green"><div class="msv">₹670 Cr</div><div class="msl">FY26 PAT (+115%); ~10% PAT margin, roughly double FY25's</div></div>
+    <div class="ms red"><div class="msv">~110×</div><div class="msl">Trailing P/E (Jun '26) — a very rich multiple with almost no margin for error</div></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Snapshot financials (consolidated)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY24</th><th class="num">FY25</th><th class="num">FY26</th></tr></thead>
+    <tbody>
+      <tr><td>Revenue (₹ Cr)</td><td class="num">3,438</td><td class="num">4,977</td><td class="num t-strong">6,794</td></tr>
+      <tr><td>Premium sourced (₹ Cr)</td><td class="num">~15,600</td><td class="num">~21,100</td><td class="num t-strong">29,934</td></tr>
+      <tr><td>Adjusted EBITDA (₹ Cr)</td><td class="num">~110</td><td class="num">332</td><td class="num t-strong">725</td></tr>
+      <tr><td>PAT (₹ Cr)</td><td class="num">64</td><td class="num">353</td><td class="num t-strong">670</td></tr>
+      <tr><td>PAT margin</td><td class="num">~2%</td><td class="num">~6%</td><td class="num t-strong">~10%</td></tr>
+      <tr><td>EPS (₹)</td><td class="num">~1.4</td><td class="num">7.75</td><td class="num t-strong">14.48</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the ~110× multiple (and the ESOP asterisk)</div>
+    <p>At a market cap of roughly <strong>₹73,700 Cr on ~₹670 Cr of FY26 profit</strong>, PB Fintech trades around <strong>110× trailing earnings</strong> — the kind of multiple reserved for companies expected to compound profits rapidly for many years. That only makes sense if you believe: (1) premium sourced keeps growing ~40% as under-penetration closes; (2) operating leverage and the renewal annuity keep expanding margins; and (3) IRDAI doesn't cap commissions. Bulls argue that with profit inflecting (PAT +115%), a renewal annuity compounding at 60%+, and a genuine moat, PB will "grow into" the multiple — and note that reported profit is <em>understated</em> because New-Initiatives investment and large <strong>ESOP costs</strong> depress it (strip those out and the "true" Core earning power is higher). Bears counter that <em>even on the most generous adjusted earnings</em> the stock is expensive, that ESOP charges are a real, recurring cost to shareholders (not a one-off to be waved away), and that a single adverse IRDAI circular on commissions could reset the whole thesis. A stock this richly priced can de-rate hard on any disappointment — which is why §10's regulatory question matters so much to the valuation.</p>
+  </div>
+
+  <div class="note gold"><b>One thing to read carefully:</b> PB reports <em>adjusted</em> EBITDA that <strong>excludes ESOP (share-based) costs</strong>. Those costs are large and recurring — they dilute shareholders every year — so "adjusted EBITDA" flatters the picture. When comparing PB to a conventional company, remember that a chunk of employee compensation is being paid in equity and stripped out of the headline profitability figure.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Regulation &amp; the rivals — the rich-valuation debate</h2></div>
+  <p class="part-sub">The fourth defining force — the IRDAI commission question and the competitive set.</p>
+
+  <p class="lead">Because PB Fintech's revenue <em>is</em> commission on insurance premium, the two things that can most damage it are (a) a regulator changing how much commission distributors may earn, and (b) rivals or insurers competing that commission away. Both are live, and both feed the central valuation debate: is a premium-multiple, profitable fintech worth it, given a regulator holds a lever over its lifeblood?</p>
+
+  <h3>The regulatory question (the "China" of this story)</h3>
+  <ul class="clean">
+    <li><strong>IRDAI &amp; commission caps.</strong> India's insurance regulator, IRDAI, oversees intermediaries like Policybazaar. After a 2026 amendment to the Insurance Act gave the regulator power to cap commissions/remuneration, there is a live risk it could <strong>limit the commissions insurers pay distributors</strong>. Because commission <em>is</em> PB's revenue, any cap would hit it directly — the stock has already sold off on such fears. Founder Yashish Dahiya has publicly called commission caps a potential "existential threat" to distributors, and floated that PB could seek an insurance-<em>manufacturing</em> licence if its distribution model were disrupted (a contingency, not a plan).</li>
+    <li><strong>Web-aggregator / broker rules.</strong> PB operates under IRDAI's intermediary framework; changes to disclosure, conduct, or the aggregator/broker regime can raise compliance costs or reshape the model. PB's 2024 upgrade to a <em>composite broker</em> licence widened what it can distribute, which cuts the other way — regulation isn't only a headwind.</li>
+  </ul>
+
+  <h3>The competitive set</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Who competes with Policybazaar &amp; Paisabazaar</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs PB Fintech</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Policybazaar</td><td>The dominant online insurance marketplace; the reference brand for comparison.</td><td><em>This company.</em> Widest reach, strongest brand, largest premium sourced, growing renewal annuity.</td></tr>
+      <tr><td class="t-strong">Insurers' direct channels</td><td>HDFC Life, Star Health, ICICI Lombard etc. building their own online direct-to-consumer sales.</td><td>The structural competitor — if insurers sell direct online, they bypass PB's commission. So far PB's comparison &amp; convenience keep customers coming to the marketplace.</td></tr>
+      <tr><td class="t-strong">Other aggregators &amp; fintechs</td><td>Bank/UPI-app insurance tie-ups, InsurTechs, and general fintech super-apps adding insurance.</td><td>Compete for the same online buyer, but lack PB's brand, scale and data moat; none has matched its premium-sourced scale.</td></tr>
+      <tr><td class="t-strong" style="color:var(--sky)">Paisabazaar rivals</td><td>BankBazaar, bank apps, and lending fintechs in the credit-comparison space.</td><td>Credit is more contested and lower-margin than insurance; Paisabazaar's edge is its free credit-score funnel and scale.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The chain of cause and effect to watch</div>
+    <p>Here is the risk in plain English: <strong>IRDAI caps distributor commissions → insurers pay PB less per rupee of premium → PB's take rate falls → its revenue and margins compress</strong>, even if premium sourced keeps growing. This is the single most important external swing factor — more important than competition or any one quarter's growth — because it strikes the very unit of PB's revenue. The counter-arguments the bulls lean on: (1) distribution is genuinely valuable to insurers, who <em>need</em> PB's reach and would resist losing it; (2) any cap is likely to be measured, not confiscatory; (3) PB could pivot toward higher-value services or, in extremis, insurance manufacturing. But none of that removes the fact that a company priced at ~110× earnings depends on a regulator's forbearance over its core revenue line. Watch IRDAI's draft rules on commissions closely — they, not the growth numbers, are the biggest determinant of whether the rich multiple survives.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuinely excellent platform — priced for it to keep executing on every front.</p>
+
+  <p class="lead">PB Fintech is one of the cleanest ways to own India's insurance under-penetration: the #1 online marketplace, a moat of brand-scale-data, a renewal annuity that compounds, and a profit line that has just inflected sharply. The investment debate is almost entirely about <strong>price and regulation</strong> — not whether the business is good.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural tailwind</strong> — India's chronic under-insurance gives a decade-long runway of rising premium to distribute, with PB owning the online channel.</li>
+        <li><strong>Profit inflection</strong> — PAT +115% on revenue +37%; operating leverage means profit compounds far faster than revenue from here.</li>
+        <li><strong>Compounding renewal annuity</strong> — a high-margin recurring book (~₹1,126 Cr ARR, +63%) that builds a rising floor under earnings at near-zero cost.</li>
+        <li><strong>Genuine moat</strong> — brand, scale, data and insurer relationships in a winner-takes-most channel; the lead has widened, not narrowed.</li>
+        <li><strong>Optionality &amp; fortress balance sheet</strong> — net-cash, funding Paisabazaar, PB Partners, UAE and healthcare as free options on the future.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>IRDAI commission risk</strong> — a cap on distributor commissions would strike PB's core revenue directly; the founder himself calls it a potential "existential threat."</li>
+        <li><strong>Rich valuation</strong> — ~110× earnings leaves no margin for error; vulnerable to a sharp de-rating on any growth or regulatory disappointment.</li>
+        <li><strong>ESOP &amp; adjusted-EBITDA optics</strong> — large, recurring share-based costs are stripped out of headline profitability, flattering the numbers.</li>
+        <li><strong>New Initiatives burn</strong> — PB Healthcare especially is capital-hungry and unproven; the profitable Core subsidises a scatter of experiments.</li>
+        <li><strong>Direct &amp; overhang risk</strong> — insurers building direct online channels; and continued selling by early venture backers in a promoter-less stock.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>PB Fintech is a <strong>structurally advantaged, now-profitable platform</strong> sitting on top of one of India's best long-term trends — a large, under-insured population steadily buying more cover, increasingly online, through the marketplace it dominates. The business risk is low and the profit trajectory is genuinely exciting; the <em>valuation and regulatory</em> risk is real and concentrated. The story over the next few years will be written in a handful of numbers: <strong>premium sourced growth</strong> (is the under-penetration thesis delivering?), the <strong>renewal ARR</strong> (is the annuity compounding?), the <strong>New-Initiatives loss</strong> (is the optionality turning, or just burning?), and — above all — <strong>whatever IRDAI decides about commissions</strong>. Get those right and a 110× multiple compounds into something reasonable as profits inflect; get the commission question wrong and a richly-priced stock has a long way to fall.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>PB Fintech Ltd — Q4 &amp; FY26 results (year ended Mar 2026) and investor presentation; company investor-relations, pbfintech.in/investor-relations.</li>
+    <li>PB Fintech — Q1 FY26 press release (business-model description, renewals, new initiatives), pbfintech.in.</li>
+    <li>ScanX / Whalesbook — "PB Fintech reports 115% YoY PAT growth to ₹670 Cr in FY26; total insurance premium surges 42% to ₹29,934 Cr."</li>
+    <li>Entrackr — "PB Fintech reports Rs 2,061 Cr revenue in Q4 FY26; profit rises 54%" (revenue split, employee &amp; ad costs).</li>
+    <li>BW Disrupt — "PB Fintech Q4 EBITDA nearly doubles in FY26, profit climbs 54% on insurance growth" (adjusted EBITDA ₹725 Cr / ₹280 Cr).</li>
+    <li>(Re)in Asia — "Policybazaar FY2026 profit surges supported by protection products and renewals" (core premium ₹20,390 Cr, ~21% margin; renewal ARR).</li>
+    <li>Screener.in — PB Fintech consolidated financials (FY22–FY26 revenue, PAT, OPM, EPS, P/E, book value, shareholding).</li>
+    <li>Business Standard — "PB Fintech's subsidiary gets approval from IRDAI to act as composite insurance broker" (licence upgrade, reinsurance).</li>
+    <li>Life Insurance International — Policybazaar composite insurance broker licence.</li>
+    <li>inkl / Business Standard — Yashish Dahiya on commission caps as an "existential threat"; insurance-manufacturing-licence contingency.</li>
+    <li>India Startup News — "Policybazaar parent PB Fintech posts record FY26 revenue of Rs 6,794 crore"; Q3 FY26 New-Initiatives ₹732 Cr.</li>
+    <li>Entrepreneur India / Entrackr — PB Healthcare Services subsidiary and $218M seed led by General Catalyst; PB Partners 400k+ advisors.</li>
+    <li>Business Standard / 5paisa — PB Fintech block deals, Tencent exit, founder share sales; shareholding pattern (FII/DII).</li>
+    <li>Simply Wall St / MarketScreener / Investing.com — analyst target-price consensus (~₹1,940 avg) and valuation multiples (P/E ~110–124×, market cap).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; segment-revenue splits, premium-sourced sub-splits and market-share figures in particular are approximate and blended from multiple sources (FY24 premium-sourced and adjusted-EBITDA figures are estimates). Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "POLICYBZR";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Live updates coming soon.'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Live updates coming soon.';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
