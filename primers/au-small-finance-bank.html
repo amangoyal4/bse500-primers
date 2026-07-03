@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AU Small Finance Bank — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F4F8;
+    --paper-2:#FBFAFE;
+    --card:#FFFFFF;
+    --ink:#1A1526;
+    --ink-soft:#565067;
+    --ink-faint:#8C86A0;
+    --brand:#5A2D82;          /* AU purple */
+    --brand-bright:#8541B8;   /* brighter violet */
+    --gold:#D98A2B;           /* warm amber accent */
+    --red:#C0392B;
+    --dep:#8541B8;           /* deposits violet */
+    --loan:#2E7D5B;          /* secured loans green */
+    --nim:#D98A2B;           /* margin amber */
+    --casa:#C0468A;          /* CASA magenta */
+    --unsec:#C0392B;         /* unsecured red */
+    --line:#E0DCE8;
+    --line-soft:#EAE7F0;
+    --good:#2A8359;
+    --bad:#C0392B;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F0E7F8;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:14px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#F7EFDD;border:1px solid #EAD9B4;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"₹";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#463209;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F6FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#ECE9F2;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#5A2D82,#8541B8);}
+  .fill.gold{background:linear-gradient(90deg,#D98A2B,#E8B85A);}
+  .fill.dep{background:linear-gradient(90deg,#8541B8,#A968D0);}
+  .fill.loan{background:linear-gradient(90deg,#2E7D5B,#46A079);}
+  .fill.casa{background:linear-gradient(90deg,#C0468A,#D673AB);}
+  .fill.unsec{background:linear-gradient(90deg,#C0392B,#D85F50);}
+  .fill.red{background:linear-gradient(90deg,#C0392B,#D85F50);}
+  .fill.ink{background:linear-gradient(90deg,#3a3352,#524a6e);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* money-flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.dep{background:var(--dep);}
+  .node.casa{background:var(--casa);}
+  .node.loan{background:var(--loan);}
+  .node.nim{background:var(--gold);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-dep{color:var(--dep);font-weight:600;}
+  .chain-loan{color:var(--loan);font-weight:600;}
+  .chain-unsec{color:var(--unsec);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms.casa .msv{color:var(--casa);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEDEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2c22;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#F7EFDD;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F0E7F8;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What a small finance bank is</a></li>
+    <li><a href="#p2"><span class="n">02</span> Bank economics 101</a></li>
+    <li><a href="#p3"><span class="n">03</span> How the money flows</a></li>
+    <li><a href="#p4"><span class="n">04</span> The company &amp; owners</a></li>
+    <li><a href="#p5"><span class="n">05</span> The Wheels &amp; SBL franchise</a></li>
+    <li><a href="#p6"><span class="n">06</span> The universal-bank catalyst</a></li>
+    <li><a href="#p7"><span class="n">07</span> Fincare &amp; the MFI stress</a></li>
+    <li><a href="#p8"><span class="n">08</span> Deposits, CASA &amp; digital</a></li>
+    <li><a href="#p9"><span class="n">09</span> The loan book &amp; asset quality</a></li>
+    <li><a href="#p10"><span class="n">10</span> The industry &amp; rivals</a></li>
+    <li><a href="#p11"><span class="n">11</span> Financials &amp; valuation</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: AUBANK · BSE: 540611</span>
+    <span class="tag gold">Built for a non-banker</span>
+  </div>
+  <h1>AU Small Finance Bank, <em>the SFB going universal</em></h1>
+  <p class="dek">A complete walk through India's largest small finance bank — a Jaipur-born, vehicle-finance-rooted lender that earns a fat 6% margin lending to hard-to-assess small borrowers, how the "small finance bank" model actually works, the Wheels-and-mortgage franchise at its core, the microfinance stress the Fincare merger brought — and the single event that could re-rate the whole stock: its bid to become a full universal bank.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹2,641 <small>Cr</small></div><div class="l">Net profit (FY26) · +25% YoY</div></div>
+    <div class="cell"><div class="v">5.96% <small>NIM</small></div><div class="l">Net interest margin (Q4 FY26) · SFB-high</div></div>
+    <div class="cell"><div class="v">₹1.53 <small>L Cr</small></div><div class="l">Total deposits (Mar '26) · +23%</div></div>
+    <div class="cell"><div class="v">~₹79,300 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">3 Jul 2026</b> · source: Q4 &amp; FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — PAT ₹2,641 Cr (+25% YoY), Q4 PAT ₹832 Cr (+65% YoY), NIM back up to 5.96%, deposits ₹1,52,661 Cr (+23%), GNPA/NNPA improved to 2.03%/0.74%, credit cost down to 0.96% as microfinance stress normalised; added the universal-bank-transition, Wheels/SBL-franchise and Fincare/MFI-stress sections. AU filed its final universal-bank licence application in March 2026 and awaits RBI approval.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">AU Small Finance Bank is <strong>India's largest small finance bank (SFB)</strong> — a Jaipur-headquartered lender that began life in 1996 as a used-truck financier and became a bank in 2017. It takes deposits from households and businesses and lends, at high yields, to the kind of borrower a big bank often overlooks: the small trucker buying a second-hand commercial vehicle, the shopkeeper borrowing against his property, the farmer, the micro-entrepreneur. With <strong>~₹1.4 lakh crore of loans</strong> and <strong>₹1.53 lakh crore of deposits</strong>, it is by far the biggest of the small finance banks — and, uniquely, the first one the RBI has cleared to graduate into a full <strong>universal bank</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It earns a huge margin because it lends to the underbanked.</strong> AU runs a net interest margin (NIM) of <strong>~6%</strong> — nearly double the ~3–3.5% of an HDFC or ICICI. That's not a trick; it's the whole SFB model. Lending to small, hard-to-assess borrowers is <em>risky and expensive to underwrite</em>, so it commands a fat yield. The edge is doing that underwriting well enough that the higher losses don't eat the fatter margin.</li>
+    <li><strong>Its heritage is Wheels and small-business loans — mostly secured.</strong> Vehicle finance ("Wheels" — used and new commercial vehicles, cars, two-wheelers) and secured business loans against property (SBL) built AU, and <strong>~92% of its book is secured</strong>. That secured backbone is what has kept it far cleaner than the pure-microfinance SFBs.</li>
+    <li><strong>Two forces define the stock right now.</strong> One is a catalyst: AU has applied to convert into a <strong>universal bank</strong>, which would strip away the SFB rulebook and could re-rate the shares. The other is a risk: the 2024 <strong>Fincare merger</strong> added a big microfinance book right as that sector hit a stress cycle — and MFI/unsecured bad loans dented FY25 earnings before <em>normalising</em> through FY26.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of AU as a <strong>bank built to serve the customers the big banks find too small or too messy to bother with</strong> — the used-truck driver, the corner-shop owner, the small-town family. Because those loans are harder to judge and riskier, AU charges much more for them, so it earns a very wide margin (a ~6% spread vs ~3% at HDFC). Its skill is <em>underwriting</em>: knowing which of those hard-to-read borrowers will actually repay, and lending against collateral (a vehicle, a property) so it can recover if they don't. It's now trying to "level up" from a small finance bank into a full-scale universal bank — which would let it drop the special SFB rules and, in theory, fund itself more cheaply and lend more broadly. The catch it's working through: a 2024 merger loaded it up with microfinance loans (tiny, unsecured loans to poor borrowers) just as that whole segment turned sour across India.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What a "small finance bank" actually is</h2></div>
+  <p class="part-sub">A special category of Indian bank — and the reason AU earns the margin it does.</p>
+
+  <p class="lead">Before anything about AU makes sense, you need the category. A <strong>small finance bank (SFB)</strong> is a special type of bank the RBI created in 2015 with one job: <strong>banking for the underbanked</strong>. SFBs were licensed to take the microfinance companies and niche NBFCs already serving small farmers, micro-entrepreneurs and low-income households — and turn them into full deposit-taking banks. In exchange for a banking licence, they accept a rulebook that <em>forces</em> them to keep serving that base. That rulebook is why an SFB earns a ~6% margin and a universal bank earns ~3%.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The SFB rulebook — the constraints that shape (and reward) the model</caption>
+    <thead><tr><th>Rule</th><th>What it means — and why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">75% priority-sector</td><td>An SFB must lend <strong>75% of its book to "priority sectors"</strong> (agriculture, micro/small enterprises, weaker sections) — vs just 40% for a universal bank. This <em>forces</em> the lending down-market into higher-yielding, harder segments.</td></tr>
+      <tr><td class="t-strong">50% small-ticket</td><td>At least <strong>half of loans must be ≤ ₹25 lakh</strong> — small-ticket by design. Small, granular loans to many borrowers, not a few big corporate exposures.</td></tr>
+      <tr><td class="t-strong">15% capital (CRAR)</td><td>SFBs must hold a <strong>15% capital-adequacy ratio</strong> vs 11.5% for universal banks — a bigger safety buffer, but also idle capital that drags on returns.</td></tr>
+      <tr><td class="t-strong">25% rural branches</td><td>At least <strong>a quarter of branches must sit in unbanked rural areas</strong> — reach into places big banks won't go, at higher cost-to-serve.</td></tr>
+      <tr><td class="t-strong">Result: high NIM</td><td>Serving riskier, smaller, harder-to-reach borrowers commands a <strong>fat yield</strong>. SFBs run ~6–8% NIM vs ~3–3.5% for large private banks. AU: <strong>~6%</strong>.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why a fat margin is not free money</div>
+    <p>An SFB's ~6% margin looks luxurious next to HDFC's ~3.5% — until you remember <em>why</em> it exists. You earn 6% because you're lending to a used-truck driver with no formal income proof, or a micro-borrower with no credit history — people a normal bank rejects. Those borrowers default more often, and when a downturn hits (a bad monsoon, a rural income shock, a microfinance over-lending cycle), they default <em>together</em>. So the SFB model is a trade: a much wider margin in exchange for higher, lumpier credit losses and higher costs (small loans, rural branches, intensive collection). It only works if you underwrite brilliantly and price the risk right. AU's whole reputation rests on doing exactly that — mostly with <em>secured</em> lending, so it can seize a vehicle or property when a loan goes bad.</p>
+  </div>
+
+  <p>There are roughly a dozen SFBs in India — AU, Equitas, Ujjivan, Jana, ESAF, Utkarsh, Suryoday and others — but AU stands apart on two counts: it is the <strong>largest by a distance</strong>, and it was built on <strong>secured vehicle and business lending</strong> rather than pure unsecured microfinance. That secured DNA is why AU has weathered the recent MFI storm far better than its peers, and why it — and only it, so far — has been cleared to try graduating out of the SFB category altogether.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>Bank economics 101: how a bank earns</h2></div>
+  <p class="part-sub">No finance degree required — just the handful of numbers that drive everything.</p>
+
+  <p class="lead">A bank is, at its core, a <strong>spread business</strong>: it borrows money cheaply (mostly from depositors) and lends it out at a higher rate. The gap between the two — scaled to its assets — is the engine. For AU, an SFB, two of these numbers matter most: the unusually <em>high</em> margin (the reward for going down-market) and the <em>credit cost</em> (the price of it). Here are the only terms you need, with AU's FY26 figure.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only banking units you need — with AU's FY26 number</caption>
+    <thead><tr><th>Term</th><th>What it means (and AU's number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">NII</td><td><strong>Net Interest Income</strong> — interest earned on loans minus interest paid on deposits and borrowings. The core revenue line. AU: <strong>~₹2,582 Cr in Q4 FY26</strong> (+23% YoY).</td></tr>
+      <tr><td class="t-strong">NIM</td><td><strong>Net Interest Margin</strong> — NII as a % of interest-earning assets; the "spread", standardised. AU: <strong>~5.96% in Q4 FY26</strong> — nearly <em>double</em> a universal bank's, the signature of the SFB model.</td></tr>
+      <tr><td class="t-strong">CASA</td><td><strong>Current + Savings Account</strong> deposits — everyday money paying little/no interest. Cheaper funding = fatter margin. AU: <strong>~28.4%</strong> of deposits (₹43,360 Cr) — good for an SFB, but the lever it's working hardest.</td></tr>
+      <tr><td class="t-strong">GNPA / NNPA</td><td><strong>Gross / Net Non-Performing Assets</strong> — the % of loans gone bad. AU: <strong>2.03% / 0.74%</strong> — elevated by the MFI cycle, but <em>improving</em> and modest given the down-market book.</td></tr>
+      <tr><td class="t-strong">Credit cost</td><td>Provisions (money set aside for bad loans) as a share of assets. The number that makes-or-breaks an SFB. AU: <strong>0.96% in FY26</strong>, down from 1.3% in FY25 as MFI stress eased.</td></tr>
+      <tr><td class="t-strong">RoA / RoE</td><td><strong>Return on Assets / Equity</strong> — profit per rupee of assets / of shareholder capital. AU: <strong>~1.6% RoA, ~14% RoE</strong> in FY26 — recovering as credit costs fall.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The simple profit equation</div>
+    <p>Roughly: <strong>Profit ≈ (interest earned − interest paid) − operating costs − loan losses + fee income</strong>. An SFB starts with a huge advantage on the first bracket (a ~6% spread), but gives a lot of it back on the other two: <strong>operating costs</strong> are high (small loans, rural branches, feet-on-street collection) and <strong>loan losses</strong> are higher and lumpier than at a big bank. So AU's job is to protect that wide spread by (a) underwriting well, (b) lending secured so recoveries are strong, and (c) grinding operating costs down and cheap deposits up. When those work, the ~6% margin turns into a healthy ~1.6% RoA. When credit costs spike — as they did in FY25's microfinance cycle — the margin is still there but the profit gets eaten.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>How the money flows: deposits in, high-yield loans out</h2></div>
+  <p class="part-sub">Read this once and the whole bank — and its risk-reward — clicks into place.</p>
+
+  <p class="lead">A bank is a <strong>conveyor belt for money</strong>: deposits come in one end, loans go out the other, and the spread is harvested as net interest income. What makes AU distinctive is the <em>back end</em> — instead of thin-spread home and corporate loans, it puts money to work in high-yield, mostly-secured segments (Wheels, business loans, gold, and a slice of unsecured microfinance/cards). That's what generates the ~6% margin. The strategy debate is all about the front end: can AU gather deposits cheaply enough — and eventually, as a universal bank, cheaply enough to keep the whole machine humming.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The money conveyor — deposits in, high-yield secured loans out, a fat spread harvested</div>
+    <div class="flow-row">
+      <div class="node dep"><div class="ntag">Stage 1 · Funding</div><div class="nname">Deposits</div><div class="nwho">₹1.53 L Cr from savers &amp; businesses. +23% YoY. The fuel.</div></div>
+      <div class="arrow">→</div>
+      <div class="node casa"><div class="ntag">Stage 2 · Cheap money</div><div class="nname">CASA</div><div class="nwho">Current/savings (~28%). Low-cost core AU is building up.</div></div>
+      <div class="arrow">→</div>
+      <div class="node loan"><div class="ntag">Stage 3 · Assets</div><div class="nname">High-yield loans</div><div class="nwho">Wheels, SBL/mortgages, gold, commercial — ~92% secured.</div></div>
+      <div class="arrow">→</div>
+      <div class="node nim"><div class="ntag">Stage 4 · Profit</div><div class="nname">~6% margin</div><div class="nwho">Loan yield minus funding cost = a ~6% NIM, SFB-high.</div></div>
+    </div>
+    <div class="flow-note">AU's edge is Stage 3: it earns far more per rupee lent than a universal bank because it lends down-market — but secured, so losses stay controllable. The universal-bank prize (§06) is to cheapen Stage 1–2 funding without giving up the Stage-4 margin.</div>
+  </div>
+
+  <h3>The two levers that set the spread</h3>
+  <p>A bank's margin is just <strong>(what it earns on loans) minus (what it pays for funding)</strong>. AU is unusual because it wins on the <em>first</em> lever and is still building the second:</p>
+  <ul class="clean">
+    <li><strong>Earn a lot on loans.</strong> AU's <span class="chain-loan">high-yield book</span> — used-vehicle finance, secured business loans, gold, and unsecured MFI/cards — delivers a loan yield well above a universal bank's. This is the SFB advantage, baked in.</li>
+    <li><strong>Pay less for funding.</strong> As a younger bank without a legacy deposit base, AU historically paid up for deposits. Growing <span class="chain-dep">CASA</span> and lowering cost of funds is the lever it's working hardest — and the single biggest prize of universal-bank status (a lower reserve/priority burden and a stronger brand help fund cheaper).</li>
+  </ul>
+
+  <div class="note gold"><b>The risk built into the model:</b> the same down-market lending that earns AU its fat margin is what makes its <span class="chain-unsec">credit costs</span> higher and lumpier than a big bank's. The whole game is keeping loan losses <em>well below</em> the margin advantage. AU does that mainly by staying ~92% secured — its unsecured microfinance and card book, the part that hurt in FY25, is a deliberately small slice (see §07 and §09).</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A 1996 truck-financier that became a bank — still run by its founder.</p>
+
+  <p class="lead">AU began in <strong>1996 in Jaipur</strong> as <strong>AU Financiers</strong>, a vehicle-finance NBFC founded by a young chartered accountant, <strong>Sanjay Agarwal</strong>. For two decades it financed used commercial vehicles for small operators across Rajasthan and the north — learning to underwrite exactly the hard-to-assess borrower that would become its franchise. In <strong>2017 it converted into a small finance bank</strong> and listed on the exchanges, and it has since grown into the largest SFB in India — now standing on the threshold of becoming a full universal bank.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1996</div><div class="ev"><strong>Founded in Jaipur</strong> by Sanjay Agarwal as <strong>AU Financiers</strong> — a used-commercial-vehicle finance NBFC serving small operators.</div></li>
+    <li><div class="yr">2000s–2015</div><div class="ev">Builds a deep <strong>vehicle-finance and secured-business-loan (SBL) franchise</strong> across semi-urban and rural north/west India; attracts marquee investors (Warburg Pincus, Temasek, IFC, Kotak).</div></li>
+    <li class="major"><div class="yr">Apr 2017</div><div class="ev"><strong>Converts to a Small Finance Bank</strong> (AU Small Finance Bank) on 19 Apr 2017; IPO and stock-exchange listing on 29 Jun 2017.</div></li>
+    <li><div class="yr">2018</div><div class="ev"><strong>Temasek</strong> (via Camas Investments) invests, joining a strong institutional register; AU builds an urban deposit and digital franchise atop its lending roots.</div></li>
+    <li class="major"><div class="yr">Apr 2024</div><div class="ev"><strong>Fincare SFB merges into AU</strong> (effective 1 Apr 2024) — adding a large <strong>microfinance</strong> book, South-India reach and ~5.9 million customers.</div></li>
+    <li><div class="yr">FY25</div><div class="ev">The <strong>industry-wide microfinance stress cycle</strong> hits: elevated slippages in MFI and credit cards lift credit costs to ~1.3%, denting return ratios.</div></li>
+    <li class="major"><div class="yr">Aug 2025</div><div class="ev"><strong>RBI grants in-principle approval</strong> for AU to convert into a <strong>universal bank</strong> — the first SFB to earn the nod, and RBI's first new universal-bank licence in ~11 years.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">PAT <strong>₹2,641 Cr</strong> (+25% YoY); NIM back to ~5.96%; deposits ₹1,52,661 Cr (+23%); GNPA/NNPA improve to <strong>2.03%/0.74%</strong> as MFI stress normalises; AU <strong>files its final universal-bank application</strong> (Mar 2026); Sanjay Agarwal reappointed MD &amp; CEO.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Founder-led.</strong> Unlike HDFC or Federal, AU <em>has</em> a promoter: founder <strong>Sanjay Agarwal</strong> and family/associates hold ~<strong>22.8%</strong>. He remains MD &amp; CEO (reappointed for a fresh 3-year term in early 2026) — the underwriting culture and risk discipline are his.</li>
+    <li><strong>Blue-chip institutions alongside.</strong> Foreign institutions hold ~<strong>37%</strong> and domestic institutions ~<strong>31%</strong>, with the public the rest. Long-standing backers include <strong>Temasek</strong> (via Camas) and, historically, Warburg Pincus and IFC — a marquee register for a bank this young.</li>
+    <li><strong>Scale of the franchise:</strong> ~<strong>2,700 physical touchpoints</strong> across 21 states and 4 union territories, ~<strong>60,000 employees</strong>, and roughly <strong>1.25 crore customers</strong> — a genuinely national footprint, weighted to the north, west and (post-Fincare) south.</li>
+    <li><strong>Headquarters:</strong> registered in <strong>Jaipur, Rajasthan</strong>, with a corporate office in Mumbai — a distinctly non-metro heritage that mirrors its customer base.</li>
+  </ul>
+</section>
+
+<!-- 05 — BESPOKE: the Wheels & SBL franchise -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The Wheels &amp; SBL franchise — the secured core</h2></div>
+  <p class="part-sub">The heritage business that built AU, and the reason it's the safest SFB.</p>
+
+  <p class="lead">If you remember one thing about AU's <em>lending</em>, make it this: it is a <strong>secured lender at heart</strong>. Its two founding franchises — <strong>Wheels</strong> (vehicle finance) and <strong>SBL</strong> (secured business loans against property) — are both collateralised, and together with mortgages and gold they keep <strong>~92% of the loan book secured</strong>. That secured backbone is exactly why AU sailed through the microfinance storm that battered the pure-MFI small finance banks. Deep underwriting of hard-to-assess borrowers, backed by real collateral, is AU's durable moat.</p>
+
+  <div class="chart">
+    <div class="c-title">Where AU's money is lent — a mostly-secured, retail-led book</div>
+    <div class="c-sub">Approximate loan-portfolio mix, FY26 (share of ~₹1.4 lakh crore gross loans)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Wheels (vehicle finance)<small>used + new CVs, cars, 2-wheelers</small></div><div class="track"><span class="fill loan" style="width:100%"></span></div><div class="bval">~33%</div></div>
+      <div class="bar-row"><div class="blab">Mortgages — SBL + home<small>secured loans against property</small></div><div class="track"><span class="fill brand" style="width:97%"></span></div><div class="bval">~32%</div></div>
+      <div class="bar-row"><div class="blab">Commercial banking<small>SME / business, higher-touch</small></div><div class="track"><span class="fill casa" style="width:67%"></span></div><div class="bval">~22%</div></div>
+      <div class="bar-row"><div class="blab">Unsecured — MFI, cards, PL<small>microfinance + credit cards</small></div><div class="track"><span class="fill unsec" style="width:24%"></span></div><div class="bval">~8%</div></div>
+    </div>
+    <div class="legend"><span>Roughly a third Wheels, a third mortgages (SBL + home), a fifth commercial banking, and a deliberately small ~8% unsecured slice. Gold loans (~₹4,000 Cr, doubled YoY) sit within the secured mix. The ~92% secured share is AU's defining risk feature.</span></div>
+  </div>
+
+  <h3>The two heritage engines</h3>
+  <ul class="clean">
+    <li><strong>Wheels — the founding franchise (~33% of loans, ~₹46,400 Cr).</strong> AU's roots: financing <em>used and new commercial vehicles</em>, plus cars and two-wheelers, for small operators — the trucker buying a second-hand vehicle to run a haulage business. Used-CV lending is hard: no formal income, an asset that depreciates, borrowers in the informal economy. AU's 25+ years of doing it — knowing local values, borrowers and recovery — is a genuine, hard-to-copy skill. It grew ~27% YoY in FY26 and management targets a steady 20–25% CAGR.</li>
+    <li><strong>SBL &amp; mortgages — secured business lending (~32%, ~₹40,000 Cr).</strong> Loans to small businesses and self-employed borrowers <em>against property</em> (a shop, a home), plus home loans. This is the classic "loan against property" (LAP) / micro-mortgage business — again, a hard-to-assess borrower, but with real-estate collateral behind every rupee. High-yield, secured, granular — the SFB sweet spot.</li>
+    <li><strong>Commercial banking (~22%, ~₹31,000 Cr).</strong> A newer, faster-growing engine (+29% YoY) — SME and business lending, plus a growing non-fund book (guarantees, LCs) of ~₹11,000 Cr. Higher-ticket than the heritage retail book, and a lever for the universal-bank future.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "secured, granular, well-underwritten" is a moat</div>
+    <p>Anyone can lend money; the trick is <strong>getting it back</strong> from borrowers that spreadsheets can't easily judge. AU's edge is two-fold. First, it lends <em>against collateral</em> — a vehicle it can repossess, a property it can enforce — so even when a borrower defaults, recoveries are strong and losses are contained. Second, it has spent nearly three decades learning to <em>read</em> the informal-sector borrower: the used-truck operator, the small trader with no audited accounts. That underwriting knowledge — built local, over cycles — is not something a big bank can buy off the shelf. It's why AU can earn a fat SFB yield <em>without</em> the wild loss cycles that hit lenders who chase the same yield through unsecured lending. The secured book is the ballast that lets AU be the largest, and steadiest, small finance bank in India.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE: the universal-bank catalyst -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The universal-bank transition — the re-rating catalyst</h2></div>
+  <p class="part-sub">The single most important event on AU's horizon — and the whole re-rating case.</p>
+
+  <p class="lead">The defining story for AU right now is not a number in the results; it's a licence application. In <strong>August 2025 the RBI granted AU in-principle approval to convert from a small finance bank into a full universal bank</strong> — the first SFB ever to clear that bar, and the RBI's first new universal-bank licence in roughly eleven years. AU <strong>filed its final application in March 2026</strong> and now awaits the RBI's final nod. If granted, this would remove the SFB rulebook that both constrains and cheapens the model — and, bulls argue, re-rate the entire stock.</p>
+
+  <div class="chart">
+    <div class="c-title">SFB vs universal bank — what "graduating" changes</div>
+    <div class="c-sub">The regulatory constraints that would fall away (lower bar = looser rule)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Priority-sector lending<small>forced down-market lending</small></div><div class="track"><span class="fill red" style="width:100%"></span></div><div class="bval">75% → 40%</div></div>
+      <div class="bar-row"><div class="blab">Capital adequacy (CRAR)<small>idle safety capital</small></div><div class="track"><span class="fill brand" style="width:77%"></span></div><div class="bval">15% → 11.5%</div></div>
+      <div class="bar-row"><div class="blab">Rural-branch mandate<small>25% in unbanked rural areas</small></div><div class="track"><span class="fill casa" style="width:33%"></span></div><div class="bval">falls away</div></div>
+      <div class="bar-row"><div class="blab">Franchise / brand<small>funding cost &amp; broad lending</small></div><div class="track"><span class="fill gold" style="width:60%"></span></div><div class="bval">re-rates</div></div>
+    </div>
+    <div class="legend"><span>Universal-bank status loosens the priority-sector quota (75%→40%), lowers required capital (15%→11.5%, freeing capital to lend), removes the rural-branch mandate, and — the big prize — should over time lower cost of funds and broaden lending. Illustrative; actual benefits depend on RBI conditions.</span></div>
+  </div>
+
+  <h3>Why the licence matters so much</h3>
+  <ul class="clean">
+    <li><strong>Drop the priority-sector burden.</strong> As a universal bank, AU's forced-lending quota falls from 75% to 40% — freeing it to lend across a broader, better-rated range instead of being pushed relentlessly down-market. More flexibility, potentially better risk-adjusted returns.</li>
+    <li><strong>Free up capital.</strong> The required capital-adequacy ratio drops from 15% to 11.5%. Capital that was sitting idle as an SFB buffer can instead be deployed into loans — mechanically lifting return on equity.</li>
+    <li><strong>Cheaper, broader funding over time.</strong> A universal-bank badge, corporate and government-business access, and no rural-branch mandate can, over years, <em>lower the cost of funds</em> — the SFB's structural weak spot. Cheaper deposits + the retained high-yield book = a wider, more durable margin.</li>
+    <li><strong>A valuation re-rating.</strong> This is the crux. SFBs trade at a discount to universal banks precisely because of the constraints above. Analysts have argued a successful conversion could move AU from an SFB-style ~3× book toward a universal-bank ~4–5× — a meaningful re-rating of the same underlying business.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why a licence — not a loan number — is the story</div>
+    <p>Most of what moves a bank stock is boring and incremental: a few basis points of margin, a quarter of loan growth. AU is unusual because a single regulatory event could <em>step-change</em> the whole thesis. Converting to a universal bank is like a specialist shop being allowed to become a full department store: it can stock more, serve more customers, borrow more cheaply, and — crucially — the market values a department store differently. The catch is that the RBI moves deliberately and attaches conditions; the final licence comes only after it is satisfied AU meets every guideline, and the funding-cost benefit builds slowly rather than arriving overnight. So this is a real, powerful catalyst — but one measured in years and dependent on execution, not a switch that flips on approval day.</p>
+  </div>
+
+  <div class="note gold"><b>What to watch:</b> the <strong>final RBI approval</strong> and its conditions; how quickly AU's <strong>cost of funds</strong> falls once it converts; and whether the freed-up capital and broadened lending actually lift <strong>RoE</strong>. Approval on clean terms + a visible funding-cost decline = the re-rating thesis working. Delay, tough conditions, or no funding benefit = the discount persists.</div>
+</section>
+
+<!-- 07 — BESPOKE: Fincare & the MFI stress -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The Fincare merger &amp; the microfinance stress</h2></div>
+  <p class="part-sub">The honest risk — a big merger that landed a microfinance book into a stress cycle.</p>
+
+  <p class="lead">Every good primer has to be honest about the wart, and AU's is this: in <strong>April 2024 it merged with Fincare Small Finance Bank</strong> — a deal that added scale, South-India reach and ~5.9 million customers, but also loaded AU with a large <strong>microfinance (MFI)</strong> book <em>just as India's microfinance sector tipped into a stress cycle</em>. That timing hurt: FY25 saw elevated slippages in MFI and credit cards, credit costs jumped, and return ratios dipped — before the stress began <strong>normalising through FY26</strong>.</p>
+
+  <h3>What microfinance is — and why it turned</h3>
+  <ul class="clean">
+    <li><strong>Microfinance = tiny, unsecured loans to poor borrowers.</strong> Small (often ₹30,000–₹80,000), collateral-free loans to low-income women, typically in rural areas, usually via group-lending. High-yield, financial-inclusion lending — but <em>unsecured</em>, so when it goes bad there's nothing to seize.</li>
+    <li><strong>The 2024–25 sector cycle.</strong> Across India, years of aggressive MFI growth led to <strong>over-leveraged borrowers</strong> (too many lenders lending to the same households). As repayment discipline slipped and regulation tightened, defaults rose sector-wide — hitting <em>every</em> microfinance lender, AU included.</li>
+    <li><strong>Why it hit AU specifically.</strong> Fincare's book was MFI-heavy, so the merger raised AU's exposure to precisely the segment that then cracked. Credit costs on the MFI and card segments spiked in FY25 (card and MFI credit costs ran into double digits at the peak), pulling group credit cost to ~1.3% and denting RoA.</li>
+    <li><strong>The normalisation.</strong> Management flagged the MFI book as having "peaked" and guided to improvement — and FY26 delivered: full-year credit cost fell to <strong>0.96%</strong> (from 1.3%), Q4 credit cost dropped to ~0.6%, and GNPA/NNPA improved to <strong>2.03%/0.74%</strong>. The stress is receding, not gone.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the damage was contained — the secured shield</div>
+    <p>Here's the reassuring part. Even after Fincare, unsecured lending (microfinance + credit cards + personal loans) is only about <strong>8% of AU's book</strong> — the other ~92% is secured Wheels, mortgages and commercial loans. So when the MFI cycle turned, it dented one small corner of the bank rather than blowing a hole in it. Contrast that with the pure-microfinance SFBs, where the same cycle caused deep losses. AU's secured heritage acted as a shield: the MFI stress cost it a year of softer earnings, not a crisis. Management's response has been to <em>manage the mix</em> — grow the secured book (23% YoY) while deliberately shrinking/holding the unsecured book flat until the cycle fully clears. It's a real risk that requires watching, but AU's structure meant it was a bruise, not a break.</p>
+  </div>
+
+  <div class="note"><b>The risk to keep watching:</b> microfinance is inherently cyclical and unsecured. Even a small book can produce lumpy losses in a downturn, and any renewed rural-income shock or over-lending flare-up would show up in AU's MFI slippages first. The number to track each quarter is the <strong>credit cost and MFI/card slippages</strong> — if they keep falling, the Fincare integration is behind AU; if they re-accelerate, the unsecured book is still a drag on an otherwise strong secured franchise.</div>
+</section>
+
+<!-- 08 — BESPOKE: deposits, CASA & digital -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The deposit franchise, CASA &amp; the digital build</h2></div>
+  <p class="part-sub">AU's above-average liabilities franchise — and the lever that decides its margin.</p>
+
+  <p class="lead">For a lender, growing loans is the easy part; <strong>funding them cheaply</strong> is where banks are made or broken. AU's quiet achievement is that a bank born as a north-Indian truck-financier has built one of the <strong>strongest deposit and digital franchises among the small finance banks</strong> — an urban, tech-forward liabilities engine bolted onto a rural-rooted lending business. Deposits grew <strong>23% YoY to ₹1,52,661 Cr</strong> in FY26, funding the loan book comfortably.</p>
+
+  <div class="chart">
+    <div class="c-title">A fast-growing, increasingly cheap funding base</div>
+    <div class="c-sub">AU deposit franchise, FY26 (₹ Crore and ratios)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Total deposits<small>+23% YoY — the whole funding base</small></div><div class="track"><span class="fill dep" style="width:100%"></span></div><div class="bval">1,52,661</div></div>
+      <div class="bar-row"><div class="blab">CASA deposits<small>current + savings, low-cost</small></div><div class="track"><span class="fill casa" style="width:28%"></span></div><div class="bval">43,360</div></div>
+      <div class="bar-row"><div class="blab">CASA ratio<small>share of cheap money</small></div><div class="track"><span class="fill gold" style="width:28%"></span></div><div class="bval">~28.4%</div></div>
+    </div>
+    <div class="legend"><span>A ~28% CASA ratio is good for an SFB (better than most peers) but below the ~40%+ of the big private banks — which is why lowering cost of funds is AU's key margin lever, and why the universal-bank badge (a funding tailwind) matters so much.</span></div>
+  </div>
+
+  <h3>Why the liabilities franchise is a genuine strength</h3>
+  <ul class="clean">
+    <li><strong>An urban, digital deposit engine.</strong> AU built a modern, app-first banking experience — video banking, QR, a strong credit-card and savings proposition — to attract <em>urban</em> depositors whose money is cheaper and stickier than an SFB's traditional base. It punches above its size on brand and digital for a bank this young.</li>
+    <li><strong>CASA is the margin lever.</strong> Every rupee of current/savings money (paying little or no interest) that replaces a costly fixed deposit widens the margin. At ~28%, AU's CASA is respectable for an SFB but has room to grow — and growing it is the most direct way to defend the ~6% NIM as loan competition intensifies.</li>
+    <li><strong>Deposits comfortably fund the book.</strong> With ₹1.53 lakh Cr of deposits against ~₹1.4 lakh Cr of loans, AU is <em>self-funded</em> on deposits — no reliance on flighty wholesale borrowing — a mark of a maturing, stable franchise.</li>
+    <li><strong>The universal-bank funding upside.</strong> Cost of funds is AU's structural soft spot vs the big banks. Universal-bank status — with its lower reserve burden, broader deposit access and stronger brand — is the clearest path to closing that gap over time (see §06).</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why cheap deposits are the whole ballgame</div>
+    <p>The hardest thing in Indian banking today is <strong>gathering deposits cheaply</strong> — savers are shifting money into mutual funds and equities, so every bank is fighting for a shrinking pool, and a younger bank like AU (without a 90-year brand) has to work harder and pay more. That's why AU's ~6% margin, impressive as it is, lives or dies on the funding side: if it can keep growing CASA and lower its cost of funds — organically, and then with the universal-bank tailwind — the fat lending yield converts into fat profit. If deposit competition forces it to keep paying up, the margin gets squeezed from the bottom. The deposit franchise isn't the glamorous part of AU's story, but it's the part that decides how much of that glamorous margin actually reaches shareholders.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The loan book and asset quality</h2></div>
+  <p class="part-sub">What AU lends against — and how clean the book actually is.</p>
+
+  <p class="lead">AU's ~₹1.4 lakh crore gross loan book is <strong>retail-led, high-yield and ~92% secured</strong>, spread across its heritage Wheels and mortgage franchises, a fast-growing commercial book, and a small, deliberately-contained unsecured slice. Asset quality is <em>elevated versus a pristine universal bank</em> — that's the nature of down-market lending — but modest given the borrower base, and <strong>improving</strong> as the microfinance cycle normalises.</p>
+
+  <div class="chart">
+    <div class="c-title">Asset quality — elevated by the SFB model, but improving</div>
+    <div class="c-sub">Key ratios, FY26 (lower NPA = better; higher CRAR = safer)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Capital adequacy (CRAR)<small>Basel III — buffer vs losses</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~19%</div></div>
+      <div class="bar-row"><div class="blab">Secured share of loans<small>collateral behind the book</small></div><div class="track"><span class="fill loan" style="width:97%"></span></div><div class="bval">~92%</div></div>
+      <div class="bar-row"><div class="blab">Gross NPA<small>bad loans / total loans</small></div><div class="track"><span class="fill red" style="width:11%"></span></div><div class="bval">2.03%</div></div>
+      <div class="bar-row"><div class="blab">Net NPA<small>after provisioning</small></div><div class="track"><span class="fill red" style="width:4%"></span></div><div class="bval">0.74%</div></div>
+    </div>
+    <div class="legend"><span>GNPA of 2.03% and NNPA of 0.74% are higher than a top universal bank's (~0.2–0.5% net) — expected for down-market lending — but improved from ~2.3%/0.88% a quarter earlier, and well-buffered by a ~19% CRAR. The ~92% secured share is what keeps losses recoverable.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The loan book — high-yield, retail-led, mostly secured (FY26)</caption>
+    <thead><tr><th>Segment</th><th>Approx. share</th><th>What it is &amp; the FY26 trend</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Wheels (vehicle finance)</td><td class="t-strong">~33%</td><td>Used + new commercial vehicles, cars, two-wheelers (~₹46,400 Cr). The heritage franchise; +27% YoY; targeted 20–25% CAGR. <strong>Secured.</strong></td></tr>
+      <tr><td class="t-strong">Mortgages (SBL + home)</td><td class="t-strong">~32%</td><td>Secured business loans against property + home loans (~₹40,000 Cr). High-yield, granular, real-estate-backed. <strong>Secured.</strong></td></tr>
+      <tr><td class="t-strong">Commercial banking</td><td class="t-strong">~22%</td><td>SME / business lending (~₹31,000 Cr, +29% YoY) plus ~₹11,000 Cr non-fund book. The fastest-growing engine. <strong>Secured.</strong></td></tr>
+      <tr><td class="t-strong">Unsecured (MFI, cards, PL)</td><td class="t-strong">~8%</td><td>Microfinance, credit cards, personal loans. The high-risk slice that drove the FY25 stress; held/shrunk while the cycle clears. <strong>Unsecured.</strong></td></tr>
+      <tr><td class="t-strong">Gold loans</td><td>within secured</td><td>~₹4,000 Cr, doubled YoY — a fast-growing, fully-secured, high-yield add-on.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~92%</div><div class="msl">Secured share of loans — the shield against unsecured loss cycles</div></div>
+    <div class="ms gold"><div class="msv">0.96%</div><div class="msl">FY26 credit cost — down from 1.3% in FY25 as MFI stress eased</div></div>
+    <div class="ms green"><div class="msv">~19%</div><div class="msl">Capital adequacy (CRAR) — a comfortable buffer, well above the 15% floor</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to read AU's NPAs — don't compare them to HDFC's</div>
+    <p>A net NPA of 0.74% would look mediocre next to HDFC's ~0.3% — but that's the wrong comparison. AU deliberately lends to <em>riskier, harder-to-assess borrowers</em> and gets paid a ~6% margin for it (vs HDFC's ~3.5%). A little more bad debt is the <em>expected cost</em> of that fatter margin, not a sign of sloppiness. The right questions are: (1) is the loss well below the margin advantage? — yes, comfortably; (2) is the book secured, so losses are recoverable? — ~92% yes; and (3) is asset quality stable/improving? — yes, GNPA/NNPA fell through FY26 as the MFI cycle turned. Judged as an SFB — not as a universal bank — AU's asset quality is solid, and its ~19% capital buffer gives it plenty of room to absorb shocks.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">Where the largest small finance bank sits in the Indian banking pecking order.</p>
+
+  <p class="lead">Indian banking is <strong>large, growing and structurally favourable</strong> to well-run private lenders. AU occupies a <strong>distinct niche</strong>: the biggest and best-capitalised of the small finance banks, with a secured, vehicle-and-mortgage DNA that sets it apart from the microfinance-heavy SFBs — and, uniquely, a foot on the ladder toward universal-bank status. Its edge is not the scale of an HDFC; it's the <em>high-yield down-market franchise plus the graduation optionality</em>.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape — where AU fits</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs AU Small Finance Bank</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">AU Small Finance Bank</td><td>Largest SFB; secured, Wheels/mortgage DNA</td><td><em>This company.</em> ~6% NIM, ~92% secured, universal-bank optionality, contained MFI stress. The premium-multiple SFB.</td></tr>
+      <tr><td class="t-strong">Other SFBs</td><td>Equitas, Ujjivan, Jana, ESAF, Utkarsh, Suryoday</td><td>AU's direct cohort — but it is the <strong>largest by far</strong>, more secured, and hit far less hard by the MFI cycle. Several rivals posted losses AU avoided.</td></tr>
+      <tr><td class="t-strong">Universal / big private banks</td><td>HDFC, ICICI, Axis, Kotak, Federal</td><td>Far larger, ~3–3.5% NIM, cheaper funding, pristine asset quality. The category AU is <em>trying to join</em> — it earns a much fatter margin but funds dearer and lends riskier.</td></tr>
+      <tr><td class="t-strong">Vehicle-finance NBFCs</td><td>Shriram, Cholamandalam, Sundaram</td><td>Compete directly in AU's Wheels heartland (used-CV finance), but fund more expensively (no deposits). AU's deposit licence is its edge over them.</td></tr>
+      <tr><td class="t-strong">PSU banks</td><td>SBI, PNB, Canara…</td><td>Huge, cheap deposit franchises and government backing, but rarely serve AU's small, informal, down-market borrower — different game entirely.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The category confusion to avoid</div>
+    <p>AU is easy to mis-file. It is <em>not</em> a microfinance lender (that's a small ~8% slice), and it is <em>not yet</em> a universal bank (though it's applying). The right mental slot is: <strong>"a high-yield, mostly-secured retail bank for the underbanked — the largest and safest small finance bank in India, trying to graduate into the big league."</strong> Its truest rivals for its heartland (used-vehicle and business-against-property lending) are the vehicle-finance NBFCs like Shriram and Chola — but AU has a weapon they lack: a banking licence and a deposit franchise, which funds it far more cheaply than an NBFC. That combination — NBFC-style high-yield lending funded with bank deposits — is the essence of what makes AU work.</p>
+  </div>
+
+  <div class="note gold"><b>The regulatory backdrop:</b> banks operate under the RBI's tight prudential regime — Basel III capital rules, cash-reserve (CRR) and statutory-liquidity (SLR) requirements, priority-sector quotas, and rules on provisioning, unsecured credit and microfinance. For AU, two regulatory threads dominate: the <strong>universal-bank licence</strong> (the upside catalyst) and RBI's evolving stance on <strong>microfinance and unsecured lending</strong> (the risk lever). Its clean-SFB reputation and the RBI's willingness to let it graduate are themselves quiet assets.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A high-growth, high-margin bank — at a rich multiple the bulls justify with the universal-bank optionality.</p>
+
+  <p class="lead">AU's financials read like a fast-growing bank emerging from a soft patch: record profit, a ~6% margin, ~20%+ loan and deposit growth, and asset quality mending as the MFI cycle turns. The debate is less about the business quality (it's a strong SFB) and more about the <strong>price</strong>: AU trades at a premium multiple — around 4× book — that already prices in a lot of the universal-bank re-rating and growth. The valuation question <em>is</em> the investment question.</p>
+
+  <div class="chart">
+    <div class="c-title">Net profit trajectory</div>
+    <div class="c-sub">Profit after tax (₹ Crore) — a dip through the MFI cycle, then a sharp FY26 recovery</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24<small>pre-Fincare peak</small></div><div class="track"><span class="fill ink" style="width:60%"></span></div><div class="bval">~1,535</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>MFI-stress year</small></div><div class="track"><span class="fill brand" style="width:82%"></span></div><div class="bval">~2,106</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>recovery</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">2,641</div></div>
+    </div>
+    <div class="legend"><span>FY26 PAT of ₹2,641 Cr was +25% YoY, driven by strong NII growth (+23% in Q4) and falling credit costs as the microfinance stress normalised. The trajectory shows the FY25 dip and the FY26 rebound. (Post-merger figures; FY24/FY25 approximate.)</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~1.6%</div><div class="msl">Return on assets, FY26 — recovering as credit costs fall</div></div>
+    <div class="ms green"><div class="msv">~14%</div><div class="msl">Return on equity, FY26 — solid, with universal-bank upside</div></div>
+    <div class="ms casa"><div class="msv">~5.96%</div><div class="msl">Net interest margin (Q4) — the SFB-high signature</div></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The financial snapshot (FY26, year ended Mar 2026)</caption>
+    <thead><tr><th>Metric</th><th class="num">Value</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>Net profit (PAT)</td><td class="num">₹2,641 Cr</td><td>+25% YoY; Q4 ₹832 Cr (+65% YoY)</td></tr>
+      <tr><td>Net interest income (Q4)</td><td class="num">~₹2,582 Cr</td><td>+23% YoY</td></tr>
+      <tr><td>NIM (Q4)</td><td class="num">~5.96%</td><td>SFB-high; ~double a universal bank's</td></tr>
+      <tr><td>Total deposits</td><td class="num">₹1,52,661 Cr</td><td>+23% YoY; CASA ₹43,360 Cr (~28.4%)</td></tr>
+      <tr><td>Gross loan portfolio</td><td class="num">~₹1,40,000 Cr</td><td>+21% YoY; ~92% secured</td></tr>
+      <tr><td>GNPA / NNPA</td><td class="num">2.03% / 0.74%</td><td>Improving; credit cost 0.96% (FY26)</td></tr>
+      <tr><td>Capital adequacy (CRAR)</td><td class="num">~19%</td><td>Well above the 15% SFB floor</td></tr>
+      <tr><td>RoA / RoE</td><td class="num">~1.6% / ~14%</td><td>Recovering post-MFI stress</td></tr>
+      <tr><td>EPS</td><td class="num">~₹35.3</td><td>Face value ₹10</td></tr>
+      <tr><td>Dividend</td><td class="num">₹1.00 / sh</td><td>Recommended for FY26 (low payout — reinvests for growth)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the valuation</div>
+    <p>For a bank, the multiple that matters is <strong>price-to-book against RoE</strong> (banks are valued on their equity, not their sales). AU trades around a <strong>~₹79,300 Cr market cap</strong>, roughly <strong>~4× book value</strong> (book ~₹264) and ~30× earnings — a <em>premium</em> valuation, well above the ~1–2× book of the stressed pure-MFI SFBs and even above most universal banks on a P/B basis. Bulls justify it three ways: AU is the highest-quality, fastest-growing SFB; it has a ~6% margin that dwarfs a universal bank's; and the <strong>universal-bank conversion</strong> could re-rate it further (from SFB ~3× toward universal ~4–5×) while lowering its cost of funds. Bears counter that ~4× book <em>already</em> prices in the conversion and the recovery — leaving little margin for error if RBI approval slips, the MFI stress returns, or growth slows. Unlike a value name like Federal, AU is a <strong>growth-and-optionality</strong> bank: you're paying up front for a re-rating and compounding that must actually arrive.</p>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A strong, fast-growing SFB with a genuine re-rating catalyst — priced for it.</p>
+
+  <p class="lead">AU Small Finance Bank is the largest, best-capitalised and most secured of India's small finance banks, run by its founder, earning a fat SFB margin, and standing on the threshold of becoming a universal bank. The investment debate is a classic growth-and-catalyst one: <strong>the business quality is high and the universal-bank prize is real — but so is the premium price and the microfinance risk</strong>.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>High-margin, secured SFB model</strong> — a ~6% NIM (double a universal bank's), ~92% secured, with a hard-to-copy underwriting edge in Wheels and business loans.</li>
+        <li><strong>The universal-bank catalyst</strong> — first SFB with RBI in-principle approval; conversion could drop the SFB rulebook, free capital, lower funding cost and re-rate the multiple.</li>
+        <li><strong>Strong, fast growth</strong> — deposits +23%, loans +21%, PAT +25% in FY26; the largest SFB with a national, digital-forward franchise.</li>
+        <li><strong>MFI stress normalising</strong> — credit cost down to 0.96% (from 1.3%), GNPA/NNPA improving — the Fincare integration risk visibly receding.</li>
+        <li><strong>Founder-led with blue-chip backers</strong> — Sanjay Agarwal at the helm, Temasek and top institutions on the register; ~19% capital buffer.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich valuation</strong> — ~4× book / ~30× earnings already prices in the universal-bank re-rating and the recovery; little room for error.</li>
+        <li><strong>Microfinance/unsecured risk</strong> — even at ~8% of the book, MFI is unsecured and cyclical; a renewed rural shock would hit AU's slippages first.</li>
+        <li><strong>Costly funding</strong> — a younger bank with ~28% CASA pays up for deposits; the universal-bank funding benefit builds slowly, not overnight.</li>
+        <li><strong>Regulatory dependence</strong> — the whole re-rating leans on RBI's final licence and its conditions; delay or tough terms would disappoint.</li>
+        <li><strong>Deposit war &amp; rate cycle</strong> — savers shifting to mutual funds makes cheap deposits scarce; rate cuts can squeeze the high loan yield faster than funding costs.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>AU is a <strong>rare thing among small finance banks: a large, secured, well-run high-growth lender with a genuine step-change catalyst</strong> — the universal-bank conversion — sitting in front of it. The business is clearly strong: a ~6% margin, a ~92%-secured book that shielded it from the microfinance carnage that hurt its peers, and 20%+ growth in both loans and deposits. The tension is entirely in the <em>price</em>: at ~4× book, the market has already paid up for both the recovery and the re-rating, so AU has to <em>deliver</em> them. Watch three things each quarter: <strong>the universal-bank licence (approval and terms), credit cost / MFI slippages (is the stress truly behind it?), and CASA / cost of funds (is funding getting cheaper?)</strong>. Get those right and a premium bank compounds into its multiple and re-rates further; stumble on the licence or the MFI book and a rich valuation leaves little cushion.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>AU Small Finance Bank — Press Release, Q4'FY26 / FY26 Financial Results (year ended 31 March 2026), au.bank.in (PR dated 27 Apr 2026).</li>
+    <li>AU Small Finance Bank — Q4 FY26 Investor Presentation, au.bank.in.</li>
+    <li>Business Standard — "AU Small Finance Bank Q4FY26 results: Net profit rises 65% to ₹832 crore" (Q4 PAT ₹832 Cr, NII ₹2,582 Cr +23%, NIM ~6%, provisions −58% YoY; universal-bank final licence filed Mar 2026).</li>
+    <li>Upstox / Angel One — "AU Small Finance Bank Q4 profit soars 65% YoY to ₹832 crore, NII up 23%; dividend recommended."</li>
+    <li>ScanX — "AU Small Finance Bank Reports Strong Q4 FY26 Results" (FY26 PAT ₹2,641 Cr +25%, RoA 1.6%/1.8%, RoE 14.2%, deposits ₹1,52,661 Cr +23%, CASA ₹43,360 Cr / 28.4%, GLP +21%, GNPA 2.03% / NNPA 0.74%, credit cost 0.96% vs 1.3% FY25, cost/assets 4.1%; Wheels ₹46,400 Cr, commercial ₹31,000 Cr, gold ₹4,000 Cr; secured 92%).</li>
+    <li>Business Standard / marketsmojo — "AU Small Finance Bank Q4 FY26: Strong Profit Surge Amid Asset Quality Concerns."</li>
+    <li>Business Standard — "AU SFB gets RBI nod for universal bank conversion" &amp; "RBI removes compulsory holding company requirement for universal banking" (in-principle approval 7 Aug 2025; NOFHC relaxation; final application under way).</li>
+    <li>MSN / Business Standard — "RBI grants AU Small Finance Bank in-principle nod for universal bank licence — first in ~10/11 years."</li>
+    <li>Value Research — "Why small finance banks like AU SFB are dreaming of going big" (SFB vs universal-bank rules: 75%→40% PSL, 15%→11.5% CRAR; funding-cost and re-rating implications).</li>
+    <li>Equitymaster / Univest — "How a Universal Banking License Could Boost Fortunes of these Small Finance Bank Stocks" (SFB ~6–8% NIM vs ~3–3.5% for large private banks; potential P/B re-rating ~3× → ~4–5×).</li>
+    <li>AU Small Finance Bank &amp; TA Associates — "AU Small Finance Bank and Fincare Small Finance Bank merge" (effective 1 Apr 2024; ~5.9 mn customers, South-India reach, microfinance book added).</li>
+    <li>CARE Ratings — AU Small Finance Bank Limited rating press releases (FY25 MFI/credit-card stress: credit costs ~11% cards / ~7.75% MFI; GNPA to 2.47% Jun'25; normalisation guidance).</li>
+    <li>Wikipedia — "AU Small Finance Bank" (founded 1996 as AU Financiers; SFB from 19 Apr 2017; IPO 29 Jun 2017; Jaipur HQ; ~2,726 touchpoints, 21 states + 4 UTs, ~59,872 employees, ~1.25 cr customers; NSE: AUBANK, BSE: 540611).</li>
+    <li>Screener.in — AU Small Finance Bank financials (market cap ~₹79,300 Cr, P/B ~4.0×, P/E ~30, book value ~₹264, EPS ~₹35.3, face value ₹10, dividend ₹1; shareholding: promoter ~22.8%, FII ~37%, DII ~31%, public ~9%).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; segment mixes, quarterly vs full-year figures and peer comparisons vary by source and accounting basis, and some segment shares are approximate. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "AUBANK";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
