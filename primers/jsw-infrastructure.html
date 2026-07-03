@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSW Infrastructure — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F5F7;
+    --paper-2:#FAFBFC;
+    --card:#FFFFFF;
+    --ink:#0E1E2B;
+    --ink-soft:#4C5E6E;
+    --ink-faint:#83919E;
+    --brand:#0C3A5C;          /* deep sea navy */
+    --brand-bright:#1E6E9E;   /* harbour blue */
+    --gold:#D98B2B;           /* JSW cargo amber */
+    --bulk:#1E6E9E;           /* dry bulk blue */
+    --liquid:#2FA39A;         /* liquid teal */
+    --container:#D98B2B;      /* container amber */
+    --logi:#6E7FB0;           /* logistics indigo */
+    --intl:#8B6FA0;           /* international violet */
+    --line:#D7DDE2;
+    --line-soft:#E6EBEF;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4EFF6;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2606;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:66ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:26px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF2E3;border:1px solid #EFDCBB;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"⚓";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F9FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E7ECEF;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0C3A5C,#1E6E9E);}
+  .fill.gold{background:linear-gradient(90deg,#D98B2B,#E7A951);}
+  .fill.bulk{background:linear-gradient(90deg,#1E6E9E,#4090C0);}
+  .fill.liquid{background:linear-gradient(90deg,#2FA39A,#54BFB6);}
+  .fill.container{background:linear-gradient(90deg,#D98B2B,#E7A951);}
+  .fill.logi{background:linear-gradient(90deg,#6E7FB0,#8C9BC6);}
+  .fill.intl{background:linear-gradient(90deg,#8B6FA0,#A588BA);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a5c,#516074);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.bulk{background:var(--bulk);}
+  .node.liquid{background:var(--liquid);}
+  .node.container{background:var(--container);}
+  .node.spec{background:var(--brand);}
+  .node.logi{background:var(--logi);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-bulk{color:var(--bulk);font-weight:600;}
+  .chain-liquid{color:var(--liquid);font-weight:600;}
+  .chain-container{color:var(--gold);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF2E3;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a5e18;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#E4F1FA;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Port economics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The concession &amp; cargo-annuity model</a></li>
+    <li><a href="#p3"><span class="n">03</span> Captive vs third-party cargo</a></li>
+    <li><a href="#p4"><span class="n">04</span> The port &amp; terminal network</a></li>
+    <li><a href="#p5"><span class="n">05</span> The cargo mix — bulk, liquid, container</a></li>
+    <li><a href="#p6"><span class="n">06</span> The 400 MTPA growth engine</a></li>
+    <li><a href="#p7"><span class="n">07</span> The move into logistics</a></li>
+    <li><a href="#p8"><span class="n">08</span> The company &amp; owners</a></li>
+    <li><a href="#p9"><span class="n">09</span> Balance sheet &amp; capex funding</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Rivals &amp; the industry</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: JSWINFRA · BSE: 543994</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>JSW Infrastructure, <em>the toll gate on India's coast</em></h1>
+  <p class="dek">A complete walk through India's second-largest private commercial port operator — how a port actually earns money (a per-tonne handling charge under a decades-long concession), why ports are scarce, high-barrier, ~50%-margin infrastructure-annuity assets, the crucial split between "captive" JSW-group cargo and higher-value third-party cargo, and how a company doubling its capacity toward 400 MTPA — while pushing from ports into full-blown logistics — earns a rich multiple against big brother Adani Ports.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹5,361 <small>Cr</small></div><div class="l">Revenue (FY26, +20%)</div></div>
+    <div class="cell"><div class="v">122 <small>MT</small></div><div class="l">Cargo handled · FY26</div></div>
+    <div class="cell"><div class="v">~48.5% <small>EBITDA</small></div><div class="l">Margin · ₹2,604 Cr (FY26)</div></div>
+    <div class="cell"><div class="v">~₹76,000 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">3 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹5,361 Cr (+20%), operating EBITDA ₹2,604 Cr (~48.5% margin), reported PAT ₹1,547 Cr, EPS ₹7.25; cargo 122 MT (+4%); third-party mix 48%; operational capacity 183 MTPA (target 400 MTPA by FY30); net debt ~₹3,100 Cr (~1.2× EBITDA). Added the July-2026 ₹7,503 Cr QIP (₹285/share), the Navkar logistics acquisition and the 302-km JSW-Steel slurry pipeline; added the concession, captive/third-party and 400-MTPA sections.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">JSW Infrastructure <strong>builds and runs ports and cargo terminals</strong> — the quays, cranes, conveyors and tanks that load and unload ships — and it is <strong>India's second-largest private commercial port operator</strong> (behind Adani Ports). It handles bulk cargo (coal, iron ore, minerals), liquids (petroleum, chemicals, LPG) and, increasingly, containers, across a network of <strong>three private ports and a set of terminals at major government ports</strong> on both Indian coasts, plus international terminals in the UAE. In FY26 it moved a record <strong>122 million tonnes (MT)</strong> of cargo.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It's a per-tonne toll booth on the coast.</strong> JSW Infra doesn't own the goods it moves; it earns a <strong>handling charge for every tonne of cargo</strong> that crosses its berths, under long-term <em>concessions</em> (30–50 year government contracts to operate a port as a local monopoly). Because a port is a fixed asset with mostly fixed costs, once cargo crosses a break-even volume almost every extra tonne is profit — which is why port operations earn an eye-watering <strong>~48–50%+ EBITDA margin</strong>.</li>
+    <li><strong>Half its cargo is its own group; half is everyone else's.</strong> A huge share of volume is <span class="chain-bulk">captive</span> — coal and iron ore for sister companies <strong>JSW Steel and JSW Energy</strong>. That's a rock-solid anchor (guaranteed, often take-or-pay volume), but also a related-party concentration. The whole strategic story is the deliberate shift toward <span class="chain-container">third-party</span> cargo, which has grown from ~5% of volume in FY19 to <strong>~48% in FY26</strong>.</li>
+    <li><strong>It is a growth machine, not a cash cow to sit on.</strong> JSW Infra is roughly <strong>doubling capacity from 183 MTPA toward 400 MTPA by FY30</strong> via greenfield ports, acquisitions and a vertical push into <strong>logistics</strong> (rail, a 302-km slurry pipeline, warehousing, the Navkar acquisition). That ~₹39,000 Cr expansion — part-funded by a landmark <strong>₹7,503 Cr QIP in July 2026</strong> — is exactly what the ~34–38× earnings multiple is paying for.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of JSW Infrastructure as a <strong>landlord of the coastline</strong>. When a ship arrives with coal for a power plant, or leaves loaded with steel, or discharges petrol into storage tanks, it has to use somebody's port — and JSW Infra owns or operates a chain of those doorways. It charges a fee per tonne to move cargo across the quay, store it, and (now) truck or rail it inland. Because it got the right to run these ports under multi-decade government contracts that no rival can duplicate next door, it's a rare, protected, high-margin infrastructure asset — a bit like a highway toll plaza, but for cargo ships. The twist unique to this company: a large chunk of the "traffic" is captive cargo from its own JSW-group siblings (steel and power), which is both a reassuring guaranteed base and a governance question — and management's core mission is to fill the ports with <em>other people's</em> cargo too, while building whole new ports as India's trade grows.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Port economics 101: how a port actually earns</h2></div>
+  <p class="part-sub">No maritime background needed — just how a quay turns tonnes into cash.</p>
+
+  <p class="lead">A port is a <strong>fixed-asset, throughput business</strong>. You build the expensive bits once — the deep-water berths, the cranes, the conveyors, the storage yards and tanks — and then you earn by pushing as much cargo across them as possible. The single most important operating number is therefore <strong>cargo volume, measured in million tonnes (MT)</strong>. Almost every rupee of revenue scales with the tonnes handled.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only units you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and JSW Infra's number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Cargo handled (MT)</td><td>The master metric — total tonnage moved across all berths in a year. JSW Infra handled <strong>122 MT in FY26</strong> (up 4%).</td></tr>
+      <tr><td class="t-strong">Capacity (MTPA)</td><td>The physical ceiling — million tonnes <em>per annum</em> the network <em>could</em> handle at full tilt. JSW Infra's operational Indian capacity is <strong>~183 MTPA</strong>; the target is <strong>400 MTPA by FY30</strong>.</td></tr>
+      <tr><td class="t-strong">Utilisation</td><td>Cargo ÷ capacity. At ~122 MT on ~183 MTPA, JSW Infra runs roughly <strong>two-thirds utilised</strong> — leaving headroom to grow volume on the <em>same</em> assets (pure operating leverage).</td></tr>
+      <tr><td class="t-strong">Realisation / tariff</td><td>The <strong>handling charge per tonne</strong> the port earns. Varies hugely by cargo — a tonne of liquid chemical or container earns far more than a tonne of coal.</td></tr>
+      <tr><td class="t-strong">Concession</td><td>The long-term (30–50 year) government/state contract giving JSW Infra the right to build and run a port or terminal as a local monopoly.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The simple revenue equation</div>
+    <p>Roughly: <strong>Revenue ≈ Tonnes × Realisation-per-tonne</strong>. So JSW Infra grows in three compounding ways — <strong>add capacity</strong> (build/buy more ports), <strong>fill it</strong> (higher utilisation and new customers), and <strong>lift the value of each tonne</strong> (shift mix toward higher-tariff liquid and container cargo, and add value-added services like storage and last-mile logistics). Because a port's costs are mostly <em>fixed</em> — the berth is already built, the cranes are already there — once volume crosses break-even, almost every extra tonne of revenue drops straight to profit. That operating leverage is why ports earn ~50% EBITDA margins, and why volume growth is the number to watch.</p>
+  </div>
+
+  <h3>Why ports are such high-margin, high-barrier assets</h3>
+  <ul class="clean">
+    <li><strong>The costs are front-loaded and fixed.</strong> The heavy spend is the one-time construction of berths and equipment. After that, the marginal cost of moving an extra tonne is small — labour, power, maintenance — so incremental margins are enormous.</li>
+    <li><strong>You can't just build a rival next door.</strong> A deep-water port needs the right coastline, dredged draft, land, rail/road connectivity, huge capital and — critically — a <em>government concession</em>. Those are scarce. A concession is effectively a licensed local monopoly for decades.</li>
+    <li><strong>The cash flow is annuity-like.</strong> Cargo has to keep flowing for a steel mill to run or a power plant to burn coal — so a well-placed port sees steady, essential, repeat volume, often locked in by long-term contracts. It behaves less like a cyclical industrial and more like a <strong>toll-collecting infrastructure annuity</strong>.</li>
+  </ul>
+</section>
+
+<!-- 02 — BESPOKE #1: concession & cargo-annuity model -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The concession &amp; the cargo-annuity model</h2></div>
+  <p class="part-sub">The single most important idea in the whole primer — read this once and the equity story clicks.</p>
+
+  <p class="lead">JSW Infra rarely owns its ports outright. It holds them under long <strong>concessions</strong> — build-operate-transfer style contracts under which a government or state hands over the right to build and run a port (or a terminal inside a bigger government port) as a <strong>regional monopoly for decades</strong>, in return for a share of revenue and an obligation to invest. This structure is the source of the company's deepest moat <em>and</em> the reason its cash flows look like an annuity.</p>
+
+  <h3>How the concession works</h3>
+  <ul class="clean">
+    <li><strong>Exclusive &amp; long.</strong> JSW Jaigarh, its flagship private port, runs on a <strong>50-year build-own-operate-share-transfer (BOOST)</strong> concession from the Maharashtra government. Terminals won at major government ports (e.g. Paradip, Ennore, Mangalore, Tuticorin, Kolkata) typically come via <strong>public-private-partnership tenders on ~30-year DBFOT</strong> (design-build-finance-operate-transfer) terms. During the concession, no one else can operate that berth.</li>
+    <li><strong>Revenue-share to the grantor.</strong> At major-port terminals, JSW Infra usually pays the port authority a percentage of revenue (the price of the concession). At its own private ports, it keeps more of the economics but bears the full build cost.</li>
+    <li><strong>Build &amp; operate obligation.</strong> The operator must invest to build and expand capacity — that's the capex that creates debt, but also the asset that throws off decades of handling fees.</li>
+  </ul>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">How a tonne of cargo becomes revenue — the annuity in motion</div>
+    <div class="flow-row">
+      <div class="node spec"><div class="ntag">Step 1 · The right</div><div class="nname">Win a concession</div><div class="nwho">30–50 yr contract to run a port/terminal as a local monopoly.</div></div>
+      <div class="arrow">→</div>
+      <div class="node bulk"><div class="ntag">Step 2 · The asset</div><div class="nname">Build berths &amp; cranes</div><div class="nwho">One-time heavy capex — the fixed cost that then earns for decades.</div></div>
+      <div class="arrow">→</div>
+      <div class="node container"><div class="ntag">Step 3 · The flow</div><div class="nname">Handle cargo, per tonne</div><div class="nwho">Charge for loading, unloading, storage — often take-or-pay.</div></div>
+      <div class="arrow">→</div>
+      <div class="node liquid"><div class="ntag">Step 4 · The margin</div><div class="nname">~50% EBITDA</div><div class="nwho">Fixed cost + incremental tonnes = huge operating leverage.</div></div>
+    </div>
+    <div class="flow-note">The magic is Step 4: because Steps 1–2 are paid for up-front, each extra tonne handled in Step 3 arrives at very high margin — and long-term / take-or-pay contracts make the flow annuity-like rather than cyclical.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "take-or-pay" is the secret sauce</div>
+    <p>Some of JSW Infra's biggest contracts — especially with its JSW-group customers — carry <strong>"take-or-pay"</strong> clauses. That means the customer commits to pay for a minimum volume of cargo <em>whether or not it actually ships it</em>. So even in a soft year, the port still collects. As of the IPO era, take-or-pay JSW-group contracts underpinned a large minimum annual tonnage — turning a chunk of revenue into a contracted, utility-like floor. Combine (1) a multi-decade monopoly concession, (2) essential cargo that has to keep flowing, and (3) take-or-pay minimums, and you get why analysts treat a well-run port as an <strong>infrastructure annuity</strong>: predictable, long-life, inflation-linked cash flow, protected by a contract no competitor can copy. That predictability is precisely what earns ports a premium valuation despite being capital-heavy.</p>
+  </div>
+
+  <blockquote>You cannot build a second deep-water port on the same stretch of coast. That single sentence is the moat — and the reason a per-tonne handling fee compounds into a multi-decade annuity.</blockquote>
+</section>
+
+<!-- 03 — BESPOKE #2: captive vs third-party -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>Captive vs third-party cargo — the defining dynamic</h2></div>
+  <p class="part-sub">The one tension that runs through the whole JSW Infra story: the anchor and the concentration.</p>
+
+  <p class="lead">Here is the fact that makes JSW Infrastructure different from a standalone port operator: it was <strong>born inside the JSW group</strong> to move <em>its own</em> cargo. JSW Steel needs to import coking coal and iron ore and export steel; JSW Energy needs to import thermal coal for its power plants. JSW Infra's ports were built, in large part, to serve those sister companies. That "<strong>captive</strong>" cargo is both the greatest strength and the sharpest question mark in the whole investment case.</p>
+
+  <div class="chart">
+    <div class="c-title">The great diversification — third-party cargo's rise</div>
+    <div class="c-sub">Share of total volume that is third-party (non-JSW-group)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY19<small>a captive port</small></div><div class="track"><span class="fill ink" style="width:10%"></span></div><div class="bval">~5%</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill bulk" style="width:80%"></span></div><div class="bval">~40%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill bulk" style="width:98%"></span></div><div class="bval">~49%</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>near half external</small></div><div class="track"><span class="fill gold" style="width:96%"></span></div><div class="bval">~48%</div></div>
+    </div>
+    <div class="legend"><span>From ~5% third-party in FY19 to ~48% in FY26 — one of the clearest strategic transformations in the sector. The remaining ~52% is captive JSW-group cargo (steel &amp; energy).</span></div>
+  </div>
+
+  <h3>The bull side: captive cargo is a rock-solid anchor</h3>
+  <ul class="clean">
+    <li><strong>Guaranteed, essential volume.</strong> JSW Steel and JSW Energy <em>must</em> move coal, ore and steel — and much of it is locked in via long-term, often take-or-pay contracts. That gives JSW Infra a contracted volume floor most independent ports would envy.</li>
+    <li><strong>A ready-made base to build on.</strong> Captive cargo let the company build scale, learn to run ports well, and generate the cash to expand — without waiting to win third-party customers first. New ports open with anchor volume already in hand.</li>
+    <li><strong>It de-risks new-port ramp-up.</strong> A greenfield port normally opens near-empty and loses money for years; a JSW port can open already fed by group cargo, shortening its path to profitability.</li>
+  </ul>
+
+  <h3>The bear side: it's a related-party concentration</h3>
+  <ul class="clean">
+    <li><strong>Half the business is one customer group.</strong> ~52% of volume from JSW Steel/Energy means JSW Infra's fortunes are tied to its siblings' output — a slowdown in steel or a change in a power plant's coal sourcing hits the port directly.</li>
+    <li><strong>Related-party pricing is a governance watch-item.</strong> When the customer and the service provider share the same promoter, minority shareholders have to trust that inter-company tariffs are set at arm's length. It's disclosed and regulated, but it's a permanent question a sceptic will ask.</li>
+    <li><strong>Third-party cargo is usually worth more.</strong> External customers typically pay market tariffs and diversify risk — which is exactly why growing the third-party share isn't just "de-risking", it can be <em>margin-accretive and multiple-expanding</em> too.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the third-party push is the whole re-rating story</div>
+    <p>Picture two versions of the same port. Version A moves only its parent's coal — safe, but the market values it as a captive cost centre with related-party risk, and caps the multiple. Version B moves the <em>same</em> tonnage but now half of it is for unrelated steelmakers, chemical firms, container lines and traders paying market rates. Version B is a genuine, diversified commercial franchise — lower single-customer risk, arm's-length pricing, and a clear runway to keep winning customers. Same assets, very different quality of earnings. JSW Infra's journey from ~5% to ~48% third-party is the market's evidence that it's becoming Version B — and every point of further diversification is, in effect, an upgrade to the quality (and the valuation) of the whole business. This is the JSW Infra equivalent of the "one force that defines the company", and it's the single trend to track each year.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The port &amp; terminal network</h2></div>
+  <p class="part-sub">Three private ports, a set of major-port terminals, and an international foothold in the UAE.</p>
+
+  <p class="lead">JSW Infra's ~183 MTPA of operational capacity is spread across roughly <strong>ten port concessions on both Indian coasts</strong> — a mix of wholly developed private ports and terminals operated inside government "major ports" — plus terminals in the UAE. The flagship is deep-water <strong>Jaigarh</strong>; the network hugs India's mineral and energy trade routes.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The network at a glance (FY26, capacity MTPA)</caption>
+    <thead><tr><th>Port / terminal</th><th>Location</th><th class="num">Capacity</th><th>Role &amp; why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">JSW Jaigarh</td><td>Maharashtra (W coast)</td><td class="num">55</td><td><strong>The flagship.</strong> Deep-water, all-weather private port, 7 berths, on a 50-yr BOOST concession. Bulk + liquid + the LPG push.</td></tr>
+      <tr><td class="t-strong">JSW Dharamtar</td><td>Maharashtra (W coast)</td><td class="num">34</td><td>Private port near Mumbai serving JSW Steel's Dolvi works — a core captive-cargo gateway.</td></tr>
+      <tr><td class="t-strong">South West Port</td><td>Mormugao, Goa</td><td class="num">8.5</td><td>Two bulk berths at Mormugao — a long-held Goa concession.</td></tr>
+      <tr><td class="t-strong">Paradip terminals</td><td>Odisha (E coast)</td><td class="num">10 + 30</td><td>Iron-ore terminal (10) plus newly-won EQ1/2/3 coal terminals (~30) — a big east-coast expansion.</td></tr>
+      <tr><td class="t-strong">Ennore / Mangalore / Tuticorin</td><td>TN &amp; Karnataka (E &amp; W)</td><td class="num">~7 ea.</td><td>Coal &amp; bulk terminals at major government ports — the PPP terminal book.</td></tr>
+      <tr><td class="t-strong">JNPA liquid terminal</td><td>Navi Mumbai (W coast)</td><td class="num">liquid</td><td>Liquid-cargo terminal at India's premier container port — a higher-value niche.</td></tr>
+      <tr><td class="t-strong">PNP Port</td><td>Maharashtra (W coast)</td><td class="num">acquired</td><td>Recent acquisition adding west-coast bulk capacity and volume.</td></tr>
+      <tr><td class="t-strong">Fujairah + Dibba (UAE)</td><td>United Arab Emirates</td><td class="num">41</td><td>Two dry-bulk terminals + a 465,000 m³ liquid tank-storage farm — the international leg and a higher-margin liquids business.</td></tr>
+      <tr><td class="t-strong">Kolkata container terminal</td><td>West Bengal (E coast)</td><td class="num">~0.9m TEU</td><td>Newly won (2026) container project — part of the container-growth push toward ~1.8m TEU.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Capacity by anchor asset (approx. MTPA)</div>
+    <div class="c-sub">Jaigarh + Dharamtar + the UAE terminals are the backbone today</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Jaigarh</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">55</div></div>
+      <div class="bar-row"><div class="blab">Fujairah+Dibba (UAE)</div><div class="track"><span class="fill intl" style="width:75%"></span></div><div class="bval">41</div></div>
+      <div class="bar-row"><div class="blab">Dharamtar</div><div class="track"><span class="fill bulk" style="width:62%"></span></div><div class="bval">34</div></div>
+      <div class="bar-row"><div class="blab">Paradip (ore + EQ1-3)</div><div class="track"><span class="fill gold" style="width:73%"></span></div><div class="bval">~40</div></div>
+      <div class="bar-row"><div class="blab">South West / others</div><div class="track"><span class="fill liquid" style="width:25%"></span></div><div class="bval">~13</div></div>
+    </div>
+    <div class="legend"><span>Figures are approximate and shift as terminals commission. The east-coast (Paradip, Ennore, Kolkata) build-out is deliberately diversifying a historically west-coast, JSW-Steel-anchored footprint.</span></div>
+  </div>
+
+  <div class="note gold"><b>The geographic logic:</b> JSW Infra's footprint deliberately tracks India's energy-and-metals trade — coal and iron-ore gateways on both coasts — while the newer container and liquid terminals push it into higher-tariff, more diversified cargo. The UAE terminals add a hard-currency, higher-margin liquids business and a template for exporting the model beyond India.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The cargo mix — bulk, liquid &amp; container</h2></div>
+  <p class="part-sub">Not all tonnes are equal — the shift up the value ladder is a quiet margin story.</p>
+
+  <p class="lead">JSW Infra's 122 MT of cargo is not one thing. It splits into three families that earn <em>very</em> different amounts per tonne, and the deliberate drift toward the higher-value families (liquids, containers) is a slow but real upgrade to the quality of earnings.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The cargo value ladder — earnings-per-tonne rises left to right</div>
+    <div class="flow-row">
+      <div class="node bulk"><div class="ntag">The base</div><div class="nname">Dry bulk</div><div class="nwho">Coal, iron ore, minerals. Huge volume, lower tariff/tonne. The captive core.</div></div>
+      <div class="arrow">→</div>
+      <div class="node liquid"><div class="ntag">Higher value</div><div class="nname">Liquid bulk</div><div class="nwho">Petroleum, chemicals, LPG. Tank storage = recurring, higher-margin revenue.</div></div>
+      <div class="arrow">→</div>
+      <div class="node container"><div class="ntag">Highest value</div><div class="nname">Containers</div><div class="nwho">Boxed goods (TEUs). Highest realisation/tonne; the diversification frontier.</div></div>
+    </div>
+    <div class="flow-note">Bulk gives scale and captive anchoring; liquids and containers give tariff and diversification. Growing the right of this ladder lifts blended realisation without needing extra tonnes.</div>
+  </div>
+
+  <ul class="clean">
+    <li><strong><span class="chain-bulk">Dry bulk</span></strong> — the historic core: thermal &amp; coking coal, iron ore, limestone, minerals. This is where the captive JSW-group volume sits and where the tonnage is largest, but the per-tonne tariff is the lowest of the three.</li>
+    <li><strong><span class="chain-liquid">Liquid bulk</span></strong> — petroleum products, chemicals and now LPG, handled via pipelines into tank farms. The <strong>465,000 m³ Fujairah tank farm</strong> and a new <strong>LPG terminal at Jaigarh</strong> exemplify the push: liquids come with sticky, recurring <em>storage</em> revenue and higher margins.</li>
+    <li><strong><span class="chain-container">Containers</span></strong> — the highest realisation per tonne and the clearest third-party diversification lever. JSW Infra is building toward <strong>~1.8 million TEUs</strong> of container capacity, including the newly won <strong>Kolkata terminal</strong> (~0.9m TEU) — a step-change from its bulk heritage.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why mix matters as much as volume</div>
+    <p>Two ports can handle the same 100 tonnes and earn wildly different revenue depending on <em>what</em> those tonnes are. A tonne of coal might earn a modest handling fee; a tonne of chemicals sitting in a storage tank for weeks, or a container of finished goods, can earn several times more — and liquids add recurring rent on top of the one-time handling charge. So JSW Infra has two levers, not one: move <strong>more tonnes</strong> (volume), and move <strong>richer tonnes</strong> (mix). The company's EBITDA-per-tonne has been inching up (roughly ₹175 → ₹200 across recent years) precisely because mix and value-added services are improving — a quiet compounding force that a simple "tonnes handled" headline misses.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE #3: 400 MTPA growth engine -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The 400 MTPA growth engine</h2></div>
+  <p class="part-sub">The defining growth story — roughly doubling the company by the end of the decade.</p>
+
+  <p class="lead">If the concession model is what JSW Infra <em>is</em>, the capacity-expansion drive is what the market is <em>buying</em>. Management has set an audacious target: take operational capacity from <strong>~183 MTPA today to 400 MTPA by FY30</strong>, backed by a multi-year capex programme of roughly <strong>₹39,000 crore</strong> — greenfield ports, terminal wins, acquisitions and logistics all at once. This is the growth runway that separates JSW Infra from a mature, ex-growth port.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The expansion pipeline (selected major projects)</caption>
+    <thead><tr><th>Project</th><th class="num">Est. capex</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Keni Port (Karnataka)</td><td class="num">₹4,119 Cr</td><td>New greenfield port (~30 MTPA) — a fresh 30–50 yr concession, largely third-party from day one.</td></tr>
+      <tr><td class="t-strong">Jatadhar Port (Odisha)</td><td class="num">₹3,050 Cr</td><td>New east-coast port (~30 MTPA) — feeds JSW Steel's Odisha plans and diversifies geographically.</td></tr>
+      <tr><td class="t-strong">Slurry pipeline (Odisha)</td><td class="num">₹4,000 Cr</td><td>302-km iron-ore slurry pipeline (~30 MTPA) with a take-or-pay JSW-Steel contract — port-to-plant integration.</td></tr>
+      <tr><td class="t-strong">Dharamtar &amp; Jaigarh expansion</td><td class="num">₹2,359 Cr</td><td>~36 MTPA of extra capacity on existing, proven assets — the cheapest, fastest tonnes to add.</td></tr>
+      <tr><td class="t-strong">Paradip EQ1/2/3 terminals</td><td class="num">bid</td><td>~30 MTPA of coal-terminal capacity won at Paradip — bolt-on to an existing hub.</td></tr>
+      <tr><td class="t-strong">Kolkata container + Jaigarh LPG</td><td class="num">~₹1,640 Cr</td><td>Higher-value container (~0.9m TEU) and liquid/LPG capacity — mix upgrade, not just volume.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">The capacity ambition</div>
+    <div class="c-sub">Operational cargo-handling capacity (MTPA)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill bulk" style="width:44%"></span></div><div class="bval">~177</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:46%"></span></div><div class="bval">~183</div></div>
+      <div class="bar-row"><div class="blab">FY30 target</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">400</div></div>
+    </div>
+    <div class="legend"><span>Roughly doubling capacity in ~4 years — via greenfield ports, terminal wins, brownfield expansion and acquisitions. Realising it depends on execution, funding and enough cargo to fill the new berths.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why doubling capacity is a compounding machine — if the tonnes show up</div>
+    <p>Here's the bull mechanism in one loop. Each new port opens with a <strong>captive JSW-group anchor</strong> (so it isn't empty on day one), then ramps up with <strong>third-party cargo</strong> as it matures. Because ports are fixed-cost assets, a ramping terminal sees profit grow <em>faster</em> than volume as it fills — the same operating-leverage J-curve that defines any infrastructure asset. Stack a dozen such assets, each climbing its own curve, and both revenue and margin can compound for years. Management's own near-term guidance shows the ambition: <strong>revenue targeted at ~₹10,800 Cr and EBITDA ~₹5,000 Cr by FY28</strong> — roughly double FY26. The bear counter is the same loop in reverse: doubling capacity means doubling <em>execution</em> — new geographies, construction risk, and above all the need to <em>find enough third-party cargo to fill berths the JSW group alone can't</em>. Empty new capacity is just depreciation and interest with no toll.</p>
+  </div>
+</section>
+
+<!-- 07 — BESPOKE #4: logistics integration -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>From ports to logistics — the vertical push</h2></div>
+  <p class="part-sub">The newest chapter: don't just handle cargo at the quay — move it door-to-door.</p>
+
+  <p class="lead">A port only touches cargo at the water's edge. JSW Infra's next act is to follow that cargo <em>inland</em> — to become an <strong>integrated ports-and-logistics player</strong> that owns the rail rakes, pipelines, warehouses and container yards that carry goods the "last mile" from ship to customer. This is the pivot that could turn a port operator into an end-to-end supply-chain franchise — and capture more of each shipment's value.</p>
+
+  <ul class="clean">
+    <li><strong>The Navkar acquisition.</strong> JSW Infra acquired a <strong>~70.4% stake in Navkar Corporation</strong>, a container-logistics company with container freight stations (CFS), inland container depots and rail links near JNPT/Mumbai — instantly bolting a container-logistics network onto the port business.</li>
+    <li><strong>The slurry pipeline.</strong> A <strong>302-km iron-ore slurry pipeline in Odisha</strong> (Nuagaon to Jagatsinghpur, ~₹4,000 Cr, targeted for completion by early 2027) will pump ore directly from mine region to plant/port under a <strong>take-or-pay contract with JSW Steel</strong> — replacing thousands of truck trips with a fixed, high-margin annuity pipe.</li>
+    <li><strong>Rail, warehousing &amp; land.</strong> The company is assembling <strong>rail rakes, trailers, container-handling equipment and logistics land</strong> (parcels at Panvel and Morbi) to run first-and-last-mile movement itself, rather than hand cargo off at the gate.</li>
+  </ul>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The integration thesis — owning more of the cargo journey</div>
+    <div class="flow-row">
+      <div class="node bulk"><div class="ntag">Traditional</div><div class="nname">Ship → Quay</div><div class="nwho">Port earns a handling fee, then hands cargo off. One toll.</div></div>
+      <div class="arrow">→</div>
+      <div class="node logi"><div class="ntag">New</div><div class="nname">Rail / pipeline</div><div class="nwho">JSW Infra now carries cargo inland — rakes, the slurry pipe.</div></div>
+      <div class="arrow">→</div>
+      <div class="node container"><div class="ntag">New</div><div class="nname">CFS / warehouse</div><div class="nwho">Navkar's depots &amp; yards — storage, customs, distribution.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Result</div><div class="nname">Door-to-door</div><div class="nwho">Multiple tolls on one shipment — a wider, stickier franchise.</div></div>
+    </div>
+    <div class="flow-note">Each step JSW Infra owns is another fee on the same cargo — and a reason for a customer to use its port <em>because</em> it can deliver end-to-end.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why integration is more than empire-building</div>
+    <p>Two payoffs justify the logistics push. <strong>First, more value per shipment:</strong> a customer that used to pay JSW Infra only for quay handling can now pay it for rail haulage, storage and last-mile delivery too — several tolls on one journey instead of one. <strong>Second, it makes the port stickier:</strong> if JSW Infra can offer a steelmaker or importer a seamless door-to-door solution, that customer has a strong reason to route cargo through JSW's port in the first place — deepening the third-party diversification the whole strategy depends on. The slurry pipeline is the purest example: a fixed, decades-long, take-or-pay pipe is about as annuity-like as infrastructure gets. The risk is that logistics — trucking, warehousing, freight — is a <em>lower-margin, more competitive, more asset-heavy</em> world than the ~50%-margin port core, so the integration must be done selectively or it dilutes the very margins that make the company special.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A JSW-group company built around captive cargo, recently listed, still ~84% promoter-owned.</p>
+
+  <p class="lead">JSW Infrastructure is a core arm of the <strong>US$-scale JSW Group</strong> controlled by industrialist <strong>Sajjan Jindal</strong> — the same house that owns JSW Steel, JSW Energy, JSW Cement and more. Incorporated in 2006 to handle the group's own port needs, it grew into India's second-largest private port operator and finally came to the public market in October 2023.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2006</div><div class="ev">JSW Infrastructure incorporated — built to handle the JSW group's <strong>captive coal, ore and steel</strong> cargo.</div></li>
+    <li class="major"><div class="yr">2010s</div><div class="ev">Develops flagship <strong>Jaigarh</strong> (50-yr concession) and <strong>Dharamtar</strong>; wins terminals at major ports (Mangalore, Ennore, Paradip); expands beyond pure-captive volume.</div></li>
+    <li><div class="yr">FY19</div><div class="ev">Third-party cargo just <strong>~5%</strong> of volume — essentially a captive port operator at this point.</div></li>
+    <li><div class="yr">2021–22</div><div class="ev">Acquires the <strong>Fujairah &amp; Dibba (UAE)</strong> terminals and liquid tank farm — the international and liquids leg.</div></li>
+    <li class="major"><div class="yr">Oct 2023</div><div class="ev"><strong>IPO</strong> — a ₹2,800 Cr entirely-fresh issue at ₹119/share; lists on NSE &amp; BSE on 3 Oct 2023 to a strong debut.</div></li>
+    <li><div class="yr">FY25–FY26</div><div class="ev">Third-party mix reaches <strong>~48–49%</strong>; acquires <strong>PNP Port</strong> and <strong>Navkar</strong> (logistics); wins Paradip EQ1-3 and the Kolkata container terminal; sets the <strong>400 MTPA / ₹39,000 Cr</strong> plan.</div></li>
+    <li class="major"><div class="yr">Jul 2026</div><div class="ev">Raises <strong>₹7,503 Cr via a landmark QIP</strong> at ₹285 (₹6,555 Cr primary + a promoter offer-for-sale in one structure) — funding expansion and starting to meet minimum-public-shareholding norms.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoter ~84%.</strong> <strong>Sajjan Jindal, the Sajjan Jindal Family Trust and JSW-group entities</strong> held ~83.6% at March 2026 — a very high promoter stake, being gradually reduced (the July-2026 QIP included a promoter sell-down) to meet SEBI's 25% minimum-public-float rule over time.</li>
+    <li><strong>The group ecosystem is the point.</strong> Being inside JSW is JSW Infra's origin, its anchor customer base, and its brand — but also the source of the related-party dynamic covered in Section 03.</li>
+    <li><strong>Institutional demand is strong.</strong> The July-2026 QIP was subscribed ~6.7× (bids of ~₹50,500 Cr), pulling in domestic mutual funds, insurers and foreign institutions — evidence of appetite for the ports-and-logistics growth story.</li>
+  </ul>
+</section>
+
+<!-- 09 — BESPOKE #5: balance sheet & capex funding -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The balance sheet &amp; how the ₹39,000 Cr gets funded</h2></div>
+  <p class="part-sub">A conservatively-geared operator — the question is whether it stays that way through the build.</p>
+
+  <p class="lead">Unlike some infrastructure names buried in debt, JSW Infra runs a <strong>notably clean balance sheet</strong>. Net debt at end-FY26 was only about <strong>₹3,100 Cr</strong> — roughly <strong>1.2× operating EBITDA</strong> — against ~₹3,455 Cr of cash. That low leverage is a deliberate strength as it embarks on a ~₹39,000 Cr, decade-long capex marathon.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~₹3,100 Cr</div><div class="msl">Net debt (FY26) — very modest for a port infra builder</div></div>
+    <div class="ms green"><div class="msv">~1.2×</div><div class="msl">Net debt / operating EBITDA — well below prudent ceilings</div></div>
+    <div class="ms"><div class="msv">₹7,503 Cr</div><div class="msl">July-2026 QIP raised — fresh equity to fund the build</div></div>
+  </div>
+
+  <h3>How the expansion is paid for</h3>
+  <ul class="clean">
+    <li><strong>Internal cash flow.</strong> A ~48–50% EBITDA-margin business throws off strong operating cash — the first and cheapest source of expansion capital.</li>
+    <li><strong>Fresh equity (the QIP).</strong> The <strong>₹7,503 Cr July-2026 QIP</strong> (₹6,555 Cr of it primary) directly funds capex while broadening the shareholder base and easing the public-float requirement. It dilutes EPS ~8–10% near-term until the new capacity earns.</li>
+    <li><strong>Prudent debt headroom.</strong> With leverage at just ~1.2×, JSW Infra can borrow substantially against its annuity cash flows without stressing the balance sheet — project debt secured on long-life concession assets.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why a clean balance sheet matters so much in ports</div>
+    <p>Ports are capital-devouring: you spend the money up front and earn it back slowly over decades. If you fund that with too much expensive debt, interest can swallow the fat EBITDA margin before it reaches shareholders (that's precisely the trap heavily-levered airport and infra operators fall into). JSW Infra's answer is to keep leverage low and fund the build with a <em>mix</em> of internal cash, fresh equity and disciplined project debt — so the annuity cash flows compound for shareholders rather than for lenders. The near-term cost is equity dilution (the QIP) and a period where new capacity isn't yet earning; the long-term prize is a franchise that roughly doubles in size while staying financially sturdy. The watch-item: whether leverage stays modest as the ₹39,000 Cr is deployed, or creeps up if projects run over budget or cargo fills the new berths slower than planned.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Fast growth, fat margins, an annuity core — and a price that already assumes a lot goes right.</p>
+
+  <p class="lead">JSW Infra's financial record is a picture of high-margin, fast-compounding infrastructure: revenue up ~20% in FY26, ~48–50% EBITDA margins, and a five-year revenue CAGR around 27%. The debate isn't the quality of the business — it's whether the ~34–38× earnings multiple already prices the growth.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue from operations (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:64%"></span></div><div class="bval">~3,478</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:83%"></span></div><div class="bval">4,476</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">5,361</div></div>
+      <div class="bar-row"><div class="blab">FY28 guided<small>company target</small></div><div class="track"><span class="fill container" style="width:130%;max-width:100%"></span></div><div class="bval">~10,800</div></div>
+    </div>
+    <div class="legend"><span>FY28 is a management guidance target (roughly doubling FY26), not an actual — shown to frame the growth ambition.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit (PAT) trajectory</div>
+    <div class="c-sub">Consolidated net profit after tax (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:70%"></span></div><div class="bval">~1,155</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill liquid" style="width:92%"></span></div><div class="bval">1,521</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill liquid" style="width:94%"></span></div><div class="bval">1,547</div></div>
+    </div>
+    <div class="legend"><span>FY26 PAT rose only marginally despite +20% revenue — dragged by one-offs (a ~₹68 Cr Fujairah fire loss, forex &amp; labour costs) and higher depreciation/interest from the expansion. Adjusted for one-offs, underlying profit grew faster.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~48.5%</div><div class="msl">FY26 operating EBITDA margin — annuity-grade profitability</div></div>
+    <div class="ms green"><div class="msv">~1.2×</div><div class="msl">Net debt / EBITDA — a rare low-leverage infra builder</div></div>
+    <div class="ms red"><div class="msv">~34–38×</div><div class="msl">Trailing P/E (Jul '26) — a rich multiple to defend</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the multiple</div>
+    <p>At ~₹76,000 Cr market cap on ~₹1,547 Cr of FY26 profit, JSW Infra trades around <strong>34–38× trailing earnings</strong> — interestingly, roughly in line with (no longer at a huge premium to) its far larger rival Adani Ports (~34×). That price only makes sense if you believe the <strong>capacity-doubling + third-party-diversification + logistics story delivers years of high-teens-plus growth</strong>. Bulls argue you're buying a scarce, ~50%-margin, annuity-like infrastructure franchise with a clear runway to double — the sort of asset that deserves a scarcity premium, especially with a clean balance sheet. Bears note the multiple leaves little room for error: FY26 PAT barely grew (one-offs and rising depreciation/interest bit), the QIP dilutes near-term EPS, and much of the value depends on <em>future</em> capacity that must be built <em>and</em> filled. Because the business is high-margin and cash-generative, analysts also lean on <strong>EV/EBITDA</strong> and forward earnings rather than trailing P/E — the trajectory of EBITDA (targeted ~₹5,000 Cr by FY28) is really what's being bought.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The rivals &amp; the industry</h2></div>
+  <p class="part-sub">A duopoly-ish private-port world led by Adani, inside a state-dominated sector going private.</p>
+
+  <p class="lead">India's port sector is split between government-run "major ports" and a fast-growing private cohort winning share by running terminals better and building new capacity. That private cohort is dominated by two names — <strong>Adani Ports (#1) and JSW Infrastructure (#2)</strong> — with everyone else far smaller.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs JSW Infra</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">JSW Infrastructure</td><td>#2 private port operator</td><td><em>This company.</em> ~183 MTPA, 122 MT handled; JSW-group anchor + a fast-rising third-party book; doubling toward 400 MTPA.</td></tr>
+      <tr><td class="t-strong">Adani Ports (APSEZ)</td><td>#1 private port operator by a wide margin</td><td>~633 MMT capacity, ~15 ports, a national logistics network and ~₹4.3 lakh Cr market cap — roughly 5–6× JSW Infra's size. The benchmark and the giant.</td></tr>
+      <tr><td class="t-strong">Government "major ports"</td><td>State-run ports (JNPA, Paradip, etc.)</td><td>Still the bulk of national capacity — but increasingly hand terminals to private operators like JSW Infra via PPP concessions (a tailwind, not just a rival).</td></tr>
+      <tr><td class="t-strong">Standalone / captive ports</td><td>Smaller private &amp; company-captive ports</td><td>Fragmented; JSW Infra's scale, JSW anchor and concession book give it a structural edge over sub-scale operators.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "second place" here is still an excellent place to be</div>
+    <p>Adani Ports is much bigger, and will stay bigger — but ports aren't a winner-take-all market. Each concession is a <em>local</em> monopoly, so JSW Infra doesn't need to beat Adani everywhere; it needs to win and run its own concessions well. Two structural tailwinds lift the whole cohort: <strong>India's trade keeps growing</strong> (more coal, ore, chemicals, containers to move), and the government is <strong>privatising and PPP-ing more terminals</strong> — handing well-run operators like JSW Infra a steady stream of new concessions to bid for. Being the clear #2, with a captive anchor and a clean balance sheet, means JSW Infra has both the scale to compete for national bids and the runway to keep taking share. The competitive risk is less "Adani eats JSW's lunch" and more that aggressive bidding for scarce concessions erodes returns for everyone.</p>
+  </div>
+
+  <div class="note gold"><b>The sector backdrop:</b> port tariffs, concession terms and revenue-share are shaped by government policy (the Major Port Authorities framework, state maritime boards, and the national maritime/logistics agenda). Broadly the policy direction — more private participation, logistics-cost reduction, port-led development — is favourable, but tariff regulation and concession-renewal terms are permanent variables worth watching.</div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks &amp; the bull/bear</h2></div>
+  <p class="part-sub">A scarce, high-margin annuity doubling in size — priced for a lot to go right.</p>
+
+  <p class="lead">JSW Infrastructure offers a rare combination: the <strong>annuity stability of a concession-based port</strong> with the <strong>growth of a company doubling its capacity</strong>. Whether that justifies the price comes down to execution — building ~₹39,000 Cr of new capacity, filling it with third-party cargo, and integrating logistics without diluting the ~50% margin core.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Scarce, protected, high-margin asset.</strong> Multi-decade monopoly concessions, ~48–50% EBITDA margins, annuity-like cargo — infrastructure of genuine quality.</li>
+        <li><strong>A clear runway to double.</strong> 183 → 400 MTPA by FY30; revenue/EBITDA guided to roughly double by FY28. Few infra names have this visible a growth path.</li>
+        <li><strong>De-risking in real time.</strong> Third-party cargo up from ~5% to ~48% — improving earnings quality and cutting single-customer risk each year.</li>
+        <li><strong>Clean balance sheet + strong sponsor.</strong> Net debt just ~1.2× EBITDA, fresh ₹7,503 Cr QIP, and the JSW group's captive anchor and execution muscle behind it.</li>
+        <li><strong>Optionality.</strong> Logistics integration (Navkar, slurry pipeline, rail), containers and the UAE liquids business add higher-value, stickier revenue.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich multiple, little margin for error.</strong> ~34–38× earnings on FY26 PAT that barely grew — the growth must arrive on schedule to justify the price.</li>
+        <li><strong>Related-party concentration.</strong> Still ~52% captive JSW-group cargo, with the governance/arm's-length-pricing questions that come with it.</li>
+        <li><strong>Execution &amp; fill risk.</strong> Doubling capacity means doubling construction, new geographies, and the need to <em>find enough third-party cargo</em> to fill new berths — empty capacity is pure cost.</li>
+        <li><strong>Dilution &amp; capex intensity.</strong> The QIP dilutes near-term EPS; a ₹39,000 Cr spend over years pressures returns until assets ramp.</li>
+        <li><strong>Cargo &amp; margin mix.</strong> Reliance on coal/ore ties volume to steel &amp; power cycles; the logistics push is inherently lower-margin than the port core.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>JSW Infrastructure is a <strong>high-quality, high-growth ports-and-logistics franchise</strong> — a scarce concession-protected annuity that also happens to be doubling in size. The three numbers that decide the story: the <strong>third-party cargo share</strong> (is it still climbing?), <strong>capacity added and filled</strong> (is the 400 MTPA build on track, and are the new berths busy?), and <strong>leverage</strong> (does the balance sheet stay clean through the capex marathon?). Get those three right and the ~50%-margin annuity compounds handsomely; stumble on execution or cargo, and a richly-priced stock has room to de-rate. It is neither a sleepy toll-collector nor a speculative builder — it's a bet that a proven port operator can grow like a start-up while keeping the margins and safety of infrastructure.</p>
+  </div>
+
+  <div class="note"><b>What to watch each quarter:</b> total cargo (MT) and utilisation; the third-party vs captive split; new concession wins and capacity commissioned; EBITDA-per-tonne and margin; net-debt/EBITDA; progress on the slurry pipeline, Navkar/logistics integration and the container ramp; and promoter-stake sell-down toward the 25% public-float requirement.</div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; notes</div>
+  <ol>
+    <li>JSW Infrastructure — Q4 &amp; FY26 results and May 2026 investor presentation (revenue ₹5,361 Cr, operating EBITDA ₹2,604 Cr, PAT ₹1,547 Cr, cargo 122 MT, capacity ~183 MTPA, 400 MTPA FY30 target).</li>
+    <li>JSW Infrastructure — Q4 &amp; FY25 press release (capacity ~177 MTPA, third-party ~49%, 117 MT cargo).</li>
+    <li>Screener.in — JSW Infrastructure consolidated financials (revenue, PAT, EPS ₹7.25, ROCE 14%, ROE 15.4%, borrowings, promoter holding 83.61%, market cap, P/E).</li>
+    <li>JSW Infrastructure IPO prospectus/coverage (Chittorgarh, Business Standard) — ₹2,800 Cr fresh issue at ₹119, listed 3 Oct 2023 on NSE/BSE, BSE scrip 543994.</li>
+    <li>Business Standard / ITLN / SME Street — July 2026 ₹7,503 Cr QIP at ₹285 (primary + promoter OFS), ~6.7× subscribed, funding ₹39,000 Cr capex.</li>
+    <li>JSW.in / jswinfrastructure.in — port network &amp; capacities (Jaigarh 55, Dharamtar 34, South West/Mormugao 8.5, Mangalore 6.73, Paradip 10 + EQ1-3 ~30, Fujairah+Dibba UAE 41).</li>
+    <li>Scanx / Whalesbook / InvestyWise — captive vs third-party split (52%/48% FY26; ~5% third-party in FY19), FY28 guidance (₹10,800 Cr revenue, ₹5,000 Cr EBITDA), capex pipeline.</li>
+    <li>India Shipping News / Business Standard — Kolkata container terminal win (~0.93m TEU); container capacity toward ~1.8m TEU.</li>
+    <li>Group.jsw.in / TradeBrains / Entrepreneur India — Navkar Corporation ~70.4% acquisition; 302-km Odisha slurry pipeline (₹4,000 Cr, take-or-pay with JSW Steel).</li>
+    <li>Motilal Oswal / JM Financial / ICICI Direct initiating-coverage notes — concession terms (Jaigarh 50-yr BOOST; PPP DBFOT ~30-yr), take-or-pay contracts, EBITDA-per-tonne (~₹175→₹200), ~50%+ margins.</li>
+    <li>Screener.in — Adani Ports (APSEZ) comparison (~633 MMT capacity, ~₹4.3 lakh Cr market cap, P/E ~34, net debt/EBITDA 3.3×); net debt figures for JSW Infra (~₹3,100 Cr, ~1.2× EBITDA, cash ₹3,455 Cr).</li>
+    <li>AngelOne — ₹16,500 Cr FY27–FY28 capex plan (~₹13,000 Cr ports, ~₹3,500 Cr logistics).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer, not investment advice. Figures are approximate, drawn from public sources (company results and investor presentations, exchange filings, Screener and reputable news/brokerage coverage) as of early July 2026, and may be dated or contain estimates; several segment splits, per-terminal capacities and forward targets are approximations or company guidance, not audited actuals. Verify every number against primary sources (the company's filings and investor materials) before making any decision. The author holds no position and receives no compensation related to the company discussed.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  const REFRESH_ENDPOINT = "";
+  const COMPANY_SYMBOL = "JSWINFRA";
+  function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      const original = btn.innerHTML;
+      btn.classList.add('spinning');
+      btn.innerHTML = '<span class="rbi">⟳</span> Checking…';
+      setTimeout(function(){
+        btn.classList.remove('spinning');
+        btn.innerHTML = original;
+        alert('Live updates coming soon.');
+      }, 650);
+    }
+  }
+</script>
+</body>
+</html>
