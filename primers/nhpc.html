@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NHPC — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F5F7;
+    --paper-2:#FAFCFD;
+    --card:#FFFFFF;
+    --ink:#0B1A24;
+    --ink-soft:#44585F;
+    --ink-faint:#7C8E96;
+    --brand:#0E4C6B;          /* deep river blue */
+    --brand-bright:#1B84B0;   /* bright hydro blue */
+    --gold:#12A0A6;           /* turbine teal / aqua accent */
+    --hydro:#1B6FA6;          /* hydro blue */
+    --solar:#D89A1E;          /* solar amber */
+    --psp:#3F8FA6;            /* pumped-storage slate-teal */
+    --reg:#2E7D6B;            /* regulated / annuity green */
+    --wind:#5CA3C4;           /* wind pale blue */
+    --line:#D8E1E6;
+    --line-soft:#E7EEF1;
+    --good:#1F8E5A;
+    --bad:#C0492F;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#DBEEF6;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#03302F;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#E1F2F3;border:1px solid #B3DEDF;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#0A6E72;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"💧";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#0B3234;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F1F7F8;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 96px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E4ECEE;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0E4C6B,#1B84B0);}
+  .fill.gold{background:linear-gradient(90deg,#12A0A6,#37C1C6);}
+  .fill.hydro{background:linear-gradient(90deg,#1B6FA6,#3F97C4);}
+  .fill.solar{background:linear-gradient(90deg,#D89A1E,#EAB63F);}
+  .fill.psp{background:linear-gradient(90deg,#3F8FA6,#5FB0C4);}
+  .fill.reg{background:linear-gradient(90deg,#2E7D6B,#46A088);}
+  .fill.wind{background:linear-gradient(90deg,#5CA3C4,#7DBEDA);}
+  .fill.bad{background:linear-gradient(90deg,#C0492F,#D96243);}
+  .fill.ink{background:linear-gradient(90deg,#33443f,#4f5e59);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 64px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.hydro{background:var(--hydro);}
+  .node.reg{background:var(--reg);}
+  .node.psp{background:var(--psp);}
+  .node.solar{background:var(--solar);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEA;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2f1f;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#E1F2F3;color:#0B3234;}
+  .note.gold b{color:#0A6E72;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF6F9;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> The regulated-return model</a></li>
+    <li><a href="#p2"><span class="n">02</span> The company &amp; owners</a></li>
+    <li><a href="#p3"><span class="n">03</span> Today's fleet: what NHPC runs</a></li>
+    <li><a href="#p4"><span class="n">04</span> Why hydro is hard to build</a></li>
+    <li><a href="#p5"><span class="n">05</span> The capacity pipeline</a></li>
+    <li><a href="#p6"><span class="n">06</span> The renewables &amp; solar pivot</a></li>
+    <li><a href="#p7"><span class="n">07</span> Pumped storage &amp; green hydrogen</a></li>
+    <li><a href="#p8"><span class="n">08</span> Financials &amp; the FY26 numbers</a></li>
+    <li><a href="#p9"><span class="n">09</span> Dividend &amp; the PSU-utility case</a></li>
+    <li><a href="#p10"><span class="n">10</span> Valuation &amp; the re-rating debate</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: NHPC · BSE: 533098</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>NHPC, <em>the regulated-hydro annuity</em></h1>
+  <p class="dek">A full walk through India's largest hydroelectric power company — a Navratna PSU whose dams earn a government-set, assured return on equity, turning electricity into a bond-like annuity insulated from market prices; how that same regulation caps the upside and ties growth to building new plants; why hydro takes a decade and a mountain of risk to build; and how NHPC is now pivoting into solar, pumped storage and green hydrogen to become a broader 20-GW clean-energy company by 2030.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹11,615 <small>Cr</small></div><div class="l">Revenue (FY26) · +6%</div></div>
+    <div class="cell"><div class="v">₹3,689 <small>Cr</small></div><div class="l">Net profit (FY26) · +25%</div></div>
+    <div class="cell"><div class="v">~9.3 <small>GW</small></div><div class="l">Installed capacity (grp) · ~83% hydro</div></div>
+    <div class="cell"><div class="v">~₹81,600 <small>Cr</small></div><div class="l">Market cap (Jul 2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">3 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Update</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — standalone net profit ₹3,689 Cr (+24.6%, aided by a ₹1,157 Cr deferred-tax reversal), revenue ₹11,615 Cr, generation 29,619 MU. Record 1,850 MW commissioned (Subansiri Lower 750 MW, Parbati-II 800 MW, Karnisar Solar 300 MW); Subansiri crossed 1,000 MW in May 2026. 9,204 MW under construction; total dividend ₹1.61/share; Govt of India cut its stake to ~67.4% via a June-2026 OFS.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">NHPC Limited is <strong>India's largest hydroelectric power company</strong> — a <strong>Navratna public-sector undertaking</strong> ~67% owned by the Government of India. It builds and runs large dams and hydro power stations (and, increasingly, solar farms), and sells the electricity in bulk to state distribution companies. As of FY26 (year ended March 2026) it operates roughly <strong>9.3 GW of capacity across its own stations, subsidiaries and joint ventures</strong> — the vast majority hydro — and it earned a <strong>standalone net profit of ₹3,689 crore on revenue of ₹11,615 crore</strong>.</p>
+
+  <p>Three facts frame the whole story:</p>
+  <ul class="clean">
+    <li><strong>Its earnings are a government-regulated annuity, not a market bet.</strong> Almost every NHPC plant earns a <strong>CERC-regulated, cost-plus tariff</strong> — a formula that hands NHPC an <strong>assured ~15.5–16.5% return on the equity</strong> it has invested in each plant, whatever happens to power prices. That makes its profit unusually stable and predictable, like a utility bond. It also <em>caps the upside</em>: NHPC can't earn a windfall when power is scarce, and it can only grow profit by building <em>new</em> regulated capacity.</li>
+    <li><strong>Growth = building new plants — which is very hard.</strong> Because a plant's return is fixed once it's built, NHPC's growth engine is <strong>capacity addition</strong>. It has ~9,204 MW under construction (Subansiri Lower, Parbati-II, Teesta-VI and more) and targets ~20 GW by 2030. But hydro projects take <em>a decade-plus</em>, run through Himalayan geology, and are notorious for cost and time overruns — the central execution risk.</li>
+    <li><strong>The new chapter is renewables + storage.</strong> Through NHPC Renewable Energy Ltd, NHPC is pivoting hard into <strong>solar, pumped-storage hydro and green hydrogen</strong> — faster-to-build growth, but sold on <em>competitive bids</em> rather than assured returns. It's also a <strong>high-dividend PSU</strong> (~2% yield) trading at a modest ~22× earnings and ~1.8× book — an income-and-defensive name with a re-rating debate attached.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of NHPC as a company that <strong>owns big dams and sells their electricity under government-set rules that guarantee it a fixed profit margin</strong>. It's the opposite of a company gambling on market prices: whether power is cheap or dear this year, NHPC earns roughly the same regulated return on each dam it has built. That makes it <em>steady, low-risk and bond-like</em> — a classic "widows-and-orphans" utility with a fat dividend. The catch is two-fold: the guaranteed return also <em>caps</em> how much it can make, so the only way to grow is to keep building new dams — and dams take ten-plus years, cost a fortune, and can go badly wrong in the Himalayas. NHPC's answer is to bolt on a faster growth engine — <strong>solar and grid-scale "water batteries"</strong> — to add capacity quicker than hydro alone allows.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>The regulated-return model — the one idea that unlocks NHPC</h2></div>
+  <p class="part-sub">Why NHPC's profit is a government-guaranteed annuity, not a market wager — and why that's the single most important thing to understand.</p>
+
+  <p class="lead">Before anything else, you have to understand <em>how</em> NHPC makes money — because it is completely different from an ordinary business, and different even from many power companies. NHPC does <strong>not</strong> sell electricity at whatever the market will pay. Instead, almost every one of its plants earns a <strong>CERC-regulated, cost-plus tariff</strong> that hands NHPC a pre-set, assured return. Get this one mechanism, and the rest of the company snaps into focus.</p>
+
+  <h3>What "cost-plus regulated tariff" actually means</h3>
+  <p>NHPC's tariffs are set by the <strong>Central Electricity Regulatory Commission (CERC)</strong>, the national power regulator. For each hydro plant, CERC works out an <strong>"annual fixed charge"</strong> — the total amount NHPC is allowed to recover from customers each year — by adding up the plant's genuine costs <em>plus</em> a guaranteed profit. The formula has a handful of components:</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>How CERC builds NHPC's allowed tariff — the "annual fixed charge"</caption>
+    <thead><tr><th>Component</th><th>What it covers (plain English)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Return on Equity (RoE)</td><td>The guaranteed profit. CERC lets NHPC earn a fixed <strong>~15.5%</strong> (run-of-river) to <strong>~16.5%</strong> (with storage) return on the equity capital it put into the plant. <em>This is the number that makes NHPC a regulated utility.</em></td></tr>
+      <tr><td class="t-strong">Depreciation</td><td>Recovers the cost of the dam and machinery over its life — so NHPC gets its capital back.</td></tr>
+      <tr><td class="t-strong">Interest on loans</td><td>The interest NHPC pays on the debt used to build the plant is passed straight through to customers.</td></tr>
+      <tr><td class="t-strong">O&amp;M expenses</td><td>The cost of running and maintaining the station — staff, spares, repairs — is recovered.</td></tr>
+      <tr><td class="t-strong">Interest on working capital + tax on RoE</td><td>Day-to-day financing needs and the tax on the guaranteed return are also built in.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Add those up and you get the tariff. Crucially, <strong>fuel is not on the list</strong> — water is free. So a hydro plant's earnings are almost entirely this <em>fixed</em> capacity charge, recovered as long as the plant is available to run. NHPC then sells this power to state distribution companies (DISCOMs) across northern and eastern India under <strong>long-term power purchase agreements (PPAs)</strong>, often 35–40 years long.</p>
+
+  <div class="plain">
+    <div class="ptag">The single idea that unlocks NHPC: "assured return on equity"</div>
+    <p>Here is the whole business in one sentence: <strong>for every rupee of equity NHPC invests in a completed hydro plant, the government's tariff formula guarantees it earns roughly 15.5–16.5% a year, decade after decade, no matter what power prices do.</strong> That transforms a dam into something that behaves like a <em>government-backed bond</em> — a long, steady, predictable stream of profit. NHPC doesn't win or lose on whether electricity is scarce or cheap this summer; it simply collects its regulated return. This is why NHPC is a classic <strong>low-risk, defensive, high-dividend utility</strong>. But the same guarantee is a ceiling: NHPC can <em>never</em> earn a bonanza when power prices spike, because it's not selling at market prices. Its profit can only grow one way — by <strong>building new plants that add new regulated equity</strong> to earn a return on. Remember this "assured-return-but-capped" logic; it runs through every section below.</p>
+  </div>
+
+  <h3>Regulated vs merchant — the crucial distinction</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Two completely different ways to sell power — and where NHPC sits</caption>
+    <thead><tr><th>Model</th><th>How it earns</th><th>Risk &amp; upside</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Regulated (cost-plus) — NHPC's hydro</td><td>Earns a government-set assured RoE on invested equity, recovered via a fixed capacity charge under a long PPA. Price is set by formula, not the market.</td><td><strong>Low risk, capped upside.</strong> An annuity: stable, bankable, insulated from price swings — but you can't earn more than the allowed return.</td></tr>
+      <tr><td class="t-strong">Merchant / competitively-bid — NHPC's newer solar</td><td>Sells power at a market-determined or auction-won price. You bid a tariff to win a project; your profit depends on building cheaply and running well.</td><td><strong>Higher risk, uncapped-ish upside.</strong> You keep the gains if you execute well and prices are firm — but you also carry the downside if costs run over or prices fall.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>NHPC's legacy hydro business is almost entirely the <em>regulated</em> kind — which is exactly why it's so stable and so beloved by income investors. Its new solar and renewable projects are increasingly the <em>competitively-bid</em> kind — a subtle but important shift in the risk character of the company as it grows (more on this in §06). One nuance to flag: because customers are state DISCOMs, NHPC's real-world risk is not price but <strong>collection</strong> — DISCOMs are chronically weak payers, so NHPC periodically books a <strong>late-payment surcharge (LPS)</strong> on overdue bills, and its receivables are worth watching.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A 50-year-old Navratna PSU, still government-controlled, and the flagship of Indian hydropower.</p>
+
+  <p class="lead">NHPC (originally the National Hydroelectric Power Corporation) was set up in <strong>1975</strong> to build and run India's large hydro projects — the kind of decade-long, capital-heavy, nation-building infrastructure that, at the time, only the state could finance. Half a century on, it is a listed <strong>Navratna</strong> company (a status granting large PSUs more operational and investment autonomy) and remains the country's dominant hydro developer, accounting for a large share of India's installed hydro capacity.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1975</div><div class="ev">Incorporated as the National Hydroelectric Power Corporation to develop India's large hydro potential — a state-owned nation-builder from day one.</div></li>
+    <li class="major"><div class="yr">1990s–2000s</div><div class="ev">Commissions landmark stations — <strong>Salal, Dulhasti, Uri (J&amp;K), Chamera, Dhauliganga, Teesta-V (Sikkim)</strong> — building the backbone of its ~7 GW hydro fleet.</div></li>
+    <li class="major"><div class="yr">2009</div><div class="ev"><strong>IPO</strong> — NHPC lists on NSE/BSE; the Government of India retains majority control while raising public capital for expansion.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Grows via subsidiaries and JVs (e.g. Chenab Valley Power Projects in J&amp;K); begins its first steps into solar and diversification.</div></li>
+    <li class="major"><div class="yr">2022</div><div class="ev">Sets up <strong>NHPC Renewable Energy Ltd (NREL)</strong> — a wholly-owned arm for solar, small hydro and green hydrogen. The pivot beyond hydro formally begins.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev"><strong>Record year for commissioning</strong> — 1,850 MW added (Subansiri Lower 750 MW, Parbati-II 800 MW, Karnisar Solar 300 MW); Subansiri crosses 1,000 MW in May 2026. Standalone PAT ₹3,689 Cr; Govt trims stake to ~67.4% via an OFS.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoter — Government of India: ~67.4%.</strong> NHPC is a government-controlled PSU. In June 2026 the government sold ~3% via an Offer-for-Sale (part of its disinvestment programme), trimming its stake from ~70.9% toward ~67.4% — a modest liquidity/float event, but control stays firmly with the state.</li>
+    <li><strong>Why "PSU" matters for the investment case:</strong> government ownership brings <em>cheap capital, policy alignment, and a mandate to build strategic hydro</em> — but also <strong>disinvestment overhang</strong> (the state may keep selling shares), the risk of being asked to take on national-interest projects with thin returns, and a dividend the government relies on as a shareholder.</li>
+    <li><strong>Leadership:</strong> run by a professional PSU management team under a Chairman &amp; Managing Director, executing a capacity-addition and diversification roadmap toward ~20 GW by 2030.</li>
+    <li><strong>Balance sheet:</strong> capital-intensive but investment-grade. Standalone net worth ~₹41,000 Cr; total borrowings ~₹46,000 Cr (standalone) / ~₹52,000 Cr (consolidated). Debt is the fuel for the build-out — and, remember, its interest is largely passed through to customers under the regulated model (see §01).</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why NHPC exists at all — the case for a state hydro-builder</div>
+    <p>Large hydro is uniquely awkward for private capital: it takes <strong>10–15 years to build</strong>, costs tens of thousands of crores, and is riddled with geological and political risk — but once built, it produces clean, cheap, dispatchable power for <em>60–100 years</em>. That mismatch — brutal upfront risk, glorious long-tail reward — is exactly what a patient, low-cost-of-capital, government-backed entity is built for. NHPC is India's chosen vehicle for it. The regulated-return model is the other half of the deal: in exchange for taking on that long, risky build, NHPC is <em>guaranteed</em> a fair return once the plant runs. Understanding that bargain — the state takes the long risk, the regulator guarantees the return — explains why NHPC looks the way it does.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>Today's fleet — what NHPC actually runs</h2></div>
+  <p class="part-sub">Roughly 9.3 GW across hydro, solar and a little wind — overwhelmingly hydro today.</p>
+
+  <p class="lead">Including its own stations, subsidiaries and joint ventures, NHPC operates around <strong>9.3 GW of installed capacity across 31 power stations</strong> as of FY26. The fleet is still <strong>heavily hydro</strong> — that legacy of large Himalayan dams — with a fast-growing but still small slice of solar, and a token amount of wind. In FY26 the fleet generated <strong>29,619 million units (kWh)</strong> of electricity, up sharply from 25,548 MU the year before as new capacity came online.</p>
+
+  <div class="chart">
+    <div class="c-title">Capacity mix (FY26, incl. subsidiaries &amp; JVs)</div>
+    <div class="c-sub">~9.3 GW total — hydro still dominates; solar is the fast-growing new leg</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Hydro<small>large dams &amp; run-of-river</small></div><div class="track"><span class="fill hydro" style="width:100%"></span></div><div class="bval">~7.8 GW</div></div>
+      <div class="bar-row"><div class="blab">Solar<small>Karnisar &amp; others</small></div><div class="track"><span class="fill solar" style="width:11%"></span></div><div class="bval">~0.8 GW</div></div>
+      <div class="bar-row"><div class="blab">Wind<small>small pilot</small></div><div class="track"><span class="fill wind" style="width:1%"></span></div><div class="bval">~50 MW</div></div>
+    </div>
+    <div class="legend"><span>NHPC's own standalone base is ~7,771 MW hydro + ~512 MW solar + 50 MW wind; group-level (with JVs/subsidiaries) capacity is ~9.3 GW and rising as Subansiri units commission.</span></div>
+  </div>
+
+  <h3>The stations that built the company</h3>
+  <ul class="clean">
+    <li><strong>Hydro — the legacy annuity base.</strong> NHPC's fleet is a roll-call of major Himalayan and eastern stations: <strong>Salal, Dulhasti, Uri-I &amp; II, Kishanganga (J&amp;K), Chamera-I/II/III, Parbati-III (Himachal), Teesta-V (Sikkim), Dhauliganga (Uttarakhand)</strong> and more. Each earns a regulated RoE and sells to state DISCOMs under long PPAs — the stable, decades-long annuity core of the business.</li>
+    <li><strong>Solar — the new, fast-growing leg.</strong> NHPC has moved into utility-scale solar (e.g. the <strong>300 MW Karnisar Solar Project</strong> in Rajasthan, commissioned in FY26, plus projects under NREL and PSA/PPA-backed tenders). Solar is far quicker to build than hydro — months, not years — which is precisely why it's central to hitting capacity targets this decade.</li>
+    <li><strong>Wind &amp; small hydro — minor today.</strong> A small wind pilot and small-hydro interests round out the mix; these are optionality rather than needle-movers for now.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why hydro is such a prized <em>type</em> of power</div>
+    <p>Hydro is the quiet aristocrat of the power system. It's <strong>clean</strong> (no emissions, no fuel), it lasts for generations, and — unlike solar and wind — it's <strong>"dispatchable" and flexible</strong>: you can open the gates and generate power on command, and ramp it up or down in minutes to match demand. As India floods its grid with intermittent solar and wind, that flexibility becomes <em>more</em> valuable, not less — hydro (and its cousin, pumped storage) is what balances a green grid when the sun sets and the wind drops. NHPC owns the largest hydro fleet in the country, so it sits on an asset that's ageing gracefully into a more important role. The problem was never the asset — it's how painfully hard the asset is to <em>build</em>, which is the next section.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Why hydro is so hard to build — the execution risk</h2></div>
+  <p class="part-sub">Decade-long gestation, Himalayan geology, cost overruns — the defining risk of NHPC's growth engine.</p>
+
+  <p class="lead">If the regulated-return model is what makes NHPC <em>stable</em>, the difficulty of building hydro is what makes it <em>slow and risky to grow</em>. A large hydro project is one of the hardest things in infrastructure to deliver — and NHPC's history, like every hydro developer's, is studded with delays and cost overruns. This is not a footnote; it is the central risk to the whole growth story.</p>
+
+  <h3>Why a dam takes a decade (and often longer)</h3>
+  <ul class="clean">
+    <li><strong>Very long gestation.</strong> From first survey to first power, a large hydro project routinely takes <strong>8–15 years</strong> — clearances, land, tunnelling through mountains, building a dam, installing machinery. Money goes out for a decade before a single unit earns a rupee of regulated return.</li>
+    <li><strong>Geological surprises.</strong> Himalayan rock is young, fractured and unpredictable. Tunnel-boring hits soft strata, water ingress, or collapses; foundations reveal weaknesses. These are discovered <em>during</em> construction and blow up budgets and timelines — the single biggest technical wildcard.</li>
+    <li><strong>Environmental &amp; social hurdles.</strong> Dams flood valleys, displace communities and face activist, judicial and downstream-state opposition. NHPC's flagship <strong>Subansiri Lower</strong> was stalled for years by environmental litigation — a textbook example of how non-engineering risks can freeze a project.</li>
+    <li><strong>Cost &amp; time overruns feed each other.</strong> A delayed project accrues interest on a growing pile of un-earning capital. Because the regulator eventually allows a return on the (higher) final cost, the plant can still be viable — but the <em>years of no return</em> are a real drag, and gross overruns can trigger disallowances.</li>
+  </ul>
+
+  <blockquote>Hydro's bargain is brutal at the front and generous at the back: a decade of risk and spending, then 60–100 years of clean, regulated cash flow.</blockquote>
+
+  <div class="plain">
+    <div class="ptag">How a finished plant turns into profit — the "commissioning" moment</div>
+    <p>Here's why analysts obsess over NHPC's <strong>commissioning schedule</strong>. While a plant is under construction, it's a giant hole that <em>consumes</em> cash and carries debt but earns <strong>nothing</strong> — it sits as "capital work-in-progress" on the balance sheet. The instant a unit is <strong>commissioned</strong> (switched on and declared commercially operational), it flips: CERC sets its tariff, and it starts earning its <strong>assured 15.5–16.5% RoE</strong> on all that invested equity. So every commissioned megawatt is a step-up in regulated profit. That's why FY26 — with a record <strong>1,850 MW commissioned</strong> and Subansiri's units finally coming online after years of delay — matters so much: years of trapped capital are converting into earning, annuity-generating assets. The growth of NHPC is, quite literally, the pace at which its construction pipeline crosses the commissioning line.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The capacity pipeline — where the growth comes from</h2></div>
+  <p class="part-sub">~9,204 MW under construction and a huge longer-dated queue — each new plant adds fresh regulated RoE.</p>
+
+  <p class="lead">Because NHPC can only grow profit by adding new regulated capacity, its <strong>under-construction pipeline is the growth story</strong>. And it is large: NHPC (with subsidiaries and JVs) is building <strong>14 projects totalling ~9,204 MW</strong> — roughly doubling the size of the current fleet — with a much bigger queue behind that in the clearance and survey stages. Management targets around <strong>20 GW of total capacity by 2030</strong>.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Selected projects in the build pipeline</caption>
+    <thead><tr><th>Project</th><th>Type / location</th><th class="num">Capacity</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Subansiri Lower</td><td>Hydro · Arunachal / Assam</td><td class="num">2,000 MW</td><td>The flagship — long-delayed, now commissioning; crossed 1,000 MW by May 2026, full commissioning targeted ~late 2026.</td></tr>
+      <tr><td class="t-strong">Parbati-II</td><td>Hydro · Himachal</td><td class="num">800 MW</td><td>Fully commissioned in FY26 (Apr 2025) after a very long build — a big FY26 capacity add.</td></tr>
+      <tr><td class="t-strong">Teesta-VI</td><td>Hydro · Sikkim</td><td class="num">500 MW</td><td>Under construction (taken over from a stalled developer); commissioning later this decade.</td></tr>
+      <tr><td class="t-strong">Pakal Dul, Kiru, Kwar, Ratle</td><td>Hydro · J&amp;K (JV/subsidiary)</td><td class="num">~3,000 MW</td><td>Chenab-valley projects; several targeted for commissioning around 2026–28.</td></tr>
+      <tr><td class="t-strong">Karnisar &amp; other solar</td><td>Solar · Rajasthan &amp; others</td><td class="num">~1,190 MW</td><td>6 solar projects in the ~9.2 GW under-construction total — the fast-build leg.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~9.2 GW</div><div class="msl">Under construction (14 projects: 8 hydro + 6 solar)</div></div>
+    <div class="ms"><div class="msv">~20 GW</div><div class="msl">Total-capacity target by 2030 (from ~9.3 GW today)</div></div>
+    <div class="ms green"><div class="msv">1,850 MW</div><div class="msl">Record capacity commissioned in FY26 alone</div></div>
+  </div>
+
+  <p>Behind the under-construction pipeline sits a still-larger queue: reports point to roughly <strong>10,000+ MW at the clearance stage and another ~9,800 MW in survey &amp; investigation</strong>. In principle, NHPC has decades of hydro growth ahead of it. In practice — per §04 — the binding constraint is <em>execution</em>: how fast these projects actually cross the commissioning line without ballooning costs.</p>
+
+  <div class="note gold"><b>Why the pipeline is the whole valuation debate:</b> a regulated utility's value is essentially "regulated equity × the allowed return, discounted." So NHPC's future profit is a direct function of <strong>how much new equity it can deploy into commissioned plants and how fast</strong>. Bulls see a decade-long, near-guaranteed growth runway (build it, earn 15.5–16.5% on it, repeat). Bears see the same runway repeatedly delayed by geology, courts and cost overruns — profit that's always "two years away." The truth of NHPC is decided at the commissioning line.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The renewables &amp; solar pivot — a faster growth engine</h2></div>
+  <p class="part-sub">NHPC Renewable Energy Ltd, big solar ambitions, and a subtle shift from assured returns to competitive bids.</p>
+
+  <p class="lead">Hydro is slow. To grow faster than a decade-long dam allows, NHPC has opened a second front: <strong>renewables — above all solar — housed largely in its wholly-owned arm, NHPC Renewable Energy Ltd (NREL)</strong>. This is the growth engine beyond hydro, and it targets a very large renewable build — reports cite ambitions of <strong>~16,700 MW of RE capacity by 2030</strong> as part of the broader 20 GW goal. It's also where NHPC's risk character quietly changes.</p>
+
+  <h3>Why solar, and why now</h3>
+  <ul class="clean">
+    <li><strong>Speed.</strong> A utility-scale solar farm takes <em>months</em> to build, versus <em>years-to-a-decade</em> for hydro. When you're chasing a capacity target, solar is how you add gigawatts on a timeline that hydro simply can't match.</li>
+    <li><strong>Policy tailwind.</strong> India is racing toward ~500 GW of non-fossil capacity by 2030; a government-owned power giant is an obvious vehicle, and NHPC often wins mandates to develop and aggregate solar (signing PSAs/PPAs with DISCOMs and solar developers).</li>
+    <li><strong>Diversification.</strong> Solar de-risks NHPC's reliance on a handful of enormous, slow, single-site hydro projects — spreading growth across many smaller, faster, geographically-diverse assets.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The catch: solar changes the "assured return" contract</div>
+    <p>Here's the subtle but important shift. NHPC's <strong>hydro</strong> earns a <em>regulated, assured</em> RoE — the government guarantees the return. Its <strong>new solar</strong>, by contrast, is largely won through <strong>competitive auctions</strong>: NHPC bids a tariff to win a project, and its profit then depends on building cheaply, financing well and running efficiently — with <em>no</em> guaranteed 15–16% floor. In plain terms, solar swaps the <strong>certainty</strong> of the regulated annuity for the <strong>speed and scale</strong> of the competitive market. That's not necessarily bad — solar can be genuinely profitable and it lets NHPC grow fast — but it means the <em>quality</em> of NHPC's earnings gradually becomes a blend: a rock-solid regulated hydro core, plus a growing, more market-exposed renewable layer. As solar's share rises, NHPC becomes a touch less bond-like and a touch more like a normal power developer. Watch that mix over time.</p>
+  </div>
+
+  <p>For now, hydro still dwarfs solar in NHPC's earnings, so the regulated-annuity character dominates. But directionally, the company is deliberately building toward a future where a meaningful chunk of profit comes from competitively-won renewables — a broader clean-energy company rather than a pure regulated-hydro utility.</p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Pumped storage &amp; green hydrogen — hydro's role in the renewable era</h2></div>
+  <p class="part-sub">The "water battery" opportunity, and the optionality that could make NHPC central to a green grid.</p>
+
+  <p class="lead">Beyond dams and solar farms sits NHPC's most strategically interesting growth optionality: <strong>pumped-storage projects (PSPs)</strong> and <strong>green hydrogen</strong>. As India's grid fills with intermittent solar and wind, the scarce, valuable asset becomes <em>storage</em> — and pumped hydro is the largest, cheapest, longest-duration storage technology available. NHPC, as the country's hydro master-builder, is a natural leader here.</p>
+
+  <div class="plain">
+    <div class="ptag">What a pumped-storage project is — the grid's giant water battery</div>
+    <p>A PSP is beautifully simple: build <strong>two reservoirs, one high up, one lower down</strong>. When power is cheap and plentiful (say, mid-day solar surplus), use it to <strong>pump water uphill</strong> into the top reservoir. When power is scarce and expensive (the evening peak, after sunset), <strong>let the water flow back down</strong> through turbines to generate electricity. It's a rechargeable battery made of water and gravity — proven, long-lasting (decades), and able to store far more energy for far longer than lithium batteries. As solar floods the grid with midday power that's worthless at night, PSPs are what shift that clean energy to when it's actually needed. Whoever builds the most storage owns the ability to sell <em>firm, on-demand</em> green power — and NHPC, with the dam-building expertise and the sites, is racing to be that player.</p>
+  </div>
+
+  <h3>NHPC's storage &amp; hydrogen push</h3>
+  <ul class="clean">
+    <li><strong>A large PSP pipeline.</strong> NHPC plans to start construction of at least two PSPs (~2,000 MW) in the near term, and has a much larger pipeline under survey — <strong>~7,900+ MW of proposed PSP capacity</strong> across states (e.g. Savitri and Kalu in Maharashtra, Gadikota and Yaganti in Andhra Pradesh, Masinta in Odisha, Kuppa in Gujarat, Indirasagar-Omkareshwar in MP).</li>
+    <li><strong>Partnerships to move faster.</strong> In June 2026 NHPC signed an MoU with <strong>ONGC Green</strong> to jointly develop pumped-storage and renewable projects — pooling capital and sites to accelerate the build.</li>
+    <li><strong>Green hydrogen — the long-dated option.</strong> Through NREL, NHPC is exploring green hydrogen (using renewable power to split water into hydrogen fuel). It's early and small, but it's a call option on a potentially large future energy vector.</li>
+  </ul>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">NHPC's evolution — from pure regulated hydro to a broader clean-energy company</div>
+    <div class="flow-row">
+      <div class="node hydro"><div class="ntag">The core</div><div class="nname">Regulated hydro</div><div class="nwho">Assured ~15–16% RoE; stable annuity; slow to build.</div></div>
+      <div class="arrow">→</div>
+      <div class="node solar"><div class="ntag">Faster growth</div><div class="nname">Solar (NREL)</div><div class="nwho">Quick to build; competitively bid; adds gigawatts.</div></div>
+      <div class="arrow">→</div>
+      <div class="node psp"><div class="ntag">The grid role</div><div class="nname">Pumped storage</div><div class="nwho">"Water batteries" — firm green power for the peak.</div></div>
+      <div class="arrow">→</div>
+      <div class="node reg"><div class="ntag">The option</div><div class="nname">Green hydrogen</div><div class="nwho">Early-stage; a call on a future clean-fuel market.</div></div>
+    </div>
+    <div class="flow-note">The regulated hydro annuity funds and anchors the company; solar, storage and hydrogen are the growth-and-optionality layers that turn NHPC from a single-technology PSU into a diversified clean-energy platform.</div>
+  </div>
+
+  <p>The strategic logic is coherent: NHPC uses its stable regulated-hydro cash to fund faster solar growth <em>and</em> to build the storage that a renewable-heavy grid will pay a premium for. Pumped storage, in particular, plays directly to NHPC's core competence — building big things with water in difficult terrain — making it perhaps the most natural adjacency the company has.</p>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The FY26 numbers — steady, with a tax kicker to note</h2></div>
+  <p class="part-sub">Modest revenue growth, a 25% profit jump flattered by a one-off, and a fat regulated margin.</p>
+
+  <p class="lead">FY26 was a solid year for NHPC. Revenue rose ~6% to <strong>₹11,615 crore</strong> and standalone net profit jumped <strong>24.6% to ₹3,689 crore</strong>. But an honest reading requires a flag: a large chunk of that profit growth came from a <strong>one-off tax benefit</strong>, not pure operating strength — so the underlying growth was gentler than the headline suggests, exactly as you'd expect from a regulated annuity.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue &amp; profit trajectory</div>
+    <div class="c-sub">₹ Cr, standalone — steady top line; FY26 PAT boosted by a deferred-tax reversal</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue FY25</div><div class="track"><span class="fill brand" style="width:94%"></span></div><div class="bval">10,933</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">11,615</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY25</div><div class="track"><span class="fill reg" style="width:80%"></span></div><div class="bval">2,962</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY26</div><div class="track"><span class="fill reg" style="width:100%"></span></div><div class="bval">3,689</div></div>
+    </div>
+    <div class="legend"><span>Standalone figures. FY26 PAT of ₹3,689 Cr includes a ~₹1,157 Cr deferred-tax reversal from opting into the concessional tax regime — a genuine but non-recurring boost.</span></div>
+  </div>
+
+  <div class="note"><b>The one-off to know about:</b> in FY26 NHPC opted into India's <strong>concessional corporate-tax regime</strong>, which meant re-measuring its deferred-tax liabilities at a lower rate. That <strong>reduced deferred-tax expense by ~₹1,156.6 crore</strong> in FY26 — a real cash-tax benefit going forward, but a <em>non-recurring</em> lift to this year's reported profit. Strip it out, and FY26's underlying profit growth was far more modest, consistent with a regulated utility whose earnings step up mainly when new plants commission. (Consolidated PAT, on some data services, reads higher at ~₹4,220 Cr; definitions and standalone-vs-consolidated scope vary — treat the standalone ₹3,689 Cr as the cleaner reported figure.)</div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~45%</div><div class="msl">Operating (EBITDA) margin — fat, thanks to no fuel cost &amp; regulated tariffs</div></div>
+    <div class="ms"><div class="msv">₹3.75</div><div class="msl">FY26 EPS (consolidated basis)</div></div>
+    <div class="ms green"><div class="msv">29,619 MU</div><div class="msl">FY26 generation (up from 25,548 MU) as new units ran</div></div>
+  </div>
+
+  <h3>How to read NHPC's financials</h3>
+  <ul class="clean">
+    <li><strong>High, stable margins.</strong> With no fuel cost and a regulated tariff, NHPC runs a fat operating margin (~45% EBITDA). This is the signature of the annuity model — costs are low and largely passed through; the profit is the allowed return.</li>
+    <li><strong>Returns look modest — and that's the model.</strong> ROE is ~9% and ROCE ~6%. Those aren't "bad"; they reflect (a) the regulated ~15–16% RoE applying only to the <em>approved equity in commissioned plants</em>, diluted at the group level by large capital tied up in under-construction projects earning nothing yet, and (b) a big equity base. As the pipeline commissions, more equity starts earning its regulated return, and blended returns should firm up.</li>
+    <li><strong>The receivables watch.</strong> Because customers are financially-stretched state DISCOMs, NHPC carries meaningful receivables and periodically books <strong>late-payment surcharge (LPS)</strong> income on overdue dues. Reforms (like the government's LPS payment scheme) have helped, but DISCOM payment health remains the key day-to-day risk to cash flows.</li>
+    <li><strong>Debt funds the build.</strong> Borrowings of ~₹46–52k Cr fund construction; crucially, the <em>interest is largely a pass-through</em> in the regulated tariff, so leverage here is far less alarming than for a merchant generator — it's matched to assured-return assets.</li>
+  </ul>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The dividend &amp; the PSU-utility income case</h2></div>
+  <p class="part-sub">A stable, high-yield, government-owned utility — the defensive/income angle.</p>
+
+  <p class="lead">For many investors, NHPC is first and foremost an <strong>income and defensive holding</strong>: a government-owned utility with predictable regulated earnings and a habit of paying out a healthy slice of profit as dividends. In FY26 it declared a total dividend of <strong>₹1.61 per share</strong> (a ₹1.40 interim + ₹0.21 final), for a dividend yield of roughly <strong>~2%</strong> at the ~₹81 share price.</p>
+
+  <div class="plain">
+    <div class="ptag">Why a regulated utility is a natural dividend machine</div>
+    <p>The same features that cap NHPC's upside make it a reliable payer. Because earnings are a <strong>regulated annuity</strong> — steady, visible, insulated from market swings — the company can commit to a dividend without fear that a bad year wipes it out. And because the <strong>Government of India owns ~67%</strong>, there's structural pressure to pay generous dividends: the state relies on PSU dividends as a source of budget revenue. So NHPC tends to distribute a meaningful share of profit each year. For an income investor, that combination — <em>defensive, regulated, government-backed, yielding ~2%</em> — is the appeal: it behaves less like a growth stock and more like an inflation-of-the-grid bond with equity upside. The trade-off, of course, is that cash paid out as dividends is cash <em>not</em> reinvested into the huge capex pipeline, so NHPC must balance rewarding shareholders against funding its own growth (which is partly why it also raises debt and, occasionally, the government sells stock).</p>
+  </div>
+
+  <p>The defensive character is real: NHPC's cash flows don't lurch with the economic cycle, its customers are (ultimately) state governments, and its assets are strategic national infrastructure. In a market wobble, this is the kind of low-beta, dividend-paying utility that holds up better than most. The flip side is the well-worn "PSU utility" complaint — that such stocks can sit cheap and un-loved for years, growing slowly, until a catalyst (a commissioning wave, a re-rating of the storage story) wakes them up.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Valuation — the re-rating debate</h2></div>
+  <p class="part-sub">A cheap-ish regulated utility, valued on book and yield — with an option on the growth pipeline.</p>
+
+  <p class="lead">At a share price around <strong>₹81</strong> and a market cap of roughly <strong>₹81,600 crore</strong> (July 2026), NHPC trades like what it is: a <strong>regulated utility</strong>. The market values it on a <strong>P/E of ~21.7×</strong>, a <strong>price-to-book of ~1.8×</strong>, and a dividend yield of ~2% — not a growth multiple, but not distressed either. The whole valuation debate turns on one question: <em>is that fair for a slow, safe annuity — or too cheap for a company about to commission a wave of new regulated capacity plus a storage option?</em></p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Valuation snapshot (July 2026, approx.)</caption>
+    <thead><tr><th>Metric</th><th class="num">Value</th><th>Read</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Market cap</td><td class="num">~₹81,600 Cr</td><td>A large-cap PSU utility; among India's bigger power names by value.</td></tr>
+      <tr><td class="t-strong">Share price</td><td class="num">~₹81</td><td>Government trimmed its stake at similar levels via a June-2026 OFS.</td></tr>
+      <tr><td class="t-strong">P/E (TTM)</td><td class="num">~21.7×</td><td>Reasonable for a regulated utility; flattered slightly by the FY26 tax one-off.</td></tr>
+      <tr><td class="t-strong">P/B</td><td class="num">~1.8×</td><td><em>The key lens.</em> For a regulated utility, value ≈ regulated equity × allowed return; ~1.8× book prices in some growth from the pipeline.</td></tr>
+      <tr><td class="t-strong">Book value</td><td class="num">~₹41 / sh</td><td>The equity base on which the ~15–16% regulated RoE is (partly) earned.</td></tr>
+      <tr><td class="t-strong">ROE / ROCE</td><td class="num">~9% / ~6%</td><td>Modest blended returns — a lot of capital is in un-earning construction; should firm as plants commission.</td></tr>
+      <tr><td class="t-strong">Dividend yield</td><td class="num">~2%</td><td>The income anchor; ₹1.61/share paid in FY26.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why P/B is the right lens for a regulated utility</div>
+    <p>For a regulated business, there's a neat mental model: the company essentially earns its allowed return (~15–16%) on its <strong>regulated equity base (roughly its book value)</strong>. So a rational price is book value scaled up for (a) how much the regulator lets it earn above its cost of capital, and (b) how fast that regulated equity base is growing. NHPC at ~1.8× book says the market credits it with earning a decent spread <em>and</em> growing its regulated asset base via the pipeline — but isn't paying a rich growth premium. <strong>The bull re-rating case:</strong> as ~9 GW of construction commissions over the next few years, the regulated equity base swells, blended ROE rises off today's ~9%, and the storage/renewables optionality gets valued — justifying a higher multiple. <strong>The bear case:</strong> hydro delays keep pushing that out, the tax one-off flatters current earnings, disinvestment (more government selling) caps the price, and it stays a cheap, slow, ex-growth PSU. Same annuity, two very different prices depending on whether you believe the pipeline lands on time.</p>
+  </div>
+
+  <div class="note gold"><b>How NHPC differs from other "power" primers:</b> unlike <strong>Tata Power</strong> (an <em>integrated</em> utility that also owns distribution wires and sells to millions of households) or <strong>JSW Energy</strong> (a <em>merchant/thermal-plus-renewables growth</em> developer betting on market prices and storage), NHPC is a <strong>pure regulated-generation annuity</strong> — closest in spirit to a government bond with a hydro build option attached. Its earnings quality is the highest of the three; its market-price upside is the lowest. You buy NHPC for stability, yield and a slow, near-guaranteed capacity-led growth — not for a merchant-price windfall.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A stable regulated annuity with a genuine growth pipeline — held back by execution and a PSU discount.</p>
+
+  <p class="lead">NHPC is one of the cleanest expressions of the regulated-utility idea in Indian markets: a low-risk, government-backed, dividend-paying hydro annuity with a large, decade-long capacity pipeline and a credible pivot into solar and storage. The debate is not about the <em>quality</em> or safety of the business — it's about <strong>whether the growth arrives on time, and whether the market ever pays up for it</strong>.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Rock-solid regulated annuity</strong> — assured ~15.5–16.5% RoE on hydro equity; earnings insulated from power-price swings; the highest earnings quality among power peers.</li>
+        <li><strong>Real, funded growth pipeline</strong> — ~9.2 GW under construction (Subansiri, Chenab valley, solar), roughly doubling the fleet toward a ~20 GW / 2030 target; each commissioning adds regulated profit.</li>
+        <li><strong>Storage &amp; renewables optionality</strong> — a natural leader in pumped storage (the "water battery" the green grid needs) plus growing solar and green-hydrogen options via NREL.</li>
+        <li><strong>Defensive, high-yield PSU</strong> — ~2% dividend, low beta, strategic national assets; a re-rating candidate as the pipeline commissions and blended ROE firms.</li>
+        <li><strong>Cheap-ish on book</strong> — ~1.8× P/B leaves room to re-rate if the regulated equity base swells on schedule.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Chronic execution risk</strong> — hydro's decade-long builds, Himalayan geology, environmental litigation and cost overruns repeatedly delay the very commissioning the thesis depends on.</li>
+        <li><strong>Capped upside</strong> — the regulated model means no windfalls; growth is slow and grind-y, tied to adding new capacity, not to a booming power market.</li>
+        <li><strong>Modest current returns</strong> — ~9% ROE / ~6% ROCE today; a lot of capital sits idle in un-earning construction, and the FY26 profit jump was partly a one-off tax reversal.</li>
+        <li><strong>DISCOM &amp; receivables risk</strong> — customers are financially-weak state utilities; late payments and reliance on LPS income are a persistent cash-flow drag.</li>
+        <li><strong>PSU overhang</strong> — government disinvestment (more OFS selling) caps the price; national-interest mandates and a "cheap forever" PSU discount can linger for years.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>NHPC is a <strong>defensive, regulated-hydro annuity with a growth pipeline bolted on</strong> — a business whose profit is unusually safe (a government-guaranteed return on every dam it builds) but whose growth is unusually hard-won (dams take a decade and fight geology and courts the whole way). The investment case is less about business quality — which is high and stable — and more about <strong>execution and patience</strong>. The story over the next few years will be told in a handful of numbers each year: the <strong>pace of commissioning</strong> (does Subansiri finish and the Chenab-valley wave land on time?), the <strong>renewables &amp; PSP build-out</strong> (does the faster growth engine deliver?), and <strong>blended ROE</strong> (does it rise as trapped construction capital starts earning its regulated return?). Deliver those, and a cheap ~1.8× book re-rates on a genuinely safer-than-average utility; keep slipping, and NHPC stays exactly what the bears say it is — a slow, safe, un-loved PSU with a fat dividend and a pipeline that's always two years away.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>NHPC Ltd — Q4 &amp; FY26 results and investor presentation (year ended Mar 2026), nhpcindia.com.</li>
+    <li>Indian Masterminds — "NHPC Q4 FY26 Profit Surges 71% to ₹1,460 Cr; FY26 Net Profit Up 24.6%" (FY26 revenue, PAT, dividend, tax reversal, capacity).</li>
+    <li>PSU Connect — "NHPC Q4 Results FY26: Net Profit ₹1,460 Cr, Total Dividend ₹1.61/Share."</li>
+    <li>BW Businessworld / Outlook Business — "NHPC Adds Record 1,850 MW Capacity in FY26; Q4 Profit Jumps 68%."</li>
+    <li>Business Standard / Daily Pioneer — NHPC Q4 FY26 result (consolidated income &amp; profit; final dividend).</li>
+    <li>Investing.com — "NHPC FY26 Q3 slides reveal 30% profit margin, 9,204 MW project pipeline" (under-construction pipeline: 8 hydro + 6 solar).</li>
+    <li>PSU Watch / Energy Watch — "NHPC capacity to rise 59% to 13 GW by FY27; Subansiri to anchor additions."</li>
+    <li>Screener.in — NHPC Ltd, consolidated financials, valuation (P/E ~21.7×, P/B ~1.8×, book ₹41), borrowings, ROE/ROCE, shareholding.</li>
+    <li>CERC / NHPC regulatory filings &amp; ICRA rating rationale — cost-plus tariff mechanism; RoE norms of 15.5%/16.5% for ROR hydro projects; annual-fixed-charge components.</li>
+    <li>Indian Masterminds — "NHPC to Boost Hydropower by 4.8 GW by FY27 with 10 GW New Projects and 2,000 MW Pumped Storage."</li>
+    <li>Power Peak Digest / Indian Masterminds — "NHPC, ONGC Green sign MoU to develop pumped storage, renewable projects" (June 2026); PSP pipeline (~7,900+ MW under S&amp;I).</li>
+    <li>PSU Watch — "NHPC targets 16,700 MW RE capacity by 2030"; TND India — "NHPC targets 20 GW installed capacity by 2030."</li>
+    <li>ProMFG Media — "NHPC Renewable Energy Limited (NREL)" for RE, small hydro and green-hydrogen business.</li>
+    <li>Power Peak Digest — NHPC/JPCL 40-year PPAs with state DISCOMs (Rangit-IV, Dulhasti Stage-II); regulated sale-to-DISCOM model.</li>
+    <li>Upstox / news reports — Government of India OFS (June 2026) trimming stake toward ~67.4%; Tickertape/Trendlyne dividend &amp; yield data.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; figures vary by source and basis (standalone vs consolidated PAT; own-capacity vs group capacity incl. subsidiaries/JVs; regulated RoE norms are subject to periodic CERC revision). Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "NHPC";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Update will then trigger an on-demand, incremental refresh of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Update'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Update';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
