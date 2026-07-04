@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aditya Infotech (CP PLUS) — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F7;
+    --paper-2:#FAFCFC;
+    --card:#FFFFFF;
+    --ink:#12181D;
+    --ink-soft:#51606A;
+    --ink-faint:#8A98A1;
+    --brand:#0B5C74;          /* deep surveillance teal */
+    --brand-bright:#0FB5D6;   /* electric surveillance-cyan */
+    --gold:#E23A47;           /* security-red accent */
+    --lens:#0FB5D6;           /* cyan */
+    --guard:#E23A47;          /* red */
+    --steel:#3E6C86;          /* steel blue */
+    --amber:#E8971E;          /* signal amber */
+    --line:#D8DEE1;
+    --line-soft:#E7ECEE;
+    --good:#1F8A5B;
+    --bad:#C23A2C;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E3F5FA;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#fff;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .provenance{font-family:"DM Mono",monospace;font-size:11px;color:var(--ink-faint);margin-top:18px;letter-spacing:.02em;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#EAF7FA;border:1px solid #C4E7EF;border-left:3px solid var(--brand-bright);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#0a5f78;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"◉";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#0e3a47;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F9FA;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E7ECEE;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0B5C74,#0FB5D6);}
+  .fill.gold{background:linear-gradient(90deg,#E23A47,#F0636E);}
+  .fill.lens{background:linear-gradient(90deg,#0FB5D6,#4CD0E8);}
+  .fill.steel{background:linear-gradient(90deg,#3E6C86,#5A89A3);}
+  .fill.amber{background:linear-gradient(90deg,#E8971E,#F2B44E);}
+  .fill.bad{background:linear-gradient(90deg,#C23A2C,#D85A4B);}
+  .fill.ink{background:linear-gradient(90deg,#3a4750,#51606A);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 64px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.n1{background:var(--brand);}
+  .node.n2{background:var(--steel);}
+  .node.n3{background:var(--lens);}
+  .node.n4{background:var(--guard);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEDEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2b22;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--brand-bright);background:#EAF7FA;color:#0e3a47;}
+  .note.gold b{color:#0a5f78;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF7FA;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What CP PLUS actually sells</a></li>
+    <li><a href="#p2"><span class="n">02</span> How the business earns</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The China-substitution story</a></li>
+    <li><a href="#p5"><span class="n">05</span> Make-in-India &amp; the Kadapa plant</a></li>
+    <li><a href="#p6"><span class="n">06</span> The Dahua unwind</a></li>
+    <li><a href="#p7"><span class="n">07</span> The market &amp; rivals</a></li>
+    <li><a href="#p8"><span class="n">08</span> Demand drivers &amp; the AI shift</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The growth runway</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: CPPLUS · BSE: 544466</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>Aditya Infotech — <em>the CP PLUS surveillance leader</em></h1>
+  <p class="dek">A complete walk through India's No. 1 CCTV and video-surveillance company — how a camera-and-recorder brand actually makes money through a 30,000-partner channel, why the government's move to push Chinese cameras (Hikvision, Dahua) out of India on data-security grounds is the single defining tailwind, how a Noida importer-assembler is turning itself into the world's third-largest surveillance manufacturer at Kadapa, and why a 2025 IPO now trades at ~115× earnings.</p>
+  <p class="provenance">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹4,221 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~20.8% <small>share</small></div><div class="l">India video-surveillance mkt (FY25)</div></div>
+    <div class="cell"><div class="v">~13.4% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹42,300 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">04 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹4,221 Cr (+35.6%), EBITDA margin ~13.4%, adjusted PAT ₹368 Cr; added the STQC / Chinese-camera-ban section and the Dahua-unwind analysis.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Aditya Infotech Limited is the company behind <strong>CP PLUS</strong> — India's largest and best-known brand of <strong>CCTV cameras, video recorders (DVRs/NVRs) and surveillance systems</strong>. It designs, sources, increasingly manufactures and sells security cameras to homes, shops, factories, banks, hospitals, schools and government (smart-city / safe-city) projects, distributed through a vast partner network. By revenue it is India's <strong>No. 1 video-surveillance player, with ~20.8% market share (FY25)</strong> under the CP PLUS brand.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>A fast-growing, newly listed market leader.</strong> Revenue reached <strong>₹4,221 Cr in FY26 (+35.6%)</strong>, EBITDA more than doubled to <strong>~₹566–579 Cr (~13.4–13.7% margin)</strong>, and adjusted profit (PAT) jumped ~166% to <strong>~₹368 Cr</strong>. The company IPO'd in <strong>August 2025</strong> and the stock has since more than doubled off its ₹675 issue price.</li>
+    <li><strong>The whole story is China-substitution.</strong> India is deliberately pushing Chinese surveillance majors (Hikvision, Dahua) out of the market on <strong>national-security / data-security grounds</strong> — from 1 April 2026, every internet-connected camera sold in India must carry <strong>STQC certification</strong>, which Chinese-chipset cameras can't get. That hands a structural gift to a domestic, STQC-certified, "Make-in-India" leader like CP PLUS.</li>
+    <li><strong>It is racing from importer-assembler to real manufacturer.</strong> Its <strong>Kadapa (Andhra Pradesh) plant</strong> — India's largest and the world's third-largest surveillance factory, ~2.2 million units/month — is taking Make-in-India content from ~85% toward ~98%, and it is backward-integrating into housings and lenses. That localisation is both a margin lever and a policy shield. The catch: the same policy is <em>ending</em> its 16-year Dahua distribution business, and at ~115× earnings the stock prices in near-flawless execution.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of CP PLUS as <strong>the Indian answer to the Chinese camera giants</strong>. For years India's CCTV market was ruled by cheap Chinese hardware (Hikvision and Dahua). Now the government — worried those cameras could quietly beam footage to foreign servers — is effectively banning Chinese-chipset cameras and forcing everyone to buy locally-tested, certified kit. CP PLUS spent years building an Indian brand, an Indian factory, and its own certified products, so it is walking into a market where its biggest rivals are being shown the door. The complication: CP PLUS was also India's <em>distributor</em> for Dahua, so it has to grow its own brand faster than it loses the Chinese business it used to resell — and investors are paying a very rich price for it to pull that off.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What CP PLUS actually sells</h2></div>
+  <p class="part-sub">A camera is only the start — the money is in the recorder, the software and the service.</p>
+
+  <p class="lead">A modern surveillance system is not one product; it is a <strong>stack</strong>. CP PLUS sells the whole stack — from the camera on the wall to the box that stores the footage to the AI software that watches it and the service contract that keeps it running. Understanding that stack explains where the margins and the moats live.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The surveillance stack, layer by layer</caption>
+    <thead><tr><th>Layer</th><th>What it is</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Cameras</td><td>Analog and IP (internet-protocol) network cameras — the "eyes". IP cameras are ~75% of the portfolio (Q3 FY26) and rising.</td><td>The volume driver. IP cameras carry higher value and are where the AI/analytics premium sits — the mix shift from analog to IP lifts revenue per unit.</td></tr>
+      <tr><td class="t-strong">Recorders</td><td>DVRs (for analog) and NVRs (for IP) — the boxes that store and manage footage.</td><td>A high-attach, stickier product: every camera install needs a recorder, and the recorder locks the customer into the ecosystem.</td></tr>
+      <tr><td class="t-strong">Accessories &amp; adjacencies</td><td>Biometrics, access control, interactive displays, body-worn cameras, thermal cameras, routers, cables, power supplies.</td><td>Widens the basket per install and pulls CP PLUS from "camera vendor" toward "security-systems vendor".</td></tr>
+      <tr><td class="t-strong">Solutions &amp; software</td><td>Fully integrated security systems, video analytics, and AI-IoT remote monitoring (the <strong>OnVigil</strong> brand) for intrusion, fire and SOP monitoring.</td><td>The high-margin, recurring-flavoured layer — "security-as-a-service" that turns one-off hardware sales into ongoing relationships.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Products + solutions + services — three business models in one</h3>
+  <ul class="clean">
+    <li><strong>Products</strong> — the core: designing/branding/assembling-and-increasingly-manufacturing cameras, recorders and accessories, sold through the channel. This is the bulk of revenue.</li>
+    <li><strong>Solutions</strong> — integrating those products into complete systems for an enterprise or a government project (a bank's branch network, a city's traffic cameras, a factory's perimeter). Higher value per deal, more services attached.</li>
+    <li><strong>Services</strong> — installation, maintenance, AMC (annual maintenance contracts) and the OnVigil remote-monitoring service — a foothold in recurring revenue.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the recorder and software matter more than the camera</div>
+    <p>A CCTV camera is close to a commodity — anyone can source a cheap sensor. What is harder to copy is the <strong>full system</strong>: the recorder that reliably stores weeks of footage, the software that lets a shop owner watch 20 stores from a phone, the analytics that flag an intruder at 2am, and a service network that fixes a dead camera the next day. That is why CP PLUS keeps pushing "up the stack" — from selling cameras to selling <strong>integrated security</strong>. The camera gets you in the door; the recorder, the software and the AMC are what keep the customer and protect the margin.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>How the business earns: the channel machine</h2></div>
+  <p class="part-sub">CP PLUS doesn't sell to you directly — it sells through an army of partners. Read this once and the model clicks.</p>
+
+  <p class="lead">Aditya Infotech is, at heart, a <strong>brand-and-distribution machine</strong>. It does not run showrooms or an army of salespeople knocking on doors. Instead it pushes product through a <strong>vast layered channel</strong>: distributors, dealers, and — critically — <strong>system integrators</strong> (the firms that actually design and install a CCTV setup for an end customer). Win the channel, and the channel sells for you.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">From factory to wall — how a CP PLUS camera reaches a customer</div>
+    <div class="flow-row">
+      <div class="node n1"><div class="ntag">Stage 1 · Make/source</div><div class="nname">Manufacture &amp; brand</div><div class="nwho">Kadapa plant + sourcing. CP PLUS-branded product.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n2"><div class="ntag">Stage 2 · Channel</div><div class="nname">Distributors &amp; dealers</div><div class="nwho">30,000+ partners, 40+ branches move stock nationwide.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n3"><div class="ntag">Stage 3 · Install</div><div class="nname">System integrators</div><div class="nwho">1,800+ SIs design &amp; fit the system for the end customer.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n4"><div class="ntag">Stage 4 · End user</div><div class="nname">Homes · business · govt</div><div class="nwho">Retail, factories, banks, smart-city projects. 55+ service centres back it up.</div></div>
+    </div>
+    <div class="flow-note">The system integrator is the kingmaker: they choose which brand to install for the customer. A deep, well-supplied, well-supported channel is the real moat — far harder for a rival to replicate than any single camera.</div>
+  </div>
+
+  <h3>The four levers of channel economics</h3>
+  <ul class="clean">
+    <li><strong>Reach</strong> — 30,000+ channel partners, 1,800+ system integrators, 40+ branches and 55+ service centres across India. This density is what lets CP PLUS put product on a shelf in a small town where a Chinese import can't easily follow with service.</li>
+    <li><strong>Brand pull</strong> — CP PLUS is a recognised name, so end customers and integrators ask for it. Brand contributed <strong>~86–87% of FY26 revenue</strong> (the rest being distributed third-party product, chiefly Dahua — see section 06).</li>
+    <li><strong>Service &amp; support</strong> — a CCTV system fails silently; whoever fixes it fastest keeps the customer. The service network is a genuine differentiator versus grey-market imports.</li>
+    <li><strong>Working capital</strong> — a channel business runs on inventory and receivables. Distributors need stock and credit; that ties up cash. Managing this working-capital cycle (and the memory/DDR component costs that swing with global chip prices) is central to the margin story.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "asset of the channel" is the point</div>
+    <p>You can copy a camera in a weekend. You cannot copy <strong>30,000 partners and 1,800 integrators who trust your brand, stock your product and know they'll get service</strong> — that takes 25 years to build. This is CP PLUS's real competitive advantage, and it is exactly the thing a Chinese major loses when it's banned: even a superior, cheaper camera is useless if no Indian integrator will install it, no distributor will stock it, and no service network stands behind it. The channel is the moat; the ban removes the rivals who could contest it.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A family-built, Noida-headquartered business that turned a distributorship into a national brand.</p>
+
+  <p class="lead">Aditya Infotech is a <strong>promoter-controlled family business</strong>. Founded in 1994 by the <strong>Khemka family</strong>, it grew from an IT/electronics trading house into India's leading surveillance brand under <strong>Aditya Khemka</strong>, now Managing Director. The family still owns roughly three-quarters of the company after the 2025 IPO.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1994</div><div class="ev">Aditya Infotech founded by the <strong>Khemka family</strong> (Hari Shanker Khemka and family) in Noida as an IT/electronics distribution business.</div></li>
+    <li><div class="yr">2007</div><div class="ev">Launches the <strong>CP PLUS</strong> brand of surveillance products; begins building a national dealer and system-integrator channel.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Becomes India's <strong>exclusive distributor for Dahua Technology</strong> (a ~16-year relationship) while scaling the home-grown CP PLUS brand alongside it.</div></li>
+    <li><div class="yr">2023–24</div><div class="ev">Inaugurates the <strong>Kadapa (Andhra Pradesh) manufacturing plant</strong> — India's largest surveillance factory — pivoting hard toward "Make in India".</div></li>
+    <li class="major"><div class="yr">Aug 2025</div><div class="ev"><strong>IPO</strong> — ₹1,300 Cr (₹500 Cr fresh + ₹800 Cr offer-for-sale) at ₹675/share; lists on NSE &amp; BSE on <strong>5 Aug 2025</strong> with a ~120% listing pop. Fresh proceeds cut debt ~89%.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ₹4,221 Cr (+35.6%); market share climbs sharply as the Chinese-camera ban approaches; backward-integrates into housings and lenses; MD Aditya Khemka wins the Hurun Industry Achievement Award 2025–26.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the Khemka family holds <strong>~74.75%</strong> (Mar 2026). <strong>Aditya Khemka</strong> (MD) holds ~55.7%, father <strong>Hari Shanker Khemka</strong> ~18%, and brother <strong>Rishi Khemka</strong> ~13.4%. A tightly-held, founder-run company where operating and capital decisions sit with one family — alignment, but also key-person concentration.</li>
+    <li><strong>Wealth:</strong> per the Hurun India Rich List 2025, the Khemka family's net worth is estimated around <strong>₹35,000 Cr</strong>, almost all of it this business — skin in the game.</li>
+    <li><strong>Institutions:</strong> post-IPO, domestic institutions (DIIs ~14.7%) and foreign investors (FIIs ~5.7%) hold the rest of the free float (public ~4.8%).</li>
+    <li><strong>Balance sheet:</strong> IPO fresh proceeds cut borrowings by ~89% to a modest <strong>~₹180 Cr</strong>; the business now largely self-funds its capacity build from internal accruals and earns high returns (ROCE ~29.6%, ROE ~25.4%).</li>
+  </ul>
+</section>
+
+<!-- 04 — BESPOKE: the defining force -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The China-substitution story — the defining tailwind</h2></div>
+  <p class="part-sub">The single force an analyst leads with. Read this section twice.</p>
+
+  <p class="lead">For a decade, India's CCTV market was <strong>Chinese-dominated</strong>: Hikvision and Dahua — the world's two largest surveillance makers — together with a long tail of Chinese-chipset imports controlled the bulk of the hardware. India is now deliberately dismantling that dependence on <strong>national-security and data-security grounds</strong> — and a domestic leader like CP PLUS sits directly in the path of the money that has to move.</p>
+
+  <h3>Why the government is acting</h3>
+  <p>Security agencies flagged that internet-connected cameras — especially those built on Chinese chipsets — could allow <strong>unauthorised remote access, covert data transmission to foreign servers, and surveillance of sensitive installations</strong>. Millions of Chinese cameras watching Indian streets, offices, airports and power plants became a strategic liability. The policy answer was a certification wall.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The regulatory wall being built around Chinese cameras</caption>
+    <thead><tr><th>Rule</th><th>What it does</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Essential Requirements (ER) norms</td><td>MeitY rules (from Apr 2024, 2-year runway) requiring surveillance cameras to meet Indian security/quality standards.</td><td>Set the framework; gave Indian brands two years to certify and scale.</td></tr>
+      <tr><td class="t-strong">Mandatory STQC certification</td><td>From <strong>1 April 2026</strong>, every internet-connected CCTV camera sold in India must be tested and certified by a government lab (STQC).</td><td>The hard gate. No certificate, no legal sale.</td></tr>
+      <tr><td class="t-strong">Chinese-chipset exclusion</td><td>The government has effectively refused to certify products using Chinese-origin chipsets — targeting Hikvision, Dahua and TP-Link.</td><td>Dahua reportedly has <strong>no</strong> STQC-certified models; Chinese majors are barred from new sales from Apr 2026.</td></tr>
+      <tr><td class="t-strong">Government procurement preference</td><td>Public projects (smart-city, safe-city, PSU, defence) already require STQC and favour Indian brands.</td><td>The largest, stickiest demand pool tilts hard toward certified domestic vendors.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why this is such a big deal for CP PLUS</div>
+    <p>India's surveillance market is roughly a <strong>US$2 billion+ market growing ~15–17% a year</strong>, and Chinese-origin brands historically took a very large slice of it. When policy removes those rivals from new sales, that demand doesn't vanish — it has to be <em>re-supplied by someone who is certified and domestic</em>. CP PLUS spent the two-year window swapping its camera chips to <strong>Novatek (Taiwan)</strong> and other non-Chinese silicon, getting dozens of models STQC-certified, and building Indian manufacturing. It is arguably the single best-positioned beneficiary of the reshuffle. That is precisely why its <strong>market share leapt from ~20.8% (FY25) toward the ~40%+ range through FY26</strong> as buyers and integrators pre-emptively shifted to a compliant Indian leader.</p>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Market share climbing into the ban</div>
+    <div class="c-sub">CP PLUS / Aditya Infotech share of India's video-surveillance market (by revenue, approx.)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25<small>pre-ban baseline</small></div><div class="track"><span class="fill steel" style="width:46%"></span></div><div class="bval">~20.8%</div></div>
+      <div class="bar-row"><div class="blab">Q2 FY26<small>mid-transition</small></div><div class="track"><span class="fill brand" style="width:86%"></span></div><div class="bval">~38.9%</div></div>
+      <div class="bar-row"><div class="blab">Q3 FY26<small>as STQC deadline nears</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~45%</div></div>
+    </div>
+    <div class="legend"><span>Quarterly share figures are company-cited and can be measured on different bases (e.g. share of certified/organised segment vs. total market); treat the trajectory as directional, not exact. The direction — sharply up as Chinese rivals face the STQC wall — is the point.</span></div>
+  </div>
+
+  <div class="note gold"><b>The honest caveat on the numbers:</b> the ~20.8% FY25 figure is a full-market share; the ~39–45% Q2/Q3 FY26 figures are company-reported and may reflect the <em>organised / certified</em> segment or incremental share of a shifting market, so they aren't strictly comparable. What is not in doubt is the vector: policy is pushing share toward the domestic leader, and CP PLUS is capturing it.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Make-in-India &amp; the Kadapa plant</h2></div>
+  <p class="part-sub">The pivot from importer-assembler to manufacturer — a margin lever and a policy shield at once.</p>
+
+  <p class="lead">Being an <em>Indian brand</em> is not the same as being an <em>Indian manufacturer</em>. For years, much of the CCTV sold in India — including by domestic brands — was really Chinese-made hardware re-badged. CP PLUS is trying to change that with real, deep, local manufacturing at <strong>Kadapa, Andhra Pradesh</strong>, and it is the second pillar of the whole investment case.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~3.5 lakh</div><div class="msl">sq ft — India's largest surveillance factory; world's 3rd largest</div></div>
+    <div class="ms gold"><div class="msv">~2.2M</div><div class="msl">units/month installed capacity — 12 SMT lines, DVR/NVR &amp; POE lines</div></div>
+    <div class="ms green"><div class="msv">85% → 98%</div><div class="msl">Make-in-India content today, targeted — with backward integration</div></div>
+  </div>
+
+  <h3>What "backward integration" actually means here</h3>
+  <p>Assembling a camera from imported parts is shallow localisation. The deeper — and more valuable — move is making the <strong>components</strong> in India. CP PLUS is doing exactly that:</p>
+  <ul class="clean">
+    <li><strong>Housings &amp; enclosures</strong> — a dedicated unit adjacent to the Kadapa plant to make its own camera housings, cables and adapters, reducing dependence on external (often imported) supply. Expected operational by mid-2026.</li>
+    <li><strong>Lens assembly</strong> — a CCTV-lens line commissioned, with commercial production slated from ~Q1 FY27, scaling from ~300,000 to ~1 million units/month by Q4 FY27. Lenses are a high-value, previously-imported component.</li>
+    <li><strong>Chip realignment</strong> — swapping camera SoCs (system-on-chips) from Chinese to non-Chinese suppliers (Taiwan's Novatek and others) — the change that makes STQC certification possible in the first place.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why localisation pays twice</div>
+    <p>Deep local manufacturing does two things at once. <strong>First, margin:</strong> every component made in-house instead of imported cuts cost, reduces forex exposure, and improves design control — a direct lever on the gross margin that helped EBITDA margin expand ~540 bps in FY26. <strong>Second, protection:</strong> the more genuinely "Make-in-India" the product is, the more it qualifies for government-procurement preferences, STQC certification and public-tender eligibility — turning localisation into a moat that policy actively rewards. This is why the Kadapa build-out is not just a factory; it is the physical embodiment of the entire China-substitution thesis. The risk is execution and capital intensity: building the world's third-largest surveillance factory and then filling it is a bet on demand showing up on schedule.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE: the counter-force to the tailwind -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The Dahua unwind — the tailwind's hidden cost</h2></div>
+  <p class="part-sub">The same policy that helps CP PLUS is killing a business it used to depend on. This is the nuance most miss.</p>
+
+  <p class="lead">Here is the twist that makes Aditya Infotech more interesting — and riskier — than a simple "China-ban winner". For ~16 years, CP PLUS was <strong>India's exclusive distributor for Dahua</strong>, the world's second-largest surveillance maker. That distribution business was a meaningful chunk of revenue. The very ban that boosts the CP PLUS brand is <strong>destroying the Dahua distribution business</strong> at the same time.</p>
+
+  <div class="chart">
+    <div class="c-title">The Dahua business is collapsing by design</div>
+    <div class="c-sub">Dahua-supplied product as a share of Aditya Infotech revenue</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25<small>~₹770 Cr of revenue</small></div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">~24.7%</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>brand at ~86% of revenue</small></div><div class="track"><span class="fill ink" style="width:56%"></span></div><div class="bval">~14%</div></div>
+      <div class="bar-row"><div class="blab">Post-ban<small>Dahua contracted ~80%</small></div><div class="track"><span class="fill steel" style="width:12%"></span></div><div class="bval">→ minimal</div></div>
+    </div>
+    <div class="legend"><span>In FY25, Dahua-supplied product was ~24.7% of revenue (~₹770 Cr). Management has said the Dahua business contracted ~80%. Shares are approximate; the mix is shifting decisively toward the owned CP PLUS brand (~86–87% of revenue).</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the unwind is (mostly) good — but not free</div>
+    <p>Losing a quarter of your revenue base sounds alarming. Two reasons it is manageable — and one reason it isn't. <strong>(1) It's low-margin revenue being replaced by high-margin revenue.</strong> Distributing someone else's product earns a thin distributor spread; selling your own branded, increasingly-Indian-made product earns a full manufacturer's margin. Swapping Dahua rupees for CP PLUS rupees is <em>margin-accretive</em> — which is exactly why EBITDA more than doubled in FY26 even as the Dahua line shrank. <strong>(2) The demand doesn't disappear</strong> — customers who used to buy Dahua through CP PLUS can now buy CP PLUS instead. <strong>But (3)</strong> the transition must be executed cleanly: if CP PLUS-brand growth ever lagged the Dahua decline, top-line growth would stall. So far it hasn't — FY26 grew 35.6% <em>through</em> the unwind — but it is the key thing to watch.</p>
+  </div>
+
+  <div class="note"><b>The real risk to keep in view:</b> the Dahua unwind is a one-time headwind on a shrinking base, but it also removes a supplier relationship and forces CP PLUS to fill the gap entirely with its own capacity and its own R&amp;D. Any stumble in owned-brand supply, certification, or component sourcing would bite harder now that the Chinese fallback is gone.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The market and the rivals</h2></div>
+  <p class="part-sub">A market being re-drawn by policy — and CP PLUS starts it as the largest domestic name.</p>
+
+  <p class="lead">India's electronic-surveillance market has historically been <strong>concentrated at the top and fragmented below</strong>: the three biggest brands — <strong>CP PLUS, Dahua and Hikvision</strong> — together held ~70–75% share, with a tail of Bosch, Panasonic, Uniview, Godrej, Zicom and others. The STQC wall is now redrawing that map by removing the Chinese two from the top — and the fight for the vacated share is the industry's central story.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape after the reshuffle</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs CP PLUS</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">CP PLUS (Aditya Infotech)</td><td>India's No. 1 by revenue; ~20.8% share (FY25), rising into the ban</td><td><em>This company.</em> Broadest domestic channel, STQC-certified range, own manufacturing. The default beneficiary of substitution.</td></tr>
+      <tr><td class="t-strong">Hikvision / Prama India</td><td>World's largest surveillance maker; India business run via Prama</td><td>Being pushed out of new sales on the STQC/chipset wall — the biggest share pool up for grabs. Prama is localising to survive.</td></tr>
+      <tr><td class="t-strong">Dahua</td><td>World's #2 maker; historically distributed in India by CP PLUS itself</td><td>No STQC-certified models; barred from new sales. Its Indian revenue is precisely what CP PLUS is converting to its own brand.</td></tr>
+      <tr><td class="t-strong">Sparsh, other Indian brands</td><td>Smaller domestic, STQC-certified players</td><td>Also benefit from substitution, but lack CP PLUS's channel depth, brand and manufacturing scale.</td></tr>
+      <tr><td class="t-strong">Global / diversified (Bosch, Panasonic, Godrej, Uniview)</td><td>Broad security or electronics majors with a surveillance line</td><td>Credible in specific niches/enterprise, but surveillance is one line among many — rarely CP PLUS's dedicated focus or price-value positioning.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive tension to watch</div>
+    <p>Two forces pull against each other. <strong>In CP PLUS's favour:</strong> it enters the reshuffle as the largest domestic brand with the deepest channel and real Indian manufacturing — the hardest package for anyone to replicate quickly. <strong>Against it:</strong> the same tailwind is visible to everyone. Chinese majors will try to survive by localising through Indian partners (Prama for Hikvision), other Indian brands will chase the freed-up share, and cheap grey-market imports never fully disappear. The result is likely <em>share gains with pricing discipline required</em> — CP PLUS can win volume, but must keep raising the value of each sale (more IP cameras, more solutions, more services) rather than just riding a one-time policy windfall. Whoever converts the policy moment into durable brand and service loyalty keeps the share once the dust settles.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Demand drivers and the AI shift</h2></div>
+  <p class="part-sub">Surveillance is going everywhere — and getting smarter. Both trends lift revenue per camera.</p>
+
+  <p class="lead">Even without the China-substitution windfall, the underlying market is growing fast. Two structural forces drive it: <strong>surveillance is spreading into every corner of Indian life</strong>, and <strong>cameras are shifting from "record footage" to "understand footage" (AI/analytics)</strong> — a shift that raises the value of each device sold.</p>
+
+  <div class="chart">
+    <div class="c-title">Where the demand comes from</div>
+    <div class="c-sub">Illustrative demand pools driving India's ~15–17% surveillance market growth</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Government<small>smart-city / safe-city, PSU, police</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">large &amp; sticky</div></div>
+      <div class="bar-row"><div class="blab">Enterprise<small>banks, factories, retail chains, logistics</small></div><div class="track"><span class="fill lens" style="width:88%"></span></div><div class="bval">high-value</div></div>
+      <div class="bar-row"><div class="blab">Consumer / SME<small>homes, shops, small offices</small></div><div class="track"><span class="fill amber" style="width:74%"></span></div><div class="bval">high-volume</div></div>
+      <div class="bar-row"><div class="blab">VSaaS / services<small>surveillance-as-a-service</small></div><div class="track"><span class="fill gold" style="width:52%"></span></div><div class="bval">fastest-growing</div></div>
+    </div>
+    <div class="legend"><span>Bar widths are illustrative of relative pull, not exact revenue shares. Government projects anchor big volumes; consumer/SME drives unit counts; VSaaS is the highest-growth, recurring layer.</span></div>
+  </div>
+
+  <h3>The three demand engines, decoded</h3>
+  <ul class="clean">
+    <li><strong>Ubiquity</strong> — cameras are now expected everywhere: every new shop, apartment, factory, school, highway and toll plaza. India's Smart Cities Mission and safe-city command-and-control centres institutionalise this at the government level. The base of "places that need a camera" keeps widening.</li>
+    <li><strong>The analog-to-IP-to-AI shift</strong> — old analog cameras just recorded; modern IP cameras stream, and AI cameras <em>interpret</em> — detecting intrusion, counting people, reading number plates, spotting fire. IP cameras are already ~75% of CP PLUS's portfolio, and AI-enabled cameras carry higher prices and margins. Each step up the ladder lifts revenue per unit.</li>
+    <li><strong>Services &amp; recurring revenue</strong> — VSaaS and remote-monitoring (OnVigil) turn hardware buyers into subscription customers, the highest-growth slice of the market and the one that could, over time, smooth CP PLUS's hardware-cyclical revenue.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "smarter cameras" is a quiet margin story</div>
+    <p>The obvious growth story is <em>more</em> cameras. The subtler — and more valuable — story is <em>better</em> cameras. When a customer upgrades from a ₹1,500 analog camera to a ₹6,000 AI-enabled IP camera with analytics, CP PLUS earns far more from the same install, and the software/analytics layer is far harder for a commodity importer to match. Layer on rising services (AMC, VSaaS), and revenue per customer can grow even if the number of customers grows slowly. This mix-shift toward IP + AI + services is the internal engine that lets CP PLUS keep growing margins after the one-time China-substitution boost fades — provided it stays ahead on the technology.</p>
+  </div>
+
+  <div class="note gold"><b>The technology risk is the flip side:</b> the AI shift is an opportunity only if CP PLUS leads it. If global players bring superior on-device AI, or if the market commoditises AI features faster than CP PLUS can differentiate, the premium erodes. Staying at the technology frontier — not just the manufacturing frontier — is a permanent requirement, not a solved problem.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Explosive FY26 growth and margin expansion — priced at a very rich multiple.</p>
+
+  <p class="lead">FY26 was a landmark year: revenue up ~36%, EBITDA more than doubling, and profit up ~166% as the brand/mix shift and localisation flowed through. The business quality inflected sharply upward. The debate — as with any newly-listed momentum leader — is the price.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated operating revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill steel" style="width:74%"></span></div><div class="bval">~3,111</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">4,221</div></div>
+      <div class="bar-row"><div class="blab">FY27e<small>company guidance</small></div><div class="track"><span class="fill brand" style="width:148%;max-width:100%"></span></div><div class="bval">6,000–6,500</div></div>
+    </div>
+    <div class="legend"><span>FY26 revenue ₹4,221 Cr (+35.6% YoY implies ~₹3,111 Cr FY25 base). FY27 is company guidance, not a result.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit &amp; margin inflection</div>
+    <div class="c-sub">Adjusted PAT (₹ Cr) and EBITDA margin (%)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Adj. PAT FY25</div><div class="track"><span class="fill ink" style="width:38%"></span></div><div class="bval">~138</div></div>
+      <div class="bar-row"><div class="blab">Adj. PAT FY26</div><div class="track"><span class="fill lens" style="width:100%"></span></div><div class="bval">~368</div></div>
+      <div class="bar-row"><div class="blab">EBITDA margin FY25</div><div class="track"><span class="fill ink" style="width:60%"></span></div><div class="bval">~8.3%</div></div>
+      <div class="bar-row"><div class="blab">EBITDA margin FY26</div><div class="track"><span class="fill gold" style="width:97%"></span></div><div class="bval">~13.4%</div></div>
+    </div>
+    <div class="legend"><span>Adjusted PAT +166% YoY to ₹368 Cr; EBITDA margin expanded ~540 bps to ~13.4–13.7% as brand mix and localisation improved. FY25 PAT implied from the +166% growth cited.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~₹31.2</div><div class="msl">FY26 EPS — on ~₹368 Cr adjusted PAT</div></div>
+    <div class="ms green"><div class="msv">~29.6%</div><div class="msl">ROCE — high returns on capital employed</div></div>
+    <div class="ms red"><div class="msv">~115×</div><div class="msl">Trailing P/E (Jul '26) — a very rich multiple to defend</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the ~115× multiple</div>
+    <p>At ~₹42,300 Cr market cap on ~₹368 Cr of FY26 adjusted profit, CP PLUS trades around <strong>115× trailing earnings</strong> — an extremely rich price even for a fast-growing leader. That number <em>only</em> makes sense if you look forward: on FY27 guidance of ₹6,000–6,500 Cr revenue at 8.5–9.5% PAT margin, profit could roughly double again, pulling the forward multiple down sharply. The bull case is that the China-substitution windfall, the mix-shift to IP/AI, and localisation-driven margin gains compound for several years, so today's price is really ~40–50× a much larger future profit. The bear case is that (a) a chunk of the recent surge is a <em>one-time</em> policy re-rating that normalises, (b) memory/component cost swings and channel working-capital can dent margins, and (c) at 115× trailing / ~22× book, <em>any</em> disappointment — a soft quarter, a guidance cut, a lock-in expiry — can de-rate the stock hard. Both can be true at different points: the growth may be real <em>and</em> the entry price demanding.</p>
+  </div>
+
+  <div class="note gold"><b>On the "adjusted" PAT:</b> FY26 profit is quoted as <em>adjusted</em> (excluding IPO-related and one-off items); reported PAT and adjusted PAT can differ, and margin/EPS figures vary slightly by source (Screener shows ~₹368 Cr net profit, ~₹31.2 EPS). Cross-check against the audited annual report before relying on any single figure.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The growth runway</h2></div>
+  <p class="part-sub">Guidance to ~₹6,000 Cr+, deeper localisation, and a services layer on top.</p>
+
+  <p class="lead">Management is guiding to <strong>₹6,000–6,500 Cr of revenue in FY27</strong> (roughly ~45%+ growth) at 14–15% EBITDA and 8.5–9.5% PAT margins — an unusually confident outlook that leans on three stacked levers.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The growth levers, stacked</caption>
+    <thead><tr><th>Lever</th><th>What it adds</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Share capture</td><td>Absorbing the demand vacated by Chinese brands as STQC bites from Apr 2026.</td><td>The one-time-but-large windfall — the reason FY26/FY27 growth is so steep.</td></tr>
+      <tr><td class="t-strong">Mix &amp; premiumisation</td><td>More IP cameras (~75% of portfolio), AI-enabled devices, and higher-value recorders/solutions.</td><td>Lifts revenue per unit and margin independent of volume — the durable engine.</td></tr>
+      <tr><td class="t-strong">Deeper localisation</td><td>Housings, enclosures and lenses made in-house at Kadapa; Make-in-India content toward ~98%.</td><td>Cuts cost and forex exposure, expands gross margin, and deepens the policy moat.</td></tr>
+      <tr><td class="t-strong">Services / VSaaS</td><td>OnVigil remote monitoring, AMCs, security-as-a-service, plus a multi-brand play (NEXIVUE, EYRA for mass/unorganised segments).</td><td>Adds recurring, higher-margin revenue and broadens the addressable market down-market.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Three engines, stacked</h3>
+  <ul class="clean">
+    <li><strong>Policy windfall</strong> — the China-substitution share gain, concentrated in FY26–FY27 as the ban lands.</li>
+    <li><strong>Structural growth</strong> — a ~15–17% market with ubiquity + AI mix-shift underneath, durable well beyond the windfall.</li>
+    <li><strong>Margin self-help</strong> — localisation and premiumisation lifting margins toward the 14–15% EBITDA guidance, with services as the long-term kicker.</li>
+  </ul>
+
+  <blockquote>The next chapter is less about riding a one-time ban and more about converting a policy moment into a permanent brand, a real factory, and a recurring-services business — that's where a durable multiple is earned.</blockquote>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuine structural winner — priced for near-flawless execution.</p>
+
+  <p class="lead">CP PLUS is one of the cleaner "policy-plus-execution" stories in Indian capital goods: a domestic surveillance leader handed a large structural tailwind, with real manufacturing and a deep channel to convert it. The debate is almost entirely about <strong>how much is already in the price</strong> and whether the one-time windfall becomes durable growth.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural tailwind</strong> — the STQC wall pushes Chinese majors out of a growing market and hands share to the domestic leader.</li>
+        <li><strong>Channel &amp; brand moat</strong> — 30,000+ partners, 1,800+ integrators, a recognised brand and a national service network that rivals can't quickly copy.</li>
+        <li><strong>Real Make-in-India manufacturing</strong> — the Kadapa plant + backward integration into housings/lenses lift margins and deepen the policy moat.</li>
+        <li><strong>Margin inflection</strong> — EBITDA margin up ~540 bps in FY26 as low-margin Dahua revenue is replaced by high-margin owned brand; more to come.</li>
+        <li><strong>Long runway + optionality</strong> — ubiquity, AI mix-shift, VSaaS/OnVigil, exports (14+ markets) and multi-brand (NEXIVUE/EYRA) on top of a strong balance sheet.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Extreme valuation</strong> — ~115× trailing / ~22× book leaves no room for error; a soft quarter or guidance cut can de-rate hard.</li>
+        <li><strong>One-time vs. durable</strong> — part of the surge is a policy re-rating; if share gains prove less sticky than hoped, growth normalises.</li>
+        <li><strong>Dahua unwind &amp; supply risk</strong> — a ~₹770 Cr low-margin business is disappearing; the owned brand must fill the gap flawlessly with its own supply and R&amp;D.</li>
+        <li><strong>Component / forex / working capital</strong> — memory/DDR cost swings, import content in the supply chain, and channel inventory/receivables can squeeze margins and cash.</li>
+        <li><strong>Competition &amp; tech shift</strong> — other Indian brands and localising Chinese majors chase the same share; the AI/analytics frontier must be led, not just followed. Plus a tightly-held, founder-run company (~75% promoter) and post-IPO lock-in dynamics.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Aditya Infotech is a <strong>genuine structural beneficiary of India's push to de-risk its surveillance infrastructure from China</strong> — with a real brand, a real factory and a real channel to capture the share the policy frees up. The business case is strong and the FY26 numbers are spectacular. The <em>valuation</em> case is the entire debate: at ~115× trailing earnings, the market is already paying for the windfall <em>and</em> for it to become durable, compounding growth. The story over the next few years will be written in three numbers — <strong>CP PLUS brand revenue growth</strong> (is it outrunning the Dahua decline?), <strong>EBITDA margin</strong> (is localisation and mix delivering?), and <strong>the durability of market share</strong> (does the share stick once the ban is old news?). Get those right and the premium can be grown into; stumble, and a 115× stock has a long way to fall.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Aditya Infotech — FY26 results (year ended Mar 2026): revenue ₹4,220.8 Cr, EBITDA ₹579 Cr, adjusted PAT ₹368 Cr — EquityBulls / Business Upturn / Quartr results coverage.</li>
+    <li>Business Upturn — "Aditya Infotech reports 45.5% revenue growth to ₹1,422 crore in Q4 FY26".</li>
+    <li>ScanX — "Aditya Infotech reports strong Q2 FY26 results with 37.5% revenue growth".</li>
+    <li>Multibagg — "Aditya Infotech: Securing Growth with AI and Localization in Q3 FY26" (Kadapa, lens/housing localisation, capacity, FY27 guidance).</li>
+    <li>Screener.in — Aditya Infotech (CPPLUS) consolidated financials, valuation, shareholding; BSE 544466 / NSE CPPLUS / ISIN INE819V01029.</li>
+    <li>NSE India — Aditya Infotech Limited get-quote (symbol CPPLUS, ISIN INE819V01029); stockanalysis.com — BOM:544466.</li>
+    <li>Chittorgarh / m.Stock / Kotak Neo — Aditya Infotech IPO details (₹640–675 band, ₹1,300 Cr, listed 5 Aug 2025).</li>
+    <li>Axis Bank / ICICI Direct — Aditya Infotech IPO notes (July 2025), Dahua exposure ~24.7% of FY25 revenue.</li>
+    <li>Business India — "How Aditya Infotech enhanced its competitive edge" &amp; "You are being watched" (Dahua relationship, backward integration, ₹145 Cr investment).</li>
+    <li>CP PLUS World — press releases on the Kadapa manufacturing facility (India's largest / world's 3rd largest, ~2.2M units/month, 85%→98% Make-in-India) and Hurun award.</li>
+    <li>MeitY / STQC coverage — The Federal, Swarajya, Karnik (Substack), digimro, delhincrtimes on the Apr 2026 STQC mandate and Chinese-chipset exclusion.</li>
+    <li>Grand View Research / Mordor Intelligence — India video-surveillance market size &amp; ~15–17% CAGR outlook to 2030.</li>
+    <li>Tracxn / CARE Ratings / news24 — competitive set (CP PLUS, Dahua, Hikvision/Prama), channel scale, promoter (Khemka family) holdings and net worth.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports around FY26 (year ended March 2026), and may contain errors or become outdated; several figures (market share on differing bases, adjusted vs. reported PAT, quarterly shares) are company-cited or estimated and should be verified against the audited annual report and primary filings before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "CPPLUS";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
