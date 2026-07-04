@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SBI Cards and Payment Services — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F7;
+    --paper-2:#FAFBFD;
+    --card:#FFFFFF;
+    --ink:#161B24;
+    --ink-soft:#535E6E;
+    --ink-faint:#8992A3;
+    --brand:#1B4CA1;          /* SBI Card royal blue */
+    --brand-bright:#2E6BD4;   /* brighter card blue */
+    --gold:#E8A33D;           /* warm gold - accent / rewards */
+    --purple:#7A5AC2;         /* premium / co-brand */
+    --teal:#2A8C8C;           /* spends / engagement */
+    --rose:#C4556F;           /* risk / delinquency */
+    --line:#DCE0E6;
+    --line-soft:#E9ECF1;
+    --good:#248256;
+    --bad:#C0442D;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7EEF9;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF2E1;border:1px solid #F0DDB6;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#4a3610;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F9FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 96px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EBEEF2;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#1B4CA1,#2E6BD4);}
+  .fill.gold{background:linear-gradient(90deg,#E8A33D,#F1BB63);}
+  .fill.teal{background:linear-gradient(90deg,#2A8C8C,#3FA5A5);}
+  .fill.purple{background:linear-gradient(90deg,#7A5AC2,#957AD1);}
+  .fill.rose{background:linear-gradient(90deg,#C4556F,#D67188);}
+  .fill.bad{background:linear-gradient(90deg,#C0442D,#D65C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4453,#535E6E);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 64px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.b1{background:var(--brand);}
+  .node.b2{background:var(--teal);}
+  .node.b3{background:var(--gold);color:#3a2806;}
+  .node.b4{background:var(--purple);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEDEA;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2f22;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF2E1;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF0FA;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Credit-card economics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The two revenue engines</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The SBI distribution edge</a></li>
+    <li><a href="#p5"><span class="n">05</span> Spends vs receivables</a></li>
+    <li><a href="#p6"><span class="n">06</span> The credit-cost cycle</a></li>
+    <li><a href="#p7"><span class="n">07</span> The industry &amp; rivals</a></li>
+    <li><a href="#p8"><span class="n">08</span> The UPI-on-credit &amp; MDR question</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The growth runway</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: SBICARD · BSE: 543066</span>
+    <span class="tag gold">Built for a non-finance reader</span>
+  </div>
+  <h1>SBI Cards &amp; Payment Services, <em>India's only listed credit-card company</em></h1>
+  <p class="dek">A full walk through the country's #2 credit-card issuer — how a credit card actually makes money (interest on revolving balances plus fees on every swipe), why an unsecured lender lives and dies on its credit-cost cycle, what the RBI's 2023 risk-weight crackdown did to returns, and why a business backed by State Bank of India's 22,000 branches still trades at a modest ~26× earnings.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹20,708 <small>Cr</small></div><div class="l">Total income (FY26)</div></div>
+    <div class="cell"><div class="v">₹2,167 <small>Cr</small></div><div class="l">Net profit (FY26, +13%)</div></div>
+    <div class="cell"><div class="v">~2.15 <small>cr cards</small></div><div class="l">Cards-in-force · #2 issuer</div></div>
+    <div class="cell"><div class="v">~₹57,000 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">4 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — total income ₹20,708 Cr, PAT ₹2,167 Cr, GNPA down to 2.41%, credit cost easing to 8.6%; added the RBI risk-weight and UPI-on-credit / MDR sections.</div>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice</p>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">SBI Cards and Payment Services is a <strong>pure-play credit-card company</strong> — it issues credit cards, lends on them, and earns fees on the spending they generate. It is <strong>India's only listed stand-alone credit-card business</strong> and the country's <strong>#2 issuer</strong> (behind HDFC Bank), with <strong>~2.15 crore cards in force</strong> and an <strong>18.6% share of all cards in the market</strong>. Its parent and promoter is <strong>State Bank of India</strong>, the country's largest bank, which owns ~68.6% and feeds it customers through the widest branch network in India.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is a lender, not a bank.</strong> SBI Cards is a Non-Banking Financial Company (NBFC). It has no deposits — it <strong>borrows money in the market and lends it to cardholders</strong>, earning the spread. In FY26 it earned <strong>₹20,708 Cr of total income</strong> and <strong>₹2,167 Cr of net profit</strong> (up 13%), on a receivables (loan) book of <strong>₹56,926 Cr</strong>.</li>
+    <li><strong>Two engines drive it.</strong> (1) <em>Interest income</em> from cardholders who "revolve" — carry a balance instead of paying in full — and from EMI conversions; and (2) <em>fee income</em> — interchange on every swipe, plus annual fees and late fees. Total card spends hit <strong>₹4.30 lakh crore in FY26 (+29%)</strong>, but the loan book grew only <strong>~2%</strong> — a gap that is the whole story of the current cycle.</li>
+    <li><strong>The story is asset quality.</strong> Because card lending is <em>unsecured</em> (no collateral), the swing factor is bad debts. A post-COVID delinquency spike plus the RBI's Nov-2023 crackdown on unsecured credit squeezed returns hard. FY26 is the recovery: gross NPAs fell to <strong>2.41%</strong> (from 3.08%), credit cost eased to <strong>8.6%</strong>, and management is steering return-on-assets back from <strong>3.2%</strong> toward a <strong>4–4.5%</strong> medium-term goal.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of SBI Cards as a <strong>machine that rents out money at ~16% and borrows it at ~7%</strong>, wrapped in a rewards-and-convenience product that also collects a small toll every time you swipe. The genius is the parent: State Bank of India hands it a firehose of pre-screened customers from 22,000+ branches, so it barely has to hunt for business. The danger is the flip side of lending without collateral — when the economy wobbles or too many risky customers are onboarded, some simply stop paying, and those losses (called "credit costs") can wipe out a big chunk of profit in a bad year. Everything an analyst watches here comes down to one tension: <strong>grow the loan book fast enough to matter, but not so fast that the bad debts blow up.</strong></p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Credit-card economics 101: how a card actually earns</h2></div>
+  <p class="part-sub">No finance degree required — just the handful of terms that drive everything.</p>
+
+  <p class="lead">A credit card is two products fused into one plastic rectangle: a <strong>payment tool</strong> (you swipe, the issuer pays the merchant, you settle later) and a <strong>short-term loan</strong> (if you don't settle in full, the issuer charges you interest). SBI Cards earns from both. To follow the business you only need six words.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The vocabulary that runs the whole business</caption>
+    <thead><tr><th>Term</th><th>What it means (and SBI Cards' number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Cards-in-force (CIF)</td><td>How many active cards it has issued. SBI Cards has <strong>~2.15 crore</strong> — an <strong>18.6% market share</strong>, second only to HDFC Bank.</td></tr>
+      <tr><td class="t-strong">Spends</td><td>The total value swiped on its cards in a year. FY26: <strong>₹4.30 lakh crore (+29%)</strong>. Drives <em>fee</em> income, not the loan book directly.</td></tr>
+      <tr><td class="t-strong">Receivables</td><td>The outstanding loan book — money cardholders owe that hasn't been repaid. FY26: <strong>₹56,926 Cr (+2%)</strong>. Drives <em>interest</em> income.</td></tr>
+      <tr><td class="t-strong">Revolver rate</td><td>Share of the book held by customers who carry a balance (pay interest) rather than settling in full. ~<strong>22%</strong> of receivables in FY26 — the profit-rich slice.</td></tr>
+      <tr><td class="t-strong">Interchange / MDR</td><td>The fee the merchant's bank pays the card issuer on every swipe. This is the "toll" — SBI Cards' cut of the <strong>MDR</strong> (Merchant Discount Rate) the merchant pays.</td></tr>
+      <tr><td class="t-strong">Credit cost / GNPA</td><td>The losses from cardholders who don't repay. <strong>GNPA</strong> = % of the book gone bad (FY26: <strong>2.41%</strong>); <strong>credit cost</strong> = provisions as a % of the book (FY26: <strong>8.6%</strong>). The number that makes or breaks a year.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The simple profit equation</div>
+    <p>Strip it down and SBI Cards' profit is roughly: <strong>(interest earned on the loan book) + (fees on spends and cards) − (cost of the money it borrows) − (operating costs) − (bad-debt losses)</strong>. Two of those five levers are the swing factors that decide a good year from a bad one: the <strong>cost of funds</strong> (which rises and falls with interest rates — SBI Cards borrows to lend) and the <strong>bad-debt losses</strong> (which explode in a downturn and shrink in a recovery). Everything else — spends, cards, fees — grows fairly steadily. So when you hear the stock is "cheap" or "expensive," it's almost always a bet on where those two levers are heading.</p>
+  </div>
+
+  <h3>Why "unsecured" is the word that matters most</h3>
+  <p>A home loan has a house behind it; a car loan has a car. A credit-card loan has <strong>nothing</strong> — if the borrower defaults, the issuer can't repossess the dinners and flight tickets they bought. That's why card interest rates are so high (SBI Cards' yield is ~16%): the price compensates for the risk. It's also why the RBI treats card lending as the riskiest consumer credit, and why the entire investment case rests on one discipline — <strong>lending to the right people, and pricing the losses in.</strong></p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The two revenue engines: interest and fees</h2></div>
+  <p class="part-sub">Read this once and the entire income statement clicks into place.</p>
+
+  <p class="lead">SBI Cards' income comes from two distinct engines that behave very differently. <strong>Interest income</strong> is the bigger, higher-margin engine, but it only turns when customers borrow. <strong>Fee income</strong> is steadier and grows with every swipe, whether or not the customer ever pays a rupee of interest. Understanding which engine is firing tells you where the business is in its cycle.</p>
+
+  <h3>Engine 1 — interest income (the receivables book)</h3>
+  <ul class="clean">
+    <li><strong>The revolvers.</strong> When a cardholder pays only the minimum due and carries the rest, that balance "revolves" and earns interest at ~3.5% a month (~40%+ annualised). This is the single most profitable slice of the book — but it's only ~<strong>22% of receivables</strong> today, down from pre-COVID highs as customers turned cautious.</li>
+    <li><strong>EMIs &amp; term loans.</strong> Big-ticket purchases converted to instalments, plus loans-on-cards, now form a growing share of the book. Lower yield than revolving, but lower risk and more predictable — management is deliberately tilting toward this "transactor-plus-EMI" mix.</li>
+    <li><strong>Why it's cyclical.</strong> Revolving balances shrink when consumers are nervous (they pay down debt) and swell when they're confident. So interest income is tied to the consumer credit cycle — and in FY26, with the book flat, this engine grew only modestly.</li>
+  </ul>
+
+  <h3>Engine 2 — fee income (interchange, annual &amp; late fees)</h3>
+  <ul class="clean">
+    <li><strong>Interchange / MDR.</strong> Every time you swipe, the merchant pays a Merchant Discount Rate; a large chunk of it — the "interchange" — flows to the card issuer. More spends = more interchange, regardless of whether the customer revolves. This is why <strong>spends growth (+29%)</strong> matters even when the loan book is flat.</li>
+    <li><strong>Annual &amp; membership fees.</strong> Yearly card fees (often waived above a spend threshold) and premium-card charges.</li>
+    <li><strong>Instalment, late &amp; other fees.</strong> Late-payment fees, over-limit fees, EMI processing, forex mark-ups and reward-redemption economics.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the fee engine is quietly the resilient one</div>
+    <p>Here's the subtle point most people miss: a customer who pays their bill in full every month (a "transactor") earns SBI Cards <em>no interest</em> — but still generates <strong>interchange on every swipe</strong>. So even in a cautious credit cycle, when revolving balances shrink and the interest engine sputters, the <strong>fee engine keeps humming as long as people keep spending</strong>. That's exactly what FY26 showed: spends up 29%, book up just 2%. The trade-off is that fee income is lower-margin and exposed to regulatory risk on interchange/MDR (see §08). A healthy card business wants <em>both</em> engines firing — plenty of spends <em>and</em> a healthy, well-underwritten revolving book.</p>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Two engines, two behaviours (FY26 vs FY25)</div>
+    <div class="c-sub">Spends (fee engine) roared; the loan book (interest engine) barely moved</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Total spends<small>drives fee income</small></div><div class="track"><span class="fill teal" style="width:100%"></span></div><div class="bval">+29%</div></div>
+      <div class="bar-row"><div class="blab">Total income<small>blended</small></div><div class="track"><span class="fill brand" style="width:38%"></span></div><div class="bval">+11%</div></div>
+      <div class="bar-row"><div class="blab">Receivables<small>drives interest income</small></div><div class="track"><span class="fill gold" style="width:7%"></span></div><div class="bval">+2%</div></div>
+    </div>
+    <div class="legend"><span>The wide gap between spends growth and book growth is the defining feature of FY26: customers are swiping enthusiastically but borrowing cautiously, so the high-margin interest engine is idling while the fee engine carries the quarter.</span></div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A bank's card arm, spun into India's only listed pure-play issuer.</p>
+
+  <p class="lead">SBI Cards began as a <strong>joint venture between State Bank of India and GE Capital</strong> in 1998 — one of the first companies to bring modern credit cards to India at scale. SBI later bought out GE's stake, and in <strong>March 2020</strong> listed the business, giving public investors the only clean way to own a stand-alone Indian credit-card franchise. State Bank of India remains firmly in control as promoter.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1998</div><div class="ev">Founded as a <strong>JV between State Bank of India and GE Capital</strong> — a pioneer of organised credit-card issuance in India.</div></li>
+    <li><div class="yr">2017</div><div class="ev">SBI (with Carlyle) buys out <strong>GE Capital's stake</strong>, turning it into an SBI-controlled entity.</div></li>
+    <li class="major"><div class="yr">Mar 2020</div><div class="ev"><strong>IPO</strong> — a ₹10,340 Cr issue, one of India's largest; lists on NSE &amp; BSE just as COVID hit, making it the <strong>only listed pure-play card company</strong>.</div></li>
+    <li><div class="yr">FY21–22</div><div class="ev">Rides the post-COVID spending rebound; spends and cards recover sharply as the economy reopens.</div></li>
+    <li class="major"><div class="yr">Nov 2023</div><div class="ev"><strong>RBI hikes risk weights</strong> on unsecured consumer credit — credit-card receivables to 150% (banks) / 125% (NBFCs). Directly raises SBI Cards' capital cost and cools the whole sector.</div></li>
+    <li><div class="yr">FY24–25</div><div class="ev">Delinquencies climb as post-COVID vintages season; <strong>credit cost peaks (~9%)</strong> and RoA compresses — the toughest stretch of the cycle.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Recovery underway: <strong>GNPA falls to 2.41%, credit cost eases to 8.6%, PAT +13% to ₹2,167 Cr</strong>; cost of funds drops 71 bps as rates ease. Management targets RoA back to 4–4.5%.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> <strong>State Bank of India</strong> holds ~<strong>68.6%</strong> — the controlling shareholder, brand licensor and customer-sourcing partner all in one. This is the single most important fact about the company: the parent <em>is</em> the moat.</li>
+    <li><strong>Public float:</strong> the ~31% free float is held by mutual funds (~10%), foreign institutions (~10%), insurers (~7%) and retail. A liquid, widely-tracked large-cap.</li>
+    <li><strong>Balance sheet as an NBFC:</strong> unlike a bank, it has <strong>no deposits</strong>. It funds its ₹57,000 Cr book with ~₹44,000 Cr of market borrowings (bonds, bank lines, commercial paper). Capital adequacy is strong at <strong>25.5% (Tier-1 20.0%)</strong> — a cushion the RBI's risk-weight hike made more precious.</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The SBI distribution edge — and the cost-of-funds catch</h2></div>
+  <p class="part-sub">The parentage that makes SBI Cards special — and the sensitivity it can't escape.</p>
+
+  <p class="lead">Ask an analyst why SBI Cards deserves to exist as a stand-alone franchise and the answer is one word: <strong>distribution</strong>. Acquiring a credit-card customer is expensive and risky — you have to find them, verify them, and bet they'll repay. SBI Cards gets that almost for free, because its parent has already done it.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">How State Bank of India feeds the card machine</div>
+    <div class="flow-row">
+      <div class="node b1"><div class="ntag">Step 1 · Sourcing</div><div class="nname">SBI's 22,000+ branches</div><div class="nwho">A ready pool of ~50 crore pre-screened bank customers.</div></div>
+      <div class="arrow">→</div>
+      <div class="node b2"><div class="ntag">Step 2 · Onboarding</div><div class="nname">Pre-approved cards</div><div class="nwho">Existing SBI account data lowers acquisition cost &amp; risk.</div></div>
+      <div class="arrow">→</div>
+      <div class="node b3"><div class="ntag">Step 3 · Monetise</div><div class="nname">Spends + revolving</div><div class="nwho">Fees on every swipe; interest on carried balances.</div></div>
+      <div class="arrow">→</div>
+      <div class="node b4"><div class="ntag">Step 4 · Fund it</div><div class="nname">Market borrowings</div><div class="nwho">Bonds &amp; bank lines at ~6.7% — the cost-of-funds lever.</div></div>
+    </div>
+    <div class="flow-note">Steps 1–2 are the parent's gift: cheap, low-risk customer acquisition that no independent issuer can match. Step 4 is the catch — with no deposits, funding costs move with market rates.</div>
+  </div>
+
+  <h3>The "open market" vs "banca" split</h3>
+  <p>SBI Cards sources customers through two channels. <strong>"Banca"</strong> — through SBI's own branch network, tapping existing bank customers — is the low-cost, low-risk channel and the structural advantage. <strong>"Open market"</strong> — salespeople signing up non-SBI customers on the street or online — is faster-growing but riskier, and is exactly where post-COVID delinquencies concentrated. Part of the FY24–25 asset-quality pain came from open-market vintages, and management has since tilted the mix back toward the safer banca channel.</p>
+
+  <div class="plain">
+    <div class="ptag">The cost-of-funds sensitivity, explained</div>
+    <p>Because SBI Cards is an NBFC with <strong>no deposits</strong>, it must borrow every rupee it lends — around <strong>₹44,000 Cr</strong> of bonds and bank lines. Its <strong>cost of funds was ~6.7% in FY26, down 71 basis points</strong> from the prior year as the RBI cut rates. That fall is pure profit tailwind: it lends at ~16% and borrows cheaper, so the spread widens. But the same lever cuts both ways — if rates <em>rise</em>, funding costs climb and margins compress, and SBI Cards can't fully re-price its card rates as fast. A bank with sticky low-cost deposits is insulated from this; a card NBFC is not. So watch the rate cycle: falling rates are a quiet tailwind for SBI Cards, rising rates a headwind.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~6.7%</div><div class="msl">Cost of funds, FY26 (down 71 bps) — a rate-cycle tailwind</div></div>
+    <div class="ms gold"><div class="msv">~16%</div><div class="msl">Portfolio yield — the rate it lends at; the spread is the margin</div></div>
+    <div class="ms green"><div class="msv">~11.2%</div><div class="msl">Net interest margin (NIM), FY26 — up ~31 bps YoY</div></div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Spends vs receivables — the gap that defines FY26</h2></div>
+  <p class="part-sub">Why the loan book barely grew even as swiping surged — and why that's deliberate.</p>
+
+  <p class="lead">The most striking number in FY26 is the <strong>29% jump in spends against just 2% growth in the loan book</strong>. To a newcomer that looks contradictory. It isn't — it's the signature of a card business that is choosing to <strong>grow transactions while deliberately restraining lending</strong>, because the last credit cycle burned it.</p>
+
+  <div class="chart">
+    <div class="c-title">The great divergence (FY26)</div>
+    <div class="c-sub">Spends soared; receivables stalled; new-account additions actually fell</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Spends<small>₹4.30 lakh cr</small></div><div class="track"><span class="fill teal" style="width:100%"></span></div><div class="bval">+29%</div></div>
+      <div class="bar-row"><div class="blab">Total income<small>₹20,708 cr</small></div><div class="track"><span class="fill brand" style="width:38%"></span></div><div class="bval">+11%</div></div>
+      <div class="bar-row"><div class="blab">Receivables<small>₹56,926 cr</small></div><div class="track"><span class="fill gold" style="width:7%"></span></div><div class="bval">+2%</div></div>
+      <div class="bar-row"><div class="blab">New accounts<small>3.59 mn (was 4.09 mn)</small></div><div class="track"><span class="fill rose" style="width:88%"></span></div><div class="bval">−12%</div></div>
+    </div>
+    <div class="legend"><span>New account additions fell to 3.59 million (from 4.09 million) as the company throttled open-market sourcing after the delinquency spike. Fewer, better-quality accounts means slower book growth but healthier asset quality.</span></div>
+  </div>
+
+  <p>Three forces explain the divergence:</p>
+  <ul class="clean">
+    <li><strong>Fewer, safer new customers.</strong> New-account additions <em>fell</em> to 3.59 million from 4.09 million as management dialled back the riskier open-market channel. Slower onboarding directly slows book growth.</li>
+    <li><strong>Customers borrowing less.</strong> The revolver rate — the share of the book carrying interest — sits at ~22%, well below pre-COVID levels. Cautious consumers pay their bills down rather than carry them, so spends convert into less lending.</li>
+    <li><strong>A mix shift toward EMIs and transactors.</strong> The company is deliberately favouring lower-risk instalment lending and full-payers over high-risk revolvers, trading yield for safety while the cycle heals.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why this is the right call — but also the tension in the stock</div>
+    <p>Restraining book growth in a recovering credit cycle is <strong>prudent risk management</strong>: it lets asset quality heal and rebuilds the underwriting muscle. But it comes at a cost — the high-margin <em>interest</em> engine (§02) stays idle, so profit growth leans on fees and on falling credit costs rather than on a growing loan book. The bull says this is a coiled spring: once confidence returns and the company re-accelerates lending into a clean book at lower funding costs, the interest engine roars back and RoA jumps toward the 4–4.5% target. The bear says muted book growth plus interchange/regulatory risk caps how exciting this can be. Both are watching the <strong>same two numbers each quarter: receivables growth and the revolver rate</strong>.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE: the defining swing factor for a card issuer -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The credit-cost cycle — the swing factor that defines everything</h2></div>
+  <p class="part-sub">For an unsecured lender, this is <em>the</em> section. Nothing else moves the profit as much.</p>
+
+  <p class="lead">A credit-card company can grow spends, add cards and expand fees for years — and still see a single bad year in credit costs erase most of the progress. Because the lending is <strong>unsecured</strong>, bad debts are the master variable. The last three years have been a textbook cycle: a delinquency spike, a regulatory tightening, a returns squeeze, and now a recovery. Understanding this arc explains both the recent numbers and the current valuation.</p>
+
+  <h3>The three terms that decide a card lender's fate</h3>
+  <ul class="clean">
+    <li><strong>GNPA (Gross Non-Performing Assets).</strong> The share of the loan book that has gone bad (broadly, 90+ days unpaid). FY26: <strong>2.41%</strong>, sharply better than 3.08% a year earlier. Falling GNPA = the storm is passing.</li>
+    <li><strong>Credit cost.</strong> The provisions the company sets aside for expected losses, as a % of the book — the <em>actual</em> hit to the P&amp;L. FY26: <strong>~8.6%</strong>, easing from ~9.0%. This is the number that directly eats profit.</li>
+    <li><strong>RoA (Return on Assets).</strong> Profit as a % of the loan book — the master scorecard for a lender. FY26: <strong>~3.2%</strong>, with Q4 running at ~3.6% and management targeting <strong>4–4.5%</strong> once credit costs normalise fully.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">The recovery arc — asset quality is healing</div>
+    <div class="c-sub">Gross NPA (%) — lower is better; the cycle turned in FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25<small>peak stress</small></div><div class="track"><span class="fill rose" style="width:100%"></span></div><div class="bval">3.08%</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>recovering</small></div><div class="track"><span class="fill gold" style="width:78%"></span></div><div class="bval">2.41%</div></div>
+      <div class="bar-row"><div class="blab">Net NPA<small>FY26, post-provision</small></div><div class="track"><span class="fill brand" style="width:34%"></span></div><div class="bval">1.04%</div></div>
+    </div>
+    <div class="legend"><span>Gross NPA fell 67 bps year-on-year; the Stage-3 (bad-loan) stock shrank ~₹268 Cr in Q4 alone. The company still carries a ~₹220 Cr management overlay as a buffer — a sign it's healing cautiously, not declaring victory.</span></div>
+  </div>
+
+  <h3>What caused the stress — and why it's fading</h3>
+  <p>The pain had two roots. First, <strong>post-COVID normalisation</strong>: a wave of new cards issued during the 2021–23 boom — many through the riskier open-market channel — seasoned into higher-than-expected defaults as revenge-spending gave way to repayment stress. Second, the <strong>RBI's November 2023 crackdown</strong> on unsecured credit, which raised risk weights on card receivables and signalled the whole industry to slow down and tighten. SBI Cards, being <strong>100% unsecured</strong>, felt this more than any diversified peer.</p>
+
+  <p>FY26 is the other side of that cycle. The bad vintages have largely worked through the book; new sourcing skews safer (banca over open-market); collections and underwriting have tightened; and <strong>falling interest rates</strong> are cutting the cost of funds. The result: GNPA down, credit cost easing, and RoA climbing back toward target.</p>
+
+  <div class="note gold"><b>Why the RBI risk-weight hike still matters:</b> raising the risk weight on card receivables (to 150% for banks, 125% for NBFCs) means every rupee lent now consumes <em>more</em> regulatory capital. For SBI Cards that had two effects: it made capital adequacy (25.5%) something to guard carefully, and it structurally raised the return-on-equity hurdle the business must clear. It's a permanent tax on growth-by-lending — and a big reason management now prizes profitable, well-underwritten growth over sheer book expansion.</div>
+
+  <div class="plain">
+    <div class="ptag">The single mechanism to internalise</div>
+    <p>Here is the whole investment case in one sentence: <strong>SBI Cards' profit is a lever pivoting on credit costs.</strong> When credit cost falls from ~9% toward the ~6% the company earned in calmer years, an enormous amount of income stops being set aside for losses and drops straight to profit — RoA and RoE jump, and the stock re-rates. When credit cost spikes, the reverse happens fast and brutally. Growth in cards and spends sets the <em>size</em> of the lever; the credit-cost cycle sets <em>which way it swings</em>. That is why, for this company more than almost any other in the index, the quarterly GNPA and credit-cost prints matter more than the revenue line.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A fast-growing market dominated by banks — with SBI Cards the lone pure-play.</p>
+
+  <p class="lead">India's credit-card market is <strong>large, under-penetrated and growing fast</strong> — roughly 11 crore cards for 140 crore people, versus near-universal penetration in developed markets. But it's dominated by <strong>banks</strong>, which can cross-sell cards to deposit customers and fund them with cheap deposits. SBI Cards is the odd one out — the only major issuer that is a stand-alone company, not a bank division.</p>
+
+  <div class="chart">
+    <div class="c-title">Cards-in-force market share (FY26)</div>
+    <div class="c-sub">SBI Cards is a clear #2 behind HDFC Bank</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">HDFC Bank</div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~22%</div></div>
+      <div class="bar-row"><div class="blab">SBI Cards</div><div class="track"><span class="fill brand" style="width:85%"></span></div><div class="bval">~18.6%</div></div>
+      <div class="bar-row"><div class="blab">ICICI Bank</div><div class="track"><span class="fill teal" style="width:73%"></span></div><div class="bval">~16.1%</div></div>
+      <div class="bar-row"><div class="blab">Axis Bank</div><div class="track"><span class="fill purple" style="width:61%"></span></div><div class="bval">~13.4%</div></div>
+    </div>
+    <div class="legend"><span>By <em>spends</em> share the ranking is similar — HDFC ~29%, SBI Cards ~18–19%, ICICI ~16%, Axis ~11–12%. SBI Cards is a solid #2 on both cards and spends.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs SBI Cards</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">HDFC Bank</td><td>#1 issuer (~22% CIF, ~29% spends)</td><td>Premium, high-spend customer base; funded by cheap deposits — a structural cost-of-funds edge over an NBFC.</td></tr>
+      <tr><td class="t-strong" style="color:var(--brand)">SBI Cards</td><td>#2, the only pure-play (~18.6% CIF)</td><td><em>This company.</em> Unmatched SBI branch distribution; but 100% unsecured and reliant on market funding.</td></tr>
+      <tr><td class="t-strong">ICICI Bank</td><td>#3, aggressive on co-brands (~16%)</td><td>Bank-funded, tech-forward, fast-growing on Amazon Pay and other co-brand tie-ups.</td></tr>
+      <tr><td class="t-strong">Axis Bank</td><td>#4 (~13%); bought Citi's India cards</td><td>Bulked up via the Citibank India acquisition; bank-funded, premium-tilted.</td></tr>
+      <tr><td class="t-strong">Fintech co-brands (e.g. via partner banks)</td><td>Distribution disruptors</td><td>Slick apps sourcing customers for partner banks; pressure acquisition economics and rewards generosity.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The structural handicap — and the offsetting edge</div>
+    <p>Every major rival is a <strong>bank</strong>, and that matters for one reason: <strong>deposits</strong>. HDFC, ICICI and Axis fund their card books with cheap current- and savings-account money, giving them a permanent cost-of-funds advantage over SBI Cards, which must borrow in the market. In a rising-rate world, that gap widens against SBI Cards. The offset is <strong>SBI's distribution</strong> — no rival has 22,000+ branches funnelling pre-screened customers at near-zero acquisition cost. So the competitive story is a standing trade-off: SBI Cards wins on <em>customer sourcing</em> and loses on <em>funding cost</em>. The pure-play structure also cuts both ways — it gives investors a clean, focused bet on the card cycle, but denies the company the diversification and deposit base that cushion a bank through a downturn.</p>
+  </div>
+</section>
+
+<!-- 08 — BESPOKE: the UPI-on-credit / MDR regulatory threat -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The UPI-on-credit &amp; MDR question — the regulatory wildcard</h2></div>
+  <p class="part-sub">The structural threat unique to Indian card issuers — and it aims straight at the fee engine.</p>
+
+  <p class="lead">The most-watched risk hanging over every Indian card issuer isn't a competitor — it's a policy question about <strong>who pays for digital payments</strong>. India built UPI as a near-free, real-time payment rail. Credit cards, by contrast, charge merchants a Merchant Discount Rate (MDR) that funds the whole rewards-and-interchange model. Two forces now put that model under pressure.</p>
+
+  <h3>Force 1 — RuPay credit cards on UPI</h3>
+  <p>Since 2022 the RBI has allowed <strong>RuPay credit cards to be linked to UPI</strong>, so you can scan a QR code and pay from a credit card. This is genuinely useful — it merges India's most popular payment rail with credit — and RuPay has grabbed a rising share of new-card issuance on the back of it. But it's a double-edged sword for issuers like SBI Cards:</p>
+  <ul class="clean">
+    <li><strong>Opportunity:</strong> it massively expands where a credit card can be used (every UPI QR, including tiny merchants who never accepted cards), potentially lifting spends.</li>
+    <li><strong>Threat:</strong> for small-ticket UPI-credit transactions (below ₹2,000), <strong>MDR is effectively zero</strong> — so the issuer earns interchange on <em>bigger</em> tickets but little or nothing on the flood of small ones. If credit-card usage migrates to low-MDR UPI rails, the fee engine's economics erode.</li>
+  </ul>
+
+  <h3>Force 2 — the MDR policy overhang</h3>
+  <p>There is persistent pressure — political and regulatory — to <strong>reduce or zero out MDR</strong> to make digital payments cheaper for merchants. Debit-card and standard UPI MDR is already effectively nil. If a future mandate were to cap or eliminate credit-card MDR, it would strike directly at interchange — one of SBI Cards' two engines. The industry has pushed back hard precisely because, as banks have warned, zeroing MDR "may impact the entire credit card business model."</p>
+
+  <div class="note"><b>Why this is the genuine structural wildcard:</b> unlike the credit-cost cycle (which swings and heals), an adverse MDR ruling would be a <em>permanent</em> repricing of the fee engine. It wouldn't end the business — interest income on revolving balances would remain — but it would compress the economics of the payment side and force issuers to lean even harder on lending (the riskier engine) and on annual fees. There is no confirmed mandate as of mid-2026; the current framework keeps meaningful MDR on higher-ticket credit transactions. But it is the single risk most likely to structurally reset the sector's earning power, so it belongs at the top of any watch-list for this stock.</div>
+
+  <div class="plain">
+    <div class="ptag">How to hold both the opportunity and the threat in your head</div>
+    <p>The honest read is that UPI-on-credit is <strong>expansionary for volumes but dilutive to per-transaction economics</strong>. It brings credit to hundreds of millions of new merchant touchpoints — great for spends and for keeping the card relevant against pure-UPI habits. But it does so at thinner (sometimes zero) interchange on small tickets, and it hands the network narrative to RuPay/NPCI, which the government can regulate more directly. For SBI Cards, the practical response is to keep pushing <strong>higher-ticket spends, EMIs, premium cards and annual fees</strong> — parts of the model less exposed to small-ticket MDR erosion. Watch two things: how fast credit spends migrate to UPI rails, and any RBI/government signal on credit-card MDR.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Profit recovering off a hard cycle — priced far more soberly than in 2020.</p>
+
+  <p class="lead">SBI Cards' financials read as a recovery story: income growing double-digits, profit up 13%, asset quality healing and funding costs falling. The market, having watched RoA compress through the down-cycle, now values it at a far more modest multiple than at IPO — a discount that is either the opportunity or the warning, depending on your view of the cycle.</p>
+
+  <div class="chart">
+    <div class="c-title">Income &amp; profit trajectory</div>
+    <div class="c-sub">Total income and net profit (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Total income FY25</div><div class="track"><span class="fill ink" style="width:90%"></span></div><div class="bval">18,637</div></div>
+      <div class="bar-row"><div class="blab">Total income FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">20,708</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY25</div><div class="track"><span class="fill gold" style="width:9%"></span></div><div class="bval">1,916</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY26</div><div class="track"><span class="fill gold" style="width:10.5%"></span></div><div class="bval">2,167</div></div>
+    </div>
+    <div class="legend"><span>Total income +11% to ₹20,708 Cr; PAT +13% to ₹2,167 Cr. Profit grew faster than income because credit costs eased and funding costs fell — the recovery working exactly as the credit-cost lever (§06) predicts.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Key FY26 metrics at a glance</caption>
+    <thead><tr><th>Metric</th><th class="num">FY26</th><th class="num">FY25</th><th>Read</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Total income</td><td class="num">₹20,708 Cr</td><td class="num">₹18,637 Cr</td><td>+11%, steady</td></tr>
+      <tr><td class="t-strong">Net profit (PAT)</td><td class="num">₹2,167 Cr</td><td class="num">₹1,916 Cr</td><td>+13%, recovering</td></tr>
+      <tr><td class="t-strong">Receivables</td><td class="num">₹56,926 Cr</td><td class="num">~₹55,800 Cr</td><td>+2%, deliberately restrained</td></tr>
+      <tr><td class="t-strong">Spends</td><td class="num">₹4.30 L Cr</td><td class="num">~₹3.33 L Cr</td><td>+29%, fee engine firing</td></tr>
+      <tr><td class="t-strong">GNPA</td><td class="num">2.41%</td><td class="num">3.08%</td><td>Healing (−67 bps)</td></tr>
+      <tr><td class="t-strong">Credit cost</td><td class="num">~8.6%</td><td class="num">~9.0%</td><td>Easing</td></tr>
+      <tr><td class="t-strong">NIM</td><td class="num">~11.2%</td><td class="num">~10.9%</td><td>Wider on cheaper funding</td></tr>
+      <tr><td class="t-strong">Cost of funds</td><td class="num">~6.7%</td><td class="num">~7.4%</td><td>−71 bps, rate tailwind</td></tr>
+      <tr><td class="t-strong">RoA</td><td class="num">~3.2%</td><td class="num">~2.9%</td><td>Climbing toward 4–4.5% goal</td></tr>
+      <tr><td class="t-strong">RoE</td><td class="num">~14.7%</td><td class="num">~13–14%</td><td>Recovering with the cycle</td></tr>
+      <tr><td class="t-strong">Capital adequacy (CAR)</td><td class="num">25.5%</td><td class="num">~23%</td><td>Strong buffer, Tier-1 20.0%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~26×</div><div class="msl">Trailing P/E (Jul '26) — modest vs its own history &amp; the IPO froth</div></div>
+    <div class="ms gold"><div class="msv">~3.6×</div><div class="msl">Price-to-book — how card lenders are typically valued</div></div>
+    <div class="ms green"><div class="msv">~68.6%</div><div class="msl">SBI promoter holding — the distribution &amp; brand anchor</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the valuation</div>
+    <p>SBI Cards trades around <strong>₹57,000 Cr market cap</strong>, roughly <strong>26× trailing earnings and ~3.6× book</strong> — a long way below the ~40×+ it once commanded, and the stock is down sharply from its 52-week high. Card lenders are usually valued on <strong>P/E and P/B, cross-checked against RoA/RoE</strong>: a business earning ~3% RoA and ~15% RoE, with a clear path to 4–4.5% RoA as credit costs normalise, can support a mid-20s P/E and a ~3.5× book multiple. The bull case is straightforward: if the credit-cost lever swings back toward the ~6% of calmer years, earnings can grow well above the income line and the multiple re-rates. The bear case is that muted book growth, interchange/MDR risk and the deposit-funded competition cap the upside, leaving a fairly-valued franchise rather than a cheap one. The number that resolves the debate is RoA — watch it each quarter.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The growth runway</h2></div>
+  <p class="part-sub">Under-penetrated cards, premiumisation, and a book waiting to re-accelerate.</p>
+
+  <p class="lead">Even after a cautious year, SBI Cards sits on a long runway. India has among the <strong>lowest credit-card penetration of any large economy</strong>, spending is digitising fast, and the company has both the distribution and the balance sheet to grow — once the cycle gives it the confidence to lend harder again.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The growth levers</caption>
+    <thead><tr><th>Lever</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Card penetration</td><td>~11 crore cards for 140 crore people — years of structural growth as incomes and formal credit deepen. SBI's branch reach into smaller towns is a distribution wedge rivals lack.</td></tr>
+      <tr><td class="t-strong">Spends &amp; digitisation</td><td>Spends grew 29% in FY26; online now ~62.5% of retail spends. Rising e-commerce and UPI-on-credit expand where cards get used — lifting the fee engine.</td></tr>
+      <tr><td class="t-strong">Premiumisation &amp; co-brands</td><td>Higher-fee premium cards and co-brand tie-ups (travel, retail, fuel) lift spends-per-card and fee income, and skew toward creditworthy, high-spend customers.</td></tr>
+      <tr><td class="t-strong">Book re-acceleration</td><td>The biggest latent lever: once asset quality is fully healed, restarting receivables growth into a clean book at lower funding costs re-fires the high-margin interest engine.</td></tr>
+      <tr><td class="t-strong">RoA normalisation</td><td>Getting RoA from ~3.2% to the 4–4.5% target — chiefly via lower credit costs — is the clearest path to double-digit earnings growth with no extra risk-taking.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <blockquote>The next chapter is less about issuing more cards and more about the credit cycle giving SBI Cards permission to lend confidently again — that's where the operating leverage lives.</blockquote>
+
+  <div class="plain">
+    <div class="ptag">The two-speed growth model</div>
+    <p>SBI Cards can grow two ways, and they have very different risk profiles. The <strong>safe way</strong> is more spends, more cards, more fees, more premium mix — steady, low-risk, but lower-margin. The <strong>powerful way</strong> is a bigger, healthy receivables book with more revolvers — high-margin, but only prudent once underwriting and the macro are sound. FY26 was almost entirely the safe way. The upside case for the stock is that FY27–28 lets the company add back the powerful way <em>on top of</em> the safe way — spends and fees still compounding, and the interest engine re-firing into a clean book at cheap funding. Get that combination and RoA and earnings both step up.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A quality franchise coming off a hard cycle — the debate is where the cycle goes next.</p>
+
+  <p class="lead">SBI Cards is a strong franchise with a genuine moat (SBI's distribution) that has just endured the toughest stretch of its credit cycle. The business quality isn't seriously in question; the debate is entirely about the <strong>trajectory of credit costs, funding costs and regulation</strong> — and whether the modest valuation already prices the recovery.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Cycle turning up</strong> — GNPA falling (2.41%), credit cost easing (8.6%), RoA climbing toward the 4–4.5% target; profit grows faster than income.</li>
+        <li><strong>Unmatched distribution</strong> — SBI's 22,000+ branches source pre-screened customers at near-zero acquisition cost; the parent is the moat.</li>
+        <li><strong>Funding tailwind</strong> — cost of funds down 71 bps as rates ease; NIM widening.</li>
+        <li><strong>Structural growth</strong> — deeply under-penetrated cards market; spends +29%; digitisation and premiumisation compounding.</li>
+        <li><strong>Modest valuation</strong> — ~26× earnings, well below IPO-era levels; a clean pure-play on the recovery with a strong 25.5% capital buffer.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>100% unsecured</strong> — no collateral; any fresh delinquency wave (macro shock, over-onboarding) hits profit hard and fast.</li>
+        <li><strong>MDR / UPI-on-credit</strong> — a permanent regulatory reset of interchange would strike the fee engine directly.</li>
+        <li><strong>Muted book growth</strong> — receivables +2% and revolver rate at ~22%; the high-margin interest engine is idling.</li>
+        <li><strong>No deposits</strong> — market-funded NBFC at a structural cost-of-funds disadvantage to bank rivals if rates rise.</li>
+        <li><strong>Regulatory tax on growth</strong> — RBI risk-weights raised the capital cost of lending; RoE hurdle permanently higher.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>SBI Cards is <strong>India's only clean, listed bet on the structural rise of the credit card</strong> — backed by the country's biggest bank, throwing off ~3% RoA and ~15% RoE even in a recovering cycle, at a valuation the market has de-rated to sober levels. The business risk is real and specific: it lends without collateral, so its fate rides on the <strong>credit-cost cycle</strong>, and its fee economics carry a genuine <strong>MDR/UPI regulatory tail-risk</strong>. But the same cyclicality is the opportunity — if credit costs normalise toward calmer-year levels and the company re-accelerates a clean loan book at falling funding costs, RoA marches to 4–4.5% and earnings compound well above the top line. The story over the next few years is written in three numbers each quarter: <strong>credit cost / GNPA</strong> (is the cycle healing?), <strong>receivables growth &amp; revolver rate</strong> (is the interest engine re-firing?), and any <strong>MDR/interchange signal</strong> (is the fee engine safe?). Read those right and this is a compounder bought at a discount; read them wrong and it's a fairly-priced lender exposed to the next unsecured-credit downturn.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>SBI Cards and Payment Services — Q4 &amp; FY26 results (year ended Mar 2026); investor presentation &amp; press release.</li>
+    <li>Multibagg market-pulse — "SBI Card FY26: profit up 13% as credit costs ease, receivables growth stays muted" (FY26 metrics table).</li>
+    <li>Angel One — "SBI Cards Q4 FY26 results: net profit rises 14% to ₹609 crore as NPAs improve."</li>
+    <li>ScanX / Yahoo Finance — SBI Cards Q4 FY26 earnings-call highlights (NIM, RoA target, cost-to-income guidance).</li>
+    <li>Zee Business — "SBI Card Q4 results: profit up 13% to ₹2,167 crore, spends jump 31%."</li>
+    <li>Screener.in — SBI Cards &amp; Payment Services consolidated financials, market cap, P/E, P/B, ROE, promoter holding.</li>
+    <li>Business Today — "Who dominates India's credit card market? HDFC leads cards, SBI Card tops spending" (Jun 2026); credit-card market shares.</li>
+    <li>Business Today — "SBI Card says RBI's revised risk-weight norms may impact capital adequacy" (Nov 2023).</li>
+    <li>RIS / ICICI Direct — RBI November 2023 risk-weight increase on unsecured consumer credit &amp; credit-card receivables.</li>
+    <li>IBS Intelligence / TechnoFino / Zeta — RuPay credit-on-UPI, interchange and MDR mechanics.</li>
+    <li>Trendlyne / Angel One — SBI Cards shareholding pattern (SBI promoter ~68.6%).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "SBICARD";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
