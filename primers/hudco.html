@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUDCO — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F7;
+    --paper-2:#FAFBFC;
+    --card:#FFFFFF;
+    --ink:#171E27;
+    --ink-soft:#525E6C;
+    --ink-faint:#8792A0;
+    --brand:#2D4A6B;          /* urban-infra slate blue */
+    --brand-bright:#3C6DA0;   /* civic blue */
+    --gold:#E08A2C;           /* construction amber */
+    --terra:#C05A3C;          /* housing terracotta */
+    --steel:#5E7C9E;          /* infra steel */
+    --civic:#3E7C63;          /* civic green */
+    --sov:#7A6BB0;            /* sovereign violet */
+    --line:#DCDFE4;
+    --line-soft:#E7EAEE;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7EEF5;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2606;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:11px;color:var(--ink-faint);margin-top:16px;letter-spacing:.02em;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E3;border:1px solid #EFD9B4;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6018;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"▸";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#4a3410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F9FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EBEEF1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2D4A6B,#3C6DA0);}
+  .fill.gold{background:linear-gradient(90deg,#E08A2C,#EDA754);}
+  .fill.steel{background:linear-gradient(90deg,#5E7C9E,#7A96B4);}
+  .fill.terra{background:linear-gradient(90deg,#C05A3C,#D2765A);}
+  .fill.civic{background:linear-gradient(90deg,#3E7C63,#54987D);}
+  .fill.sov{background:linear-gradient(90deg,#7A6BB0,#9384C4);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4652,#525E6C);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.sov{background:var(--sov);}
+  .node.brand{background:var(--brand);}
+  .node.civic{background:var(--civic);}
+  .node.gold{background:var(--gold);}
+  .node.terra{background:var(--terra);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E3;color:#4a3712;}
+  .note.gold b{color:#9a6018;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6018;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF1F7;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What HUDCO actually is</a></li>
+    <li><a href="#p2"><span class="n">02</span> Wholesale-lending 101</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> Who it lends to</a></li>
+    <li><a href="#p5"><span class="n">05</span> How it makes money</a></li>
+    <li><a href="#p6"><span class="n">06</span> The growth super-cycle</a></li>
+    <li><a href="#p7"><span class="n">07</span> Asset-quality clean-up</a></li>
+    <li><a href="#p8"><span class="n">08</span> The peer set</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The re-rating debate</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: HUDCO · BSE: 540530</span>
+    <span class="tag gold">Built for a non-finance reader</span>
+  </div>
+  <h1>HUDCO, <em>the government's urban-infrastructure banker</em></h1>
+  <p class="dek">A complete walk through India's specialist wholesale lender for housing and urban infrastructure — how a Navratna PSU makes money lending large, long-tenure loans to state governments and public agencies, why that "govt-to-govt" model is unusually low-risk but thin-margined, and the aggressive plan to triple its loan book that is the whole re-rating story.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹1.61 <small>lakh Cr</small></div><div class="l">Loan book (FY26)</div></div>
+    <div class="cell"><div class="v">₹4,034 <small>Cr</small></div><div class="l">Net profit (FY26)*</div></div>
+    <div class="cell"><div class="v">1.04% <small>GNPA</small></div><div class="l">Gross NPA · 0.05% net</div></div>
+    <div class="cell"><div class="v">~₹40,700 <small>Cr</small></div><div class="l">Market cap (Jun '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">05 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — loan book ₹1,60,724 Cr (+29%), sanctions ₹1.65 lakh Cr, PAT ₹4,034 Cr (flattered by a ₹1,533 Cr deferred-tax write-back), GNPA down to 1.04%; added the ₹3-lakh-crore-by-FY30 growth section. *PAT includes a large one-off — see §9.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">HUDCO — the <strong>Housing and Urban Development Corporation</strong> — is a <strong>Government-of-India-owned wholesale lender</strong> that funds housing schemes and urban infrastructure. It is <em>not</em> a bank you walk into and it is <em>not</em> a retail home-loan company. Instead it lends <strong>large, long-tenure loans to state governments, state housing boards, urban local bodies and public agencies</strong> so they can build affordable housing, water and sewerage systems, roads, metros, power and smart-city projects. Think of it as the specialist financier sitting behind India's urban-development push.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>A Navratna PSU, 75% owned by the Government of India.</strong> HUDCO operates under the Ministry of Housing &amp; Urban Affairs, was elevated to <strong>Navratna</strong> status in 2024 (giving it more financial autonomy), and the government holds <strong>~75%</strong> of the shares. Its identity is govt-to-govt: it borrows cheaply on its quasi-sovereign name and on-lends to public bodies.</li>
+    <li><strong>The loan book is growing fast.</strong> The book jumped <strong>~29% to ₹1,60,724 Cr in FY26</strong> (from ₹1,24,720 Cr), blowing past management's own ₹1.5-lakh-crore target by December. Sanctions hit a record <strong>₹1.65 lakh Cr</strong> and disbursements a record <strong>₹51,194 Cr</strong>. The stated ambition: <strong>tripling toward ₹3 lakh Cr by FY30</strong>. That growth acceleration is the defining thesis.</li>
+    <li><strong>Very clean, very safe — and thin-margined.</strong> Because it lends mostly to state/quasi-sovereign borrowers (often state-guaranteed), credit risk is low: <strong>gross NPA fell to 1.04% and net NPA to just 0.05%</strong> in FY26, with a ~95% provision coverage. The trade-off is a modest <strong>~3% net interest margin / ~2% spread</strong> — you don't earn fat yields lending to governments. Reported <strong>PAT was ₹4,034 Cr</strong>, but ~₹1,533 Cr of that was a one-off deferred-tax write-back (see §9).</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>HUDCO is the <strong>government's in-house infrastructure bank</strong>. When a state wants to build affordable housing, lay a water pipeline, or fund its share of a metro or a smart-city project, it often needs a long-term loan that ordinary banks are reluctant to give (too long, too lumpy, too "public"). HUDCO steps in: it raises money cheaply by selling bonds on its government-backed name, then lends that money to the state at a small markup. The genius is that its borrowers are governments, so it almost never suffers a bad loan — but the same safety means the markup is small. The current excitement is that India is spending enormous sums on cities, and HUDCO has decided to grow its loan book aggressively to ride that wave. It is, in effect, a <strong>leveraged bet on India's urban-infrastructure spending</strong>.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What HUDCO actually is (and isn't)</h2></div>
+  <p class="part-sub">Clearing up the single biggest misconception first.</p>
+
+  <p class="lead">The word "Housing" in the name misleads people. HUDCO is <strong>not a housing-finance company (HFC) that gives you a home loan</strong>, and it is not a retail bank. It is a <strong>development finance institution (DFI)</strong> — a wholesale lender whose customers are institutions, not individuals. Getting this right is the key to understanding everything else about the business.</p>
+
+  <h3>Three things it is</h3>
+  <ul class="clean">
+    <li><strong>A wholesale lender.</strong> It writes big-ticket loans (often hundreds or thousands of crore each) to a small number of institutional borrowers — a state housing board, a municipal corporation, a state urban-development authority. One loan can be the size of a mid-cap company's entire balance sheet.</li>
+    <li><strong>A "govt-to-govt" financier.</strong> The overwhelming majority of its book is loans to <strong>state governments, their agencies and public bodies</strong> — frequently backed by state guarantees or state-budget commitments. That makes the credit quasi-sovereign.</li>
+    <li><strong>A "techno-financial" institution.</strong> HUDCO doesn't just lend; it also appraises, designs and provides consultancy on housing and urban-infra projects. It has historically been a <em>nodal agency</em> for government housing and urban schemes — the body the Centre channels scheme money and expertise through.</li>
+  </ul>
+
+  <h3>Three things it is not</h3>
+  <ul class="clean">
+    <li><strong>Not a retail HFC.</strong> It does not compete with HDFC-type home loans or LIC Housing Finance for individual borrowers — retail housing loans are a tiny, legacy sliver of the book.</li>
+    <li><strong>Not a deposit-taking bank.</strong> It has no branch network taking public deposits. It funds itself entirely in the <strong>bond and loan markets</strong> — that's the crucial difference from a bank (see §5).</li>
+    <li><strong>Not a high-yield lender.</strong> It deliberately lends to the safest, lowest-yielding borrowers in the system. Safety, not spread, is the design.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The mental model</div>
+    <p>Picture HUDCO as sitting in the same family as <strong>PFC and REC</strong> (which do exactly this for the <em>power</em> sector) and <strong>IRFC</strong> (which does it for <em>railways</em>). They are all government-owned wholesale infrastructure lenders — "specialised NBFCs" that borrow cheap on a quasi-sovereign name and on-lend to public bodies in one sector. HUDCO's sector is <strong>housing and urban infrastructure</strong>: the water, sewerage, roads, transit and affordable homes that make a city function. Same machine, different vertical.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>Wholesale-lending economics 101</h2></div>
+  <p class="part-sub">No finance degree required — just the handful of numbers that drive a lender.</p>
+
+  <p class="lead">A lender is, at heart, a <strong>spread business</strong>: it borrows money at one interest rate and lends it out at a slightly higher rate. The gap between the two, minus its costs and any loan losses, is its profit. Five terms tell you almost the whole story of any lender — and they explain why HUDCO is safe-but-thin.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only lending vocabulary you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and HUDCO's number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Loan book / AUM</td><td>The total money it has lent out and is earning interest on. HUDCO's is <strong>~₹1.61 lakh Cr</strong> (FY26), up ~29% in a year.</td></tr>
+      <tr><td class="t-strong">Spread</td><td>Lending rate minus borrowing rate — the raw markup. HUDCO targets a <strong>~2% spread</strong>: it lends to governments cheaply, so the markup is small.</td></tr>
+      <tr><td class="t-strong">NIM</td><td>"Net Interest Margin" — net interest income as a % of assets; a fuller measure of profitability per rupee lent. HUDCO runs a <strong>~3% NIM</strong>, aiming to push past 3.1%.</td></tr>
+      <tr><td class="t-strong">GNPA / NNPA</td><td>"Gross / Net Non-Performing Assets" — the % of loans that have gone bad (net = after provisions). HUDCO: <strong>GNPA 1.04%, NNPA 0.05%</strong> — extremely low, because it lends to governments.</td></tr>
+      <tr><td class="t-strong">CRAR</td><td>"Capital-to-Risk-weighted Assets Ratio" — the equity cushion vs regulatory minimum (~15%). HUDCO's is a hefty <strong>39.93%</strong> — huge headroom to grow.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The simple profit equation</div>
+    <p>Roughly: <strong>Profit ≈ Loan book × Spread − operating costs − loan losses</strong>. So a lender like HUDCO grows profit in three ways — <strong>grow the book</strong> (lend more), <strong>protect the spread</strong> (borrow ever cheaper, since it can't raise lending rates much on government borrowers), and <strong>keep losses near zero</strong> (which it does by lending to safe borrowers). Because its spread is thin and fixed, the <em>dominant</em> lever is book growth. That's why "triple the loan book" is the entire story: on a ~2% spread, doubling the book roughly doubles the profit. HUDCO is, in a real sense, a <strong>volume machine</strong>, not a margin machine.</p>
+  </div>
+
+  <h3>Why the spread is thin — and why that's the point</h3>
+  <p>There is an iron law in lending: <strong>the safer the borrower, the lower the yield</strong>. A moneylender charging 30% is compensating for high default risk; a lender to a state government earns single digits precisely <em>because</em> that government won't default. HUDCO chose the safe end of the spectrum. Its GNPA of ~1% (and near-zero net NPA) is the reward; its ~2% spread is the price. You cannot have both fat yields and near-zero defaults — HUDCO optimises for the second.</p>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A 55-year-old public institution, now run like a growth engine.</p>
+
+  <p class="lead">HUDCO was founded in <strong>1970</strong> as a fully government-owned company to finance housing and urban development — a direct instrument of national policy in the decades when India was urbanising fast but had almost no organised financing for cities. It listed on the exchanges in <strong>2017</strong> via an IPO, but the government retained majority control and remains the promoter.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1970</div><div class="ev">HUDCO incorporated as a <strong>wholly-owned Government of India company</strong> under the housing ministry, to finance housing &amp; urban development.</div></li>
+    <li><div class="yr">1970s–2000s</div><div class="ev">Becomes the <strong>nodal financing agency</strong> for successive national housing and urban schemes; funds millions of dwelling units and a huge slice of India's early urban infrastructure.</div></li>
+    <li><div class="yr">2013</div><div class="ev">Sets up a dedicated wing to study best practices after earlier <strong>private-sector project loans</strong> soured — the seed of a later, more disciplined approach to credit.</div></li>
+    <li class="major"><div class="yr">May 2017</div><div class="ev"><strong>IPO</strong> — the government sells ~10% via an offer-for-sale; HUDCO lists on NSE &amp; BSE. Government retains the controlling stake.</div></li>
+    <li><div class="yr">2020–24</div><div class="ev">Cleans up legacy NPAs, provisions heavily, and pivots decisively toward <strong>safe government/agency lending</strong>; GNPA falls sharply.</div></li>
+    <li class="major"><div class="yr">2024</div><div class="ev">Elevated to <strong>Navratna</strong> status — greater autonomy to invest and grow without case-by-case government approval.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Loan book crosses <strong>₹1.6 lakh Cr</strong> (+29%); record sanctions/disbursements; signs mega state MoUs (e.g. up to <strong>₹1 lakh Cr with Bihar</strong> over 5 years); reaffirms the <strong>₹3-lakh-crore-by-FY30</strong> ambition.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> the <strong>President of India / Government of India</strong> holds <strong>~75%</strong> (as of the latest disclosures), with the balance split among domestic institutions (~11%), retail public (~12%) and a small foreign holding (~2%). The 75% floor gives the government a permanent controlling hand and keeps HUDCO's "quasi-sovereign" identity intact.</li>
+    <li><strong>Governance:</strong> a Navratna CPSE under the Ministry of Housing &amp; Urban Affairs, led by a Chairman &amp; Managing Director (Sanjay Kulshrestha). Being government-run cuts both ways — it delivers cheap funding and policy access, but subjects strategy to public-policy priorities and periodic stake-sale speculation.</li>
+    <li><strong>Balance sheet:</strong> exceptionally well-capitalised — <strong>CRAR ~40%</strong>, roughly double the regulatory need — which is precisely what lets it target a tripling of the book without urgently raising fresh equity.</li>
+  </ul>
+
+  <div class="note gold"><b>The disinvestment angle:</b> because the government holds ~75%, HUDCO is perennially in the frame for possible <em>disinvestment</em> (a government stake sale). A sell-down could add free float and re-rate the stock — but it can also cap the price near the offer level and is a source of headline risk. It's a structural feature of any large listed PSU, and worth keeping on the radar.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Who HUDCO lends to — the borrower map</h2></div>
+  <p class="part-sub">Follow the money: from a bond investor, through HUDCO, into a city.</p>
+
+  <p class="lead">HUDCO's loan book splits into two broad buckets — <strong>housing finance</strong> and <strong>urban-infrastructure finance</strong> — but almost all of it goes to <strong>public borrowers</strong>. The single most important credit fact about HUDCO is <em>who</em> sits on the other side of its loans: overwhelmingly governments and their agencies, not private developers.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The financing chain — cheap sovereign-name money, deployed into cities</div>
+    <div class="flow-row">
+      <div class="node sov"><div class="ntag">Step 1 · Funding</div><div class="nname">Bond &amp; loan markets</div><div class="nwho">HUDCO sells bonds on its govt-backed name; raises money cheaply.</div></div>
+      <div class="arrow">→</div>
+      <div class="node brand"><div class="ntag">Step 2 · The lender</div><div class="nname">HUDCO</div><div class="nwho">Appraises &amp; on-lends at a ~2% markup. Takes near-zero credit risk.</div></div>
+      <div class="arrow">→</div>
+      <div class="node civic"><div class="ntag">Step 3 · Borrowers</div><div class="nname">States, boards, ULBs, agencies</div><div class="nwho">Often state-guaranteed. The quasi-sovereign credit.</div></div>
+      <div class="arrow">→</div>
+      <div class="node gold"><div class="ntag">Step 4 · The output</div><div class="nname">Housing &amp; urban infra</div><div class="nwho">Homes, water, sewerage, roads, metros, smart cities.</div></div>
+    </div>
+    <div class="flow-note">The whole model rests on Step 3 being safe: because borrowers are public bodies (frequently with state guarantees or budget commitments), defaults are rare — which is why HUDCO can lend at a thin spread and still sleep at night.</div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The two halves of the book — and where the growth is</caption>
+    <thead><tr><th>Segment</th><th>What it funds</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Housing finance</td><td>Affordable-housing schemes via state housing boards &amp; agencies (PMAY / Housing-for-All), plus legacy retail housing</td><td>The historic core; tied directly to national affordable-housing policy. Social-housing volume is chunky and policy-driven.</td></tr>
+      <tr><td class="t-strong">Urban-infrastructure finance</td><td>Water supply, sewerage &amp; drainage, roads &amp; transport, power, metros, area development, smart-city works</td><td><strong>The growth engine.</strong> This is where the enormous urban-capex pipeline lands — the biggest driver of the book toward ₹3 lakh Cr.</td></tr>
+      <tr><td class="t-strong">Borrower type — public</td><td>State governments, state housing boards, urban local bodies (municipal corporations), development authorities, PSUs</td><td>The vast majority of the book. Frequently <strong>state-guaranteed</strong> → quasi-sovereign risk → the reason GNPA is ~1%.</td></tr>
+      <tr><td class="t-strong">Borrower type — private (small/re-entering)</td><td>Private developers / project entities — the historical source of nearly all HUDCO's bad loans</td><td>Deliberately shrunk after past losses; HUDCO is now cautiously studying a <strong>disciplined re-entry</strong> for higher-yielding business.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why state guarantees are the secret sauce</div>
+    <p>Many of HUDCO's loans carry a <strong>state-government guarantee</strong> or are serviced directly from a state's budget. That effectively converts a loan to a municipal water board into a loan backed by the whole state's finances — turning a middling municipal credit into something close to a sovereign one. It is the structural reason a lender can grow a ₹1.6-lakh-crore book with a net NPA of five basis points (0.05%). The flip side: HUDCO's fortunes are tied to <strong>state-government finances and their appetite to borrow</strong> — if states retrench or run into fiscal trouble, HUDCO's growth engine can idle.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>How HUDCO makes money — the funding edge</h2></div>
+  <p class="part-sub">The real skill isn't lending — it's borrowing cheaply.</p>
+
+  <p class="lead">For a wholesale lender, the profit is made on the <strong>liability side</strong> as much as the asset side. HUDCO's competitive advantage is that it can <strong>borrow money more cheaply than almost anyone except the sovereign itself</strong>, because it carries a government-owned, high-credit-rating name. The cheaper it borrows, the wider its spread on the same government loans.</p>
+
+  <h3>Where the money comes from</h3>
+  <ul class="clean">
+    <li><strong>Bonds &amp; debentures</strong> — the workhorse. HUDCO issues rupee bonds to institutions and, at times, subordinated/perpetual debt. Its high rating and sovereign ownership keep coupons low.</li>
+    <li><strong>Tax-free bonds (historically)</strong> — in past years HUDCO was authorised to issue <strong>tax-free bonds</strong> (interest exempt under Sec 10(15) of the Income-Tax Act). These let it raise ultra-cheap long money, because investors accept a lower rate for tax-free income. A powerful, if intermittent, funding tool.</li>
+    <li><strong>Bank loans &amp; refinance</strong> — supplementary term borrowing to top up the funding mix.</li>
+  </ul>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~6.3%</div><div class="msl">Weighted-average cost of funds (FY26) — falling as rates ease and rating holds</div></div>
+    <div class="ms gold"><div class="msv">~2%</div><div class="msl">Target spread — thin by design, because borrowers are governments</div></div>
+    <div class="ms green"><div class="msv">~3%</div><div class="msl">Net interest margin — management guiding toward 3.1%+</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The virtuous circle (and its limit)</div>
+    <p>Here's the mechanism: government ownership → high credit rating → cheap borrowing → ability to lend to governments at a positive spread. In FY26 HUDCO's cost of funds fell (management cited a ~27–30 bps reduction), which directly widens the spread even without charging borrowers more — a rare "free" margin gain. The <em>limit</em> is that this edge is <strong>borrowed from the government's own creditworthiness</strong>. HUDCO can never borrow cheaper than the sovereign, so its spread is capped by how much cheaper it can get than its state-government borrowers — a naturally narrow band. That's why the strategy is to <strong>grow volume</strong> rather than chase margin.</p>
+  </div>
+
+  <div class="note gold"><b>The leverage question:</b> a lender's profit scales with how large a loan book it can build on its equity — its <em>leverage</em>. With CRAR near 40% (versus a ~15% requirement), HUDCO is <strong>massively under-leveraged</strong> today. That is the coiled spring: it can roughly <em>double or triple</em> its book before capital becomes a constraint, converting spare balance-sheet capacity directly into future profit. The re-rating thesis is largely a bet that this spring uncoils.</div>
+</section>
+
+<!-- 06 — BESPOKE: the defining force for HUDCO -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The urban-infrastructure super-cycle</h2></div>
+  <p class="part-sub">The structural force unique to HUDCO — and the reason the stock re-rated.</p>
+
+  <p class="lead">Every lender wants loan demand; HUDCO sits in front of one of the largest, most policy-backed demand pipelines in the country. India is in the middle of a <strong>historic urban-infrastructure and affordable-housing build-out</strong> — and HUDCO has positioned itself to <em>finance</em> a slice of it. This is the single most important thing to understand about the current investment case: HUDCO is a <strong>leveraged play on India's government-driven urban capex</strong>.</p>
+
+  <h3>The demand side — why the pipeline is enormous</h3>
+  <ul class="clean">
+    <li><strong>Affordable housing (PMAY / Housing-for-All)</strong> — a multi-crore-unit national mission to house urban and rural poor; state agencies need long-term finance to build, and HUDCO is a nodal channel.</li>
+    <li><strong>Urban civic infrastructure (AMRUT, Smart Cities, Jal Jeevan)</strong> — water supply, sewerage, drainage and city-level works across hundreds of towns — chronically under-financed and exactly HUDCO's lane.</li>
+    <li><strong>Mass transit &amp; mobility</strong> — metros, urban roads and transport projects that need patient, long-tenure capital.</li>
+    <li><strong>The financing gap</strong> — India's urban-infrastructure investment need runs into the <em>tens of lakh crore</em> over the coming decade, far exceeding what state budgets alone can fund. That gap is HUDCO's addressable market — and it is vast relative to a ₹1.6-lakh-crore book.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">The loan-book acceleration — the whole thesis in one chart</div>
+    <div class="c-sub">HUDCO loan book (₹ lakh Cr) — history and the stated FY30 ambition</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill ink" style="width:41%"></span></div><div class="bval">1.25</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>+29% YoY</small></div><div class="track"><span class="fill brand" style="width:54%"></span></div><div class="bval">1.61</div></div>
+      <div class="bar-row"><div class="blab">FY30 target<small>management ambition</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~3.0</div></div>
+    </div>
+    <div class="legend"><span>On a ~2% spread, roughly doubling the book roughly doubles net interest income. That volume-led compounding — not margin — is what the growth thesis is buying.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why this re-rated a "boring" PSU into a multibagger</div>
+    <p>For years HUDCO was seen as a sleepy, slow-growing government lender trading at a deep discount to book value. Three things changed the narrative: <strong>(1)</strong> the government's own urban-capex push gave HUDCO an obvious, policy-backed demand pipeline; <strong>(2)</strong> management set an <strong>explicit, aggressive growth target</strong> — tripling the book toward ₹3 lakh Cr by FY30 — turning it from a low-growth utility into a growth story; and <strong>(3)</strong> the legacy bad loans were cleaned up, removing the asset-quality overhang. Put a credible ~15–20% book-growth runway on a near-zero-NPA lender with 40% capital headroom, and the market re-rated the price-to-book multiple sharply upward. HUDCO became one of the celebrated PSU re-rating stories of the cycle.</p>
+  </div>
+
+  <div class="note gold"><b>The mega-MoU signal:</b> in FY26 HUDCO signed headline financing arrangements with states — for example an MoU to provide <strong>up to ₹1 lakh crore to Bihar over five years</strong> for urban infrastructure. Such state-level MoUs are how the ₹3-lakh-crore ambition is meant to be filled: a handful of large state relationships can move the book meaningfully. They are the leading indicator to watch — sanctions convert to disbursements convert to a bigger book convert to profit.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The asset-quality clean-up</h2></div>
+  <p class="part-sub">The overhang that's been (largely) removed — and why it matters.</p>
+
+  <p class="lead">HUDCO's credit history is not spotless. In earlier years, a slice of its lending went to <strong>private-sector project loans</strong> — and some of those went bad, producing lumpy, embarrassing NPAs that dragged the stock's reputation. The story of the last few years is a <strong>decisive clean-up</strong>: writing off/provisioning the legacy bad loans and pivoting the book firmly toward safe government borrowers.</p>
+
+  <div class="chart">
+    <div class="c-title">Asset quality — the clean-up in numbers</div>
+    <div class="c-sub">Net NPA (%) — the sharp fall that removed the overhang</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25<small>net NPA</small></div><div class="track"><span class="fill steel" style="width:100%"></span></div><div class="bval">0.25%</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>net NPA</small></div><div class="track"><span class="fill civic" style="width:20%"></span></div><div class="bval">0.05%</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>gross NPA</small></div><div class="track"><span class="fill gold" style="width:64%"></span></div><div class="bval">1.04%</div></div>
+    </div>
+    <div class="legend"><span>Net NPA of 0.05% means that, after provisions, essentially none of the book is impaired. Provision coverage is ~95%, so the residual gross NPAs are heavily covered.</span></div>
+  </div>
+
+  <p>Two mechanics drove the improvement. First, <strong>the mix shifted</strong>: as government/agency lending grew far faster than the legacy private book, the bad-loan pool shrank as a share of the whole. Second, <strong>heavy provisioning</strong> — HUDCO built provision coverage to ~95%, meaning the small remaining gross NPAs are almost fully written down already, so future "surprises" from them are minimal.</p>
+
+  <div class="plain">
+    <div class="ptag">Why near-zero NPA is both a strength and a subtlety</div>
+    <p>A 0.05% net NPA is genuinely excellent and de-risks the balance sheet. But read it correctly: it is a <strong>consequence of lending to governments</strong>, not evidence of superior underwriting skill. The real credit test comes if HUDCO <em>re-enters private-sector lending</em> to earn higher yields — that's where its past losses came from. Management has signalled a <strong>cautious, disciplined re-entry</strong> (building a dedicated team and capabilities first). Done well, it lifts margins; done carelessly, it re-imports exactly the risk that was just cleaned up. So the number to watch over the next few years is not just "how fast the book grows" but "<strong>how much of the new growth is private vs government</strong>" — and whether asset quality holds as the mix shifts.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The peer set — HUDCO among the PSU lenders</h2></div>
+  <p class="part-sub">Same machine, different verticals — and HUDCO's distinct niche.</p>
+
+  <p class="lead">HUDCO belongs to a small, distinctive club: <strong>government-owned wholesale infrastructure lenders</strong>. Each dominates one vertical, borrows on a quasi-sovereign name, and lends to public bodies at a thin spread. Understanding the cousins clarifies both HUDCO's model and what makes its niche its own.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The government-lender family</caption>
+    <thead><tr><th>Player</th><th>Vertical</th><th>Vs HUDCO</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">HUDCO</td><td>Housing &amp; <em>urban</em> infrastructure</td><td><em>This company.</em> Water, sewerage, roads, metros, smart cities, affordable housing. The urban-infra specialist.</td></tr>
+      <tr><td class="t-strong">PFC (Power Finance Corp)</td><td>Power sector</td><td>The big cousin — far larger book; lends to power generation/T&amp;D. Higher yields but historically more sector-specific risk.</td></tr>
+      <tr><td class="t-strong">REC Ltd</td><td>Power &amp; (now) broader infra</td><td>PFC's sibling (PFC owns a majority of REC); rural electrification roots, expanding into infra. Larger, higher-yielding.</td></tr>
+      <tr><td class="t-strong">IRFC</td><td>Railways</td><td>The rail financier — funds Indian Railways' rolling stock/projects on a lease model. Ultra-low risk, ultra-thin spread; even more captive.</td></tr>
+      <tr><td class="t-strong">NHB / NaBFID / banks</td><td>Housing refinance / infra</td><td>NHB refinances HFCs; NaBFID is the new national infra-finance DFI; commercial banks also fund urban projects — potential overlap/competition on some deals.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">HUDCO's distinctive position</div>
+    <p>Two things set HUDCO apart in this group. First, its vertical — <strong>urban infrastructure and housing</strong> — is arguably the one with the <em>largest untapped financing gap</em> and the strongest current policy tailwind (cities, water, transit, homes are the visible face of "Viksit Bharat" development). Second, HUDCO is <strong>smaller and lower-leveraged</strong> than PFC/REC, which means it has proportionally <em>more room to grow</em> — a ₹1.6-lakh-crore book tripling to ₹3 lakh Cr is a bigger percentage move than the giants can achieve. The trade-off: PFC/REC earn higher yields on power loans, so HUDCO's margin is thinner; and NaBFID's arrival as a purpose-built national infra DFI is a new competitive/complementary force to watch.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Strong headline growth — with one big asterisk on the profit line.</p>
+
+  <p class="lead">HUDCO's FY26 was, on the surface, a blockbuster: a ~29% loan-book jump, record sanctions and disbursements, falling NPAs, and a ~49% rise in reported profit. But an honest read requires flagging that a <strong>large chunk of the reported profit was a one-off accounting gain</strong>, not core earnings.</p>
+
+  <div class="chart">
+    <div class="c-title">The loan book (₹ lakh Cr)</div>
+    <div class="c-sub">Volume is the growth engine</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill ink" style="width:41%"></span></div><div class="bval">1.25</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:54%"></span></div><div class="bval">1.61</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Reported net profit (₹ Cr) — read with care</div>
+    <div class="c-sub">FY26 PAT includes a ~₹1,533 Cr one-off deferred-tax write-back</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25<small>PAT</small></div><div class="track"><span class="fill ink" style="width:67%"></span></div><div class="bval">2,709</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>reported PAT</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">4,034</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>core (ex one-off)</small></div><div class="track"><span class="fill brand" style="width:62%"></span></div><div class="bval">~2,500</div></div>
+    </div>
+    <div class="legend"><span>The ~₹2,500 Cr "core" figure is an approximation: reported PAT ₹4,034 Cr minus the ~₹1,533 Cr deferred-tax write-back. Treat it as indicative, not exact.</span></div>
+  </div>
+
+  <div class="note"><b>Read the profit honestly:</b> in Q4 FY26 HUDCO reversed <strong>₹1,532.86 Cr from a Deferred Tax Liability</strong> into the P&amp;L (after a decision on the Special Reserve under Sec 36(1)(viii) of the Income-Tax Act). This flattered the headline: quarterly <strong>profit-before-tax actually fell ~39% YoY</strong> even as reported net profit rose 172%. So the FY26 ₹4,034 Cr PAT overstates the run-rate of the underlying business — core FY26 earnings are roughly ~₹2,500 Cr. This does not change the growth story, but it means the "P/E on reported FY26 profit" understates the true multiple.</div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>FY26 scorecard (year ended March 2026, standalone unless noted)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY26</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Loan book</td><td class="num">₹1,60,724 Cr</td><td>+29% YoY (from ₹1,24,720 Cr)</td></tr>
+      <tr><td class="t-strong">Sanctions</td><td class="num">₹1,64,758 Cr</td><td>Record; +~29% YoY</td></tr>
+      <tr><td class="t-strong">Disbursements</td><td class="num">₹51,194 Cr</td><td>Record; +~28% YoY</td></tr>
+      <tr><td class="t-strong">Total/operational income</td><td class="num">₹13,150 Cr</td><td>+~28% YoY</td></tr>
+      <tr><td class="t-strong">Reported PAT</td><td class="num">₹4,034 Cr</td><td>+49% YoY — <em>incl. ~₹1,533 Cr one-off</em></td></tr>
+      <tr><td class="t-strong">Gross / Net NPA</td><td class="num">1.04% / 0.05%</td><td>~95% provision coverage</td></tr>
+      <tr><td class="t-strong">NIM / spread</td><td class="num">~3% / ~2%</td><td>Cost of funds ~6.3%, falling</td></tr>
+      <tr><td class="t-strong">CRAR</td><td class="num">39.93%</td><td>~2.5× the regulatory minimum</td></tr>
+      <tr><td class="t-strong">RoE / RoA</td><td class="num">~15% / ~2.5%</td><td>Latest-quarter proxies; solid for a low-risk lender</td></tr>
+      <tr><td class="t-strong">Dividend</td><td class="num">₹6.05 / sh</td><td>Highest-ever payout (~60.5% of face value)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~2.3×</div><div class="msl">Price-to-book (Jun '26) — up sharply from the deep discount of years past</div></div>
+    <div class="ms"><div class="msv">~10×</div><div class="msl">P/E on reported FY26 profit — but higher on core, ex the tax one-off</div></div>
+    <div class="ms green"><div class="msv">~3%</div><div class="msl">Dividend yield — a steady payout on a growing book</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to value a wholesale lender — P/B, not P/E</div>
+    <p>Lenders are valued on <strong>price-to-book (P/B)</strong> more than price-to-earnings, because their "product" is their balance sheet and their earning power scales with equity. The link is <strong>RoE</strong>: a lender earning a ~15% return on equity, growing its book ~20%+, with near-zero NPAs and huge capital headroom, deserves to trade <em>above</em> book value — and HUDCO now does (~2.3× P/B), a big move up from the sub-1× levels it traded at when it was seen as a stagnant PSU. The debate (next section) is whether ~2.3× book already prices in the growth, or whether a sustained march toward ₹3 lakh Cr justifies even more. Note: on <strong>core</strong> earnings (stripping the tax write-back), the P/E is meaningfully higher than the ~10× the reported number implies — so don't anchor on the headline P/E.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The re-rating debate</h2></div>
+  <p class="part-sub">Cheap PSU with a growth runway — or a re-rated stock that's priced it in?</p>
+
+  <p class="lead">HUDCO was a celebrated PSU multibagger: a stock that traded below book value as a forgotten government lender, then re-rated hard as the growth story took hold. The central question now is whether that re-rating is <strong>finished, fair, or still has legs</strong> — and it hinges on one number: how fast the loan book actually compounds.</p>
+
+  <blockquote>On a thin, fixed spread, a wholesale lender's share price is, over time, a bet on the size of its loan book.</blockquote>
+
+  <h3>The bull's arithmetic</h3>
+  <p>If HUDCO grows the book from ₹1.6 lakh Cr toward ₹3 lakh Cr by FY30 — roughly a high-teens annual growth rate — then, holding the ~2% spread and near-zero NPAs, net interest income and core profit could nearly <strong>double</strong> over the period. Layer on a falling cost of funds (widening spread "for free"), a fat 40% capital cushion (no dilution needed), and a policy tailwind, and you have a lender that can compound earnings at a healthy clip with very low risk. Bulls argue such a franchise deserves to trade well above book, and that ~2.3× P/B is not demanding if the growth delivers.</p>
+
+  <h3>The bear's arithmetic</h3>
+  <p>Bears counter that the easy re-rating has already happened — the stock moved from below book to ~2.3× book, so a lot of the growth is <em>already in the price</em>. On a thin ~2% spread, growth <strong>must</strong> arrive on schedule to justify the multiple; any slippage (states borrowing less, disbursement delays, a spread squeeze if funding costs rise) and a re-rated PSU can de-rate just as fast as it re-rated. And the reported P/E flatters — strip out the tax write-back and the business isn't as "cheap" as ~10× suggests. The Q4 stock drop (shares fell ~8% on results despite the headline profit jump) shows the market is already scrutinising core numbers over headlines.</p>
+
+  <div class="plain">
+    <div class="ptag">The synthesis</div>
+    <p>Both can be right at different points. HUDCO is a <strong>genuinely improved franchise</strong> — cleaner book, faster growth, huge capital headroom, real policy tailwind — that has already been <em>partly</em> rewarded for it. From here, the returns are less about the re-rating (largely done) and more about <strong>execution</strong>: does the book actually compound toward ₹3 lakh Cr, does the spread hold as it grows, and does asset quality survive any private-sector re-entry? Watch three numbers each quarter — <strong>loan-book growth, spread/NIM, and GNPA</strong>. If all three hold, the compounding does the work; if any wobbles, a 2.3× P/B has room to compress.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A safe, cheaply-funded lender riding a real tailwind — priced for it to keep growing.</p>
+
+  <p class="lead">HUDCO is one of the cleaner ways to own India's urban-infrastructure spending: a Navratna PSU with a quasi-sovereign funding edge, near-zero NPAs, enormous capital headroom, and an explicit plan to triple its book. The investment debate is about <strong>execution and price</strong> — will the growth arrive, and how much is already paid for.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural demand</strong> — a vast, policy-backed urban-infra and affordable-housing pipeline (PMAY, AMRUT, Smart Cities, Jal Jeevan, metros) that dwarfs the current book.</li>
+        <li><strong>Explicit growth runway</strong> — management targeting ~₹3 lakh Cr by FY30 (roughly doubling); on a ~2% spread, book growth is profit growth.</li>
+        <li><strong>Capital headroom</strong> — CRAR ~40% means it can grow for years without diluting shareholders.</li>
+        <li><strong>Very low credit risk</strong> — GNPA ~1%, net NPA 0.05%, ~95% coverage; quasi-sovereign borrowers, often state-guaranteed.</li>
+        <li><strong>Cheap, improving funding</strong> — government-name bond access and a falling cost of funds widen the spread "for free."</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Re-rating largely done</strong> — from sub-1× to ~2.3× book; much of the growth may already be in the price, leaving little error margin.</li>
+        <li><strong>Thin, capped spread</strong> — ~2% margin means growth <em>must</em> deliver; a funding-cost spike or spread squeeze bites directly.</li>
+        <li><strong>Headline-profit optics</strong> — FY26 PAT flattered by a ~₹1,533 Cr one-off tax write-back; core earnings are lower, and PBT actually fell in Q4.</li>
+        <li><strong>State-finance &amp; private re-entry risk</strong> — growth depends on state borrowing appetite; a return to private-sector lending could re-import old NPA risk.</li>
+        <li><strong>PSU overhang</strong> — disinvestment/stake-sale headlines, policy-driven strategy, and government priorities can override pure shareholder logic.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>HUDCO is a <strong>materially better business than the market treated it as a few years ago</strong> — a cleaned-up, fast-growing, ultra-low-risk wholesale lender plugged directly into India's urban build-out, with the balance sheet to fund years of expansion. The easy money from the re-rating is mostly made; the next leg is an <strong>execution story</strong>. The three quarterly numbers that decide it are <strong>loan-book growth</strong> (is the ₹3-lakh-crore march real?), <strong>spread/NIM</strong> (does the thin margin hold as the book grows?), and <strong>asset quality</strong> (does GNPA stay near zero, especially if it re-enters private lending?). Get those right and the volume compounds; stumble, and a re-rated PSU has room to give it back.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>HUDCO FY26 (year ended Mar 2026) full-year results — reported via Sarkaritel, Whispersinthecorridors and InvestyWise summaries: loan book ₹1,60,724 Cr (+29%), PAT ₹4,034.37 Cr, sanctions ₹1,64,758 Cr, disbursements ₹51,194 Cr, GNPA 1.04%, NNPA 0.05%, CRAR 39.93%, dividend ₹6.05/sh.</li>
+    <li>Business Standard — "Hudco shares tumble 8% after mixed Q4 results" (May 2026): loan book ₹1.60 trn, Q4 disbursement/quarter details.</li>
+    <li>Multibagg / Whalesbook — "HUDCO Q4FY26: Profit up 172%, stock drops 8%" and "Profit jumps on tax gain": ₹1,532.86 Cr deferred-tax write-back (Special Reserve, Sec 36(1)(viii)); PBT down ~39% YoY.</li>
+    <li>InvestyWise — "HUDCO Robust FY26 Performance": FY26 vs FY25 comparison, provision coverage 94.90%, ₹3-lakh-crore FY30 objective.</li>
+    <li>Tech Observer / The Statesman / Free Press Journal — "HUDCO targets ~₹3 lakh crore infra finance by 2030" (CMD Sanjay Kulshrestha), private-sector re-entry &amp; hiring plans.</li>
+    <li>Sahi / ScanX — HUDCO–Bihar MoU (up to ₹1 lakh crore over 5 years for urban infrastructure).</li>
+    <li>MarketsMojo — HUDCO Q2/Q3 FY26 result analyses: NIM ~3%, spread ~2%, cost of funds ~6.32%, margin commentary.</li>
+    <li>Tickertape / 5paisa / Groww — HUDCO market data (Jun '26): price ~₹206, market cap ~₹40,700 Cr, P/E ~10, P/B ~2.3, dividend yield ~3%.</li>
+    <li>Shareholding disclosures (BSE/marketsmojo) — Government of India ~75%; Navratna status (2024), Ministry of Housing &amp; Urban Affairs.</li>
+    <li>CARE Ratings — HUDCO rating rationale (2025): nodal-agency role, state-government borrower focus, stable outlook.</li>
+    <li>HUDCO tax-free bond disclosures (hudco.org) — Sec 10(15) tax-free bond funding history.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several figures (core-PAT ex one-off, RoE/RoA, borrower-mix shares, valuation multiples) are approximations or point-in-time proxies. Verify all numbers against primary sources (company results, investor presentation and concall) before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "HUDCO";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nRefresh isn't wired up yet. Once the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
