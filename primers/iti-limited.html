@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITI Limited — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F4F7;
+    --paper-2:#FAFBFD;
+    --card:#FFFFFF;
+    --ink:#141A26;
+    --ink-soft:#525C6E;
+    --ink-faint:#8A93A6;
+    --brand:#2A4A9B;          /* deep PSU indigo */
+    --brand-bright:#3E68C4;   /* signal blue */
+    --gold:#E08A2C;           /* saffron/amber - national accent */
+    --tel:#2A4A9B;            /* telecom / RAN indigo */
+    --def:#556070;            /* defence slate */
+    --net:#1F7A6B;            /* network projects / BharatNet teal-green */
+    --met:#C77D2E;            /* smart meters amber */
+    --data:#7A5AA8;           /* data centre / other violet */
+    --line:#DCDFE7;
+    --line-soft:#E9EBF1;
+    --good:#2A8359;
+    --bad:#C0442E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7ECF7;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2606;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F7FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 96px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAECF2;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2A4A9B,#3E68C4);}
+  .fill.gold{background:linear-gradient(90deg,#E08A2C,#EDA957);}
+  .fill.tel{background:linear-gradient(90deg,#2A4A9B,#4066BE);}
+  .fill.def{background:linear-gradient(90deg,#556070,#6E7A8C);}
+  .fill.net{background:linear-gradient(90deg,#1F7A6B,#2E9B88);}
+  .fill.met{background:linear-gradient(90deg,#C77D2E,#DA9848);}
+  .fill.data{background:linear-gradient(90deg,#7A5AA8,#9679C0);}
+  .fill.bad{background:linear-gradient(90deg,#C0442E,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4658,#525C6E);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 66px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.src{background:var(--gold);}
+  .node.mfg{background:var(--tel);}
+  .node.dep{background:var(--net);}
+  .node.pay{background:var(--def);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-tel{color:var(--tel);font-weight:600;}
+  .chain-net{color:var(--net);font-weight:600;}
+  .chain-def{color:var(--def);font-weight:600;}
+  .chain-met{color:var(--met);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2f22;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF0FB;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What ITI actually does</a></li>
+    <li><a href="#p2"><span class="n">02</span> India's oldest telecom PSU</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The order book</a></li>
+    <li><a href="#p5"><span class="n">05</span> The Digital India dependence</a></li>
+    <li><a href="#p6"><span class="n">06</span> Why the model bleeds cash</a></li>
+    <li><a href="#p7"><span class="n">07</span> The perennial turnaround</a></li>
+    <li><a href="#p8"><span class="n">08</span> The industry &amp; rivals</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials, honestly</a></li>
+    <li><a href="#p10"><span class="n">10</span> Valuation &amp; the float</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: ITI · BSE: 523610</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>ITI Limited, <em>India's oldest telecom-gear PSU — and its longest turnaround story</em></h1>
+  <p class="dek">A plain-English walk through the 1948-founded, ~90%-government-owned company that once built the nation's telephone exchanges — how it makes money today by manufacturing and executing turnkey government network projects (BharatNet, BSNL 4G, defence comms, smart meters), why the business is chronically loss-making and working-capital-heavy, and why a stock that barely earns anything still carries a ~₹28,000 Cr market value.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹2,184 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹18,500 <small>Cr</small></div><div class="l">Order book</div></div>
+    <div class="cell"><div class="v">~90% <small>GoI</small></div><div class="l">Govt promoter holding</div></div>
+    <div class="cell"><div class="v">~₹28,000 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">12 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 results incorporated — revenue ₹2,184 Cr (down ~40% YoY), reported net profit ₹293 Cr but lifted by ~₹503 Cr other income (operating profit just ₹44 Cr); order book ~₹18,500 Cr led by ASCON Phase-IV defence (₹8,280 Cr) and BharatNet Phase-3 (₹6,956 Cr).</div>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice</p>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">ITI Limited — originally <strong>Indian Telephone Industries</strong> — is a <strong>government-owned telecom-equipment manufacturer</strong>, the country's oldest. Founded in <strong>1948 in Bengaluru</strong>, it built the switching and transmission gear that ran India's phone network for decades. Today it is a <strong>public sector undertaking (PSU) under the Department of Telecommunications, Ministry of Communications</strong>, with the <strong>Government of India (via the President of India) holding ~90%</strong> of the shares. It carries the <strong>"Mini-Ratna"</strong> label — a modest degree of operating autonomy granted to profitable-enough central PSUs.</p>
+
+  <p>Three facts frame everything that follows:</p>
+  <ul class="clean">
+    <li><strong>It lives on government orders.</strong> ITI no longer sells much to the open market. It manufactures and <em>executes turnkey projects</em> for government programmes — rural broadband (<strong>BharatNet</strong>), <strong>BSNL's 4G network</strong>, <strong>defence communications</strong> (the Army's ASCON network), and <strong>smart electricity meters</strong>. Its ~₹18,500 Cr order book is almost entirely public-sector work.</li>
+    <li><strong>It has been chronically unprofitable.</strong> ITI lost money in FY23, FY24 and FY25 (net losses of roughly <strong>₹360 Cr, ₹569 Cr and ₹233 Cr</strong>). FY26 <em>reported</em> a ₹293 Cr net profit — but that was rescued by ~₹503 Cr of "other income"; the actual <strong>operating profit was just ₹44 Cr on ₹2,184 Cr of sales (a ~2% margin)</strong>. Revenue itself fell ~40% year-on-year. This is not, on any honest reading, a healthy earnings machine.</li>
+    <li><strong>The stock trades on hope, not earnings.</strong> With a book value near <strong>₹19</strong> a share and a market price around <strong>₹290</strong>, ITI trades at roughly <strong>15× book</strong> and a barely-meaningful P/E — a valuation that fundamentals cannot justify. What holds it up is a <em>combination</em> of a big announced order book, the "Digital India / Make-in-India telecom" theme, an implicit government backstop, and an unusually <strong>small public float</strong> (only ~10% of shares are not government-held), which makes the price technically volatile.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of ITI as <strong>India's legacy national telecom factory, kept alive by the state and repeatedly asked to become relevant again</strong>. In the landline era it was indispensable — it literally made the exchanges. Then the technology moved to private and foreign hands, ITI's old capacity became obsolete, and it spent two decades loss-making and dependent on government rescue packages. Today it has a genuine second act on paper: it wins large government contracts to build rural broadband, run BSNL's home-grown 4G, and make smart meters and defence gear. The hope is that this order book finally turns into steady profit. The reality so far is a company that books revenue lumpily, waits a very long time to get paid, earns thin-to-negative margins, and survives on periodic equity infusions from its owner — the government. The share price behaves less like a claim on earnings and more like an option on the turnaround finally happening.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What ITI actually does — a factory that became a project contractor</h2></div>
+  <p class="part-sub">From selling boxes to executing systems — the model in one read.</p>
+
+  <p class="lead">ITI's business today is best understood as <strong>two overlapping things</strong>: (1) a <strong>manufacturer</strong> of telecom and electronic hardware, and (2) a <strong>system integrator / turnkey project executor</strong> that wins large government contracts and delivers the whole thing end-to-end — design, supply, install, commission, and sometimes maintain. The second role increasingly dominates the revenue.</p>
+
+  <h3>The four revenue engines</h3>
+  <div class="chart">
+    <div class="c-title">ITI's business, by activity</div>
+    <div class="c-sub">Indicative mix — the order book is dominated by government network &amp; defence projects</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Network projects<small>BharatNet, BSNL, smart cities</small></div><div class="track"><span class="fill net" style="width:100%"></span></div><div class="bval">Largest</div></div>
+      <div class="bar-row"><div class="blab">Defence electronics<small>ASCON, secure comms</small></div><div class="track"><span class="fill def" style="width:84%"></span></div><div class="bval">Large</div></div>
+      <div class="bar-row"><div class="blab">Telecom manufacturing<small>4G RAN, GSM, transmission</small></div><div class="track"><span class="fill tel" style="width:58%"></span></div><div class="bval">Growing</div></div>
+      <div class="bar-row"><div class="blab">Smart meters &amp; others<small>meters, solar, data centres</small></div><div class="track"><span class="fill met" style="width:40%"></span></div><div class="bval">Emerging</div></div>
+    </div>
+    <div class="legend"><span>Bars show relative importance, not audited segment revenue (ITI's revenue is lumpy and project-timing-driven). The point: value is concentrated in a handful of big government programmes.</span></div>
+  </div>
+
+  <ul class="clean">
+    <li><strong><span class="chain-net">Network / turnkey projects</span></strong> — the biggest engine. ITI bids for and executes large government connectivity programmes: <strong>BharatNet</strong> (laying optical fibre to villages), BSNL network modernisation, smart-city networks, Wi-Fi and surveillance rollouts. Here ITI is a <em>contractor</em> — it buys much of the equipment, deploys it, and bills against milestones.</li>
+    <li><strong><span class="chain-def">Defence electronics &amp; secure communications</span></strong> — a strategically prized business because it plays into <em>indigenisation</em> (reducing India's reliance on foreign defence suppliers). The flagship is the Army's <strong>ASCON (Army Static Switched Communication Network) Phase-IV</strong>, a multi-thousand-crore secure-communications backbone. Encryption and secure gear are a natural fit for a government-owned firm.</li>
+    <li><strong><span class="chain-tel">Telecom-equipment manufacturing</span></strong> — the historical core. ITI makes (and increasingly assembles/manufactures for others) telecom hardware: legacy switching and transmission, GSM gear, and — the big new hope — <strong>4G/5G Radio Access Network (RAN)</strong> equipment for BSNL's home-grown network.</li>
+    <li><strong><span class="chain-met">Smart meters, solar &amp; new lines</span></strong> — diversification into government-driven electronics demand: <strong>smart energy meters</strong> (under the national metering programme), solar panels, HDPE pipe, smart cards, micro-PCs, and data-centre / security-and-surveillance work.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Manufacturer vs contractor — why it matters</div>
+    <p>When ITI <em>manufactures</em> its own product (say, a 4G radio unit), it captures the full value it adds and can, in theory, earn a real margin. When ITI acts as a <em>turnkey contractor</em> on a BharatNet package, a large chunk of the contract value is bought-in equipment and sub-contracted work that simply passes through its books — so the reported revenue looks big, but the <em>margin</em> ITI keeps on it is thin. As the mix has tilted toward pass-through project execution, ITI's revenue has become lumpy (it spikes when big projects are billed) and its margins have stayed razor-thin. This is the central reason a company with a huge order book still struggles to make money.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>India's oldest telecom company — a 1948 institution</h2></div>
+  <p class="part-sub">Why ITI has emotional and strategic weight far beyond its profits.</p>
+
+  <p class="lead">ITI is not a normal listed company; it is a piece of <strong>national industrial history</strong>. When it was set up in <strong>1948</strong>, just after Independence, India had almost no capacity to make its own telecommunications equipment. ITI became the state's answer — the factory that would build the phone network of a new republic. For decades, if you made a call in India, the switch routing it was very likely made by ITI.</p>
+
+  <ul class="timeline">
+    <li class="major"><div class="yr">1948</div><div class="ev"><strong>Indian Telephone Industries</strong> is founded in Bengaluru as a departmental factory — India's first public-sector telecom-equipment maker.</div></li>
+    <li><div class="yr">1950</div><div class="ev">Incorporated as a company; produces India's first <strong>automatic telephone exchange</strong> (in collaboration with Western Electric).</div></li>
+    <li><div class="yr">1960s–80s</div><div class="ev">Becomes the manufacturing backbone of the erstwhile <strong>Department of Telecommunications</strong>. Adds plants at <strong>Naini, Rae Bareli, Mankapur, Palakkad and Srinagar</strong>; makes switching, transmission, cables and subscriber equipment for the national network.</div></li>
+    <li><div class="yr">1990s</div><div class="ev">Telecom is <strong>liberalised and privatised</strong>. Digital and mobile technology, largely foreign (Ericsson, Nokia, Siemens, later Huawei), floods in. ITI's electro-mechanical and early-digital capacity starts becoming <strong>obsolete</strong>; it loses its guaranteed captive buyer.</div></li>
+    <li><div class="yr">2000s</div><div class="ev">Struggles to compete in an open market. Accumulates losses; becomes dependent on government orders and support. Listed on the exchanges but effectively a ward of the state.</div></li>
+    <li class="major"><div class="yr">2013</div><div class="ev">Referred to the <strong>BIFR</strong> (the erstwhile sick-companies board); a <strong>financial revival / restructuring package</strong> is approved, backed by government equity infusion and land monetisation.</div></li>
+    <li><div class="yr">2018 onward</div><div class="ev">Repositioned as a play on <strong>Digital India</strong>: wins BharatNet packages, GSM and defence orders, and later BSNL 4G and smart-meter work — the current "turnaround" narrative.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Reports a return to (reported) profit aided by other income, and a large ~₹18,500 Cr order book — but revenue falls ~40% and operating margins stay near breakeven. The turnaround remains a work in progress.</div></li>
+  </ul>
+
+  <div class="note gold"><b>Why the history matters to an investor:</b> ITI's legacy status is exactly why the government keeps it alive and keeps steering orders and capital its way — a "national telecom-manufacturing champion" is strategically useful, especially amid a push to cut reliance on Chinese and Western gear. But legacy also means <em>legacy problems</em>: old plants, a large and expensive workforce, obsolete capacity, and a culture built for a captive-buyer era rather than open competition. The same government backing that provides the safety net is also what keeps ITI from being disciplined by the market.</div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A government company, run for government objectives — not only shareholder returns.</p>
+
+  <p class="lead">The single most important fact about ITI's ownership is that it is <strong>~90% owned by the Government of India</strong>, held in the name of the <strong>President of India</strong>, through the Department of Telecommunications. This is not a company where private promoters or institutions call the shots — the majority owner is the state, and the state's goals (strategic self-reliance, employment, network build-out) sit alongside, and sometimes ahead of, profit.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~90.0%</div><div class="msl">Government of India promoter holding (President of India)</div></div>
+    <div class="ms gold"><div class="msv">6 plants</div><div class="msl">Bengaluru, Naini, Rae Bareli, Mankapur, Palakkad, Srinagar</div></div>
+    <div class="ms"><div class="msv">~10%</div><div class="msl">Public float — institutions ~8%, retail/others ~2%</div></div>
+  </div>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> the <strong>President of India</strong> (i.e. the Union Government via the Department of Telecommunications, Ministry of Communications) — ~90.02% as of FY26. The promoter's shares are unencumbered.</li>
+    <li><strong>Public shareholders:</strong> the remaining ~10% — institutions (~8%, including some mutual funds and insurers) and non-institutional/retail investors (~2%). This is a <em>very thin</em> free float for a company of ITI's market value.</li>
+    <li><strong>Six manufacturing plants</strong> spread across the country — a deliberately dispersed industrial footprint (partly a legacy of regional-development policy), which adds fixed cost but also gives ITI real estate and a national manufacturing base to repurpose (e.g. into smart meters, solar, electronics).</li>
+    <li><strong>Governance:</strong> a government-appointed board and CMD; ITI answers to its administrative ministry and to Parliament (via CAG audit, PSU oversight). Capital-raising, big investments and revival plans require government sign-off.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "the owner is the customer" cuts both ways</div>
+    <p>ITI's controlling shareholder (the government) is also, in effect, its <strong>biggest customer</strong> (BharatNet, BSNL, defence, smart meters are all government programmes) and its <strong>lender of last resort</strong> (it funds revival packages and equity infusions). For the bull, that's a powerful safety net — the state will not let its strategic telecom PSU collapse, and it can direct orders and capital to it. For the bear, it's a governance red flag: a company that doesn't have to win in a competitive market, gets bailed out when it fails, and is run partly for non-commercial objectives has <em>weak incentives to be efficient or profitable</em>. Minority shareholders own a sliver of a company whose priorities they don't set.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The order book — the whole bull case in one number</h2></div>
+  <p class="part-sub">A big backlog of government work — impressive on paper, slow to convert to cash.</p>
+
+  <p class="lead">Almost every optimistic take on ITI leads with the <strong>order book</strong>: roughly <strong>₹18,500 Cr</strong> of contracted future work (an earlier figure of ~₹16,180 Cr was reported as of March 2025). That is many times its annual revenue, so on the surface it promises years of growth. The catch — which the rest of this primer keeps returning to — is that a large order book is only as good as ITI's ability to <em>execute it on time and get paid</em>.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The order book — the big blocks</caption>
+    <thead><tr><th>Programme</th><th class="num">Size (approx.)</th><th>What it is / why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">ASCON Phase-IV (defence)</td><td class="num">~₹8,280 Cr</td><td>Army Static Switched Communication Network — a nationwide secure military communications backbone. ITI's single largest contract; strategically prized, but a long, complex, multi-year execution.</td></tr>
+      <tr><td class="t-strong">BharatNet Phase-3</td><td class="num">~₹6,956 Cr</td><td>Three packages (Himachal Pradesh; West Bengal + Andaman &amp; Nicobar; North-East NER-II) to build rural optical-fibre broadband. The flagship Digital India programme — and a notorious source of delays and payment lags.</td></tr>
+      <tr><td class="t-strong">BSNL 4G RAN manufacturing</td><td class="num">~₹1,100 Cr+</td><td>Manufacturing 4G radio units (eNodeB) for BSNL's home-grown network; 1,000+ units already dispatched, plus an additional ~₹1,142 Cr order. The clearest example of ITI as a <em>manufacturer</em>, not just a contractor.</td></tr>
+      <tr><td class="t-strong">Smart meters, GSM, other projects</td><td class="num">balance</td><td>Smart energy meters under the national metering push, plus assorted telecom-equipment, smart-city and surveillance orders.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Order book ≠ revenue ≠ profit ≠ cash</div>
+    <p>It's tempting to read "₹18,500 Cr order book" as "₹18,500 Cr of value for shareholders." It isn't. That number has to survive <strong>four leaks</strong> before it helps you: (1) <strong>time</strong> — these are multi-year projects that convert to revenue slowly; (2) <strong>margin</strong> — much of a turnkey contract is pass-through equipment on which ITI keeps very little; (3) <strong>execution</strong> — delays, cost overruns and design changes routinely erode PSU project economics; and (4) <strong>collection</strong> — the government is a slow payer, so even completed work sits as receivables for a very long time (ITI's debtor days have run around <strong>486 days</strong> — well over a year of sales stuck in unpaid bills). A huge backlog is genuinely better than an empty one — but it is a <em>promise</em>, not a profit.</p>
+  </div>
+</section>
+
+<!-- 05 — BESPOKE: the defining external force for ITI -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The Digital-India dependence — ITI's "one customer" problem</h2></div>
+  <p class="part-sub">The structural force that defines the whole investment case: ITI rises and falls with government telecom spending.</p>
+
+  <p class="lead">Every business has demand risk. ITI's is unusually concentrated: its fortunes are almost entirely tied to a handful of <strong>government programmes and their tender timing</strong>. When New Delhi funds and moves on rural broadband, BSNL's network, defence indigenisation and smart metering, ITI has work. When those programmes stall, get re-tendered, or shift to private vendors, ITI's revenue simply isn't there. This is the demand-side equivalent of a commodity company's exposure to one metal price.</p>
+
+  <div class="chart">
+    <div class="c-title">What ITI is a bet on</div>
+    <div class="c-sub">The government programmes that drive its order book — each with its own political and budget cycle</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">BharatNet<small>rural fibre broadband</small></div><div class="track"><span class="fill net" style="width:100%"></span></div><div class="bval">Core</div></div>
+      <div class="bar-row"><div class="blab">BSNL revival &amp; 4G/5G<small>state-telco network build</small></div><div class="track"><span class="fill tel" style="width:88%"></span></div><div class="bval">Core</div></div>
+      <div class="bar-row"><div class="blab">Defence indigenisation<small>ASCON, secure comms</small></div><div class="track"><span class="fill def" style="width:78%"></span></div><div class="bval">Strategic</div></div>
+      <div class="bar-row"><div class="blab">Smart metering (RDSS)<small>power-sector reform push</small></div><div class="track"><span class="fill met" style="width:60%"></span></div><div class="bval">Emerging</div></div>
+    </div>
+    <div class="legend"><span>Each pillar depends on a separate budget line, ministry and tender cycle. ITI needs several of them firing at once to sustain revenue — and any one stalling leaves a hole.</span></div>
+  </div>
+
+  <h3>The bull framing — a genuine optionality</h3>
+  <ul class="clean">
+    <li><strong>The programmes are real and large.</strong> BharatNet aims to connect every gram panchayat; BSNL is spending to build a home-grown 4G/5G network; the RDSS power-reform scheme targets crores of smart meters; defence is under pressure to buy Indian. That is a multi-decade, multi-lakh-crore public-capex wave, and ITI is <em>positioned</em> in all of it.</li>
+    <li><strong>"Make in India / Atmanirbhar" tailwind.</strong> Policy increasingly favours domestic telecom manufacturing and penalises Chinese gear on security grounds. A wholly government-owned maker is a natural beneficiary and a preferred vendor for sensitive work (defence, secure comms).</li>
+    <li><strong>Preferential-vendor status.</strong> As a PSU, ITI can receive nominated or price-preference orders and public-sector set-asides that a private firm cannot — a structural advantage in winning government work.</li>
+  </ul>
+
+  <h3>The bear framing — dependence, not diversification</h3>
+  <ul class="clean">
+    <li><strong>Concentration risk.</strong> A private telecom-gear firm sells to many operators, enterprises and export markets. ITI sells, overwhelmingly, to <em>one customer: the government</em>. If tenders slow (as in FY26, when revenue fell ~40%), there's little private business to cushion it.</li>
+    <li><strong>Tender-timing whiplash.</strong> Government programmes are re-designed, delayed and re-tendered constantly (BharatNet's phases are a case study in slippage). ITI's revenue therefore arrives in lumps and droughts, making it very hard to run a stable, profitable operation.</li>
+    <li><strong>Policy is a double-edged sword.</strong> The same government can also route work to private players (much of BSNL's 4G core, for instance, went to a private-led consortium), so being a PSU guarantees neither the order nor the margin.</li>
+  </ul>
+
+  <div class="note"><b>The honest core of the ITI debate:</b> is ITI a <em>leveraged play on India's biggest public telecom-capex wave</em> — or a <em>captive contractor whose revenue is at the mercy of budget cycles and tender delays it cannot control?</em> The evidence says: both, at different times. The order book proves the optionality is real; the FY26 revenue drop and the chronic losses prove the dependence is real too. An investor is essentially betting on <strong>execution and payment timing</strong> catching up with the opportunity.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Why the model bleeds cash — working capital and receivables</h2></div>
+  <p class="part-sub">The mechanical reason a company with a full order book keeps losing money.</p>
+
+  <p class="lead">If you remember one operational fact about ITI, make it this: it is a <strong>working-capital-heavy project business selling to a slow-paying customer</strong>. That single characteristic explains the thin margins, the debt, the cash strain and the repeated need for government support far better than any story about technology or orders.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The cash cycle of an ITI government project — and where it hurts</div>
+    <div class="flow-row">
+      <div class="node src"><div class="ntag">Stage 1 · Win</div><div class="nname">Government tender / order</div><div class="nwho">ITI wins a turnkey contract (often at a keen price to beat rivals).</div></div>
+      <div class="arrow">→</div>
+      <div class="node mfg"><div class="ntag">Stage 2 · Spend</div><div class="nname">Buy equipment &amp; execute</div><div class="nwho">ITI funds materials, sub-contractors and labour <em>up front</em> — cash out.</div></div>
+      <div class="arrow">→</div>
+      <div class="node dep"><div class="ntag">Stage 3 · Deliver</div><div class="nname">Deploy &amp; commission</div><div class="nwho">Milestones met, but sign-off and inspection can drag on.</div></div>
+      <div class="arrow">→</div>
+      <div class="node pay"><div class="ntag">Stage 4 · Wait</div><div class="nname">Get paid — eventually</div><div class="nwho">Government pays slowly; cash sits as receivables ~486 days.</div></div>
+    </div>
+    <div class="flow-note">Cash leaves at Stage 2 and only comes back — partially, slowly — at Stage 4. The gap has to be funded with debt or fresh equity, which is why ITI carries borrowings and leans on the government.</div>
+  </div>
+
+  <h3>The four pressure points</h3>
+  <ul class="clean">
+    <li><strong>Receivables that don't turn into cash.</strong> Debtor days around <strong>486</strong> mean ITI effectively waits well over a year to collect. Money tied up in unpaid government bills is money it can't use — and some old receivables risk being provisioned (written down) if disputes drag on.</li>
+    <li><strong>Thin-to-negative margins.</strong> On pass-through turnkey work, ITI keeps very little; competitive tendering and cost overruns can push project economics <em>below</em> breakeven, which is exactly what the FY23–FY25 operating losses (OPM of −11%, −25%, −2%) reflect.</li>
+    <li><strong>Debt to fund the gap.</strong> To bridge the cash cycle, ITI borrows — ~₹765 Cr of debt at March 2026 — and pays interest on it, which eats what little operating profit exists. It's a small balance sheet, but for a barely-profitable company even modest interest bites.</li>
+    <li><strong>Legacy fixed costs.</strong> Six plants and a large, long-tenured workforce carry heavy fixed costs (salaries, pensions, upkeep) that must be covered whether or not orders are flowing — so a revenue drought immediately turns into an operating loss.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The vicious circle — and how it's broken</div>
+    <p>Put the pieces together and you get a self-reinforcing squeeze: <strong>low margins → little internal cash → reliance on debt and delayed receivables → interest and provisions → losses → weak balance sheet → need for government equity</strong>. The government breaks the circle periodically by <em>infusing capital</em> (buying fresh shares) and by nudging payments and orders — which is why the state's ~90% stake has crept up over the years. For minority shareholders, the important question isn't just "can ITI win orders?" (it can) but "can it execute them at a profit and collect the cash <em>without</em> needing another bailout?" That is the turnaround that has been promised for years and not yet durably delivered.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The perennial turnaround — and the government safety net</h2></div>
+  <p class="part-sub">Why ITI is the market's archetypal "always about to turn the corner" stock.</p>
+
+  <p class="lead">ITI has been a <strong>turnaround story for the better part of two decades</strong>. Every few years brings a fresh reason to believe — a revival package, a new flagship order, a technology pivot — and the stock periodically rockets on the hope. Yet the durable, cash-generating profitability that would <em>confirm</em> the turnaround has stayed elusive. Understanding this pattern is essential to judging today's version of the story.</p>
+
+  <div class="chart">
+    <div class="c-title">The track record the turnaround has to overcome</div>
+    <div class="c-sub">Net profit / (loss), ₹ Crore — four straight loss years before FY26's other-income-aided profit</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill net" style="width:21%"></span></div><div class="bval">+120</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill bad" style="width:63%"></span></div><div class="bval">−360</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">−569</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill bad" style="width:41%"></span></div><div class="bval">−233</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill net" style="width:51%"></span></div><div class="bval">+293*</div></div>
+    </div>
+    <div class="legend"><span>*FY26 profit is flattered by ~₹503 Cr of other income; operating profit was only ~₹44 Cr. The underlying business is close to breakeven, not comfortably profitable.</span></div>
+  </div>
+
+  <h3>The government support mechanisms</h3>
+  <ul class="clean">
+    <li><strong>Revival packages.</strong> ITI was taken through a formal <strong>BIFR revival (2013)</strong> that combined government equity, land monetisation and restructuring — a template the state has repeatedly used to keep it going.</li>
+    <li><strong>Equity infusions &amp; preferential allotments.</strong> The government periodically <strong>buys fresh ITI shares</strong> (preferential allotment to the President of India) to inject cash — for example a ₹59 Cr infusion under the revival package, and preferential issues listed as recently as June 2026. Each infusion props up the balance sheet but also <em>increases</em> the government's stake.</li>
+    <li><strong>Order steering &amp; price preference.</strong> As a PSU, ITI benefits from public-procurement preferences and can be nominated for strategic work (especially defence), giving it a pipeline a private firm might not win on pure cost.</li>
+  </ul>
+
+  <div class="note gold"><b>The MPS overhang:</b> India's listing rules require most listed companies to have a <strong>minimum public shareholding (MPS) of 25%</strong> — but ITI's public float is only ~10% because the government owns ~90%. PSUs get extended timelines and exemptions, yet the gap is a standing issue: to comply, the government would eventually have to <em>sell down</em> a large slug of shares (an OFS or similar). A big government sale into a thin float would be a significant <strong>supply overhang</strong> on the price. So the very thing that makes ITI's float scarce today (90% government ownership) also implies a future seller. It's a structural technical factor an investor should keep firmly in mind.</div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A domestic telecom-manufacturing push — but ITI is not obviously the winner of it.</p>
+
+  <p class="lead">India is trying to build a <strong>home-grown telecom and network-equipment industry</strong>, both to capture value and to reduce security-sensitive reliance on Chinese and Western vendors. That is a real tailwind. But ITI competes in it against nimbler, better-run private companies — and, in RAN and 5G, against global giants. Being the <em>oldest</em> and most government-backed player does not make it the most competitive one.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs ITI</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">ITI Limited</td><td>Government-owned legacy manufacturer + turnkey project executor</td><td><em>This company.</em> Unmatched PSU status, defence access and national footprint — but chronically loss-making, working-capital-heavy and execution-challenged.</td></tr>
+      <tr><td class="t-strong">Tejas Networks</td><td>Optical &amp; wireless network products (Tata group)</td><td>A genuine product company — designs and sells its own optical/RAN gear, won large BSNL 4G/5G equipment orders, and is <em>profitable and R&amp;D-led</em>. Often the vendor ITI executes <em>around</em>.</td></tr>
+      <tr><td class="t-strong">HFCL</td><td>Optical fibre/cable + telecom equipment + defence electronics</td><td>Private, faster-moving, exporting, with better margins and a growing product portfolio. Competes with ITI across fibre, projects and defence.</td></tr>
+      <tr><td class="t-strong">Sterlite Technologies (STL)</td><td>Optical fibre &amp; cable, network integration</td><td>A scaled fibre and network-solutions specialist; a rival in BharatNet-type fibre work and enterprise networks.</td></tr>
+      <tr><td class="t-strong">Bharat Electronics (BEL)</td><td>Defence electronics PSU</td><td>Context/benchmark: another government-owned electronics maker — but <em>highly profitable and well-run</em>, showing that a PSU <em>can</em> execute. The contrast is not flattering to ITI.</td></tr>
+      <tr><td class="t-strong">Global majors (Ericsson, Nokia, Samsung)</td><td>Global RAN/5G equipment leaders</td><td>Set the technology bar in radio access. ITI's 4G/5G ambitions depend on the government reserving home-grown demand, not on beating these players on merit.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The uncomfortable comparison</div>
+    <p>The most instructive names in that table are <strong>Tejas Networks and BEL</strong>. Tejas shows what a real <em>product</em>-and-R&amp;D telecom-equipment company looks like — it designs its own gear, wins the same government demand, and makes money doing it. BEL shows that a <em>government-owned</em> electronics company can be excellently run and consistently profitable. ITI has the strategic positioning of both — a PSU making telecom and defence electronics — but not (yet) the execution or product depth of either. Its edge is structural (PSU status, defence access, national plants); its weakness is operational (technology gaps versus product-led rivals, thin margins, slow execution). The investment question is whether policy support and the order book can compensate for a real competitiveness gap.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials — the honest picture</h2></div>
+  <p class="part-sub">Lumpy revenue, chronic losses, a one-off-flattered FY26, and a balance sheet propped by the state.</p>
+
+  <p class="lead">Here the primer has to be blunt, because ITI's financials are the crux of the whole story. This is <strong>not</strong> a business with the steady, compounding numbers of a quality company. It is a lumpy, thin-margin, frequently loss-making PSU whose reported FY26 profit rests heavily on non-operating income.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Five-year record (₹ Crore) — consolidated, approximate</caption>
+    <thead><tr><th>Year</th><th class="num">Revenue</th><th class="num">Operating profit</th><th class="num">OPM %</th><th class="num">Net profit / (loss)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">FY22</td><td class="num">1,861</td><td class="num">109</td><td class="num">~6%</td><td class="num">+120</td></tr>
+      <tr><td class="t-strong">FY23</td><td class="num">1,395</td><td class="num">−154</td><td class="num">−11%</td><td class="num">−360</td></tr>
+      <tr><td class="t-strong">FY24</td><td class="num">1,264</td><td class="num">−318</td><td class="num">−25%</td><td class="num">−569</td></tr>
+      <tr><td class="t-strong">FY25</td><td class="num">3,616</td><td class="num">−60</td><td class="num">−2%</td><td class="num">−233</td></tr>
+      <tr><td class="t-strong">FY26</td><td class="num">2,184</td><td class="num">44</td><td class="num">~2%</td><td class="num">+293*</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Read that table carefully and three things jump out:</p>
+  <ul class="clean">
+    <li><strong>Revenue is violently lumpy.</strong> It swung from ₹1,264 Cr (FY24) up to ₹3,616 Cr (FY25) and back down to ₹2,184 Cr (FY26) — a ~40% fall in a single year. That volatility is the tender-timing dependence made visible; it is nearly impossible to run a stable, profitable operation against demand that jumps around like this.</li>
+    <li><strong>Operating profitability is essentially absent.</strong> ITI made operating <em>losses</em> in FY23, FY24 and FY25, and only a sliver of operating profit (~2% margin) in FY26. The core business barely covers its own costs.</li>
+    <li><strong>FY26's "profit" is an accounting rescue, not an operating triumph.</strong> The ₹293 Cr reported net profit sits on top of ~₹503 Cr of <strong>other income</strong> (non-operating items). Strip that out and the underlying business is close to breakeven. The headline "ITI returns to profit" is technically true and substantively misleading.</li>
+  </ul>
+
+  <div class="mini-stats">
+    <div class="ms red"><div class="msv">~486 days</div><div class="msl">Debtor days — cash trapped in unpaid (mostly government) bills</div></div>
+    <div class="ms red"><div class="msv">~1.4%</div><div class="msl">Return on capital employed (FY26) — near the risk-free rate</div></div>
+    <div class="ms"><div class="msv">~₹765 Cr</div><div class="msl">Total debt (Mar 2026), funding the working-capital gap</div></div>
+  </div>
+
+  <div class="note"><b>The numbers that matter most:</b> a company earning <strong>ROCE of ~1.4%</strong> and <strong>negative ROE</strong> is, in plain terms, <em>destroying or barely preserving</em> the capital it employs — the opposite of a compounder. Book value per share is only around <strong>₹19</strong>. Every honest financial metric points to a business that has not yet proven it can turn its opportunity into durable profit. Any investment case therefore rests <em>not</em> on the historic numbers but on a forecast that they are about to change — which is precisely the leap of faith the market is (partly) making.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Valuation and the low-float technicals</h2></div>
+  <p class="part-sub">A stock whose price is driven more by theme, float and momentum than by earnings.</p>
+
+  <p class="lead">Valuing ITI on fundamentals is genuinely hard — because for most years there have been <strong>no positive earnings to value</strong>. When a company is loss-making, the price-to-earnings (P/E) ratio is either meaningless or absurdly high; ITI's reported P/E of ~97× on FY26's other-income-aided profit is not a number to build a thesis on. So what is actually holding up a ~₹28,000 Cr market value on a business with ~₹19 book value and near-zero returns?</p>
+
+  <div class="chart">
+    <div class="c-title">Why the valuation defies the fundamentals</div>
+    <div class="c-sub">Illustrative — the disconnect between what ITI earns and what it's valued at</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Price / Book<small>~₹290 vs ~₹19 book</small></div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">~15×</div></div>
+      <div class="bar-row"><div class="blab">ROCE<small>what the business earns</small></div><div class="track"><span class="fill ink" style="width:4%"></span></div><div class="bval">~1.4%</div></div>
+      <div class="bar-row"><div class="blab">Public float<small>share not govt-held</small></div><div class="track"><span class="fill met" style="width:22%"></span></div><div class="bval">~10%</div></div>
+      <div class="bar-row"><div class="blab">3-yr stock CAGR<small>price, not earnings</small></div><div class="track"><span class="fill gold" style="width:80%"></span></div><div class="bval">~40%</div></div>
+    </div>
+    <div class="legend"><span>A ~15× book multiple on a ~1.4% ROCE business is not a fundamentals-based valuation. The ~40% three-year price CAGR, on flat-to-negative earnings, is a theme-and-float story.</span></div>
+  </div>
+
+  <h3>What actually moves the price</h3>
+  <ul class="clean">
+    <li><strong>Order-book &amp; policy headlines.</strong> News of a new BharatNet package, a BSNL 4G order or a defence contract can move the stock sharply — the market is trading the <em>hope</em> embedded in the backlog, not realised profit.</li>
+    <li><strong>The thin float.</strong> With only ~10% of shares freely traded, relatively small flows of buying or selling can swing the price hard. Low-float PSUs are prone to sharp, momentum-driven moves (up <em>and</em> down) that have little to do with fundamentals.</li>
+    <li><strong>The "government backing" put.</strong> Investors price in an implicit belief that the state won't let ITI fail — which supports the valuation even through loss years, but is not the same as the company earning its keep.</li>
+    <li><strong>The MPS overhang (the other way).</strong> Against all that, the eventual need for the government to sell down toward the 25% minimum public shareholding hangs over the price as a future supply risk.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">How to hold the valuation in your head</div>
+    <p>The cleanest way to think about ITI's price is that it is <strong>not a valuation of current earnings at all</strong> — there aren't reliable earnings to value. It is closer to an <em>option premium</em>: the market is paying up for the possibility that the order book, policy support and Make-in-India tailwind eventually convert into real, cash-generating profit, amplified by a scarce float that makes the shares jumpy. If that turnaround finally arrives and sticks, today's price could look cheap in hindsight. If it doesn't — if execution stays weak, receivables stay stuck, and the business keeps needing bailouts — then a ~15× book, ~1.4%-ROCE stock has a very long way it <em>could</em> fall. Both outcomes are live, which is exactly why the stock is volatile.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A strategic national asset with real optionality — attached to a chronically unprofitable operation.</p>
+
+  <p class="lead">ITI sits at an unusual crossroads: it has a <strong>strategically important role and a genuinely large opportunity</strong> in India's telecom and defence build-out, wrapped around a <strong>business that has not yet shown it can execute that opportunity profitably</strong>. The investment debate is almost entirely about which of those two facts wins.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>National champion optionality</strong> — a wholly government-backed telecom + defence manufacturer, riding BharatNet, BSNL 4G/5G, smart metering and Make-in-India indigenisation.</li>
+        <li><strong>Huge order book</strong> — ~₹18,500 Cr, many times annual revenue, anchored by a ₹8,280 Cr defence contract and ₹6,956 Cr of BharatNet Phase-3.</li>
+        <li><strong>Government safety net</strong> — the state, as ~90% owner, funds revivals and equity infusions; ITI is very unlikely to be allowed to fail.</li>
+        <li><strong>Preferred-vendor status &amp; defence access</strong> — public-procurement preferences and strategic nomination that private rivals can't match.</li>
+        <li><strong>Operating leverage if orders execute</strong> — a business near breakeven can swing to meaningful profit if a few large projects convert cleanly and get paid.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Chronic unprofitability</strong> — losses in FY23–FY25; FY26 profit only via ~₹503 Cr other income; ROCE ~1.4%, negative ROE.</li>
+        <li><strong>Execution &amp; working capital</strong> — ~486 debtor days, slow government payments, cost overruns; a full order book that doesn't convert to cash.</li>
+        <li><strong>Revenue volatility</strong> — ~40% revenue drop in FY26; fortunes hostage to tender timing and budget cycles.</li>
+        <li><strong>Competitiveness gap</strong> — out-executed by product-led rivals (Tejas, HFCL) and well-run PSUs (BEL); technology gaps in RAN/5G.</li>
+        <li><strong>Valuation &amp; float risk</strong> — ~15× book on a ~1.4%-ROCE business; a thin ~10% float that cuts both ways; an MPS sell-down overhang.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>ITI is best understood as a <strong>theme-and-turnaround stock, not an earnings stock</strong>. The bull owns it for what it <em>could</em> become — the executing arm of India's telecom and defence self-reliance drive, backed by a government that won't let it die and armed with an order book bigger than its revenue. The bear owns nothing, because after two decades the company still can't reliably turn that opportunity into profit or cash, still leans on the state to plug its balance sheet, and still trades at a valuation its fundamentals can't support. The honest verdict: the <strong>optionality is real, but so is the dysfunction</strong>. The whole case turns on two numbers to watch each year — whether <strong>operating margin</strong> climbs durably above breakeven, and whether those <strong>486 debtor days</strong> start falling as government payments actually arrive. Until both move the right way, ITI remains what it has long been: the market's most patient turnaround bet.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Screener.in — ITI Ltd consolidated financials (FY22–FY26), ratios, debtor days, ROCE, book value.</li>
+    <li>ITI Limited — Q4 &amp; FY26 results / corrigendum (year ended Mar 2026), reported via ScanX / Trade Brains.</li>
+    <li>ScanX / market-news coverage — ITI FY26 revenue ₹2,18,372 lakh, net profit ₹29,283 lakh; Q3 FY26 revenue ₹51,465 lakh.</li>
+    <li>ValueResearch / 5paisa / Kotak — ITI share price, market cap (~₹28,000 Cr), 52-week range, P/B (Jul 2026).</li>
+    <li>Trendlyne / IndiaInfoline — ITI shareholding pattern (GoI/President of India ~90.02%).</li>
+    <li>HDFC Sky / BSE filings — BSNL BharatNet Phase-3 contracts (₹1,901 Cr NER-II; cumulative ₹6,956 Cr).</li>
+    <li>ITI management discussion &amp; BSE disclosures — order book, ASCON Phase-IV (₹8,280 Cr), BSNL 4G RAN orders.</li>
+    <li>PSUConnect / TipRanks / InvestyWise — government equity infusion (₹59 Cr) &amp; preferential allotment (Jun 2026).</li>
+    <li>Wikipedia / ITI Limited company profile (itiltd.in) — history since 1948, six manufacturing plants, Mini-Ratna status.</li>
+    <li>Industry context: Tickertape / Pestel-analysis / brokerage notes on Tejas Networks, HFCL, STL, BEL competitive landscape.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports around FY26 (year ended March 2026), and may contain errors or become outdated; several PSU figures (order book, segment mix, one-off items) are inherently lumpy and estimate-based — verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "ITI";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
