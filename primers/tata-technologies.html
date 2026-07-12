@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tata Technologies — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F8;
+    --paper-2:#FBFCFD;
+    --card:#FFFFFF;
+    --ink:#141A22;
+    --ink-soft:#54606E;
+    --ink-faint:#8894A2;
+    --brand:#1466C7;          /* electric mobility blue */
+    --brand-bright:#2E86E6;   /* brighter EV blue */
+    --gold:#E58A2B;           /* warm amber - accent / warmth */
+    --svc:#1466C7;            /* services - engineering blue */
+    --tech:#6D4FC9;           /* technology solutions - PLM violet */
+    --edu:#1E9E6B;            /* education - green */
+    --ev:#0FA3C4;             /* EV / SDV - electric cyan */
+    --auto:#123C86;           /* automotive - deep blue */
+    --line:#DBE0E6;
+    --line-soft:#E8ECF0;
+    --good:#2A8359;
+    --bad:#C0452C;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7F0FB;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F9FC;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E9EDF1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#1466C7,#2E86E6);}
+  .fill.gold{background:linear-gradient(90deg,#E58A2B,#EDA957);}
+  .fill.svc{background:linear-gradient(90deg,#1466C7,#3A83DB);}
+  .fill.tech{background:linear-gradient(90deg,#6D4FC9,#8A72D6);}
+  .fill.edu{background:linear-gradient(90deg,#1E9E6B,#38B683);}
+  .fill.ev{background:linear-gradient(90deg,#0FA3C4,#2FBBD8);}
+  .fill.auto{background:linear-gradient(90deg,#123C86,#255BB0);}
+  .fill.bad{background:linear-gradient(90deg,#C0452C,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4652,#54606E);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.auto{background:var(--auto);}
+  .node.svc{background:var(--svc);}
+  .node.ev{background:var(--ev);}
+  .node.tech{background:var(--tech);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-svc{color:var(--svc);font-weight:600;}
+  .chain-tech{color:var(--tech);font-weight:600;}
+  .chain-edu{color:var(--edu);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF2FB;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What ER&amp;D actually is</a></li>
+    <li><a href="#p2"><span class="n">02</span> The three businesses</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The automotive concentration</a></li>
+    <li><a href="#p5"><span class="n">05</span> The EV / software-defined-vehicle wave</a></li>
+    <li><a href="#p6"><span class="n">06</span> Marquee deals &amp; partnerships</a></li>
+    <li><a href="#p7"><span class="n">07</span> The blockbuster 2023 IPO</a></li>
+    <li><a href="#p8"><span class="n">08</span> The industry &amp; rivals</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> Cyclicality, concentration &amp; GenAI</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: TATATECH · BSE: 544028</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Tata Technologies, <em>the car-makers' engineering room</em></h1>
+  <p class="dek">A complete walk through the Tata-group firm that helps the world's automakers design and engineer their vehicles — what "engineering R&amp;D services" means (and how it differs from the office-IT of a TCS or Infosys), why its fortunes ride on the global shift to EVs and software-defined cars, how heavily it leans on two anchor clients (Tata Motors and Jaguar Land Rover), the story of its blockbuster 2023 IPO, and why a business growing in single digits still trades at ~50× earnings.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹5,506 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹547 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~15.7% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹29,500 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">12 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹5,506 Cr, PAT ₹547 Cr (down YoY), EBITDA margin ~15.7%; added the Q4 recovery, the BMW TechWorks JV going live, and the auto-ER&amp;D / JLR-softness risk section.</div>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice</p>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Tata Technologies is an <strong>engineering R&amp;D (ER&amp;D) services company</strong> — an outsourced engineering department that global manufacturers, above all <strong>carmakers</strong>, hire to help design, engineer and develop their <em>products</em>: the vehicle itself, its electric powertrain, its software, its factory. It does <strong>not</strong> run a client's payroll system or email — that's mainstream IT. Tata Technologies helps a company build the thing it sells. It is part of the Tata group, majority-owned by <strong>Tata Motors</strong>, and listed in a headline-grabbing 2023 IPO.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It's an automotive engineering house, first and foremost.</strong> Roughly <strong>~86% of revenue comes from automotive / mobility</strong>. Its two biggest customers — "anchor clients" <strong>Tata Motors</strong> and <strong>Jaguar Land Rover (JLR)</strong> — are both inside the wider Tata family, which is a strength (guaranteed, deep work) and a risk (heavy concentration). The bespoke growth story is the world re-engineering every car for the EV and software age.</li>
+    <li><strong>FY26 was a year of soft growth and falling profit.</strong> Revenue edged up to <strong>~₹5,506 Cr</strong> (from ~₹5,168 Cr), but <strong>net profit fell to ~₹547 Cr</strong> (from ~₹677 Cr) as the automotive engineering cycle cooled — JLR and other clients trimmed discretionary spend — and margins slipped to <strong>~15.7% EBITDA</strong> (from 18%+). The year ended on a stronger note: a big Q4 with 15% sequential revenue growth and margins recovering to 16%.</li>
+    <li><strong>The valuation still prices in a lot.</strong> Despite the growth wobble, the stock trades near <strong>~50× earnings</strong> (market cap ~₹29,500 Cr) — a premium built on the Tata brand, the scarcity of listed pure-play auto-ER&amp;D names, and the EV/software-defined-vehicle promise. The central debate: is that multiple justified while the auto-engineering cycle is soft?</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Imagine a carmaker wants to launch a new electric SUV. It needs thousands of engineers to design the body, run crash simulations, develop the battery and motor software, wire up the touchscreen, and set up the factory — but hiring all of them permanently, worldwide, is slow and expensive. So it <strong>rents</strong> that engineering muscle from firms like Tata Technologies, which keep armies of specialised engineers in lower-cost India and deploy them on the client's projects. Tata Technologies is essentially <strong>a carmaker's outsourced engineering room</strong>. When the auto industry is spending heavily on new models — as it is now, redesigning everything for electric and software — that room is busy. When carmakers tighten belts, it empties. That cyclicality is the whole game.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What "engineering R&amp;D services" actually is</h2></div>
+  <p class="part-sub">The single distinction that makes Tata Technologies click — and it's not the one most people assume.</p>
+
+  <p class="lead">Tata Technologies sits under the NSE's "Information Technology" label, so newcomers file it next to TCS and Infosys. That's misleading. There are two very different kinds of IT services company, and Tata Technologies is firmly in the smaller, more specialised camp.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Two kinds of "IT services" — Tata Technologies is on the right</caption>
+    <thead><tr><th>&nbsp;</th><th>Mainstream / enterprise IT</th><th>Engineering R&amp;D (ER&amp;D) services</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">What they build</td><td>The client's <em>business systems</em>: banking software, ERP, websites, data centres, cloud migration, back-office processes.</td><td>The client's <em>physical product</em>: the car, the aircraft part, the machine, its embedded software and its factory.</td></tr>
+      <tr><td class="t-strong">Who buys it</td><td>The CIO / IT department — runs the company internally.</td><td>The Chief Engineer / R&amp;D head — builds what the company sells.</td></tr>
+      <tr><td class="t-strong">Typical names</td><td>TCS, Infosys, Wipro, HCLTech, Cognizant.</td><td><strong>Tata Technologies</strong>, KPIT, Tata Elxsi, L&amp;T Technology Services (LTTS), Cyient.</td></tr>
+      <tr><td class="t-strong">Skills involved</td><td>Software engineering, cloud, data, business process.</td><td>Mechanical &amp; automotive engineering, CAD/CAE, embedded software, electronics, manufacturing.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>ER&amp;D stands for <strong>Engineering, Research &amp; Development</strong>. The industry's shorthand is <em>outsourced product engineering</em>. A carmaker, aircraft-maker or industrial-machinery firm spends a huge slice of revenue on R&amp;D every year; a growing part of that engineering is handed to specialist partners who can do it faster and cheaper — very often from India, where a large pool of engineers costs a fraction of one in Germany or the US. That labour-arbitrage-plus-expertise is the entire commercial logic.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the distinction matters for you as a reader</div>
+    <p>It changes what drives the business. A TCS rides <strong>corporate IT budgets</strong> across banks, retailers and insurers — thousands of clients, diverse end-markets. Tata Technologies rides <strong>automotive R&amp;D budgets</strong> — a single, deeply cyclical industry, dominated by a handful of clients. When car companies launch lots of new models, ER&amp;D booms; when they pause or cut, it stalls fast. So to understand Tata Technologies you don't study the IT sector — you study <strong>the car industry</strong>, and especially the once-in-a-century switch to electric and software-defined vehicles. That is why this primer spends most of its time on cars, not code.</p>
+  </div>
+
+  <h3>The "China+1" and cost-arbitrage angle</h3>
+  <p>Global manufacturers increasingly want engineering done outside high-cost Western centres, and — for supply-chain and geopolitical reasons — outside an over-concentration in China. India is the natural beneficiary: English-speaking, engineer-rich, and cost-competitive. Tata Technologies pitches itself as a trusted, Tata-branded partner for exactly this "offshore your product engineering to India" shift. Every rupee of a Western carmaker's engineering budget that migrates to an Indian ER&amp;D vendor is addressable market for Tata Technologies and its peers.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The three businesses inside Tata Technologies</h2></div>
+  <p class="part-sub">One dominant engine, plus two smaller wheels — Services, Technology Solutions and Education.</p>
+
+  <p class="lead">Tata Technologies reports two segments — <strong>Services</strong> and <strong>Technology Solutions</strong> — and runs a third, smaller <strong>Education</strong> arm. Understanding what each does, and how big it is, tells you almost the whole revenue story.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue by segment (approx., FY26)</div>
+    <div class="c-sub">The Services engine dwarfs the rest</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Services<small>core product engineering</small></div><div class="track"><span class="fill svc" style="width:100%"></span></div><div class="bval">~78%</div></div>
+      <div class="bar-row"><div class="blab">Technology Solutions<small>PLM software resale + products</small></div><div class="track"><span class="fill tech" style="width:28%"></span></div><div class="bval">~22%</div></div>
+      <div class="bar-row"><div class="blab">Education<small>iGetIT skilling — within the mix</small></div><div class="track"><span class="fill edu" style="width:9%"></span></div><div class="bval">small</div></div>
+    </div>
+    <div class="legend"><span>Shares are approximate, based on Q4 FY26 disclosures (Services ~78%, Technology Solutions ~22%). Education is a smaller, strategic business reported within the group.</span></div>
+  </div>
+
+  <h3>1 · Services — the core (product engineering)</h3>
+  <p>This is the real business: <strong>Tata Technologies' own engineers doing outsourced product-engineering work</strong> for manufacturers. For a carmaker that means vehicle styling and design, body and chassis engineering, crash and aerodynamic simulation (CAE), electrical/electronics architecture, <strong>EV powertrain development</strong>, and increasingly the <strong>embedded and application software</strong> that runs a modern "software-defined vehicle." It's billed by the hour or by the project, and it grows by winning bigger, longer, deeper engagements with existing clients and by adding new ones. Roughly <strong>81% of Services revenue is automotive</strong>, with the rest in aerospace and industrial heavy machinery.</p>
+
+  <h3>2 · Technology Solutions — reselling the tools of the trade</h3>
+  <p>Engineers don't work in a vacuum; they use expensive design software called <strong>PLM (Product Lifecycle Management)</strong> — the systems that manage a product's entire digital life from first sketch to factory floor. The giants here are <strong>Dassault Systèmes</strong> (CATIA, 3DEXPERIENCE) and <strong>Siemens</strong>. Tata Technologies is a value-added <strong>reseller and implementer</strong> of that software — it sells the licences, installs and configures them, trains users, and layers its own products and IP on top. Lower-margin and lumpier than Services (a big licence sale can swing a quarter), but it deepens client relationships and feeds engineering work.</p>
+
+  <h3>3 · Education — iGetIT and the skilling push</h3>
+  <p>The third leg is <strong>Education / skilling</strong>, run largely through its <strong>iGetIT</strong> platform and large government/institutional programmes that modernise the engineering and vocational training infrastructure of Indian states — kitting out ITIs (industrial training institutes) and colleges with modern manufacturing labs and curricula. It's small in revenue but strategically neat: it trains the very kind of engineers the industry (and Tata Technologies itself) needs, and it builds goodwill and long-term relationships with governments.</p>
+
+  <h3>How the pieces fit — the vehicle-development value chain</h3>
+  <p>The clearest way to see what Tata Technologies does is to follow a new vehicle from idea to factory. Tata Technologies can plug in at <em>every</em> stage — and the further into software and EVs the work goes, the more valuable and defensible it becomes.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">Where Tata Technologies plugs into a new vehicle programme</div>
+    <div class="flow-row">
+      <div class="node auto"><div class="ntag">Stage 1 · Concept</div><div class="nname">Styling &amp; design</div><div class="nwho">Look, feel, ergonomics, early CAD models.</div></div>
+      <div class="arrow">→</div>
+      <div class="node svc"><div class="ntag">Stage 2 · Engineer</div><div class="nname">Engineering &amp; simulation</div><div class="nwho">Body, chassis, crash/aero CAE, EV powertrain.</div></div>
+      <div class="arrow">→</div>
+      <div class="node ev"><div class="ntag">Stage 3 · Software</div><div class="nname">Embedded &amp; SDV software</div><div class="nwho">The code that runs the car — the fast-growing tip.</div></div>
+      <div class="arrow">→</div>
+      <div class="node tech"><div class="ntag">Stage 4 · Make</div><div class="nname">Digital manufacturing / PLM</div><div class="nwho">Factory design, PLM tools, production launch.</div></div>
+    </div>
+    <div class="flow-note">The further right you go, the higher the value and stickiness. Legacy ER&amp;D lived in Stages 1–2 (mechanical CAD/CAE); the growth — and the whole EV/software thesis — is in Stage 3.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one-line model</div>
+    <p><strong>Services</strong> is Tata Technologies' engineers doing the work; <strong>Technology Solutions</strong> is Tata Technologies selling and running the software those engineers use; <strong>Education</strong> is Tata Technologies training the next generation of them. Services is ~four-fifths of revenue and where the investment case lives — so when analysts talk about Tata Technologies' growth, margins and deal wins, they mostly mean the Services business.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A Tata Motors offshoot that grew up buying engineering firms abroad — then went public.</p>
+
+  <p class="lead">Tata Technologies began as the <strong>in-house engineering services arm connected to Tata Motors</strong> and grew into a global ER&amp;D player, partly by acquiring engineering companies overseas. It remains a <strong>Tata Motors subsidiary</strong> — that parentage is the defining fact of its ownership, its client book and its identity.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1994</div><div class="ev">Incorporated as the engineering-services company within the Tata Motors orbit — built to support automotive product development.</div></li>
+    <li><div class="yr">2005</div><div class="ev">Acquires UK-based <strong>INCAT</strong>, adding scale in PLM and engineering services and a foothold with Western automotive clients.</div></li>
+    <li><div class="yr">2013</div><div class="ev">Acquires US-based <strong>Cambric</strong> and expands its global delivery network across the UK, US, Europe and Asia — becoming a genuinely multinational ER&amp;D firm.</div></li>
+    <li><div class="yr">2017</div><div class="ev">Private-equity investor <strong>TPG</strong> (via Alpha TC Holdings) takes a minority stake, bringing outside capital and governance ahead of an eventual listing.</div></li>
+    <li class="major"><div class="yr">Nov 2023</div><div class="ev"><strong>Blockbuster IPO</strong> — the first Tata-group IPO in ~19 years (since TCS in 2004); ₹3,042 Cr offer-for-sale, subscribed ~69×, listed at a ~140% premium. Lists on NSE &amp; BSE.</div></li>
+    <li><div class="yr">2024–25</div><div class="ev">Signs marquee deals — the <strong>BMW joint venture (BMW TechWorks India)</strong>, <strong>VinFast</strong> EV work, aerospace with <strong>Airbus</strong> — and pushes to diversify beyond the two anchor clients.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Growth cools with the auto-ER&amp;D cycle; profit falls YoY on JLR/discretionary softness and margin pressure, but the year ends with a strong Q4 and a return to sequential growth. Headcount ~12,600.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; control</h3>
+  <ul class="clean">
+    <li><strong>Promoter — Tata Motors.</strong> Tata Motors (with associate/promoter group entities) holds roughly <strong>~55% of Tata Technologies</strong>, making it a listed subsidiary firmly inside the Tata fold. This is why JLR (a Tata Motors company) and Tata Motors itself are such large, reliable clients — the customer and the parent overlap.</li>
+    <li><strong>Public &amp; institutions.</strong> The remaining ~45% is with public shareholders, domestic and foreign institutions, and mutual funds, all acquired since the 2023 listing. Early PE backer TPG largely exited via the IPO's offer-for-sale.</li>
+    <li><strong>Balance sheet.</strong> The business is <strong>asset-light and cash-generative</strong> — it sells engineering hours, not factories — carries little to no net debt, and generated record cash flows in FY25, funding dividends (a final + special dividend was declared for FY26) rather than heavy capex.</li>
+  </ul>
+
+  <div class="note gold"><b>The related-party lens:</b> because the parent (Tata Motors) and a top client (JLR, also Tata Motors-owned) sit on the same side, a good chunk of Tata Technologies' revenue is effectively <em>intra-group</em>. That guarantees a base of work and deep integration — but it also means minority public shareholders should watch that captive contracts are struck on arm's-length commercial terms, and that the anchor relationships stay healthy.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The automotive concentration and the anchor clients</h2></div>
+  <p class="part-sub">Tata Technologies' greatest strength and its sharpest risk are the same fact.</p>
+
+  <p class="lead">Tata Technologies is not a diversified engineering firm that happens to do some auto work — it is <strong>an automotive engineering firm with a little aerospace and industrial on the side</strong>. Around <strong>86% of revenue is automotive</strong>, and a large share of <em>that</em> comes from just two customers: <strong>Tata Motors and Jaguar Land Rover</strong>. This double concentration — one industry, two anchor clients — is the first thing any analyst underlines.</p>
+
+  <div class="chart">
+    <div class="c-title">How concentrated is it?</div>
+    <div class="c-sub">Approximate revenue exposure by end-market and by client type</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Automotive / mobility<small>the core vertical</small></div><div class="track"><span class="fill auto" style="width:100%"></span></div><div class="bval">~86%</div></div>
+      <div class="bar-row"><div class="blab">Aerospace<small>Airbus &amp; others</small></div><div class="track"><span class="fill svc" style="width:12%"></span></div><div class="bval">~9%</div></div>
+      <div class="bar-row"><div class="blab">Industrial heavy machinery<small>+ other</small></div><div class="track"><span class="fill ink" style="width:7%"></span></div><div class="bval">~5%</div></div>
+    </div>
+    <div class="legend"><span>Approximate. Within the Services segment, automotive is ~81%; group-wide, auto exposure is around ~86%. Aerospace and industrial are the diversification frontiers.</span></div>
+  </div>
+
+  <h3>The two anchors — Tata Motors and JLR</h3>
+  <ul class="clean">
+    <li><strong>Tata Motors</strong> — the parent and a core client. Tata Technologies supports its passenger-vehicle and EV programmes, commercial vehicles and design work. As Tata Motors electrifies its fleet, that's steady, deep engineering demand.</li>
+    <li><strong>Jaguar Land Rover (JLR)</strong> — Tata Motors' British luxury-car arm and, for years, one of Tata Technologies' single largest revenue sources. JLR's big model-refresh and electrification programmes are meaningful chunks of the order book.</li>
+    <li><strong>The wider client roster</strong> — beyond the anchors, Tata Technologies works with global OEMs and suppliers: <strong>Airbus</strong> (aerospace), <strong>McLaren, Ford, Honda, Cooper Standard, ST Engineering</strong>, and a set of new-energy-vehicle names — <strong>VinFast, NIO, Rivian</strong>. Winning and growing these <em>non-anchor</em> accounts is the explicit diversification strategy.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why concentration cuts both ways</div>
+    <p><strong>The strength:</strong> anchor clients give Tata Technologies a large, sticky, predictable base of work, deep programme knowledge, and a captive relationship a rival can't dislodge — you don't casually switch the firm that helps engineer your cars. <strong>The risk:</strong> when JLR or Tata Motors hits a rough patch — a demand slump, a model-launch pause, a capex cut, or (as in FY26) a squeeze from US import tariffs — Tata Technologies feels it directly and fast. A handful of client decisions can swing a whole year. That is precisely what played out in FY26, and it is why "reduce anchor-client dependence" is management's stated priority.</p>
+  </div>
+
+  <div class="note"><b>The FY26 illustration:</b> Tata Motors' passenger-vehicle revenue fell and JLR's revenue dropped ~9% with margins hit by US tariff pressure. Because those two are Tata Technologies' biggest customers, their belt-tightening flowed straight into softer ER&amp;D demand — the mechanism behind Tata Technologies' own single-digit growth and lower profit for the year.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The EV and software-defined-vehicle wave</h2></div>
+  <p class="part-sub">The structural tailwind that is the entire bull case — a car industry re-engineering itself from scratch.</p>
+
+  <p class="lead">The reason investors pay a premium for an auto-ER&amp;D firm right now is a genuine, once-in-a-century transition: <strong>every carmaker on earth is re-engineering its fleet</strong> for two shifts at once — from petrol to electric, and from mechanical machine to <strong>software-defined vehicle (SDV)</strong>. Both create an enormous, multi-year surge in engineering work — and much of it is exactly what firms like Tata Technologies do.</p>
+
+  <h3>What "software-defined vehicle" means — and why it's a goldmine for ER&amp;D</h3>
+  <p>A traditional car is defined by its mechanical hardware; a software-defined vehicle is defined by its <strong>code</strong>. Its features — driver assistance, infotainment, over-the-air updates, battery management — live in software running on powerful central computers, and can be improved after the car is sold, like a phone. Building that requires a vast new engineering effort: writing millions of lines of embedded software, redesigning the car's electrical architecture, and validating it all. Carmakers, historically hardware companies, don't have enough of these software engineers — so they buy the capability from ER&amp;D partners. <strong>SDV is the single biggest new demand driver in the whole ER&amp;D industry.</strong></p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">EV powertrain</div><div class="msl">New battery, motor &amp; power-electronics engineering — a from-scratch discipline replacing the engine</div></div>
+    <div class="ms gold"><div class="msv">SDV software</div><div class="msl">Embedded code, central compute, OTA updates — the fastest-growing, highest-value work</div></div>
+    <div class="ms green"><div class="msv">China+1</div><div class="msl">Western OEMs offshoring engineering to cost-competitive India — Tata Tech's addressable pool</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why this is a tailwind — and why it's not automatic</div>
+    <p>The size of the prize is real: the shift to EVs and SDVs means carmakers must engineer whole new platforms, and offshoring that engineering to India is the cost-effective way to do it. That's structurally good for Tata Technologies for years. <strong>But two things complicate the story.</strong> First, the EV transition itself has become <em>bumpy</em> — several Western carmakers have slowed or delayed EV programmes as consumer demand disappointed and losses mounted, and a paused programme means paused engineering. Second, the very software-heavy nature of the new work invites the question of whether <strong>generative AI</strong> could eventually let a client do more engineering with fewer outsourced hours. So the tailwind is genuine but lumpy — it giveth (SDV demand) and, in a given year, can taketh away (EV pullbacks).</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Marquee deals and partnerships</h2></div>
+  <p class="part-sub">The proof points that Tata Technologies can win beyond the family — and move up the value chain.</p>
+
+  <p class="lead">Deal wins are the currency of an ER&amp;D company: they show the order book is growing, the client base is broadening, and the work is getting more valuable. Tata Technologies has landed several headline partnerships that speak directly to the SDV and diversification thesis.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The signature partnerships</caption>
+    <thead><tr><th>Deal / client</th><th>What it is</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">BMW TechWorks India</td><td>A <strong>50:50 joint venture with the BMW Group</strong> (offices in Pune, Bengaluru, Chennai) for automotive software, software-defined-vehicle development and business IT.</td><td>A blue-chip Western OEM choosing Tata Technologies as an equal partner for SDV software — the strongest validation of the software thesis and a non-anchor relationship.</td></tr>
+      <tr><td class="t-strong">VinFast</td><td>Engineering partnership with the Vietnamese EV maker to help develop its electric vehicles and scale up quickly.</td><td>A flagship new-energy-vehicle client — proof Tata Technologies can win the fast-growing EV-native carmakers, not just legacy OEMs.</td></tr>
+      <tr><td class="t-strong">Airbus</td><td>Multi-year aerospace engineering engagement supporting aircraft design/engineering and digital work.</td><td>The cornerstone of the <strong>aerospace diversification</strong> — reducing reliance on automotive and adding a second growth vertical.</td></tr>
+      <tr><td class="t-strong">Large multi-year deals</td><td>A stream of $20m–$50m deals, plus a marquee <strong>$500m+</strong> engagement and a fresh ~$100m win around Q4 FY26.</td><td>Big, long deals convert to steady multi-year revenue — the order-book depth that underpins future growth guidance.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Read the deals as a strategy</div>
+    <p>Each headline deal ticks a strategic box the company badly needs. The <strong>BMW JV</strong> proves Tata Technologies can win a top Western OEM and do high-value <em>software</em> work — answering both the "can you diversify off the anchors?" and "can you climb into SDV?" questions at once. <strong>VinFast</strong> plants a flag with EV-native players. <strong>Airbus</strong> builds a second vertical outside cars. Together they're the evidence management points to when arguing that Tata Technologies is more than a captive JLR/Tata Motors engineering shop — and that the premium valuation reflects a broadening, up-market business.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The blockbuster November 2023 IPO</h2></div>
+  <p class="part-sub">The listing that turned a quiet Tata engineering arm into a market sensation.</p>
+
+  <p class="lead">Tata Technologies' stock-market debut in <strong>November 2023</strong> was one of the most talked-about Indian IPOs in years — not just for its size, but for what it represented: the <strong>first initial public offering from the Tata group in nearly two decades</strong>, since Tata Consultancy Services listed in 2004. For a generation of Indian retail investors, it was the first-ever chance to buy a fresh Tata listing.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~69×</div><div class="msl">Times oversubscribed — one of the most sought-after Indian IPOs of its year</div></div>
+    <div class="ms"><div class="msv">₹3,042 Cr</div><div class="msl">Issue size (an offer-for-sale by existing holders incl. Tata Motors &amp; TPG)</div></div>
+    <div class="ms green"><div class="msv">~+140%</div><div class="msl">Listing-day pop — debuted around ₹1,200 vs the ₹500 issue price</div></div>
+  </div>
+
+  <p>The frenzy had several drivers stacked on top of each other: the <strong>scarcity of a new Tata listing</strong>; a red-hot Indian IPO market in 2023; the <strong>novelty of a listed pure-play auto-ER&amp;D name</strong> riding the EV story; and the Tata brand's trust with retail investors. The result was a record wave of retail applications and a spectacular first-day gain that minted instant paper profits for allottees.</p>
+
+  <div class="note gold"><b>The cautionary footnote:</b> a euphoric listing sets a high bar. Much of the excitement priced in years of rapid growth. When growth subsequently <em>moderated</em> — as the auto-ER&amp;D cycle cooled in FY25–FY26 — the stock had to grow into, rather than beyond, its listing enthusiasm. The IPO story is a reminder that the market's expectations for Tata Technologies were set very high from day one, which is part of why today's valuation debate is so sharp.</div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A crowded, cyclical field of Indian ER&amp;D specialists — plus global engineering giants.</p>
+
+  <p class="lead">Tata Technologies competes in the global <strong>ER&amp;D services</strong> market, a large and growing but <em>cyclical</em> industry. Its most direct comparables are the listed Indian ER&amp;D pure-plays — a cohort that trades and moves together, and whose shares all came under pressure in 2026 as automotive engineering demand softened.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Focus</th><th>Vs Tata Technologies</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Tata Technologies</td><td>Automotive product engineering, EV/SDV, PLM; some aerospace</td><td><em>This company.</em> Deep auto-OEM relationships (Tata Motors/JLR), full styling-to-manufacturing chain, Tata brand.</td></tr>
+      <tr><td class="t-strong">KPIT Technologies</td><td>Pure-play <strong>automotive software</strong> — powertrain, SDV, autonomous</td><td>The most direct SDV-software rival; more software-only and higher-margin, less full-lifecycle engineering.</td></tr>
+      <tr><td class="t-strong">Tata Elxsi</td><td>Design + embedded across auto, media &amp; healthcare</td><td>A Tata cousin; higher margins, more diversified end-markets, strong design/embedded brand.</td></tr>
+      <tr><td class="t-strong">L&amp;T Technology Services (LTTS)</td><td>Broad ER&amp;D across transport, industrial, telecom, medical</td><td>Larger and more diversified across verticals; less auto-concentrated than Tata Tech.</td></tr>
+      <tr><td class="t-strong">Cyient</td><td>ER&amp;D in aerospace, rail, semiconductors, geospatial</td><td>Strong in aero/rail; different vertical mix, smaller in automotive.</td></tr>
+      <tr><td class="t-strong">Global ER&amp;D majors</td><td><strong>Capgemini Engineering, Alten, Akkodis</strong> (Adecco), EPAM</td><td>Much larger, Western-headquartered; compete for the same OEM budgets, especially in Europe.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How Tata Technologies is positioned</div>
+    <p>Against KPIT, Tata Technologies is <em>broader</em> — it does the whole vehicle (design, mechanical, electrical, software, manufacturing), not just software — which is a strength in scope but means a lower blended margin than a software-only peer. Against LTTS and Cyient, it is <em>more automotive-concentrated</em> — a sharper bet on cars, for better or worse. Its genuine edges are the <strong>Tata brand and ecosystem</strong> (the captive JLR/Tata Motors work and the group's manufacturing depth) and a full-lifecycle capability from styling to the factory floor. Its structural vulnerability is that it is the <em>most exposed of the cohort to a single, cyclical industry.</em></p>
+  </div>
+
+  <div class="note gold"><b>The sector backdrop:</b> in 2026 the entire listed Indian ER&amp;D group — KPIT, LTTS, Tata Elxsi and Tata Technologies — de-rated together as automotive clients globally pulled back discretionary engineering spend and EV programmes wobbled. That correlation is the tell: these are cyclical stocks tied to the same automotive-R&amp;D budget, and they rise and fall as a pack.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A soft FY26 on the top and bottom line — meeting a premium multiple.</p>
+
+  <p class="lead">FY26 was, financially, a <strong>pause year</strong>: revenue grew only in single digits, and profit actually <em>fell</em> as margins compressed under the auto-ER&amp;D slowdown. The encouraging counter-signal was a strong final quarter. The tension is that this softer trajectory sits against a rich valuation.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Operating revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:90%"></span></div><div class="bval">~5,117</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:91%"></span></div><div class="bval">5,168</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:97%"></span></div><div class="bval">5,506</div></div>
+    </div>
+    <div class="legend"><span>Growth cooled to single digits in FY25–FY26 as automotive engineering demand softened. Q4 FY26 rebounded ~15% sequentially — the hoped-for turn.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit (PAT) trajectory</div>
+    <div class="c-sub">Net profit after tax (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:96%"></span></div><div class="bval">~679</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill svc" style="width:96%"></span></div><div class="bval">677</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>margin squeeze</small></div><div class="track"><span class="fill bad" style="width:77%"></span></div><div class="bval">547</div></div>
+    </div>
+    <div class="legend"><span>Profit fell ~19% in FY26 — the clearest sign of the cyclical squeeze: flat-ish revenue but lower margins pulled the bottom line down.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms red"><div class="msv">~15.7%</div><div class="msl">FY26 EBITDA margin — down from 18%+, the margin story to watch</div></div>
+    <div class="ms"><div class="msv">~12,600</div><div class="msl">Employees (Q4 FY26); LTM attrition ~16%</div></div>
+    <div class="ms red"><div class="msv">~50×</div><div class="msl">Trailing P/E (Jul '26) — a rich multiple for single-digit growth</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the valuation</div>
+    <p>At ~₹29,500 Cr market cap on ~₹547 Cr of FY26 profit, Tata Technologies trades around <strong>50× trailing earnings</strong> — a premium multiple, and a demanding one for a company whose profit just <em>fell</em>. What are you paying for? Three things: (1) the <strong>Tata brand and scarcity</strong> — it is one of very few listed, large, pure-play auto-ER&amp;D names investors can own; (2) the <strong>SDV/EV structural growth</strong> story, on the bet that FY26 was a cyclical trough and growth re-accelerates; and (3) an <strong>asset-light, cash-generative, dividend-paying</strong> model. The bear reading is blunt: a ~50× multiple attached to single-digit revenue growth and falling margins is <em>"priced for growth in a softening cycle"</em> — leaving little room for error if the auto-ER&amp;D recovery is slow. The Q4 FY26 rebound and management's target of a return to double-digit organic growth by FY27 are the data points the bulls are leaning on.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Cyclicality, concentration and the GenAI question</h2></div>
+  <p class="part-sub">The three forces that most threaten the thesis — laid out honestly.</p>
+
+  <p class="lead">Tata Technologies is a good business facing three specific, structural risks that a first-time reader should understand clearly, because together they explain both the FY26 wobble and the valuation debate.</p>
+
+  <h3>1 · Auto-cyclicality — the demand is borrowed from carmakers' budgets</h3>
+  <p>ER&amp;D spend is <strong>discretionary</strong> for a carmaker: it can be dialled up when launching new models and dialled down instantly when cash is tight. So Tata Technologies' revenue tracks the <strong>capital-and-R&amp;D cycle of the auto industry</strong>, not a smooth annuity. When global OEMs paused or trimmed EV and engineering spend through FY25–FY26 — amid soft consumer EV demand, tariff uncertainty and cost pressure — Tata Technologies felt it directly. This cyclicality is permanent; the question is only where in the cycle you are.</p>
+
+  <h3>2 · Client concentration — a few decisions move the whole year</h3>
+  <p>With ~86% automotive revenue and outsized exposure to <strong>Tata Motors and JLR</strong>, a single anchor's belt-tightening can swing results. FY26 was the live demonstration: JLR revenue fell ~9% (US tariff hit) and Tata Motors' PV business softened, and Tata Technologies' growth stalled in sympathy. Diversification — the BMW JV, VinFast, Airbus, more non-anchor OEMs — is the mitigation, but it takes years to meaningfully dilute two clients that large.</p>
+
+  <h3>3 · The GenAI question — friend or threat to billed hours?</h3>
+  <p>ER&amp;D is, ultimately, a <strong>people business</strong>: it earns by billing engineering hours. Generative AI raises an uncomfortable question — if AI tools let engineers write code, run simulations and generate designs far faster, does a client need to buy as many outsourced hours? The optimistic view is that AI makes Tata Technologies' engineers <em>more productive and more valuable</em>, expands the work that's economic to do, and that clients still need domain expertise AI can't supply. The bearish view is that AI compresses the very billable-hour model ER&amp;D rests on. It's unresolved — but it's a genuine overhang on the whole labour-arbitrage ER&amp;D sector, not just Tata Technologies.</p>
+
+  <div class="note"><b>The honest synthesis:</b> none of these risks is fatal, but they compound. A cyclical, client-concentrated business facing a technology that could pressure its billing model, trading at ~50× earnings, has a lot riding on the recovery arriving on schedule. Bulls see a scarce, brand-backed play on an unstoppable EV/SDV shift with a Q4 turn already visible. Bears see a single-industry, two-client engineering shop priced for perfection in a softening cycle. Both are looking at the same company.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A quality franchise on a structural theme — meeting a cyclical trough and a demanding price.</p>
+
+  <p class="lead">Tata Technologies is a genuinely strong ER&amp;D franchise: a trusted, Tata-backed partner to the world's carmakers, plugged into the biggest engineering transition in a century. The investment debate is almost entirely about <strong>timing and price</strong> — is FY26 a cyclical bottom that re-accelerates, and does the ~50× multiple leave room if it doesn't?</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural EV/SDV tailwind</strong> — every carmaker re-engineering its fleet drives multi-year outsourced-engineering demand, especially in high-value software.</li>
+        <li><strong>Anchor + marquee clients</strong> — deep, sticky Tata Motors/JLR base plus BMW TechWorks JV, VinFast and Airbus proving diversification and up-market wins.</li>
+        <li><strong>Tata brand &amp; scarcity</strong> — one of few listed pure-play auto-ER&amp;D names; trusted parentage; full styling-to-factory capability.</li>
+        <li><strong>Asset-light &amp; cash-generative</strong> — low capex, record cash flows, dividend-paying, minimal debt.</li>
+        <li><strong>Visible turn</strong> — a strong Q4 FY26 (~15% sequential growth, margins recovering) and a management target of double-digit organic growth by FY27.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich valuation on falling profit</strong> — ~50× earnings while FY26 PAT dropped ~19%; priced for a recovery that must arrive.</li>
+        <li><strong>Auto-cyclicality</strong> — discretionary ER&amp;D spend can be cut fast; a prolonged auto/EV slowdown hits hard.</li>
+        <li><strong>Two-client, one-industry concentration</strong> — ~86% auto; heavy JLR/Tata Motors reliance; JLR's FY26 tariff hit flowed straight through.</li>
+        <li><strong>Margin pressure</strong> — EBITDA margin slipped below 16%; wage inflation and pricing competition weigh.</li>
+        <li><strong>GenAI overhang</strong> — the billable-hour ER&amp;D model faces an unresolved AI-productivity question.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Tata Technologies is a <strong>high-quality, structurally-advantaged auto-engineering franchise</strong> whose business risk is moderate but whose <em>timing-and-valuation</em> risk is real. The next chapters will be written in a few numbers each quarter: does <strong>revenue growth re-accelerate toward double digits</strong> (is the Q4 FY26 turn durable?), do <strong>margins climb back toward 18%+</strong>, and does <strong>non-anchor revenue</strong> (BMW, VinFast, Airbus, new OEMs) grow fast enough to dilute the JLR/Tata Motors concentration? Get those right and the EV/SDV thesis justifies the premium; stay soft, and a ~50× stock tied to a cyclical, two-client, single-industry base has meaningful room to de-rate. It is best understood not as a steady IT compounder but as a <strong>brand-backed, cyclical bet on the electric-and-software future of the car</strong>.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Tata Technologies — "Delivers strong revenue and margin growth in Q4 FY26" (newsroom, May 2026).</li>
+    <li>Business Standard — "Tata Technologies Q4FY26 results: Net profit rises 8% to ₹204 crore" (May 2026).</li>
+    <li>Tata Technologies — 31st Annual Report 2024-25 and Q4 FY26 Investor Presentation (investor relations).</li>
+    <li>BSE — Tata Technologies Ltd stock quote, scrip code 544028 (bseindia.com).</li>
+    <li>Screener.in — Tata Technologies Ltd consolidated financials &amp; valuation.</li>
+    <li>Tata group / Tata.com — "The making of a blockbuster IPO" (Tata Technologies, 2023).</li>
+    <li>ICICIdirect / Goodreturns — Tata Technologies IPO subscription &amp; listing coverage (Nov 2023).</li>
+    <li>BMW Group press &amp; Tata Technologies — "BMW TechWorks India" 50:50 JV announcement (2024–25).</li>
+    <li>Autocar Professional — Tata Technologies–BMW JV and SDV coverage.</li>
+    <li>Business Today — "KPIT Tech, LTTS, Tata Elxsi, Tata Technologies: what's spooking ER&amp;D services stocks?" (Feb 2026).</li>
+    <li>ICICI Securities — Tata Technologies Initiating Coverage note (client mix / anchor clients).</li>
+    <li>Tata Motors — Consolidated Q1 FY26 results &amp; JLR performance disclosures (2025–26).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports around FY26 (year ended March 2026), and may contain errors or become outdated; verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "TATATECH";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
