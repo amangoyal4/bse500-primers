@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACME Solar Holdings — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F4EE;
+    --paper-2:#FBFAF3;
+    --card:#FFFFFF;
+    --ink:#1A1C15;
+    --ink-soft:#575A4C;
+    --ink-faint:#8B8E7C;
+    --brand:#15683C;          /* deep clean-energy green */
+    --brand-bright:#1E9A54;   /* bright renewable green */
+    --gold:#E8A21A;           /* solar amber - primary accent */
+    --sun:#F0810B;            /* sun-orange */
+    --sky:#3E82B8;            /* grid / transmission blue */
+    --grape:#8A5DA6;          /* storage / hydrogen violet */
+    --line:#E2E0D4;
+    --line-soft:#ECEAE0;
+    --good:#2A8359;
+    --bad:#C0492C;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7F0EA;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FCF3E1;border:1px solid #F0DCB2;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6a12;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"☀";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#4a3a10;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F8F1;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EDEBE1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#15683C,#1E9A54);}
+  .fill.gold{background:linear-gradient(90deg,#E8A21A,#F2BB4E);}
+  .fill.sun{background:linear-gradient(90deg,#F0810B,#F79E3E);}
+  .fill.sky{background:linear-gradient(90deg,#3E82B8,#5D9ECF);}
+  .fill.grape{background:linear-gradient(90deg,#8A5DA6,#A67CBE);}
+  .fill.bad{background:linear-gradient(90deg,#C0492C,#D46A4E);}
+  .fill.ink{background:linear-gradient(90deg,#3a4034,#575A4C);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.n1{background:var(--sun);}
+  .node.n2{background:var(--gold);color:#3a2806;}
+  .node.n3{background:var(--sky);}
+  .node.n4{background:var(--brand-bright);}
+  .node.n5{background:var(--brand);}
+  .node.n2 .ntag,.node.n2 .nwho{opacity:.9;}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:#C6820A;}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEA;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FCF3E1;color:#4a3712;}
+  .note.gold b{color:#9a6a12;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6a12;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3ED;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Renewable-IPP economics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The business model</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The portfolio &amp; pipeline</a></li>
+    <li><a href="#p5"><span class="n">05</span> From plain solar to firm power</a></li>
+    <li><a href="#p6"><span class="n">06</span> The PPA &amp; off-taker book</a></li>
+    <li><a href="#p7"><span class="n">07</span> The 500 GW tailwind</a></li>
+    <li><a href="#p8"><span class="n">08</span> Leverage &amp; the cost of money</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The growth runway</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: ACMESOLAR · BSE: 544283</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>ACME Solar Holdings, <em>the contracted green-power annuity</em></h1>
+  <p class="dek">A complete walk through one of India's larger pure-play renewable-energy independent power producers — how a company that builds solar, wind and storage plants earns decades of fixed, annuity-like cash flow from 25-year government contracts, why it runs ~90% operating margins on a mountain of project debt, and whether the multi-gigawatt growth pipeline is worth the leverage that funds it.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹2,507 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">2,990 <small>MW</small></div><div class="l">Operational capacity</div></div>
+    <div class="cell"><div class="v">~90% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹26,900 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">13 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹2,507 Cr (+59%), EBITDA ₹2,265 Cr, PAT ₹498 Cr; operational capacity 2,990 MW, total portfolio 8,071 MW; added the FDRE / firm-power and leverage sections.</div>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice</p>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">ACME Solar Holdings <strong>builds, owns and operates large-scale renewable-energy power plants</strong> — utility-scale solar farms, and increasingly wind, hybrid (solar-plus-wind) and battery-backed "firm power" projects — and sells the electricity they generate under <strong>long-term, ~25-year power-purchase agreements (PPAs)</strong> to government off-takers at a fixed price per unit. It is what the industry calls an <strong>Independent Power Producer, or IPP</strong>: it doesn't sell panels or build for others, it owns the assets and collects the power bill for decades. Listed only in November 2024, it is one of India's larger <em>pure-play</em> renewable IPPs.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>An annuity business wearing an infrastructure balance sheet.</strong> ACME had <strong>2,990 MW operational</strong> at end-FY26 and a <strong>total contracted portfolio of ~8,071 MW</strong> (operational + under construction), with ~5,081 MW still being built. Because sunlight and wind are free, once a plant is built almost all its revenue drops through as profit — FY26 EBITDA margin was around <strong>90%</strong>. But building those plants is enormously capital-hungry, so the company carries heavy <strong>project debt (~₹12,800 Cr net)</strong>.</li>
+    <li><strong>Growth you can see years in advance.</strong> Revenue jumped <strong>~59% to ₹2,507 Cr</strong> in FY26 and PAT nearly doubled to <strong>₹498 Cr</strong>, purely because more contracted megawatts switched on. Management targets scaling the fleet from ~2.9 GW to <strong>~7 GW operational by FY28</strong> — the pipeline is already won and financed, so the near-term growth is unusually visible.</li>
+    <li><strong>The debate is leverage vs. annuity.</strong> Bulls see a decades-long, inflation-insensitive, government-contracted green-infrastructure cash machine riding India's ~500 GW clean-energy build-out. Bears see a highly-leveraged, execution-heavy developer exposed to interest rates, grid delays and the shaky finances of state electricity distribution companies. Both are looking at the same company.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of ACME as a company that <strong>builds a giant power plant, signs a 25-year rental contract for its electricity before laying a single panel, borrows most of the money to build it, and then just collects a fixed cheque every month for a quarter-century</strong>. The sun and wind cost nothing, so running the plant is cheap — the whole game is (1) borrowing to build it, (2) making sure it actually gets built on time and connected to the grid, and (3) making sure the buyer pays on time. Get those right and you own a bond-like income stream with a green label. Get them wrong and the interest bill eats you alive. Everything that follows is an unpacking of those three risks and the enormous tailwind pushing against them.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Renewable-IPP economics 101: how a solar plant earns money</h2></div>
+  <p class="part-sub">No engineering degree required — just the handful of numbers that drive the whole model.</p>
+
+  <p class="lead">A renewable IPP is, at heart, a <strong>capital-recovery machine</strong>. It spends a large lump of money upfront to build a plant, then earns it back slowly over 20–25 years by selling the electricity at a pre-agreed price. Because the "fuel" (sunlight, wind) is free and running costs are tiny, the economics are unusually simple — and unusually dependent on two things: how much power the plant produces, and how cheaply the company borrowed to build it.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only units you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and ACME's number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Capacity (MW / GW)</td><td>The nameplate size of the plant — how much power it can produce at full tilt. ACME: <strong>2,990 MW operational</strong>, ~8,071 MW total portfolio (1,000 MW = 1 GW).</td></tr>
+      <tr><td class="t-strong">PLF (plant load factor)</td><td>What fraction of that nameplate a plant actually delivers over a year — the "capacity utilisation" of a power plant. Solar is naturally low (the sun sets): ACME's solar PLF runs <strong>~23–24%</strong>. Wind and hybrid are higher; storage lifts the <em>useful</em> output.</td></tr>
+      <tr><td class="t-strong">Tariff (₹/unit)</td><td>The fixed price the off-taker pays per unit (kWh) of electricity, locked in for the whole PPA. ACME's projects span roughly <strong>₹2.5–6.3/unit</strong> depending on type (plain solar is cheapest; firm/peak power earns most).</td></tr>
+      <tr><td class="t-strong">PPA (power-purchase agreement)</td><td>The ~<strong>25-year contract</strong> that fixes who buys the power and at what price. This is the asset — it turns a pile of panels into a predictable, decades-long income stream.</td></tr>
+      <tr><td class="t-strong">Generation (MU)</td><td>Actual electricity sold, in million units. ACME generated <strong>~6,464 MU in FY26</strong> (+61%). Revenue ≈ generation × tariff.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The simple revenue equation</div>
+    <p>Roughly: <strong>Revenue ≈ Capacity × PLF × 8,760 hours × Tariff</strong>. Notice what's <em>missing</em>: fuel cost. A thermal plant burns coal or gas it must buy every day; a solar plant's input is sunlight, which is free forever. That single fact is why renewable IPPs earn <strong>~90% EBITDA margins</strong> — almost the entire tariff, minus a little for operations and maintenance, is gross profit. The catch is that ACME has to build the plant <em>before</em> it earns a rupee, and it borrows most of that money — so the real "cost of goods" for a solar plant isn't fuel, it's <strong>interest and depreciation</strong>, which sit below the EBITDA line. That's the crucial mental shift: renewables move the cost from the fuel bill to the finance bill.</p>
+  </div>
+
+  <h3>Why the model is called "annuity-like"</h3>
+  <ul class="clean">
+    <li><strong>The price is fixed for 25 years.</strong> Once the PPA is signed, the tariff generally doesn't change — so the revenue per unit is known decades out, insensitive to inflation or power-market swings. That predictability is exactly why these assets are compared to bonds.</li>
+    <li><strong>The buyer is usually a government entity.</strong> Most PPAs are with central agencies like SECI (Solar Energy Corporation of India) or NTPC, or with state distribution companies — so counterparty <em>credit</em> is (mostly) sovereign-flavoured, even if payment <em>timing</em> can wobble.</li>
+    <li><strong>The output is near-guaranteed by physics.</strong> The sun rises on a schedule; a well-sited plant's annual generation is statistically predictable (developers quote a "P90" — the output level exceeded 90% of years). ACME's actual solar PLF has tracked close to its P90, a sign the plants perform as modelled.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The business model: build it, then collect the annuity</h2></div>
+  <p class="part-sub">Five steps turn a competitive auction into a decade of cash flow — read this once and the whole company clicks.</p>
+
+  <p class="lead">ACME's entire operation is a repeating five-step cycle: <strong>win a contract, sign the PPA, finance and build the plant, switch it on, then collect the tariff for 25 years</strong>. Each new project is another slice of contracted cash flow bolted onto the fleet. Understanding this pipeline is understanding the business.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The renewable-IPP value chain — a project's journey from auction to annuity</div>
+    <div class="flow-row">
+      <div class="node n1"><div class="ntag">Step 1 · Compete</div><div class="nname">Win the auction</div><div class="nwho">Bid the lowest tariff in a SECI/NTPC reverse auction; lowest bidder wins the capacity.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n2"><div class="ntag">Step 2 · Contract</div><div class="nname">Sign the 25-yr PPA</div><div class="nwho">Locks the buyer and the fixed tariff. This is the bankable asset.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n3"><div class="ntag">Step 3 · Fund &amp; build</div><div class="nname">Finance + construct</div><div class="nwho">~70–80% project debt + equity; procure modules, secure land &amp; grid, build (12–24 mo).</div></div>
+      <div class="arrow">→</div>
+      <div class="node n4"><div class="ntag">Step 4 · Energise</div><div class="nname">Commission (COD)</div><div class="nwho">Plant connects to the grid and starts generating — revenue switches on.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n5"><div class="ntag">Step 5 · Harvest</div><div class="nname">Operate &amp; collect</div><div class="nwho">Sell power for 25 years at ~90% margin; repay debt; the rest is cash.</div></div>
+    </div>
+    <div class="flow-note">The value is created at Steps 1–2 (a won, signed PPA) but the <em>cash</em> only arrives from Step 4 onward — so the whole model is a bet on flawlessly executing Step 3, funded by debt, again and again.</div>
+  </div>
+
+  <h3>The three-bucket portfolio — where visibility comes from</h3>
+  <p>Analysts track a renewable IPP by splitting its megawatts into three buckets, each telling you a different thing:</p>
+  <ul class="clean">
+    <li><strong>Operational</strong> — plants already switched on and earning. This is <em>today's</em> revenue. ACME: <strong>2,990 MW</strong>.</li>
+    <li><strong>Under construction</strong> — contracted, financed, being built. This is <em>tomorrow's</em> revenue, largely locked. ACME: <strong>~5,081 MW</strong>.</li>
+    <li><strong>Awarded / contracted (pre-construction)</strong> — won in auction, PPA signed or being signed, not yet started. This is the <em>growth pipeline</em>. ACME's total portfolio of ~8,071 MW, of which ~6,570 MW already has PPAs signed.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "asset-heavy and leveraged" is the whole point</div>
+    <p>Unlike an asset-<em>light</em> services firm, a renewable IPP <strong>wants</strong> to own lots of expensive assets — the assets <em>are</em> the annuity. Building a gigawatt of solar costs thousands of crores, and the standard way to fund it is <strong>project finance</strong>: borrow ~70–80% of each project's cost against that project's own future PPA cash flows, and put in ~20–30% equity. The debt is deliberate and structural, not a sign of distress — the fixed 25-year tariff is exactly the kind of predictable cash flow lenders love to lend against. The flip side, covered in section 08, is that this makes the equity value acutely sensitive to <strong>interest rates and refinancing</strong>: when your revenue is fixed but your biggest cost is interest, the direction of rates matters enormously.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">From a 2003 clean-tech venture to a 2024 IPO — and a promoter who still owns most of it.</p>
+
+  <p class="lead">ACME Solar Holdings is the listed renewable-power arm of the wider <strong>ACME Group</strong>, founded by first-generation entrepreneur <strong>Manoj Kumar Upadhyay</strong>. ACME began in energy-efficiency and telecom-power products in the mid-2000s, pivoted hard into solar in the last decade, and carved out its operating renewable assets into ACME Solar Holdings, which it floated on the exchanges in November 2024.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2015</div><div class="ev">ACME Solar Holdings <strong>incorporated</strong> (June 2015) as the group's renewable-power holding vehicle, consolidating solar projects developed since the early 2010s.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Wins a string of central and state solar auctions; ACME becomes one of India's early large-scale solar developers, at one point setting record-low solar tariffs.</div></li>
+    <li><div class="yr">2021</div><div class="ev">The parent group commissions an early integrated <strong>green-ammonia</strong> pilot at Bikaner, Rajasthan — seeding the "electrons to molecules" green-hydrogen ambition at the group level.</div></li>
+    <li><div class="yr">2023–24</div><div class="ev">Portfolio broadens beyond plain solar into <strong>wind, hybrid and FDRE (firm &amp; dispatchable)</strong> projects; large under-construction pipeline builds up ahead of listing.</div></li>
+    <li class="major"><div class="yr">Nov 2024</div><div class="ev"><strong>IPO</strong> — ₹2,900 Cr (₹2,395 Cr fresh issue + ₹505 Cr offer-for-sale) at ₹289/share; subscribed ~2.75×; <strong>lists on NSE &amp; BSE on 13 Nov 2024</strong>. Fresh proceeds used largely to <em>repay project debt</em> of subsidiaries.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Operational fleet reaches <strong>2,990 MW</strong>; revenue +59% to <strong>₹2,507 Cr</strong>, PAT ~doubles to <strong>₹498 Cr</strong>; ~2.3 GW of battery storage commissioned; total portfolio ~8,071 MW. Management targets <strong>~7 GW operational by FY28</strong>.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> <strong>Manoj Kumar Upadhyay</strong> (founder-chairman) together with Mamta Upadhyay, ACME Cleantech Solutions Pvt Ltd, MKU Holdings and the Upadhyay Family Trust. As of the March 2026 quarter the <strong>promoter group held ~83%</strong> of the company — an unusually high stake for a recently-listed firm, signalling founder conviction but also a large future float overhang once lock-ins ease.</li>
+    <li><strong>Structure:</strong> ACME Solar Holdings is the listed <em>operating renewable IPP</em>. The wider ACME Group also pursues <strong>green hydrogen / green ammonia</strong> (in India, Oman and elsewhere) — largely <em>outside</em> the listed entity, so treat those as group-level optionality rather than committed listco earnings (see section 10).</li>
+    <li><strong>Balance sheet:</strong> deliberately <strong>leveraged</strong> — net debt of roughly ₹12,800 Cr at end-FY26 (up sharply as construction accelerated), against ~₹4,500 Cr+ of net worth. This is project debt against contracted assets, not working-capital distress — but it is the defining feature of the equity story.</li>
+  </ul>
+
+  <div class="note gold"><b>Verify note — exchange codes:</b> ACME Solar Holdings trades as <b>NSE: ACMESOLAR</b> and <b>BSE: 544283</b> (ISIN INE622W01025). A commonly-quoted "544369" does not match this company; the BSE scrip code confirmed against exchange and broker records is <b>544283</b>.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The portfolio and the pipeline</h2></div>
+  <p class="part-sub">2,990 MW earning today, ~5,000 MW being built, ~8 GW contracted — the growth is already on the books.</p>
+
+  <p class="lead">The single most important table for any IPP is the <strong>capacity ladder</strong>: what's running, what's being built, and what's contracted. ACME's ladder is heavily front-loaded with growth — its under-construction book (~5.1 GW) is larger than its entire operational fleet (~3.0 GW), which is why revenue can keep compounding at high double digits for several years just by finishing what's already been won.</p>
+
+  <div class="chart">
+    <div class="c-title">The capacity ladder (FY26)</div>
+    <div class="c-sub">Portfolio in MW — operational vs. under-construction vs. total contracted</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Operational<small>earning today</small></div><div class="track"><span class="fill brand" style="width:37%"></span></div><div class="bval">2,990</div></div>
+      <div class="bar-row"><div class="blab">Under construction<small>contracted &amp; financed</small></div><div class="track"><span class="fill sun" style="width:63%"></span></div><div class="bval">~5,081</div></div>
+      <div class="bar-row"><div class="blab">Total portfolio<small>operational + UC</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~8,071</div></div>
+      <div class="bar-row"><div class="blab">PPA-signed<small>tariff already locked</small></div><div class="track"><span class="fill sky" style="width:81%"></span></div><div class="bval">~6,570</div></div>
+    </div>
+    <div class="legend"><span>The under-construction book being larger than the operating fleet is the essence of the growth story: most of the next few years' revenue is already contracted, not yet switched on.</span></div>
+  </div>
+
+  <h3>The technology mix — no longer just solar</h3>
+  <p>ACME started as a plain-solar developer but has deliberately diversified into wind, hybrids and battery storage, chasing the higher tariffs that "firm" (reliable, round-the-clock) power now commands. The rough shape of the portfolio:</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Portfolio by technology (approximate)</caption>
+    <thead><tr><th>Technology</th><th>What it is</th><th>Why it's in the mix</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Solar (standalone)</td><td>Ground-mount utility-scale solar farms — the historical core</td><td>Cheapest to build, lowest tariff, but only generates by day (~23–24% PLF). Still the bulk of operating MW.</td></tr>
+      <tr><td class="t-strong">Wind &amp; wind-solar hybrid</td><td>Wind farms, and combined solar+wind at one grid point</td><td>Wind blows at different times than the sun shines — combining them smooths output and lifts utilisation.</td></tr>
+      <tr><td class="t-strong">FDRE / firm &amp; dispatchable</td><td>Solar + wind + <strong>battery storage</strong> engineered to deliver reliable, on-demand power</td><td>The strategic frontier — solves intermittency, wins premium tariffs and long contracts (see section 05).</td></tr>
+      <tr><td class="t-strong">Battery storage (BESS)</td><td>~2.3 GW commissioned; ~17 GWh in the portfolio pipeline</td><td>The enabling layer for firm power and peak-hour supply; stores midday solar for evening demand.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the mix shift matters more than the megawatts</div>
+    <p>A gigawatt of plain solar and a gigawatt of firm, storage-backed power look identical on a capacity chart — but they are very different businesses. Plain solar sells cheap, intermittent daytime electrons; <strong>firm power sells reliability</strong>, which the grid is increasingly desperate for and willing to pay up for. As ACME tilts its new wins toward FDRE and hybrids, its <em>average tariff and contract quality rise</em> even if the headline MW growth looks the same. Watch the mix, not just the total — a portfolio getting "firmer" is quietly getting more valuable per megawatt.</p>
+  </div>
+</section>
+
+<!-- 05 — BESPOKE: the defining strategic force -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>From plain solar to firm power: the FDRE shift</h2></div>
+  <p class="part-sub">The single most important strategic change in Indian renewables — and ACME is positioning right in it.</p>
+
+  <p class="lead">For a decade, Indian solar had one problem it couldn't shake: <strong>it only works when the sun shines</strong>. A grid can't run on power that vanishes every evening exactly as households switch on lights and cook dinner. The industry's answer — and the theme that now defines the whole sector's next chapter — is the shift from plain, "must-run" solar to <strong>Firm &amp; Dispatchable Renewable Energy (FDRE)</strong>: projects that combine solar, wind and batteries to deliver <em>reliable, on-demand, round-the-clock green power</em>. This is the growth story sitting on top of the growth story.</p>
+
+  <h3>The intermittency problem, and how firm power solves it</h3>
+  <ul class="clean">
+    <li><strong>Plain solar</strong> generates a fat midday peak and nothing at night — great for daytime load, useless for the evening demand peak. Grids can only absorb so much of it before it becomes a nuisance.</li>
+    <li><strong>Hybrids</strong> (solar + wind at one point) help, because wind often blows when the sun doesn't — but they're still weather-dependent.</li>
+    <li><strong>FDRE / round-the-clock (RTC)</strong> adds <strong>battery storage</strong>: store the cheap midday solar, discharge it in the evening peak, and contractually <em>guarantee</em> a minimum availability. The buyer gets something close to a conventional dispatchable plant — but green.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why FDRE earns better economics</div>
+    <p>A plain-solar PPA might clear at ~₹2.5–3.0/unit. A firm, storage-backed peak-power contract clears far higher — ACME signed a <strong>300 MW / 1,200 MWh assured peak-power project with SECI at ₹6.28/unit</strong>, and firm/hybrid awards in the ₹4.4–4.7/unit range. The buyer happily pays roughly double because they're buying <em>reliability</em>, not just electrons. So FDRE does two things at once: it wins the contracts that plain solar increasingly can't (grids now auction firm power preferentially), and it earns a materially higher tariff per megawatt. For a developer that can execute the added complexity of integrating storage, it's the most attractive segment in the market — and ACME has made it a strategic priority, targeting roughly <strong>half its capacity in FDRE and ~10 GWh of operational batteries</strong> over the next couple of years.</p>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Why firm power commands a premium</div>
+    <div class="c-sub">Illustrative signed tariffs by project type (₹ per unit)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Plain solar<small>daytime only</small></div><div class="track"><span class="fill gold" style="width:44%"></span></div><div class="bval">~2.5–3.0</div></div>
+      <div class="bar-row"><div class="blab">Wind-solar hybrid<small>e.g. 190 MW SECI</small></div><div class="track"><span class="fill sky" style="width:70%"></span></div><div class="bval">~4.72</div></div>
+      <div class="bar-row"><div class="blab">FDRE (Tata Power)<small>50 MW firm</small></div><div class="track"><span class="fill brand" style="width:66%"></span></div><div class="bval">~4.43</div></div>
+      <div class="bar-row"><div class="blab">Assured peak power<small>300 MW / 1,200 MWh SECI</small></div><div class="track"><span class="fill sun" style="width:94%"></span></div><div class="bval">~6.28</div></div>
+    </div>
+    <div class="legend"><span>Tariffs are indicative, from ACME's disclosed awards. The premium for "firmness" — guaranteed, dispatchable delivery — is roughly 1.5–2× a plain-solar tariff.</span></div>
+  </div>
+
+  <div class="note gold"><b>The strategic bet:</b> ACME is wagering that the next wave of Indian renewable auctions is dominated by firm, storage-backed capacity rather than plain solar — and building the storage and hybrid expertise to win it. If firm power is where the tariffs and the volumes go, an IPP that got there early earns more per megawatt and faces less curtailment risk. If battery costs or execution surprise, the same complexity that earns the premium becomes the thing that trips up delivery.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The PPA and off-taker book</h2></div>
+  <p class="part-sub">Who buys the power, at what price, for how long — and where the payment risk hides.</p>
+
+  <p class="lead">An IPP's revenue quality is only as good as its <strong>off-takers</strong> — the entities that sign the PPAs and pay the bills. ACME's book is anchored to central, high-rated counterparties, which is a genuine strength, but the sector's perennial weak spot is the financial health of the state distribution companies (discoms) that ultimately consume much of the power.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The off-taker spectrum (best to worst credit)</caption>
+    <thead><tr><th>Off-taker type</th><th>Who</th><th>Payment risk</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Central agencies</td><td><strong>SECI</strong> (Solar Energy Corp of India), <strong>NTPC</strong> — AAA-rated central intermediaries that sign the PPA and on-sell to states</td><td>Low. They act as a payment-security buffer between the developer and weaker states. The bulk of ACME's marquee contracts sit here.</td></tr>
+      <tr><td class="t-strong">State discoms (direct)</td><td>State electricity distribution utilities buying directly</td><td>Higher. Many discoms are loss-making and chronically slow to pay — the sector's single biggest recurring headache.</td></tr>
+      <tr><td class="t-strong">Commercial &amp; industrial (C&amp;I)</td><td>Corporates buying green power directly (open access)</td><td>Variable, but growing; better tariffs, more counterparty diligence needed. A smaller slice for ACME today.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Recent contract wins — the pipeline in action</h3>
+  <ul class="clean">
+    <li><strong>300 MW / 1,200 MWh assured peak power</strong> — 25-year PPA with SECI at <strong>₹6.28/unit</strong>; ISTS-connected. A flagship firm-power win.</li>
+    <li><strong>190 MW wind-solar hybrid</strong> — PPA with SECI at a fixed <strong>₹4.72/unit</strong>.</li>
+    <li><strong>50 MW FDRE</strong> — awarded by Tata Power at <strong>₹4.43/kWh</strong>, showing traction beyond central agencies.</li>
+    <li><strong>301 MW SECI award</strong> — added to the development pipeline during FY26, lifting the under-construction book past 5 GW.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the 25-year tenor is the real asset</div>
+    <p>Each of these contracts fixes a price for <strong>a quarter of a century</strong>. That's what converts a construction project into an annuity: ACME knows, today, roughly what a plant commissioned in 2027 will earn every year until the early 2050s. That visibility is what lets it borrow heavily (lenders can size debt against a known cash flow), and what lets analysts value the equity as a <em>discounted stream of contracted cash flows</em>. The risk isn't the price — that's locked. The risk is whether the counterparty <strong>pays on time</strong> (discom delays can stretch receivables and strangle cash flow) and whether the grid actually <strong>takes the power</strong> (curtailment — being told to switch off when the grid is congested — is a real, if usually minor, drag). The SECI/NTPC buffer is precisely designed to blunt the first risk.</p>
+  </div>
+</section>
+
+<!-- 07 — BESPOKE: the mega-tailwind -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The 500 GW tailwind: India's energy transition</h2></div>
+  <p class="part-sub">The structural force behind every renewable IPP — a decade-long, government-mandated build-out of historic scale.</p>
+
+  <p class="lead">ACME doesn't operate in a normal market; it operates inside one of the largest energy build-outs in human history. India has set a target of <strong>~500 GW of non-fossil power capacity by 2030</strong> — up from ~175 GW of renewables targeted for 2022 — and aims for half of all installed capacity to be non-fossil by decade's end. For a company that builds and owns renewable plants, that is a demand tailwind measured in <em>hundreds of gigawatts</em> of new auctions. This is the reason the whole sector exists at its current scale.</p>
+
+  <div class="chart">
+    <div class="c-title">The scale of the runway</div>
+    <div class="c-sub">India non-fossil / renewable capacity — where it is vs. where it's headed</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Installed (Dec 2024)<small>renewable, approx.</small></div><div class="track"><span class="fill brand" style="width:42%"></span></div><div class="bval">~209 GW</div></div>
+      <div class="bar-row"><div class="blab">2030 target<small>non-fossil capacity</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~500 GW</div></div>
+      <div class="bar-row"><div class="blab">CY2024 auctions<small>record year</small></div><div class="track"><span class="fill sun" style="width:12%"></span></div><div class="bval">~59 GW</div></div>
+    </div>
+    <div class="legend"><span>Roughly 300 GW of new non-fossil capacity is targeted this decade; clean-power auctions hit a record ~59 GW in 2024 alone (2.3× the prior year). The auction machine that feeds developers like ACME is running hot.</span></div>
+  </div>
+
+  <h3>What the transition means for a developer like ACME</h3>
+  <ul class="clean">
+    <li><strong>A near-bottomless auction pipeline.</strong> To hit 500 GW, agencies must keep auctioning tens of gigawatts a year — a steady conveyor of new PPAs for developers who can execute.</li>
+    <li><strong>A shift toward firm power.</strong> As the grid saturates with daytime solar, new auctions increasingly demand hybrids, storage and FDRE (section 05) — playing to where ACME is pivoting.</li>
+    <li><strong>Falling technology costs.</strong> Module and battery prices have fallen for years, improving project returns — though this cuts both ways (see the module-cost risk in section 11).</li>
+  </ul>
+
+  <div class="note gold"><b>The honest caveat — a build-out with bottlenecks:</b> the target is enormous but the plumbing struggles to keep up. <em>Transmission</em> (grid connectivity) lags project readiness; <em>land</em> acquisition is slow; and — tellingly — as of late 2024 roughly <strong>9–40 GW of auctioned renewable capacity sat "stranded" for want of signed off-take agreements</strong>, because financially-stressed discoms were slow to commit to buying the power. The tailwind is real and huge; it is not frictionless. A developer's edge is executing <em>through</em> these bottlenecks — securing land, grid and PPAs — faster than rivals.</div>
+</section>
+
+<!-- 08 — BESPOKE: leverage, the defining risk -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Leverage and the cost of money</h2></div>
+  <p class="part-sub">The defining risk of every renewable IPP — when your revenue is fixed, your interest bill decides your profit.</p>
+
+  <p class="lead">Here is the uncomfortable truth beneath the ~90% EBITDA margin: a renewable IPP is a <strong>leveraged infrastructure play</strong>, and for a leveraged business with fixed revenue, <strong>the interest bill is the swing factor between a great investment and a poor one</strong>. ACME funds its plants ~70–80% with debt, so its net debt has climbed steeply as it builds — to roughly <strong>₹12,800 Cr at end-FY26</strong>, up sharply from the prior year as the ~5 GW construction book ramped. Understanding this is understanding the real risk.</p>
+
+  <div class="chart">
+    <div class="c-title">The margin cascade — where a renewable rupee goes</div>
+    <div class="c-sub">Illustrative: why a 90% EBITDA margin becomes a ~20% net margin</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">100</div></div>
+      <div class="bar-row"><div class="blab">EBITDA<small>after tiny O&amp;M cost</small></div><div class="track"><span class="fill brand" style="width:90%"></span></div><div class="bval">~90</div></div>
+      <div class="bar-row"><div class="blab">After interest<small>the big one</small></div><div class="track"><span class="fill sun" style="width:45%"></span></div><div class="bval">~45</div></div>
+      <div class="bar-row"><div class="blab">After depreciation &amp; tax<small>= PAT</small></div><div class="track"><span class="fill sky" style="width:20%"></span></div><div class="bval">~20</div></div>
+    </div>
+    <div class="legend"><span>Illustrative shape, not exact FY26 figures. The point: fuel is free, so EBITDA is huge — but interest and depreciation on the borrowed capital eat most of it. FY26 PAT (₹498 Cr) was ~20% of revenue (₹2,507 Cr).</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why interest rates matter more here than almost anywhere</div>
+    <p>In a normal company, if costs rise you can try to raise prices. An IPP <strong>can't</strong> — its tariff is locked for 25 years. So its revenue is fixed, but a big chunk of its cost (interest) is <em>not</em> fixed forever: project debt gets <strong>refinanced</strong> over the asset's life, and new projects are funded at whatever rates prevail. That makes the equity value unusually sensitive to interest rates. Falling rates are a powerful tailwind — the same fixed cash flow, financed more cheaply, throws off more equity return, and existing debt can be refinanced lower. Rising rates do the reverse and can squeeze projects bid at thin margins. This is why renewable-IPP investors watch the rate cycle as closely as they watch megawatts.</p>
+  </div>
+
+  <h3>The offsetting comforts</h3>
+  <ul class="clean">
+    <li><strong>The debt is matched to the asset.</strong> Long-dated project debt against 25-year contracted cash flows is a natural fit — lenders are comfortable, and the cash flow to service it is contractual, not cyclical.</li>
+    <li><strong>The IPO deleveraged deliberately.</strong> ACME used the bulk of its ₹2,395 Cr fresh IPO proceeds to <strong>repay subsidiary debt</strong>, improving the credit profile ahead of the build-out — a signal that leverage is actively managed, not ignored.</li>
+    <li><strong>Cash PAT dwarfs reported PAT.</strong> Because depreciation is a large, non-cash charge, the <em>cash</em> the business throws off is far higher than net profit — supporting debt service and reinvestment. (FY25 cash PAT more than doubled to ~₹559 Cr.)</li>
+  </ul>
+
+  <div class="note"><b>The bottom line on leverage:</b> the debt is structural and largely sensible — but it is large and rising, and it makes ACME a <em>geared</em> bet. A stumble in execution, a spike in rates, or a stretch in discom receivables hits the equity harder than it would a debt-free company. This is the price of the annuity model, and it is the number-one thing a cautious investor stress-tests.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Explosive growth off a small base — priced for the pipeline to deliver.</p>
+
+  <p class="lead">ACME's financials are the picture of a fast-scaling IPP: revenue and profit compounding rapidly as contracted megawatts switch on, industry-leading margins, and a valuation that already discounts years of that growth. The debate is not whether it grows — the pipeline all but guarantees near-term growth — but whether the price and the leverage leave room for error.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Operating revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:63%"></span></div><div class="bval">~1,575</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">2,507</div></div>
+      <div class="bar-row"><div class="blab">FY28 target<small>company guidance</small></div><div class="track"><span class="fill sun" style="width:100%;max-width:100%"></span></div><div class="bval">~5,900</div></div>
+    </div>
+    <div class="legend"><span>FY26 revenue grew ~59% as capacity ramped. Management guides to roughly ₹5,900 Cr by FY28 as the ~5 GW under construction commissions — a target, not a result.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit (PAT) trajectory</div>
+    <div class="c-sub">Net profit after tax (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill sky" style="width:26%"></span></div><div class="bval">251</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:52%"></span></div><div class="bval">498</div></div>
+      <div class="bar-row"><div class="blab">FY28 target<small>company guidance</small></div><div class="track"><span class="fill sun" style="width:100%"></span></div><div class="bval">~950</div></div>
+    </div>
+    <div class="legend"><span>PAT nearly doubled in FY26 (+98%). The FY28 target of ~₹950 Cr implies profit again roughly doubling as the fleet scales toward ~7 GW.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~90%</div><div class="msl">FY26 EBITDA margin — free fuel means almost all revenue is gross profit</div></div>
+    <div class="ms red"><div class="msv">~₹12.8k Cr</div><div class="msl">Net debt (Mar '26) — the leverage that funds the build-out</div></div>
+    <div class="ms"><div class="msv">~83%</div><div class="msl">Promoter holding — high founder skin-in-the-game, large future float overhang</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the valuation</div>
+    <p>At ~₹26,900 Cr market cap on ~₹498 Cr of FY26 profit, ACME trades on a high trailing P/E (roughly the mid-50s×) — but P/E is the <em>wrong</em> primary lens for a leveraged, fast-growing IPP, because it ignores the debt and the not-yet-earning pipeline. The market values these companies on <strong>EV/EBITDA</strong> (enterprise value — equity plus net debt — over EBITDA, ~16–17× trailing) and on a <strong>DCF of contracted cash flows</strong> (discounting the 25-year PPA annuities of the whole ~8 GW portfolio). On a <em>forward</em> basis — against the ~₹5,900 Cr revenue / ~₹950 Cr PAT the company targets for FY28 — the multiples compress sharply, which is the bull's core argument: you're paying a full price today for capacity that is largely built or funded and will roughly double the earnings base. The bear's retort: that only works if the pipeline commissions on time, rates behave, and discoms pay — and a geared stock priced for perfect execution de-rates hard if any of those slip.</p>
+  </div>
+
+  <div class="note gold"><b>A word on the numbers:</b> FY26 figures (revenue ₹2,507 Cr, EBITDA ₹2,265 Cr, PAT ₹498 Cr, operational 2,990 MW, net debt ~₹12,800 Cr) are drawn from ACME's FY26 results and investor materials and cross-checked against multiple market sources. The <b>FY28 targets (~7 GW, ~₹5,900 Cr revenue, ~₹950 Cr PAT)</b> are <em>management guidance and analyst estimates, not committed results</em> — long-dated pipeline and capacity targets are inherently uncertain and should be treated as directional.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The growth runway</h2></div>
+  <p class="part-sub">~7 GW by FY28, a firm-power tilt, storage at scale — and a green-hydrogen call option at the group level.</p>
+
+  <p class="lead">ACME's growth is unusually legible because so much of it is already contracted. The core plan is simple to state and hard to execute: <strong>take the fleet from ~2.9 GW today to ~7 GW operational by FY28</strong>, largely by finishing the ~5 GW under construction, while tilting the mix toward higher-value firm and hybrid power.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The growth engines, stacked</caption>
+    <thead><tr><th>Engine</th><th>What it adds</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Commission the pipeline</td><td>~5 GW under construction → operational over FY27–28</td><td>The clearest lever: contracted, financed capacity switching on and turning into revenue. Targets ~7 GW operational by FY28.</td></tr>
+      <tr><td class="t-strong">Tilt to firm power</td><td>~50% of capacity in FDRE; richer tariffs per MW</td><td>Raises revenue and margin quality per megawatt, not just the megawatt count (section 05).</td></tr>
+      <tr><td class="t-strong">Storage at scale</td><td>~10 GWh of operational batteries targeted; ~17 GWh in portfolio</td><td>Enables firm/peak-power contracts and captures the fast-growing storage economics.</td></tr>
+      <tr><td class="t-strong">Green hydrogen / ammonia</td><td>ACME <em>Group</em> ambition: ~10 MTPA green ammonia/H₂-equivalent by 2032 (India, Oman, etc.)</td><td>A large optionality — but largely <em>outside</em> the listed entity today; treat as a call option, not listco earnings.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The green-hydrogen optionality — real, but keep it in its box</div>
+    <p>The wider ACME Group has genuine green-hydrogen and green-ammonia ambitions — an early integrated green-ammonia plant at Bikaner, large projects planned in Oman and India, and a stated goal of a ~10-million-tonne-per-annum green-ammonia/hydrogen-equivalent portfolio by 2032. This is a potentially enormous adjacency: using cheap renewable power to make green molecules that decarbonise fertiliser, shipping and steel. <strong>But most of this sits at the group / ACME Cleantech level, not inside listed ACME Solar Holdings.</strong> So value it as a call option on the group's ambition and India's hydrogen economy — a reason the story could get bigger — rather than as earnings you can bank in the listco's numbers today. If any of it is injected into the listed entity, that changes the calculus; until then, the listco is a renewable IPP first.</p>
+  </div>
+
+  <blockquote>The next few years are less about winning new auctions and more about pouring concrete on the ones already won — that's where the contracted growth turns into cash.</blockquote>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A contracted green-infrastructure annuity — geared, execution-heavy, and priced for the pipeline to land.</p>
+
+  <p class="lead">ACME Solar is one of the more direct listed ways to own India's renewable build-out: a pure-play IPP with a large, contracted, multi-gigawatt pipeline and a strategic tilt toward the firm power the grid increasingly needs. The investment debate is a clean one — a <strong>long-duration, government-contracted, annuity-like green-infrastructure cash flow</strong> versus a <strong>leveraged, execution-dependent, discom-exposed developer priced for flawless delivery</strong>.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Contracted annuity</strong> — ~8 GW portfolio on ~25-year PPAs; ~90% EBITDA margins; largely inflation-insensitive, bond-like cash flows.</li>
+        <li><strong>Visible growth</strong> — ~5 GW under construction already funded; ~7 GW operational target by FY28 roughly doubles the earnings base.</li>
+        <li><strong>Firm-power tilt</strong> — early, scaled positioning in FDRE / storage, the highest-tariff, fastest-growing segment.</li>
+        <li><strong>Mega-tailwind</strong> — India's ~500 GW-by-2030 target guarantees a deep auction pipeline for a decade.</li>
+        <li><strong>Aligned promoter &amp; deleveraging intent</strong> — ~83% founder-held; IPO proceeds used to cut debt; hydrogen optionality on top.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Heavy leverage</strong> — ~₹12.8k Cr net debt and rising; equity value highly sensitive to interest rates and refinancing.</li>
+        <li><strong>Execution risk</strong> — the ~5 GW build depends on land, transmission/grid connectivity and module supply landing on schedule.</li>
+        <li><strong>Off-taker / discom risk</strong> — weak state discom finances mean payment delays; curtailment and stranded-capacity risk across the sector.</li>
+        <li><strong>Module &amp; policy</strong> — solar-module costs, import dependence and domestic-content (ALMM) rules can pressure project returns.</li>
+        <li><strong>Full valuation &amp; float</strong> — priced for the pipeline to land; a geared stock de-rates hard on any slip, and a large promoter stake is a future overhang.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>ACME Solar is a <strong>leveraged bet on India's energy transition executed through a contracted-annuity business model</strong>. The revenue side is about as good as infrastructure gets — fixed prices, long tenors, quasi-sovereign buyers, a huge tailwind. The risk sits entirely on the <em>funding and delivery</em> side: heavy debt, a build-out that must land on time, and counterparties who don't always pay promptly. The story over the next two years is written in three numbers each quarter — <strong>operational MW added</strong> (is the pipeline commissioning?), <strong>interest cost / net debt</strong> (is the leverage staying serviceable?), and <strong>receivable days</strong> (are the discoms paying?). Get those right and the annuity compounds into the multiple; stumble, and the gearing that magnifies the upside magnifies the fall.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>ACME Solar Holdings — Q4 &amp; FY26 results and investor presentation (year ended Mar 2026), company disclosures.</li>
+    <li>ACME Solar Holdings Q4 FY26 earnings call transcript (GuruFocus / Yahoo Finance).</li>
+    <li>SolarQuarter / ScanX — "ACME Solar nearly doubles FY26 profit as revenue surges 59%" (May 2026).</li>
+    <li>IPO Central — "ACME Solar Q4 FY25 revenue surges 69.5%, PAT turns positive" and FY25 results.</li>
+    <li>SaurEnergy — "Q3 FY25: ACME Solar's PAT up 152% YoY" (result analysis).</li>
+    <li>Screener.in &amp; Tijori Finance — ACME Solar Holdings consolidated financials, net debt, valuation.</li>
+    <li>BSE / m.bseindia.com StockReach (scrip 544283) and broker records — exchange codes &amp; ISIN INE622W01025.</li>
+    <li>Chittorgarh / Mercom India / SEBI prospectus — ACME Solar IPO (Nov 2024) details, promoter list.</li>
+    <li>PV Magazine India, PV-Tech, Angel One, Energywatch — SECI/Tata Power PPA &amp; tariff awards (300 MW peak power ₹6.28; 190 MW hybrid ₹4.72; 50 MW FDRE ₹4.43).</li>
+    <li>Elara Securities / Motilal Oswal — ACME Solar coverage notes and FY28 estimates (May 2026).</li>
+    <li>Ministry of Power / IEEFA / Mercom — India 500 GW non-fossil target, CY2024 auction volumes, stranded-capacity data.</li>
+    <li>Trendlyne / Business Standard — shareholding pattern, market cap and share-price data (Jul 2026).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; forward targets (capacity, revenue and profit guidance for FY27–FY28) are management/analyst estimates and inherently uncertain. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "ACMESOLAR";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
