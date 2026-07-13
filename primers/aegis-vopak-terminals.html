@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aegis Vopak Terminals — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F5;
+    --paper-2:#FBFCFA;
+    --card:#FFFFFF;
+    --ink:#141F22;
+    --ink-soft:#516064;
+    --ink-faint:#8797A0;
+    --brand:#0E7C86;          /* port teal - salt water & steel tanks */
+    --brand-bright:#159AA6;   /* bright terminal teal */
+    --gold:#E08A2B;           /* LPG / gas-flame amber */
+    --lpg:#E08A2B;            /* LPG amber */
+    --liq:#0E7C86;            /* liquids teal */
+    --amm:#5B6BB0;            /* ammonia indigo */
+    --chem:#C1683E;           /* chemicals rust */
+    --steel:#3E6E86;          /* steel-blue */
+    --line:#D9DED9;
+    --line-soft:#E7EBE6;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7F2F1;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:66ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:23px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F9F6;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EBEEE8;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0E7C86,#159AA6);}
+  .fill.gold{background:linear-gradient(90deg,#E08A2B,#EDA957);}
+  .fill.liq{background:linear-gradient(90deg,#0E7C86,#2FA0AA);}
+  .fill.lpg{background:linear-gradient(90deg,#E08A2B,#EDA957);}
+  .fill.amm{background:linear-gradient(90deg,#5B6BB0,#7C8AC7);}
+  .fill.chem{background:linear-gradient(90deg,#C1683E,#D5825A);}
+  .fill.steel{background:linear-gradient(90deg,#3E6E86,#5A8AA1);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a4d,#516064);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.a{background:var(--steel);}
+  .node.b{background:var(--brand);}
+  .node.c{background:var(--gold);}
+  .node.d{background:var(--amm);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3F1;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Tank-terminal economics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The business model</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The terminal network</a></li>
+    <li><a href="#p5"><span class="n">05</span> Two engines: liquids vs gas</a></li>
+    <li><a href="#p6"><span class="n">06</span> The India import story</a></li>
+    <li><a href="#p7"><span class="n">07</span> The expansion pipeline</a></li>
+    <li><a href="#p8"><span class="n">08</span> Ammonia &amp; the energy transition</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: AEGISVOPAK · BSE: 544407</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Aegis Vopak Terminals, <em>the toll gate of India's liquid &amp; gas imports</em></h1>
+  <p class="dek">A complete walk through India's largest third-party tank-storage company — how a port-side tank farm actually earns money by <em>storing</em> other people's LPG, chemicals and petroleum, why "take-or-pay" storage contracts make it an infrastructure annuity, and why a scarce, capex-hungry Aegis Logistics × Royal Vopak joint venture trades at a triple-digit P/E just a year after listing.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹923 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">1.67M <small>cbm</small></div><div class="l">Liquid storage + ~2.8 lakh MT LPG</div></div>
+    <div class="cell"><div class="v">~74% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹32,000 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">13 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹923 Cr, ~74% EBITDA margin, PAT ₹342 Cr; added the ammonia / green-ammonia optionality and the $5bn-by-2030 capex pipeline.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Aegis Vopak Terminals (AVTL) owns and operates <strong>tank farms and gas terminals at Indian ports</strong> — giant clusters of steel tanks and cryogenic spheres that <strong>store imported and exported liquids (petroleum products, chemicals, vegetable oils) and gases (LPG, ammonia)</strong> on behalf of oil companies, chemical firms and traders. It does not own the cargo; it rents out the tank and charges a fee for storing and moving it. It is <strong>India's largest third-party (independent) storage operator</strong> for both liquids and LPG, spread across <strong>~20 terminals at six major ports</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>A blue-chip joint venture, freshly listed.</strong> AVTL is a 2021 JV between <strong>Aegis Logistics</strong> (India's leading private oil-and-gas logistics group) and <strong>Royal Vopak</strong> of the Netherlands (the world's largest independent tank-storage company). It IPO'd in <strong>May 2025</strong>, raising ₹2,800 Cr — largely to repay debt and fund expansion — and lists on NSE and BSE.</li>
+    <li><strong>An infrastructure annuity with extraordinary margins.</strong> Because storage is a fixed-asset, contracted business, AVTL earns a <strong>~74% EBITDA margin</strong> — revenue of <strong>~₹923 Cr in FY26</strong> converts to ~₹686 Cr of operating profit and <strong>~₹342 Cr of net profit</strong>. Much of it sits on <strong>"take-or-pay"</strong> contracts: customers pay for reserved tank capacity whether or not they use it.</li>
+    <li><strong>The whole story is capacity build-out vs valuation.</strong> AVTL is in a furious expansion phase — liquid storage has grown 3.75× and LPG capacity 4.5× since the JV formed, with a pipeline targeting <strong>~$5 billion of capex by 2030</strong>. That growth is real, but it is <strong>capex- and debt-heavy</strong>, and the stock trades at a <strong>triple-digit P/E and ~45–50× EV/EBITDA</strong> — a scarcity premium that leaves no room for a stumble.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of AVTL as the <strong>landlord and toll-keeper of India's import jetties for anything that flows</strong>. When a ship arrives at an Indian port carrying LPG for your kitchen cylinder, or a chemical feedstock for a factory, that cargo cannot sit on the ship — it has to be pumped into tanks on shore before it is trucked, piped, railed or bottled onward. AVTL owns those tanks. It doesn't care much about the price of the LPG or the chemical; it just charges rent for the tank and a fee for the throughput. Because port land is scarce, permits are hard, and the tanks last for decades, whoever owns the tank farm at a busy port sits on a small monopoly — a toll gate on a river of imports that only grows as India's economy grows. The catch: building those tanks costs enormous amounts of upfront capital, and the market is already paying a very rich price for the annuity.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Tank-terminal economics 101: how storing things earns money</h2></div>
+  <p class="part-sub">No logistics background required — just how a tank farm turns steel into cash.</p>
+
+  <p class="lead">A storage terminal is, financially, a <strong>capacity business</strong>, much like a hotel or a warehouse: it has a fixed volume of tanks and a largely fixed cost base (the land lease, the steel, the pumps, a small crew), and it earns by <strong>renting that volume out</strong> and moving product through it. Three ideas explain almost the whole model.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only concepts you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Storage capacity</td><td>The physical ceiling — measured in <strong>cubic metres (cbm)</strong> for liquids and <strong>metric tonnes (MT)</strong> for pressurised/cryogenic gas. AVTL has <strong>~1.67 million cbm</strong> of liquid capacity and <strong>~2.78 lakh MT</strong> of static LPG capacity.</td></tr>
+      <tr><td class="t-strong">Utilisation (%)</td><td>What share of tanks are actually contracted/filled. Higher utilisation = more revenue on the same fixed cost. AVTL's liquid terminals run at <strong>~75%</strong>.</td></tr>
+      <tr><td class="t-strong">Storage fee vs throughput fee</td><td>Two ways to earn: a <strong>storage/rental fee</strong> for reserving tank space (often fixed, take-or-pay), plus a <strong>throughput/handling fee</strong> for each tonne pumped in and out. Gas terminals lean on throughput; liquid terminals lean on rental.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The simple revenue equation</div>
+    <p>Roughly: <strong>Revenue ≈ Capacity × Utilisation × Tariff</strong>, plus throughput fees on volume handled. So AVTL grows in three ways — <strong>add capacity</strong> (build tanks), <strong>fill it</strong> (utilisation), and <strong>raise the tariff</strong> (price per cbm/MT). The magic is that a tank's costs are almost entirely <em>fixed</em>: once a terminal crosses its break-even utilisation, nearly every extra rupee of storage fee drops straight to profit. That's why storage businesses show such enormous margins — AVTL's ~74% EBITDA margin isn't a fluke, it's the physics of the asset. A tank that's already built and staffed costs almost the same whether it's half-full or full.</p>
+  </div>
+
+  <h3>Why "take-or-pay" is the whole point</h3>
+  <p>The best tank-storage revenue is <strong>take-or-pay</strong>: a customer signs a multi-year contract to reserve, say, 50,000 cbm, and pays the rental <em>whether or not</em> they actually use it. This converts a physical asset into something close to a bond — a predictable, contracted stream of cash for years, largely insulated from how much product actually moves in a given month. It is why lenders and equity investors treat quality terminal businesses as <strong>infrastructure annuities</strong> rather than cyclical logistics plays.</p>
+
+  <ul class="clean">
+    <li><strong>Long contracts, sticky customers.</strong> Tanks are purpose-built for decades of service; switching terminals is disruptive and costly, so customers stay. AVTL describes multi-year take-or-pay agreements as the backbone of its revenue predictability.</li>
+    <li><strong>Commodity-price-agnostic.</strong> AVTL earns a fee for <em>space and handling</em>, not a margin on the commodity. Whether crude is $60 or $100, the LPG still needs a tank — so earnings are far less volatile than a refiner's or a trader's.</li>
+    <li><strong>Volume optionality on top.</strong> Above the contracted floor, higher import volumes mean more throughput fees — a free tailwind when India's imports rise.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The business model: owning the pinch-point of the supply chain</h2></div>
+  <p class="part-sub">Read this once and the entire investment case clicks into place.</p>
+
+  <p class="lead">AVTL sits at a single, unavoidable <strong>pinch-point</strong>: the moment imported liquid or gas transfers from ship to shore. Everything that arrives by sea must pass through a shore tank before it can go anywhere else. Own the tank at a busy port, and you own a toll gate that the whole downstream chain has to pay to cross.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The import value chain — AVTL owns the shaded middle step</div>
+    <div class="flow-row">
+      <div class="node a"><div class="ntag">Stage 1 · Arrival</div><div class="nname">Import ship berths</div><div class="nwho">Tanker carrying LPG, ammonia, chemicals or petroleum docks at the port jetty.</div></div>
+      <div class="arrow">→</div>
+      <div class="node b"><div class="ntag">Stage 2 · The toll gate</div><div class="nname">AVTL tank farm / cryogenic terminal</div><div class="nwho">Cargo pumped into AVTL tanks. <strong>Storage + throughput fee earned here.</strong></div></div>
+      <div class="arrow">→</div>
+      <div class="node c"><div class="ntag">Stage 3 · Onward</div><div class="nname">Bottling · pipeline · rail · road</div><div class="nwho">Product dispatched to oil-marketing companies, refiners, factories.</div></div>
+      <div class="arrow">→</div>
+      <div class="node d"><div class="ntag">Stage 4 · End use</div><div class="nname">Kitchens · factories · fields</div><div class="nwho">Cooking-gas cylinders, chemical plants, fertiliser, industry.</div></div>
+    </div>
+    <div class="flow-note">AVTL earns at Stage 2 regardless of who owns the cargo or what it eventually sells for — the definition of a neutral, third-party infrastructure toll.</div>
+  </div>
+
+  <h3>Why this is a genuine moat, not just a warehouse</h3>
+  <ul class="clean">
+    <li><strong>Scarce port land.</strong> Deep-water port frontage with jetty access, pipelines and hazardous-goods clearance is extremely limited. You cannot simply build a rival tank farm next door — the land, the marine access and the permits barely exist.</li>
+    <li><strong>Permit &amp; safety barriers.</strong> Storing LPG, ammonia and flammable chemicals demands PESO/explosives licences, environmental clearances and cryogenic engineering — years of approvals and specialised know-how (exactly what Royal Vopak brings).</li>
+    <li><strong>Heavy upfront capex.</strong> A cryogenic LPG or ammonia terminal costs hundreds of crores and years to build. That capital wall keeps new entrants out — but it's also AVTL's central risk (see §10).</li>
+    <li><strong>Strategic location.</strong> AVTL's six ports collectively handle roughly <strong>23% of India's liquid imports and ~61% of its LPG imports</strong> — the terminals sit exactly where the cargo lands.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">"Third-party" is the key word</div>
+    <p>Many oil and chemical companies own <em>captive</em> tanks for their own cargo. AVTL is different: it is a <strong>neutral, independent operator</strong> that rents to <em>everyone</em> — competing oil-marketing companies, private traders, chemical importers — without favouring any of them. That neutrality is valuable: a customer who wouldn't store product in a rival's captive tank will happily use an independent one. It's the same reason airlines share a neutral airport rather than each building their own. Being the <strong>largest independent</strong> storage host in India gives AVTL scale, credibility and the pick of the best port locations — the foundation of its pricing power.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A marriage of India's oil-logistics champion and the world's tank-storage leader.</p>
+
+  <p class="lead">AVTL is a <strong>2021 joint venture</strong> that fused two complementary parents: <strong>Aegis Logistics</strong> — the listed Indian group that has run LPG and liquid terminals for decades and knows the ports, the customers and the regulators — and <strong>Royal Vopak</strong> — the Dutch multinational that operates tank terminals across the globe and brings capital, cryogenic engineering and safety systems. Aegis supplies the India, Vopak supplies the playbook.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1950s–2000s</div><div class="ev"><strong>Aegis Logistics</strong> builds India's leading private network of LPG and liquid terminals and gas distribution — the operating DNA behind AVTL.</div></li>
+    <li class="major"><div class="yr">2021</div><div class="ev"><strong>The JV is formed</strong> — Aegis Logistics and Royal Vopak combine their Indian terminal assets into Aegis Vopak Terminals, pairing local reach with global tank-storage expertise.</div></li>
+    <li><div class="yr">FY22–FY25</div><div class="ev">Rapid build-out: liquid storage grows <strong>3.75×</strong> and LPG capacity <strong>4.5×</strong> vs the JV's start; revenue climbs from ₹356 Cr (FY23) to ₹621 Cr (FY25).</div></li>
+    <li><div class="yr">Jun 2025</div><div class="ev">Commissions an <strong>82,000 MT cryogenic LPG terminal at Mangalore</strong>, deepening the west-coast LPG franchise.</div></li>
+    <li class="major"><div class="yr">May–Jun 2025</div><div class="ev"><strong>IPO</strong> — a ₹2,800 Cr all-fresh issue (26–28 May); <strong>lists on NSE &amp; BSE on 2 June 2025</strong>. Proceeds: ~₹2,027 Cr to repay debt, ~₹671 Cr for capex.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue <strong>~₹923 Cr</strong> (+~49%), EBITDA margin ~74%, PAT <strong>~₹342 Cr</strong>; gas throughput hits <strong>3.9 million tonnes</strong>; announces the <strong>Pipavav ammonia terminal</strong> and a ~₹1,675 Cr JNPT project.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoters ~87%.</strong> Post-IPO, the two parents together hold roughly <strong>86.9%</strong> — split between <strong>Aegis Logistics</strong> (the controlling Indian partner) and <strong>Vopak India B.V. / Royal Vopak</strong>. A high promoter stake means the free float is small and both parents remain deeply committed to funding the growth.</li>
+    <li><strong>Institutional backing.</strong> FIIs hold ~5.9% and domestic institutions ~4.9%; public float is a slim ~2.3%. Japan's <strong>ITOCHU Corporation</strong> has taken a 10% stake in the ammonia subsidiary (Aegis Terminal Pipavav), with plans to raise it to 25% — a strategic validation of the gas/ammonia strategy.</li>
+    <li><strong>Two-parent governance.</strong> The Aegis–Vopak structure gives AVTL both a local operator's instincts and a global major's engineering and safety standards — but it also means strategy is set jointly by two large owners, and the company relies on their continued capital support through a heavy build cycle.</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The terminal network</h2></div>
+  <p class="part-sub">Six ports, roughly twenty terminals, and a footprint that rings India's coastline.</p>
+
+  <p class="lead">AVTL's assets are strung along <strong>six of India's most important cargo ports</strong>, chosen because that's where the imports actually land. The network spans the west coast (Gujarat, Karnataka, Kerala), the east coast (West Bengal) and now the container gateway near Mumbai (JNPT/JNPA) — giving national reach and diversification across trade lanes.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The port footprint (FY26)</caption>
+    <thead><tr><th>Port</th><th>What's there</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Kandla (Gujarat)</td><td>Large liquid tank farm on India's busiest chemical/petroleum import coast</td><td>Anchors the Gujarat chemicals cluster — the densest liquid-import corridor in India.</td></tr>
+      <tr><td class="t-strong">Pipavav (Gujarat)</td><td>Liquid + LPG; site of the new cryogenic <strong>ammonia terminal (36,000 MT)</strong> and added LPG</td><td>The flagship expansion node and the base of the energy-transition (ammonia) optionality.</td></tr>
+      <tr><td class="t-strong">Mangalore (Karnataka)</td><td>82,000 MT cryogenic LPG terminal (commissioned Jun 2025) + rail gantry under build</td><td>Deepens the west-coast LPG franchise near a major refinery hub.</td></tr>
+      <tr><td class="t-strong">Kochi (Kerala)</td><td>LPG storage serving the southern cooking-gas market</td><td>Captures growing South-India LPG demand.</td></tr>
+      <tr><td class="t-strong">Haldia (West Bengal)</td><td>Liquid + LPG on the east coast; expanding via LPG storage acquisition</td><td>The eastern gateway — serves the under-served, fast-growing east and northeast.</td></tr>
+      <tr><td class="t-strong">JNPT / JNPA (Maharashtra)</td><td>New ~₹1,675 Cr project: <strong>318,100 cbm liquid + 77,286 MT LPG + bottling plant</strong></td><td>Entry at India's premier container port, next to the Mumbai demand centre — a major capacity step-up.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Capacity growth since the JV (2021 → FY26)</div>
+    <div class="c-sub">How fast AVTL has been building — indexed to the JV's starting base</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Liquid storage<small>now ~1.67M cbm</small></div><div class="track"><span class="fill liq" style="width:83%"></span></div><div class="bval">3.75× </div></div>
+      <div class="bar-row"><div class="blab">LPG capacity<small>now ~2.78 lakh MT</small></div><div class="track"><span class="fill lpg" style="width:100%"></span></div><div class="bval">4.5×</div></div>
+      <div class="bar-row"><div class="blab">Gas throughput<small>FY25 → FY26</small></div><div class="track"><span class="fill steel" style="width:26%"></span></div><div class="bval">3.3→3.9 Mt</div></div>
+    </div>
+    <div class="legend"><span>Multiples are vs the JV's 2021 base (company disclosure). The build-out is the central story — and the central bet: capacity is only worth what utilisation and tariffs make it worth.</span></div>
+  </div>
+
+  <div class="note gold"><b>Scale in one line:</b> AVTL operates roughly <strong>20 tank terminals across six ports</strong>, with liquid capacity of ~1.67 million cbm and static LPG capacity of ~2.78 lakh MT — the <em>largest independent</em> such network in India, and the ports it sits on handle a disproportionate share of the country's liquid and LPG imports.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Two engines: the liquids business vs the gas business</h2></div>
+  <p class="part-sub">One company, two quite different storage economics — worth separating clearly.</p>
+
+  <p class="lead">AVTL runs <strong>two distinct businesses under one roof</strong>: storing <strong>liquids</strong> (petroleum products, chemicals, vegetable oils) in ambient steel tanks, and storing <strong>gases</strong> (LPG, and now ammonia) in pressurised or cryogenic terminals. They serve different customers, earn in different ways, and grow off different tailwinds.</p>
+
+  <div class="chart">
+    <div class="c-title">The two engines, side by side</div>
+    <div class="c-sub">Illustrative — how the liquid and gas businesses differ</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Liquid terminals<small>chemicals, POL, edible oil</small></div><div class="track"><span class="fill liq" style="width:100%"></span></div><div class="bval">rental-led</div></div>
+      <div class="bar-row"><div class="blab">LPG / gas terminals<small>cooking gas, industrial</small></div><div class="track"><span class="fill lpg" style="width:82%"></span></div><div class="bval">throughput-led</div></div>
+      <div class="bar-row"><div class="blab">Ammonia (emerging)<small>fertiliser, energy carrier</small></div><div class="track"><span class="fill amm" style="width:34%"></span></div><div class="bval">contracted</div></div>
+    </div>
+    <div class="legend"><span>Liquid storage earns mostly fixed <em>rental</em> on reserved tank space; gas terminals earn more on <em>throughput</em> (tonnes handled), so gas volumes track India's rising LPG imports directly.</span></div>
+  </div>
+
+  <h3>The liquids business — steady, rental, chemical-heavy</h3>
+  <ul class="clean">
+    <li><strong>What's stored:</strong> petroleum products (POL), industrial chemicals, and edible/vegetable oils — much of it imported into Gujarat's chemical belt (Kandla, Pipavav).</li>
+    <li><strong>How it earns:</strong> primarily <strong>fixed monthly rental</strong> on reserved cbm, often take-or-pay — the most annuity-like, predictable slice of AVTL.</li>
+    <li><strong>Why it grows:</strong> India's chemical and petroleum consumption keeps rising, and a lot of specialty chemicals are imported — each needing shore storage. Liquid utilisation runs ~75%, with room to fill new tanks.</li>
+  </ul>
+
+  <h3>The gas business — the growth engine</h3>
+  <ul class="clean">
+    <li><strong>What's stored:</strong> mainly <strong>LPG</strong> (the propane/butane that fills India's cooking-gas cylinders), plus emerging ammonia.</li>
+    <li><strong>How it earns:</strong> heavier on <strong>throughput fees</strong> — a fee per tonne handled — so revenue scales directly with rising LPG import volumes. FY26 gas throughput reached <strong>3.9 million tonnes</strong> (up from 3.3 Mt).</li>
+    <li><strong>Why it matters most:</strong> India imports well over half its LPG, and demand grows structurally with household cooking-gas penetration. This is AVTL's steepest growth curve and where most new capex is going (Mangalore, JNPT, Haldia, Pipavav).</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the gas side is the exciting one</div>
+    <p>Liquid storage is the ballast — steady, rental, predictable. But the <strong>gas terminals are the growth engine</strong>, because they ride the single biggest structural tailwind AVTL has: India's relentlessly rising <strong>LPG imports for cooking fuel</strong>. Every new household that switches to a subsidised gas cylinder, and every tonne of LPG that arrives by ship, has to pass through a coastal import terminal — and independent capacity like AVTL's is scarce. That's why the company is pouring capital into cryogenic LPG terminals and rail gantries: it's building tollbooths on the fastest-growing lane of India's energy imports.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The India import-growth story — why the tanks keep filling</h2></div>
+  <p class="part-sub">The structural demand backdrop that underwrites the whole thesis.</p>
+
+  <p class="lead">AVTL is, at heart, a <strong>leveraged play on India importing more of almost everything liquid and gaseous</strong>. As incomes rise and the economy industrialises, India's imports of cooking gas, chemical feedstocks and petroleum products climb year after year — and every extra tonne needs shore storage. AVTL owns the shore storage.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three demand rivers feeding AVTL</caption>
+    <thead><tr><th>Import stream</th><th>The driver</th><th>Why it needs AVTL</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">LPG (cooking gas)</td><td>Household penetration (Ujjwala &amp; beyond); India imports well over half its LPG</td><td>Imported LPG must be stored in coastal cryogenic/pressurised terminals before bottling &amp; distribution — AVTL's fastest-growing lane.</td></tr>
+      <tr><td class="t-strong">Chemicals &amp; specialty liquids</td><td>Manufacturing growth, "China+1", specialty-chemical imports</td><td>Imported chemical feedstocks need neutral, safety-certified liquid tankage at ports — AVTL's Gujarat cluster.</td></tr>
+      <tr><td class="t-strong">Petroleum products</td><td>Rising fuel &amp; industrial demand; trade flows through import hubs</td><td>POL cargoes need shore tanks for blending, holding and onward movement.</td></tr>
+      <tr><td class="t-strong">Ammonia (emerging)</td><td>Fertiliser (DAP) demand today; hydrogen/energy carrier tomorrow</td><td>Ammonia is toxic and cryogenic — very few can store it; AVTL is building India's first independent ammonia terminal.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The "own the toll gate" thesis in one paragraph</div>
+    <p>You don't have to predict which specific commodity wins. India's economy grows, so its imports of liquids and gases grow, so the ports get busier, so the demand for shore tankage rises — and independent tankage is capacity-constrained by land and permits. Whoever owns the scarce tanks at the busy ports collects a toll on <em>all</em> of it, in good years and bad, because the cargo has nowhere else to go. That's the bull's core claim: AVTL isn't betting on a commodity price, it's <strong>renting out an unavoidable bottleneck in India's import machine</strong>, with contracted cash flows and a structural volume tailwind behind it.</p>
+  </div>
+
+  <div class="note gold"><b>The concentration flip-side:</b> because AVTL earns off <em>import volumes</em>, it is exposed to anything that dents them — a domestic refining/LPG-production build-out, subsidy or policy shifts, a demand slump, or a customer moving cargo elsewhere. The tailwind is real, but it is India's import trajectory, not AVTL's own choices, that ultimately fills the tanks.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The expansion pipeline — a $5-billion build-out</h2></div>
+  <p class="part-sub">AVTL's clearest growth lever, and its biggest source of risk, are the same thing: capex.</p>
+
+  <p class="lead">AVTL is mid-way through an <strong>aggressive, multi-year capacity build</strong>. FY26 capex alone was roughly <strong>₹1,883 Cr</strong>, and management has flagged an ambition to reach <strong>~$1.2 billion of cumulative capex by FY27 and ~$5 billion by 2030</strong> — roughly tripling from 2022 to 2025 and doubling again by 2027. The projects are concrete and contracted, not vapour.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The expansion pipeline (announced / under construction)</caption>
+    <thead><tr><th>Project</th><th>What's being built</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">JNPT / JNPA (Mumbai)</td><td>~₹1,675 Cr: 318,100 cbm liquid + 77,286 MT LPG + a 35,000 MT/yr bottling plant</td><td>A major capacity step-up at India's premier container port, right by the Mumbai demand centre.</td></tr>
+      <tr><td class="t-strong">Pipavav ammonia terminal</td><td>36,000 MT cryogenic ammonia — India's first <em>independent</em> ammonia terminal</td><td>Opens the energy-transition franchise; anchored by a 15-year take-or-pay deal with Hindustan Zinc's DAP plant.</td></tr>
+      <tr><td class="t-strong">Mangalore LPG</td><td>82,000 MT cryogenic LPG (commissioned Jun 2025) + rail gantry</td><td>Deepens west-coast LPG throughput; rail gantry widens the distribution reach inland.</td></tr>
+      <tr><td class="t-strong">Haldia LPG</td><td>Additional LPG storage via acquisition</td><td>Strengthens the under-served eastern gateway.</td></tr>
+      <tr><td class="t-strong">Mangalore ammonia (MoU)</td><td>Non-binding MoU with L&amp;T to jointly develop ammonia terminals</td><td>Signals AVTL's intent to become the national platform for ammonia handling.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Three growth engines, stacked</h3>
+  <ul class="clean">
+    <li><strong>Capacity</strong> — the pipeline of new liquid, LPG and ammonia terminals toward the $5bn-by-2030 ambition (provided utilisation follows the steel).</li>
+    <li><strong>Utilisation maturation</strong> — filling the tanks already built: growth with <em>no</em> extra capex, straight to the ~74% margin.</li>
+    <li><strong>Tariff &amp; mix</strong> — pricing power at scarce port locations, plus a mix shift toward higher-value cryogenic gas and ammonia handling.</li>
+  </ul>
+
+  <blockquote>The build-out is the reason to own the stock and the reason to fear it — every new terminal is future annuity if it fills, and a drag on returns and the balance sheet until it does.</blockquote>
+</section>
+
+<!-- 08 — BESPOKE: the defining energy-transition optionality for AVTL -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Ammonia and the energy-transition optionality</h2></div>
+  <p class="part-sub">The bespoke, forward-looking force that separates AVTL from a plain storage company.</p>
+
+  <p class="lead">Beyond LPG and chemicals sits AVTL's most distinctive angle: <strong>ammonia</strong>. Today ammonia matters as a fertiliser input (it's the "A" in DAP and urea); tomorrow it may matter as one of the leading <strong>carriers of clean energy</strong> — a way to ship hydrogen around the world in liquid form. Ammonia is toxic, corrosive and must be stored cold; almost nobody in India can handle it independently. AVTL is building that capability first.</p>
+
+  <div class="chart">
+    <div class="c-title">Why ammonia is a scarce, high-barrier niche</div>
+    <div class="c-sub">Illustrative difficulty of independent storage by product</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Petroleum / edible oil<small>ambient liquid</small></div><div class="track"><span class="fill liq" style="width:34%"></span></div><div class="bval">moderate</div></div>
+      <div class="bar-row"><div class="blab">LPG<small>pressurised / cryogenic</small></div><div class="track"><span class="fill lpg" style="width:64%"></span></div><div class="bval">hard</div></div>
+      <div class="bar-row"><div class="blab">Ammonia<small>toxic + cryogenic</small></div><div class="track"><span class="fill amm" style="width:100%"></span></div><div class="bval">very hard</div></div>
+    </div>
+    <div class="legend"><span>The harder the product is to store safely, the fewer the rivals and the stronger the pricing power. Ammonia is the extreme case — and AVTL is aiming to be India's independent platform for it.</span></div>
+  </div>
+
+  <h3>What AVTL is actually doing</h3>
+  <ul class="clean">
+    <li><strong>India's first independent ammonia terminal</strong> — a 36,000 MT cryogenic facility at Pipavav, backed by a <strong>15-year take-or-pay contract with Hindustan Zinc</strong> for its upcoming DAP fertiliser plant. Long contract, scarce asset, guaranteed base-load cash flow — the ideal annuity.</li>
+    <li><strong>A strategic Japanese partner</strong> — ITOCHU Corporation has taken 10% of the ammonia subsidiary (Aegis Terminal Pipavav), heading toward 25%: capital plus a global trading relationship in ammonia.</li>
+    <li><strong>A national ammonia ambition</strong> — a non-binding MoU with L&amp;T to jointly develop ammonia terminals at Mangalore, positioning AVTL as the go-to host as ammonia demand scales.</li>
+    <li><strong>Green-ammonia &amp; LCO2 optionality</strong> — the company is exploring green-ammonia and liquid-CO2 storage, dovetailing with India's National Green Hydrogen Mission and global decarbonisation.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why this is "optionality," not yet a thesis</div>
+    <p>Here's the honest framing. The <strong>fertiliser-ammonia</strong> demand is real and contracted <em>today</em> — that part is bankable. The <strong>green-ammonia / hydrogen-carrier</strong> story is a genuine, potentially huge future market, but it is still early, policy-dependent and unproven at scale. So treat ammonia as a <strong>cheap call option</strong> layered on top of the core LPG-and-liquids annuity: if the energy-transition thesis plays out, AVTL is positioned as the incumbent independent host for a scarce, safety-critical asset; if it takes longer, AVTL still earns solid fertiliser-linked storage fees in the meantime. You don't pay much for the upside, and the downside is capped by the take-or-pay contract underneath. That asymmetry is what makes the ammonia angle interesting rather than speculative.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A scarce niche with few true peers — but plenty of adjacent capital circling.</p>
+
+  <p class="lead">Independent, third-party tank storage in India is a <strong>concentrated, high-barrier niche</strong> — there simply aren't many players with scarce port land, safety permits and the capital to build cryogenic terminals. AVTL is the largest. But it sits inside a broader, well-funded port-and-logistics-infrastructure landscape, and its own parent operates in the same space.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs AVTL</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Aegis Vopak Terminals</td><td>Largest <em>independent</em> LPG + liquid tank-storage operator in India</td><td><em>This company.</em> Scarce port terminals, ~74% margins, take-or-pay contracts, ammonia optionality.</td></tr>
+      <tr><td class="t-strong">Aegis Logistics (parent)</td><td>Listed oil-and-gas logistics group; AVTL's controlling promoter</td><td>Owns AVTL — so it's a shareholder, not a rival; also runs gas sourcing/distribution around the terminals.</td></tr>
+      <tr><td class="t-strong">Royal Vopak (parent)</td><td>World's largest independent tank-storage operator, globally</td><td>The other parent — brings the global playbook; competes only outside India.</td></tr>
+      <tr><td class="t-strong">Adani Ports &amp; SEZ</td><td>India's largest private port operator, broad cargo</td><td>Far bigger and more diversified; a port landlord that <em>can</em> add liquid/gas tankage, but not a pure storage specialist.</td></tr>
+      <tr><td class="t-strong">JSW Infrastructure</td><td>Fast-growing private port &amp; logistics group</td><td>Ports + some liquid/LPG handling; an ambitious, well-capitalised adjacent competitor for port infrastructure.</td></tr>
+      <tr><td class="t-strong">IMC, Ganesh Benzoplast, GDL &amp; others</td><td>Regional liquid-terminal / chemical-storage operators</td><td>Smaller, mostly liquid-focused; lack AVTL's scale, national footprint and cryogenic gas/ammonia depth.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive tension to watch</div>
+    <p>Two dynamics matter. First, <strong>scarcity is AVTL's shield</strong>: you can't conjure a rival cryogenic terminal at a busy port overnight — land, permits and capital block new entrants, which is exactly why AVTL earns bond-like margins. Second, <strong>capital is circling the space</strong>: Adani Ports and JSW Infrastructure are enormous, ambitious port groups that could add liquid/gas tankage at ports they already control, and India's decarbonisation push is drawing new money into ammonia and green-hydrogen infrastructure. AVTL's defence is being <em>first and largest independent</em>, with the Vopak engineering pedigree and long take-or-pay contracts locking in customers. The strategic question is whether it can keep signing scarce port sites and long contracts faster than deeper-pocketed port landlords decide to move up-market into storage.</p>
+  </div>
+
+  <div class="note gold"><b>The regulatory backdrop:</b> AVTL operates under port-authority concessions, PESO/explosives and environmental licences, and safety regimes for hazardous goods. That's a barrier that protects incumbents — but it also means AVTL depends on port authorities and regulators for land, tariffs and clearances, and any shift in port policy or import regulation flows straight through to the business.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Spectacular margins and rapid growth — attached to heavy capex, real debt, and a very rich price.</p>
+
+  <p class="lead">AVTL's income statement is a thing of beauty — enormous margins, fast growth — but the balance sheet and the valuation are where the debate lives. This is a young, capital-hungry infrastructure company being priced as a scarce, contracted annuity.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Revenue from operations (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:39%"></span></div><div class="bval">356</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:62%"></span></div><div class="bval">570</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:67%"></span></div><div class="bval">621</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">923</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit (PAT) trajectory</div>
+    <div class="c-sub">Net profit after tax (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23<small>break-even</small></div><div class="track"><span class="fill ink" style="width:1%"></span></div><div class="bval">~0</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill liq" style="width:25%"></span></div><div class="bval">87</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill liq" style="width:37%"></span></div><div class="bval">127</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill liq" style="width:100%"></span></div><div class="bval">342</div></div>
+    </div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~74%</div><div class="msl">FY26 EBITDA margin — infrastructure-annuity economics</div></div>
+    <div class="ms red"><div class="msv">~5.4×</div><div class="msl">Net debt / EBITDA — a leveraged, capex-heavy balance sheet</div></div>
+    <div class="ms"><div class="msv">~7.3%</div><div class="msl">ROCE — still low as new assets ramp; the key number to watch rise</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to read this balance sheet</div>
+    <p>The IPO (Jun 2025) repaid ~₹2,027 Cr of debt, and by Sep-25 net debt had dropped to roughly ₹383 Cr. But AVTL then <strong>re-levered hard for capex</strong> — FY26 investment of ~₹1,883 Cr pushed total borrowings back up to ~₹3,700 Cr by March 2026, a net-debt/EBITDA of around <strong>5.4×</strong>. That's the reality of a build-out: you borrow to build tanks that don't earn until they fill. It's manageable <em>if</em> the new terminals ramp to healthy utilisation on contracted tariffs — and dangerous if they don't. Meanwhile ROCE is only ~7% because a big chunk of the asset base is still pre-revenue construction. The bull expects both ROCE and margins to climb as the pipeline fills; the bear sees leverage rising ahead of returns.</p>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the triple-digit multiple</div>
+    <p>At roughly <strong>₹32,000 Cr market cap on ~₹342 Cr of FY26 profit, AVTL trades near ~100×+ trailing earnings and ~45–50× EV/EBITDA</strong> — extraordinarily rich, even for infrastructure. That price <em>only</em> makes sense if you believe the $5bn build-out delivers years of compounding annuity cash flows, and that the scarcity of independent Indian port storage deserves a premium few assets can claim. Bulls argue this is a rare, contracted, monopoly-like infra platform with a decade-long import tailwind and blue-chip parents — worth paying up for. Bears argue the multiple prices in flawless execution: any slip in utilisation, tariffs, project timelines or leverage, and a triple-digit P/E has a very long way to fall. Both can be right at different points — which is why <strong>utilisation, contracted tonnage, and net-debt/EBITDA</strong> are the numbers to track each quarter.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuinely scarce infrastructure asset — priced for everything to go right.</p>
+
+  <p class="lead">AVTL is one of the purest ways to own India's import-and-energy-logistics backbone: a scarce, contracted, high-margin tank-storage platform with two blue-chip parents and a decade of demand tailwinds. The investment debate is almost entirely about <strong>capex, leverage and price</strong> — not whether the business model works.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Scarce infrastructure moat</strong> — largest independent port tank-storage network; scarce land, permits and capital keep rivals out.</li>
+        <li><strong>Annuity economics</strong> — ~74% EBITDA margins on take-or-pay contracts; commodity-price-agnostic, bond-like cash flows.</li>
+        <li><strong>Structural import tailwind</strong> — rising LPG, chemical and petroleum imports mean the tanks keep filling for years.</li>
+        <li><strong>Ammonia / green-energy optionality</strong> — first-mover independent ammonia terminal, ITOCHU partner, cheap call on the energy transition.</li>
+        <li><strong>Blue-chip parents</strong> — Aegis Logistics' India reach + Royal Vopak's global engineering and safety pedigree.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Very rich valuation</strong> — triple-digit P/E, ~45–50× EV/EBITDA; priced for flawless multi-year execution.</li>
+        <li><strong>Capex &amp; leverage</strong> — a $5bn build-out funded partly by debt; net-debt/EBITDA back near ~5.4× as new tanks pre-fund revenue.</li>
+        <li><strong>Utilisation risk</strong> — returns depend on filling new capacity at good tariffs; empty tanks are pure drag.</li>
+        <li><strong>Customer &amp; volume concentration</strong> — a few large oil/gas/chemical clients, and dependence on India's import volumes and port policy.</li>
+        <li><strong>Execution &amp; regulation</strong> — project delays, tariff/port-authority decisions, or a domestic supply build-out could all bite.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>AVTL owns something genuinely rare — the <strong>independent toll gates of India's liquid and gas imports</strong>, with contracted cash flows, spectacular margins, and a real energy-transition option on top. The business risk is comparatively low for an infrastructure company; the <em>capital and valuation</em> risk is high. The story over the next few years will be written in three numbers each quarter — <strong>utilisation</strong> (are the new tanks filling?), <strong>contracted tonnage</strong> (are the take-or-pay deals rolling in?), and <strong>net-debt/EBITDA</strong> (is leverage peaking as returns arrive?). Deliver on those, and a scarce annuity justifies its premium; stumble, and a triple-digit multiple leaves a great deal of room to disappoint.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Aegis Vopak Terminals — FY26 (year ended Mar 2026) results &amp; earnings-call highlights (via GuruFocus / Yahoo Finance / ScanX / Whalesbook).</li>
+    <li>BSE India — Aegis Vopak Terminals StockReach (scrip code 544407); ISIN INE0INX01018.</li>
+    <li>Screener.in — Aegis Vopak Terminals consolidated financials, shareholding &amp; ratios.</li>
+    <li>Trendlyne — Aegis Vopak Terminals quarterly results &amp; financial statement (Mar 2026).</li>
+    <li>Aegis Vopak Terminals IPO prospectus &amp; notes — Chittorgarh, SMC Global, Canara, Kotak Securities (May 2025).</li>
+    <li>AVTL Investor Presentation (June 2025), BSE corporate filings.</li>
+    <li>TankTerminals / TradeBrains — expansion (JNPT ₹1,675 Cr, Mangalore LPG, Haldia, ammonia) coverage.</li>
+    <li>InvestyWise — Pipavav ammonia terminal, Hindustan Zinc take-or-pay, ITOCHU stake; Hindustan Aegis LPG.</li>
+    <li>Aegis Vopak company website (aegisvopak.com) — network, solutions &amp; about.</li>
+    <li>Groww / Value Research / MarketsMojo — market cap, valuation multiples &amp; ratings (Jul 2026).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; some FY25 profit figures differ across sources (consolidated basis used here). Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "AEGISVOPAK";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
