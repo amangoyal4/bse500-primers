@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sai Life Sciences — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F8;
+    --paper-2:#FAFBFE;
+    --card:#FFFFFF;
+    --ink:#161B26;
+    --ink-soft:#525A6B;
+    --ink-faint:#8A93A6;
+    --brand:#2657C7;          /* science cobalt — deep */
+    --brand-bright:#4E79E0;   /* bright cobalt */
+    --gold:#D9862B;           /* warm amber — section accent / warmth */
+    --disc:#7C5CD0;           /* discovery / CRO violet */
+    --dev:#1197A6;            /* development / CDMO teal */
+    --comm:#1F9D6B;           /* commercial manufacturing green */
+    --line:#DCE0E9;
+    --line-soft:#E9ECF2;
+    --good:#1F9D6B;
+    --bad:#C24634;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#EAF0FC;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#EEF2FC;border:1px solid #CFDBF5;border-left:3px solid var(--brand);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#2450b6;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#1e2b48;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F8FC;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAEDF3;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2657C7,#4E79E0);}
+  .fill.gold{background:linear-gradient(90deg,#D9862B,#EDA957);}
+  .fill.disc{background:linear-gradient(90deg,#7C5CD0,#9A7FE0);}
+  .fill.dev{background:linear-gradient(90deg,#1197A6,#3BB4C2);}
+  .fill.comm{background:linear-gradient(90deg,#1F9D6B,#38B885);}
+  .fill.bad{background:linear-gradient(90deg,#C24634,#D6604E);}
+  .fill.ink{background:linear-gradient(90deg,#3a4356,#525A6B);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain / funnel flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.disc{background:var(--disc);}
+  .node.dev{background:var(--dev);}
+  .node.comm{background:var(--comm);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-disc{color:var(--disc);font-weight:600;}
+  .chain-dev{color:var(--dev);font-weight:600;}
+  .chain-comm{color:var(--comm);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2f22;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF2E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF0FC;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What a CRDMO actually is</a></li>
+    <li><a href="#p2"><span class="n">02</span> The three engines</a></li>
+    <li><a href="#p3"><span class="n">03</span> The funnel &amp; why it's sticky</a></li>
+    <li><a href="#p4"><span class="n">04</span> The company &amp; owners</a></li>
+    <li><a href="#p5"><span class="n">05</span> The client base</a></li>
+    <li><a href="#p6"><span class="n">06</span> China+1 &amp; BIOSECURE</a></li>
+    <li><a href="#p7"><span class="n">07</span> Capacity &amp; capex</a></li>
+    <li><a href="#p8"><span class="n">08</span> The industry &amp; rivals</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The growth runway</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: SAILIFE · BSE: 544306</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Sai Life Sciences, <em>the molecule's outsourced partner</em></h1>
+  <p class="dek">A complete walk through one of India's largest CRDMOs — the specialist that global pharma and biotech hire to do the chemistry of finding, developing and manufacturing new small-molecule drugs. How the "discovery-to-commercial" funnel works, why customers who start with you tend to stay for a decade, how the China+1 and BIOSECURE tailwinds fit in, and why a ~30%-margin business trades north of 60× earnings.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹2,192 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">300+ <small>clients</small></div><div class="l">Active customers · 34 commercial molecules</div></div>
+    <div class="cell"><div class="v">~30% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹23,000 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">13 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹2,192 Cr (+29%), EBITDA margin ~30%, PAT ₹355 Cr (+109%); added the BIOSECURE / China+1 section and the discovery-to-commercial funnel.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Sai Life Sciences is a <strong>CRDMO — a Contract Research, Development and Manufacturing Organisation</strong>. In plain English, it is the <strong>outsourced chemistry partner that pharmaceutical and biotech companies hire to help discover, develop and then manufacture new medicines</strong>. It does not sell its own branded drugs; it is the specialist behind the scenes, doing the laboratory and factory work for the companies whose names end up on the pill bottle. It is one of India's largest and fastest-growing players in this business, and it works on <strong>small-molecule</strong> drugs — the classic chemically-synthesised medicines that make up most of the world's tablets and capsules.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It spans the full life of a drug molecule.</strong> Sai does <em>discovery</em> research (helping find and optimise a drug candidate), <em>development</em> (figuring out how to make the active ingredient at scale for clinical trials), and <em>commercial manufacturing</em> (producing it in bulk once it is approved). Very few companies offer all three under one roof — that integration is the whole pitch.</li>
+    <li><strong>The numbers just inflected sharply.</strong> FY26 revenue rose <strong>~29% to ~₹2,192 Cr</strong>, EBITDA jumped <strong>~56% to ~₹661 Cr</strong> (margin up to ~30% from 25%), and profit (PAT) <strong>more than doubled to ~₹355 Cr (+109%)</strong>. It serves <strong>300+ active customers</strong>, including 19 of the world's top 25 pharma companies.</li>
+    <li><strong>It is a play on a huge structural shift.</strong> Global pharma and biotech are moving outsourced chemistry <em>out of China</em> — the "China+1" trend, now sharpened by the US <strong>BIOSECURE Act</strong>. Indian CRDMOs are among the biggest beneficiaries, and analysts frequently name Sai as a top pick. That tailwind, plus a maturing pipeline of molecules moving toward lucrative commercial manufacturing, is what the market is paying a very rich <strong>60×+ earnings</strong> multiple for — and it is exactly where the risk lives too.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of a new medicine as a long relay race, from a hunch in a laboratory to a product on a pharmacy shelf. The company that <em>owns</em> the drug — a big pharma like Pfizer, or a tiny venture-funded biotech with one idea — often doesn't want to build and run all the labs and chemical plants needed for each leg of the race. So it <strong>hands the chemistry to a specialist contractor</strong>. Sai Life Sciences is that contractor. Its bet is that if it does the early legs well (the discovery and development work), the customer will keep handing it every subsequent leg — all the way to manufacturing the finished ingredient for years after the drug is approved. Each leg up the chain is bigger money and harder to switch away from. The catch: many drug candidates fail along the way, biotech customers' spending rises and falls with their funding, and the stock already prices in a lot of the good news.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>CRDMO 101: what does Sai actually sell?</h2></div>
+  <p class="part-sub">No chemistry degree required — just why drug companies outsource, and what they outsource.</p>
+
+  <p class="lead">To understand Sai you first have to understand a simple fact about the drug industry: <strong>inventing a medicine and manufacturing a medicine are two very different, very expensive skills</strong>, and increasingly the companies that own the drug don't want to do all of it themselves. That is the entire reason the CRDMO industry exists.</p>
+
+  <h3>Why do drug companies outsource at all?</h3>
+  <ul class="clean">
+    <li><strong>Big pharma</strong> (Pfizer, Merck, AstraZeneca and the like) has plenty of money but wants to stay <em>capital-light and focused</em> — it would rather spend on the science and marketing that differentiate it, and rent the routine (but demanding) chemistry from specialists who can do it cheaper, faster and at flexible scale.</li>
+    <li><strong>Small and emerging biotech</strong> is the opposite: often a handful of scientists with a promising molecule and a pile of venture-capital money, but <em>no labs and no factories at all</em>. They <em>must</em> outsource almost everything. This "long tail" of hungry, well-funded biotechs is the fastest-growing source of new molecules in the world — and a core Sai customer group.</li>
+    <li><strong>Both</strong> face the same reality: a new drug needs a dozen different chemistry capabilities at different stages, most of which they don't want to build and staff permanently for one molecule that might fail.</li>
+  </ul>
+
+  <h3>The two words hiding inside "CRDMO"</h3>
+  <p>The acronym stitches together two older industry terms. Getting them straight is the key to the whole company:</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Decoding the jargon</caption>
+    <thead><tr><th>Term</th><th>What it means</th><th>Where in a drug's life</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">CRO<br><small>Contract Research Org.</small></td><td>Does the early <em>discovery</em> science: designing and making candidate molecules, testing them, optimising them. Sai calls this its <span class="chain-disc">Discovery</span> business.</td><td>Before human trials — finding a drug worth developing.</td></tr>
+      <tr><td class="t-strong">CDMO<br><small>Contract Dev. &amp; Mfg. Org.</small></td><td>Does the later <em>development and manufacturing</em>: working out how to make the drug's active ingredient reliably and at scale, then producing it — first for trials, later in bulk. Sai's <span class="chain-dev">Development</span> + <span class="chain-comm">Manufacturing</span> businesses.</td><td>From clinical trials all the way to the approved, marketed drug.</td></tr>
+      <tr><td class="t-strong">CRDMO<br><small>the two combined</small></td><td>A single partner that does <em>both</em> — the research <em>and</em> the development-and-manufacturing — across the molecule's whole life. This is Sai's positioning.</td><td>The full journey, discovery → commercial, under one roof.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one term to memorise: "API"</div>
+    <p>Nearly everything on the manufacturing side revolves around the <strong>API — the Active Pharmaceutical Ingredient</strong>. That's the actual chemical that <em>does</em> the healing; the rest of a tablet is just filler, coating and binder. Making an API is real industrial chemistry — a sequence of reactions in large steel reactors, each step purified and quality-controlled to pharma-grade standards. Sai makes APIs and the <strong>intermediates</strong> (the half-built chemical stages on the way to the finished API). Crucially, Sai focuses on APIs for <strong>innovator (patented) drugs</strong> — brand-new medicines still under patent — <em>not</em> cheap generics. Innovator work is higher-value, more technically demanding, stickier, and less exposed to the brutal price competition of generics.</p>
+  </div>
+
+  <p>So when you read that Sai is a "small-molecule CRDMO serving innovator pharma and biotech", translate it as: <em>the outsourced lab-and-factory partner that helps invent new chemically-made medicines and then manufactures their active ingredients — for the companies that own those medicines, while they are still patent-protected and valuable.</em></p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The three engines: Discovery, Development, Manufacturing</h2></div>
+  <p class="part-sub">Sai's business is literally organised as the three stages of a drug's life.</p>
+
+  <p class="lead">Sai runs its business as three connected stages that mirror how a real drug progresses. Reading them in order is the fastest way to "get" the company, because each stage feeds the next — and each is worth more money than the one before.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The integrated CRDMO chain — each stage feeds the next</div>
+    <div class="flow-row">
+      <div class="node disc"><div class="ntag">Stage 1 · Research (CRO)</div><div class="nname">Discovery</div><div class="nwho">Med. chemistry, biology, DMPK, computational. Find &amp; optimise a candidate.</div></div>
+      <div class="arrow">→</div>
+      <div class="node dev"><div class="ntag">Stage 2 · Develop (CDMO)</div><div class="nname">Process R&amp;D &amp; scale-up</div><div class="nwho">Design a route to make the API; supply intermediates &amp; API for clinical trials.</div></div>
+      <div class="arrow">→</div>
+      <div class="node comm"><div class="ntag">Stage 3 · Manufacture</div><div class="nname">Commercial supply</div><div class="nwho">Bulk API &amp; intermediates for approved, marketed drugs. The big, durable prize.</div></div>
+    </div>
+    <div class="flow-note">The further right you go, the larger the contract, the longer it lasts, and the harder it is to switch supplier — but the fewer molecules make it there. Winning a customer at Stage 1 is how Sai earns the right to Stages 2 and 3.</div>
+  </div>
+
+  <h3><span class="chain-disc">Stage 1 — Discovery (the CRO / research engine)</span></h3>
+  <p>This is the earliest, most scientific stage: helping a customer <em>find</em> a drug worth pursuing. Sai's scientists do <strong>medicinal chemistry</strong> (designing and synthesising candidate molecules), <strong>biology</strong> (testing whether they work against a disease target), <strong>DMPK</strong> (studying how the body absorbs and clears the molecule) and <strong>computational chemistry</strong> (using software to predict which molecules to make). Contracts here are smaller and shorter, but discovery is the <strong>"front door"</strong>: land a molecule at this stage and you are the natural partner as it advances. In FY26 the discovery/CRO business generated <strong>~₹775 Cr and grew ~24%</strong>.</p>
+
+  <h3><span class="chain-dev">Stage 2 — Development (the CDMO / process engine)</span></h3>
+  <p>Once a candidate is chosen and heads into human trials, the question becomes: <em>how do you actually make this molecule, reliably, in ever-larger amounts, to pharma-grade purity?</em> That's <strong>process R&amp;D and scale-up</strong> — inventing the recipe (the "route"), refining it, and manufacturing the API and intermediates in the modest quantities that clinical trials need. As a drug moves from Phase 1 to Phase 3, the batches get bigger and the contracts grow. This is where a discovery relationship starts turning into real revenue.</p>
+
+  <h3><span class="chain-comm">Stage 3 — Commercial manufacturing</span></h3>
+  <p>If — and it's a big if — the drug is approved and launched, Sai can become the <strong>ongoing commercial supplier of its API</strong>, making it in bulk year after year for as long as the drug sells. This is the <strong>prize</strong>: large, recurring, multi-year revenue, embedded in the customer's regulatory filings so it is extremely hard to switch away from. Sai had <strong>34 molecules in commercial manufacturing</strong> at FY26. Together, Stages 2 and 3 (the CDMO business) generated <strong>~₹1,417 Cr and grew ~33%</strong> in FY26 — about two-thirds of total revenue.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue by engine (FY26, approx.)</div>
+    <div class="c-sub">A CDMO-heavy mix — roughly two-thirds development &amp; manufacturing, one-third discovery</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">CDMO<small>development + commercial mfg.</small></div><div class="track"><span class="fill dev" style="width:100%"></span></div><div class="bval">~₹1,417 Cr</div></div>
+      <div class="bar-row"><div class="blab">CRO / Discovery<small>research services</small></div><div class="track"><span class="fill disc" style="width:55%"></span></div><div class="bval">~₹775 Cr</div></div>
+    </div>
+    <div class="legend"><span>The CDMO side is bigger and grew faster (+33% vs +24%). A manufacturing-heavy mix means longer, stickier, more durable customer relationships — but also more capital tied up in plants.</span></div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The funnel — and why it makes customers sticky</h2></div>
+  <p class="part-sub">The single most important idea in the whole investment case.</p>
+
+  <p class="lead">The reason investors get excited about an <em>integrated</em> CRDMO is a piece of economics best pictured as a <strong>funnel</strong>. Sai starts hundreds of small discovery programmes; only some advance into development; only a few of those ever reach commercial manufacturing. But <strong>each survivor that moves up the funnel is worth dramatically more</strong> — and can only get there through a partner it already trusts. Land them early and cheap; keep the winners for a decade.</p>
+
+  <div class="chart">
+    <div class="c-title">The molecule funnel (FY26, illustrative counts)</div>
+    <div class="c-sub">Many programmes enter; few reach the lucrative commercial stage — but each step up is far higher value</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Early-stage pipeline<small>discovery + early development</small></div><div class="track"><span class="fill disc" style="width:100%"></span></div><div class="bval">~155</div></div>
+      <div class="bar-row"><div class="blab">Phase 3 / pre-registration<small>late-stage, nearing approval</small></div><div class="track"><span class="fill dev" style="width:20%"></span></div><div class="bval">11</div></div>
+      <div class="bar-row"><div class="blab">Commercial molecules<small>approved &amp; being supplied</small></div><div class="track"><span class="fill comm" style="width:34%"></span></div><div class="bval">34</div></div>
+    </div>
+    <div class="legend"><span>Counts are approximate, from FY26 disclosures. The 11 in Phase 3/pre-registration are the near-term "graduates": if ~half succeed, they become the next tranche of commercial molecules by ~FY29.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the funnel = a moat</div>
+    <p>Two forces make an integrated CRDMO's revenue unusually durable. <strong>First, switching cost rises with every stage.</strong> By the time a molecule reaches commercial manufacturing, Sai's exact process is written into the customer's regulatory approval (the FDA/EMA filing names the site and method). Changing supplier means re-validating and re-filing — costly, slow and risky — so incumbents rarely get displaced. <strong>Second, integration compounds the relationship.</strong> A customer who trusts Sai with discovery is far more likely to keep it for development, and then for manufacturing, because handing the molecule between different vendors loses time and knowledge. So Sai spends cheaply to win lots of early-stage programmes, knowing that a minority will graduate into large, sticky, multi-year manufacturing contracts. That "seed low, harvest high" dynamic is the engine of the whole model.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">34</div><div class="msl">Commercial molecules — the durable base being supplied year after year</div></div>
+    <div class="ms gold"><div class="msv">11</div><div class="msl">In Phase 3 / pre-registration — the near-term graduating class</div></div>
+    <div class="ms green"><div class="msv">~155</div><div class="msl">Early-stage programmes feeding the top of the funnel</div></div>
+  </div>
+
+  <p>The flip side of the funnel is honest to state: <strong>most molecules fail</strong>. A discovery programme that dies never becomes revenue; a Phase 3 drug that misses its endpoint takes an expected commercial contract with it. Sai's revenue can therefore be <strong>lumpy and milestone-driven</strong> — a single large molecule advancing (or stumbling) can swing a quarter. The funnel is a source of both durability <em>and</em> unpredictability.</p>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">From a two-fume-hood lab in Hyderabad to a TPG-backed, newly-listed CRDMO.</p>
+
+  <p class="lead">Sai Life Sciences was founded in <strong>1999 in Hyderabad by Krishna Kanumuri</strong> (originally as Sai Dru Syn Laboratories), starting as a tiny chemistry lab with two fume hoods. Over 25 years it grew from niche research services into a fully integrated CRDMO, took in global private-equity backing, and listed on the stock market in December 2024.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1999</div><div class="ev"><strong>Krishna Kanumuri</strong> founds the company in Hyderabad as a small contract-chemistry lab — the discovery-research seed of Sai.</div></li>
+    <li><div class="yr">2005</div><div class="ev">Sets up its first large-scale manufacturing facility at <strong>Bidar (Karnataka)</strong> — the move into the CDMO / manufacturing business.</div></li>
+    <li><div class="yr">2018</div><div class="ev">Global PE firm <strong>TPG</strong> invests, becoming the largest shareholder and funding a step-change in scale and capability.</div></li>
+    <li><div class="yr">2019</div><div class="ev">Launches the <strong>"Sai 2025"</strong> programme — a $150M+ investment to modernise infrastructure and expand discovery, development and manufacturing capacity.</div></li>
+    <li><div class="yr">2020</div><div class="ev">Opens a <strong>Process R&amp;D centre at Alderley Park, Manchester (UK)</strong> and a <strong>discovery site in Watertown / Greater Boston (USA)</strong> — putting scientists next to Western customers.</div></li>
+    <li class="major"><div class="yr">Dec 2024</div><div class="ev"><strong>IPO</strong> — ~₹3,043 Cr issue (fresh + offer-for-sale) at ₹522–549/share; lists on NSE &amp; BSE. Fresh proceeds largely repay debt.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ~₹2,192 Cr (+29%), EBITDA margin ~30%, PAT ~₹355 Cr (+109%); 34 commercial molecules; Bidar reactor capacity expanded to ~700 KL; steps up capex for the China+1 wave.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the founding Kanumuri family group holds roughly <strong>~35%</strong> after the IPO. <strong>Krishna Kanumuri</strong> has led the company as CEO/MD through its transformation from research boutique to integrated CRDMO.</li>
+    <li><strong>Private-equity anchor — TPG:</strong> the global PE firm <strong>TPG</strong> was the largest holder pre-IPO (~40%) and sold down the most in the offer-for-sale, retaining a large stake (~25% area) afterwards. <strong>HBM</strong> and other financial investors also participated. This is important context for the share register: <em>PE holders that bought years ago will look to monetise over time</em>, which can create periodic supply of stock once lock-ins lapse.</li>
+    <li><strong>Balance sheet:</strong> the IPO's fresh proceeds funded a <strong>~₹720 Cr debt repayment</strong> completed in FY25, sharply cutting interest cost from FY26. Net debt is now modest — a light, largely self-funding balance sheet, though a heavy capex plan (below) will use cash.</li>
+  </ul>
+
+  <div class="note gold"><b>Read the ownership carefully:</b> Sai is <em>PE-groomed</em> rather than a decades-old family compounder. That brought professional management, global customers and capital — but it also means a cap table with large financial investors whose eventual exits are a technical overhang on the stock, separate from how the business performs.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The client base — who actually pays Sai</h2></div>
+  <p class="part-sub">A marquee big-pharma roster plus a long tail of biotechs — with real concentration.</p>
+
+  <p class="lead">A CRDMO is only as good as the customers who trust it with their molecules, and Sai's roster is genuinely blue-chip. It serves <strong>300+ active customers</strong> across the US, UK, Europe and Japan, and works with <strong>19 of the world's top 25 pharma companies</strong> — reportedly including names such as AbbVie, Eli Lilly, Bristol Myers Squibb, Pfizer, Merck, GSK, Genentech/Roche, AstraZeneca and Sanofi. Winning and keeping such customers is itself the proof of quality: big pharma audits its suppliers exhaustively.</p>
+
+  <div class="chart">
+    <div class="c-title">A deliberate shift toward large pharma</div>
+    <div class="c-sub">Share of revenue from large-pharma customers</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill ink" style="width:57%"></span></div><div class="bval">~28%</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~49%</div></div>
+    </div>
+    <div class="legend"><span>Large pharma has grown from roughly a quarter to about half of revenue — deeper, more durable relationships, but also rising dependence on a handful of big accounts.</span></div>
+  </div>
+
+  <h3>The two customer types, and why Sai wants both</h3>
+  <ul class="clean">
+    <li><strong>Large pharma</strong> — deep pockets, long programmes, rigorous standards. Over 90% of Sai's CDMO (manufacturing) revenue comes from large-pharma customers. These relationships are stickier and support the big commercial contracts, but they concentrate revenue.</li>
+    <li><strong>Emerging biotech (the long tail)</strong> — hundreds of smaller, venture-funded companies that outsource everything. They are the richest source of <em>new</em> molecules entering the funnel, and where much of the discovery/CRO volume originates. But their spending rises and falls with biotech funding cycles — a swing factor for the whole industry (see §11).</li>
+  </ul>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Customer concentration (FY26, approx.)</caption>
+    <thead><tr><th>Cohort</th><th class="num">Share of revenue</th><th>What it tells you</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Top 1 customer</td><td class="num">~12%</td><td>A single account is material — a genuine concentration risk to watch.</td></tr>
+      <tr><td class="t-strong">Top 5 customers</td><td class="num">~37%</td><td>Just five accounts drive over a third of revenue.</td></tr>
+      <tr><td class="t-strong">Top 10 customers</td><td class="num">~54%</td><td>The business leans on a modest number of deep relationships — normal for a CDMO, but a risk if one large programme pauses.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The concentration trade-off</div>
+    <p>Concentration in a CRDMO cuts both ways. On one hand, deep relationships with a few large innovators are exactly what you want — they bring big, multi-year, hard-to-switch manufacturing contracts and validate your quality to everyone else. On the other, if that top customer's flagship molecule hits a regulatory snag, loses patent protection, or the customer in-sources a step, a chunk of revenue can wobble in a single quarter. Sai's answer is to keep <strong>widening the funnel</strong> — 300+ customers and a large early-stage pipeline — so that no single molecule or account is irreplaceable over time.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE: the defining structural force (Sai's "China" section) -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>China+1 and the BIOSECURE tailwind</h2></div>
+  <p class="part-sub">The structural force the entire bull case is built on — and Sai sits right in its path.</p>
+
+  <p class="lead">For two decades, the default place to outsource pharmaceutical chemistry was <strong>China</strong>, led by giants like <strong>WuXi AppTec and WuXi Biologics</strong>. That is now changing — fast — and the change is the single biggest reason Indian CRDMOs like Sai have re-rated. Two overlapping forces are pushing Western drug companies to diversify their chemistry supply chains away from China, and India is the most credible alternative.</p>
+
+  <h3>Force 1 — "China+1"</h3>
+  <p>After COVID-era supply shocks and rising geopolitical tension, Western pharma and biotech decided that relying on a single country for critical drug-chemistry was too risky. The strategy — dubbed <strong>"China+1"</strong> — is not to abandon China overnight, but to add a <em>second</em>, non-Chinese source for new programmes. India, with its deep bench of chemists, English-language business culture, strong IP framework and cost advantage, is the natural "+1". Sai's CFO has publicly described the company seeing a genuine <strong>"tailwind"</strong> from this shift.</p>
+
+  <h3>Force 2 — the US BIOSECURE Act</h3>
+  <p>The <strong>BIOSECURE Act</strong> is US legislation designed to restrict federal-funded work with certain Chinese biotech firms (WuXi among those originally named) on national-security grounds. A version advanced through the US legislative process and was folded into the FY2026 defence-authorisation law signed in December 2025. Even where it does not name specific companies, its <em>direction of travel</em> is unmistakable — it pushes American drug developers to de-risk away from Chinese CRDMOs. That is a potential <strong>multi-year demand transfer</strong> toward Indian and other non-Chinese partners.</p>
+
+  <div class="plain">
+    <div class="ptag">Why this is a multi-year story, not a one-quarter pop</div>
+    <p>Here's the crucial mechanism: <strong>drug supply chains move slowly, and that's the point.</strong> Because a molecule's manufacturing process is locked into its regulatory filing, a customer can't just switch its <em>existing</em> commercial drugs to a new country cheaply. What actually happens is that customers steer their <strong>new programmes</strong> — the discovery and early-development work starting today — toward "+1" partners. Those programmes then take years to climb the funnel toward commercial manufacturing. So the BIOSECURE / China+1 benefit shows up first as a <strong>surge of early-stage enquiries and discovery work</strong> (which Sai is reporting), and only converts into large manufacturing revenue several years later. That slow-burn is exactly why bulls see a long runway — and why the payoff requires patience and flawless execution to actually arrive.</p>
+  </div>
+
+  <div class="note gold"><b>The honest caveat:</b> "China+1" is a real, durable tailwind — but it is also the most <em>consensus</em>, most talked-about theme in Indian pharma, and much of it is already in the share prices across the sector. It is a reason to like the industry's structural direction; it is not, by itself, a reason the stock is cheap. And WuXi and China are not standing still — they remain formidable, low-cost incumbents fighting to keep the business.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Capacity and capex — building ahead of demand</h2></div>
+  <p class="part-sub">To catch the China+1 wave, Sai is spending heavily on labs and reactors.</p>
+
+  <p class="lead">A CRDMO can only take on the work it has the physical capacity to do — reactor volume for manufacturing, laboratory space and scientists for research. Sai is in an <strong>aggressive build-out phase</strong>, deliberately adding capacity <em>ahead</em> of demand to be ready when China+1 programmes graduate up the funnel. That is why capex is stepping up sharply.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The physical footprint &amp; capex</caption>
+    <thead><tr><th>Asset / metric</th><th>Detail</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Bidar, Karnataka (manufacturing)</td><td>The flagship API/intermediate plant; reactor capacity expanded to <strong>~700 KL</strong> across ~12 production blocks (Block 11 Phase II added FY26)</td><td>The commercial-manufacturing engine — more reactor volume = capacity to serve bigger, later-stage contracts.</td></tr>
+      <tr><td class="t-strong">Hyderabad (R&amp;D)</td><td>Core discovery &amp; development research campuses and headquarters</td><td>The "front door" of the funnel — where new customer programmes start.</td></tr>
+      <tr><td class="t-strong">Manchester, UK (Alderley Park)</td><td>Process R&amp;D / analytical development centre of excellence</td><td>Puts development scientists next to European innovator customers.</td></tr>
+      <tr><td class="t-strong">Watertown / Boston, USA</td><td>Discovery site in the world's densest biotech hub</td><td>Wins early-stage work from US biotech at the source — feeds the funnel.</td></tr>
+      <tr><td class="t-strong">Capex — FY26</td><td class="num">~₹633 Cr</td><td>Well above prior years; labs, reactors, automation and new capabilities (e.g. ADC, high-throughput screening).</td></tr>
+      <tr><td class="t-strong">Capex — FY27 (planned)</td><td class="num">~₹1,100–1,300 Cr</td><td>A <strong>big step up</strong> — management cites deeper customer engagement and better pipeline visibility; the clearest signal of confidence in the demand wave.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why rising capex is both the bull and bear point</div>
+    <p>Capacity expansion is a <strong>bet on future demand</strong>. If the China+1 programmes convert as hoped, today's new reactors and labs fill with high-value work and the spending looks brilliant — operating leverage kicks in and margins climb. But capex has to be funded and it depresses free cash flow in the meantime; a new plant that opens before the demand arrives is a drag on returns until it fills. So the ₹1,100–1,300 Cr FY27 plan is simultaneously the <strong>strongest evidence of management's confidence</strong> and the <strong>clearest execution risk</strong>: build too slowly and you miss the wave; build too fast into a biotech-funding downturn and you carry idle, expensive capacity.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A premium-priced club of Indian CRDMOs, plus the Chinese incumbents being de-risked.</p>
+
+  <p class="lead">Sai competes in a <strong>consolidating, high-quality, premium-valued</strong> corner of Indian pharma. The closest listed comparison is <strong>Syngene International</strong>; the broader peer set includes Divi's Laboratories, Laurus Labs, Piramal Pharma and Cohance/Suven — while the incumbents the whole China+1 story is de-risking away from are the Chinese giants <strong>WuXi AppTec and WuXi Biologics</strong>.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Sai Life Sciences</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Sai Life Sciences</td><td>Integrated small-molecule CRDMO, discovery → commercial</td><td><em>This company.</em> A "pure-play" integrated CRDMO with strong late-stage small-molecule assets; often analysts' top pick on the China+1 theme.</td></tr>
+      <tr><td class="t-strong">Syngene International</td><td>The closest listed CRDMO peer (Biocon group)</td><td>Larger, broader (incl. biologics), strong in early research — but seen as lighter on late-stage <em>small-molecule</em> commercial assets, where Sai is well-positioned.</td></tr>
+      <tr><td class="t-strong">Divi's Laboratories</td><td>Large, highly profitable API &amp; custom-synthesis leader</td><td>Bigger, cash-rich, best-in-class margins; more API/generics-and-CS weighted than an integrated discovery-to-commercial CRDMO.</td></tr>
+      <tr><td class="t-strong">Laurus Labs</td><td>APIs + fast-growing CDMO arm</td><td>Diversified (ARV APIs, formulations) with a rising CDMO business; different mix, overlapping ambition.</td></tr>
+      <tr><td class="t-strong">Piramal Pharma, Cohance / Suven</td><td>Other Indian CDMO/CRDMO players</td><td>Part of the same China+1 cohort; each with its own niche — the space is broad but Sai's integrated small-molecule span is distinctive.</td></tr>
+      <tr><td class="t-strong">WuXi AppTec / WuXi Biologics</td><td>The Chinese incumbents</td><td>Vast scale, low cost, deep capability — the giants BIOSECURE/China+1 is steering work <em>away</em> from, and Sai's structural opportunity.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">What makes Sai's position distinctive</div>
+    <p>Two things. <strong>First, genuine integration in small molecules.</strong> Plenty of Indian firms do <em>either</em> research <em>or</em> manufacturing well; fewer do the whole span — discovery, development <em>and</em> commercial — for small molecules under one roof, which is what lets Sai capture a molecule early and ride it up the funnel. <strong>Second, it is a relatively "pure play."</strong> Divi's and Laurus carry big API/generics businesses; Syngene skews to research and biologics. For an investor who specifically wants exposure to the <em>innovator small-molecule CRDMO</em> opportunity, Sai is one of the cleaner ways to buy it — which is part of why it commands a scarcity premium. The competitive risk is that this is a <em>crowded</em> premium: every Indian peer is racing to add CRDMO capacity, and success invites more competition for the same customers, chemists and real estate.</p>
+  </div>
+
+  <div class="note gold"><b>Regulatory backdrop:</b> a CRDMO lives or dies on regulatory trust. Its manufacturing sites are inspected by the <strong>US FDA, EMA and others</strong>; a serious inspection failure at a key plant can halt supply and damage the customer relationships that took years to build. Clean regulatory track record is a core, ongoing requirement — not a one-time achievement.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A sharp margin-and-profit inflection — meeting an equally sharp valuation.</p>
+
+  <p class="lead">FY26 was a breakout year: revenue grew fast, but profit grew far faster as margins expanded and interest cost fell after the IPO debt repayment. The business quality is improving in the numbers. The debate — as with every CRDMO — is almost entirely about the <strong>price</strong> you pay for it.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Operating revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:67%"></span></div><div class="bval">~1,465</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:77%"></span></div><div class="bval">~1,695</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~2,192</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit (PAT) trajectory</div>
+    <div class="c-sub">Net profit after tax (₹ Crore) — the margin-and-deleverage inflection</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:23%"></span></div><div class="bval">~83</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill dev" style="width:48%"></span></div><div class="bval">~170</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill comm" style="width:100%"></span></div><div class="bval">~355</div></div>
+    </div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~30%</div><div class="msl">FY26 EBITDA margin — up from ~25% in FY25 (₹661 Cr EBITDA)</div></div>
+    <div class="ms green"><div class="msv">+109%</div><div class="msl">FY26 PAT growth — margin gains + lower interest post debt-repayment</div></div>
+    <div class="ms red"><div class="msv">~64–74×</div><div class="msl">Trailing P/E (mid-2026) — a very rich multiple to defend</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the 60×+ multiple</div>
+    <p>At roughly <strong>₹23,000 Cr market cap</strong> on ~₹355 Cr of FY26 profit, Sai trades in the region of <strong>60–70× trailing earnings</strong> — squarely in the premium band the Indian CRDMO/CDMO space commands (Divi's, Laurus and Syngene all trade at rich multiples too). That price <em>only</em> makes sense if you believe FY26's growth-and-margin inflection is the <em>start</em> of a multi-year climb — the funnel maturing toward more commercial molecules, the China+1 programmes converting, and the new capex filling with high-value work so margins keep rising. Bulls argue a scarce, integrated, structurally-advantaged small-molecule CRDMO deserves a scarcity premium and that earnings will "grow into" the multiple. Bears argue the multiple already discounts years of flawless execution, leaving <strong>no room for a biotech-funding winter, a lumpy quarter, a regulatory stumble, or PE-investor selling</strong> — any of which could trigger a sharp de-rating. Both can be right at different points in the cycle, which is why growth and margins are the numbers to track every quarter.</p>
+  </div>
+
+  <div class="note gold"><b>A note on the figures:</b> FY26 numbers here are drawn from results coverage and the Q4 FY26 earnings call (year ended March 2026); market cap and P/E are mid-2026 snapshots that move with the share price. Treat them as approximate and verify against Sai's filings before relying on them.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The growth runway</h2></div>
+  <p class="part-sub">Three stacked levers: the funnel maturing, China+1 converting, and margins expanding.</p>
+
+  <p class="lead">Sai's growth story is the sum of three reinforcing levers. None depends on a single blockbuster; together they describe how a CRDMO compounds if it executes.</p>
+
+  <h3>Three growth engines, stacked</h3>
+  <ul class="clean">
+    <li><strong>The funnel maturing.</strong> The 11 molecules in Phase 3 / pre-registration are the near-term graduating class — if roughly half succeed, they add ~5–7 new commercial molecules by ~FY29, each a durable revenue stream. Behind them sits a ~155-molecule early-stage pipeline continually refilling the top.</li>
+    <li><strong>China+1 / BIOSECURE conversion.</strong> Today's surge of discovery and early-development enquiries from customers de-risking away from China becomes tomorrow's development and manufacturing revenue — a multi-year demand transfer, provided Sai captures its share and the programmes advance.</li>
+    <li><strong>Margin &amp; mix expansion.</strong> As more revenue shifts toward later-stage development and commercial manufacturing, and as the new capacity fills, operating leverage lifts margins — the FY25→FY26 jump from ~25% to ~30% EBITDA margin is the template management wants to extend.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The compounding logic in one line</div>
+    <p>Win many cheap early programmes → advance a growing subset into development → convert a durable minority into commercial manufacturing → fund the capacity that lets you do it at larger scale → and let the mix-shift toward manufacturing lift margins along the way. Do that repeatedly, riding the China+1 tailwind, and revenue and (especially) profit can compound for years. That is the entire bull thesis — and every link in the chain is an execution test.</p>
+  </div>
+
+  <blockquote>The next few years are about converting a full pipeline and a real tailwind into commercial molecules and filled reactors — that's where the operating leverage lives.</blockquote>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuinely improving business — priced for a lot to keep going right.</p>
+
+  <p class="lead">Sai Life Sciences is one of the cleaner ways to own the Indian small-molecule CRDMO opportunity: an integrated discovery-to-commercial platform, a blue-chip customer roster, a sharp FY26 profit inflection, and a genuine structural tailwind at its back. The investment debate is less about whether the business is good and more about <strong>cyclicality, execution and the price</strong>.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural tailwind</strong> — China+1 and BIOSECURE steering multi-year demand toward Indian CRDMOs; Sai a frequent analyst top pick.</li>
+        <li><strong>Integrated funnel</strong> — discovery-to-commercial span captures molecules early and rides them up into sticky, high-value manufacturing contracts.</li>
+        <li><strong>Sharp inflection</strong> — FY26 EBITDA margin ~30% (from 25%), PAT +109%; operating leverage visibly arriving.</li>
+        <li><strong>Blue-chip base</strong> — 300+ customers, 19 of top 25 pharma, 34 commercial molecules and 11 in Phase 3 feeding the next wave.</li>
+        <li><strong>Capacity ahead of demand</strong> — Bidar at ~700 KL and a ₹1,100–1,300 Cr FY27 capex plan positioning for the wave.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich valuation</strong> — ~60–70× earnings leaves little margin for error; vulnerable to de-rating on any disappointment.</li>
+        <li><strong>Biotech-funding cyclicality</strong> — discovery demand from emerging biotech rises and falls with venture funding; a funding winter bites.</li>
+        <li><strong>Lumpy, milestone-driven revenue</strong> — most molecules fail; a single large programme advancing or stumbling can swing a quarter.</li>
+        <li><strong>Execution &amp; regulatory risk</strong> — heavy capex to fund and fill; a USFDA/EMA inspection failure at a key plant would be serious.</li>
+        <li><strong>Concentration, forex &amp; PE overhang</strong> — top 10 customers ~54% of revenue; largely USD/EUR revenue; large PE holders whose exits are a technical overhang.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Sai Life Sciences is a <strong>structurally advantaged, integrated small-molecule CRDMO</strong> catching a real multi-year outsourcing wave, with FY26 proving that scale can translate into rapidly rising margins and profit. The business risk is moderate and improving; the <em>valuation and cyclicality</em> risks are real and priced-in tightly. The story over the next few years will be written in a handful of numbers each quarter — <strong>commercial-molecule additions</strong> (is the funnel graduating?), <strong>margins</strong> (is operating leverage sustaining?), and <strong>new-programme wins</strong> (is China+1 converting?). Get those right and the compounding can justify the premium; a biotech-funding winter, a lumpy quarter, or a regulatory stumble, and a 60×+ stock has a long way to fall. It is best understood as a high-quality participant in a powerful theme — at a price that already believes the theme will play out.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Sai Life Sciences — "Reports robust FY25 results" (revenue +16%, PAT +105%), sailife.com.</li>
+    <li>Sai Life Sciences — Q4 FY26 Earnings Conference Call transcript, 15 May 2026 (sailife.com).</li>
+    <li>Yahoo Finance — "Sai Life Sciences (NSE:SAILIFE) Q4 2026 Earnings Call Highlights: Record Growth" (FY26 revenue ₹2,192 Cr, EBITDA ₹661 Cr, PAT ₹355 Cr; segment, customer &amp; molecule detail).</li>
+    <li>InvestyWise — "Sai Life Sciences FY26 Financial Performance" (29% revenue growth, margin expansion).</li>
+    <li>BSE India — Sai Life Sciences scrip 544306 (StockReach); NSE — SAILIFE quote page.</li>
+    <li>HDFC Securities — Sai Life Sciences IPO Note (11 Dec 2024): issue structure, TPG/HBM shareholding, debt repayment.</li>
+    <li>YourStory — "TPG-backed Sai Life Sciences plans IPO"; SPTulsian IPO analysis.</li>
+    <li>Pharma Manufacturing — "India's CRDMOs poised for growth with passage of BIOSECURE Act" (CFO commentary on tailwind).</li>
+    <li>Clinical Trials Arena / labiotech.eu — BIOSECURE Act 2.0 and NDAA FY2026 context; WuXi and China+1 dynamics.</li>
+    <li>Acheron Research / SecondSource / SOIC — CRDMO business-model deep dives; FY24 CRO vs CDMO revenue split.</li>
+    <li>Sai Life Sciences — "Completes Phase II of Production Block 11 at Bidar, expands capacity to 700 KL" (Aug 2025).</li>
+    <li>Business Standard — "Jefferies upbeat on India CRDMO" (peer coverage, SAILIFE Buy, target ₹1,160); stockanalysis.com valuation metrics.</li>
+    <li>Company investor-relations disclosures and annual report, sailife.com.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports around FY26 (year ended March 2026), and may contain errors or become outdated; market cap and valuation multiples are point-in-time snapshots that move with the share price. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "SAILIFE";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
