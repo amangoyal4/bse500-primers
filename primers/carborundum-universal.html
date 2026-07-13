@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carborundum Universal (CUMI) — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F3;
+    --paper-2:#FBFBF8;
+    --card:#FFFFFF;
+    --ink:#181F1F;
+    --ink-soft:#526160;
+    --ink-faint:#8A9593;
+    --brand:#35595E;          /* abrasive charcoal-teal */
+    --brand-bright:#4E7F84;   /* honed teal */
+    --gold:#DA7B2C;           /* grinding-spark amber */
+    --cer:#A15C46;            /* fired-clay ceramic */
+    --emd:#6B7C80;            /* mineral / graphite slate */
+    --line:#DBDED9;
+    --line-soft:#E8EAE4;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7F0EE;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2506;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:66ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:11px;color:var(--ink-faint);margin-top:16px;letter-spacing:.02em;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF0E3;border:1px solid #EFD6B7;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a5c18;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#46320f;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F8F4;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EBEDE6;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#35595E,#4E7F84);}
+  .fill.gold{background:linear-gradient(90deg,#DA7B2C,#EA9A4F);}
+  .fill.cer{background:linear-gradient(90deg,#A15C46,#BC7659);}
+  .fill.emd{background:linear-gradient(90deg,#6B7C80,#899A9E);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#39403f,#566160);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:120px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.emd{background:var(--emd);}
+  .node.abr{background:var(--brand);}
+  .node.cer{background:var(--cer);}
+  .node.mkt{background:var(--gold);color:#3a2506;}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-abr{color:var(--brand);font-weight:600;}
+  .chain-cer{color:var(--cer);font-weight:600;}
+  .chain-emd{color:var(--emd);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF0E3;color:#4a3512;}
+  .note.gold b{color:#9a5c18;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a5c18;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3F0;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> The picks-and-shovels idea</a></li>
+    <li><a href="#p2"><span class="n">02</span> Three segments, one chain</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> Abrasives</a></li>
+    <li><a href="#p5"><span class="n">05</span> Ceramics</a></li>
+    <li><a href="#p6"><span class="n">06</span> Electrominerals &amp; integration</a></li>
+    <li><a href="#p7"><span class="n">07</span> The silicon-carbide call</a></li>
+    <li><a href="#p8"><span class="n">08</span> The overseas map &amp; Russia</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: CARBORUNIV · BSE: 513375</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Carborundum Universal, <em>the grit under Indian manufacturing</em></h1>
+  <p class="dek">A complete walk through the Murugappa group's abrasives-ceramics-electrominerals maker — the consumable "picks and shovels" that grind, cut and finish almost everything that gets manufactured; how it mines and fuses its own raw minerals for a cost moat; the surprise silicon-carbide call on EV power chips buried inside a grinding-wheel company; and why a Russian subsidiary quietly split its India profit from its group profit in FY26.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹5,150 <small>Cr</small></div><div class="l">Revenue (FY26, consolidated)</div></div>
+    <div class="cell"><div class="v">3 <small>segments</small></div><div class="l">Abrasives · Ceramics · Electrominerals</div></div>
+    <div class="cell"><div class="v">~₹416 <small>Cr</small></div><div class="l">Standalone (India) PAT · FY26</div></div>
+    <div class="cell"><div class="v">~₹20,500 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">13 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — consolidated sales crossed ₹5,000 Cr; standalone India PAT +29% to ₹416 Cr; ~₹135 Cr exceptional charge from winding down Awuko (Germany) and impairing Foskor Zirconia (South Africa); Aspiration 2030 and the high-purity silicon-carbide push added.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Carborundum Universal — everyone calls it <strong>CUMI</strong> — makes the <strong>consumable tools that shape other things</strong>. Its grinding wheels, sandpapers and polishing products <strong>cut, grind, smooth and finish</strong> metal, glass, stone, wood and ceramics in virtually every factory, workshop, auto plant, foundry and steel mill. It also makes technical <strong>ceramics</strong> (wear-resistant, refractory and defence parts) and, crucially, the raw fused <strong>minerals</strong> — silicon carbide and fused alumina — that go <em>into</em> abrasives and ceramics. It is a <strong>Murugappa group</strong> company, headquartered in Chennai, and one of the largest players of its kind in India.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It sells "razor blades", not "razors".</strong> An abrasive is <em>used up</em> in the process — a grinding wheel wears down, sandpaper loads up and gets thrown away. So CUMI earns a recurring, low-ticket, repeat-purchase revenue stream tied to how busy Indian (and world) manufacturing is, rather than one-off capital-equipment sales. That gives it broad, diversified, industrial-activity-linked demand — but also cyclicality.</li>
+    <li><strong>It is backward-integrated into its own raw material.</strong> CUMI doesn't just buy silicon carbide and alumina — it <em>fuses them itself</em> in electric-arc furnaces (a legacy of its founding). That in-house mineral supply is the cost-and-quality moat under the whole group, and it sells the surplus to other abrasive and refractory makers worldwide.</li>
+    <li><strong>Two profit stories live in one company right now.</strong> In FY26 the <strong>India (standalone) business had a great year — PAT up ~29% to ₹416 Cr</strong> — while the <strong>consolidated group profit fell to ~₹168 Cr</strong>, dragged down by ~₹135 Cr of one-time charges from shutting/impairing overseas units and by its sanctions-hit Russian subsidiary. The gap between those two numbers <em>is</em> the overseas problem — and closing it is the whole near-term story.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>If a factory anywhere makes a metal part, that part almost certainly gets <strong>ground, deburred, polished or sharpened</strong> at some stage — and the abrasive that does it wears away and has to be rebought. CUMI is the company that keeps selling those consumables, plus the industrial ceramics that line furnaces and armour vehicles, plus the fused minerals both are made from. It is unglamorous, diversified and defensively spread across dozens of end-industries — with one modern twist: the very mineral it has fused for grinding wheels for seventy years, <strong>silicon carbide</strong>, is now the hot material for electric-vehicle power chips. So a boring consumables maker is sitting on a genuinely interesting materials option.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>The picks-and-shovels idea: what an abrasive actually is</h2></div>
+  <p class="part-sub">No engineering degree required — just why "grit that wears out" is a good business.</p>
+
+  <p class="lead">Almost nothing comes out of a mould or a casting perfectly finished. Metal parts have rough edges, welds, burrs and surfaces that must be made smooth, flat, sharp or dimensionally exact. The tool that does this is an <strong>abrasive</strong> — hard mineral grains (grit) bonded onto a wheel, a belt, a disc or a paper. Press the grit against the workpiece, and it shaves material away. Every engine crankshaft, every steel sheet, every knife edge, every polished granite countertop, every semiconductor wafer passes an abrasive somewhere.</p>
+
+  <p>The commercial beauty is that the abrasive is <strong>a consumable</strong>. A grinding wheel grinds itself away; a sanding belt dulls and is replaced; a cut-off disc shrinks with every cut. The customer keeps coming back to rebuy — the classic "razor-and-blades" economics, except CUMI mostly just sells the blades. Demand therefore tracks the <em>running</em> of the economy, not the <em>building</em> of it: as long as factories, foundries, auto plants and construction sites are active, abrasives get consumed.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three families of abrasive — what they are, in plain words</caption>
+    <thead><tr><th>Type</th><th>What it is</th><th>Where it's used</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Bonded abrasives</td><td>Grit fused into a solid shape — the classic <strong>grinding wheel</strong>, cut-off disc or honing stone.</td><td>Metal grinding, tool sharpening, cutting steel, precision finishing.</td></tr>
+      <tr><td class="t-strong">Coated abrasives</td><td>Grit glued onto a flexible backing — <strong>sandpaper, sanding belts, flap discs</strong>.</td><td>Wood, auto refinishing, metal fabrication, general surface prep.</td></tr>
+      <tr><td class="t-strong">Super-abrasives</td><td>The hardest grits — <strong>diamond and CBN</strong> (cubic boron nitride) — for the toughest, most precise jobs.</td><td>Carbide tools, aerospace alloys, glass, electronics, high-precision grinding.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "consumable" changes the whole risk profile</div>
+    <p>A company that sells a ₹5-crore machine makes that sale once a decade; a company that sells the grinding wheels the machine chews through makes a sale every few weeks, to thousands of customers, across dozens of industries. No single customer or sector dominates, orders are small and frequent, and the product is genuinely necessary rather than discretionary. That is a structurally <strong>steadier, more diversified</strong> demand base than most capital-goods businesses — the trade-off being that it is still tied to overall factory <em>utilisation</em>, so a broad industrial slowdown quietly trims volumes across the board.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>Three segments, one chain</h2></div>
+  <p class="part-sub">Abrasives, Ceramics and Electrominerals — and the vertical integration that ties them together.</p>
+
+  <p class="lead">CUMI reports in three segments, and the single most important thing to grasp is that they are not three unrelated businesses stapled together — they are <strong>a supply chain the company owns end to end</strong>. Electrominerals make the raw grit; Abrasives and Ceramics turn that grit into finished products; and whatever grit isn't consumed internally is sold to the rest of the world.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue by segment (FY25 consolidated, approx.)</div>
+    <div class="c-sub">Abrasives is the biggest line; Ceramics is the smallest — but watch the profit twist in Part 05</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Abrasives<small>wheels, sandpaper, super-abrasives</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~43%</div></div>
+      <div class="bar-row"><div class="blab">Electrominerals<small>SiC &amp; fused alumina</small></div><div class="track"><span class="fill emd" style="width:72%"></span></div><div class="bval">~31%</div></div>
+      <div class="bar-row"><div class="blab">Ceramics<small>industrial, wear, refractory, defence</small></div><div class="track"><span class="fill cer" style="width:53%"></span></div><div class="bval">~23%</div></div>
+    </div>
+    <div class="legend"><span>Shares are approximate and shift year to year; segments also sell to each other, so reported segment revenue includes some inter-segment supply that nets out at the group level.</span></div>
+  </div>
+
+  <h3>The value chain — mineral to finished tool</h3>
+  <p>Read this diagram once and the whole company clicks into place. CUMI starts with raw minerals (bauxite, petroleum coke, quartz), fuses them into abrasive grains in its own furnaces, then either uses those grains to make abrasives and ceramics — or sells them onward to rival manufacturers who lack their own mineral base.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">CUMI's owned value chain — the grit flows downstream</div>
+    <div class="flow-row">
+      <div class="node emd"><div class="ntag">Stage 1 · Feedstock</div><div class="nname">Electrominerals</div><div class="nwho">Fuse SiC &amp; alumina in arc furnaces from raw minerals + power.</div></div>
+      <div class="arrow">→</div>
+      <div class="node abr"><div class="ntag">Stage 2a · Convert</div><div class="nname">Abrasives</div><div class="nwho">Grit → grinding wheels, sandpaper, super-abrasives.</div></div>
+      <div class="arrow">→</div>
+      <div class="node cer"><div class="ntag">Stage 2b · Convert</div><div class="nname">Ceramics</div><div class="nwho">Grit → wear-resistant, refractory &amp; technical ceramic parts.</div></div>
+      <div class="arrow">→</div>
+      <div class="node mkt"><div class="ntag">Stage 3 · Sell</div><div class="nname">Merchant sales</div><div class="nwho">Surplus grit sold to global abrasive &amp; refractory makers.</div></div>
+    </div>
+    <div class="flow-note">Owning Stage 1 is the moat: CUMI controls the cost, quality and supply of the one input every downstream product depends on — and monetises the leftover externally instead of letting a competitor supply it.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why owning the mineral matters more than it looks</div>
+    <p>Most abrasive makers <em>buy</em> their silicon carbide and alumina from someone else — often, historically, from CUMI itself or from a handful of global mineral producers. CUMI fuses its own. That does three things: it <strong>insulates the downstream businesses</strong> from grit price spikes and shortages; it lets the company <strong>tune grain quality</strong> to exactly what its wheels and ceramics need; and it turns a cost centre into a <strong>third profit centre</strong> by selling surplus minerals externally. The catch is that fusing minerals is <strong>power-hungry and cyclical</strong> — electrominerals margins swing with energy costs and with the global commodity price of SiC and alumina, which is why this segment is the most volatile of the three.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A 1954 three-way joint venture that the Murugappa group turned into a global materials firm.</p>
+
+  <p class="lead">CUMI's name is its history. It was born in <strong>1954</strong> as a <strong>tripartite joint venture</strong> between the Chennai-based <strong>Murugappa group</strong>, <strong>The Carborundum Company of the USA</strong>, and the <strong>Universal Grinding Wheel Company of the UK</strong> — hence "Carborundum Universal". ("Carborundum" is itself the old trade name for silicon carbide.) The foreign partners eventually exited over the decades; Murugappa consolidated control and built CUMI from an abrasives licensee into a vertically integrated, multinational materials group.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1954</div><div class="ev">Incorporated in Madras as a JV of the <strong>Murugappa group + Carborundum Co. (USA) + Universal Grinding Wheel (UK)</strong> — an abrasives manufacturer under foreign licence.</div></li>
+    <li><div class="yr">1960s–80s</div><div class="ev">Builds <strong>backward integration</strong>: sets up its own electrominerals capacity (silicon carbide and fused alumina), so it makes the grit that goes into its wheels rather than importing it.</div></li>
+    <li><div class="yr">1990s–2000s</div><div class="ev">Murugappa steadily buys out the foreign partners and takes full control; CUMI diversifies from abrasives into <strong>industrial and technical ceramics, refractories and super-abrasives</strong>.</div></li>
+    <li class="major"><div class="yr">2007</div><div class="ev">Global push: acquires <strong>Volzhsky Abrasive Works in Russia</strong> (a large silicon-carbide and abrasives plant) and <strong>Foskor Zirconia in South Africa</strong>; also builds out China and other overseas operations. CUMI becomes a multinational.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Deepens technical ceramics, super-abrasives and electronics-grade minerals; positions the mineral business for higher-value, higher-purity products beyond commodity grit.</div></li>
+    <li class="major"><div class="yr">2022</div><div class="ev">Russia–Ukraine war and Western sanctions turn the <strong>Volzhsky</strong> subsidiary into a standing overhang — banking, logistics and currency friction, even though abrasives themselves aren't sanctioned goods.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Cleans up the overseas portfolio — <strong>winds down Awuko Abrasives (Germany)</strong> and <strong>impairs Foskor Zirconia (South Africa)</strong>, a ~₹135 Cr exceptional charge — while the India business posts record standalone profit. Lays out its <strong>"Aspiration 2030"</strong> plan, leaning into high-purity silicon carbide, graphene and nitrides.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> the <strong>Murugappa group</strong> holds roughly <strong>~39%</strong>, mainly through <strong>Ambadi Investments</strong> (~29%). Murugappa is one of India's oldest and most respected industrial houses (Tube Investments, Cholamandalam Finance, Coromandel International, EID Parry, Wendt India), known for conservative, long-horizon stewardship — a reassuring backer for a cyclical materials business.</li>
+    <li><strong>Institutional base:</strong> domestic institutions (DIIs) hold a large slug (~29–30%) and foreign investors (~10–11%), reflecting CUMI's status as a quality mid-cap compounder that funds and index managers like to own.</li>
+    <li><strong>Balance sheet:</strong> effectively <strong>net cash / low-debt</strong> at the group level (a modest ~₹400 Cr of gross debt against far larger reserves), which lets it self-fund capex and absorb overseas shocks without stress.</li>
+  </ul>
+
+  <div class="note gold"><b>A useful lens on Murugappa ownership:</b> the group's culture is famously patient and low-drama — it tends to hold assets for decades and reinvest steadily rather than chase quarters. For a business whose payoff (backward integration, then a high-purity-SiC option) plays out over many years, that ownership horizon is a genuine, if intangible, asset.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Segment one: Abrasives</h2></div>
+  <p class="part-sub">The largest business, the broadest customer base, the truest "industrial-activity" proxy.</p>
+
+  <p class="lead">Abrasives are CUMI's biggest segment — roughly <strong>43% of consolidated revenue</strong> — and the one closest to the "picks and shovels" idea. It spans the full range: bonded grinding wheels, coated sandpapers and belts, thin cut-off wheels, and the premium super-abrasives (diamond and CBN) for the hardest, most precise jobs. Brand names like <strong>Ajax</strong> grinding wheels and the coated-abrasives lines are fixtures on Indian shop floors.</p>
+
+  <h3>Who buys abrasives</h3>
+  <ul class="clean">
+    <li><strong>Auto &amp; auto components</strong> — grinding crankshafts, camshafts, gears, bearings; deburring and finishing thousands of machined parts.</li>
+    <li><strong>Steel &amp; metals</strong> — conditioning slabs and billets, cutting and grinding in steel mills.</li>
+    <li><strong>General engineering &amp; fabrication</strong> — the long tail of workshops, tool rooms and job shops that cut and finish metal every day.</li>
+    <li><strong>Construction &amp; DIY / retail</strong> — cutting discs, hand sanding, stone and tile finishing.</li>
+    <li><strong>Precision &amp; electronics</strong> — super-abrasives for carbide tools, glass and high-tolerance components.</li>
+  </ul>
+
+  <p>Because the customer base is so wide, abrasives revenue is one of the cleaner <strong>proxies for broad manufacturing activity</strong> in India. There is no dominant customer and no single cyclical end-market that can sink the segment on its own — but there is also no hiding from a genuine industrial downturn, when utilisation falls across the board and everyone consumes less grit.</p>
+
+  <div class="plain">
+    <div class="ptag">The domestic tailwind: import substitution &amp; "China+1"</div>
+    <p>Two structural forces work in CUMI's favour at home. First, <strong>India's manufacturing push</strong> (PLI schemes, capex revival, defence and rail localisation) lifts factory activity — and therefore abrasive consumption. Second, abrasives and technical minerals are exactly the kind of unglamorous industrial input that global buyers now want sourced <strong>outside China</strong>. CUMI, with its own mineral base and decades of process know-how, is well placed to win both the domestic replacement demand and a slice of that "China+1" reshuffling — a quieter, more durable tailwind than any single order win.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Segment two: Ceramics</h2></div>
+  <p class="part-sub">The smallest segment by revenue — and, in a genuine twist, the biggest by profit.</p>
+
+  <p class="lead">CUMI's Ceramics segment is the most <em>surprising</em> of the three. It is the <strong>smallest by sales (~23%)</strong> but consistently the <strong>largest single contributor to segment profit</strong> — in recent years it has thrown off close to <strong>half of CUMI's total EBIT</strong>. This is not commodity crockery; it is high-value <strong>industrial and technical ceramics</strong>, where hardness, wear-resistance, heat-resistance and precision command premium prices.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue share vs profit share — the ceramics twist</div>
+    <div class="c-sub">Approximate FY25 shares; Ceramics punches far above its revenue weight on profit</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Abrasives<small>~43% of revenue</small></div><div class="track"><span class="fill brand" style="width:63%"></span></div><div class="bval">~30% EBIT</div></div>
+      <div class="bar-row"><div class="blab">Ceramics<small>~23% of revenue</small></div><div class="track"><span class="fill cer" style="width:100%"></span></div><div class="bval">~48% EBIT</div></div>
+      <div class="bar-row"><div class="blab">Electrominerals<small>~31% of revenue</small></div><div class="track"><span class="fill emd" style="width:60%"></span></div><div class="bval">~29% EBIT</div></div>
+    </div>
+    <div class="legend"><span>EBIT shares are approximate and pre-elimination; they shift with the cycle, but the pattern is consistent — Ceramics is the margin engine, not the revenue engine.</span></div>
+  </div>
+
+  <h3>What's inside "Ceramics"</h3>
+  <ul class="clean">
+    <li><strong>Industrial ceramics</strong> — precision alumina and technical-ceramic components used in machinery, pumps, textiles and process industries where metal parts would wear out too fast.</li>
+    <li><strong>Wear-resistant ceramics</strong> — linings and tiles that protect chutes, pipes, mills and hoppers handling abrasive materials (cement, mining, power) — they outlast steel many times over.</li>
+    <li><strong>Refractories</strong> — heat-resistant linings for furnaces, kilns and metallurgical vessels; the ceramics that let steel and metal plants run at extreme temperatures.</li>
+    <li><strong>Metallised / anti-ballistic &amp; defence ceramics</strong> — high-hardness ceramics used in <strong>body and vehicle armour</strong> and specialised industrial applications — a small but high-value, strategically interesting niche.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why ceramics carries the margin</div>
+    <p>Abrasives and raw minerals are, at their core, <strong>volume-and-cost</strong> businesses competing partly on price. Technical ceramics are a <strong>specification-and-engineering</strong> business: a customer designing a pump seal, a furnace lining or an armour tile qualifies a supplier over years, values reliability over price, and doesn't switch casually. That stickiness — plus genuine materials know-how — is why Ceramics earns fatter margins than its size implies, and why CUMI's push into higher-end technical and defence ceramics matters more to profit than to the top line.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Segment three: Electrominerals &amp; the integration moat</h2></div>
+  <p class="part-sub">The furnace business at the base of everything — and where the SiC story lives.</p>
+
+  <p class="lead">Electrominerals (~<strong>31% of revenue</strong>) is the least visible but most foundational segment: it is where CUMI <strong>makes the raw fused grit itself</strong>. Using enormous electric-arc furnaces, it fuses raw minerals — silica/quartz and petroleum coke into <strong>silicon carbide (SiC)</strong>, and bauxite into <strong>fused / white aluminium oxide</strong>. These are the abrasive and refractory grains that feed the other two segments and that CUMI also sells to abrasive and refractory makers around the world.</p>
+
+  <h3>The two workhorse minerals</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>What CUMI fuses, and what it's for</caption>
+    <thead><tr><th>Mineral</th><th>Made from</th><th>Used for</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Silicon carbide (SiC)</td><td>Silica/quartz + petroleum coke, fused at extreme heat</td><td>Very hard abrasive grit; refractories; wear ceramics — and, increasingly, the base material for <strong>power semiconductors</strong> (see Part 07).</td></tr>
+      <tr><td class="t-strong">Fused / white alumina</td><td>Bauxite (aluminium ore), electrically fused</td><td>The workhorse grit in grinding wheels and sandpaper; refractory and technical-ceramic feedstock.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>This is the segment that makes CUMI <strong>backward-integrated</strong>: it doesn't depend on outside suppliers for the one input every downstream product needs. That is a real cost-and-security advantage — but it comes with the segment's defining weakness. Fusing minerals consumes <strong>vast amounts of electricity</strong>, so profitability is highly sensitive to <strong>power costs and to raw-material prices</strong> (bauxite, petroleum coke). And because a large share of fused minerals trades as a <strong>global commodity</strong>, electrominerals earnings swing with world SiC/alumina prices — the most cyclical, least predictable line in the group.</p>
+
+  <div class="plain">
+    <div class="ptag">One number that captures the integration logic</div>
+    <p>Roughly speaking, the grit CUMI fuses in Stage 1 becomes the abrasives and ceramics it sells in Stage 2, and whatever is left over is sold as merchant minerals in Stage 3. So a single furnace campaign can end up as a grinding wheel in a Pune auto plant, a furnace lining in a steel mill, <em>and</em> a bag of grit shipped to a rival abrasive maker in Europe — three different margins from one input. That is the practical meaning of vertical integration: the same tonne of silicon carbide gets three chances to earn.</p>
+  </div>
+</section>
+
+<!-- 07 — BESPOKE CRUX: silicon carbide optionality -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The silicon-carbide call hidden inside a grinding-wheel company</h2></div>
+  <p class="part-sub">The one part of this business a generalist should not skim — because it is where a "boring" stock owns a genuine EV-and-semiconductor option.</p>
+
+  <p class="lead">Here is the fact that should make you sit up. <strong>Silicon carbide</strong> — the same "carborundum" CUMI has fused for grinding wheels since the 1950s — has quietly become one of the most strategically prized materials in electronics. In its high-purity, crystalline form, SiC is the base for <strong>power semiconductors</strong>: the chips that manage high voltages in <strong>electric-vehicle inverters, on-board chargers, fast-charging stations, solar inverters and industrial power devices</strong>. SiC power chips switch faster, run hotter and waste less energy than ordinary silicon — which is exactly what EVs need to extend range and shrink charging time.</p>
+
+  <p>So a company most investors file under "abrasives" is one of the few Indian firms with <strong>decades of hands-on silicon-carbide manufacturing know-how and installed furnace capacity</strong>. The grade CUMI has historically made — <em>metallurgical / abrasive-grade</em> SiC — is not the same as the ultra-pure, single-crystal, semiconductor-grade material that goes into a wafer. The distance between the two is large and hard to cross. But the starting point — the process knowledge, the raw-material access, the furnaces — is something almost no other Indian company has.</p>
+
+  <h3>What CUMI is actually doing about it</h3>
+  <ul class="clean">
+    <li>Under its <strong>"Aspiration 2030"</strong> plan, CUMI has explicitly flagged advanced materials — <strong>high-purity silicon carbide (HPSiC)</strong>, graphene and nitrides — as strategic growth vectors, and talked about serving adjacent electronics areas such as wafer-fab consumables and electronic substrates.</li>
+    <li>It remains <strong>net-cash and free-cash-generative</strong>, which is what lets it fund long-gestation R&amp;D and capacity (capex of ~₹309 Cr in FY26, ~₹400 Cr planned for FY27) without betting the balance sheet.</li>
+    <li>The prize is the difference between selling SiC as a <strong>commodity abrasive at commodity prices</strong> versus selling <strong>higher-purity SiC into electronics</strong> at a large multiple of that — a step up in both margin and strategic relevance.</li>
+  </ul>
+
+  <div class="note gold"><b>Keep expectations honest.</b> This is an <em>option</em>, not a shipping product line. Semiconductor-grade SiC wafers are a fiercely competitive global business dominated by large specialists, and full qualification is a multi-year, capital-intensive road with no guarantee CUMI reaches the highest-value tier. Treat it as embedded upside that costs little to hold — not as a number in this year's model.</div>
+
+  <div class="plain">
+    <div class="ptag">The non-transferable way to frame it</div>
+    <p>Most "EV plays" are companies that would have to <em>build</em> a silicon-carbide capability from scratch to participate. CUMI is the rare case that would have to <strong>climb, not start</strong> — it already fuses the mineral, it already runs the furnaces, it already sells SiC globally; the task is moving <em>up the purity curve</em> from grinding-wheel grit toward electronics grade. That is a fundamentally different, and cheaper, starting position than a greenfield entrant — and it is precisely the sentence that could not be written about a Grindwell Norton or a 3M.</p>
+  </div>
+</section>
+
+<!-- 08 — BESPOKE SURPRISE/RISK: the overseas map & Russia -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The overseas map — and the Russian anchor</h2></div>
+  <p class="part-sub">The single biggest reason the India story and the group story diverged in FY26.</p>
+
+  <p class="lead">CUMI is not just an Indian company — it runs a global footprint, and that footprint is where its recent pain has come from. The standout asset (and liability) is <strong>Volzhsky Abrasive Works (VAW) in Russia</strong>, acquired in 2007 — a large silicon-carbide and abrasives plant, historically one of the more significant SiC producers globally, that exports a big share of its output to Europe. Around it sit smaller overseas units in South Africa, Germany, China, Australia, North America and elsewhere.</p>
+
+  <p>Since 2022, the Russia exposure has been a running overhang. The <strong>products themselves aren't sanctioned</strong> (abrasives and SiC aren't dual-use goods), so VAW keeps producing — but the <strong>banking, payment, shipping and reputational friction</strong> of running a large Russian subsidiary through a sanctions regime is real, and it comes bundled with <strong>ruble volatility</strong> and the risk that European customers de-source Russian-origin material. It is the definition of a discount-worthy asset: valuable, cash-generative, and permanently clouded.</p>
+
+  <h3>The FY26 clean-up — and the wedge it created</h3>
+  <p>In FY26 CUMI took the knife to the weaker overseas assets: it <strong>decided to wind down Awuko Abrasives (Germany)</strong> and <strong>wrote down Foskor Zirconia (South Africa)</strong>, booking a combined <strong>~₹135 Cr exceptional charge</strong>. Layer that on top of the Russia drag, and you get the year's defining oddity:</p>
+
+  <div class="mini-stats">
+    <div class="ms green"><div class="msv">+29%</div><div class="msl">Standalone (India) PAT growth — to ~₹416 Cr in FY26</div></div>
+    <div class="ms red"><div class="msv">~₹168 Cr</div><div class="msl">Consolidated (group) PAT — dragged down by overseas charges &amp; Russia</div></div>
+    <div class="ms gold"><div class="msv">~₹135 Cr</div><div class="msl">FY26 exceptional charge — Awuko wind-down + Foskor Zirconia impairment</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The wedge — the analytical device for this company</div>
+    <p>Look at the two profit numbers side by side. The <strong>India business earned ~₹416 Cr and grew ~29%</strong>; the <strong>whole group earned only ~₹168 Cr</strong>. That gap — roughly a quarter of a billion rupees of "missing" profit — is <em>almost entirely the overseas portfolio</em>: Russia's friction plus the one-time write-offs. Read the right way, that is oddly encouraging: it means the <strong>core Indian franchise is compounding underneath a foreign anchor</strong>, and the group's headline weakness is a clean-up cost, not a rot in the business you'd actually want to own. The bear reading is equally clean: those overseas assets were bought with shareholder money, and unwinding them is a real, recurring reminder that CUMI's global adventure has been a mixed bag.</p>
+  </div>
+
+  <div class="note"><b>What to watch:</b> whether the FY26 clean-up is the <em>end</em> of the overseas drag or a stage in a longer de-risking. If Awuko and Foskor Zirconia are the last of it and Russia stabilises, the group and standalone profit lines should start converging again — and that convergence, more than any single order, is the near-term proof the strategy is working.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A consolidated Indian abrasives market, global majors above it, and one very close listed peer.</p>
+
+  <p class="lead">The Indian abrasives market is <strong>reasonably consolidated</strong> at the top: CUMI and <strong>Grindwell Norton</strong> together dominate the organised space, with a long tail of smaller and unorganised players below. Above them sit the <strong>global majors</strong> — Saint-Gobain, 3M, Tyrolit and others — who compete in premium and specialised segments. On the electrominerals and SiC side, CUMI's competitors are global mineral and, increasingly, semiconductor-materials specialists.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs CUMI</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Carborundum Universal (CUMI)</td><td>Vertically integrated abrasives + ceramics + electrominerals; ~₹5,150 Cr revenue</td><td><em>This company.</em> The only major with its own SiC/alumina mineral base and a real high-purity-SiC option.</td></tr>
+      <tr><td class="t-strong">Grindwell Norton</td><td>Saint-Gobain's listed Indian abrasives arm; the <strong>closest peer</strong></td><td>Slightly smaller revenue but <strong>higher, steadier margins (EBIT ~18%)</strong> and no messy overseas subsidiaries — the "cleaner" abrasives compounder. Backed by Saint-Gobain's global tech.</td></tr>
+      <tr><td class="t-strong">Saint-Gobain / Norton (global)</td><td>World's largest abrasives group (Grindwell's parent)</td><td>Global scale, R&amp;D and brand; competes at the premium end and supplies technology to Grindwell.</td></tr>
+      <tr><td class="t-strong">3M, Tyrolit, Bosch, Klingspor</td><td>Global abrasives &amp; power-tool consumables majors</td><td>Strong in coated abrasives, retail and specialised industrial niches; compete on brand and technology.</td></tr>
+      <tr><td class="t-strong">Wendt (India), Orient Abrasives, Asahi Diamond</td><td>Smaller Indian specialists (super-abrasives, bonded, diamond)</td><td>Niche players; Wendt is itself part-owned within the Murugappa orbit. Compete in specific product pockets.</td></tr>
+      <tr><td class="t-strong">Global SiC / power-semi specialists</td><td>Wolfspeed, Coherent, STMicro, onsemi, ROHM, etc.</td><td>The field CUMI's <em>high-purity SiC</em> ambition would eventually run into — deep-pocketed, far ahead on semiconductor-grade wafers.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">CUMI vs Grindwell — the peer comparison that matters</div>
+    <p>The sharpest mirror for CUMI is <strong>Grindwell Norton</strong>, and the contrast is instructive. Grindwell is the <em>cleaner</em> business — tighter, more consistent margins, no Russia, no overseas write-offs, backed by Saint-Gobain's technology — and the market rewards it with steady, high-quality returns. CUMI is the <em>broader and lumpier</em> one: more segments, its own mineral base, a global footprint that has cost it lately, and the SiC option Grindwell doesn't have. Simplifying: Grindwell is the purer play on <strong>India's abrasives demand</strong>; CUMI is that <strong>plus</strong> a mineral-integration and semiconductor-materials angle, wrapped in more volatility. Which you prefer depends on whether you're paying for consistency or for optionality.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A quality compounder underneath — currently wearing a bruised headline.</p>
+
+  <p class="lead">CUMI's long-term record is that of a <strong>steady industrial compounder</strong>: consolidated revenue has grown at a low-double-digit CAGR over a decade, crossing <strong>₹5,000 Cr in FY26</strong>. But FY26's <em>profit</em> line is the crux — it fell sharply at the group level even as India thrived, because of the overseas charges. Reading the two profit lines correctly is the whole valuation debate.</p>
+
+  <div class="chart">
+    <div class="c-title">Consolidated revenue trajectory</div>
+    <div class="c-sub">Group revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill emd" style="width:89%"></span></div><div class="bval">4,654</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill emd" style="width:90%"></span></div><div class="bval">4,702</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:94%"></span></div><div class="bval">~4,894</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~5,150</div></div>
+    </div>
+    <div class="legend"><span>Revenue kept climbing even through the overseas trouble — the top line is not where the FY26 problem shows up.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Consolidated profit (PAT) — where FY26 hurt</div>
+    <div class="c-sub">Group net profit (₹ Crore); the FY26 dip is the overseas clean-up, not the India business</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill brand" style="width:93%"></span></div><div class="bval">442</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">476</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill cer" style="width:63%"></span></div><div class="bval">~299</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill bad" style="width:35%"></span></div><div class="bval">~168</div></div>
+    </div>
+    <div class="legend"><span>Contrast this with <strong>standalone (India) PAT of ~₹416 Cr, up ~29%</strong> in FY26 — the divergence is the whole story of the year.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~21.5%</div><div class="msl">Standalone (India) EBITDA margin, FY26 — up from ~17% a few years ago</div></div>
+    <div class="ms gold"><div class="msv">~₹416 Cr</div><div class="msl">Standalone PAT (India), FY26 (+29%) — the "clean" earnings power</div></div>
+    <div class="ms red"><div class="msv">~10–11%</div><div class="msl">Consolidated ROCE, FY26 — depressed by the overseas drag</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to read the multiple — and the metric that settles it</div>
+    <p>On the depressed <em>consolidated</em> FY26 profit, CUMI screens at a very high P/E (in the high-70s to triple digits) — but that ratio is distorted, because the denominator was hit by one-time charges. On the <em>standalone</em> India earnings of ~₹416 Cr against a ~₹20,500 Cr market cap, the multiple is closer to the <strong>~45–50× range</strong> — still a clear premium, the kind of price a market pays for a Murugappa-quality compounder with an embedded SiC option. The number that will actually settle the thesis is not the headline P/E but <strong>the reconvergence of consolidated PAT toward standalone PAT</strong> — i.e. the overseas book turning from a drag into a contributor — <em>plus</em> concrete progress on high-purity SiC and steady segment margins (especially Ceramics holding its EBIT lead). Get those, and the premium is earned by rising quality; miss them, and the "cheap standalone / expensive consolidated" gap simply persists.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A defensively diversified industrial franchise with one clean-up to finish and one option to prove.</p>
+
+  <p class="lead">Strip it back and CUMI is a <strong>high-quality, vertically integrated maker of the consumables and materials that Indian manufacturing runs on</strong>, controlled by a patient owner, with a genuine — if unproven — call on the silicon-carbide-for-electronics theme. The near-term debate is about the overseas clean-up and the premium price; the long-term debate is about how far up the value chain the SiC know-how can climb.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Consumable, diversified demand</strong> — razor-blade economics tied to broad industrial activity, no single-customer risk, riding India's manufacturing and "China+1" tailwinds.</li>
+        <li><strong>Vertical integration moat</strong> — owns its SiC/alumina mineral base; cost, quality and supply security no pure abrasive rival has.</li>
+        <li><strong>Ceramics margin engine</strong> — the smallest segment earns the most profit, and the technical/defence ceramics mix is climbing.</li>
+        <li><strong>The SiC option</strong> — decades of silicon-carbide know-how and furnaces as a low-cost starting point for high-purity, electronics-grade material.</li>
+        <li><strong>Clean India business + strong owner</strong> — standalone PAT +29%, net-cash balance sheet, Murugappa stewardship.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Cyclicality</strong> — abrasives and minerals volumes fall with any real industrial slowdown; electrominerals margins swing with power and commodity prices.</li>
+        <li><strong>The Russia anchor</strong> — Volzhsky brings sanctions friction, ruble risk and reputational overhang that won't fully clear soon.</li>
+        <li><strong>A patchy overseas record</strong> — the FY26 Awuko/Foskor write-offs are a reminder that CUMI's global acquisitions have underdelivered.</li>
+        <li><strong>Premium valuation</strong> — even on clean India earnings the stock is richly priced; the SiC option is partly in the price but far from proven.</li>
+        <li><strong>Cleaner alternative exists</strong> — Grindwell Norton offers the abrasives exposure with steadier margins and none of the overseas mess.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>CUMI is two things at once wearing one ticker: a <strong>quietly excellent Indian materials compounder</strong> and a <strong>lumpy global portfolio it is still tidying up</strong>. The India franchise is doing the compounding; the overseas book is doing the drag; and underneath both sits a silicon-carbide capability that could, one day, matter far more than any grinding wheel. The next real milestones are concrete and namable: the <strong>full exit of the Awuko/Foskor loss-makers and stabilisation of Volzhsky</strong> (so group profit reconverges with India's), and the <strong>first credible qualification of high-purity, electronics-grade SiC</strong>. Until those land, you are buying a good business at a full price with a free option attached — and watching to see whether the grit that grinds India's factories can also end up inside its electric cars.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Murugappa / Carborundum Universal — Q4 &amp; Full-Year FY2025-26 press release and results (year ended Mar 2026).</li>
+    <li>Carborundum Universal — Q4 FY26 earnings call &amp; "Aspiration 2030" update (InvestyWise transcript summary).</li>
+    <li>Screener.in — Carborundum Universal consolidated financials (revenue, PAT, ROCE, market cap, shareholding).</li>
+    <li>ICICI Securities — Carborundum Universal Q4 FY25 results note (segment revenue and EBIT shares).</li>
+    <li>Whalesbook / ScanX — "CUMI FY26 PAT rises 29.4% to ₹416 Cr (standalone); overseas write-offs hit profit."</li>
+    <li>Tradebrains — "Carborundum Universal vs Grindwell Norton" peer comparison.</li>
+    <li>Whalesbook — Grindwell Norton FY26 results (revenue, EBIT margin, PAT).</li>
+    <li>Free Press Journal / Daijiworld — "CUMI's Russian operations may not be largely affected" (Volzhsky/VAW, 2022).</li>
+    <li>OpenSanctions / OFAC — Volzhsky Abrasive Works sanctions status.</li>
+    <li>Wikipedia — Carborundum Universal &amp; Murugappa Group (founding history, 1954 JV); CUMI EMD site (silicon-carbide products).</li>
+    <li>Bosch Semiconductors / Microchip — background on silicon carbide in EV power electronics.</li>
+    <li>OpenPR / India Abrasives Industry report — market-share context (CUMI, Grindwell, Wendt, Asahi Diamond).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports around FY26 (year ended March 2026), and may contain errors or become outdated; standalone (India) and consolidated (group) numbers differ materially for this company, so check which basis a figure is on. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "CARBORUNIV";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
