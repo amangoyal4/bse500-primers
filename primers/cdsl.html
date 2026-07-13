@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central Depository Services (CDSL) — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F5;
+    --paper-2:#FBFCFB;
+    --card:#FFFFFF;
+    --ink:#14201F;
+    --ink-soft:#4E5F62;
+    --ink-faint:#84959A;
+    --brand:#0F5666;          /* secure-vault deep teal-navy */
+    --brand-bright:#1C8299;   /* capital-markets bright teal */
+    --gold:#C08A2D;           /* secure bronze-gold accent */
+    --indigo:#3B4E8C;         /* rival / NSDL indigo */
+    --slate:#5A6B72;
+    --line:#D9DEDD;
+    --line-soft:#E7EBEA;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4F1F0;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#2f2205;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF2E1;border:1px solid #EEDCB8;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#946514;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"▸";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#463407;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F9F8;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAEEED;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0F5666,#1C8299);}
+  .fill.gold{background:linear-gradient(90deg,#C08A2D,#D6A54A);}
+  .fill.teal{background:linear-gradient(90deg,#1C8299,#3AA7BC);}
+  .fill.indigo{background:linear-gradient(90deg,#3B4E8C,#5568A8);}
+  .fill.slate{background:linear-gradient(90deg,#5A6B72,#7C8B92);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.good{background:linear-gradient(90deg,#2A8359,#3AA06E);}
+  .fill.ink{background:linear-gradient(90deg,#33434a,#566169);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.n1{background:var(--indigo);}
+  .node.n2{background:var(--brand-bright);}
+  .node.n3{background:var(--brand);}
+  .node.n4{background:var(--gold);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF2E1;color:#4a3712;}
+  .note.gold b{color:#946514;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#946514;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3F1;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Demat 101: what a depository is</a></li>
+    <li><a href="#p2"><span class="n">02</span> How CDSL makes money</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; its owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The CDSL–NSDL duopoly</a></li>
+    <li><a href="#p5"><span class="n">05</span> The retail-investing boom</a></li>
+    <li><a href="#p6"><span class="n">06</span> Toll-booth economics</a></li>
+    <li><a href="#p7"><span class="n">07</span> Beyond the core: KYC &amp; more</a></li>
+    <li><a href="#p8"><span class="n">08</span> The numbers</a></li>
+    <li><a href="#p9"><span class="n">09</span> Valuation: the premium debate</a></li>
+    <li><a href="#p10"><span class="n">10</span> The risks</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, bull &amp; bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: CDSL · BSE: not listed</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Central Depository Services, <em>the toll-booth on India's bull market</em></h1>
+  <p class="dek">A complete walk through one of India's two securities depositories — the "digital vault" that holds your shares in electronic form. How a demat account actually works, why CDSL is a regulated near-monopoly with monopoly-like margins, why every new retail investor makes it money almost for free, and whether a debt-free, ~50%-margin compounder is worth ~60× earnings.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,239 <small>Cr</small></div><div class="l">Total income (FY26, cons.)</div></div>
+    <div class="cell"><div class="v">18.0 <small>crore</small></div><div class="l">Demat accounts (Mar '26)</div></div>
+    <div class="cell"><div class="v">~₹455 <small>Cr</small></div><div class="l">Net profit (FY26, cons.)</div></div>
+    <div class="cell"><div class="v">~₹28,700 <small>Cr</small></div><div class="l">Market cap (Jun '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">13 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — consolidated income ₹1,239 Cr, PAT ₹455 Cr (down 14% as market activity cooled), 18.0 crore demat accounts, ₹12.75 dividend; added the CDSL–NSDL duopoly and market-cyclicality sections.</div>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice</p>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Central Depository Services (India) Limited — <strong>CDSL</strong> — is one of India's <strong>two securities depositories</strong>: the electronic registries that hold shares, bonds, mutual-fund units and other securities in <strong>dematerialised ("demat") form</strong> and record who owns what. When you buy a share on your Zerodha or Groww app, no paper certificate changes hands — the ownership is simply updated in a depository's books. CDSL runs the ledger behind a majority of India's retail investors.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is critical market infrastructure with monopoly-like economics.</strong> CDSL and rival NSDL form a regulated <strong>duopoly</strong> — there are only two depositories in the whole country. CDSL is now the <strong>larger by number of demat accounts</strong> (~18.0 crore, roughly <strong>4 in 5 of all accounts</strong>), because it powers most discount-broker sign-ups (Zerodha, Groww, Angel One, Upstox). It is a <strong>toll-booth</strong>: it takes a small cut of the market's plumbing, at ultra-high margin, with almost no capital tied up.</li>
+    <li><strong>It is the purest listed play on India's retail-investing boom.</strong> Every new investor, every new demat account, every IPO and every share transfer feeds CDSL's revenue — and the marginal cost of one more account is close to zero. Revenue grew to <strong>~₹1,239 Cr (FY26 consolidated)</strong> at a roughly <strong>50% EBITDA margin</strong>, with <strong>zero debt</strong> and <strong>~₹2,850 Cr of cash and investments</strong>. It pays generous dividends (₹12.75/share for FY26).</li>
+    <li><strong>Its profit can fall even as the franchise grows.</strong> FY26 net profit actually <em>dropped ~14%</em> to <strong>~₹455 Cr</strong>, because a big chunk of revenue is <strong>market-linked</strong> — transaction charges, IPO and corporate-action fees — and market activity cooled after a frenzied FY25 (and SEBI's curbs on retail F&O speculation bit). That cyclicality, plus a <strong>SEBI-regulated pricing regime</strong> and a rich <strong>~60× P/E</strong>, is the whole debate.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Think of the stock market as a giant shopping mall. The exchanges (NSE, BSE) are the <em>shops</em> where trades happen. But someone has to keep the master record of who owns which goods once the sale is done, and hand ownership from seller to buyer. That record-keeper is the <strong>depository</strong>. India, by design, has exactly two of them — CDSL and NSDL — both tightly regulated by SEBI. CDSL is the one most new small investors end up on. It doesn't take market risk, doesn't lend, doesn't hold inventory; it just charges tiny fees on an enormous and growing flow of accounts and transactions. That makes it a rare thing: a debt-free, cash-gushing, near-monopoly "picks-and-shovels" business — but one whose fees are set under a regulator's eye and whose busiest quarters depend on how excited the public is about stocks.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Demat 101: what a depository actually is</h2></div>
+  <p class="part-sub">No finance degree required — just one idea about where your shares live.</p>
+
+  <p class="lead">Before the late 1990s, buying a share in India meant receiving a <strong>physical paper certificate</strong>. It could be forged, torn, lost in the post, or take weeks to transfer. Settlement was slow and fraud was common. India fixed this by <strong>dematerialising</strong> securities — converting paper certificates into electronic entries — and creating <strong>depositories</strong> to hold those entries centrally. CDSL was set up for exactly this, receiving its certificate of commencement from SEBI in <strong>February 1999</strong>.</p>
+
+  <h3>The four players you need to know</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Who's who in the demat system</caption>
+    <thead><tr><th>Player</th><th>What they do (in plain English)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Depository<br><small>CDSL / NSDL</small></td><td>The central electronic vault and registry. Holds your securities in demat form and keeps the master record of ownership. Think of it as the bank of the securities world — but for shares, not cash.</td></tr>
+      <tr><td class="t-strong">Depository Participant (DP)</td><td>Your point of contact — usually your broker (Zerodha, Groww, Angel One) or bank. You never deal with CDSL directly; you open a demat account <em>through</em> a DP, which is CDSL's agent. CDSL had <strong>585+ DPs</strong> at FY26.</td></tr>
+      <tr><td class="t-strong">Issuer</td><td>The company whose shares exist. Every listed company registers its securities with a depository so they can be held electronically — and <em>pays the depository an annual fee</em> for the privilege.</td></tr>
+      <tr><td class="t-strong">Investor (you)</td><td>The "beneficial owner" (BO). Your demat account holds your shares; the depository's books say they're yours.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bank analogy that makes it click</div>
+    <p>A demat account is to your shares what a bank account is to your money. Your bank doesn't keep a specific pile of banknotes with your name on it — it keeps an <em>electronic ledger entry</em> saying you have ₹X. When you pay someone, the bank debits your entry and credits theirs; no cash physically moves. A depository does the identical thing for securities: it holds an electronic entry saying you own 100 shares of Reliance, and when you sell, it debits your account and credits the buyer's. CDSL is, in effect, a <strong>bank for shares</strong> — the record-keeping utility that makes fast, safe, paperless trading possible. And like a bank running the payments rails, it earns a small, steady toll on the flow.</p>
+  </div>
+
+  <h3>What sits in the vault</h3>
+  <p>It isn't only equity shares. CDSL holds <strong>equities, bonds and debentures, mutual-fund units, government securities, treasury bills, commercial paper, certificates of deposit</strong> and more — and, via subsidiaries, even <strong>insurance policies</strong> in electronic form. Anything that can be "held" as a financial asset can, increasingly, be dematerialised and parked in the depository — which quietly widens the toll-booth's road every year.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>How CDSL makes money</h2></div>
+  <p class="part-sub">Six little tolls on the same enormous flow — read this once and the model clicks.</p>
+
+  <p class="lead">CDSL's revenue is a bundle of <strong>small, recurring charges</strong> levied at different points of the securities lifecycle. No single fee is large; collectively, on a base of 18 crore accounts and billions of transactions, they add up to a high-margin annuity. Crucially, some of these fees are <strong>stable and recurring</strong> (they arrive whether or not markets are busy), and others are <strong>activity-linked</strong> (they rise and fall with trading, IPOs and market mood). Knowing which is which explains the whole earnings profile.</p>
+
+  <div class="chart">
+    <div class="c-title">Where the revenue comes from (approximate mix)</div>
+    <div class="c-sub">Standalone operating revenue by stream — illustrative share of the core depository business</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Annual issuer charges<small>recurring · companies pay yearly</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~31%</div></div>
+      <div class="bar-row"><div class="blab">Transaction charges<small>activity-linked</small></div><div class="track"><span class="fill bad" style="width:88%"></span></div><div class="bval">~27%</div></div>
+      <div class="bar-row"><div class="blab">Online data / KYC-tech<small>data &amp; other services</small></div><div class="track"><span class="fill teal" style="width:63%"></span></div><div class="bval">~20%</div></div>
+      <div class="bar-row"><div class="blab">IPO &amp; corporate action<small>market-linked</small></div><div class="track"><span class="fill bad" style="width:37%"></span></div><div class="bval">~11%</div></div>
+      <div class="bar-row"><div class="blab">e-CAS / account statements<small>recurring</small></div><div class="track"><span class="fill gold" style="width:14%"></span></div><div class="bval">~4%</div></div>
+      <div class="bar-row"><div class="blab">e-voting &amp; other<small>recurring / data</small></div><div class="track"><span class="fill slate" style="width:11%"></span></div><div class="bval">~3%</div></div>
+    </div>
+    <div class="legend"><span><i style="background:#BC4630"></i>Red bars = <strong>market-linked</strong> (transaction + IPO/corporate-action ≈ a big slice that swings with market activity). The rest is stickier annuity revenue. Shares are approximate and shift year to year.</span></div>
+  </div>
+
+  <h3>The tolls, decoded</h3>
+  <ul class="clean">
+    <li><strong>Annual issuer charges</strong> — every company whose securities are held with CDSL pays a yearly fee (scaled to its number of folios / market value). This is the <em>gold-standard annuity</em>: it recurs regardless of whether anyone trades, and it grows as more companies list and more securities are dematerialised.</li>
+    <li><strong>Transaction charges</strong> — a small fee each time securities are <em>debited</em> from a demat account (i.e. on sales/transfers). This is the biggest <em>activity-linked</em> line: busy, speculative markets mean more transactions and more fees; quiet markets mean fewer.</li>
+    <li><strong>IPO &amp; corporate-action fees</strong> — CDSL earns when new shares are issued (IPOs, rights, bonuses) and when corporate actions (dividends, splits, mergers) are processed. A red-hot IPO market is a direct tailwind; an IPO drought is a direct headwind.</li>
+    <li><strong>Online data charges</strong> — fees for data and technology services CDSL sells to market participants, including KYC-verification pulls. A fast-growing, sticky, tech-flavoured line.</li>
+    <li><strong>Account-maintenance &amp; e-CAS</strong> — charges tied to holding and servicing accounts (statements, e-CAS consolidated account statements). Recurring and account-base-driven.</li>
+    <li><strong>e-voting, insurance repository &amp; other</strong> — CDSL runs the dominant <strong>e-voting</strong> platform companies use for shareholder resolutions, an <strong>insurance repository</strong> (policies held electronically), and other data/tech services — small today but optionality on top.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the mix matters more than the total</div>
+    <p>The single most important thing to understand about CDSL's revenue is the split between <strong>annuity and activity</strong>. Roughly <strong>a third to a half</strong> of the core depository revenue (transaction charges + IPO/corporate-action fees) is <em>directly geared to how active the market is</em>. In a euphoric year — heavy trading, a flood of IPOs — those lines surge and profits look spectacular. In a cooler year they shrink, and profit can fall even though the account base keeps rising (exactly what happened in FY26). The recurring lines — issuer charges, account maintenance, data — provide a rising floor. Bulls focus on the growing floor; bears focus on the swinging roof.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A stock exchange built it — which creates one genuinely unusual quirk.</p>
+
+  <p class="lead">CDSL was <strong>promoted by BSE Limited</strong> (the Bombay Stock Exchange) in the late 1990s, alongside a group of leading banks, to bring a second depository and lower-cost demat services to Indian investors. It went public on <strong>30 June 2017 — the first depository to list anywhere in the Asia-Pacific region</strong>. Ownership is deliberately <strong>dispersed</strong>, because SEBI's rules for market infrastructure sharply cap how much any one shareholder can own.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1999</div><div class="ev">CDSL receives its SEBI certificate of commencement (Feb 1999), <strong>promoted by BSE Limited</strong> with major banks as co-sponsors — India's second depository.</div></li>
+    <li><div class="yr">2000s</div><div class="ev">Builds out the DP network and dematerialisation of Indian securities; positions itself as the lower-cost, retail-friendly depository.</div></li>
+    <li class="major"><div class="yr">Feb 2022</div><div class="ev">Crosses <strong>6 crore active demat accounts</strong> — the first Indian depository to do so, powered by the discount-broking boom.</div></li>
+    <li class="major"><div class="yr">30 Jun 2017</div><div class="ev"><strong>IPO / listing on NSE</strong> — the first listed depository in Asia-Pacific and only the second in the world.</div></li>
+    <li><div class="yr">FY25</div><div class="ev">A frenzied bull market drives record trading, IPOs and account additions; consolidated PAT peaks near <strong>₹526 Cr</strong>.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Account base reaches <strong>~18.0 crore</strong> (+2.72 crore added); but market activity cools and SEBI's F&amp;O curbs bite — consolidated PAT <em>falls</em> ~14% to <strong>~₹455 Cr</strong> even as the franchise grows. Rival <strong>NSDL lists</strong> (Aug 2025), giving investors two pure depository stocks for the first time.</div></li>
+  </ul>
+
+  <div class="note gold"><b>The listing quirk — read this carefully:</b> Because CDSL's promoter is <strong>BSE</strong>, CDSL is listed <strong>only on the NSE</strong> (symbol <strong>CDSL</strong>) — it does <em>not</em> trade on the BSE. It would be awkward for a depository to list on the very exchange that owns it. So <strong>CDSL has no BSE listing</strong> — "NSE: CDSL" is the only real, tradable line. (The similar-looking BSE scrip code 543328 in fact belongs to an unrelated company, Krsnaa Diagnostics.)</div>
+
+  <h3>Ownership &amp; the SEBI cap</h3>
+  <p>CDSL is a <strong>Market Infrastructure Institution (MII)</strong>, a category SEBI treats as a public utility. Under the Depositories &amp; Participants Regulations, no single shareholder may own too much: broadly <strong>5% for individuals/most entities and up to 15% for approved institutions</strong> (an exchange, bank, insurer, another depository). This is deliberate — it prevents any one owner from controlling a piece of critical national plumbing.</p>
+  <ul class="clean">
+    <li><strong>BSE Limited</strong> — the promoter, holding at/near the <strong>15% institutional cap</strong>. It cannot own more.</li>
+    <li><strong>Other large holders</strong> — a spread of institutions including <strong>Standard Chartered Bank, HDFC Bank</strong>, and domestic funds such as <strong>PPFAS Mutual Fund</strong> and <strong>LIC</strong>. No dominant controller; the free float is large.</li>
+    <li><strong>Governance</strong> — as an MII, CDSL runs under an unusually strict SEBI governance code (independent "public-interest" directors, conduct rules, fee oversight). This is a double-edged sword: it protects the franchise's integrity and its licence, but it also means SEBI, not CDSL, has the final say on much of its pricing.</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The CDSL–NSDL duopoly</h2></div>
+  <p class="part-sub">Two vaults, one country — and they specialise in very different customers.</p>
+
+  <p class="lead">India has exactly <strong>two depositories</strong>: CDSL and the older <strong>NSDL</strong> (National Securities Depository Limited, set up in 1996, promoted by NSE/IDBI). No third is licensed. This is a textbook <strong>regulated duopoly</strong> — high barriers (you need a SEBI licence, deep trust, and national-scale technology), rational competition, and no price war to zero. But the two are <em>not</em> mirror images: they dominate opposite ends of the market.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The two depositories serve different customers</div>
+    <div class="flow-row">
+      <div class="node n1"><div class="ntag">NSDL's turf</div><div class="nname">Institutions &amp; big money</div><div class="nwho">FPIs, corporates, bonds, large investors. Fewer accounts, vast value.</div></div>
+      <div class="arrow">vs</div>
+      <div class="node n2"><div class="ntag">CDSL's turf</div><div class="nname">Retail &amp; discount brokers</div><div class="nwho">Zerodha, Groww, Angel One, Upstox. Tens of crore of small accounts.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n3"><div class="ntag">Result · CDSL</div><div class="nname">Wins on account count</div><div class="nwho">~4 in 5 demat accounts; ~85%+ of new ones.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n4"><div class="ntag">Result · NSDL</div><div class="nname">Wins on value held</div><div class="nwho">~87% of assets under custody by rupee value.</div></div>
+    </div>
+    <div class="flow-note">CDSL rules by <em>number of investors</em>; NSDL rules by <em>value of assets</em>. Both statements are true at once — that's the key to reading their financials.</div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Two ways to keep score — and each depository wins one</div>
+    <div class="c-sub">Approximate market share, FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Demat accounts<small>CDSL</small></div><div class="track"><span class="fill brand" style="width:80%"></span></div><div class="bval">~80%</div></div>
+      <div class="bar-row"><div class="blab">Demat accounts<small>NSDL</small></div><div class="track"><span class="fill indigo" style="width:20%"></span></div><div class="bval">~20%</div></div>
+      <div class="bar-row"><div class="blab">Assets under custody<small>CDSL</small></div><div class="track"><span class="fill brand" style="width:13%"></span></div><div class="bval">~13%</div></div>
+      <div class="bar-row"><div class="blab">Assets under custody<small>NSDL</small></div><div class="track"><span class="fill indigo" style="width:87%"></span></div><div class="bval">~87%</div></div>
+    </div>
+    <div class="legend"><span>CDSL held ~18.0 crore accounts vs NSDL's ~4.3 crore; but NSDL's custody value (~₹520 lakh crore) dwarfs CDSL's (~₹77 lakh crore) because it holds institutional/FPI assets and most bonds.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why CDSL's "worse" AUC share is actually its strength</div>
+    <p>At first glance NSDL looks bigger — it custodies six times the rupee value. But CDSL's revenue leans on <strong>volume of accounts and transactions</strong>, not the value of assets sitting still. It is the retail investor — opening an account on a phone app, trading small lots, participating in IPOs — who generates the transaction, IPO and data fees. That is precisely the segment <strong>growing fastest</strong> in India, and the one CDSL <em>owns</em>: it captures the large majority of every new account opened. NSDL's institutional custody is enormous but grows slowly and generates comparatively little per-transaction fee. So CDSL, the "smaller" depository by assets, is the higher-growth, higher-margin, more retail-geared franchise — which is why the market has historically valued it richly. NSDL's own listing in August 2025 now gives investors a direct, comparable yardstick for the first time.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The retail-investing boom — the growth engine</h2></div>
+  <p class="part-sub">The single structural force behind the whole investment case.</p>
+
+  <p class="lead">CDSL is, more than anything, a <strong>leveraged bet on Indians putting savings into the stock market</strong>. For most of the country's history, households kept wealth in gold, property and bank deposits. Over the last decade — cheap smartphones, zero-brokerage discount apps, UPI-easy money movement, rising incomes, and a long bull market — a structural shift began: tens of millions of first-time investors opened demat accounts. CDSL sits directly under that firehose, because the discount brokers driving it (Zerodha, Groww, Angel One, Upstox) overwhelmingly route new accounts to CDSL.</p>
+
+  <div class="chart">
+    <div class="c-title">CDSL demat accounts — a decade of compounding</div>
+    <div class="c-sub">Approximate active demat accounts (crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY17 (IPO year)</div><div class="track"><span class="fill slate" style="width:7%"></span></div><div class="bval">~1.2</div></div>
+      <div class="bar-row"><div class="blab">FY20</div><div class="track"><span class="fill slate" style="width:12%"></span></div><div class="bval">~2.0</div></div>
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill teal" style="width:35%"></span></div><div class="bval">~6.3</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill teal" style="width:63%"></span></div><div class="bval">~11.3</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:85%"></span></div><div class="bval">~15.3</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~18.0</div></div>
+    </div>
+    <div class="legend"><span>~2.72 crore accounts added in FY26 alone; the base reached ~18.38 crore by May 2026. Figures are approximate active-account counts.</span></div>
+  </div>
+
+  <p>The mechanism that makes this so powerful for shareholders is <strong>operating leverage</strong>. CDSL's costs — its technology platform, its people, its data centres — are largely <em>fixed</em>. Once the system is built, servicing one more demat account costs almost nothing. So as the account base swells from a handful of crore toward 20+ crore, the recurring fee streams (account maintenance, issuer charges, data) scale up while costs barely move, and the incremental revenue drops almost straight to profit.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~18.0 cr</div><div class="msl">Demat accounts at Mar 2026 — India's largest depository by count</div></div>
+    <div class="ms gold"><div class="msv">~2.72 cr</div><div class="msl">Net new accounts added in FY26 despite a cooler market</div></div>
+    <div class="ms green"><div class="msv">585+</div><div class="msl">Depository participants (brokers/banks) distributing CDSL</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Under-penetration is the long runway</div>
+    <p>Even at 18 crore accounts, India remains <strong>strikingly under-invested in equities</strong>. Accounts belong to a modest share of the population, many households still hold most wealth in property, gold and deposits, and the number of <em>unique</em> investors is smaller still (many people hold multiple accounts). Compared with developed markets, the share of household savings in equities is low and rising. If that "financialisation of savings" continues for another decade — the base case most bulls hold — the demat account base keeps compounding, and CDSL, as the default rail for new retail investors, keeps collecting a bigger toll. The engine isn't the stock market's level; it's the <em>number of participants</em>, which has a much longer secular runway.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Toll-booth economics: why the margins are so high</h2></div>
+  <p class="part-sub">Capital-light, cash-rich, and structurally hard to attack.</p>
+
+  <p class="lead">CDSL is close to a textbook example of a <strong>capital-light compounder</strong>. It doesn't build factories, carry inventory, extend loans, or take market risk. It runs a technology platform and a licence. That produces a financial profile most businesses can only dream of: EBITDA margins around <strong>50%+</strong>, minimal capital expenditure, negative working capital, and a balance sheet with <strong>no debt and ~₹2,850 Cr of cash and investments</strong>.</p>
+
+  <h3>The four features of the moat</h3>
+  <ul class="clean">
+    <li><strong>Regulatory barrier</strong> — you cannot simply start a depository. It requires a SEBI licence, national infrastructure, and years of trust. Only two exist. That is the deepest moat of all.</li>
+    <li><strong>Network effects &amp; switching costs</strong> — brokers, companies and investors are all wired into CDSL's system; moving is disruptive and rare. Companies list their securities once; investors keep accounts for years.</li>
+    <li><strong>Extreme operating leverage</strong> — fixed technology cost base; near-zero marginal cost per extra account or transaction. Growth in volume flows to profit.</li>
+    <li><strong>Capital-light cash generation</strong> — little reinvestment needed, so almost all profit becomes free cash flow, funding fat dividends and a growing cash pile rather than capex or debt service.</li>
+  </ul>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~50%+</div><div class="msl">EBITDA margin — among the highest of any listed Indian company</div></div>
+    <div class="ms green"><div class="msv">Zero</div><div class="msl">Debt — funded entirely by its own cash generation</div></div>
+    <div class="ms"><div class="msv">~₹2,850 Cr</div><div class="msl">Cash &amp; investments on the balance sheet</div></div>
+  </div>
+
+  <blockquote>A depository takes no market risk and needs almost no capital — it simply charges a small, recurring toll on an ever-widening river of accounts, transactions and securities.</blockquote>
+
+  <p>The flip side of "capital-light" is that CDSL has limited ways to <em>redeploy</em> its cash at high returns — it can't build ten new hospitals or a giant plant. So it returns most profit as dividends and accumulates cash. That's shareholder-friendly, but it also means growth is tethered to the market's own expansion (more accounts, more securities, more transactions) rather than to reinvestment the company controls.</p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Beyond the core: KYC, insurance &amp; data</h2></div>
+  <p class="part-sub">The subsidiaries that widen the moat — especially a quiet KYC near-monopoly.</p>
+
+  <p class="lead">CDSL is not only the depository. Through subsidiaries it runs several adjacent <strong>market-utility</strong> businesses that ride the same rails and deepen its grip on India's capital-market plumbing. The most important is <strong>CDSL Ventures Limited (CVL)</strong>, a dominant KYC registry.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The CDSL group beyond the core depository</caption>
+    <thead><tr><th>Business</th><th>What it does</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">CDSL Ventures (CVL)<br><small>KYC Registration Agency</small></td><td>India's first and largest <strong>KRA</strong> — a central registry of investor KYC records used by brokers, mutual funds and other intermediaries so an investor's identity is verified once and reused everywhere.</td><td>A second toll-booth on the <em>same</em> retail boom. CVL has crossed <strong>10 crore KYC records</strong> — a dominant, sticky, data-rich franchise that grows with every new investor.</td></tr>
+      <tr><td class="t-strong">CDSL Insurance Repository</td><td>Holds <strong>insurance policies in electronic ("demat") form</strong>, letting policyholders keep all cover in one digital account.</td><td>Extends the "digital vault" idea from securities to insurance — a long-dated optionality as insurance dematerialises.</td></tr>
+      <tr><td class="t-strong">e-Voting platform</td><td>The electronic system companies use for <strong>shareholder voting</strong> on resolutions (AGMs, mergers, etc.).</td><td>Near-ubiquitous in corporate India; a recurring, low-cost, high-stickiness data service.</td></tr>
+      <tr><td class="t-strong">Data &amp; technology services</td><td>Online data access, verification pulls, and other tech services sold to market participants.</td><td>Fast-growing, high-margin, and increasingly the "third leg" alongside issuer and transaction income.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why CVL is the underrated jewel</div>
+    <p>Every investor in India must be <strong>KYC-verified</strong> before they can invest — and doing that check individually for every broker and fund would be enormously wasteful. So the system created <strong>KRAs</strong> (KYC Registration Agencies): verify once, store centrally, reuse everywhere. CVL was the first and is the biggest, sitting on <strong>10+ crore KYC records</strong>. It's the same business logic as the depository — a central, regulated, trust-based registry that every new market entrant must pass through — and it grows off the identical retail-investing wave. In effect, CDSL taxes the retail boom <em>twice</em>: once when you open a demat account, and again when your identity is verified to invest at all. That layering is a quiet, powerful part of the moat that headline "depository" descriptions miss.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The numbers</h2></div>
+  <p class="part-sub">A high-quality franchise — that just had a reminder of its cyclicality.</p>
+
+  <p class="lead">CDSL's long-term financials are the picture of a capital-light compounder: rapid revenue growth, ~50% margins, no debt, growing cash. But FY26 illustrated the catch vividly — <strong>revenue rose while profit fell</strong>, because the market-linked lines cooled after an exceptional FY25.</p>
+
+  <div class="chart">
+    <div class="c-title">Consolidated total income</div>
+    <div class="c-sub">₹ Crore — the recurring floor keeps rising</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill slate" style="width:44%"></span></div><div class="bval">~620</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill teal" style="width:65%"></span></div><div class="bval">~907</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:97%"></span></div><div class="bval">~1,199</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~1,239</div></div>
+    </div>
+    <div class="legend"><span>FY26 consolidated income grew only ~3% (standalone income grew ~11% to ~₹1,096 Cr) — the slowdown reflects softer transaction and IPO activity vs a blockbuster FY25.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Consolidated net profit (PAT)</div>
+    <div class="c-sub">₹ Crore — FY26 fell ~14% as market activity normalised</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill slate" style="width:52%"></span></div><div class="bval">~276</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill teal" style="width:78%"></span></div><div class="bval">~420</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~526</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill bad" style="width:86%"></span></div><div class="bval">~455</div></div>
+    </div>
+    <div class="legend"><span>Q4 FY26 PAT fell ~20% YoY to ~₹80 Cr. The dip is a feature, not a break — it shows how much of the profit is geared to market activity.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>FY26 at a glance (year ended March 2026)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY26</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Total income (consolidated)</td><td class="num">~₹1,239 Cr</td><td>+3% YoY; standalone ~₹1,096 Cr (+11%)</td></tr>
+      <tr><td class="t-strong">Net profit (consolidated)</td><td class="num">~₹455 Cr</td><td>−14% YoY (from ~₹526 Cr)</td></tr>
+      <tr><td class="t-strong">Net profit (standalone)</td><td class="num">~₹468 Cr</td><td>EPS ~₹22.40</td></tr>
+      <tr><td class="t-strong">EBITDA margin</td><td class="num">~50%</td><td>Ranged ~44–53% across FY26 quarters</td></tr>
+      <tr><td class="t-strong">Dividend</td><td class="num">₹12.75 / sh</td><td>Up from ₹12.50 (FY25); face value ₹10</td></tr>
+      <tr><td class="t-strong">Cash &amp; investments</td><td class="num">~₹2,850 Cr</td><td>Debt-free</td></tr>
+      <tr><td class="t-strong">Demat accounts</td><td class="num">~18.0 cr</td><td>+2.72 cr in FY26</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note gold"><b>Reading FY26 correctly:</b> a 14% profit fall in a business this good is not a crack in the franchise — it is the <em>definition</em> of its cyclicality. FY25 was an extraordinary bull year (heavy trading, a wave of IPOs, high treasury gains on the cash pile). FY26 normalised. The recurring floor (issuer charges, account maintenance, KYC, data) kept climbing with the account base; the activity-linked roof (transactions, IPOs) pulled back. Judge CDSL over a full cycle, not a single peak year.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Valuation: the premium debate</h2></div>
+  <p class="part-sub">A wonderful business at a demanding price — the crux of the whole story.</p>
+
+  <p class="lead">At roughly <strong>₹28,700 Cr market cap</strong> on <strong>~₹455 Cr</strong> of FY26 profit, CDSL trades around <strong>60× trailing earnings</strong> — a rich multiple by any standard, and richer still against a year in which profit <em>fell</em>. The bull–bear argument is almost entirely about whether that premium is deserved.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~₹28,700 Cr</div><div class="msl">Market cap (Jun 2026)</div></div>
+    <div class="ms red"><div class="msv">~60×</div><div class="msl">Trailing P/E — a scarcity premium to defend</div></div>
+    <div class="ms green"><div class="msv">Debt-free</div><div class="msl">~₹2,850 Cr cash; high ROE with little capital employed</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the ~60× multiple</div>
+    <p>The bull case for the premium: CDSL is a <strong>scarce, regulated near-monopoly</strong> with ~50% margins, no debt, high return on capital, and a decade-plus structural tailwind (financialisation of Indian savings). There are only two depositories, and only one is this geared to retail growth. Businesses of that quality — moaty, capital-light, compounding — trade at premiums the world over, and a scarce one in a fast-growing market attracts a "there is no substitute" bid. The bear case: at 60× a <em>cyclically-sensitive</em> earnings stream, the price bakes in years of uninterrupted account and activity growth; a cooler market (like FY26), a SEBI fee cut, or simply a de-rating toward more normal multiples could hurt even if the business is fine. And with NSDL now listed, investors have a direct comparable that can pull CDSL's multiple around. Both sides are right in different environments — which is why the price you pay, and the point in the market cycle, matter as much here as the business quality.</p>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The market-infrastructure peer set (context, not comparables)</caption>
+    <thead><tr><th>Company</th><th>What it is</th><th>Relation to CDSL</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">CDSL</td><td>Retail-geared depository + KYC (CVL)</td><td><em>This company.</em> Larger by accounts; the purest retail-boom toll.</td></tr>
+      <tr><td class="t-strong">NSDL</td><td>The other depository — institutional/FPI-geared</td><td>The direct duopoly rival; listed Aug 2025. Bigger by AUC value, smaller by accounts, slower-growing but steadier.</td></tr>
+      <tr><td class="t-strong">BSE / NSE</td><td>Stock exchanges (BSE is CDSL's promoter)</td><td>Sit upstream in the same plumbing; also toll-booth models geared to market activity.</td></tr>
+      <tr><td class="t-strong">CAMS / KFin Technologies</td><td>Mutual-fund registrars &amp; transfer agents (RTAs)</td><td>Another capital-light, near-duopoly "picks-and-shovels" play on the same savings-financialisation theme.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The risks — read these honestly</h2></div>
+  <p class="part-sub">A great business is not the same as a great investment at any price.</p>
+
+  <p class="lead">CDSL's risks are not about the franchise falling apart — the duopoly and the moat are secure. They are about <strong>the swing in earnings, who controls the pricing, and how much you pay</strong>. Four deserve real weight.</p>
+
+  <h3>1 · Market cyclicality</h3>
+  <p>A large slice of revenue — transaction charges plus IPO and corporate-action fees — is <strong>directly geared to market activity</strong>. In a bear market, or simply a quieter year, trading volumes drop, IPOs dry up, and new-account growth slows. FY26 was a live demonstration: profit fell ~14% despite a bigger account base. On top of ordinary cycles, <strong>SEBI's curbs on retail futures-and-options speculation</strong> (aimed at protecting small traders) indirectly cool the frenetic activity that fattens CDSL's busiest quarters. The recurring floor cushions the fall — but the roof genuinely swings.</p>
+
+  <h3>2 · Regulatory &amp; pricing risk</h3>
+  <p>This is the subtle one. CDSL does <strong>not fully control its own prices</strong>. As a SEBI-regulated MII, its fee structures are set within a regulatory framework, and SEBI has both the mandate and the inclination to keep market-access costs low for investors. A regulator that decides depository charges should fall — to benefit the retail investors it champions — could cap or cut a fee stream with the stroke of a circular. That is a permanent, structural feature of owning a regulated utility: the same rules that protect the monopoly also constrain how much it can charge.</p>
+
+  <h3>3 · Competition &amp; the listed rival</h3>
+  <p>NSDL is the other half of the duopoly and now a <strong>listed company</strong>, sharpening the competition for share (especially if it pushes harder into retail) and giving the market a direct valuation comparable. Duopoly economics are usually stable — neither side benefits from a price war — but any aggressive move by NSDL, or regulatory nudges toward "interoperability," could pressure CDSL's growth or pricing.</p>
+
+  <h3>4 · Operational, cyber &amp; valuation risk</h3>
+  <ul class="clean">
+    <li><strong>It is critical infrastructure</strong> — a serious technology failure, cyber-attack or data breach would be reputationally and operationally severe, and invite regulatory action. Trust <em>is</em> the product.</li>
+    <li><strong>Concentration on retail activity</strong> — CDSL's fortunes are tied to the retail-investing wave continuing; a prolonged risk-off phase in Indian equities would hit it more than a diversified financial.</li>
+    <li><strong>Valuation</strong> — at ~60× earnings, the stock is priced for continued compounding. Any disappointment — a weak market year, a fee cut, a growth wobble — can trigger a sharp de-rating even with the business intact. The valuation itself is a risk.</li>
+  </ul>
+
+  <div class="note"><b>The honest tension in one line:</b> CDSL is a wonderful, moaty, monopoly-like toll-booth — <em>and</em> it is market-cyclical, regulated on price, and richly valued. Both descriptions are true. The investment question is not "is it a good business?" (it plainly is) but "is a cyclical, regulated cash machine worth ~60× at this point in the cycle?" Reasonable people disagree.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuinely high-quality utility on the rails of India's savings shift.</p>
+
+  <p class="lead">Look past any single year and CDSL is one of the cleanest structural stories in Indian financials: a debt-free, capital-light, ~50%-margin near-monopoly that earns a growing toll every time an Indian household moves savings into securities. The long arc — financialisation, more investors, more securities dematerialised, more data and KYC — points up. The debate, as ever, is price and cycle.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Regulated near-monopoly</strong> — one of only two depositories; the deepest possible moat, plus a KYC near-monopoly (CVL) on top.</li>
+        <li><strong>Purest retail-boom play</strong> — captures ~4 in 5 new demat accounts; grows with every new investor and IPO.</li>
+        <li><strong>Exceptional economics</strong> — ~50% margins, zero debt, ~₹2,850 Cr cash, high ROE, huge operating leverage, generous dividends.</li>
+        <li><strong>Long runway</strong> — India remains under-invested in equities; financialisation of savings has a decade-plus to run.</li>
+        <li><strong>Optionality</strong> — KYC, insurance repository, e-voting and data services widen the toll-booth.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Market cyclicality</strong> — a big chunk of revenue swings with trading, IPOs and market mood; FY26 profit fell ~14%.</li>
+        <li><strong>Regulated pricing</strong> — SEBI, not CDSL, has the final say on many fees; a fee cut is a permanent risk.</li>
+        <li><strong>Rich valuation</strong> — ~60× earnings leaves little margin for error and is vulnerable to de-rating.</li>
+        <li><strong>Listed rival &amp; F&amp;O curbs</strong> — NSDL now public and competing; SEBI's retail-speculation curbs cool activity.</li>
+        <li><strong>Capital-light cuts both ways</strong> — little to reinvest in; growth is tethered to the market's own expansion.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>CDSL is a <strong>structurally advantaged, monopoly-like utility</strong> riding one of India's most durable trends — the movement of household savings into financial markets. The business risk is genuinely low: the duopoly is protected, the balance sheet is pristine, the margins are extraordinary. The risks that matter are <em>cyclicality</em> (profit will wobble with the market), <em>regulation</em> (its prices are not fully its own), and <em>valuation</em> (a scarce compounder is priced like one). Watch two things each year: the <strong>net new demat accounts</strong> (is the retail engine still humming?) and the <strong>mix of recurring vs activity-linked revenue</strong> (is the annuity floor rising fast enough to matter when the activity roof swings?). Get comfortable with a cyclical, regulated cash machine at a premium multiple, and CDSL is about as high-quality as toll-booths come. Balk at the price or the cycle, and the same facts read very differently.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>CDSL — "Financial results for Q4 &amp; FY26" media release (year ended Mar 2026), cdslindia.com.</li>
+    <li>Business Standard — "CDSL posts ₹455 cr profit for FY26; consolidated income at ₹1,239 cr" (May 2026).</li>
+    <li>Business Today / MSN — "CDSL Q4 results: consolidated PAT declines 20% to ₹80 crore; ₹12.75/share dividend."</li>
+    <li>Business Upturn / Dailyhunt — "CDSL reports 11% YoY growth in standalone total income for FY26."</li>
+    <li>ThePrint / Business Standard (ANI) — India's demat boom; CDSL account additions, Q3 FY26.</li>
+    <li>Outlook Money — "NSDL adds 59 lakh demat accounts in FY26"; CDSL vs NSDL account &amp; AUC market share.</li>
+    <li>Trade Brains — "CDSL: revenue split of CDSL from each of its business operations."</li>
+    <li>Angel One / CDSL — "CDSL Ventures (CVL) crosses 10 crore KYC records milestone."</li>
+    <li>SEBI — Depositories &amp; Participants Regulations 2018; MII shareholding framework (5% / 15% caps); Oct 2024 monitoring circular.</li>
+    <li>Wikipedia — "Central Depository Services Limited" (listing history, promoter, NSE-only listing).</li>
+    <li>Chittorgarh / Screener — NSDL IPO (Jul–Aug 2025) details and market cap.</li>
+    <li>Screener.in, Groww, companiesmarketcap.com — CDSL market cap, P/E, and consolidated financials.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; verify all numbers against primary sources before relying on them. Note: CDSL is listed only on the NSE (symbol CDSL); it does not trade on the BSE, and the similar-looking BSE scrip code 543328 in fact belongs to an unrelated company. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring (DORMANT).
+     The page holds NO secrets. Once deployed, the button POSTs the company symbol
+     to a free Cloudflare Worker, which (server-side, with a scoped token) triggers
+     the GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "CDSL";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nRefresh isn't wired up yet. Once the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
