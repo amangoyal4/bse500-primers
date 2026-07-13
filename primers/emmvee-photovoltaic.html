@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emmvee Photovoltaic Power — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F6F4;
+    --paper-2:#FBFBF9;
+    --card:#FFFFFF;
+    --ink:#161A22;
+    --ink-soft:#525A69;
+    --ink-faint:#8A93A2;
+    --brand:#2E4C9E;          /* photovoltaic silicon indigo */
+    --brand-bright:#4A6FD0;   /* brighter PV blue */
+    --gold:#D98A2B;           /* warm sunlight amber - accent */
+    --sun:#E8B04B;            /* sunlight */
+    --cell:#3B5BC0;           /* solar-cell blue */
+    --silver:#5E76A8;         /* busbar silver-blue */
+    --line:#DCDFE4;
+    --line-soft:#E9EBEE;
+    --good:#2A7D57;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E6ECFA;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF2E3;border:1px solid #EFDCBB;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"☀";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F8FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAECF1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2E4C9E,#4A6FD0);}
+  .fill.gold{background:linear-gradient(90deg,#D98A2B,#E8B04B);}
+  .fill.cell{background:linear-gradient(90deg,#3B5BC0,#5E7FD8);}
+  .fill.mod{background:linear-gradient(90deg,#5E76A8,#7C93C2);}
+  .fill.sun{background:linear-gradient(90deg,#E8B04B,#F0C570);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4250,#525A69);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:110px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.up{background:var(--silver);}
+  .node.celln{background:var(--cell);}
+  .node.modn{background:var(--brand);}
+  .node.proj{background:var(--gold);color:#2c1e05;}
+  .node.emm{outline:3px solid var(--sun);outline-offset:2px;}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-cell{color:var(--cell);font-weight:600;}
+  .chain-mod{color:var(--brand);font-weight:600;}
+  .chain-up{color:var(--silver);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF2E3;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF0FB;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+  .prov{font-family:"DM Mono",monospace;font-size:11px;color:var(--ink-faint);margin-top:12px;letter-spacing:.02em;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Solar manufacturing 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The business model</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> Capacity &amp; backward integration</a></li>
+    <li><a href="#p5"><span class="n">05</span> ASP, China &amp; the margin spread</a></li>
+    <li><a href="#p6"><span class="n">06</span> The policy wall — ALMM, DCR, duties</a></li>
+    <li><a href="#p7"><span class="n">07</span> Who buys the panels — 500 GW</a></li>
+    <li><a href="#p8"><span class="n">08</span> The competitive set</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The growth runway</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: EMMVEE · BSE: 544608</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Emmvee Photovoltaic Power, <em>the panel factory the state protects</em></h1>
+  <p class="dek">A complete walk through one of India's larger integrated solar-module and solar-cell manufacturers — how a Bengaluru factory turns silicon into the panels that power plants are built from, why owning the <em>cell</em> (not just the module) is the whole margin game, and why this "solar" company's fortunes ride on a government approved-list and import duties far more than on how much sun India gets.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹5,049 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">10.3 <small>GW</small></div><div class="l">Module capacity · 2.94 GW cells</div></div>
+    <div class="cell"><div class="v">~34% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹23,100 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">13 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹5,049 Cr (+116%), EBITDA ₹1,734 Cr (~34% margin), PAT ₹1,082 Cr; order book 9.4 GW; captive TOPCon cell line completed its first full year; added the ALMM cell-mandate and ingot-wafer sections.</div>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice</p>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Emmvee Photovoltaic Power <strong>makes solar panels — and, increasingly, the light-catching cells that go inside them</strong>. It is a <strong>factory business</strong>: it buys silicon wafers, turns them into solar <em>cells</em>, and assembles those cells into finished <em>modules</em> (the blue-black panels you see on rooftops and in fields), which it sells to the companies that actually build power plants. It does <strong>not</strong> produce electricity itself. By manufacturing capacity, Emmvee is among India's larger names and one of only a handful of <strong>pure-play integrated cell-and-module makers</strong> in the country.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>Backward integration is the whole story.</strong> In FY24 Emmvee did ₹952 Cr of revenue but only <strong>₹29 Cr of profit</strong> — because it was assembling modules from cells it had to <em>buy</em>. It then switched on its own <strong>2.94 GW TOPCon solar-cell line</strong>. FY25 revenue jumped to ₹2,336 Cr and profit to ₹369 Cr; FY26 doubled again to <strong>₹5,049 Cr revenue and ₹1,082 Cr PAT</strong>. Same panels — but now Emmvee keeps the cell margin instead of paying it away.</li>
+    <li><strong>A 2025 IPO with an expansion plan attached.</strong> Emmvee listed in November 2025 at ₹217 a share (a ~₹2,900 Cr issue), raising fresh money largely to expand. It is racing module capacity toward <strong>16.3 GW and cell capacity toward 8.9 GW by FY27</strong>, and has committed to a ~₹6,300 Cr push even further upstream — into the <strong>ingots and wafers</strong> it currently imports. Order book at end-FY26: <strong>9.4 GW</strong>.</li>
+    <li><strong>The demand is real, but the moat is written in policy.</strong> Global solar-module prices have collapsed under Chinese overcapacity. What lets an Indian factory earn a fat margin anyway is a wall of government protection — an <strong>Approved List (ALMM)</strong> that effectively bars cheap Chinese modules from subsidised projects, a coming version of that list <strong>for cells</strong>, and steep import duties. Emmvee's profits are a function of that wall as much as of the sun.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Emmvee is, stripped down, a <strong>hardware factory that stamps out a commodity — a watt of solar module — whose global price keeps falling</strong>. On its own, that is a brutal business: China can make the same watt for less. Two things rescue it. First, Emmvee moved <em>up the assembly line</em>, making the cell as well as the panel, so it captures a slice of value it used to hand to a supplier. Second — and this is the part outsiders miss — the Indian government has drawn a legal line around its own market: for a large share of projects, the panel (and soon the cell) <em>must</em> be Indian-made. That single rule is what turns a low-margin assembler into a company earning 34% EBITDA margins. The bet you are being asked to make is on both the factory <em>and</em> the fence around it holding.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Solar manufacturing 101: from sand to a working panel</h2></div>
+  <p class="part-sub">Five steps turn quartz into electricity — and Emmvee sits in the middle two.</p>
+
+  <p class="lead">A finished solar panel is the end of a long, capital-heavy chain. You don't need any physics to follow it — just the order of the steps and, crucially, <strong>where the money and the difficulty concentrate</strong>. Each stage is a distinct industry with its own factories, its own margins, and its own dominant players (overwhelmingly Chinese at the top of the chain).</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The solar value chain — Emmvee occupies the cell + module stages (outlined)</div>
+    <div class="flow-row">
+      <div class="node up"><div class="ntag">Stage 1 · Upstream</div><div class="nname">Polysilicon</div><div class="nwho">Purified silicon. A chemicals business; ~90% Chinese.</div></div>
+      <div class="arrow">→</div>
+      <div class="node up"><div class="ntag">Stage 2 · Upstream</div><div class="nname">Ingots &amp; wafers</div><div class="nwho">Silicon cast into blocks, sliced into thin wafers. Emmvee imports these — for now.</div></div>
+      <div class="arrow">→</div>
+      <div class="node celln emm"><div class="ntag">Stage 3 · Emmvee</div><div class="nname">Solar cells</div><div class="nwho">Wafers turned into light-to-current converters (TOPCon). The scarce, high-value step.</div></div>
+      <div class="arrow">→</div>
+      <div class="node modn emm"><div class="ntag">Stage 4 · Emmvee</div><div class="nname">Modules / panels</div><div class="nwho">Cells wired &amp; glassed into finished panels. Emmvee's core product.</div></div>
+      <div class="arrow">→</div>
+      <div class="node proj"><div class="ntag">Stage 5 · Customer</div><div class="nname">Power projects</div><div class="nwho">IPPs &amp; rooftops buy panels to build plants. This is where ACME Solar sits.</div></div>
+    </div>
+    <div class="flow-note">Value and technical difficulty rise as you move left (upstream). Module assembly (Stage 4) is the easiest to enter and the most commoditised; cell-making (Stage 3) is harder and scarcer. Emmvee's whole strategy is to keep climbing left — from module-only, to cell-plus-module, and next toward wafers.</div>
+  </div>
+
+  <h3>Why "module vs cell" is the distinction that matters</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-mod">A module (panel)</span></strong> is an <em>assembly</em> job — lay cells in a grid, wire them, laminate glass and a frame. Real, but not hard to copy: India has ~50 module makers and roughly <strong>190+ GW</strong> of approved module capacity, far above demand. So module-only margins are thin and getting thinner.</li>
+    <li><strong><span class="chain-cell">A cell</span></strong> is where the actual photovoltaic magic is made — doping and coating a wafer so it converts sunlight to current. It needs cleaner processes, costlier equipment and know-how. India has far <em>less</em> cell capacity (~30 GW approved) than module capacity, so the <strong>cell is the bottleneck — and the bottleneck earns the margin</strong>.</li>
+    <li><strong><span class="chain-up">Wafers &amp; polysilicon</span></strong> are further upstream still — heavy, energy-intensive, almost entirely Chinese. India barely makes them. Whoever cracks domestic wafers next captures the last big slice of imported value; Emmvee has said it intends to.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The one idea to hold onto</div>
+    <p>In solar, <strong>the further upstream you go, the fewer competitors and the fatter the margin — but the harder and more capital-hungry the plant</strong>. Anyone can bolt together modules; making cells is a real barrier; making wafers is a national-scale industrial project. Emmvee's entire investment case is a single sentence: <em>it is walking up that chain, one expensive step at a time, and pocketing the margin at each rung the moment its own capacity replaces an import.</em> Keep this "climb the chain" picture in mind and every later section clicks.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The business model: capacity, utilisation, and the spread per watt</h2></div>
+  <p class="part-sub">A factory earns on four numbers — and one of them isn't revenue.</p>
+
+  <p class="lead">Emmvee is a classic manufacturing business, so it lives and dies by factory arithmetic rather than the "occupancy" or "same-store" logic of services. Four levers explain almost everything, and management is unusually blunt that the headline (revenue) can mislead — what matters is the <strong>margin captured on each watt produced</strong>.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The factory levers</caption>
+    <thead><tr><th>Lever</th><th>What it means (and Emmvee's number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Capacity (GW)</td><td>The nameplate ceiling on annual output. Emmvee: <strong>10.3 GW of module lines, 2.94 GW of cell lines</strong> (Mar 2026), rising fast.</td></tr>
+      <tr><td class="t-strong">Utilisation (%)</td><td>How much of that ceiling is actually running. FY26: module lines just <strong>~43%</strong> (new lines had only partial availability); cell lines <strong>~70%</strong>, hitting ~85% by May 2026. Under-used lines carry full fixed cost.</td></tr>
+      <tr><td class="t-strong">ASP per watt (₹/W)</td><td>The selling price of a watt of module. Volatile and globally falling; Indian DCR-grade modules command a large premium over Chinese. This is the top line of the spread.</td></tr>
+      <tr><td class="t-strong">EBITDA per watt (₹/W)</td><td>The profit kept on each watt after cell and input costs — the number management says to watch <em>instead</em> of revenue. Backward integration widens it.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "EBITDA per watt", not revenue, is the honest gauge</div>
+    <p>A module maker can grow revenue simply by pushing more panels out of the door at a wafer-thin margin — impressive-looking sales, negligible profit. That was essentially Emmvee in FY24: nearly ₹1,000 Cr of revenue, a ~3% net margin. The <em>quality</em> question is how many rupees of gross profit stick to each watt sold. When Emmvee makes the cell itself, it stops paying a supplier's mark-up and keeps that spread; when it merely assembles bought-in cells, the spread is thin. So the company (rightly) tells investors to track <strong>absolute EBITDA and EBITDA/watt</strong>, because a quarter where it sells fewer but more <em>integrated</em> watts can be worth more than a bigger, thinner one. Revenue is the vanity number; the per-watt spread is the sanity number.</p>
+  </div>
+
+  <h3>The two product grades — and why one earns triple</h3>
+  <ul class="clean">
+    <li><strong>DCR modules</strong> — panels built with Indian-made cells, eligible for "Domestic Content Requirement" projects (government-subsidised rooftop, PM-KUSUM, PSU tenders). Scarce, protected, and premium-priced.</li>
+    <li><strong>Non-DCR modules</strong> — panels that may use imported cells; sold to the open market, where they compete much more directly on price with imports.</li>
+    <li><strong>The point of integration:</strong> owning a cell line lets Emmvee build DCR-eligible panels <em>and</em> keep the cell margin — the difference between being a price-taker and a price-maker in the same factory.</li>
+  </ul>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">From solar water-heaters in 1992 to a listed gigawatt-scale panel maker.</p>
+
+  <p class="lead">Emmvee is a <strong>founder-controlled Bengaluru business</strong>, not a private-equity roll-up. Its roots go back to <strong>solar water heaters in 1992</strong>; it moved into photovoltaic modules in the late 2000s and has since ridden — and helped build — India's solar-manufacturing boom. The promoter family retains a commanding <strong>~80% stake</strong> after the IPO, so the people running the factory own most of it.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1992</div><div class="ev">The Emmvee group is founded in Bengaluru by <strong>D.V. Manjunatha</strong>, initially in <strong>solar water heaters</strong> — a foothold in solar thermal long before PV was viable in India.</div></li>
+    <li><div class="yr">2007</div><div class="ev">Emmvee Photovoltaic Power Limited is incorporated to make <strong>PV modules</strong>, entering the panel business as India's solar market begins to stir.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Scales module capacity through the National Solar Mission era; builds a domestic customer base among developers and EPC contractors.</div></li>
+    <li class="major"><div class="yr">FY24–25</div><div class="ev">Commissions its own <strong>TOPCon solar-cell manufacturing</strong> — the pivotal backward-integration step. PAT leaps from ₹29 Cr (FY24) to ₹369 Cr (FY25) as the cell margin is captured in-house.</div></li>
+    <li class="major"><div class="yr">Nov 2025</div><div class="ev"><strong>IPO</strong> — ₹2,900 Cr issue (₹2,144 Cr fresh + ₹756 Cr offer-for-sale) at ₹217/share; lists flat on NSE &amp; BSE on 18 Nov 2025. Fresh proceeds earmarked largely for capacity and debt reduction.</div></li>
+    <li><div class="yr">FY26</div><div class="ev">Module capacity reaches <strong>10.3 GW</strong>, cell <strong>2.94 GW</strong>; revenue ₹5,049 Cr, PAT ₹1,082 Cr; order book 9.4 GW; announces a <strong>~₹6,300 Cr ingot-and-wafer</strong> backward-integration plan.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; leadership</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> <strong>D.V. Manjunatha</strong> (Chairman &amp; Managing Director) and family, holding roughly <strong>80%</strong> post-listing. High promoter ownership means aligned incentives — but also a small public float and concentrated control.</li>
+    <li><strong>Base:</strong> Bengaluru, Karnataka, with manufacturing clustered in and around the region — convenient to South-India power markets and ports for wafer imports.</li>
+    <li><strong>Balance sheet:</strong> after the fresh IPO money, Emmvee ended FY26 in a <strong>net-cash position</strong> (net debt-to-equity of about −0.06×), a marked change for a capital-hungry manufacturer and the fuel for its expansion.</li>
+  </ul>
+
+  <div class="note gold"><b>A quiet flag:</b> a ~34-year-old family business that spent most of its life below the radar has, in three years, become a multi-thousand-crore listed company with a wall of expansion to execute. The commercial track record is real; the <em>public-company</em> track record — governance under scrutiny, capital allocation across a much bigger balance sheet — is only just beginning.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Capacity and the backward-integration ladder</h2></div>
+  <p class="part-sub">The single clearest way to read Emmvee: how far up the chain has it climbed?</p>
+
+  <p class="lead">Everything about Emmvee's future is captured in one moving picture — its capacity at each stage of the chain, and how quickly the upstream stages (cells, then wafers) catch up to the downstream one (modules). The company's stated roadmap is aggressive and specific.</p>
+
+  <div class="chart">
+    <div class="c-title">The capacity ladder — module, cell, and (planned) wafer</div>
+    <div class="c-sub">Installed &amp; targeted capacity in GW; upstream stages racing to match the module base</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Modules — now<small>Mar 2026</small></div><div class="track"><span class="fill mod" style="width:63%"></span></div><div class="bval">10.3 GW</div></div>
+      <div class="bar-row"><div class="blab">Modules — target<small>FY27</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">16.3 GW</div></div>
+      <div class="bar-row"><div class="blab">Cells — now<small>Mar 2026, TOPCon</small></div><div class="track"><span class="fill cell" style="width:18%"></span></div><div class="bval">2.94 GW</div></div>
+      <div class="bar-row"><div class="blab">Cells — target<small>FY27</small></div><div class="track"><span class="fill cell" style="width:55%"></span></div><div class="bval">8.9 GW</div></div>
+      <div class="bar-row"><div class="blab">Ingot–wafer — planned<small>~FY29, Phase 1+2</small></div><div class="track"><span class="fill up" style="width:55%"></span></div><div class="bval">9.0 GW</div></div>
+    </div>
+    <div class="legend"><span>Note the gap: today Emmvee makes far more module capacity (10.3 GW) than cell capacity (2.94 GW), so most of its panels still use bought-in cells. Closing that gap — cells catching up to modules — is exactly the margin story. Wafers are the next rung after that.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The expansion pipeline</caption>
+    <thead><tr><th>Step</th><th>Detail</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">New module line</td><td>Toward ~16.3 GW; targeted commissioning by end-CY2026</td><td>More panels to sell into a strong domestic order book — but modules alone are the commoditised end.</td></tr>
+      <tr><td class="t-strong">New cell line (~1.4 GW+)</td><td>TOPCon line ramping with German equipment; cells toward ~8.9 GW by FY27-end</td><td><strong>The margin engine.</strong> Every GW of captive cell replaces a bought-in cell and widens EBITDA/watt.</td></tr>
+      <tr><td class="t-strong">Ingot &amp; wafer plant</td><td>~9 GW in two phases (5 GW + 4 GW), ~₹6,300 Cr capex, first facility ~FY29</td><td>The deepest, riskiest bet — attacks the last big imported input. Few in India have done it.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The FY24-to-FY25 hinge, in one comparison</div>
+    <p>Here is the whole thesis in two years of the same company. <strong>FY24: ₹952 Cr revenue, ₹29 Cr profit</strong> — Emmvee was buying its cells, so the panel it sold carried a supplier's margin baked into its cost. <strong>FY25: ₹2,336 Cr revenue, ₹369 Cr profit</strong> — with its own TOPCon cell line running, the net margin roughly quintupled to ~16%. Revenue grew ~2.5×; <em>profit grew ~13×</em>. That is not operating leverage in the usual sense — it is <strong>value-chain capture</strong>: the same factory keeping money it used to pay away. The ingot-wafer plant is a bet that the trick works one rung higher.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>ASP, China, and the spread that is the whole business</h2></div>
+  <p class="part-sub">Module prices have crashed globally — so why is Emmvee's margin rising?</p>
+
+  <p class="lead">To understand the risk <em>and</em> the opportunity, you have to hold two facts at once. Globally, <strong>solar-module prices have collapsed</strong> — Chinese factories, drowning in overcapacity, have driven module prices toward <strong>~$0.10–0.12 per watt</strong>, with polysilicon at multi-year lows and inventories equal to hundreds of gigawatts of latent supply. And yet Emmvee's margins have <em>expanded</em>. Resolving that apparent contradiction is the key to the company.</p>
+
+  <div class="chart">
+    <div class="c-title">Two prices for (almost) the same thing</div>
+    <div class="c-sub">Illustrative solar-cell price, US cents/watt — the wedge protection creates</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Chinese cell<small>open-market import</small></div><div class="track"><span class="fill ink" style="width:32%"></span></div><div class="bval">~4–5¢</div></div>
+      <div class="bar-row"><div class="blab">Indian DCR cell<small>ALMM-eligible, protected</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~14–15¢</div></div>
+    </div>
+    <div class="legend"><span>A functionally similar solar cell sells for roughly <strong>three times</strong> as much when it qualifies for India's domestic-content projects. That wedge — not the physics of the cell — is where an Indian integrated maker earns its return. It exists only because policy forbids the cheap import in protected tenders.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The surprise most newcomers miss</div>
+    <p>You would assume a "solar" company wins when solar hardware gets cheaper and demand explodes. For a <em>developer</em> like ACME Solar, that's true — falling panel prices are pure fuel. For a <em>manufacturer</em> like Emmvee, falling global prices are the enemy: they compress what it can charge. What rescues Emmvee is the opposite of a free market — a protected one. The Indian cell that goes into a domestic-content panel fetches roughly <strong>3× the price of the identical-looking Chinese cell</strong>, purely because a government approved-list makes the cheap one ineligible for a big chunk of Indian projects. So Emmvee's fortunes hinge less on how much sun India gets, or even on global solar demand, and more on <strong>how high and how durable New Delhi keeps the fence</strong> around its own market. A solar manufacturer is, in large part, a policy-arbitrage business wearing an engineering uniform.</p>
+  </div>
+
+  <blockquote>Emmvee sells a commodity whose world price only falls — and grows its margin anyway, because the margin is manufactured by an approved-list, not by the panel.</blockquote>
+
+  <div class="note"><b>The double-edge:</b> the same import glut that props up Emmvee's <em>protected</em> pricing threatens its <em>unprotected</em> pricing. On non-DCR, open-market sales — and on any export ambition — Emmvee competes head-on with ultra-cheap Chinese supply. Cheap imports are simultaneously the reason India built the fence and the flood pressing against it.</div>
+</section>
+
+<!-- 06 — BESPOKE: the defining force for Emmvee (its "China" section is the policy wall) -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The policy wall: ALMM, DCR, duties, PLI</h2></div>
+  <p class="part-sub">The four-part fence that turns a commodity factory into a profitable one — and the section that matters most.</p>
+
+  <p class="lead">If you read only one section, read this. India has spent five years constructing a deliberate <strong>industrial fence</strong> to build a domestic solar-manufacturing base from scratch — and Emmvee is a direct beneficiary of every plank of it. The fence has four parts, and they are being <em>raised</em>, one stage of the value chain at a time.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The four planks of the fence</caption>
+    <thead><tr><th>Plank</th><th>What it does</th><th>Effect on Emmvee</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">ALMM List-I (modules)</td><td>An "Approved List of Models &amp; Manufacturers." Only listed makers' <em>modules</em> can be used in government / subsidised projects. Effectively excludes Chinese panels.</td><td>Emmvee is on the list; guarantees access to the protected slice of demand.</td></tr>
+      <tr><td class="t-strong">ALMM List-II (cells)</td><td>The <em>same idea, extended to cells.</em> From <strong>1 June 2026</strong>, approved modules for non-exempt government projects must use <em>Indian-made, listed cells</em>.</td><td><strong>The big one.</strong> Protects cell-makers directly. Emmvee's captive TOPCon cells are on List-II — turning its integration bet into a licence to sell the scarce input.</td></tr>
+      <tr><td class="t-strong">Import duties (BCD)</td><td>A ~<strong>40% basic customs duty on imported modules</strong> and ~<strong>25% on imported cells</strong>, taxing the Chinese alternative.</td><td>Widens the price umbrella under which Indian hardware sells profitably.</td></tr>
+      <tr><td class="t-strong">PLI scheme</td><td>Production-Linked Incentives rewarding domestic, <em>integrated</em> manufacturing (bonus for going upstream to cells/wafers).</td><td>Subsidises exactly the backward-integration ladder Emmvee is climbing.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The sequence is the tell. First the state protected <strong>modules</strong> (ALMM List-I) — which is why India now has ~190+ GW of module capacity, far above demand. That over-built the easy end. So the protection is now marching <em>upstream</em>: the <strong>1 June 2026 cell mandate</strong> (List-II) does for cells what List-I did for modules, and manufacturers are already lobbying for the same treatment for <strong>wafers</strong>. Each time the fence moves a stage upstream, it mints a scarcity — and a margin — for whoever has capacity at that stage first.</p>
+
+  <div class="chart">
+    <div class="c-title">Where the protection has reached — and where it's heading</div>
+    <div class="c-sub">Approx. approved Indian capacity by stage vs. domestic demand pull</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Modules<small>ALMM List-I, protected since ~2021</small></div><div class="track"><span class="fill mod" style="width:100%"></span></div><div class="bval">~190+ GW</div></div>
+      <div class="bar-row"><div class="blab">Cells<small>ALMM List-II, mandate from Jun 2026</small></div><div class="track"><span class="fill cell" style="width:16%"></span></div><div class="bval">~30 GW</div></div>
+      <div class="bar-row"><div class="blab">Wafers / ingots<small>protection still being sought</small></div><div class="track"><span class="fill up" style="width:3%"></span></div><div class="bval">~minimal</div></div>
+    </div>
+    <div class="legend"><span>The scarcity — and therefore the margin — sits wherever domestic capacity is <em>thinnest</em> relative to the demand the fence redirects to it. Today that's cells; tomorrow, if policy extends, wafers. Emmvee is positioning at each rung just ahead of the mandate.</span></div>
+  </div>
+
+  <div class="note gold"><b>The dependence cuts both ways:</b> this fence is Emmvee's moat, and Emmvee's single largest risk. Every plank is a policy choice that can be softened, delayed or reversed — an ALMM exemption here, a duty rollback there, a mandate deferral (India has deferred ALMM before). The company's margins are, to an unusual degree, an <em>administrative</em> asset. That is a very different risk profile from a business whose moat is a brand or a patent.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Who buys the panels: the 500 GW demand pull</h2></div>
+  <p class="part-sub">Behind the policy is a genuinely enormous, decade-long build-out.</p>
+
+  <p class="lead">Protection would be worthless without demand to protect. Here the tailwind is real and large: India has targeted roughly <strong>500 GW of non-fossil power capacity by 2030</strong>, of which solar is the biggest chunk — a multi-hundred-gigawatt build-out that needs an ocean of panels, most of which policy insists be Indian-made. Emmvee sells into that pull.</p>
+
+  <h3>Emmvee's customer mix — who actually places the orders</h3>
+  <ul class="clean">
+    <li><strong>Independent Power Producers (IPPs)</strong> — utility-scale developers (the ACME Solars of the world) building large solar farms under long government contracts. The biggest, chunkiest orders; roughly <strong>40%</strong> of Emmvee's mix.</li>
+    <li><strong>Commercial &amp; Industrial (C&amp;I)</strong> — factories, campuses and businesses installing solar to cut power bills; ~<strong>30%</strong>. Higher-value, often DCR-linked.</li>
+    <li><strong>Others</strong> — EPC contractors, distributors, rooftop and government-scheme demand (PM-KUSUM, PM Surya Ghar rooftop) — much of it DCR-mandated, i.e. must-be-Indian.</li>
+  </ul>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">9.4 GW</div><div class="msl">Order book at end-FY26 — multiple years of module output already contracted</div></div>
+    <div class="ms gold"><div class="msv">221 MW</div><div class="msl">Average size of a top-10 order (FY26), up from 121 MW — orders getting bigger</div></div>
+    <div class="ms green"><div class="msv">~500 GW</div><div class="msl">India's 2030 non-fossil target — the structural demand behind it all</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The subtle risk hiding inside the tailwind</div>
+    <p>A 9.4 GW order book sounds like years of visibility, and it is reassuring. But two cautions belong next to it. First, <strong>solar orders are priced at prevailing ASPs</strong> — an order booked today ships at tomorrow's module price, so a strong book doesn't lock in today's margins if prices keep falling. Second, Emmvee's demand is heavily <strong>domestic and policy-linked</strong> (exports were essentially zero in FY26). That concentration is comfortable while the fence stands and India builds — and uncomfortable if a policy pause slows domestic tendering, because there is little export cushion to fall back on. The demand is huge; it is also unusually <em>correlated</em> to a single government's follow-through.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The competitive set</h2></div>
+  <p class="part-sub">A domestic land-grab — with the world's cheapest supplier waiting outside the fence.</p>
+
+  <p class="lead">Emmvee competes on two fronts at once. <strong>Inside the fence</strong>, it races a growing field of Indian integrated makers all adding cell and module capacity at the same time. <strong>Outside it</strong>, Chinese majors remain the low-cost benchmark — the reason the fence exists, and the permanent threat if it weakens. The domestic contest is the one that decides Emmvee's near-term margins.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The Indian competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Emmvee</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Emmvee Photovoltaic</td><td>Integrated cell+module maker; 10.3 GW module / 2.94 GW cell, climbing toward wafers</td><td><em>This company.</em> Among the earliest pure-play integrated names; smaller than the leaders but scaling fast.</td></tr>
+      <tr><td class="t-strong">Waaree Energies</td><td>The listed sector leader; ~22 GW global module capacity (incl. US), large cell build-out</td><td>Much bigger, broader, with US exposure. The scale benchmark Emmvee is chasing.</td></tr>
+      <tr><td class="t-strong">Premier Energies</td><td>Integrated cell+module veteran; one of the first Indian TOPCon cell makers; ~₹50,000 Cr+ market cap</td><td>The closest peer in <em>strategy</em> (deep cell integration), and roughly double Emmvee's market value.</td></tr>
+      <tr><td class="t-strong">Adani Solar (Mundra)</td><td>Large integrated capacity within the Adani group; among the first List-II cell names</td><td>Deep-pocketed conglomerate backing; a formidable capacity rival.</td></tr>
+      <tr><td class="t-strong">Vikram Solar, Tata Power Solar, ReNew, Jupiter Int'l</td><td>Established module makers, several now adding cells</td><td>The broad field crowding into cells alongside Emmvee — the source of future domestic glut risk.</td></tr>
+      <tr><td class="t-strong">Chinese majors (imports)</td><td>The global low-cost supply — LONGi, Trina, JinkoSolar and peers</td><td>Not direct sellers into protected tenders, but the price anchor and the reason duties/ALMM exist.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The tension to watch inside the fence</div>
+    <p>Protection guarantees a market for Indian hardware — but it does <em>not</em> guarantee it for Emmvee specifically. The same incentives pulling Emmvee up the value chain are pulling <strong>everyone</strong> up it: Waaree, Premier, Adani, Vikram, ReNew and a dozen others are all racing to add cell (and eventually wafer) capacity behind the same ALMM wall. India is over-built at the module stage already; the worry is that the industry over-builds the <em>cell</em> stage too, and the scarcity premium that makes today's integration so lucrative erodes as domestic cell capacity swells past ~30 GW toward the demand line. Emmvee's edge is timing and focus — it committed to cells early and stayed a pure-play manufacturer — but the window in which cells are scarce is finite, and every rival is building toward closing it.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Explosive recent growth, real profitability — and a young public record.</p>
+
+  <p class="lead">Emmvee's financials over FY23–FY26 look less like steady compounding and more like a step-change: revenue up ~8× and profit up over 100× in three years, as the cell line came on and demand surged. The numbers are genuinely strong; the debate is how much of the recent margin is <em>structural</em> versus a policy-and-scarcity peak.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Revenue from operations (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:12%"></span></div><div class="bval">618</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:19%"></span></div><div class="bval">952</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:46%"></span></div><div class="bval">2,336</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">5,049</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit (PAT) trajectory — the backward-integration effect</div>
+    <div class="c-sub">Net profit after tax (₹ Crore); note the FY24→FY25 jump when captive cells arrived</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:1%"></span></div><div class="bval">9</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:3%"></span></div><div class="bval">29</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill cell" style="width:34%"></span></div><div class="bval">369</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill cell" style="width:100%"></span></div><div class="bval">1,082</div></div>
+    </div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~34%</div><div class="msl">FY26 EBITDA margin (₹1,734 Cr) — up from ~31% in FY25</div></div>
+    <div class="ms green"><div class="msv">Net cash</div><div class="msl">Net debt/equity ~−0.06× post-IPO; ROE ~51%, ROCE ~38% (FY26)</div></div>
+    <div class="ms"><div class="msv">~21×</div><div class="msl">Trailing P/E (Jul '26) on ~₹23,100 Cr market cap</div></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Four-year financial snapshot (₹ Cr unless noted)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY23</th><th class="num">FY24</th><th class="num">FY25</th><th class="num">FY26</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue</td><td class="num">618</td><td class="num">952</td><td class="num">2,336</td><td class="num">5,049</td></tr>
+      <tr><td class="t-strong">EBITDA margin</td><td class="num">~low</td><td class="num">~thin</td><td class="num">~31%</td><td class="num">~34%</td></tr>
+      <tr><td class="t-strong">PAT</td><td class="num">9</td><td class="num">29</td><td class="num">369</td><td class="num">1,082</td></tr>
+      <tr><td class="t-strong">PAT margin</td><td class="num">~1.5%</td><td class="num">~3%</td><td class="num">~16%</td><td class="num">~21%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis</div>
+    <p>At ~21× trailing earnings, Emmvee is not priced like a fragile story — the market is paying a fair-to-full multiple for a real profit base, unlike some richer solar peers. So the question isn't "is it cheap?" — it's <strong>"how durable is the FY26 margin?"</strong>. And that reduces to one specific gauge: <strong>the EBITDA/watt spread on captive-cell modules — cell-line utilisation times the DCR/ALMM cell premium Emmvee can hold as domestic cell capacity floods in</strong>. If cell utilisation stays high (it reached ~85% by May 2026) <em>and</em> the protected cell premium holds while Emmvee's own cell capacity closes the gap with its modules, ~34% margins can persist and the earnings base grows into a larger, more integrated company. If the domestic cell glut compresses that premium faster than Emmvee climbs to wafers, the margin — and the multiple — normalise together. Watch captive-cell utilisation and realised per-watt spread, quarter by quarter; they are the vital signs.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The growth runway</h2></div>
+  <p class="part-sub">Three rungs still to climb — cells, wafers, and (maybe) exports.</p>
+
+  <p class="lead">Emmvee's growth levers are unusually legible because they are physical and pre-announced: capacity being built, a value chain being deepened, and a demand wall that keeps rising. The near-term runway is about <em>closing its own internal gap</em> — making enough cells to feed its own modules — before chasing the next rung.</p>
+
+  <ul class="clean">
+    <li><strong>Rung 1 — cells catch modules.</strong> Cell capacity from 2.94 GW toward ~8.9 GW by FY27 shrinks the reliance on bought-in cells, lifting the share of high-margin, fully-integrated DCR panels. This is the most valuable near-term lever and needs no new demand — just execution.</li>
+    <li><strong>Rung 2 — the wafer plant.</strong> The ~₹6,300 Cr, ~9 GW ingot-and-wafer project (first phase ~FY29) attacks the largest remaining imported input. If it works, it captures another margin layer <em>and</em> positions Emmvee for a future ALMM-for-wafers, the way its cells were positioned for List-II.</li>
+    <li><strong>Rung 3 — export optionality.</strong> Exports were essentially zero in FY26 — management treats them as upside, not core. US and other protected Western markets (which also penalise Chinese supply) are a possible future outlet that would reduce reliance on the Indian policy cycle.</li>
+  </ul>
+
+  <div class="note gold"><b>The execution reality:</b> each rung is harder and more capital-intensive than the last. Modules were straightforward; cells took real process engineering (and imported German equipment); wafers are a genuinely different industrial discipline that even large Indian players have found daunting. The runway is clear — but it is a climb, not a stroll, and a slipped wafer-plant timeline or a cell-ramp stumble would show up directly in the per-watt spread.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A real, profitable manufacturer — riding a genuine boom on a policy-built margin.</p>
+
+  <p class="lead">Emmvee is one of the more credible plays on India building its own solar-manufacturing base: a founder-run, now net-cash integrated maker with explosive recent profits, a full order book, and a clear ladder to climb. The core debate is whether the FY26 margin is a new normal or a policy-and-scarcity high-water mark — and whether execution keeps pace with a crowded, capacity-adding field.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Value-chain capture proven</strong> — the FY24→FY25 profit leap shows integration works; cells catching modules extends it.</li>
+        <li><strong>Policy tailwind rising, not fading</strong> — the June 2026 cell mandate directly rewards early integrated cell-makers like Emmvee.</li>
+        <li><strong>Net-cash after IPO</strong> — expansion funded without the leverage that burdens developers; ROE ~51%, ROCE ~38%.</li>
+        <li><strong>Full order book into a 500 GW build-out</strong> — 9.4 GW booked, orders getting larger, demand structural.</li>
+        <li><strong>Aligned owner</strong> — ~80% promoter holding; a 30-year operator, not a financial sponsor flipping the asset.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Margin is policy-made</strong> — an ALMM exemption, duty rollback or mandate deferral could compress the very spread the thesis rests on.</li>
+        <li><strong>Domestic cell glut</strong> — everyone is adding cell capacity behind the same fence; the scarcity premium is a wasting asset.</li>
+        <li><strong>Global price crash</strong> — Chinese overcapacity keeps world module/cell prices falling, pressuring non-DCR and export pricing.</li>
+        <li><strong>Execution &amp; concentration risk</strong> — a hard wafer-plant build, near-zero exports, and demand tied to one government's tendering cadence.</li>
+        <li><strong>Young public company</strong> — thin float, short listed history, first big capital-allocation cycle under scrutiny.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Emmvee is a real factory turning a genuine profit inside a genuine boom — but its extraordinary FY26 margin is the joint product of a scarce, protected cell and a demand wall the government keeps raising. The investable question is whether Emmvee can climb the chain <em>faster than the protection it depends on gets crowded or diluted</em> — filling its module lines with its own cells, then reaching wafers before the cell premium thins. The two milestones that will tell you are concrete and dated: whether the FY27-end cell capacity actually closes the gap with its modules, and whether the <strong>~₹6,300 Cr ingot-wafer plant lands on schedule around FY29</strong>. Get through those with the per-watt spread intact, and Emmvee graduates from policy beneficiary to structural cost-leader; fall behind the field on either, and it becomes just another Indian module line waiting for the next tariff decision.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Renewable Watch — "Emmvee Photovoltaic announces financial results for FY 2025-26" (Apr 2026): revenue ₹5,049 Cr, EBITDA ₹1,734 Cr / ~34%, PAT ₹1,082 Cr.</li>
+    <li>Emmvee Photovoltaic Power — Q4 FY26 earnings call (utilisation, EBITDA/watt, cell captive volumes, export mix, order book).</li>
+    <li>Chittorgarh / Business Standard — Emmvee IPO details &amp; listing (Nov 2025); BSE code 544608, NSE symbol EMMVEE, issue price ₹217.</li>
+    <li>Emmvee Photovoltaic Power — RHP / restated financials (FY23–FY25 revenue ₹618 / ₹952 / ₹2,336 Cr; PAT ₹9 / ₹29 / ₹369 Cr).</li>
+    <li>SaurEnergy / Sahi — "Emmvee targets 16.3 GW module &amp; 8.9 GW cell by FY27; ~9 GW ingot-wafer, ~₹6,300 Cr."</li>
+    <li>pv magazine India — "EMMVEE ramps up 1.4 GW TOPCon cell line with German equipment" (Jun 2026).</li>
+    <li>MNRE / SolarQuarter / pv-tech — ALMM List-I &amp; List-II revisions; 1 June 2026 domestic-cell mandate; ~30 GW listed cell capacity.</li>
+    <li>Websol / SaurEnergy — DCR vs non-DCR cell pricing (~14–15¢ vs ~4–5¢); BCD 40% modules / 25% cells; PLI scheme context.</li>
+    <li>pv magazine — China module/polysilicon price collapse (~$0.10–0.12/W; oversupply) 2026.</li>
+    <li>Screener.in / Groww / Trendlyne — Emmvee market cap ~₹23,100 Cr, P/E ~21×, promoter ~80%, ROE/ROCE (Jul 2026).</li>
+    <li>Waaree Energies / Premier Energies disclosures — peer capacity &amp; market-cap context.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Emmvee listed only in November 2025 and has a short public record; figures are approximate, drawn from company disclosures, the IPO prospectus and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated. Capacity, utilisation and per-watt figures in particular are indicative. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "EMMVEE";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
