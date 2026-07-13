@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Craftsman Automation — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F3;
+    --paper-2:#FBFBF9;
+    --card:#FFFFFF;
+    --ink:#191D21;
+    --ink-soft:#59626B;
+    --ink-faint:#8A939B;
+    --brand:#3E4750;          /* machined steel / graphite slate */
+    --brand-bright:#667585;   /* brushed steel */
+    --gold:#C6841E;           /* cutting-tool amber - accent */
+    --power:#3E4750;          /* powertrain - deep steel */
+    --alum:#6E8CA6;           /* aluminium blue-grey */
+    --indl:#C6841E;           /* industrial - amber/bronze */
+    --raw:#9AA3AB;            /* raw casting grey */
+    --line:#DCDEDA;
+    --line-soft:#E7E9E4;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7EAEC;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF2E1;border:1px solid #EFDCB4;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#946012;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#463310;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F8F5;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EBEDE8;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#3E4750,#5A6672);}
+  .fill.gold{background:linear-gradient(90deg,#C6841E,#D89B3C);}
+  .fill.power{background:linear-gradient(90deg,#3E4750,#5A6672);}
+  .fill.alum{background:linear-gradient(90deg,#6E8CA6,#88A2B8);}
+  .fill.indl{background:linear-gradient(90deg,#C6841E,#D89B3C);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4147,#59626B);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* machining value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.raw{background:var(--raw);}
+  .node.mach{background:var(--power);}
+  .node.fin{background:var(--brand-bright);}
+  .node.oem{background:var(--gold);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-power{color:var(--power);font-weight:600;}
+  .chain-alum{color:var(--alum);font-weight:600;}
+  .chain-indl{color:var(--indl);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF2E1;color:#4a3712;}
+  .note.gold b{color:#946012;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#946012;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAECEE;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .prov{margin-top:12px;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Precision machining 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The three engines</a></li>
+    <li><a href="#p3"><span class="n">03</span> Powertrain — the cash core</a></li>
+    <li><a href="#p4"><span class="n">04</span> Aluminium &amp; DR Axion</a></li>
+    <li><a href="#p5"><span class="n">05</span> Industrial &amp; the racking surprise</a></li>
+    <li><a href="#p6"><span class="n">06</span> The company &amp; owners</a></li>
+    <li><a href="#p7"><span class="n">07</span> The CV cycle &amp; customers</a></li>
+    <li><a href="#p8"><span class="n">08</span> The debt &amp; the mix-shift</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: CRAFTSMAN · BSE: 543276</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Craftsman Automation, <em>the precision machinist that became a die-caster</em></h1>
+  <p class="dek">A full walk through Coimbatore's diversified precision-engineering group — the high-barrier machining core that turns raw metal into truck-engine parts, the aluminium die-casting business that a debt-funded acquisition made its biggest segment, the warehouse-racking business hiding inside an auto-components company, and why a firm whose revenue nearly quadrupled in four years still earns a lower margin than it did at the start.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹8,069 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">3 <small>segments</small></div><div class="l">12 plants · 7 cities</div></div>
+    <div class="cell"><div class="v">~16% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹24,400 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">13 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹8,069 Cr (+42%), PAT ₹384 Cr (+91%), aluminium now 59% of revenue; DR Axion + Sunbeam aluminium merger effective Apr 2026; ₹2,000 Cr fund-raise approved.</div>
+  <div class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Craftsman Automation is a <strong>diversified precision-engineering and auto-components company from Coimbatore, Tamil Nadu</strong>, built over four decades by its founder <strong>Srinivasan Ravi</strong>. It does three distinct things: it <strong>machines critical engine parts</strong> for truck-makers, it <strong>die-casts aluminium components</strong> for cars, two-wheelers and EVs, and it runs a grab-bag of <strong>industrial products</strong> — including, unexpectedly, warehouse storage systems. In FY26 it crossed <strong>₹8,069 crore of revenue</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is really three businesses under one roof.</strong> Aluminium products (~59% of FY26 revenue), automotive powertrain machining (~27%) and industrial &amp; engineering (~14%) differ sharply in cyclicality, margin and how much capital they eat. The deliberate spread across three engines <em>is</em> the strategy — each one wobbles at a different time.</li>
+    <li><strong>An acquisition rewrote the company.</strong> Buying <strong>DR Axion</strong>, a large aluminium die-caster, vaulted aluminium from a side-leg to the <em>biggest</em> segment in roughly three years — and loaded the balance sheet with debt. Craftsman today carries <strong>net debt of roughly ₹3,000 crore (~2.4× EBITDA)</strong>, unusual for an auto-ancillary and central to the whole case.</li>
+    <li><strong>Revenue soared; margin did not.</strong> Revenue went from ₹2,217 Cr (FY22) to <strong>₹8,069 Cr (FY26)</strong> — up ~3.6× — yet the operating margin <em>fell</em> from ~24% to ~16%, because the machining core it grew out from earns far richer margins than the aluminium business it bolted on. The stock trades near <strong>64× earnings</strong> on the bet that this margin recovers as the acquisitions mature and the debt comes down.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Picture a workshop that got very good at one hard thing — <strong>cutting raw metal into the precise engine parts a diesel truck needs</strong> — and earned fat margins doing it because few rivals could match the precision or afford the machines. Then it decided that leaning on truck engines alone was too risky (truck demand swings violently), so it bought its way into a <em>second</em> trade — <strong>casting aluminium parts for lighter vehicles and EVs</strong> — which is bigger and faster-growing but thinner-margin and hungry for cash. Craftsman is now the sum of those two very different metal businesses, plus a third industrial odds-and-ends division, and the investment question is whether the fast, thin new business can be made to earn like the slow, fat old one.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Precision machining 101: how a metal-cutting business earns</h2></div>
+  <p class="part-sub">No engineering degree needed — just what "machining" and "die-casting" mean, and why one is fatter than the other.</p>
+
+  <p class="lead">An auto-component supplier sits between a <strong>metals mill and a vehicle maker</strong>. Its job is to take rough metal and turn it into a finished, tolerance-perfect part that a carmaker or truckmaker bolts straight onto an engine or a chassis. Craftsman does this two ways — <strong>machining</strong> and <strong>die-casting</strong> — and the difference between them explains almost everything about its margins.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The two crafts, decoded</caption>
+    <thead><tr><th>Process</th><th>What actually happens</th><th>Economics</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Machining</td><td>You start with a rough <em>casting</em> or forging and <strong>cut, drill and grind</strong> it on computer-controlled (CNC) machines to exact tolerances — think shaving a lumpy engine block down to a mirror-flat surface with holes placed to a fraction of a millimetre.</td><td><strong>High value-add.</strong> The skill and capital are in the process, not the metal. Craftsman's machining runs gross margins of ~65–70% and historically 30%+ EBITDA. But the CNC lines cost a fortune — this is capital-intensive.</td></tr>
+      <tr><td class="t-strong">Die-casting</td><td>You <strong>melt aluminium and inject it under pressure into a steel mould</strong> (a "die") to form a near-finished part in one shot — housings, covers, structural parts — then do light machining.</td><td><strong>Lower value-add, more pass-through.</strong> A big chunk of the price is the aluminium itself, which you buy and pass on. Margins are thinner (mid-teens or lower) but volumes are large and the content-per-vehicle is rising.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one idea that unlocks the margins</div>
+    <p>The value a supplier captures depends on <strong>how much of the final price is <em>metal</em> versus <em>process</em></strong>. In machining, the raw casting is cheap and the transformation is priceless — so Craftsman keeps most of the value, and margins are rich. In aluminium die-casting, expensive metal dominates the bill, so even a well-run caster passes most of the money through and keeps a thin slice. That single distinction is why Craftsman's <em>smallest</em>-by-revenue heritage is its fattest, and its <em>largest</em>-by-revenue new business is its leanest. Watch which way the revenue mix tilts and you can predict the group margin without reading another line.</p>
+  </div>
+
+  <h3>Why capital intensity matters here</h3>
+  <ul class="clean">
+    <li><strong>Fixed costs are enormous.</strong> A CNC machining line or a die-casting cell is bought before a single part ships. The powertrain segment alone sits on a gross block of roughly <strong>₹2,000 crore</strong> of plant and machinery. Depreciation and interest on that iron never stops, whether trucks are selling or not.</li>
+    <li><strong>Utilisation is everything.</strong> Because the machines are paid for, every extra part run over them is high-margin; every idle shift is pure loss. When the commercial-vehicle cycle turns down, volumes fall against an unchanged cost base and margins get crushed — the flip side of the operating leverage that makes the good years so good.</li>
+    <li><strong>Barriers cut both ways.</strong> The cost and know-how of high-precision machining keep new entrants out (good for Craftsman), but they also mean growth is bought with heavy capex and, lately, debt (the risk).</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The three engines</h2></div>
+  <p class="part-sub">One company, three very different businesses — read this once and the rest of the primer falls into place.</p>
+
+  <p class="lead">Most auto-ancillaries do one thing. Craftsman deliberately runs <strong>three segments that behave differently</strong> — so that when one is in a trough, another can be near a peak. The three are not equal in size, margin, or capital appetite, and knowing how they differ is the key to the whole business.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue by segment (FY26)</div>
+    <div class="c-sub">Consolidated segment revenue, ₹ Crore — aluminium is now the giant</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Aluminium Products<small>die-casting; incl. DR Axion, Sunbeam</small></div><div class="track"><span class="fill alum" style="width:100%"></span></div><div class="bval">~4,789</div></div>
+      <div class="bar-row"><div class="blab">Powertrain &amp; Others<small>engine-part machining</small></div><div class="track"><span class="fill power" style="width:46%"></span></div><div class="bval">~2,179</div></div>
+      <div class="bar-row"><div class="blab">Industrial &amp; Engineering<small>storage, gears, contract mfg</small></div><div class="track"><span class="fill indl" style="width:23%"></span></div><div class="bval">~1,102</div></div>
+    </div>
+    <div class="legend"><span>Shares: aluminium ~59%, powertrain ~27%, industrial ~14% of FY26 revenue. Note the reversal — until recently powertrain machining was the anchor; the DR Axion acquisition made aluminium the biggest line.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>How the three engines differ</caption>
+    <thead><tr><th>Segment</th><th>What it makes</th><th>Cyclicality</th><th>Margin</th><th>Capital intensity</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--power)">Powertrain machining</td><td>Cylinder blocks, cylinder heads, other machined engine/transmission parts</td><td><strong>High</strong> — tied to the commercial-vehicle cycle</td><td><strong>Highest</strong> (65–70% gross, historically 30%+ EBITDA)</td><td>Very high (₹2,000 Cr gross block)</td></tr>
+      <tr><td class="t-strong" style="color:var(--alum)">Aluminium products</td><td>Die-cast parts &amp; housings for 2-wheelers, cars, EVs</td><td>Moderate — spread across 2W, PV, EV; less truck-geared</td><td><strong>Lowest</strong> (thin, metal-pass-through)</td><td>High and growing (the capex magnet)</td></tr>
+      <tr><td class="t-strong" style="color:var(--indl)">Industrial &amp; engineering</td><td>Storage/racking systems, gears, sub-assemblies, tooling</td><td>Lowest &amp; most diversified — non-auto</td><td>Healthy, niche</td><td>Moderate</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why three engines instead of one</div>
+    <p>A pure truck-parts machinist lives and dies by the medium-and-heavy commercial-vehicle cycle — and that cycle is brutal, capable of dropping 40% peak-to-trough. Craftsman's answer is diversification by <em>end-market</em>, not just by product: aluminium exposes it to passenger vehicles, two-wheelers and — importantly — EVs, whose demand is driven by different forces than trucks; the industrial division earns from warehouses, factories and infrastructure that don't move with auto at all. The prize is a smoother ride through cycles. The price is a more complicated company that is harder to run and, thanks to how it built the aluminium leg, carries real debt.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>Powertrain machining — the heritage cash core</h2></div>
+  <p class="part-sub">Smaller in revenue now, but this is where the skill, the margins and the moat live.</p>
+
+  <p class="lead">Craftsman's origin and its deepest competitive advantage are here: it is the <strong>largest machiner of cylinder blocks and cylinder heads for the medium-and-heavy commercial-vehicle (M&amp;HCV) and construction-equipment engine market in India</strong>. When Tata Motors, Ashok Leyland, Daimler India, or a construction-equipment maker needs the most critical machined parts of a diesel engine, Craftsman is very often the supplier turning their rough castings into finished components.</p>
+
+  <h3>What a "cylinder block" is, and why the machining is hard</h3>
+  <p>The cylinder block is the <strong>heart of an engine</strong> — the big metal casting that houses the pistons and holds everything in alignment. The cylinder head sits on top and seals the combustion chambers. Both start life as lumpy cast metal and must be machined to <em>microscopic</em> tolerances: bores round to a few microns, mating faces dead flat, hundreds of holes exactly placed. Get it fractionally wrong and the engine fails. That difficulty is the moat: it demands expensive multi-axis CNC lines, deep process know-how, and a track record an OEM will trust with its flagship engine — which is why customers rarely switch and new entrants rarely appear.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">Where Craftsman sits in the engine-part value chain</div>
+    <div class="flow-row">
+      <div class="node raw"><div class="ntag">Input</div><div class="nname">Rough casting / forging</div><div class="nwho">Lumpy, low-value metal from a foundry.</div></div>
+      <div class="arrow">→</div>
+      <div class="node mach"><div class="ntag">Craftsman's step</div><div class="nname">Precision CNC machining</div><div class="nwho">Cut, drill, grind to microns. The value is created here.</div></div>
+      <div class="arrow">→</div>
+      <div class="node fin"><div class="ntag">Output</div><div class="nname">Finished block / head</div><div class="nwho">Tolerance-perfect, ready to assemble.</div></div>
+      <div class="arrow">→</div>
+      <div class="node oem"><div class="ntag">Customer</div><div class="nname">CV / equipment OEM engine line</div><div class="nwho">Tata, Ashok Leyland, Daimler, Cummins, CE makers.</div></div>
+    </div>
+    <div class="flow-note">Craftsman owns the high-value middle step. Because the finished part is mission-critical and the machining is hard to replicate, the OEM relationship is sticky — but it also concentrates revenue in a handful of large truck-engine customers.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why this segment still matters most, despite being ~27% of revenue</div>
+    <p>Revenue understates the powertrain segment's importance. With gross margins around <strong>65–70%</strong> and, in good years, EBITDA margins above <strong>30%</strong>, this business generates a disproportionate share of Craftsman's <em>profit</em> and cash — the very cash that helps service the aluminium debt. It is the high-quality kernel around which the rest was built. The catch is its dependence on one violently cyclical end-market: when M&amp;HCV production is strong, powertrain prints money against its fixed cost base; when trucks stall, the same fixed costs turn the leverage against it. In a soft quarter, powertrain margins have dipped into the mid-teens on higher manpower and depreciation — a reminder that even the crown-jewel segment lives on the truck cycle's terms.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Aluminium products — the growth leg and the DR Axion bet</h2></div>
+  <p class="part-sub">Now the biggest segment — bought, not built — and the reason the balance sheet looks the way it does.</p>
+
+  <p class="lead">Craftsman's aluminium division makes <strong>die-cast aluminium components</strong> for two-wheelers, passenger cars and, increasingly, electric vehicles — parts like housings, covers, structural and powertrain castings. It has always existed inside Craftsman, but it was a <em>side</em> business until a pair of acquisitions turned it into the group's largest segment. The transformational one was <strong>DR Axion</strong>.</p>
+
+  <h3>The DR Axion deal, and why it changed the company</h3>
+  <ul class="clean">
+    <li><strong>What DR Axion is:</strong> a large India-based aluminium die-caster making cylinder heads, blocks and components primarily for <em>passenger vehicles</em> — a complementary customer base to Craftsman's truck-heavy powertrain arm.</li>
+    <li><strong>The deal:</strong> Craftsman bought <strong>76% of DR Axion in February 2023</strong> at an enterprise value of ~₹650 Cr (about 4.4× FY23 EV/EBITDA — a low multiple), then acquired the <strong>residual 24% for ₹250 Cr in mid-2024</strong>, making it a wholly owned subsidiary. DR Axion's turnover was ~₹1,246 Cr in FY24 — bigger than Craftsman's own legacy aluminium line.</li>
+    <li><strong>Plus Sunbeam:</strong> Craftsman separately folded in <strong>Sunbeam</strong> (renamed Sunbeam Lightweighting Solutions), another aluminium die-caster. From <strong>April 2026</strong>, DR Axion and Sunbeam are being merged into a single aluminium entity to strip out duplicated overhead.</li>
+    <li><strong>The result:</strong> aluminium revenue jumped from ~₹3,033 Cr (FY25) to <strong>~₹4,789 Cr (FY26)</strong> and became <strong>~59% of the group</strong>. Management has guided toward roughly <strong>₹6,500 Cr of aluminium revenue by FY27</strong>.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The genuinely counter-intuitive part: aluminium is an EV hedge, not an EV victim</div>
+    <p>An engine-parts machinist should, in theory, fear electric vehicles — an EV has no cylinder block to machine. Craftsman's aluminium leg is the deliberate answer. <strong>EVs still need enormous amounts of aluminium</strong>: battery housings, motor housings, structural castings, e-drive covers — and because EVs prize light weight, aluminium <em>content per vehicle rises</em> as the fleet electrifies. So the die-casting business is largely <em>agnostic</em> to whether the car burns diesel or electrons; either way it sells aluminium parts. That is the strategic logic of pouring capital and debt into aluminium precisely as the powertrain end-market faces a long-term EV question. The bet is that aluminium content growth outruns any decline in machined-engine work.</p>
+  </div>
+
+  <div class="note gold"><b>The trade-off in one line:</b> DR Axion bought Craftsman <em>scale and a PV/EV-relevant footprint</em> cheaply — but it was debt-funded, it is lower-margin than the machining core, and it now dominates the revenue mix. The success of the entire diversification hinges on lifting this segment's margins and utilisation while paying the debt down. It is simultaneously the growth story and the risk.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Industrial &amp; engineering — the racking business hiding in an auto stock</h2></div>
+  <p class="part-sub">The smallest segment, and the one that surprises everyone who assumes Craftsman only makes car parts.</p>
+
+  <p class="lead">Here is the fact a generalist rarely expects: <strong>a "precision auto-components" company also runs one of India's notable warehouse-storage and racking businesses.</strong> Craftsman's Industrial &amp; Engineering segment (~14% of revenue) is a collection of non-automotive engineered products, and its flagship is <strong>storage solutions</strong> — the steel racking and automated systems that fill modern warehouses.</p>
+
+  <h3>What's actually inside this segment</h3>
+  <ul class="clean">
+    <li><strong>Storage solutions (Craftsman Storage):</strong> industrial pallet racking, high-bay racking, and <strong>Automated Storage &amp; Retrieval Systems (AS/RS)</strong> — stacker cranes, shuttle systems, mobile pallet racking, vertical-lift modules. This is a direct play on India's warehousing, e-commerce and logistics build-out, and it has nothing to do with the auto cycle.</li>
+    <li><strong>Gears &amp; gearboxes:</strong> custom industrial gearboxes for process industries, lifting equipment and power transmission — designed, heat-treated, hobbed and assembled in-house.</li>
+    <li><strong>High-end sub-assembly &amp; contract manufacturing:</strong> special-purpose machines (SPMs), material-handling equipment (hoists, crane kits), marine-engine and locomotive components, tool-room mould bases and sheet-metal work.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the odd-one-out segment earns its place</div>
+    <p>The industrial division does two useful things for a cyclical auto supplier. First, it is <strong>counter-cyclical to autos</strong> — warehouse racking and factory gearboxes are driven by industrial capex and logistics growth, which peak at different times than truck sales, smoothing the group's swings. Second, it is a <strong>margin and capability showcase</strong>: it lets Craftsman monetise the same core skills — precision metalworking, design, automation — in higher-mix, lower-volume niches where it isn't a price-taker to a giant OEM. It will never be the biggest engine, but it is the one that quietly proves the company is an <em>engineering</em> house, not just a captive machine shop.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A first-generation Coimbatore engineer's forty-year build — and a promoter who has been trimming his stake.</p>
+
+  <p class="lead">Craftsman is the life's work of <strong>Srinivasan Ravi</strong>, a mechanical engineer and first-generation entrepreneur who started the company in <strong>Coimbatore in 1986</strong> as a precision-machining job shop and grew it into a three-segment engineering group. He remains <strong>Chairman &amp; Managing Director</strong>, and the business still carries the stamp of an owner-operator obsessed with process capability.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1986</div><div class="ev"><strong>Srinivasan Ravi</strong> founds Craftsman in Coimbatore as a precision-machining shop for engine components.</div></li>
+    <li><div class="yr">1990s–2000s</div><div class="ev">Becomes the dominant machiner of <strong>cylinder blocks &amp; heads</strong> for India's M&amp;HCV and construction-equipment engine makers; adds aluminium die-casting and the industrial/storage lines.</div></li>
+    <li class="major"><div class="yr">Mar 2021</div><div class="ev"><strong>IPO</strong> — ₹823.7 Cr issue at ₹1,490/share; lists on NSE &amp; BSE on 25 Mar 2021.</div></li>
+    <li class="major"><div class="yr">Feb 2023</div><div class="ev">Acquires <strong>76% of DR Axion</strong> (aluminium die-casting) at ~₹650 Cr EV — the deal that reshapes the company toward aluminium.</div></li>
+    <li><div class="yr">2023–24</div><div class="ev">Folds in <strong>Sunbeam</strong> (Sunbeam Lightweighting Solutions); buys the <strong>residual 24% of DR Axion for ₹250 Cr</strong> (mid-2024) to take it 100%.</div></li>
+    <li><div class="yr">FY25</div><div class="ev">Revenue ₹5,690 Cr, but <strong>PAT dips to ₹201 Cr</strong> — margin compression and higher depreciation/interest from the aluminium build-out bite.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record <strong>₹8,069 Cr revenue (+42%)</strong>, <strong>PAT ₹384 Cr (+91%)</strong>; aluminium reaches ~59% of revenue; DR Axion + Sunbeam merger effective Apr 2026; board approves a <strong>₹2,000 Cr fund-raise</strong>; promoter trims stake.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoter group ~42%</strong> (Jun 2026), with Srinivasan Ravi holding ~38% individually. Notably, the promoter has been <strong>selling down</strong> — from ~55% around 2023 to ~42% — partly reflecting institutional appetite and, plausibly, deleveraging/estate reasons; it is a point worth watching rather than a red flag, but it dilutes the "founder all-in" signal.</li>
+    <li><strong>Institutions have piled in:</strong> FIIs ~17% and domestic institutions ~33% (Jun 2026) — the float has professionalised as the promoter stepped back.</li>
+    <li><strong>Balance sheet is levered, by design:</strong> unlike a typical debt-light auto-ancillary, Craftsman carries meaningful net debt (~₹3,000 Cr) taken on for DR Axion and capex — the defining balance-sheet fact, covered in §08.</li>
+  </ul>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The CV cycle and the customers</h2></div>
+  <p class="part-sub">The single force that swings the powertrain core — and the concentration risk that rides with it.</p>
+
+  <p class="lead">The powertrain segment is a <strong>geared bet on the Indian medium-and-heavy commercial-vehicle (M&amp;HCV) cycle</strong>. Trucks are bought when the economy is expanding, freight is growing and financing is cheap; they are deferred hard the moment any of those reverse. That makes truck-engine production one of the most cyclical demand signals in Indian manufacturing — and Craftsman's crown-jewel segment rides it directly.</p>
+
+  <h3>Why the cycle hits Craftsman twice over</h3>
+  <ul class="clean">
+    <li><strong>Volume swing:</strong> M&amp;HCV production can move 30–40% peak-to-trough. Craftsman machines a critical part of many of those engines, so its powertrain volumes swing with them.</li>
+    <li><strong>Operating leverage:</strong> because the machining lines are a huge fixed cost, a volume drop falls almost entirely to the bottom line. The same leverage that makes upcycles lucrative makes downcycles painful — margins can compress from 30%+ toward the mid-teens.</li>
+    <li><strong>Customer concentration:</strong> the machined-engine-parts business is served to a <em>handful</em> of large truck and equipment OEMs. That stickiness is a moat, but it also means a program loss or a single customer's weak year is material.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">How the diversification is meant to work in a downturn</div>
+    <p>This is exactly why Craftsman spent capital and debt building the other two engines. When trucks are weak, the hope is that <strong>passenger-vehicle and two-wheeler aluminium demand, EV content growth, and industrial/warehousing capex</strong> are on their own separate clocks — cushioning the group even as powertrain sags. It doesn't eliminate cyclicality (autos broadly still move together to a degree), but it broadens the base from "one truck cycle" to "several vehicle and industrial cycles." The FY25–FY26 numbers are an early test: powertrain had soft patches, yet the aluminium ramp kept group revenue climbing.</p>
+  </div>
+
+  <div class="note gold"><b>The dependency worth remembering:</b> Craftsman is not a diversified industrial that happens to touch autos — it is fundamentally an <em>auto</em> company (powertrain + aluminium ≈ 86% of revenue). The industrial leg diversifies at the edges; the core still needs Indian vehicle demand, and the powertrain core specifically still needs trucks. Diversification softens the cycle; it does not sever it.</div>
+</section>
+
+<!-- 08 — BESPOKE CRUX: the debt + the mix-shift -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The debt and the mix-shift — the crux of the case</h2></div>
+  <p class="part-sub">The one section a generalist must understand: Craftsman bought scale, not margin, and financed it with borrowing.</p>
+
+  <p class="lead">Strip away the segment detail and Craftsman's story reduces to a single tension. Between FY22 and FY26, <strong>revenue rose ~3.6× while the operating margin roughly halved</strong> — because the aluminium business it bought earns structurally less than the machining business it grew from. And it paid for that growth with <strong>debt</strong>. Whether this was a smart trade or an expensive one is <em>the</em> question in the stock.</p>
+
+  <div class="chart">
+    <div class="c-title">Scale up, margin down: the mix-shift in one picture</div>
+    <div class="c-sub">Operating (EBITDA) margin, % — diluted as low-margin aluminium came to dominate</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22<small>machining-led</small></div><div class="track"><span class="fill power" style="width:100%"></span></div><div class="bval">~24%</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill power" style="width:88%"></span></div><div class="bval">~21%</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill alum" style="width:83%"></span></div><div class="bval">~20%</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>aluminium scaling</small></div><div class="track"><span class="fill alum" style="width:63%"></span></div><div class="bval">~15%</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill alum" style="width:67%"></span></div><div class="bval">~16%</div></div>
+    </div>
+    <div class="legend"><span>The margin didn't fall because Craftsman got worse at anything — it fell because the <em>mix</em> tilted from ~65–70%-gross machining toward thin-margin die-casting. Revenue quality, not execution, is what changed.</span></div>
+  </div>
+
+  <p>Here is the device to keep in your head. In <strong>FY22</strong>, Craftsman earned <strong>₹163 Cr of profit on ₹2,217 Cr of revenue at a ~24% operating margin</strong>. In <strong>FY26</strong>, it earned <strong>₹384 Cr on ₹8,069 Cr at a ~16% margin</strong>. Revenue multiplied 3.6×; profit only 2.4×; margin compressed by a third. <strong>DR Axion bought scale, not margin.</strong> The bull case is that this is temporary — that a newly acquired, still-integrating aluminium business is running below its potential and will re-rate its own margins upward as utilisation, the Sunbeam merger synergies, and mix improvements land. The bear case is that die-casting is simply a thinner trade and the group margin has structurally reset lower.</p>
+
+  <div class="mini-stats">
+    <div class="ms red"><div class="msv">~₹3,000 Cr</div><div class="msl">Net debt (approx., FY26) — high for an auto-ancillary; taken on for DR Axion + capex</div></div>
+    <div class="ms gold"><div class="msv">~2.4×</div><div class="msl">Net debt / EBITDA — management targets below 2.0× by FY27, then ~1.5×</div></div>
+    <div class="ms"><div class="msv">~13.9%</div><div class="msl">ROCE (FY26) — respectable, but diluted by the levered, lower-margin mix</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why leverage makes Craftsman different from its peers</div>
+    <p>Most quality Indian auto-ancillaries are proud of near-zero net debt. Craftsman is not — it deliberately borrowed to buy DR Axion, and it now carries ~2.4× net-debt/EBITDA. In good years, leverage <em>amplifies</em> the returns on a cyclical, capital-heavy business; in a truck downturn, it works the other way, because interest is due whether or not the machines are busy. The plan to sell surplus assets (including land from a closed Gurgaon plant) and let cash flow pay down borrowings toward <strong>&lt;2.0× by FY27</strong> is not a footnote — it is the load-bearing assumption. The ₹2,000 Cr fund-raise approved in mid-2026 gives it more room, but also signals how capital-hungry the aluminium expansion remains.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A crowded auto-ancillary field — but few rivals straddle machining <em>and</em> die-casting the way Craftsman does.</p>
+
+  <p class="lead">Craftsman competes against different sets of companies in each segment, and no single listed peer is a clean mirror of all three. That is both a strength (hard to attack across the board) and a complication (harder to value against a comp).</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Where it overlaps Craftsman</th><th>How it differs</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Craftsman Automation</td><td><em>This company.</em> Machining + aluminium die-casting + industrial</td><td>Rare three-segment straddle; dominant in M&amp;HCV cylinder-block machining; levered balance sheet.</td></tr>
+      <tr><td class="t-strong">Bharat Forge</td><td>CV powertrain &amp; heavy engineering; forged/machined parts</td><td>Forging-led giant with defence, exports and aerospace diversification; larger and more global.</td></tr>
+      <tr><td class="t-strong">Sundram Fasteners</td><td>Precision machined components &amp; fasteners for powertrains</td><td>Broader precision-components house; strong exports; historically debt-light and high-return.</td></tr>
+      <tr><td class="t-strong">Sona BLW</td><td>EV-relevant driveline, gears, motors</td><td>Pure EV/driveline growth story at premium multiples; not a machining/casting overlap so much as an EV-content rival.</td></tr>
+      <tr><td class="t-strong">Endurance Technologies</td><td>Aluminium die-casting (2-wheeler-led) + other components</td><td>The closest die-casting comparator; 2W-heavy, historically cash-generative and lower-levered.</td></tr>
+      <tr><td class="t-strong">Ramkrishna Forgings</td><td>CV forgings &amp; machined components</td><td>Forging-led CV play; similar cyclicality, different process; expanding into new segments.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The positioning that's easy to miss</div>
+    <p>Two things distinguish Craftsman from the pack. First, its <strong>machining moat in CV cylinder blocks/heads</strong> is genuinely hard to replicate — most peers are forgers, fastener-makers or casters, not dominant precision machiners of the engine's core. Second, by <strong>owning both a machining and a die-casting business</strong>, Craftsman can serve an OEM across the diesel-to-EV transition from a single supplier — a structural hedge most single-process rivals lack. The offsetting reality: those same rivals mostly run <em>cleaner, lower-debt</em> balance sheets, so investors comparing them will note that Craftsman's diversification came at the cost of leverage that peers avoided.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A genuine growth record — and a multiple that already assumes the margin and debt story works out.</p>
+
+  <p class="lead">Craftsman's top line has compounded impressively; its profitability has been a rollercoaster. The valuation debate is whether a <strong>~64× earnings multiple</strong> is paying for a company mid-way through turning acquired scale into acquired profit — or getting ahead of a business that is more cyclical and more levered than the multiple implies.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore) — the DR Axion effect is visible from FY24</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill ink" style="width:27%"></span></div><div class="bval">2,217</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill power" style="width:39%"></span></div><div class="bval">3,183</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill power" style="width:55%"></span></div><div class="bval">4,452</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill alum" style="width:71%"></span></div><div class="bval">5,690</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">8,069</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit (PAT) trajectory — note the FY25 dip</div>
+    <div class="c-sub">Net profit attributable to owners (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill ink" style="width:42%"></span></div><div class="bval">163</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill power" style="width:65%"></span></div><div class="bval">251</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill power" style="width:88%"></span></div><div class="bval">337</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>margin + interest hit</small></div><div class="track"><span class="fill bad" style="width:52%"></span></div><div class="bval">201</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">384</div></div>
+    </div>
+    <div class="legend"><span>The FY25 fall in profit <em>while revenue rose</em> is the whole story in miniature: aluminium scale arrived faster than aluminium profitability, and the interest/depreciation on the build-out landed first. FY26's rebound is the early evidence that it can reverse.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms red"><div class="msv">~64×</div><div class="msl">Trailing P/E (Jul '26) — rich for a cyclical, levered auto-ancillary</div></div>
+    <div class="ms gold"><div class="msv">~21×</div><div class="msl">EV/EBITDA (approx.) — EV includes ~₹3,000 Cr net debt</div></div>
+    <div class="ms"><div class="msv">~12.5%</div><div class="msl">ROE (FY26) — being rebuilt after the FY25 dip</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one metric that settles the thesis</div>
+    <p>For Craftsman, don't fixate on the P/E — fixate on <strong>net-debt/EBITDA falling to below 2.0× by FY27</strong>, the deleveraging gate management has set itself. It is the single number that ties the whole case together: it can only fall if the aluminium acquisitions are throwing off real cash (proving the low-margin business is being made to work), if capex is disciplined, <em>and</em> if the CV cycle is cooperating enough to keep the powertrain core generating. If net-debt/EBITDA glides from ~2.4× toward 1.5× while group EBITDA margin drifts back toward the high-teens, the ~64× multiple was discounting a real deleveraging-plus-margin recovery. If it stalls above 2× because aluminium margins stay thin or trucks turn down, the same multiple is exposed. Everything else — segment mix, ARPOB-style content growth, the fund-raise — feeds into that one ratio.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A real engineering franchise carrying real leverage — the debate is margin recovery versus cyclical/financial risk.</p>
+
+  <p class="lead">Craftsman is a rare thing: an owner-built precision-engineering house with a genuine machining moat that has reinvented itself, mid-life, into an aluminium-and-EV content play. What it is <em>not</em> is a clean, debt-light compounder — the diversification was bought on borrowed money, and the numbers now hinge on turning acquired scale into acquired profit while paying that money back.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Machining moat</strong> — dominant, hard-to-replicate position in CV cylinder-block/head machining, with 65–70% gross margins throwing off cash.</li>
+        <li><strong>EV-agnostic aluminium</strong> — die-casting content rises whether vehicles go diesel or electric; DR Axion was bought cheaply (~4.4× EV/EBITDA).</li>
+        <li><strong>Margin recovery ahead</strong> — aluminium is running below potential; utilisation, the Sunbeam merger, and mix should lift group margin from ~16%.</li>
+        <li><strong>Diversification</strong> — three engines (powertrain, aluminium, industrial) on different cycles smooth the ride; industrial/storage rides the warehousing boom.</li>
+        <li><strong>Deleveraging path</strong> — asset sales + cash flow + fund-raise aimed at net-debt/EBITDA below 2.0× by FY27.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Leverage</strong> — ~₹3,000 Cr net debt (~2.4× EBITDA) is high for an auto-ancillary; interest is due even in a truck downturn.</li>
+        <li><strong>Margin reset</strong> — the mix-shift to thin-margin die-casting may be structural, not temporary; group margin fell from ~24% to ~16%.</li>
+        <li><strong>CV cyclicality</strong> — the high-margin powertrain core is geared to a 30–40%-swing truck cycle plus customer concentration.</li>
+        <li><strong>Integration risk</strong> — DR Axion + Sunbeam merger and the ₹6,500 Cr aluminium target require flawless execution and heavy capex.</li>
+        <li><strong>Valuation vs promoter selling</strong> — ~64× earnings on a levered, cyclical business, into which the promoter has been trimming his stake.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Craftsman is a real engineering business making a bold, capital-intensive pivot: from a fat-margin truck-engine machinist into a bigger, thinner-margin, EV-relevant aluminium supplier — with a warehouse-racking business along for the ride. The machining core is excellent; the aluminium bet is plausible; the balance sheet is the wildcard. The next chapter has a concrete scoreboard, not a slogan: the <strong>DR Axion–Sunbeam merged aluminium entity's first full year (FY27)</strong> showing margins climbing while <strong>net-debt/EBITDA prints below 2.0×</strong>. Hit that pairing — richer aluminium margins <em>and</em> a lighter balance sheet — and the re-rating writes itself; miss it, and Craftsman is a levered auto-ancillary wearing a growth-stock multiple.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Craftsman Automation — FY26 results (year ended Mar 2026): revenue ₹8,069 Cr, EBITDA ₹1,300 Cr, PAT ₹384 Cr; company disclosures and ScanX/Tradebrains summaries.</li>
+    <li>Craftsman Automation — Q4 FY26 results &amp; segment revenue (powertrain / aluminium / industrial), TradingView / Quartr and MarketScreener earnings summaries.</li>
+    <li>Craftsman Automation Q4 25/26 earnings-call transcript (Yahoo Finance / Alpha Spread) — net-debt/EBITDA guidance, Gurgaon land sale, aluminium targets.</li>
+    <li>DR Axion acquisition detail: alcircle, Upstox, India Infoline, autotechinsight — 76% (Feb 2023, ~₹650 Cr EV, 4.4× EV/EBITDA) + residual 24% (₹250 Cr, mid-2024).</li>
+    <li>Craftsman Automation — aluminium business restructuring (DR Axion + Sunbeam amalgamation, effective Apr 2026); StockInsights / ScanX announcements.</li>
+    <li>Motilal Oswal — Craftsman Automation initiating-coverage note (segment margins, machining value-add).</li>
+    <li>Capitalmind &amp; StockEdge — Craftsman Automation business analyses (segment structure, capital intensity).</li>
+    <li>Screener.in — Craftsman Automation consolidated financials (FY22–FY26), P/E, ROCE, ROE, shareholding.</li>
+    <li>Craftsman Automation corporate website — automotive-powertrain, industrial-and-engineering &amp; storage-solutions pages (product detail).</li>
+    <li>BSE India — Craftsman Automation Ltd (scrip 543276); NSE: CRAFTSMAN. Promoter-stake and ₹2,000 Cr fund-raise disclosures (2026).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; some items (e.g. exact net debt, EV/EBITDA) are estimated and should be verified against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "CRAFTSMAN";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
