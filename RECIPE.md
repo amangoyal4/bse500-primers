@@ -162,3 +162,48 @@ write a short run log to runs/<date>.md (companies done / held + notes)
 Target up to 6 per run, but **quality over count** — ship fewer rather than rush
 one below the bar. One excellent primer beats six rushed ones. Never publish
 half-finished work. Never repeat a company already `done`.
+---
+
+## 7. Anti-boilerplate guardrails (MANDATORY — added 2026-07-13 after a drift audit)
+
+The house STRUCTURE is deliberately shared (snapshot → industry-101 → who-controls-it
+→ bespoke crux → financials/valuation → risks/bull-bear). That is fine and intended.
+What must NOT homogenize is the PROSE. A quality audit found the "connective tissue"
+(closing lines, valuation rhetoric, voice tics) converging into a fill-in-the-blank
+template across primers. Every new primer MUST obey these rules:
+
+1. **Banned closing/valuation clichés** — do NOT use any of these phrases (they had become
+   a verbatim template): "a long way to fall", "priced for perfection", "no room for error",
+   "no margin for error", "leaves no room for error", "grow into its/the multiple",
+   "call option on the future", and the seesaw "Get those right … stumble/disappoint, and …".
+   Close the bottom-line on a COMPANY-SPECIFIC image or a concrete, NAMED next milestone
+   (a specific plant commissioning, an order-award cadence, a margin gate, a court ruling)
+   — never a generic valuation see-saw.
+
+2. **Name the metric that settles the thesis, in this company's own terms.** The valuation
+   section must point to the ONE specific, named number that will prove or break the case
+   for THIS company (e.g. occupancy for a hospital, mid-cycle GRM for a refiner, contracted
+   backlog for a defence-materials firm, ODM-mix % for a contract manufacturer, combined
+   ratio for an insurer). Do NOT default every expensive stock to a "mix-shift / ramp /
+   re-rate" arc or a "call option" framing. If a valuation section exists, the mandated
+   bespoke section must NOT also be a valuation rant — spend it on real business mechanics.
+
+3. **Cap the tic-words.** Use "honest/honestly" AT MOST ONCE in the whole primer. Do NOT use
+   "the bull owns X; the bear owns Y", "both can be right at different moments",
+   "both are true at once", or "the story will be written in [N] numbers each quarter".
+   Vary the "In plain terms" box — do NOT open it with "Think of [Company] as…" (that opener
+   is now overused; find a fresh way in).
+
+4. **One non-transferable device per primer (REQUIRED).** Include at least one analytical
+   construct that could appear in NO other primer. Test every key sentence: "would this
+   survive a find-replace of the company name?" If yes, it's boilerplate — rewrite it.
+   Gold-standard example: MRPL's "same plant, same people, same 15 MMTPA — profit moved ~38×
+   in two years; a ~$6/bbl GRM swing is the whole difference between a Rs 51 Cr and a
+   Rs 1,931 Cr year."
+
+5. **Force one genuine surprise.** Each primer must contain one insight that would SURPRISE a
+   smart generalist about this specific company (a counter-intuitive fact, a hidden
+   dependency, a structural quirk). This structurally blocks competent-but-templated output.
+
+Bones excellent, mortar fresh. If a primer reads like it could be about any company in its
+sector with the names swapped, it fails — rework it before publishing.
