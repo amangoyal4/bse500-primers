@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caplin Point Laboratories — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F3EF;
+    --paper-2:#FBFAF6;
+    --card:#FFFFFF;
+    --ink:#221813;
+    --ink-soft:#5F544D;
+    --ink-faint:#948A82;
+    --brand:#A83B2C;          /* deep terracotta / brick red */
+    --brand-bright:#C6543F;   /* bright terracotta */
+    --gold:#C98A2E;           /* warm amber - accent / West Africa */
+    --lat:#B5473A;            /* Latin America terracotta */
+    --us:#3E6B8C;             /* regulated / US steel blue */
+    --api:#6E8A3C;            /* API / backward-integration olive */
+    --afr:#C98A2E;            /* Africa amber */
+    --reg:#7A5AA0;            /* regulated dossier violet */
+    --line:#E2DCD3;
+    --line-soft:#ECE7DE;
+    --good:#2A8359;
+    --bad:#B5432E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F6E7E3;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:11px;color:var(--ink-faint);margin-top:16px;letter-spacing:.02em;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#F7ECDD;border:1px solid #EAD4B4;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8f5f18;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#443208;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F6F0;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EDE8DF;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#A83B2C,#C6543F);}
+  .fill.gold{background:linear-gradient(90deg,#C98A2E,#DBA24D);}
+  .fill.lat{background:linear-gradient(90deg,#B5473A,#CB6152);}
+  .fill.us{background:linear-gradient(90deg,#3E6B8C,#5A87A8);}
+  .fill.api{background:linear-gradient(90deg,#6E8A3C,#88A455);}
+  .fill.afr{background:linear-gradient(90deg,#C98A2E,#DBA24D);}
+  .fill.reg{background:linear-gradient(90deg,#7A5AA0,#9375B6);}
+  .fill.bad{background:linear-gradient(90deg,#B5432E,#CE5B44);}
+  .fill.ink{background:linear-gradient(90deg,#3a302b,#5F544D);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:112px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.api{background:var(--api);}
+  .node.mfg{background:var(--brand);}
+  .node.reg{background:var(--reg);}
+  .node.dist{background:var(--lat);}
+  .node.shelf{background:var(--gold);color:#3a2806;}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-lat{color:var(--lat);font-weight:600;}
+  .chain-us{color:var(--us);font-weight:600;}
+  .chain-api{color:var(--api);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms.blue .msv{color:var(--us);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#F9EBE7;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#F7ECDD;color:#4a3712;}
+  .note.gold b{color:#8f5f18;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#8f5f18;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F6E7E3;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Generic exporting 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> Owning the last mile</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owner</a></li>
+    <li><a href="#p4"><span class="n">04</span> The geographic engine</a></li>
+    <li><a href="#p5"><span class="n">05</span> The cash machine</a></li>
+    <li><a href="#p6"><span class="n">06</span> Climbing to the US</a></li>
+    <li><a href="#p7"><span class="n">07</span> Products &amp; the API push</a></li>
+    <li><a href="#p8"><span class="n">08</span> The industry &amp; rivals</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The growth runway</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: CAPLIPOINT · BSE: 524742</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Caplin Point Laboratories, <em>the company that owns the pharmacy shelf in Guatemala</em></h1>
+  <p class="dek">A full walk through one of India's most quietly profitable small-cap pharma exporters — how a Chennai firm came to control the last mile of medicine distribution across Central and South America, why "owning the shelf" lets it get paid before it ships, and whether the cash from that emerging-market engine can buy its way into the far harder, far more crowded world of US-FDA injectables.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">₹2,303 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~34% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">₹650 <small>Cr</small></div><div class="l">Net profit (FY26, +20%)</div></div>
+    <div class="cell"><div class="v">~₹19,000 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">14 Jul 2026</b> · source: Q4 &amp; FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹2,303 Cr (+13%), PAT ₹650 Cr (+20%), US revenue ₹471 Cr (+29%); 54 ANDA approvals at Caplin Steriles; ₹1,000 Cr+ capex programme under way.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Caplin Point makes <strong>finished generic medicines</strong> — antibiotics, painkillers, anti-fungals, blood-pressure and diabetes drugs, injectables — and sells almost all of them <strong>outside India</strong>. Its distinctive edge is <em>where</em> and <em>how</em>: it dominates the everyday pharmacy shelf across a cluster of <strong>Central and South American countries</strong> — Guatemala, Nicaragua, Honduras, El Salvador, Ecuador and more — markets most global drug-makers can't be bothered to serve, and it does so by <strong>owning the distribution itself</strong> rather than handing off to a local importer.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>A tiny company with world-class economics.</strong> Revenue reached <strong>₹2,303 Cr in FY26</strong> (up 13%), net profit <strong>₹650 Cr</strong> (up 20%), on a <strong>~34% EBITDA margin</strong> — with a five-year return on capital employed averaging in the low-30s percent, no long-term debt, and a promoter family owning <strong>~70.6%</strong> with zero shares pledged. Those are numbers you associate with a branded consumer business, not a generics exporter.</li>
+    <li><strong>The moat is the last mile, not the molecule.</strong> The drugs Caplin sells are ordinary generics anyone can make. What is hard to copy is its <em>in-country plumbing</em> in Latin America — its own product registrations, warehouses, and exclusive distributor network (branded "Neoethicals") that reaches thousands of pharmacies and hospitals. Rebuilding that from scratch would take a rival many years. Guatemala alone is roughly a third of Latin-American sales.</li>
+    <li><strong>The whole story is the climb up the value chain.</strong> Caplin is using its Latin-American cash to fund a deliberate move into <strong>harder, higher-value regulated markets</strong> — US-FDA-approved injectables (via subsidiary Caplin Steriles), ophthalmics, oncology and its own <strong>APIs</strong> (the raw drug ingredients). US revenue hit <strong>₹471 Cr in FY26 (+29%)</strong>, ~21% of the total. Whether that climb pays off — without wrecking the fat margins that funded it — is the entire investment debate.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Caplin figured out something most Indian pharma companies ignored: the fastest way to make money in generics is not to invent a better pill, but to be <strong>the most reliable supplier standing on shelves that nobody else wants to stock</strong>. In small Central-American economies, being the firm that always has the antibiotic in stock, registered and ready, is worth more than any patent. That position throws off enormous cash — customers there even pay Caplin <em>up front</em>. The company is now spending that cash trying to earn a second, much tougher badge of honour: shipping sterile injectables into American hospitals, where the FDA is strict and every competitor is bigger. The bet is that the shelf in Guatemala can pay for the factory that cracks the US.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Generic exporting 101: front end vs back end</h2></div>
+  <p class="part-sub">No pharma background needed — just the one distinction that explains Caplin's margins.</p>
+
+  <p class="lead">A generic drug company does something conceptually simple: it makes a copy of a medicine whose patent has expired, and sells it cheaper than the original brand. The molecule is off-patent, the recipe is public, and dozens of factories can make it. So in generics, <strong>the drug itself is rarely where the money is</strong> — the money is in <em>who controls the path from the factory to the patient</em>. That path is where Caplin is unusual.</p>
+
+  <h3>The two ways an Indian generics firm can sell abroad</h3>
+  <ul class="clean">
+    <li><strong>The back-end model (the common one).</strong> You make the tablets in India and sell them in bulk to a local <em>importer/distributor</em> in the destination country. They handle registration, warehousing, sales reps and pharmacy relationships — and they keep most of the retail value. You are a contract supplier: low margin, price-shopped every year, and only as loyal as your next quote. Most Indian exporters live here.</li>
+    <li><strong>The front-end model (Caplin's choice).</strong> You go into the destination country yourself: you <em>register the products in your own name</em>, set up warehouses, build or buy the distributor, employ the sales reps, and put your medicine directly onto pharmacy and hospital shelves. You capture the manufacturing margin <em>and</em> the distribution margin — and, crucially, you own the customer relationship. It is far more work to build, and almost impossible for a rival to dislodge once built.</li>
+  </ul>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The economics of the choice</caption>
+    <thead><tr><th>Dimension</th><th>Back-end contract exporter</th><th>Caplin's front-end model</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Who owns the registration</td><td>The local importer</td><td><strong>Caplin</strong> — the drug licences are its asset</td></tr>
+      <tr><td class="t-strong">Value captured</td><td>Factory-gate price only</td><td>Factory + distribution + shelf margin</td></tr>
+      <tr><td class="t-strong">Pricing power</td><td>Low — re-tendered each year</td><td>High — controls availability and brand</td></tr>
+      <tr><td class="t-strong">Working capital</td><td>Long credit to importers</td><td><strong>Negative</strong> — distributors pay in days</td></tr>
+      <tr><td class="t-strong">Barrier for a new rival</td><td>Low — undercut the price</td><td>High — rebuild years of registrations &amp; reach</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why this is the whole ballgame</div>
+    <p>The reason Caplin earns a ~34% EBITDA margin on commodity drugs — while plenty of larger generic exporters scrape by in the teens — is almost entirely this front-end choice. It is not selling a better antibiotic; it is selling <strong>certainty of supply plus its own brand</strong> into markets where certainty is scarce. A pharmacy in Guatemala City doesn't want the theoretically cheapest amoxicillin from an unknown Indian factory; it wants the one that is registered, always in stock, and delivered on time by a distributor it has dealt with for years. Caplin is that distributor. The margin is the reward for having done the unglamorous, decade-long work of building the pipes.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>Owning the last mile: the Latin-American moat</h2></div>
+  <p class="part-sub">Read this section once and the entire company clicks into place.</p>
+
+  <p class="lead">Caplin's core business is a <strong>vertically integrated Latin-American medicine supply chain</strong> that it controls end to end — from a factory in India all the way to the shelf of a pharmacy in Managua. Most exporters own the first link and sell the rest away. Caplin owns nearly all of it. That is the single design decision behind its returns.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The value chain — and how much of it Caplin owns</div>
+    <div class="flow-row">
+      <div class="node api"><div class="ntag">Link 1 · Ingredient</div><div class="nname">API</div><div class="nwho">The raw drug substance. Being backward-integrated into.</div></div>
+      <div class="arrow">→</div>
+      <div class="node mfg"><div class="ntag">Link 2 · Make</div><div class="nname">Formulation</div><div class="nwho">Finished tablets, creams, injectables in India.</div></div>
+      <div class="arrow">→</div>
+      <div class="node reg"><div class="ntag">Link 3 · Licence</div><div class="nname">In-country registration</div><div class="nwho">Own dossiers with each LatAm regulator.</div></div>
+      <div class="arrow">→</div>
+      <div class="node dist"><div class="ntag">Link 4 · Move</div><div class="nname">Warehousing &amp; distribution</div><div class="nwho">Own stock, own distributor (Neoethicals).</div></div>
+      <div class="arrow">→</div>
+      <div class="node shelf"><div class="ntag">Link 5 · Sell</div><div class="nname">Pharmacy &amp; hospital shelf</div><div class="nwho">Direct to the point of sale.</div></div>
+    </div>
+    <div class="flow-note">A typical Indian exporter owns only Links 1–2 and sells to an importer who takes Links 3–5 (and the margin). Caplin owns Links 2–5 today, and is building into Link 1 (APIs). The further right you own, the fatter and stickier the margin.</div>
+  </div>
+
+  <h3>What "owning the front end" actually means on the ground</h3>
+  <ul class="clean">
+    <li><strong>Its own registrations.</strong> Caplin holds the drug licences with each country's regulator in its own name — thousands of them accumulated over 25+ years across some 20 therapeutic categories. A registration takes time and money to obtain; a rival can't sell a competing product until it has its own. This is the quiet, cumulative barrier.</li>
+    <li><strong>Its own distribution arm.</strong> A regional operation branded <strong>Neoethicals</strong> distributes Caplin's medicines to wholesalers and retailers across Guatemala, El Salvador, Honduras, Nicaragua, Costa Rica, Panama, Ecuador, Chile, Venezuela, Paraguay and the Dominican Republic — employing several hundred people on the ground.</li>
+    <li><strong>Its own brands and forward reach.</strong> Products carry Caplin's own labels; the company has pushed forward into institutional/hospital supply and even branded prescription channels — capturing demand rather than waiting for orders.</li>
+    <li><strong>Markets the giants ignore.</strong> These are small economies with under-built healthcare systems. A Pfizer or a Teva sees a rounding error; Caplin sees a market it can dominate because nobody large is fighting for it. Being a big fish in deliberately small ponds is the strategy.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The one-line version of the moat</div>
+    <p>Caplin's advantage is not a drug, a patent or a factory — it is a <strong>distribution position that took a quarter-century to assemble and would take a competitor as long to rebuild</strong>. When a generic drug is a commodity, whoever controls the shelf controls the profit. In Guatemala, Honduras and their neighbours, Caplin controls the shelf. That is why a company making unremarkable pills earns remarkable margins — and why those margins have proven durable rather than fleeting.</p>
+  </div>
+
+  <div class="note gold"><b>A useful mental test:</b> ask of any Caplin strength — "could a bigger, better-funded rival replicate this next year by spending money?" A new tablet line: yes. A price cut: yes. Twenty years of in-country registrations, warehouses and pharmacy relationships across a dozen countries: no. The parts that <em>can't</em> be bought quickly are exactly the parts Caplin owns.</div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">From a Pondicherry ointments plant to a Latin-American distribution empire.</p>
+
+  <p class="lead">Caplin Point is a <strong>first-generation founder's company</strong>. Chairman <strong>C. C. Paarthipan</strong> started in pharma in the 1980s as a medical representative, incorporated the business in <strong>1990</strong> to make ointments and creams, listed it in 1994 — and then made the unorthodox bet, in markets nobody else wanted, that became the whole franchise.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1990</div><div class="ev">Caplin Point incorporated in Chennai (Tamil Nadu) by <strong>C. C. Paarthipan</strong> to make ointments, creams and external applications.</div></li>
+    <li><div class="yr">1994</div><div class="ev"><strong>IPO</strong> — reportedly oversubscribed ~117×; proceeds fund a manufacturing facility at Pondicherry.</div></li>
+    <li class="major"><div class="yr">Late 1990s–2000s</div><div class="ev">The defining pivot: instead of chasing crowded regulated markets, Caplin enters <strong>under-served Latin America and West/Francophone Africa</strong> and begins building its own front-end distribution rather than selling through importers.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Deepens the LatAm network (Neoethicals distribution), widens the product basket across ~20 therapeutic categories, and turns structurally cash-generative with negative working capital.</div></li>
+    <li class="major"><div class="yr">~2015–2019</div><div class="ev">Launches <strong>Caplin Steriles</strong> — a sterile injectables facility built to US-FDA / EU standards — the deliberate first step up the value chain into regulated markets.</div></li>
+    <li><div class="yr">FY20–FY24</div><div class="ev">US ANDA approvals accumulate; first commercial US injectable shipments; backward integration into <strong>APIs</strong> begins (Vizag plant); oncology facility at Kakkalur, Chennai.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue <strong>₹2,303 Cr</strong>, PAT <strong>₹650 Cr</strong>; US revenue <strong>₹471 Cr (+29%)</strong>; <strong>54 ANDA approvals</strong> at Caplin Steriles; a <strong>₹1,000 Cr+ capex</strong> programme (injectables, oncology, APIs) under way, funded entirely from internal cash.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> Founder-Chairman <strong>C. C. Paarthipan</strong> and family hold <strong>~70.57%</strong> (as of late 2025), with <strong>no pledged shares</strong> — an unusually high, unencumbered promoter stake that signals conviction and aligns the owner with minority shareholders.</li>
+    <li><strong>Founder-led, and therefore founder-dependent.</strong> Paarthipan is the architect of the LatAm-first strategy and remains its public face and strategic driver. That vision has been the company's greatest asset; it is also its clearest key-man risk (see §11). A professional management layer runs day-to-day operations and the regulated-market subsidiaries.</li>
+    <li><strong>Balance sheet:</strong> net cash / no long-term debt, funding a large capex programme out of operating cash flow rather than borrowing — the balance-sheet posture of a company that generates far more cash than it needs to run.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the ownership structure matters</div>
+    <p>A ~70% promoter holding with nothing pledged is rare and telling. It means the person who conceived the strategy still owns most of the company and has bet his own net worth on it, not the bank's. For a business whose edge is a hard-to-value distribution network in far-flung markets — the kind of thing that needs patient, founder-level commitment rather than quarterly optimisation — that alignment is a genuine asset. The flip side is concentration: the strategy, the relationships and much of the institutional memory sit close to one person.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The geographic engine</h2></div>
+  <p class="part-sub">Three regions, three completely different businesses under one roof.</p>
+
+  <p class="lead">Caplin's revenue splits across three geographies that could hardly be more different in character: a <strong>Latin-American cash cow</strong>, a smaller <strong>West-African branded business</strong>, and a fast-growing but far more competitive <strong>US regulated business</strong>. Understanding the mix is understanding the company, because the strategy is literally to redeploy profit from the first into the third.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue by geography (FY26, approximate)</div>
+    <div class="c-sub">Emerging markets (LatAm + Africa) were ~79% of revenue; the US ~21%</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Latin America<small>Guatemala, Nicaragua, Honduras…</small></div><div class="track"><span class="fill lat" style="width:100%"></span></div><div class="bval">~68%</div></div>
+      <div class="bar-row"><div class="blab">US / regulated<small>injectables via Caplin Steriles</small></div><div class="track"><span class="fill us" style="width:31%"></span></div><div class="bval">~21%</div></div>
+      <div class="bar-row"><div class="blab">West Africa &amp; RoW<small>branded, Francophone Africa</small></div><div class="track"><span class="fill afr" style="width:16%"></span></div><div class="bval">~11%</div></div>
+    </div>
+    <div class="legend"><span>Shares are approximate. LatAm is the high-margin, negative-working-capital core; the US is the lower-margin, capital-hungry growth bet; Africa is a smaller branded adjacency. Guatemala alone is roughly a third of LatAm sales.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three engines compared</caption>
+    <thead><tr><th>Region</th><th>What it is</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--lat)">Latin America (~68%)</td><td>Own front-end distribution across ~a dozen Central &amp; South American countries; Guatemala the largest single market</td><td>The profit and cash engine — high margin, negative working capital, deep moat. Funds everything else.</td></tr>
+      <tr><td class="t-strong" style="color:var(--us)">US / regulated (~21%)</td><td>Sterile injectables, ophthalmics via Caplin Steriles; both B2B (other firms' labels) and B2C (own label, Caplin Steriles USA)</td><td>The growth and re-rating bet — big market, strict FDA, brutal competition. Grew ~29% to ₹471 Cr in FY26.</td></tr>
+      <tr><td class="t-strong" style="color:var(--afr)">West Africa &amp; RoW (~11%)</td><td>Branded generics, strong in Francophone Africa</td><td>A smaller, branded emerging-market adjacency that echoes the LatAm playbook.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note gold"><b>The concentration to keep in view:</b> nearly four-fifths of revenue still comes from emerging markets, and within LatAm a single country — Guatemala — is around a third of the region. That concentration is the source of both the high returns (dominance in a niche) and the key risk (political, currency and economic swings in small Central-American economies). The US push is, in part, a diversification away from it.</div>
+</section>
+
+<!-- 05 — BESPOKE: the surprise / non-transferable device -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The cash machine: getting paid before you ship</h2></div>
+  <p class="part-sub">The single most counter-intuitive fact about Caplin — and the one that explains its returns.</p>
+
+  <p class="lead">Here is the detail that surprises almost everyone who first studies Caplin. In most manufacturing businesses, you spend money making a product, ship it, and then <em>wait</em> — often 60, 90, 120 days — to be paid. That waiting is called working capital, and it eats cash. Caplin's Latin-American business runs the <strong>opposite way round</strong>: its distributors pay it in a matter of <strong>days</strong>, sometimes in advance. The business is funded by its own customers.</p>
+
+  <div class="mini-stats">
+    <div class="ms blue"><div class="msv">~8–12</div><div class="msl">Receivable days in core LatAm markets — cash arrives almost as goods do</div></div>
+    <div class="ms gold"><div class="msv">Negative</div><div class="msl">Working-capital cycle in LatAm — customers fund the business, not banks</div></div>
+    <div class="ms green"><div class="msv">&gt;25%</div><div class="msl">Return on capital employed, every year for 5+ years running</div></div>
+  </div>
+
+  <p>Why would a distributor pay so fast? Because <strong>Caplin controls the shelf</strong>. As the most reliable supplier of everyday medicines — antibiotics, anti-fungals, anti-hypertensives — across some twenty therapeutic categories, it is not a vendor that must plead for orders and offer credit to win them. It is a supplier the distributors <em>need</em> in stock, and they pay promptly to keep the relationship. Scarcity of reliable supply, in economies where that reliability is genuinely valuable, flips the normal power balance between maker and seller.</p>
+
+  <div class="plain">
+    <div class="ptag">The non-obvious consequence</div>
+    <p>Negative working capital is not just a nice-to-have; it changes the <em>mathematics</em> of the company. Because customers effectively pre-fund inventory, Caplin needs very little capital tied up to run its LatAm business — so the return on the capital it <em>does</em> employ is extraordinarily high, and growth is largely self-financing. It doesn't need bank facilities to manage its cash cycle. That is how a small-cap pharma firm can simultaneously post low-30s% RoCE, carry no debt, pay dividends, <em>and</em> spend ₹1,000 Cr+ on new factories — all from internally generated cash. The Guatemala shelf isn't just profitable; it is a machine that produces cash faster than the company can spend it.</p>
+  </div>
+
+  <p>This is the analytical heart of Caplin, and it is worth stating precisely: <strong>the company earns its fattest, easiest margins in countries most of its own shareholders could not find on a map, and collects the cash before the medicine leaves the warehouse — then spends that cash chasing thinner, harder dollars in the United States, where everyone has heard of the market and everyone is competing.</strong> Every question about Caplin's future is really a question about whether that trade — easy LatAm cash for hard US revenue — creates value or quietly erodes it.</p>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Climbing to the US: the regulated-market bet</h2></div>
+  <p class="part-sub">The deliberate move from soft markets into hard ones — the growth crux.</p>
+
+  <p class="lead">A comfortable, high-margin niche can become a trap: it is profitable but ultimately capped by the size of small economies. Caplin's answer is to use the LatAm cash to buy a seat at a much bigger, much harder table — the <strong>regulated markets</strong>, above all the United States, where drugs must clear the US Food and Drug Administration (FDA) and margins are earned against the toughest competition in generics. This is the company's central growth strategy and its central risk.</p>
+
+  <h3>Why the US is a different game entirely</h3>
+  <ul class="clean">
+    <li><strong>The FDA bar is high.</strong> To sell a generic in the US you file an <strong>ANDA</strong> (Abbreviated New Drug Application) proving your copy is equivalent to the original, and your factory must pass FDA inspection. It is slow, expensive and unforgiving — but once cleared, it is a durable credential.</li>
+    <li><strong>Caplin chose the hardest, best corner of it — injectables.</strong> Rather than commodity oral tablets (where US generic pricing has been savage), it focused on <strong>sterile injectables</strong> via subsidiary <strong>Caplin Steriles</strong>: harder to make, fewer credible players, and periodic shortages that reward reliable suppliers — closer in spirit to the "be the dependable supplier" edge that works in LatAm.</li>
+    <li><strong>The approvals are stacking up.</strong> Caplin Steriles reached <strong>~54 ANDA approvals</strong> with a deep pipeline (55+ products), spanning injectables and ophthalmics, and has been acquiring approved ANDAs to accelerate — for example a batch of 10 approved injectable/ophthalmic ANDAs addressing a ~US$470m market.</li>
+    <li><strong>It is even building its own US front end.</strong> Echoing the LatAm playbook, Caplin runs both a B2B model (making products sold under other US firms' labels) and a growing B2C model selling under its <strong>own label</strong> via Caplin Steriles USA — inching toward owning the American customer relationship too.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">US revenue — small but compounding fast</div>
+    <div class="c-sub">US market revenue (₹ Crore); the regulated-market ramp</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:56%"></span></div><div class="bval">~265</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill us" style="width:78%"></span></div><div class="bval">~366</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill us" style="width:100%"></span></div><div class="bval">471</div></div>
+    </div>
+    <div class="legend"><span>US grew ~29% in FY26 to ₹471 Cr — about 21% of total revenue. Earlier years approximate. The strategic question is whether this line can keep compounding toward a third of the mix without dragging blended margins down.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The strategy in one sentence</div>
+    <p>Fund the regulated-market ambition from the emerging-market cash cow. Caplin is doing something few small-caps attempt: rather than raising equity or debt to chase US generics, it is <strong>plumbing the LatAm profit stream directly into FDA-grade injectable and oncology plants</strong>, so the risky, capital-hungry climb is paid for by the safe, cash-rich base. If it works, Caplin ends up with two moats — the LatAm shelf <em>and</em> a hard-won US injectables franchise. If it stumbles, it will have spent years of good LatAm cash on a market that competes its returns away.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The product engine and the API push</h2></div>
+  <p class="part-sub">What Caplin actually makes — and why it is now digging into the raw materials.</p>
+
+  <p class="lead">Caplin's basket is broad and deliberately unglamorous: everyday medicines across roughly <strong>twenty therapeutic categories</strong> — anti-infectives, cardiovascular, anti-diabetics, gastro, pain, dermatology — in tablets, capsules, creams, and increasingly <strong>complex sterile forms</strong>. The strategic direction of travel is toward higher-value, harder-to-make products, and toward making its own ingredients.</p>
+
+  <h3>The move to complex and sterile dosages</h3>
+  <ul class="clean">
+    <li><strong>Sterile injectables</strong> — the Caplin Steriles core: liquid and lyophilised (freeze-dried) injectables cleared for the US and EU, harder to manufacture and less price-competed than oral generics.</li>
+    <li><strong>Ophthalmics</strong> — sterile eye products, another technically demanding, higher-barrier category.</li>
+    <li><strong>Oncology</strong> — a dedicated facility at <strong>SIDCO Kakkalur, Chennai</strong> for oncology oral solids and injectables, targeting the US, EU, Canada, Mexico and Brazil — high-value, high-barrier products.</li>
+    <li><strong>Next-generation delivery</strong> — pre-filled syringes and Blow-Fill-Seal technology, plus branded pre-filled syringes launched in LatAm — pushing the product mix up the complexity curve in both regions.</li>
+  </ul>
+
+  <h3>Backward integration into APIs — the self-reliance move</h3>
+  <p>An <strong>API</strong> (Active Pharmaceutical Ingredient) is the actual drug substance inside a pill — the part that does the work. Most Indian formulators buy APIs from third parties, often from China, which means they don't control their most important input's cost, quality or availability. Caplin is <strong>building its own API capability</strong> — including an API plant at <strong>Vizag</strong> and oncology APIs alongside the Kakkalur finished-dosage plant.</p>
+
+  <div class="plain">
+    <div class="ptag">Why make your own ingredients</div>
+    <p>Backward integration into APIs does three things at once. It <strong>protects margins</strong> (you capture the ingredient profit instead of paying it to a supplier); it <strong>secures supply</strong> (no scramble when a Chinese API source is disrupted); and it <strong>strengthens US filings</strong> (controlling your own API can smooth and de-risk the FDA approval path). For a company climbing into regulated markets, owning the ingredient is the natural companion to owning the distribution — the same instinct, applied to the other end of the chain. It also deepens the moat: a rival now has to match not just Caplin's shelf and its FDA approvals, but its ingredient self-sufficiency too.</p>
+  </div>
+
+  <div class="note gold"><b>The pattern to notice:</b> whether in LatAm distribution, US injectables, or now APIs, Caplin keeps making the same move — <em>own more of the chain than a normal generics company would</em>. Front-end distribution owns the downstream; API integration owns the upstream. The company's whole identity is a refusal to be merely the factory in the middle.</div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A branded emerging-market model, judged against India's better generic exporters.</p>
+
+  <p class="lead">Caplin doesn't fit neatly into one competitive bucket. In LatAm it competes less with Indian pharma than with <strong>local distributors and other suppliers to those specific markets</strong> — a game it largely dominates. In the US it competes with the <strong>full weight of the global generic-injectables industry</strong>. And as a stock, it is measured against India's other high-quality, high-return branded/emerging-market pharma names.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>How Caplin sits among Indian peers</caption>
+    <thead><tr><th>Company</th><th>Model</th><th>Vs Caplin</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Caplin Point</td><td>Front-end LatAm distribution + emerging US injectables/APIs</td><td><em>This company.</em> Unique LatAm last-mile moat; negative working capital; ~34% margins; climbing into regulated markets.</td></tr>
+      <tr><td class="t-strong">Ajanta Pharma</td><td>Branded generics in emerging markets (Asia, Africa) + US &amp; India</td><td>The closest philosophical peer — high-return, branded emerging-market focus. Larger, more diversified geographically; different core regions.</td></tr>
+      <tr><td class="t-strong">Eris Lifesciences</td><td>Domestic-India branded chronic therapies</td><td>Another high-margin, high-RoCE compounder, but India-facing and brand-led — a valuation comparison more than a direct rival.</td></tr>
+      <tr><td class="t-strong">Alembic Pharma</td><td>India brands + US generics + APIs</td><td>Bigger US ANDA base and API scale; more exposed to competitive US oral generics; lower returns than Caplin's LatAm-anchored model.</td></tr>
+      <tr><td class="t-strong">Gland Pharma, Strides</td><td>Generic injectables / regulated-market exporters</td><td>The direct competitive set in US injectables — larger, established players Caplin is challenging as its Steriles business scales.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive tension to hold in mind</div>
+    <p>Caplin lives a double life. In its LatAm home turf it faces <strong>little serious competition</strong> — its distribution position is the defence, and few want to fight for small Central-American markets. In its US ambition it faces <strong>very serious competition</strong> — Gland, Strides and global injectables majors are bigger and already established. So the same company is simultaneously a near-monopolist in one arena and an ambitious upstart in another. Its edge in the US is to carry the LatAm instinct with it: pick niche, hard-to-make, shortage-prone injectables where reliability beats scale, rather than commodity products where scale wins. Whether that instinct travels is the open question.</p>
+  </div>
+
+  <div class="note gold"><b>The structural backdrop:</b> global generics face relentless price erosion, especially in US orals, and periodic regulatory scrutiny of overseas plants. Caplin's insulation is that most of its revenue sits in branded, front-end LatAm markets that don't behave like the cut-throat US tender market — but as it leans into the US, it is deliberately walking toward the price pressure it has so far avoided. The injectables/complex-product focus is the chosen shield.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Rare quality for a small-cap — and a price that reflects it.</p>
+
+  <p class="lead">Caplin's financial record is the reason it commands attention: steady mid-teens revenue growth, high-30s-then-mid-30s EBITDA margins, low-30s% returns on capital, net cash, and consistent dividends — a combination most small-cap pharma companies never approach. The debate is not the business quality; it is what to pay for it, and whether the US pivot preserves the very margins that make it special.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Operating revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:58%"></span></div><div class="bval">~1,341</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:77%"></span></div><div class="bval">~1,769</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:88%"></span></div><div class="bval">2,034</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">2,303</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit (PAT) trajectory</div>
+    <div class="c-sub">Net profit after tax (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:71%"></span></div><div class="bval">~462</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill us" style="width:83%"></span></div><div class="bval">541</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill us" style="width:100%"></span></div><div class="bval">650</div></div>
+    </div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~34%</div><div class="msl">FY26 EBITDA margin — consumer-grade profitability on generic drugs</div></div>
+    <div class="ms green"><div class="msv">Net cash</div><div class="msl">No long-term debt; ₹1,000 Cr+ capex self-funded from cash flow</div></div>
+    <div class="ms red"><div class="msv">~28–30×</div><div class="msl">Trailing P/E (Jul '26) — a premium small-cap multiple</div></div>
+  </div>
+
+  <p>FY26 rounded out with Q4 net profit of <strong>~₹170 Cr (+19%)</strong> on revenue of <strong>~₹600 Cr (+19%)</strong>, and the board declared an interim dividend. The multi-year picture: revenue compounding in the mid-to-high teens, PAT growing a little faster (operating leverage plus mix), margins holding in the mid-30s even as the lower-margin US business grows, and returns on capital staying comfortably above 25%.</p>
+
+  <div class="plain">
+    <div class="ptag">The number that settles the thesis</div>
+    <p>At ~₹19,000 Cr market cap on ₹650 Cr of FY26 profit — roughly <strong>28–30× trailing earnings</strong> — Caplin trades at a clear premium to a typical generic exporter, and the premium is paying for its returns profile and the US optionality. The single metric that will prove or break the case is precise: <strong>can the US-and-regulated revenue share keep climbing — from ~21% toward a third of the mix — while the consolidated EBITDA margin holds in the mid-30s and RoCE stays above 25%?</strong> That is the whole trade in one line. If US revenue scales <em>and</em> blended margins hold, the premium is justified and compounding continues. If the US grows only by diluting margins and soaking up capital at lower returns, the market is over-paying for a mix shift that quietly makes the company less special than the LatAm engine alone.</p>
+  </div>
+
+  <div class="note gold"><b>Figures to verify against primary sources:</b> FY26 revenue (₹2,303 Cr) and PAT (₹650 Cr) are drawn from reported results; EBITDA margin (~34%), RoCE (low-30s%, &gt;25% for 5 years), promoter holding (~70.57%) and US revenue (₹471 Cr) from company disclosures and broker notes. Market cap (~₹19,000 Cr) and the implied P/E move daily and are as of mid-2026; the exact multiple varies by source and date. Historical revenue/PAT for FY23–FY24 and the US-revenue split for earlier years are approximate. Confirm all figures against Caplin's filings and results before relying on them.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The growth runway</h2></div>
+  <p class="part-sub">Four levers, stacked — and all self-funded.</p>
+
+  <p class="lead">Caplin's growth is unusual in that it needs no external capital: a ₹1,000 Cr+ capex programme is being paid for entirely out of operating cash, and the company expects to stay net cash throughout. The levers are clear, and they compound on each other.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The growth levers</caption>
+    <thead><tr><th>Lever</th><th>What it is</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Deepen LatAm</td><td>More products, more categories (incl. CNS, branded pre-filled syringes), more institutional/hospital reach in existing countries</td><td>Grows the high-margin, negative-working-capital core with almost no incremental capital.</td></tr>
+      <tr><td class="t-strong">Scale US injectables</td><td>Convert the 54-ANDA base + 55-strong pipeline into commercial sales; own-label B2C via Caplin Steriles USA</td><td>The biggest revenue and re-rating lever — and the biggest execution risk.</td></tr>
+      <tr><td class="t-strong">Oncology &amp; complex forms</td><td>Kakkalur oncology (oral + injectable) for US/EU/Canada/Mexico/Brazil; Blow-Fill-Seal, pre-filled syringes</td><td>Higher-value, higher-barrier products that resist price erosion.</td></tr>
+      <tr><td class="t-strong">API backward integration</td><td>Own APIs (Vizag; oncology APIs at Kakkalur)</td><td>Protects margin, secures supply, de-risks US filings.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>The capex programme</h3>
+  <ul class="clean">
+    <li><strong>~₹1,000 Cr+ committed</strong>, roughly half already near completion and the balance to be spent over the next two to three years.</li>
+    <li><strong>Funded entirely from internal accruals</strong> — the company expects to remain net cash positive throughout, a direct benefit of the negative-working-capital LatAm engine.</li>
+    <li><strong>Aimed squarely up the value chain</strong> — injectables capacity, the oncology complex, and API self-sufficiency, i.e. the regulated-market and margin-protection agenda rather than more commodity capacity.</li>
+  </ul>
+
+  <blockquote>The next chapter is less about selling more pills in Guatemala and more about turning a wall of FDA approvals into shipped, invoiced US revenue — without letting the American business dilute the returns that paid for it.</blockquote>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuinely rare small-cap — with its hardest test still ahead.</p>
+
+  <p class="lead">Caplin is one of the more distinctive businesses in Indian pharma: a founder-owned, debt-free, high-return exporter with a durable emerging-market moat and a self-funded push into regulated markets. The investment argument turns on execution of the US climb and on the durability of the LatAm base — plus a valuation that already assumes both go well.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>An un-copyable LatAm moat</strong> — 25+ years of registrations, warehouses and distribution reach that a rival cannot buy quickly.</li>
+        <li><strong>Freakishly good economics</strong> — ~34% EBITDA margin, low-30s% RoCE, negative working capital, net cash, self-funded growth.</li>
+        <li><strong>A real second act</strong> — 54 US ANDAs, an injectables/oncology/API build-out that could add a durable regulated-market franchise.</li>
+        <li><strong>Aligned owner</strong> — ~70.6% promoter holding, nothing pledged; the strategy's architect still owns the company.</li>
+        <li><strong>Optionality</strong> — complex dosages, own-label US B2C, and Africa all sit on top of the base, largely for free.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Geographic concentration</strong> — ~four-fifths of revenue in emerging markets, with Guatemala alone a third of LatAm; exposed to Central-American political, currency and economic shocks.</li>
+        <li><strong>US execution risk</strong> — regulated-market generics is a brutal, low-margin arena where approvals don't guarantee profits; the US could dilute returns.</li>
+        <li><strong>Margin dilution</strong> — as lower-margin US grows, the blended ~34% margin could drift down even as revenue rises.</li>
+        <li><strong>Key-man dependence</strong> — the LatAm-first strategy and relationships are closely tied to the founder.</li>
+        <li><strong>Premium valuation</strong> — ~28–30× earnings already prices in a successful US ramp; a stumble in approvals or margins invites a de-rating.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Caplin has already done the hard, patient thing once — it built a distribution moat in markets nobody wanted and turned commodity generics into a low-30s%-RoCE cash machine. The question now is whether it can do a <em>different</em> hard thing: convert a wall of FDA approvals into real, profitable US revenue without the American business quietly eroding the margins that made the company worth owning. Watch one thing above all — the <strong>US-and-regulated revenue share climbing while the consolidated EBITDA margin holds in the mid-30s</strong>. The concrete milestone that will show the strategy working is prosaic and specific: <strong>the first oncology injectables shipping in volume from the Kakkalur complex to the US and EU</strong>, on Caplin's own APIs. Reach that with margins intact, and the Guatemala shelf will have successfully bought its way into America.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Caplin Point Laboratories — Q4 &amp; FY26 earnings presentation (year ended Mar 2026), caplinpoint.net investor relations.</li>
+    <li>Caplin Point Laboratories — FY26 results &amp; dividend disclosures; TradingView/Quartr results summary (FY26 revenue +13.2%, PAT +20.1%).</li>
+    <li>ICICIdirect — Caplin Point Laboratories Q4 FY26 result update.</li>
+    <li>HDFC Securities — Caplin Point Laboratories stock update &amp; "Pick of the Month" notes.</li>
+    <li>Screener.in — Caplin Point Laboratories consolidated financials, RoCE and shareholding.</li>
+    <li>Trendlyne / Groww — Caplin Point financials, market cap and valuation data.</li>
+    <li>Dhruv Meisheri (Substack) &amp; Rockstud Capital — Caplin Point deep-dives on the LatAm front-end model and negative working capital.</li>
+    <li>MoneyWorks4Me / Craft.co — peer comparison (Ajanta, Eris, Alembic, Gland, Strides) and competitive set.</li>
+    <li>Company website (caplinpoint.net) — management team, history, Caplin Steriles, Neoethicals distribution footprint.</li>
+    <li>Business Standard, ScanX — news on ANDA acquisitions, US approvals (Foscarnet, Calcium Gluconate) and capex plans.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports around FY26 (year ended March 2026), and may contain errors or become outdated; market cap and valuation multiples move daily. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "CAPLIPOINT";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
