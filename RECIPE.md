@@ -192,7 +192,9 @@ template across primers. Every new primer MUST obey these rules:
    "the bull owns X; the bear owns Y", "both can be right at different moments",
    "both are true at once", or "the story will be written in [N] numbers each quarter".
    Vary the "In plain terms" box — do NOT open it with "Think of [Company] as…" (that opener
-   is now overused; find a fresh way in).
+   is now overused; find a fresh way in). More broadly, do NOT use the "Think of it/[X] as …"
+   construction ANYWHERE in the primer (not just as the opener) — it is a recurring crutch;
+   rephrase every instance. Before finishing, grep your own draft for "think of" and remove it.
 
 4. **One non-transferable device per primer (REQUIRED).** Include at least one analytical
    construct that could appear in NO other primer. Test every key sentence: "would this
