@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Age Management Services (CAMS) — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F6F8;
+    --paper-2:#FBFCFD;
+    --card:#FFFFFF;
+    --ink:#161A26;
+    --ink-soft:#535B6E;
+    --ink-faint:#8A91A3;
+    --brand:#2A4E8C;          /* records-registry indigo */
+    --brand-bright:#3E6FC4;   /* ledger azure */
+    --gold:#B9822B;           /* ledger amber */
+    --violet:#5A3EA8;         /* fintech / non-MF adjacencies */
+    --slate:#5E6875;
+    --line:#DBDEE4;
+    --line-soft:#E7EAEF;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7EDF7;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#2f2205;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#F1F3FA;border:1px solid #D5DCEE;border-left:3px solid var(--brand);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#2f4680;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"❖";font-size:12px;}
+  .plain p{margin:0;font-size:15px;color:#1f2942;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F8FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E9ECF2;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2A4E8C,#3E6FC4);}
+  .fill.gold{background:linear-gradient(90deg,#B9822B,#D19E45);}
+  .fill.azure{background:linear-gradient(90deg,#3E6FC4,#5C8CDD);}
+  .fill.violet{background:linear-gradient(90deg,#5A3EA8,#7A5CC6);}
+  .fill.slate{background:linear-gradient(90deg,#5E6875,#7E8894);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.good{background:linear-gradient(90deg,#2A8359,#3AA06E);}
+  .fill.ink{background:linear-gradient(90deg,#2c3444,#4a5464);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.n1{background:var(--slate);}
+  .node.n2{background:var(--brand-bright);}
+  .node.n3{background:var(--brand);}
+  .node.n4{background:var(--gold);}
+  .node.n5{background:var(--violet);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.violet .msv{color:var(--violet);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF3E3;color:#4a3712;}
+  .note.gold b{color:#946514;}
+  .note.brand{border-color:var(--brand);background:#EFF2FA;color:#243254;}
+  .note.brand b{color:var(--brand);}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#946514;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF0FA;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What an RTA actually is</a></li>
+    <li><a href="#p2"><span class="n">02</span> How CAMS earns its fee</a></li>
+    <li><a href="#p3"><span class="n">03</span> The telescoping-fee crux</a></li>
+    <li><a href="#p4"><span class="n">04</span> The company &amp; its owners</a></li>
+    <li><a href="#p5"><span class="n">05</span> The CAMS–KFin duopoly</a></li>
+    <li><a href="#p6"><span class="n">06</span> The SIP &amp; mutual-fund boom</a></li>
+    <li><a href="#p7"><span class="n">07</span> Beyond mutual funds</a></li>
+    <li><a href="#p8"><span class="n">08</span> The numbers</a></li>
+    <li><a href="#p9"><span class="n">09</span> Valuation: the premium debate</a></li>
+    <li><a href="#p10"><span class="n">10</span> The risks</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, bull &amp; bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: CAMS · BSE: 543232</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Computer Age Management Services, <em>the mutual-fund industry's shared back office</em></h1>
+  <p class="dek">A complete walk through India's largest mutual-fund registrar &amp; transfer agent — the outsourced recordkeeping engine that processes your SIPs, allots your units, updates the register of who owns what, and pays out your redemptions. How an RTA earns a few paise a year on every ₹100 of assets it keeps books for, why that fee-rate <em>shrinks</em> as it succeeds, and whether a capital-light near-duopoly on India's savings boom is worth ~40× earnings.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,516 <small>Cr</small></div><div class="l">Revenue (FY26, cons.)</div></div>
+    <div class="cell"><div class="v">~₹55 <small>lakh Cr</small></div><div class="l">MF AUM serviced · ~68% share</div></div>
+    <div class="cell"><div class="v">~₹476 <small>Cr</small></div><div class="l">Net profit (FY26, cons.)</div></div>
+    <div class="cell"><div class="v">~₹18,600 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">14 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — consolidated revenue ~₹1,516 Cr (+6.6%), PAT ~₹476 Cr, MF AUM serviced ~₹55 lakh Cr (+21%), non-MF now ~15% of revenue; added the telescoping-fee, CAMS–KFin duopoly and adjacencies sections; reflects the 1:5 stock split (Dec 2025).</div>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice</p>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Computer Age Management Services — <strong>CAMS</strong> — is India's largest <strong>mutual-fund registrar &amp; transfer agent (RTA)</strong>. When you start a SIP, buy a fund, switch schemes or redeem units, a lot happens behind the app that you never see: the money has to be received, units allotted at the right day's NAV, the master register of who-owns-which-units updated, KYC checked, statements sent, the call-centre run, dividends and redemptions computed and paid to your bank. CAMS is the company that does all of that — not for one fund house, but as the shared, outsourced back office for <strong>AMCs representing roughly two-thirds of India's mutual-fund assets</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is invisible, essential, and a near-duopoly.</strong> Almost no retail investor has heard of CAMS, yet most Indian mutual-fund investors are on its rails. The whole country has just <strong>two mutual-fund RTAs of scale</strong> — CAMS and rival <strong>KFin Technologies</strong> — and CAMS is the larger, servicing AMCs that hold about <strong>68% of industry AUM</strong>. Standing up a third would take years of trust, national-scale technology and every big fund house's willingness to switch — so the barrier is very high.</li>
+    <li><strong>It earns a tiny slice of a giant, growing pool.</strong> CAMS is paid a fee measured in <strong>basis points on the assets it services</strong> — of the order of <em>three paise a year per ₹100</em>. On the ~₹55 lakh crore of mutual-fund assets it keeps books for, that adds up to <strong>~₹1,516 Cr of revenue (FY26, consolidated)</strong>, at a <strong>~46% EBITDA margin</strong>, with <strong>~₹476 Cr of net profit</strong>, essentially no debt, high return on equity, and generous dividends. It takes no market risk, holds no inventory and lends nothing — it just meters the flow.</li>
+    <li><strong>Its fee-rate falls as it wins — the counter-intuitive twist.</strong> The RTA contracts are built on <strong>telescoping slabs</strong>: the more assets CAMS services, the <em>lower</em> the rate it charges on the marginal rupee. So revenue grows <em>slower</em> than the assets underneath it. In FY26 the assets it serviced grew <strong>~21%</strong>, but revenue grew <strong>~7%</strong> — the gap is the yield giving way. The bet is that sheer volume, plus faster-growing higher-margin non-MF businesses, keeps outrunning that erosion. That, plus a rich <strong>~40× P/E</strong>, is the whole debate.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Every mutual fund in India has two very different jobs. One is glamorous — <strong>deciding what to buy</strong> — and that belongs to the asset manager (HDFC AMC, ICICI Prudential, SBI, and so on). The other is unglamorous but unavoidable — <strong>keeping the books</strong>: recording each investor's units, processing every purchase and redemption, sending statements, running KYC and the helpline. Fund houses have almost universally decided <em>not</em> to build that second machine themselves. They rent it. CAMS is the biggest landlord of that rented machine, plugged into most of the industry at once. Its revenue rises automatically as the country pours more savings into mutual funds — more investors, more SIPs, markets going up — without CAMS having to pick a single winning stock. The catch is that the price it charges per rupee of assets keeps ratcheting down, so it must add assets faster than its rate erodes, and lean on newer businesses, just to keep the profit line climbing.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What a registrar &amp; transfer agent actually is</h2></div>
+  <p class="part-sub">No finance degree required — just follow one SIP from your bank account to the fund's register.</p>
+
+  <p class="lead">A mutual fund is, legally and operationally, two separate things bolted together. The <strong>asset management company (AMC)</strong> makes the investment decisions and runs the schemes. But the <strong>ledger of investors</strong> — who put in how much, when, at what price, and what they are owed — is a huge, error-intolerant, regulated recordkeeping task that most AMCs outsource to a specialist. That specialist is the <strong>registrar &amp; transfer agent</strong>. CAMS is India's largest.</p>
+
+  <h3>Follow one ₹5,000 SIP through the machine</h3>
+  <p>Say you have a ₹5,000 monthly SIP in an equity fund. On SIP day, a chain of steps fires — and CAMS sits in the middle of almost every one:</p>
+  <ul class="clean">
+    <li><strong>Collect the money.</strong> The mandate you signed pulls ₹5,000 from your bank via NACH/UPI auto-debit. The RTA (and CAMS's payments arm) reconciles that the money actually arrived.</li>
+    <li><strong>Allot the units.</strong> The RTA applies the correct day's <strong>NAV</strong>, works out how many units ₹5,000 buys, and <strong>writes them into the register</strong> against your folio. Get the cut-off time or NAV wrong and thousands of investors are mis-allotted — so this is unforgiving, rules-bound work.</li>
+    <li><strong>Update the master record.</strong> Your total holding, the fund's total units, the inflow into the scheme — all of it is reconciled so the AMC, the bank/custodian and the regulator see one consistent set of books.</li>
+    <li><strong>Service you.</strong> The RTA generates your statement, powers the fund house's website/app view, runs the call centre and branch network, handles your address change, nominee update, KYC and grievance.</li>
+    <li><strong>Pay you out.</strong> When you redeem or receive a dividend, the RTA computes the amount, applies exit loads and taxes, and pushes the money back to your bank.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The one idea that makes it click</div>
+    <p>An AMC is a fund's brain; the RTA is its <strong>nervous system and memory</strong>. The brain decides what to own; the nervous system carries every instruction in and out, and the memory holds the definitive record of who owns what. Crucially, that record has to be <em>perfectly</em> reconciled every single day across crores of folios — a mistake isn't a bad quarter, it's a compliance failure. Building and running that system is expensive, deeply regulated, and offers no competitive edge to the fund house (nobody buys HDFC's fund because its statements are prettier). So the entire industry converged on the same answer: hand it to a shared utility that does it at scale for everyone. CAMS is that utility for most of the market — which is why it earns a small, steady fee on an enormous and rising base of assets without ever taking a view on a stock.</p>
+  </div>
+
+  <h3>Who plugs into CAMS</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>The four parties around the RTA</caption>
+    <thead><tr><th>Party</th><th>What they do — and how CAMS connects them</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">AMC / fund house<br><small>the client that pays CAMS</small></td><td>Designs and runs the schemes, decides what to invest in. Outsources the entire investor-servicing and recordkeeping stack to CAMS and pays a fee on the assets serviced. CAMS serves many of the largest AMCs (incl. HDFC, ICICI Prudential, SBI, Aditya Birla and others).</td></tr>
+      <tr><td class="t-strong">Distributor / platform</td><td>The channel that brings investors in — banks, IFAs, and apps like Groww, Zerodha, Kuvera. CAMS's systems settle transactions and commissions between distributor, investor and AMC.</td></tr>
+      <tr><td class="t-strong">Investor (you)</td><td>The unit-holder. Your folio, statements, KYC, SIP mandate and redemptions all live on the RTA's platform — usually without you ever knowing the name "CAMS".</td></tr>
+      <tr><td class="t-strong">Bank / custodian / regulator</td><td>Money moves through banks; securities sit with a custodian; SEBI and AMFI set the rules. The RTA is the reconciliation hub that keeps every party's books agreeing.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The RTA sits at the centre of the mutual-fund plumbing</div>
+    <div class="flow-row">
+      <div class="node n1"><div class="ntag">Source</div><div class="nname">Investor + distributor</div><div class="nwho">SIP, lumpsum, redemption via bank, IFA or app.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n3"><div class="ntag">The engine · CAMS</div><div class="nname">Registrar &amp; transfer agent</div><div class="nwho">Allot units, update register, KYC, statements, payouts, call centre.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n2"><div class="ntag">Client</div><div class="nname">AMC / fund house</div><div class="nwho">Runs the scheme; pays CAMS a fee on assets serviced.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n4"><div class="ntag">Rails</div><div class="nname">Bank &amp; custodian</div><div class="nwho">Money in/out; securities held; SEBI/AMFI oversight.</div></div>
+    </div>
+    <div class="flow-note">Everything an investor and a fund house need to exchange — money, instructions, records — passes through the RTA's books. Own that hub for two-thirds of the industry and you have CAMS.</div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>How CAMS earns its fee</h2></div>
+  <p class="part-sub">A basis-point charge on assets serviced — plus a fast-growing bundle of adjacent fees.</p>
+
+  <p class="lead">The core of CAMS is beautifully simple to describe: it charges each AMC a fee expressed as a <strong>tiny fraction of the assets it services</strong>, billed on the average assets under management (AAUM) of that fund house. On roughly ₹55 lakh crore of serviced AUM, a blended rate of the order of <strong>three basis points</strong> (₹3 per ₹1 lakh, i.e. about three paise per ₹100 per year) produces the bulk of a ₹1,516 Cr revenue line. Because that fee arrives whether or not you trade — it is levied on assets sitting in the fund, not on activity — it behaves like a recurring, annuity-style stream that rises as the industry's assets rise.</p>
+
+  <div class="chart">
+    <div class="c-title">Where the revenue comes from (approximate mix, FY26)</div>
+    <div class="c-sub">Consolidated revenue by broad stream — the MF RTA fee dominates, with adjacencies rising</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">MF RTA fee<small>bps on assets serviced · recurring</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~85%</div></div>
+      <div class="bar-row"><div class="blab">Non-MF services<small>payments, KRA, AA, insurance, alts</small></div><div class="track"><span class="fill violet" style="width:18%"></span></div><div class="bval">~15%</div></div>
+    </div>
+    <div class="legend"><span>Within the MF fee, most is the asset-based RTA charge; smaller slices come from transaction/paper-based charges, network/software and value-added services. Non-MF (~15.3% of revenue in FY26) is the fastest-growing piece and management's chosen offset to yield compression.</span></div>
+  </div>
+
+  <h3>The revenue streams, decoded</h3>
+  <ul class="clean">
+    <li><strong>Asset-based RTA fee</strong> — the anchor. A basis-point charge on each AMC's average assets, under a multi-year contract. It scales with the industry's AUM (SIP inflows + market appreciation + new investors) and is stickier than it looks, because switching RTA is a rare, disruptive, board-level decision for a fund house.</li>
+    <li><strong>Transaction &amp; paper-based charges</strong> — fees tied to processing purchases, redemptions, switches, new-folio creation and physical paperwork. This flexes a little with activity, but it is a minority of the MF line.</li>
+    <li><strong>Network, software &amp; value-added services</strong> — the technology CAMS licenses to AMCs and distributors: dashboards, distributor tools, data feeds, digital onboarding. Higher-margin and growing.</li>
+    <li><strong>Non-MF services</strong> — a widening set of businesses on the same rails: payments (CAMSPay), KYC (CAMS KRA), Account Aggregator, insurance repository (CAMSRep), and servicing for alternatives (AIF/PMS). Covered in full in <a href="#p7">section&nbsp;07</a>.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the fee is an annuity, not a trade</div>
+    <p>The single most important feature of CAMS's core fee is that it is charged on <strong>assets, not on activity</strong>. A depository or an exchange earns more when markets are frantic and less when they are quiet; CAMS earns on the <em>stock</em> of money sitting in mutual funds, which is far steadier. Even in a flat market, SIPs keep adding roughly ₹25,000–30,000 crore of fresh money into the industry every month, and that raises the asset base CAMS bills on. So the revenue has an unusually high recurring quality — the assets don't have to churn for CAMS to get paid; they just have to stay invested. The vulnerability is not activity drying up; it is the <em>rate</em> on those assets sliding, and a severe bear market shrinking the asset base itself.</p>
+  </div>
+</section>
+
+<!-- 03 — BESPOKE crux: the telescoping / slab fee -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The telescoping fee: why more assets means a thinner rate</h2></div>
+  <p class="part-sub">The one mechanism that shapes the whole investment case — and it runs backwards from intuition.</p>
+
+  <p class="lead">Here is the quirk a newcomer never expects. In almost every business, doing more of something either keeps the unit price flat or lets you charge more. CAMS's core contracts do the opposite. They are built on <strong>telescoping slabs</strong>: as the assets CAMS services for a fund house climb through pre-agreed thresholds, the fee rate on the higher slabs <strong>steps down</strong>. So the very success that grows the asset base also <strong>thins the rate applied to it</strong>. Revenue therefore grows more slowly than the assets beneath it — permanently, by design.</p>
+
+  <div class="plain">
+    <div class="ptag">The three-paise machine — and how it shrinks</div>
+    <p>Picture CAMS's core as a meter that clicks over roughly <strong>three paise a year for every ₹100</strong> of mutual-fund money it keeps the register for. In FY26 the money running through that meter swelled by about a fifth — on the order of <strong>₹9–10 lakh crore of net new mutual-fund assets, an amount larger than the entire Indian mutual-fund industry was a decade ago</strong>. And yet revenue rose only mid-single-digits. The reason is that while the meter processed a fifth more rupees, the rate it charged each rupee quietly slipped — from a shade over three paise toward just under it. The company must, in effect, run up a down-escalator: add assets fast enough that the widening base more than offsets the narrowing rate. For years it has managed exactly that. But the escalator never stops moving down.</p>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">The gap that defines CAMS: assets outgrow revenue outgrows yield</div>
+    <div class="c-sub">Illustrative multi-year annual growth — serviced AUM vs revenue vs the blended fee rate</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Serviced MF AUM<small>the base CAMS bills on</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~21%</div></div>
+      <div class="bar-row"><div class="blab">Revenue<small>grows slower than assets</small></div><div class="track"><span class="fill azure" style="width:33%"></span></div><div class="bval">~7–14%</div></div>
+      <div class="bar-row"><div class="blab">Blended MF yield<small>the rate — moves the other way</small></div><div class="track"><span class="fill bad" style="width:14%"></span></div><div class="bval">−3 to −6%</div></div>
+    </div>
+    <div class="legend"><span>Assets grew ~21% in FY26; blended yield fell in the low-single-digits; revenue landed in between. The wider the wedge between AUM growth and yield decline, the faster revenue compounds. Figures are approximate and vary year to year.</span></div>
+  </div>
+
+  <h3>What actually drives the rate down</h3>
+  <ul class="clean">
+    <li><strong>Contractual slabs.</strong> The built-in step-downs as each AMC's serviced assets cross thresholds — the mechanical core of the compression.</li>
+    <li><strong>Mix shift to lower-fee assets.</strong> As <strong>passive funds (index/ETFs)</strong> and low-cost direct plans grow, the blended rate drifts down: a rupee in a cheap index fund carries less RTA fee than a rupee in an active equity scheme.</li>
+    <li><strong>SEBI's total-expense-ratio pressure.</strong> When the regulator squeezes the total expense ratio (TER) that AMCs can charge investors, the AMCs push to pay their own vendors — including the RTA — less. CAMS sits downstream of every TER cut.</li>
+    <li><strong>Competitive re-pricing.</strong> With only two RTAs, contract renewals with a large AMC can be fought on price; winning or keeping a big mandate sometimes means accepting a thinner rate.</li>
+  </ul>
+
+  <div class="note brand"><b>Why this is the crux, not a footnote:</b> almost everything else about CAMS is a positive — recurring revenue, a duopoly moat, capital-light economics, a structural savings boom underneath it. The telescoping fee is the one force pulling the other way, and it is <em>always</em> pulling. It converts a spectacular tailwind (assets up ~20% a year) into a merely good one (revenue up high-single to low-double digits). The entire bull case reduces to a single question: can serviced-AUM growth and the higher-margin non-MF businesses keep outrunning the yield giving way — not for one year, but for a decade?</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A 1988 data-processing shop that became critical market infrastructure — and now has no promoter at all.</p>
+
+  <p class="lead">CAMS is older than the industry it serves. It was founded in <strong>Chennai in 1988</strong> — the name "Computer Age Management Services" is a relic of a pre-internet era when computerising paperwork was itself the business. As Indian mutual funds took off after the 1990s liberalisation, CAMS pivoted into fund recordkeeping and became the dominant RTA. Today it is <strong>professionally managed with zero promoter holding</strong> — a genuinely unusual structure for a large Indian company.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1988</div><div class="ev">CAMS founded in <strong>Chennai</strong> as a data-processing services firm — long before the modern mutual-fund industry existed.</div></li>
+    <li><div class="yr">1990s–2000s</div><div class="ev">Pivots into <strong>mutual-fund recordkeeping</strong> and scales into India's leading RTA as the fund industry expands post-liberalisation; wins mandates from most of the largest AMCs.</div></li>
+    <li><div class="yr">2014</div><div class="ev">Ownership passes through financial hands — <strong>NSE, HDFC and others</strong> hold stakes alongside founder entity Acsys; CAMS is by now the back office for a majority of the industry's assets.</div></li>
+    <li><div class="yr">2018</div><div class="ev"><strong>Warburg Pincus</strong> (via Great Terrain) buys ~12.6% from HDFC and NSE for ~₹420 Cr, later building toward a ~20% position — setting up the eventual public listing.</div></li>
+    <li class="major"><div class="yr">Sep 2020</div><div class="ev"><strong>IPO / listing on NSE &amp; BSE</strong> — an offer-for-sale by existing holders (Warburg, NSE and others). Post-issue, <strong>promoter holding falls to nil</strong>; the company becomes entirely widely held.</div></li>
+    <li><div class="yr">FY21–FY25</div><div class="ev">Builds out the <strong>non-MF adjacencies</strong> — payments, KYC (KRA), Account Aggregator, insurance repository, alternatives servicing — to widen the fee base beyond the compressing MF rate.</div></li>
+    <li class="major"><div class="yr">Dec 2025</div><div class="ev"><strong>1:5 stock split</strong> (face value ₹10 → ₹2; ~24.8 crore shares) to improve retail accessibility.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record revenue <strong>~₹1,516 Cr</strong>; serviced MF AUM ~₹55 lakh Cr (+21%); non-MF crosses <strong>~15% of revenue</strong>; MF market leadership held at ~68%.</div></li>
+  </ul>
+
+  <div class="note gold"><b>The genuine surprise — no promoter, and rival fund houses share one back office:</b> Two things about CAMS's structure catch newcomers off guard. First, it has <strong>0% promoter holding</strong> — since the 2020 IPO it has been a fully institution-and-public-owned, professionally run company, a rarity in India. Second, it is <em>neutral infrastructure</em>: fierce competitors — HDFC, ICICI Prudential, SBI and others fighting each other for every investor — hand their most sensitive investor data and processing to the <em>same</em> outsourced engine. That only works because CAMS is trusted, walled-off market plumbing rather than anyone's ally — the same reason a third RTA is so hard to conjure into being.</div>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>No promoter; widely held.</strong> The register is dominated by <strong>domestic and foreign institutions</strong> — mutual funds, insurers, FPIs — with a large public float. No single owner controls the company.</li>
+    <li><strong>Professional leadership.</strong> Run by a professional management team (led by MD &amp; CEO <strong>Anuj Kumar</strong>) and an independent board, rather than a founding family — decisions sit with managers accountable to a dispersed shareholder base.</li>
+    <li><strong>Balance sheet.</strong> <strong>Net cash / debt-free</strong>, with a comfortable cash-and-investments cushion; capital needs are minimal, so most profit is returned as dividends rather than reinvested in plant.</li>
+  </ul>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The CAMS–KFin duopoly</h2></div>
+  <p class="part-sub">Two RTAs, one industry — and a barrier that keeps it that way.</p>
+
+  <p class="lead">India's mutual-fund recordkeeping is split between exactly <strong>two RTAs of scale</strong>: CAMS and <strong>KFin Technologies</strong> (formerly Karvy Computershare / KFintech). CAMS is the larger, servicing AMCs with roughly <strong>68% of industry AUM</strong>; KFin handles most of the rest. There is no meaningful third player, and there has not been for years — which tells you how hard this market is to enter.</p>
+
+  <div class="chart">
+    <div class="c-title">The mutual-fund RTA market — a two-horse race CAMS leads</div>
+    <div class="c-sub">Approximate share of industry mutual-fund AUM serviced, FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">CAMS<small>the larger RTA</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~68%</div></div>
+      <div class="bar-row"><div class="blab">KFin Technologies<small>the challenger</small></div><div class="track"><span class="fill slate" style="width:47%"></span></div><div class="bval">~32%</div></div>
+    </div>
+    <div class="legend"><span>CAMS anchors the largest AMCs (a mandate's size, not just its count, drives share). KFin has been the more aggressive winner of newer/smaller AMC launches and has a larger international &amp; issuer-services footprint. Shares shift slowly.</span></div>
+  </div>
+
+  <h3>Why the barrier to a third RTA is so high</h3>
+  <ul class="clean">
+    <li><strong>Trust and track record.</strong> A fund house is entrusting its entire investor register to a vendor; it will not gamble that on an unproven entrant. Reputation here is measured in decades.</li>
+    <li><strong>Scale technology &amp; SEBI oversight.</strong> The RTA must run bulletproof, reconciled, audited systems across crores of folios under a demanding regulator. That platform costs years and fortunes to build — and CAMS's is already sunk and paid for.</li>
+    <li><strong>Switching cost &amp; inertia.</strong> Migrating an AMC's entire book from one RTA to another is a heavy, risky, board-level project. It happens, but rarely — so incumbency is sticky in both directions.</li>
+    <li><strong>Rational, not ruinous, competition.</strong> With only two players, price competition exists (especially at contract renewals) but does not race to zero; both earn healthy margins.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Duopoly, but not a cartel — where the two actually fight</div>
+    <p>The comfortable read is that two players simply split a growing pie and both prosper. Mostly true — but the competition is real at three seams. <strong>New AMC launches:</strong> India keeps licensing new fund houses, and each new mandate is openly contested; KFin has often been the hungrier bidder there. <strong>Big renewals:</strong> when a large AMC's multi-year contract comes up, the rival can pitch a sharper price, and CAMS may defend the mandate by conceding rate — feeding the very yield compression in <a href="#p3">section&nbsp;03</a>. <strong>Adjacencies:</strong> both are racing to add payments, KYC and data services, so the fight is spreading beyond the core register. The duopoly is a moat; it is not a truce.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE: the growth engine -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The SIP &amp; mutual-fund boom — the growth engine</h2></div>
+  <p class="part-sub">The structural force that fills the base CAMS bills on.</p>
+
+  <p class="lead">Strip everything away and CAMS is a <strong>leveraged bet on Indians moving savings into mutual funds</strong> — without CAMS having to be right about any particular fund. For most of the country's history, households kept wealth in gold, property and bank deposits. Over the past decade, a structural shift began: rising incomes, cheap smartphones, UPI-easy money movement, and above all the <strong>systematic investment plan (SIP)</strong> turning fund-buying into a monthly habit. The industry's assets have compounded from a few lakh crore to <strong>~₹75–80 lakh crore</strong>, and CAMS sits under about two-thirds of it.</p>
+
+  <div class="chart">
+    <div class="c-title">Serviced MF AUM — the base compounds</div>
+    <div class="c-sub">Approximate mutual-fund assets CAMS services (₹ lakh crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY21</div><div class="track"><span class="fill slate" style="width:33%"></span></div><div class="bval">~18</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill azure" style="width:44%"></span></div><div class="bval">~24</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:83%"></span></div><div class="bval">~45</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~55</div></div>
+    </div>
+    <div class="legend"><span>Serviced AUM grew ~21% in FY26. Two engines drive it: fresh money (SIPs + lumpsums) and market appreciation lifting the value of what's already invested. Figures approximate.</span></div>
+  </div>
+
+  <p>The mechanism that makes this so powerful for shareholders is <strong>operating leverage</strong>. CAMS's costs — the platform, the data centres, the people — are largely <em>fixed</em>. Once the system is built, servicing an extra crore of assets or an extra lakh of folios costs almost nothing. So as the serviced base swells, revenue net of the yield drag drops largely to profit, and margins hold near the mid-40s even as the fee rate erodes.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~₹55 L Cr</div><div class="msl">MF assets serviced at FY26 — up ~21% year on year</div></div>
+    <div class="ms gold"><div class="msv">+46%</div><div class="msl">New SIP registrations growth in Q4 FY26 — outpacing the industry (~37%)</div></div>
+    <div class="ms green"><div class="msv">~67%</div><div class="msl">Equity share of serviced assets — a record; equity carries higher fee</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Under-penetration is the long runway — and the SIP is the flywheel</div>
+    <p>Even after the boom, India remains <strong>strikingly under-invested in equities</strong>. The number of unique mutual-fund investors is still a modest share of the population, and households keep most wealth in property, gold and deposits. The reason the runway is credible is the <strong>SIP</strong>: it converts a one-off decision into an automatic monthly debit that keeps flowing through dull and scary markets alike, adding roughly ₹25,000–30,000 crore to the industry every month. For CAMS, that is a monthly top-up to the very base it bills on — the closest thing an RTA has to a recurring subscription. The engine is not the market's <em>level</em>; it is the steadily rising <em>stock</em> of invested savings, which has a far longer secular arc than any single bull run.</p>
+  </div>
+
+  <div class="note gold"><b>The mix inside the boom matters too:</b> not all AUM is equal to CAMS. <strong>Equity assets carry a higher fee rate</strong> than debt or liquid funds, so the record ~67% equity share is quietly good for the blended yield — a partial, market-dependent counterweight to the slab compression. The flip side: equity assets are also the most exposed to a market crash, which is exactly when the base CAMS bills on would shrink.</div>
+</section>
+
+<!-- 07 — BESPOKE: adjacencies -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Beyond mutual funds — the new fee pools</h2></div>
+  <p class="part-sub">The businesses CAMS is building to outrun its own shrinking rate.</p>
+
+  <p class="lead">If the MF fee rate only ever falls, CAMS needs <em>other</em> fee pools that grow faster and, ideally, don't telescope. That is the strategic logic of its <strong>non-MF businesses</strong> — a cluster of adjacent, mostly digital, market-utility services built on the same infrastructure, the same regulator relationships and the same distribution reach. Together they were <strong>~15.3% of revenue in FY26</strong>, and management has guided them to grow <strong>&gt;20% a year</strong> with profitability rising toward a 20% margin (from ~16.5%).</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The non-MF adjacencies</caption>
+    <thead><tr><th>Business</th><th>What it does</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">CAMSPay</td><td>Payments infrastructure — collecting SIP/insurance mandates via NACH, UPI Autopay, cards and net-banking, plus a broader payments-tech stack.</td><td>Rides the same recurring-collection flow as the SIP boom and sells into insurers and fintechs beyond mutual funds.</td></tr>
+      <tr><td class="t-strong">CAMS KRA<br><small>KYC Registration Agency</small></td><td>A central registry of investor KYC records — verify identity once, reuse across brokers, funds and intermediaries.</td><td>Every new market entrant must be KYC'd; a sticky, data-rich franchise that grows with the same retail wave as the core.</td></tr>
+      <tr><td class="t-strong">Account Aggregator<br><small>CAMSfinserv</small></td><td>A licensed AA that lets a consumer securely share their financial data (with consent) between institutions.</td><td>Positions CAMS in India's consent-based data-sharing rails — a potential platform layer for lending, wealth and advice.</td></tr>
+      <tr><td class="t-strong">CAMSRep<br><small>insurance repository</small></td><td>Holds insurance policies in electronic form and provides servicing rails to insurers.</td><td>Extends the recordkeeping model from fund units to insurance — a long-dated pool as insurance digitises.</td></tr>
+      <tr><td class="t-strong">Alternatives servicing<br><small>AIF / PMS</small></td><td>Fund-administration and investor servicing for alternative investment funds and portfolio managers.</td><td>Alternatives (AIF/PMS) are among the <em>fastest-growing</em>, higher-fee pools in Indian asset management.</td></tr>
+      <tr><td class="t-strong">Think Analytics &amp; data</td><td>Analytics and insight tools sold to AMCs and distributors on top of the transaction data CAMS already processes.</td><td>Monetises the data exhaust of the core RTA — high-margin, and hard for a non-incumbent to replicate.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the adjacencies are the whole second act</div>
+    <p>The elegance of the non-MF push is that each new business feeds on infrastructure CAMS <em>already owns</em>: the trust, the AMC and insurer relationships, the payments and KYC plumbing, and the transaction data. Adding a payments product or a KYC registry is not a leap into a new industry — it is selling one more service to customers already wired into CAMS. Two things make this the strategic centre of gravity. First, these pools are <strong>growing far faster than the mature MF core</strong> — alternatives, insurance digitisation and consent-based data are early-innings. Second, they carry fee structures that do <strong>not</strong> telescope the way the RTA slabs do, so they lift the blended economics rather than dragging them. The bear's retort is fair: at ~15% of revenue and still sub-scale in margin, the adjacencies are not yet big enough to <em>set</em> the story — they are a promising hedge that must keep compounding to matter.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The numbers</h2></div>
+  <p class="part-sub">Steady, high-margin, cash-generative — with the yield drag visible in the growth rate.</p>
+
+  <p class="lead">CAMS's financials read like a capital-light utility: consistent revenue growth, mid-40s EBITDA margins, ~30% net margins, minimal capex, no debt and generous payouts. FY26 showed both the quality and the catch — <strong>assets serviced grew ~21%, but revenue grew ~7%</strong>, because the blended fee rate gave way, exactly as the telescoping structure dictates.</p>
+
+  <div class="chart">
+    <div class="c-title">Consolidated revenue</div>
+    <div class="c-sub">₹ Crore — steady growth, well below the pace of serviced AUM</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill slate" style="width:60%"></span></div><div class="bval">~907</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill azure" style="width:78%"></span></div><div class="bval">~1,175</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:94%"></span></div><div class="bval">~1,422</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~1,516</div></div>
+    </div>
+    <div class="legend"><span>FY26 operating revenue rose ~6.6% (total income ~₹1,567 Cr). The moderation vs FY25 reflects a heavier yield step-down and a cooler-than-FY25 market, even as assets serviced kept climbing.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Net profit (PAT, attributable)</div>
+    <div class="c-sub">₹ Crore — margins high, growth gated by the fee rate</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill slate" style="width:60%"></span></div><div class="bval">~285</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill azure" style="width:73%"></span></div><div class="bval">~347</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:98%"></span></div><div class="bval">~465</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~476</div></div>
+    </div>
+    <div class="legend"><span>FY26 PAT ~₹476 Cr, up ~1% — margin held near ~30% but growth was muted as the yield drag and margin mix bit. Q4 FY26 PAT was ~₹126 Cr (+~11% YoY) on record ~₹395 Cr revenue.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>FY26 at a glance (year ended March 2026, consolidated)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY26</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue</td><td class="num">~₹1,516 Cr</td><td>+6.6% YoY; total income ~₹1,567 Cr</td></tr>
+      <tr><td class="t-strong">Net profit (attrib.)</td><td class="num">~₹476 Cr</td><td>+~1% YoY; PAT margin ~30%</td></tr>
+      <tr><td class="t-strong">EBITDA margin</td><td class="num">~46%</td><td>Q4 46.5%; FY27 guided steady ~46.5%</td></tr>
+      <tr><td class="t-strong">MF AUM serviced</td><td class="num">~₹55 L Cr</td><td>+~21% YoY; ~68% market share</td></tr>
+      <tr><td class="t-strong">Blended MF yield</td><td class="num">~3 bps</td><td>Declining low-single-digits/yr; FY27 guide &lt;3% erosion</td></tr>
+      <tr><td class="t-strong">Non-MF revenue</td><td class="num">~15.3%</td><td>Of total; guided &gt;20% growth, margin toward 20%</td></tr>
+      <tr><td class="t-strong">Balance sheet</td><td class="num">Net cash</td><td>Debt-free; high RoE (~40%+); asset-light</td></tr>
+      <tr><td class="t-strong">Dividend</td><td class="num">Generous</td><td>~₹4/sh final (FY26, ₹2 face value, post-split); high payout</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note brand"><b>Reading FY26 correctly:</b> a ~7% revenue year on ~21% asset growth is not a stumble — it is the telescoping fee doing precisely what it always does. Judge CAMS on the <em>wedge</em> between asset growth and yield decline, and on whether the non-MF lines are widening that wedge. The recurring, annuity-like core keeps the floor rising; the fee rate keeps the ceiling from rising as fast. Both are structural, not one-off.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Valuation: the premium debate</h2></div>
+  <p class="part-sub">A scarce, moaty compounder at a demanding price — the crux of the whole story.</p>
+
+  <p class="lead">At a market cap of roughly <strong>₹18,600 Cr</strong> on ~₹476 Cr of FY26 profit, CAMS trades around <strong>40× trailing earnings</strong> — a rich multiple that prices it as a rare, wide-moat compounder rather than a mature services firm. The business quality is not seriously disputed: near-duopoly, capital-light, ~40%+ RoE, structural tailwind. The argument is entirely about how much of the next decade's growth is already in the price, and whether the fee drag lets that growth show up.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~40×</div><div class="msl">Trailing P/E (Jul '26) — a premium to defend</div></div>
+    <div class="ms green"><div class="msv">~40%+</div><div class="msl">Return on equity — capital-light, cash-generative</div></div>
+    <div class="ms violet"><div class="msv">~15%→?</div><div class="msl">Non-MF revenue share — the number the re-rating leans on</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one metric that settles the thesis</div>
+    <p>For CAMS, the number to watch is not revenue, profit or even market share in isolation — it is the <strong>wedge between serviced-AUM growth and blended-yield decline, widened (or not) by the non-MF revenue mix</strong>. Concretely: is assets-serviced growth (mid-teens to ~20%) staying comfortably ahead of yield erosion (guided under 3% a year), and is non-MF revenue climbing past ~20% of the total while its margin rises toward the core's? If yes, revenue compounds at a healthy clip <em>and</em> the blended economics improve — and a 40× multiple on a scarce compounder is defensible. If serviced-AUM growth slows (a bad market, share loss to KFin, a rush into ultra-cheap passives) while yield keeps sliding and the adjacencies stall, growth flattens and a premium multiple re-rates. Everything else — the SIP counts, the equity mix, the quarter's PAT — is a read-through to those two levers.</p>
+  </div>
+
+  <p>Bulls hold that a debt-free, ~40%+-RoE, structurally-growing near-monopoly on India's savings machine deserves a scarcity premium, and that the adjacencies are a call the market is barely paying for. Bears hold that ~40× on ~1% profit growth (FY26) demands years of flawless execution against a fee rate that only falls — and that KFin, passives and SEBI can each chip at the story. The stock has historically swung between these views as markets ran hot and cold.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The risks</h2></div>
+  <p class="part-sub">A high-quality franchise is not a risk-free one — here is what can go wrong.</p>
+
+  <p class="lead">CAMS's risks are unusual because the business is so good: the dangers are less about a sudden collapse and more about a slow squeeze on the rate, the mix and the mandates. Taken honestly, they are real and worth naming precisely.</p>
+
+  <ul class="clean">
+    <li><strong>Yield / fee-rate compression.</strong> The structural headwind of <a href="#p3">section&nbsp;03</a>. Every year the blended rate steps down via slabs, passive mix-shift and TER pressure. If it ever accelerates faster than assets grow, revenue could stall even in a rising market.</li>
+    <li><strong>SEBI regulatory &amp; pricing risk.</strong> The regulator sets the TER that AMCs can charge and periodically tightens it; it can also intervene in RTA practices. CAMS sits downstream of every such decision, with limited ability to push back.</li>
+    <li><strong>Client concentration.</strong> A handful of large AMCs account for a big slice of revenue. Losing, or being forced to re-price, a single large mandate at renewal would leave a visible dent — and with only two RTAs, big clients have negotiating leverage.</li>
+    <li><strong>KFin competition.</strong> The one credible rival is aggressive on new-AMC launches and adjacencies, and a public company under its own growth pressure. Share is stable but not guaranteed, and competition can be fought on price.</li>
+    <li><strong>Passives, direct plans &amp; fintech disruption.</strong> The shift toward index funds/ETFs and direct plans lowers the blended fee, and a determined fintech or in-house AMC build-out could, over time, nibble at pieces of the servicing stack.</li>
+    <li><strong>Market cyclicality.</strong> The core fee is on assets, so a deep, prolonged bear market — especially in equities, the highest-fee slice — would shrink the base CAMS bills on and hit revenue and sentiment together.</li>
+    <li><strong>Premium valuation.</strong> At ~40× earnings, the stock itself is a risk: any disappointment on the wedge (assets vs yield) or on the adjacencies can trigger a sharp de-rating, independent of the business's underlying health.</li>
+  </ul>
+
+  <div class="note"><b>The risk that binds them:</b> notice that most of these push on the <em>same</em> lever — the blended fee rate. Passives, TER cuts, competitive renewals and client concentration all express themselves as yield compression. That is why CAMS's fate rests less on any single dramatic event and more on a quiet, continuous contest between the rate falling and the assets (and adjacencies) rising to cover it.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A rare business model, gated by a fee rate that never stops sliding.</p>
+
+  <p class="lead">CAMS is one of the cleaner franchises on the Indian market: a capital-light, near-duopoly utility earning a small recurring toll on the country's fast-growing pool of mutual-fund savings, run professionally with no debt and no promoter. The investment debate is not about whether the business is good — it is about whether growth can stay strong enough, for long enough, against the built-in erosion of its own rate, to justify a premium multiple.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural moat</strong> — a two-player market with high trust, technology and switching barriers; a third RTA is very hard to create.</li>
+        <li><strong>Recurring, annuity-like core</strong> — fees on assets, not activity; SIPs top up the base every month through good markets and bad.</li>
+        <li><strong>Capital-light economics</strong> — mid-40s EBITDA margin, ~40%+ RoE, net cash, high dividend payout — growth needs almost no capital.</li>
+        <li><strong>Long runway</strong> — India's under-penetration in equities plus the SIP flywheel give the serviced base a multi-year compounding path.</li>
+        <li><strong>Optionality in adjacencies</strong> — payments, KYC, AA, insurance and alternatives growing &gt;20% and lifting the blended mix.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>The rate only falls</strong> — telescoping slabs, passives and TER cuts mean revenue structurally lags asset growth, forever.</li>
+        <li><strong>Rich valuation</strong> — ~40× earnings on ~1% FY26 profit growth demands sustained, flawless execution.</li>
+        <li><strong>Client concentration &amp; renewals</strong> — a few large AMCs carry the revenue; a lost or re-priced mandate would sting.</li>
+        <li><strong>Regulatory overhang</strong> — SEBI controls the TER pool the whole chain is paid from, and can tighten it at will.</li>
+        <li><strong>Market cyclicality</strong> — a deep equity bear market shrinks the highest-fee assets and the base itself.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>CAMS is a <strong>rare thing: a business that gets paid a little more every year for doing nothing differently — simply because the nation keeps investing</strong> — wrapped around a fee that gets a little thinner every year for the same reason. The next few years come down to whether the widening base and the new fee pools keep outrunning the narrowing rate. The clearest scorecard is the one management itself put on the table for FY27: <strong>hold the EBITDA margin at ~46.5%, keep yield erosion under 3% a year, and grow non-MF revenue past 20% of the mix at a rising margin</strong>. Clear those three guideposts and the down-escalator stays comfortably out-climbed; miss them, and the market's willingness to pay 40× for a compounder that grew profit ~1% in FY26 is what gets tested first.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>CAMS — Q4 &amp; FY26 results / investor presentation (year ended Mar 2026); press release, camsonline.com.</li>
+    <li>CAMS FY26 results coverage — Business Standard, "CAMS gains as Q4 PAT jumps 11% YoY to ₹126 cr" (May 2026).</li>
+    <li>ScanX / IndiaIPO — "CAMS Q4 FY26: record revenue, 11% YoY growth &amp; FY27 management guidance" (May 2026).</li>
+    <li>Whalesbook / TipRanks — CAMS FY26 revenue ~₹1,516 Cr, PAT ~₹476 Cr, EBITDA margin 46.5%.</li>
+    <li>Motilal Oswal / Emkay / IIFL — CAMS analyst notes on serviced-AUM growth, blended yield (~bps) and telescoping fee structure.</li>
+    <li>CAMS 1:5 stock split — record date 5 Dec 2025 (Business Today, Angel One, HDFC Sky).</li>
+    <li>Ownership history — Warburg Pincus stake purchase from HDFC/NSE (~₹420 Cr, 2018); IPO offer-for-sale (Sep 2020); Faering Capital / IIFL IPO notes.</li>
+    <li>Screener.in — CAMS consolidated financials, market cap, P/E, EPS, dividend history.</li>
+    <li>AMFI — mutual-fund industry AUM &amp; SIP data; KFin Technologies disclosures for RTA market context.</li>
+    <li>Company disclosures, camsonline.com; NSE/BSE filings (NSE: CAMS · BSE: 543232).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several operational figures (blended yield in basis points, precise revenue mix, net-cash balance) are estimates that should be verified against CAMS's own filings. The blended-yield and market-share figures in particular are approximations. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "CAMS";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
