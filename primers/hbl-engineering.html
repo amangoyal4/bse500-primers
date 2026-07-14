@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HBL Engineering — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F5F1;
+    --paper-2:#FBFBF6;
+    --card:#FFFFFF;
+    --ink:#1B2124;
+    --ink-soft:#565F63;
+    --ink-faint:#8A9296;
+    --brand:#2C3E45;          /* signal-gantry graphite-slate */
+    --brand-bright:#A9690A;   /* deep amber (links) */
+    --gold:#D98A1E;           /* rail-safety signal amber - the accent */
+    --rail:#2E7D5B;           /* signal-clear green (electronics/kavach) */
+    --steel:#3F6472;          /* slate steel (batteries) */
+    --def:#8A5A2B;            /* bronze (defence) */
+    --line:#DDDED8;
+    --line-soft:#E9EAE3;
+    --good:#2A7D4F;
+    --bad:#BE4A2E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E9EFF0;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3d2a06;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:11px;color:var(--ink-faint);margin-top:16px;letter-spacing:.02em;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FCF2E1;border:1px solid #F0DBB6;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"⬢";font-size:12px;}
+  .plain p{margin:0;font-size:15px;color:#4a3813;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F9F4;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EBEDE6;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2C3E45,#456069);}
+  .fill.gold{background:linear-gradient(90deg,#C67A12,#E5A03A);}
+  .fill.rail{background:linear-gradient(90deg,#2E7D5B,#3FA079);}
+  .fill.steel{background:linear-gradient(90deg,#3F6472,#5A8494);}
+  .fill.def{background:linear-gradient(90deg,#8A5A2B,#A9743E);}
+  .fill.bad{background:linear-gradient(90deg,#BE4A2E,#D26244);}
+  .fill.ink{background:linear-gradient(90deg,#3a4448,#616c70);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:120px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.a{background:var(--steel);}
+  .node.b{background:var(--rail);}
+  .node.c{background:var(--gold);}
+  .node.d{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--steel);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEA;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FCF2E1;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF0F0;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--steel);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Two companies in one</a></li>
+    <li><a href="#p2"><span class="n">02</span> The specialised-battery moat</a></li>
+    <li><a href="#p3"><span class="n">03</span> Kavach, explained</a></li>
+    <li><a href="#p4"><span class="n">04</span> The Kavach order wave</a></li>
+    <li><a href="#p5"><span class="n">05</span> The pivot &amp; the re-rating</a></li>
+    <li><a href="#p6"><span class="n">06</span> The company &amp; owners</a></li>
+    <li><a href="#p7"><span class="n">07</span> Segments &amp; order book</a></li>
+    <li><a href="#p8"><span class="n">08</span> The industry &amp; rivals</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The growth runway</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: HBLENGINE · BSE: 517271</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>HBL Engineering, <em>the battery maker that became a train-safety company</em></h1>
+  <p class="dek">A complete walk through the Hyderabad engineering firm that spent forty years quietly building batteries for submarines, torpedoes and aircraft — and then reinvented itself as one of only three approved makers of Kavach, the electronic "brain" India is bolting onto its railway network to stop trains from crashing into each other. How the two businesses work, why the profit octupled in three years, and what has to keep going right.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹3,303 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹814 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~34% <small>OPM</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹21,200 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">14 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹3,303 Cr, PAT ~₹814 Cr, electronics now the largest segment; added the ₹1,714 Cr CLW Kavach loco order (May 2026) and the ~₹3,760 Cr Kavach order book.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">HBL Engineering (until November 2024 called <strong>HBL Power Systems</strong>) is a <strong>Hyderabad-based specialist engineering company</strong> with two very different halves. One is a <strong>hard-to-make battery business</strong> — nickel-cadmium and other specialised cells for submarines, torpedoes, missiles, aircraft, railways and industrial back-up, a defence-heavy niche that ordinary lead-acid makers like Exide and Amara Raja don't touch. The other, now the bigger one, is a <strong>railway-safety electronics business</strong> built around <strong>Kavach</strong> — India's home-grown train collision-avoidance system that the national railway is rolling out across tens of thousands of kilometres.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>The electronics half just overtook the batteries half.</strong> In FY26, the <strong>Electronics segment did ~₹1,626 Cr</strong> of revenue versus ~₹1,416 Cr for Industrial Batteries and ~₹212 Cr for Defence &amp; Aviation batteries. As recently as FY23, batteries were roughly three-quarters of the company. The centre of gravity has moved.</li>
+    <li><strong>Profit grew far faster than sales.</strong> Revenue went from ₹1,369 Cr (FY23) to <strong>~₹3,303 Cr (FY26)</strong> — about 2.4×. Net profit over the same span went from ₹98 Cr to <strong>~₹814 Cr</strong> — more than 8×. The operating margin roughly <strong>tripled, from ~11% to ~34%</strong>, because a rupee of Kavach electronics carries much fatter margins than a rupee of commodity battery.</li>
+    <li><strong>It's a government-order story with a national-safety mandate behind it.</strong> HBL is one of only three original RDSO-approved Kavach makers, sits on a Kavach order book of roughly <strong>₹3,760 Cr</strong>, is nearly debt-free (net cash), and earns high returns on capital (ROCE ~58%). The whole engine runs on the pace at which Indian Railways tenders and installs Kavach — which is exactly the thing that has been lumpy.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Picture a firm that has quietly kept Indian Navy submarines and torpedoes running on custom batteries for decades — a low-glamour, high-barrier engineering shop. Now imagine that same firm holds one of a handful of licences to build the electronic anti-collision system the country has decided to install on every important rail route after a string of fatal crashes. That is HBL: an old defence-grade battery maker sitting on a once-in-a-generation railway-safety order wave. The batteries gave it the engineering credibility and the balance sheet; <strong>Kavach is what turned a sleepy ₹100-Cr-profit company into an ₹800-Cr-profit one in three years</strong> — and what makes it both exciting and vulnerable to a single customer's spending calendar.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Two companies in one — the map you need first</h2></div>
+  <p class="part-sub">Before any numbers, get the shape of the business clear.</p>
+
+  <p class="lead">The single most useful thing to hold in your head is that HBL is <strong>not one business but two</strong>, welded together by a common thread of hard, mission-critical engineering. Read the split once and the rest of this primer clicks into place.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The two halves of HBL Engineering (FY26)</caption>
+    <thead><tr><th>The heritage half</th><th>The transformative half</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="t-strong" style="color:var(--steel)">Specialised &amp; industrial batteries</td>
+        <td class="t-strong" style="color:var(--rail)">Railway &amp; defence electronics</td>
+      </tr>
+      <tr>
+        <td>Nickel-cadmium, pure-lead, lithium and thermal/silver cells for submarines, torpedoes, missiles, aircraft, telecom towers, UPS/data-centres and railway signalling back-up.</td>
+        <td>Kavach train collision-avoidance, railway signalling systems, electronic fuzes for ammunition, train-management and power-electronics systems.</td>
+      </tr>
+      <tr>
+        <td>~₹1,416 Cr batteries + ~₹212 Cr defence/aviation = <strong>~49% of revenue</strong>. Steady, cyclical, defence-anchored.</td>
+        <td><strong>~₹1,626 Cr — ~49% of revenue</strong> and the fastest-growing, highest-margin part. The reason the stock exists in its current form.</td>
+      </tr>
+      <tr>
+        <td>Moat = decades of qualification. You cannot casually start making a submarine battery.</td>
+        <td>Moat = RDSO approval + interoperability. Only a handful of firms are cleared to supply Kavach.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The name change captures the shift precisely. <strong>"HBL Power Systems"</strong> described a battery-and-power company. <strong>"HBL Engineering,"</strong> adopted in November 2024, is deliberately broader — a signal from management that the future is a portfolio of engineered electronic products, of which batteries are now just one line. The company describes its own journey as moving "from reliance on a battery-maker to a portfolio of technology-driven products."</p>
+
+  <div class="plain">
+    <div class="ptag">Why one firm does both</div>
+    <p>The two halves are not random. A submarine battery, a torpedo propulsion cell and a trackside Kavach unit share the same demand: <strong>they must not fail, ever, in a safety-critical setting, and they must survive brutal conditions.</strong> The organisational muscle for that — qualification testing, defence-grade quality systems, long design cycles, dealing with government buyers like the Navy and the Railways — is exactly what HBL spent forty years building on the battery side. Kavach let it point that same muscle at a far larger market. The engineering DNA transferred; the addressable market multiplied.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The specialised-battery moat: why "hard batteries" matter</h2></div>
+  <p class="part-sub">Not the batteries you're thinking of — this is the defence-grade end of the market.</p>
+
+  <p class="lead">When most people hear "battery company" they picture car batteries and inverters — the Exide/Amara Raja lead-acid world, high-volume and price-competitive. HBL lives at the opposite end. Its heritage is <strong>nickel-cadmium and other exotic chemistries for jobs where failure is not an option and volumes are small</strong> — which means fewer competitors, stickier customers and better economics per unit, even if it will never match a lead-acid giant on scale.</p>
+
+  <h3>What HBL actually makes on the battery side</h3>
+  <ul class="clean">
+    <li><strong>Submarine batteries</strong> — huge, custom cells for the Navy's kilo-class and other submarines. HBL is a qualified indigenous supplier in a field with almost no domestic competition.</li>
+    <li><strong>Torpedo propulsion batteries</strong> — including for the Varunastra heavyweight torpedo. HBL is one of only <strong>two suppliers of torpedo propulsion in India</strong> — the kind of niche where being second means being one of two.</li>
+    <li><strong>Aircraft &amp; aviation batteries</strong> — nickel-cadmium and silver-zinc cells for aircraft, plus thermal batteries for missiles and munitions.</li>
+    <li><strong>Nickel-cadmium industrial batteries</strong> — for railway signalling, telecom towers, power plants and other back-up duties where lead-acid won't survive the temperature swings or duty cycle.</li>
+    <li><strong>Pure-lead-thin-plate and lithium</strong> — for telecom, UPS, data-centres and newer energy-storage applications.</li>
+  </ul>
+
+  <p>Why does this matter for an investor? Because <strong>qualification is the moat</strong>. Getting a battery certified for a submarine or a fighter aircraft takes years of testing and a track record no buyer will risk switching away from casually. That protects pricing and makes the revenue durable — but it is also inherently <em>lumpy</em>: defence orders arrive in bunches tied to platform programmes and government budgets, which is a big part of why HBL's battery revenue can actually shrink year-to-year (as it did in FY25).</p>
+
+  <div class="note gold"><b>The counter-intuitive surprise:</b> the same year the market fell in love with HBL as a "Kavach growth stock," its FY26 accounts carried a <strong>~₹26.5 Cr exceptional write-off for unrecoverable costs on a high-performance torpedo battery development programme.</strong> The heritage defence-battery business is genuinely hard R&D — sometimes a multi-year development simply doesn't pay off. That is the un-glamorous reality underneath the growth headline: the moat is real, but it is expensive and occasionally unforgiving to maintain.</div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>Kavach, explained from scratch</h2></div>
+  <p class="part-sub">The single idea that transformed this company — with no prior railway knowledge assumed.</p>
+
+  <p class="lead"><strong>Kavach</strong> (Hindi for "armour") is India's indigenous <strong>Automatic Train Protection (ATP)</strong> system — an electronic safety net that stops two trains from colliding, and stops a train from over-speeding or jumping a red signal, <em>even if the driver makes a mistake or is incapacitated</em>. It was developed by the Railways' own R&D arm, RDSO, together with a small group of industry partners — of which HBL is one. Understanding what Kavach physically <em>is</em> explains where HBL's money comes from.</p>
+
+  <h3>How it works, in one picture</h3>
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">Kavach: the equipment that talks to itself so trains don't crash</div>
+    <div class="flow-row">
+      <div class="node a"><div class="ntag">On the track</div><div class="nname">RFID tags &amp; trackside units</div><div class="nwho">Tags along the rails tell each train exactly where it is.</div></div>
+      <div class="arrow">→</div>
+      <div class="node b"><div class="ntag">On the loco</div><div class="nname">Onboard Kavach unit</div><div class="nwho">Reads location &amp; signals; can apply the brakes itself.</div></div>
+      <div class="arrow">→</div>
+      <div class="node c"><div class="ntag">At the station</div><div class="nname">Station Kavach + radio</div><div class="nwho">Coordinates trains in an area over a radio/LTE backbone.</div></div>
+      <div class="arrow">→</div>
+      <div class="node d"><div class="ntag">The result</div><div class="nname">Automatic braking</div><div class="nwho">Two trains on a collision course? It brakes them. No driver needed.</div></div>
+    </div>
+    <div class="flow-note">Every one of those boxes is hardware plus software that an approved vendor like HBL supplies, installs and commissions — which is why the revenue is per-locomotive and per-kilometre-of-track.</div>
+  </div>
+
+  <p>So Kavach is not one gadget — it is a <strong>system with two big revenue streams</strong>: the <strong>onboard equipment</strong> fitted to every locomotive and train set, and the <strong>trackside equipment</strong> installed along every route-kilometre and at every station. Indian Railways is buying both, on a national scale, and both are things HBL is approved to make.</p>
+
+  <div class="plain">
+    <div class="ptag">Why it became a national mandate</div>
+    <p>India runs one of the world's busiest rail networks, and it has a long, painful history of collisions caused by human error and signal-passing. The 2023 Balasore triple-train disaster in Odisha, which killed roughly 290 people, turned Kavach from a slow pilot project into a political and safety priority. The government's response has been to <strong>mandate Kavach across the network and pour money into it</strong> — rail safety spending has been running at multiples of earlier years. For an approved supplier, a fatal-accident-driven national mandate is the rarest kind of tailwind: demand that is effectively guaranteed by policy, not by the economy.</p>
+  </div>
+
+  <p>The current version, <strong>Kavach 4.0</strong>, was approved by RDSO in July 2024. Crucially, it enforces <strong>cross-vendor interoperability</strong>: a locomotive fitted with one approved vendor's equipment must work seamlessly with another vendor's trackside gear. That single rule shapes the whole competitive game — it stops any one firm from locking the network to its own kit, but it also means only vendors who pass the interoperability bar get to play at all.</p>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The Kavach order wave — how big, and how lumpy</h2></div>
+  <p class="part-sub">The growth engine, sized honestly, including the parts that disappoint.</p>
+
+  <p class="lead">The reason HBL re-rated is the sheer <strong>scale and multi-year visibility</strong> of the Kavach rollout. The reason it stays risky is that this scale arrives on the Railways' timetable, not the company's — and that timetable has repeatedly slipped. Both things are true, and you need to size them.</p>
+
+  <h3>The national rollout, by the numbers</h3>
+  <ul class="clean">
+    <li><strong>The network is enormous.</strong> Indian Railways spans roughly 68,000 route-kilometres. As of early 2026, Kavach work had been <em>taken up</em> on about <strong>24,427 route-km</strong> and roughly <strong>4,154 locomotives</strong> had been fitted — meaning the vast majority of the network and loco fleet is still ahead.</li>
+    <li><strong>The plan is multi-year and funded.</strong> From FY26 onward the stated pace is <strong>5,000–5,500 km of track per year</strong>, with a goal to equip the entire locomotive inventory over about four years, and work initiated on ~8,979 locomotives and ~1,200 EMU/MEMU train sets. An umbrella "Kavach on balance routes with LTE backbone" work alone is costed at ~₹27,693 Cr.</li>
+    <li><strong>The unit economics are chunky.</strong> Trackside Kavach costs roughly <strong>₹50 lakh per kilometre</strong>; fitting a locomotive costs about <strong>₹80 lakh per engine</strong>. Multiply by tens of thousands of km and thousands of locos and the total programme runs into the tens of thousands of crores — split across the approved vendors.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">One order, in perspective</div>
+    <div class="c-sub">A single May-2026 Kavach award vs HBL's own history (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">HBL total revenue<small>FY23, whole company</small></div><div class="track"><span class="fill ink" style="width:36%"></span></div><div class="bval">1,369</div></div>
+      <div class="bar-row"><div class="blab">CLW Kavach order<small>single award, May '26</small></div><div class="track"><span class="fill gold" style="width:45%"></span></div><div class="bval">1,714</div></div>
+      <div class="bar-row"><div class="blab">Kavach order book<small>accumulated, mid-'26</small></div><div class="track"><span class="fill rail" style="width:100%"></span></div><div class="bval">~3,764</div></div>
+    </div>
+    <div class="legend"><span>The scale-shift device: a <em>single</em> Kavach order from Chittaranjan Locomotive Works (₹1,714 Cr, to be executed within 12 months) is <strong>larger than everything HBL sold — batteries, defence, electronics, the entire company — in the whole of FY23</strong>. That is what a policy-mandated infrastructure wave does to a specialist supplier.</span></div>
+  </div>
+
+  <h3>The recent order flow (a running win-streak)</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Selected Kavach orders won (2026)</caption>
+    <thead><tr><th>Awarded by</th><th class="num">Value (₹ Cr)</th><th>What it covers</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Chittaranjan Locomotive Works (CLW)</td><td class="num">1,714</td><td>Supply, test &amp; commission Kavach locomotive equipment — 12-month execution.</td></tr>
+      <tr><td>Banaras Locomotive Works</td><td class="num">179.8</td><td>Onboard loco Kavach fitment.</td></tr>
+      <tr><td>South Central Railway</td><td class="num">133.0</td><td>Trackside Kavach deployment.</td></tr>
+      <tr><td>IRCON</td><td class="num">101.6</td><td>Kavach installation (project execution).</td></tr>
+      <tr><td>Patiala Locomotive Works</td><td class="num">83.8</td><td>Onboard loco Kavach fitment.</td></tr>
+      <tr><td>West Central Railway</td><td class="num">54.1</td><td>Trackside Kavach installation.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>The lumpiness that bites:</b> for years the Kavach story ran <em>ahead</em> of the invoices. Tenders were delayed, specifications were revised (the jump to interoperable 4.0 forced re-work), and installation depends on track-access windows the Railways controls. Investors who bought the "guaranteed rollout" narrative early sat through quarters where orders simply didn't convert to revenue on schedule. The demand is real and mandated; the <em>timing</em> is the genuine, recurring risk. Order-book size tells you the opportunity; quarterly <strong>execution</strong> tells you whether it is arriving.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The pivot and the re-rating — and the twist most people miss</h2></div>
+  <p class="part-sub">A battery company became an electronics company, and the "expensive" stock got cheaper as it did.</p>
+
+  <p class="lead">The most instructive thing about HBL is not that it grew — it is <strong>how the market's valuation and the company's earnings moved past each other.</strong> This is the non-obvious part of the story, and it is worth slowing down for, because it is the opposite of what usually happens to a hyped stock.</p>
+
+  <h3>The margin machine: why mix-shift did the heavy lifting</h3>
+  <div class="chart">
+    <div class="c-title">Operating margin, as the mix flipped to electronics</div>
+    <div class="c-sub">Operating profit margin (OPM %), consolidated</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23<small>battery-heavy</small></div><div class="track"><span class="fill steel" style="width:32%"></span></div><div class="bval">~11%</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill steel" style="width:56%"></span></div><div class="bval">~19%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill steel" style="width:59%"></span></div><div class="bval">~20%</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>electronics-led</small></div><div class="track"><span class="fill rail" style="width:100%"></span></div><div class="bval">~34%</div></div>
+    </div>
+    <div class="legend"><span>A rupee of Kavach electronics carries far more margin than a rupee of commodity battery. As electronics went from a minority of revenue to the single largest segment, the blended margin roughly tripled — which is why profit rose ~8× on ~2.4× revenue.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The non-transferable device — read this one carefully</div>
+    <p>Here is the arithmetic that only fits HBL. Between FY23 and FY26 the company's revenue rose about <strong>2.4×</strong> (₹1,369 Cr → ₹3,303 Cr), but its net profit rose more than <strong>8×</strong> (₹98 Cr → ₹814 Cr). The gap between "2.4×" and "8×" is the entire investment case in one line: it is <em>margin</em>, and margin came from <em>mix</em> — electronics displacing batteries. Now the twist: through most of that period the stock was ridiculed as absurdly expensive, trading at 60×+ earnings on the promise of Kavach. That "insane" multiple was ultimately validated <strong>not by the price going up, but by the earnings coming up to meet it</strong> — so that by mid-2026 the trailing P/E had actually <em>fallen</em> to the mid-20s even as the share price compounded. The hype was real; it was also, this once, largely delivered.</p>
+  </div>
+
+  <p>That is the surprise a generalist should carry away: a decades-old battery maker for submarines and torpedoes turned into one of the country's key train-safety suppliers, and the market's "over-valuation" was resolved by profits quadrupling into it rather than by the stock collapsing. Whether the <em>next</em> leg works the same way is the open question the rest of this primer circles.</p>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A founder-engineer, a family trust, and a coming leadership handover.</p>
+
+  <p class="lead">HBL is a <strong>founder-built, family-controlled engineering house</strong>. It traces to <strong>Hyderabad Batteries Ltd</strong>, incorporated in 1977 by <strong>Dr. Aluru Jagadish Prasad (A.J. Prasad)</strong>, an engineer who set out to close indigenous technology gaps — first in batteries, then in defence and railway electronics. A 1999 merger with SAB Nife Power Systems (the nickel-cadmium/"NIFE" specialist) created the group that listed as HBL Power Systems and, in 2024, became HBL Engineering.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1977</div><div class="ev">Dr. <strong>A.J. Prasad</strong> incorporates <strong>Hyderabad Batteries Ltd</strong> in Hyderabad — the seed of HBL, aimed at indigenous battery technology.</div></li>
+    <li><div class="yr">1986–99</div><div class="ev">SAB Nife Power Systems (nickel-cadmium/"NIFE") is built and then <strong>merged into HBL in 1999</strong>, creating a specialised-battery leader spanning defence, aviation and industrial cells.</div></li>
+    <li><div class="yr">2000s</div><div class="ev">Deepens the <strong>defence franchise</strong> — submarine batteries, torpedo propulsion (Varunastra), aircraft and thermal/missile batteries — the hard-to-qualify niche.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Enters <strong>railway electronics &amp; signalling</strong>; works with RDSO on the indigenous train-protection system (early "TCAS", later renamed Kavach), piloting on South Central Railway.</div></li>
+    <li class="major"><div class="yr">Jun 2023</div><div class="ev">The <strong>Balasore triple-train disaster</strong> (~290 dead) turns Kavach into a national safety priority, accelerating tenders and funding.</div></li>
+    <li><div class="yr">Jul 2024</div><div class="ev"><strong>Kavach 4.0</strong> approved by RDSO with mandatory cross-vendor interoperability — HBL one of the approved OEMs.</div></li>
+    <li class="major"><div class="yr">Nov 2024</div><div class="ev">Company renamed <strong>HBL Power Systems → HBL Engineering</strong>, formalising the pivot from batteries to broader engineering/electronics.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record year: revenue ~₹3,303 Cr, PAT ~₹814 Cr; <strong>electronics becomes the largest segment</strong>; ₹1,714 Cr CLW Kavach order (May '26). Kavita Prasad Aluru elevated to Executive Director (from Jul 2026).</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoter group:</strong> the <strong>Aluru family</strong>, holding ~<strong>59%</strong> of the company. The single largest block (~51%) sits in the <strong>Aluru Family Private Trust</strong>, of which Dr. A.J. Prasad's daughter, <strong>Kavita Prasad Aluru</strong>, is trustee.</li>
+    <li><strong>Leadership handover in motion:</strong> Dr. A.J. Prasad has been Chairman &amp; Managing Director; Kavita Prasad Aluru was elevated from Non-Executive to <strong>Executive Director for a five-year term from July 2026</strong> — a visible generational transition to watch, given how much of the moat is founder-era engineering relationships.</li>
+    <li><strong>Balance sheet:</strong> <strong>near debt-free</strong> — borrowings of only ~₹67 Cr against ~₹528 Cr of cash at March 2026 (net cash) — so the Kavach ramp is being funded from internal accruals, not leverage.</li>
+  </ul>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Segments and the order book</h2></div>
+  <p class="part-sub">Where the money comes from today, and what's already booked for tomorrow.</p>
+
+  <p class="lead">HBL reports three segments. The story of FY26 is that the <strong>Electronics segment overtook Industrial Batteries</strong> to become the largest — a first, and the clearest evidence that the pivot is real and not just narrative.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue by segment (FY26)</div>
+    <div class="c-sub">Consolidated segment revenue (₹ Crore) — electronics now #1</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Electronics<small>Kavach, signalling, fuzes</small></div><div class="track"><span class="fill rail" style="width:100%"></span></div><div class="bval">1,626</div></div>
+      <div class="bar-row"><div class="blab">Industrial Batteries<small>Ni-Cd, lead, lithium</small></div><div class="track"><span class="fill steel" style="width:87%"></span></div><div class="bval">1,416</div></div>
+      <div class="bar-row"><div class="blab">Defence &amp; Aviation<small>subs, torpedoes, aircraft</small></div><div class="track"><span class="fill def" style="width:13%"></span></div><div class="bval">212</div></div>
+    </div>
+    <div class="legend"><span>Electronics ~49%, Industrial Batteries ~43%, Defence &amp; Aviation ~6% of FY26 revenue. In FY23 batteries were roughly three-quarters of the whole — the reversal happened in three years.</span></div>
+  </div>
+
+  <h3>What sits inside each segment</h3>
+  <ul class="clean">
+    <li><strong><span style="color:var(--rail);font-weight:600">Electronics</span></strong> — the growth engine: Kavach onboard + trackside equipment, railway signalling systems, electronic fuzes for ammunition, train-management and centralised control, power-electronics. Highest margin, most government-mandated demand.</li>
+    <li><strong><span style="color:var(--steel);font-weight:600">Industrial Batteries</span></strong> — nickel-cadmium, pure-lead-thin-plate and lithium cells for railways, telecom, UPS/data-centres and power. Steady, competitive, the historic cash cow.</li>
+    <li><strong><span style="color:var(--def);font-weight:600">Defence &amp; Aviation</span></strong> — the smallest by revenue but the highest-barrier: submarine, torpedo, aircraft, missile and thermal batteries. A strategic indigenisation play with chunky, irregular orders.</li>
+  </ul>
+
+  <div class="mini-stats">
+    <div class="ms green"><div class="msv">~₹3,764 Cr</div><div class="msl">Accumulated Kavach order book (mid-2026) — multi-year revenue visibility</div></div>
+    <div class="ms gold"><div class="msv">~49%</div><div class="msl">Electronics share of FY26 revenue — up from a minority a few years ago</div></div>
+    <div class="ms"><div class="msv">Net cash</div><div class="msl">~₹528 Cr cash vs ~₹67 Cr debt — self-funding the ramp</div></div>
+  </div>
+
+  <p>The order book is the forward-looking half of the picture. A Kavach book of roughly <strong>₹3,760 Cr</strong>, against FY26 electronics revenue of ~₹1,626 Cr, implies more than two years of electronics revenue already contracted — before counting new tenders still to be issued across the ~44,000 km of network yet to be taken up. That is the visibility bulls point to; the bear's rejoinder is that a booked order the Railways executes slowly is a promise, not a receipt.</p>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A protected club today — with the door slowly opening.</p>
+
+  <p class="lead">HBL competes in two arenas at once. In <strong>Kavach</strong>, it is one of a very small number of approved suppliers — a genuine oligopoly created by RDSO certification. In <strong>defence batteries</strong>, it faces a different, more established set of rivals. The competitive question that matters most is how fast the Kavach club expands as the Railways tries to accelerate the rollout.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Arena</th><th>Vs HBL</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">HBL Engineering</td><td>Kavach + defence batteries</td><td><em>This company.</em> One of three original RDSO Kavach OEMs; unique in also owning a deep defence-battery franchise.</td></tr>
+      <tr><td class="t-strong">Medha Servo Drives</td><td>Kavach (onboard-strong)</td><td>Private Hyderabad peer; the heavyweight in locomotive electronics and arguably the largest Kavach player. HBL's most direct rival.</td></tr>
+      <tr><td class="t-strong">Kernex Microsystems</td><td>Kavach (listed)</td><td>Smaller listed specialist, executing its own Kavach 4.0 sections. Capacity-constrained relative to the majors but a real third OEM.</td></tr>
+      <tr><td class="t-strong">Siemens Mobility, Alstom</td><td>Signalling majors</td><td>Global signalling giants moving toward Kavach-compatible offerings; deep pockets and worldwide references, a longer-term competitive threat as approvals widen.</td></tr>
+      <tr><td class="t-strong">Exide, Amara Raja</td><td>Defence/industrial batteries</td><td>Larger battery groups with their own defence and industrial ambitions — relevant to HBL's battery half, not (yet) its Kavach half.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive tension to watch</div>
+    <p>The scarcity of approved vendors is HBL's best friend and its biggest medium-term risk at the same time. Right now, a mandated, nationwide rollout being served by only three original OEMs is a supplier's dream — demand outstrips certified capacity, which supports pricing and margins. But the Railways <em>wants</em> the rollout faster than three firms can install, so its clear incentive is to <strong>approve more vendors and expand capacity</strong>. Every new RDSO-cleared competitor, and every signalling major that qualifies, chips at the pricing power that produced HBL's 34% margins. The mandatory-interoperability rule accelerates this: because any vendor's loco kit must work with any vendor's trackside kit, the Railways can freely multi-source. HBL's defence is execution reputation and being early; the clock is on how long the club stays this small.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A genuine step-change in the numbers — and the one metric that settles the debate.</p>
+
+  <p class="lead">HBL's financials show a clean inflection rather than a smooth compounding curve. Revenue is choppy year-to-year (defence and order timing), but the FY26 leap in profitability is the real signal — and it is what the valuation now leans on.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:41%"></span></div><div class="bval">1,369</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill steel" style="width:68%"></span></div><div class="bval">2,233</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>batteries dipped</small></div><div class="track"><span class="fill steel" style="width:60%"></span></div><div class="bval">1,967</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill rail" style="width:100%"></span></div><div class="bval">3,303</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit (PAT) trajectory</div>
+    <div class="c-sub">Consolidated net profit (₹ Crore) — the real story</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:12%"></span></div><div class="bval">98</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill def" style="width:34%"></span></div><div class="bval">280</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill def" style="width:34%"></span></div><div class="bval">276</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill rail" style="width:100%"></span></div><div class="bval">~814</div></div>
+    </div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~34%</div><div class="msl">FY26 operating margin — roughly 3× the FY23 level, driven by mix</div></div>
+    <div class="ms green"><div class="msv">~58%</div><div class="msl">ROCE (FY26) — high returns on a net-cash balance sheet</div></div>
+    <div class="ms red"><div class="msv">~25×</div><div class="msl">Trailing P/E (mid-2026) — down from 60×+, as earnings caught up</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The metric that actually settles the thesis</div>
+    <p>Forget the headline P/E for a moment. The number that decides whether HBL is worth ~₹21,000 Cr is the <strong>pace at which the Electronics segment converts the Kavach order book into revenue each quarter</strong> — concretely, quarterly <strong>electronics revenue run-rate</strong> alongside <strong>route-km commissioned and locomotives fitted</strong>. Everything else is downstream of that one variable: if electronics keeps growing and holds ~30%+ margins, the mid-20s multiple looks reasonable for a mandated-demand engineering firm; if km-per-quarter and electronics revenue stall — because tenders slip, track-access is scarce, or new vendors split the pie — the whole re-rating premise weakens regardless of how large the order book looks on paper. Order book is the promise; <strong>quarterly electronics revenue is the proof</strong>. Watch that line, not the backlog headline.</p>
+  </div>
+
+  <p>A note on quality of earnings: FY26 profit included some one-offs worth knowing about — a ~₹26.5 Cr exceptional write-off on a torpedo-battery development programme and a ~₹25.5 Cr charge from new labour codes — so "clean" run-rate profitability is a touch different from the reported ₹814 Cr. Nothing that changes the trajectory, but exactly the sort of detail that separates a real read of the accounts from a headline.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The growth runway</h2></div>
+  <p class="part-sub">Three stacked engines — one huge, two optional.</p>
+
+  <p class="lead">HBL's forward story is dominated by Kavach, but it is not <em>only</em> Kavach. The base case rests on the rail rollout; the upside comes from defence indigenisation and a set of newer energy/e-mobility bets that are small today but real.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The growth engines</caption>
+    <thead><tr><th>Engine</th><th>Size today</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Kavach rollout</td><td>~₹1,626 Cr electronics; ~₹3,760 Cr book</td><td><strong>The main event.</strong> ~44,000 route-km of network and most of the loco fleet still to be fitted at ~5,000–5,500 km/yr — years of contracted and addressable demand.</td></tr>
+      <tr><td class="t-strong">Defence indigenisation</td><td>~₹212 Cr (defence &amp; aviation)</td><td>Submarine, torpedo, aircraft and missile batteries ride the "Make in India" defence push — small, high-barrier, strategically sticky.</td></tr>
+      <tr><td class="t-strong">Energy storage &amp; e-mobility</td><td>Early-stage</td><td>Lithium cells, battery-management systems, EV chargers, e-drivetrains and stationary storage — optionality, not yet a needle-mover.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>What has to go right</h3>
+  <ul class="clean">
+    <li><strong>Execution capacity</strong> — HBL must scale installation and commissioning fast enough to absorb the order book without slipping delivery, in a business gated by track-access windows it doesn't control.</li>
+    <li><strong>Holding the margin</strong> — keeping electronics near 30%+ margins as competition widens and the Railways pushes on price.</li>
+    <li><strong>Converting adjacencies</strong> — turning the defence pipeline and the still-tiny energy/e-mobility lines into a second and third leg, so the company is not a single-customer story forever.</li>
+  </ul>
+
+  <blockquote>The next chapter is less about winning Kavach orders and more about installing them — kilometre by kilometre, locomotive by locomotive, on the Railways' calendar rather than HBL's own.</blockquote>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A real re-rating already banked — and a single-customer dependency to respect.</p>
+
+  <p class="lead">HBL Engineering has done the hard part once: it turned a niche battery franchise into a national railway-safety supplier and let the profits quadruple into a demanding valuation. The debate now is whether the rollout keeps executing, whether margins survive more competition, and how much of the good news is already in the price.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Policy-mandated demand</strong> — Kavach is a national safety priority after Balasore; funding is rising and the network is barely a third covered.</li>
+        <li><strong>Scarce-approval moat</strong> — one of only three original RDSO Kavach OEMs, with a ~₹3,760 Cr book and 30%+ electronics margins.</li>
+        <li><strong>Rare dual franchise</strong> — the only Kavach maker that also owns a deep, indigenised defence-battery business (submarines, torpedoes, aircraft).</li>
+        <li><strong>Clean balance sheet</strong> — net cash, ROCE ~58%, self-funding the ramp; no leverage risk.</li>
+        <li><strong>Earnings have chased the multiple down</strong> — trailing P/E fell from 60×+ to the mid-20s as profits delivered.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>One customer, one calendar</strong> — the growth engine is Indian Railways' spending pace, which has slipped repeatedly and is outside HBL's control.</li>
+        <li><strong>Lumpy, un-smooth revenue</strong> — order-to-revenue conversion depends on track-access windows; quarters can disappoint even with a full book.</li>
+        <li><strong>The club will grow</strong> — the Railways wants more approved vendors and faster installation; new entrants and signalling majors erode pricing over time.</li>
+        <li><strong>Still not cheap for a govt-order firm</strong> — mid-20s P/E prices in continued flawless execution of the rollout.</li>
+        <li><strong>Battery half is cyclical</strong> — defence orders are irregular and occasionally involve costly failed development (the torpedo-battery write-off).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>HBL Engineering is a genuinely transformed company: a defence-grade battery maker that earned its way into one of India's most important infrastructure-safety programmes, and whose profits validated a valuation the market once called impossible. The business quality is real and the runway is long — but the entire second act depends on one buyer laying Kavach at a steady clip. The concrete milestone to hold the company to is simple and near: the <strong>₹1,714 Cr CLW locomotive order it has committed to execute within twelve months</strong>, and the ~<strong>5,000–5,500 km of track</strong> the Railways aims to equip each year. If those locomotives get fitted and those kilometres get commissioned on schedule, the electronics line keeps climbing and the case holds together. If they don't, a company priced for a nation-wide rollout will be waiting on a rollout that arrives slower than its order book promised.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Screener.in — HBL Engineering (HBLENGINE) consolidated financials, valuation, shareholding &amp; segments.</li>
+    <li>HBL Engineering — FY26 audited results (year ended 31 Mar 2026); segment revenue and exceptional items.</li>
+    <li>Business Standard — "HBL Engineering bags Rs 1,714 crore KAVACH order from CLW" (May 2026).</li>
+    <li>Business Standard — HBL Engineering Q4/quarterly results coverage (2025–26).</li>
+    <li>Equentis — "Kavach 4.0 and ₹3,763 Cr order book: inside HBL Engineering's strategic leap."</li>
+    <li>Venturasecurities / Sahi / Whalesbook — HBL Kavach order-win reports (2026).</li>
+    <li>PIB &amp; DD News — Kavach 4.0 commissioning updates, route-km and locomotive fitment status (2026).</li>
+    <li>Wikipedia — "Kavach (train protection system)"; RDSO approvals, Medha/Kernex/HBL vendors, interoperability.</li>
+    <li>Swarajya / Trade Brains — Kavach tender scale, ₹ per km / per loco economics, network targets.</li>
+    <li>Capital Market / JM Financial — "HBL Power Systems renamed as HBL Engineering" (Nov 2024).</li>
+    <li>Moneylife — "HBL Engineering: from reliance on battery-maker to a portfolio of technology-driven products."</li>
+    <li>MatrixBCG / Forbes / ScanX — company history, founder Dr. A.J. Prasad, Aluru Family Trust, Kavita Prasad Aluru appointment.</li>
+    <li>Company disclosures &amp; product pages, hbl.in / hblbatteries.com — submarine, torpedo, aircraft &amp; Ni-Cd batteries.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports around FY26 (year ended March 2026), and may contain errors or become outdated; verify all numbers against primary sources before relying on them. Segment splits, order-book figures and valuation multiples move with each quarter and each new tender. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "HBLENGINE";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
