@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KPIT Technologies — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F4;
+    --paper-2:#FAFCFA;
+    --card:#FFFFFF;
+    --ink:#16211D;
+    --ink-soft:#53625C;
+    --ink-faint:#8A9992;
+    --brand:#0E7A5F;          /* deep EV green-teal */
+    --brand-bright:#17B389;   /* electric emerald */
+    --gold:#D98A2B;           /* warm amber - accent / warmth */
+    --pwr:#0E7A5F;            /* powertrain / electrification green */
+    --mid:#2E7D8C;            /* middleware / vehicle OS teal-blue */
+    --con:#C6892B;            /* connected / cockpit amber */
+    --adas:#7A5AA6;           /* ADAS / autonomous violet */
+    --line:#D9DED9;
+    --line-soft:#E7EBE6;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7F2EE;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"◆";font-size:12px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F9F6;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAEEE9;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0E7A5F,#17B389);}
+  .fill.gold{background:linear-gradient(90deg,#D98A2B,#EDA957);}
+  .fill.pwr{background:linear-gradient(90deg,#0E7A5F,#2AA07E);}
+  .fill.mid{background:linear-gradient(90deg,#2E7D8C,#4C9CAB);}
+  .fill.con{background:linear-gradient(90deg,#C6892B,#DDA347);}
+  .fill.adas{background:linear-gradient(90deg,#7A5AA6,#9A7BC0);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a45,#53625C);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.pwr{background:var(--pwr);}
+  .node.mid{background:var(--mid);}
+  .node.con{background:var(--con);}
+  .node.adas{background:var(--adas);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-pwr{color:var(--pwr);font-weight:600;}
+  .chain-mid{color:var(--mid);font-weight:600;}
+  .chain-con{color:var(--con);font-weight:600;}
+  .chain-adas{color:var(--adas);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3F0;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .provenance{margin-top:12px;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> When a car becomes a computer</a></li>
+    <li><a href="#p2"><span class="n">02</span> What KPIT actually builds</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The client model</a></li>
+    <li><a href="#p5"><span class="n">05</span> The marquee partnerships</a></li>
+    <li><a href="#p6"><span class="n">06</span> The FY26 growth stall</a></li>
+    <li><a href="#p7"><span class="n">07</span> The industry &amp; rivals</a></li>
+    <li><a href="#p8"><span class="n">08</span> The AI-in-engineering question</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> How growth re-accelerates</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: KPITTECH · BSE: 542651</span>
+    <span class="tag gold">Built for a non-technical reader</span>
+  </div>
+  <h1>KPIT Technologies, <em>the pure-play on the software-defined vehicle</em></h1>
+  <p class="dek">A full walk through the one large Indian company that does almost nothing but automotive software — the code that increasingly <em>is</em> the modern car: EV powertrain control, the AUTOSAR middleware that ties a car's computers together, connected cockpits and ADAS. Why a decade of industry-leading growth ran into a wall in FY26, why the once-60× stock lost more than half its value in a year, and what has to happen for the engine to restart.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">$724.8 <small>M</small></div><div class="l">Revenue FY26 · ~₹6,455 Cr</div></div>
+    <div class="cell"><div class="v">+1.3% <small>cc</small></div><div class="l">Constant-currency growth FY26</div></div>
+    <div class="cell"><div class="v">~20.8% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹15,200 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">14 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="provenance">Auto-generated · figures self-verified against public sources · not investment advice.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">KPIT Technologies writes <strong>software for cars and other vehicles</strong> — and almost nothing else. It is one of the world's largest independent specialists in the code that runs the modern vehicle: the software that controls electric powertrains and batteries, the <strong>middleware</strong> that lets a car's many computers talk to each other, the connected-and-cockpit systems a driver actually touches, and the driver-assistance / autonomous stack. Its customers are the <strong>global carmakers (OEMs) and their big Tier-1 suppliers</strong>. Headquartered in Pune, it employs roughly <strong>12,500 engineers</strong> across India, Europe, the US and Asia.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>A rare pure-play.</strong> Where most Indian engineering-services firms spread across aerospace, medical devices, telecom, plant and rail, KPIT points <strong>~90%+ of its revenue at a single industry — automotive and mobility</strong>. That focus is exactly why it grew faster and earned fatter margins than diversified rivals for a decade. It is also why FY26 hurt so much.</li>
+    <li><strong>The growth engine stalled in a single year.</strong> Constant-currency revenue growth <strong>collapsed from ~18.7% in FY25 to ~1.3% in FY26</strong> as carmakers cut and deferred software spending. Nothing about KPIT's capability changed; the cheque-books it depends on simply closed for a year. Reported profit (PAT) fell from <strong>~₹840 Cr to ~₹637 Cr</strong>, and earnings per share slid from <strong>~₹30.63 to ~₹23.25</strong>.</li>
+    <li><strong>The market darling de-rated hard.</strong> A stock that had traded near <strong>~60× earnings</strong> — priced as a structural winner of the electric, software-defined car — fell roughly <strong>55% in a year (from ~₹1,328 to ~₹556)</strong> and now trades around <strong>24×</strong>. The whole investment question is now simply: was FY26 a pause, or a re-rating of what this business really is?</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>A modern car is turning into a computer on wheels — one that gets better after you buy it, through updates sent over the air, the way your phone does. Building that software is enormous, specialised work, and carmakers cannot hire fast enough to do all of it in-house. KPIT is the outside engineering team they hand a big slice of it to. For ten years that was a wonderful place to stand: the work only grew, and KPIT could charge well for scarce skills. Then in FY26 several of those carmakers, squeezed by a slower-than-hoped EV transition and their own cost problems, pressed pause on new software programs at the same time — and a company that lives off one industry felt the whole industry's flinch at once.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>When a car becomes a computer: the software-defined vehicle</h2></div>
+  <p class="part-sub">No engineering degree required — just the one shift that reorganised the whole car business.</p>
+
+  <p class="lead">For a century, a car was defined by its hardware: the engine, the gearbox, the metal. Electronics were bolted on as afterthoughts — dozens of small, single-purpose computers, each doing one job, wired together in a tangle. The <strong>software-defined vehicle (SDV)</strong> inverts that. In an SDV, the car's features live in software running on a few powerful central computers, and the hardware becomes the thing the software commands. What the car <em>is</em> — how the motor delivers torque, how the cabin behaves, what the driver-assist can do — is increasingly decided in code, and can be changed <strong>after the car is sold</strong> through over-the-air updates.</p>
+
+  <p>Three forces pushed this from a slide-deck idea into the axis the entire auto industry now turns on:</p>
+  <ul class="clean">
+    <li><strong>Electrification.</strong> An electric vehicle has no century of mechanical convention to inherit. Battery management, motor control, charging, thermal management and energy efficiency are <em>all</em> software problems — and getting them a few percent better directly extends range, the number EV buyers care about most.</li>
+    <li><strong>The feature race.</strong> Buyers now compare cars the way they compare phones: the screen, the assistant, the driver-assistance, the app. Those features are software, and they are how a carmaker differentiates when two EVs have similar batteries and motors.</li>
+    <li><strong>Consolidation of the computers.</strong> The industry is collapsing 100-plus scattered little control units into a handful of high-performance computers running a shared software platform. That re-architecture is a once-in-a-generation rebuild — and it is precisely the kind of deep, multi-year work an outside specialist gets hired for.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The one number that reframes the car business</div>
+    <p>A premium car today can carry well over <strong>100 million lines of software code</strong> — more than a modern airliner or a desktop operating system — and the industry expects <strong>software to grow from a small slice of a vehicle's engineering budget toward roughly half of it</strong> over this decade. That single migration is the tailwind under KPIT's entire existence: every rupee that shifts from bending metal to writing code is a rupee that flows toward the firms who write the code. The catch, which FY26 made vivid, is that this budget is <em>discretionary</em> — a carmaker under cash pressure can slow it in a quarter, in a way it can never slow the assembly line.</p>
+  </div>
+
+  <h3>Why "automotive software" is its own trade</h3>
+  <p>This is not ordinary IT, and it is not ordinary product design. Vehicle software is <strong>safety-critical and heavily standardised</strong>: brake and steering code must meet functional-safety rules (ISO 26262), must run on constrained automotive chips in real time, and must be validated against standards like <strong>AUTOSAR</strong> — the industry's agreed way of structuring a car's software so parts from different suppliers fit together. It takes years to build engineers who can do it and reputations that carmakers trust with their safety systems. That difficulty is the moat; it is also why the talent is scarce and expensive, and why a firm that has spent two decades accumulating it — like KPIT — cannot be conjured overnight by a new entrant.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What KPIT actually builds: the four software domains</h2></div>
+  <p class="part-sub">Open the hood on the revenue and you find four connected software practices, not a grab-bag of projects.</p>
+
+  <p class="lead">KPIT organises itself around the layers of the software-defined car. It is useful to see them as a stack — from the motor at the bottom to the driver at the top — because a single carmaker often buys across several layers, and because each layer carries a different growth rhythm and a different competitive set.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The KPIT software stack — four domains, one vehicle</div>
+    <div class="flow-row">
+      <div class="node pwr"><div class="ntag">Layer 1 · Move</div><div class="nname">Powertrain &amp; electrification</div><div class="nwho">Battery management, EV motor &amp; charging control, energy efficiency. KPIT's largest practice.</div></div>
+      <div class="arrow">→</div>
+      <div class="node mid"><div class="ntag">Layer 2 · Connect</div><div class="nname">Vehicle OS &amp; middleware</div><div class="nwho">AUTOSAR, the platform &amp; integration layer that lets the car's computers work as one.</div></div>
+      <div class="arrow">→</div>
+      <div class="node con"><div class="ntag">Layer 3 · Experience</div><div class="nname">Connected &amp; digital cockpit</div><div class="nwho">Infotainment, the driver's screens, telematics, over-the-air update systems.</div></div>
+      <div class="arrow">→</div>
+      <div class="node adas"><div class="ntag">Layer 4 · Perceive</div><div class="nname">ADAS &amp; autonomous</div><div class="nwho">Driver-assistance and self-driving software, sensors, validation. Highest-complexity work.</div></div>
+    </div>
+    <div class="flow-note">The four layers are sold separately but increasingly bought together — an OEM re-architecting to an SDV needs the middleware AND the powertrain code AND the cockpit to be designed as one system. That "whole-stack" reach is KPIT's pitch against a point-solution rival.</div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Revenue by software domain (FY26, approximate)</div>
+    <div class="c-sub">Illustrative split of KPIT's practice areas — powertrain/electrification leads</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Powertrain &amp; electrification<small>battery, EV controls, efficiency</small></div><div class="track"><span class="fill pwr" style="width:100%"></span></div><div class="bval">~33%</div></div>
+      <div class="bar-row"><div class="blab">Vehicle OS &amp; middleware<small>AUTOSAR, platform, integration</small></div><div class="track"><span class="fill mid" style="width:82%"></span></div><div class="bval">~27%</div></div>
+      <div class="bar-row"><div class="blab">Connected &amp; cockpit<small>infotainment, telematics, OTA</small></div><div class="track"><span class="fill con" style="width:64%"></span></div><div class="bval">~21%</div></div>
+      <div class="bar-row"><div class="blab">ADAS &amp; autonomous<small>driver-assist, self-driving</small></div><div class="track"><span class="fill adas" style="width:58%"></span></div><div class="bval">~19%</div></div>
+    </div>
+    <div class="legend"><span>Shares are approximate and shift as KPIT reclassifies practices; treat them as the shape of the business, not exact reported segments. The point: electrification and the middleware layer are the two engines.</span></div>
+  </div>
+
+  <h3>The domains, in plain language</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-pwr">Powertrain &amp; electrification</span></strong> — the code that turns stored energy into motion: battery-management systems that keep cells safe and squeeze out range, motor and inverter control, charging, and the thermal software that stops a battery cooking. This is KPIT's heritage strength and its single biggest revenue pool, riding directly on the global EV build-out.</li>
+    <li><strong><span class="chain-mid">Vehicle OS &amp; middleware</span></strong> — the least visible but arguably most strategic layer. <strong>Middleware is the plumbing</strong> that sits between the car's hardware and its apps, so software written by many suppliers runs together on shared computers. AUTOSAR is the standard here. Owning this layer makes KPIT hard to dislodge, because it becomes woven into the OEM's core platform.</li>
+    <li><strong><span class="chain-con">Connected &amp; digital cockpit</span></strong> — everything the driver sees and touches: instrument clusters, infotainment, telematics, and the over-the-air update machinery that keeps a car improving after purchase. This is where the "feels like a phone" competition plays out.</li>
+    <li><strong><span class="chain-adas">ADAS &amp; autonomous</span></strong> — advanced driver-assistance (lane-keeping, automated braking, parking) climbing toward higher autonomy. The most complex, most safety-critical and most compute-hungry domain, demanding heavy validation and simulation.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Staffing versus platforms — the mix that decides the margin</div>
+    <p>Two ways to sell this work sit inside KPIT. The lower-value way is <strong>bodies-on-projects</strong>: renting skilled engineers by the hour, priced against wages. The higher-value way is <strong>IP-and-platform-led</strong>: KPIT brings its own reusable software building blocks, accelerators and platforms, so it charges for outcomes and re-uses the same asset across many carmakers. KPIT has deliberately pushed its mix toward the second — its own middleware stacks, its diagnostics and testing platforms, its integration frameworks. That is a big part of why its margins sat above most Indian engineering-services peers: it wasn't just selling time, it was selling a product wrapped in a service.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">From a 1990s Pune systems shop to the demerger that created a pure-play — a founder-led story.</p>
+
+  <p class="lead">KPIT is a <strong>founder-built, founder-run company</strong> out of Pune. Its two central figures are <strong>Ravi Pandit</strong>, the co-founder and chairman who set the long-term automotive bet, and <strong>Kishor Patil</strong>, co-founder, CEO and managing director, who runs it. The business you can buy today is the product of a decisive 2019 corporate surgery that cut a diversified IT firm in two and kept the automotive half.</p>
+
+  <h3>The 2019 demerger — the move that made KPIT a pure-play</h3>
+  <p>Until 2019, "KPIT" was a broad IT and engineering company (long known as KPIT Cummins) that did both generic enterprise IT services <em>and</em> automotive engineering. In a three-way reorganisation with Birlasoft, the group <strong>split into two separately listed companies</strong>: the <strong>enterprise-IT-services business became today's Birlasoft</strong>, and the <strong>automotive engineering business was carved out as the new, focused KPIT Technologies</strong>. The point was concentration — freeing the auto-software business to chase the SDV wave without an unrelated IT-services arm attached. That single decision is why KPIT is a pure automotive-software play and its former sibling is a general IT firm.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1990</div><div class="ev">Founded in Pune; grows through the 1990s–2000s as <strong>KPIT Cummins</strong>, blending enterprise IT services with a deepening automotive-and-engineering practice.</div></li>
+    <li><div class="yr">2000s–2010s</div><div class="ev">Builds a serious <strong>automotive software</strong> franchise — powertrain, diagnostics, embedded systems — and acquires capability in electric-mobility and vehicle software.</div></li>
+    <li class="major"><div class="yr">2018–19</div><div class="ev">The <strong>KPIT–Birlasoft reorganisation</strong>: the enterprise-IT business becomes Birlasoft; the automotive engineering business is demerged and re-listed as the focused <strong>KPIT Technologies Ltd</strong>.</div></li>
+    <li><div class="yr">2020–22</div><div class="ev">Doubles down on the software-defined-vehicle theme; wins expanding programs with global OEMs and Tier-1s; margins and growth pull ahead of diversified peers.</div></li>
+    <li class="major"><div class="yr">2023</div><div class="ev">Signs a landmark long-term <strong>software partnership with Honda</strong> to power its software-defined-mobility roadmap toward 2030 — the anchor relationship.</div></li>
+    <li class="major"><div class="yr">FY25</div><div class="ev">Peak of the up-cycle: constant-currency revenue growth ~<strong>18.7%</strong>, industry-leading margins; the stock trades near ~60× earnings as a structural SDV winner.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">The stall: OEMs cut/defer software spend; CC growth crashes to <strong>~1.3%</strong>, PAT falls to ~₹637 Cr, and the stock de-rates ~55% to ~24×.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoters</strong> hold roughly <strong>39.4%</strong>. The founder group — Ravi Pandit (chairman) and Kishor Patil (CEO &amp; MD) — remains at the centre, giving KPIT the continuity of people who chose the automotive-only bet and have run it through a full cycle.</li>
+    <li><strong>The rest is largely institutional</strong> — domestic and foreign funds that bought the SDV growth story. That ownership mix is part of why the FY26 de-rating was so sharp: a growth-priced stock held by growth investors re-rates violently when the growth disappears.</li>
+    <li><strong>Balance sheet:</strong> KPIT runs <strong>net cash with high returns on capital</strong> (ROCE in the mid-20s%, ROE ~21%), funding acquisitions and platform investment from its own cash flow rather than debt — a cushion that matters most precisely in a down-year like FY26.</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The client model: a few carmakers, held very close</h2></div>
+  <p class="part-sub">KPIT's greatest strength and its sharpest risk are the same sentence — it depends on a handful of large OEMs.</p>
+
+  <p class="lead">KPIT does not chase thousands of small customers. Its stated strategy is to go <strong>deep with a concentrated set of the world's largest carmakers</strong> — internally framed around the <strong>top ~25 global OEMs ("T25")</strong> — and to embed itself so thoroughly in each that it becomes part of the OEM's core software team, on multi-year, expanding programs. A small number of anchor accounts therefore drive a large share of revenue, and KPIT's top clients each represent very substantial, sticky relationships.</p>
+
+  <div class="chart">
+    <div class="c-title">Where the money comes from — revenue by geography (approx.)</div>
+    <div class="c-sub">The counter-intuitive fact about an "Indian IT" company</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Europe<small>German &amp; European OEMs</small></div><div class="track"><span class="fill mid" style="width:100%"></span></div><div class="bval">~48%</div></div>
+      <div class="bar-row"><div class="blab">Americas<small>US OEMs &amp; Tier-1s</small></div><div class="track"><span class="fill brand" style="width:58%"></span></div><div class="bval">~28%</div></div>
+      <div class="bar-row"><div class="blab">Asia<small>Japan, India, rest</small></div><div class="track"><span class="fill con" style="width:50%"></span></div><div class="bval">~24%</div></div>
+    </div>
+    <div class="legend"><span>Shares approximate. Unlike almost every large Indian IT services firm — which lives off the United States — KPIT's single biggest market is <strong>Europe</strong>, home of the premium carmakers driving the SDV rebuild.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The genuine surprise — this Indian IT company is really a European one</div>
+    <p>Ask most people to place an Indian software exporter and they picture US banks and US retailers. KPIT breaks the mould: its <strong>largest market is Europe</strong>, because that is where the deepest software-defined-vehicle programs — German luxury marques, European mass-market groups — actually sit. That flips two things a generalist would assume. First, KPIT's <strong>currency exposure leans on the euro</strong> as much as the dollar, so European exchange rates move its rupee revenue. Second, its fortunes are tied to <strong>European auto health</strong> — and it was exactly the pressure on European and global OEM budgets that drove the FY26 stall. The strength (proximity to the most advanced SDV work) and the vulnerability (dependence on a stressed European auto sector) are the same fact.</p>
+  </div>
+
+  <h3>Why concentration cuts both ways</h3>
+  <ul class="clean">
+    <li><strong>The upside of few, deep clients.</strong> Landing inside a top OEM's software platform means years of visible, expanding work; high switching costs (the OEM would have to unpick KPIT from its core systems); and the chance to sell across all four domains into the same account. Deep beats broad in safety-critical software.</li>
+    <li><strong>The downside is symmetrical.</strong> When a few accounts carry most of the revenue, a budget cut at even one or two anchor OEMs lands disproportionately — there is no long tail of small clients to cushion it. <strong>FY26 was that risk made real</strong>: a synchronised pull-back at a cluster of large customers, and the whole top line went flat.</li>
+    <li><strong>One industry, no hedge.</strong> A diversified engineering firm can lean on aerospace when autos wobble. KPIT, being ~90%+ automotive, has <em>no other vertical to lean on</em>. That is the price of the focus that made it special on the way up.</li>
+  </ul>
+
+  <div class="note gold"><b>The concentration question:</b> KPIT's whole design — few clients, one industry, deep integration — is a leveraged bet on the automotive software cycle. In an up-cycle that leverage is the reason it out-grew everyone. In FY26's down-cycle the same leverage is why it fell hardest. Watching <strong>whether revenue broadens beyond the top handful of OEMs</strong> is therefore not a footnote; it is central to de-risking the story.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The marquee partnerships</h2></div>
+  <p class="part-sub">Read the big deals as a strategy — each one locks KPIT deeper into an OEM's software future.</p>
+
+  <p class="lead">KPIT's growth is built less on winning many small contracts and more on a few <strong>strategic, multi-year platform partnerships</strong> with major carmakers. These are structurally different from ordinary outsourcing: KPIT is chosen as a long-term software-scaling partner and dedicates hundreds — sometimes thousands — of engineers, its own IP, and its platforms to the OEM's roadmap. The marquee relationships below are both the proof of the model and, in aggregate, the concentration to watch.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The anchor partnerships</caption>
+    <thead><tr><th>Partner</th><th>What it is</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Honda</td><td>Landmark long-term partnership (from 2023) to power Honda's software-defined-mobility roadmap; scaling toward <strong>2,000+ dedicated professionals</strong> to <strong>2030 and beyond</strong>.</td><td>The anchor. A decade-long, deeply-embedded engagement of a scale rare in engineering services — the clearest single validation of KPIT's SDV pitch.</td></tr>
+      <tr><td class="t-strong">Renault Group</td><td>Selected as a <strong>strategic software-scaling partner</strong> for Renault's next-generation SDV programs; globally deploying <strong>600+ engineers</strong>, multiple software IPs and platforms, with vehicle programs from 2026.</td><td>A second major, multi-year OEM platform relationship — evidence the Honda model can be repeated with another global group.</td></tr>
+      <tr><td class="t-strong">Mercedes-Benz (R&amp;D India)</td><td>Collaboration to co-develop in-vehicle software — to speed feature deployment, boost innovation and cut cost.</td><td>Access to the most demanding, premium end of the SDV market, where software differentiation matters most.</td></tr>
+      <tr><td class="t-strong">Qorix (JV with ZF &amp; Qualcomm)</td><td>A joint venture to build <strong>middleware</strong> — the vehicle-software platform layer — for the broad industry.</td><td>Turns KPIT's plumbing expertise into a shared, productised platform, alongside a major Tier-1 (ZF) and a leading chipmaker (Qualcomm).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">What the deal pattern reveals</div>
+    <p>Notice the shape: these are not staffing contracts, they are <strong>strategic partnerships with defined horizons and dedicated headcount</strong>. The Honda engagement is scoped to a roadmap running to 2030; Renault's to production programs starting in 2026; the Qorix JV is about owning a reusable platform, not selling hours. That is KPIT deliberately trading the flexibility of many small deals for the durability of a few structural ones — a bet that in safety-critical automotive software, being irreplaceable to a handful of OEMs beats being convenient to many. The reward is visibility and stickiness. The exposure is that when one of those anchors slows its spend — as happened across FY26 — there is a lot riding on each name.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE CRUX -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The FY26 growth stall — and the de-rating</h2></div>
+  <p class="part-sub">The crux of the entire story: a market-leading growth engine went from 18.7% to 1.3% in twelve months.</p>
+
+  <p class="lead">For years KPIT was the growth star of Indian engineering services — the firm that grew fastest and earned among the best margins because it had picked the one right vertical at the right moment. Then FY26 delivered the sharpest reversal in its listed life. Constant-currency revenue growth — the cleanest read on underlying demand, stripped of exchange-rate noise — <strong>fell from ~18.7% in FY25 to ~1.3% in FY26</strong>. Dollar revenue crept up just ~4.8% to <strong>$724.8M</strong>. This is the section every other paragraph in this primer bends toward.</p>
+
+  <div class="chart">
+    <div class="c-title">The engine that stalled</div>
+    <div class="c-sub">Constant-currency revenue growth, year on year (%)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~27%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:69%"></span></div><div class="bval">~18.7%</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>the stall</small></div><div class="track"><span class="fill bad" style="width:5%"></span></div><div class="bval">~1.3%</div></div>
+    </div>
+    <div class="legend"><span>The fall is not gradual — it is a cliff. From compounding in the high-teens/twenties to essentially flat, in one year.</span></div>
+  </div>
+
+  <h3>Why it happened — the causes, honestly</h3>
+  <ul class="clean">
+    <li><strong>The EV slowdown.</strong> The electric-vehicle transition, which had been the growth premise, ran slower than the industry hoped in key Western markets. When EV volumes disappoint, the software programs feeding them get re-timed.</li>
+    <li><strong>OEM cost pressure.</strong> Several large carmakers — European ones especially — hit their own profitability and cash problems and responded by cutting discretionary R&amp;D, including outsourced software. Software budgets are easier to defer than factories.</li>
+    <li><strong>Program deferrals, not cancellations.</strong> Much of the lost growth is work pushed right rather than killed — SDV programs delayed, ramp-ups slowed. That is the bull's comfort and the bear's uncertainty: deferred demand can return, or can keep slipping.</li>
+    <li><strong>Concentration amplified it.</strong> Because a few OEMs drive most of KPIT's revenue, these cuts did not average out across a broad base — they hit the top line almost directly.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">A device worth sitting with</div>
+    <p>Here is the uncomfortable, clarifying fact: <strong>KPIT did not get worse at anything in FY26</strong>. Same engineers, same platforms, same deep OEM relationships, same industry-leading skills. Its margin held near ~20.8%; its balance sheet stayed net-cash; it kept winning deals. And yet growth fell ~17 percentage points, profit dropped from ~₹840 Cr to ~₹637 Cr, and the market took more than half the market value away. The whole move came from the <em>outside</em> — from a handful of customers deciding, in the same window, to spend less. That is the double-edge of a pure-play written in a single year: when you are this leveraged to one industry's discretionary budget, your own excellence sets the ceiling, but your customers' caution sets the floor — and in FY26 the floor moved.</p>
+  </div>
+
+  <h3>The de-rating — from ~60× to ~24×</h3>
+  <p>Markets pay up for growth and punish its absence, and KPIT had been priced for a lot of it. A stock that changed hands near <strong>~60× earnings</strong> when it was compounding in the high-teens saw two things go against it at once in FY26: the <strong>"E" fell</strong> (EPS from ~₹30.63 to ~₹23.25) and the <strong>multiple the market would pay compressed</strong>. The share price fell roughly <strong>55% — from around ₹1,328 to ~₹556</strong> — and the trailing P/E now sits around <strong>24×</strong>. The de-rating was not a small trim; it was the market re-appraising what kind of business this is.</p>
+
+  <div class="mini-stats">
+    <div class="ms red"><div class="msv">~1.3%</div><div class="msl">FY26 constant-currency growth (from ~18.7% in FY25)</div></div>
+    <div class="ms red"><div class="msv">−55%</div><div class="msl">Stock over ~12 months (~₹1,328 → ~₹556)</div></div>
+    <div class="ms gold"><div class="msv">~24×</div><div class="msl">Trailing P/E now — down from ~60× at the peak</div></div>
+  </div>
+
+  <p>The debate the market is now having is simple to state and hard to answer: <strong>was FY26 a one-year air-pocket in a still-secular story, or a permanent reset to a slower, more cyclical growth rate?</strong> Everything else — the partnerships, the margins, the AI question, the valuation — is really a way of arguing one side or the other of that single question.</p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">KPIT competes on three fronts at once — Indian ER&amp;D peers, global auto-software specialists, and the OEMs' own in-house teams.</p>
+
+  <p class="lead">Automotive software is a crowded, well-funded arena, and KPIT's rivals do not all look alike. Some are broad Indian engineering-services firms that <em>also</em> do autos; some are global players built specifically for cars; and — most under-appreciated — the biggest competitor of all is often the carmaker itself deciding to build in-house. KPIT's distinctive claim is depth-of-focus: it is the one large listed name whose <em>entire</em> identity is the software-defined vehicle.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs KPIT</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">KPIT Technologies</td><td>Pure-play automotive &amp; mobility software specialist</td><td><em>This company.</em> The deepest single-industry focus; ~90%+ auto; strong in electrification &amp; middleware.</td></tr>
+      <tr><td class="t-strong">Tata Elxsi</td><td>Design-led engineering (auto + media + healthcare)</td><td>Higher margins, but auto is one of three verticals; less of a pure SDV bet. Also faced a growth wobble.</td></tr>
+      <tr><td class="t-strong">L&amp;T Technology Services (LTTS)</td><td>Broad ER&amp;D across many industries</td><td>Bigger and diversified (mobility, hi-tech, sustainability); autos are a slice, not the whole. Diversification cushions cycles KPIT feels fully.</td></tr>
+      <tr><td class="t-strong">Tata Technologies</td><td>Auto-heavy ER&amp;D + PLM/product engineering</td><td>Also very automotive-concentrated, but weighted to product engineering and mechanical design; KPIT is more embedded-software-native.</td></tr>
+      <tr><td class="t-strong">Cyient &amp; others</td><td>Diversified engineering services</td><td>Auto is a minority of revenue; broader but shallower in vehicle software.</td></tr>
+      <tr><td class="t-strong">Global auto-software specialists</td><td>Capgemini Engineering, Elektrobit, Aptiv, Bosch/ETAS, etc.</td><td>Deep-pocketed, often closer to the OEM or the silicon; KPIT competes on cost, focus and platform IP.</td></tr>
+      <tr><td class="t-strong">OEM in-house software units</td><td>Carmakers' own software organisations</td><td>The swing factor. When OEMs insource, KPIT's addressable work shrinks; when they need scale/speed, they turn to partners like KPIT.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Where KPIT wins, and where it is exposed</div>
+    <p>KPIT's edge is being the specialist that a carmaker calls when the software job is big, safety-critical and central to the SDV rebuild — its focus, its accumulated IP in powertrain and middleware, and cost-competitive Indian engineering scale. Its exposure is the mirror image. Against diversified peers, it has <strong>no other vertical to soften an auto downturn</strong>. Against global incumbents, it lacks their proximity to the chip and the OEM's inner circle. And against the OEMs themselves, every wave of <strong>insourcing</strong> — carmakers deciding to build their own software organisations — directly narrows the pie KPIT feeds from. The FY26 stall was partly cyclical spend cuts; the longer question is how much of the SDV software value chain the OEMs ultimately keep for themselves.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The AI-in-engineering question</h2></div>
+  <p class="part-sub">Does generative AI shrink KPIT's headcount-driven revenue, or make each engineer worth more?</p>
+
+  <p class="lead">Every engineering-services firm now faces the same interrogation: if AI can generate, test and validate code, does that <strong>erode the people-hours KPIT bills</strong>, or does it let the same engineers ship far more software and win more work? The answer is genuinely unsettled, and it matters more for a software-intensive firm like KPIT than for most.</p>
+
+  <div class="bb">
+    <div class="col bear">
+      <h4>The deflation worry</h4>
+      <ul class="clean">
+        <li>A meaningful chunk of revenue still tracks <strong>engineer count and hours</strong>; if AI makes coding and testing dramatically faster, per-project billing could compress.</li>
+        <li>Clients may demand <strong>AI-driven productivity be passed back as price cuts</strong>, squeezing the very margins that made KPIT special.</li>
+        <li>Commodity, lower-complexity work is the most automatable — and the first to be repriced.</li>
+      </ul>
+    </div>
+    <div class="col bull">
+      <h4>The amplification case</h4>
+      <ul class="clean">
+        <li>Vehicle software demand is <strong>expanding faster than talent can be hired</strong>; AI helps close a shortage, not replace paid work.</li>
+        <li>Safety-critical automotive code needs <strong>heavy validation and human accountability</strong> — exactly where full automation is hardest and slowest.</li>
+        <li>AI tilts the mix toward KPIT's <strong>higher-value, IP-and-platform</strong> work and away from raw staffing — potentially margin-accretive.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to weigh it without hand-waving</div>
+    <p>The most likely path is not "AI destroys the model" or "AI changes nothing," but a re-pricing: routine coding and test-generation get cheaper and more automated, while the scarce, defensible value migrates further up — to system architecture, functional safety, integration across the four domains, and the reusable platforms KPIT owns. A firm that had <em>only</em> sold hours would be threatened. A firm that has deliberately built middleware, diagnostics and integration IP has something to sell that AI augments rather than erases. The real test is observable in the numbers over time: if KPIT can hold or lift <strong>revenue per engineer and its EBITDA margin</strong> as it deploys AI internally, the amplification case is winning; if margins bleed as clients claw back the productivity, the deflation worry is.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A decade of compounding, one hard year, and a multiple that has come a long way down.</p>
+
+  <p class="lead">Read across the years and KPIT's record is a genuine growth story with a fresh scar: revenue that more than doubled in three years, margins that climbed into the ~20%+ band, strong returns on capital and a net-cash balance sheet — interrupted by an FY26 in which the top line flattened and profit fell. The valuation debate has shifted entirely: it is no longer "how do you justify 60×?" but "is 24× cheap, fair, or still generous for a business this cyclical and concentrated?"</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:48%"></span></div><div class="bval">~3,090</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:74%"></span></div><div class="bval">~4,806</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:90%"></span></div><div class="bval">5,842</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">6,455</div></div>
+    </div>
+    <div class="legend"><span>The INR line still rose ~10.5% in FY26 — flattered by currency; the constant-currency +1.3% is the truer read of underlying demand.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit (PAT) trajectory</div>
+    <div class="c-sub">Consolidated net profit after tax (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:42%"></span></div><div class="bval">~354</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill pwr" style="width:70%"></span></div><div class="bval">~587</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill pwr" style="width:100%"></span></div><div class="bval">840</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>the fall</small></div><div class="track"><span class="fill bad" style="width:76%"></span></div><div class="bval">~637</div></div>
+    </div>
+    <div class="legend"><span>FY26 profit fell ~24% — margin pressure plus a Q4 forex loss — even as reported revenue rose. That divergence is the whole surprise in one picture.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~20.8%</div><div class="msl">FY26 EBITDA margin — among the best in Indian ER&amp;D, and held despite the stall</div></div>
+    <div class="ms green"><div class="msv">Net cash</div><div class="msl">Debt-light, ROCE ~26%, ROE ~21% — self-funds growth</div></div>
+    <div class="ms red"><div class="msv">~24×</div><div class="msl">Trailing P/E (Jul '26) — de-rated from ~60×</div></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The numbers at a glance</caption>
+    <thead><tr><th>Metric</th><th class="num">FY25</th><th class="num">FY26</th><th>Read</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue (USD)</td><td class="num">~$692M</td><td class="num">$724.8M</td><td>+4.8% USD; +1.3% constant-currency</td></tr>
+      <tr><td class="t-strong">Revenue (₹ Cr)</td><td class="num">5,842</td><td class="num">6,455</td><td>+10.5% — flattered by currency</td></tr>
+      <tr><td class="t-strong">EBITDA margin</td><td class="num">~21%</td><td class="num">~20.8%</td><td>Held near best-in-class</td></tr>
+      <tr><td class="t-strong">Net profit (₹ Cr)</td><td class="num">840</td><td class="num">~637</td><td>−24% — margin + forex hit</td></tr>
+      <tr><td class="t-strong">EPS (₹)</td><td class="num">30.63</td><td class="num">23.25</td><td>The "E" that fell under the multiple</td></tr>
+      <tr><td class="t-strong">Promoter holding</td><td class="num">~39%</td><td class="num">~39.4%</td><td>Founder group stable</td></tr>
+      <tr><td class="t-strong">Headcount</td><td class="num">~13,250</td><td class="num">~12,545</td><td>Trimmed — a lever behind held margins</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The metric that settles the thesis</div>
+    <p>Strip everything else away and one number decides KPIT from here: <strong>quarterly constant-currency revenue growth, and whether it climbs off the ~1–2% floor back toward the low-double-digits</strong> — with the EBITDA margin defended in the ~20–21% band and revenue visibly broadening beyond the top few OEMs. That combination — growth re-accelerating, margin held, concentration easing — is the entire bull case expressed as things you can actually check each quarter. If constant-currency growth re-accelerates while margin holds, the de-rated multiple starts to look like an opportunity. If it stays stuck near flat, then ~24× is not cheap for a business whose growth has structurally slowed and whose fortunes ride a handful of stressed carmakers. Management has guided to a stronger second half of FY27 and an EBITDA margin around 20.5–21.2% — that guided re-acceleration is the first checkpoint.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>How growth re-accelerates</h2></div>
+  <p class="part-sub">The bull path is concrete — deferred programs restart, anchors scale, and the software share of the car keeps climbing.</p>
+
+  <p class="lead">The case for KPIT is not that FY26 was imaginary — it wasn't — but that the forces that stalled it are cyclical while the force under it is secular. If that is right, growth re-accelerates through a handful of identifiable levers rather than hope.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The re-acceleration levers</caption>
+    <thead><tr><th>Lever</th><th>What has to happen</th><th>Why it could</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Deferred programs restart</td><td>OEMs un-pause the SDV work pushed right in FY26</td><td>Much of the lost growth was deferral, not cancellation; delayed demand can return as budgets normalise.</td></tr>
+      <tr><td class="t-strong">Anchor accounts scale</td><td>Honda ramps toward its 2030 roadmap; Renault programs hit production from 2026</td><td>These partnerships have defined, multi-year growth built in — headcount and scope are contracted to rise.</td></tr>
+      <tr><td class="t-strong">New anchors added</td><td>Convert more of the T25 OEMs into deep, multi-domain relationships</td><td>Each new anchor both grows revenue and reduces the concentration that made FY26 so sharp.</td></tr>
+      <tr><td class="t-strong">Software share keeps rising</td><td>The long migration of engineering spend from hardware to software continues</td><td>The structural tailwind is intact regardless of any single year's EV volumes.</td></tr>
+      <tr><td class="t-strong">Mix &amp; AI lift value-per-engineer</td><td>Shift further to IP/platform work; deploy AI internally</td><td>Grows revenue and margin without proportional headcount — the higher-quality kind of growth.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>What could keep it stuck</h3>
+  <ul class="clean">
+    <li><strong>A structurally slower auto industry.</strong> If Western OEMs remain cash-constrained and cautious for years, deferred programs keep slipping rather than restarting.</li>
+    <li><strong>Insourcing.</strong> If carmakers decide the SDV software layer is too strategic to outsource and build it in-house, KPIT's addressable pie shrinks structurally, not cyclically.</li>
+    <li><strong>Pricing pressure from AI.</strong> If clients capture AI productivity as lower prices, growth in <em>value</em> lags growth in <em>volume</em>.</li>
+  </ul>
+
+  <blockquote>The next chapter is not written in a new theme but in a cadence: quarter by quarter, does constant-currency growth climb back off the floor while the margin holds — and does the Honda-to-2030 ramp arrive on schedule?</blockquote>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuinely good business, re-priced by a genuinely bad year — the debate is which one FY26 represents.</p>
+
+  <p class="lead">KPIT remains a high-quality operator: focused, cash-generative, best-in-class margins, embedded in the software rebuild of the global car, run by the founders who chose that path. FY26 did not break the business; it exposed how much of the business rides on other people's discretionary budgets. The investment question is whether the market's ~55% haircut over-corrected for a cyclical air-pocket or correctly re-rated a more cyclical, more concentrated firm than the 60× multiple had assumed.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural tailwind intact</strong> — software's share of the car keeps rising for years; the SDV rebuild is a decade-long project, not a fad.</li>
+        <li><strong>Deep, contracted anchors</strong> — Honda to 2030, Renault from 2026, embedded platform work that is hard to unpick.</li>
+        <li><strong>Best-in-class economics</strong> — ~20.8% EBITDA margin held through the stall; net cash, high ROCE, self-funded.</li>
+        <li><strong>Deferrals can return</strong> — much of the FY26 loss was work pushed right, not lost.</li>
+        <li><strong>Cheaper entry</strong> — ~24× for a leader in automotive software is a fraction of the peak multiple.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Client &amp; vertical concentration</strong> — one industry, a few OEMs; an auto-software-spend cut hits disproportionately, as FY26 proved.</li>
+        <li><strong>Cyclical, discretionary demand</strong> — OEM R&amp;D budgets can slow fast; the growth may be structurally lumpier than believed.</li>
+        <li><strong>Insourcing &amp; GenAI</strong> — carmakers building in-house, or AI repricing engineering hours, could cap the pie or the margin.</li>
+        <li><strong>Still not cheap</strong> — ~24× assumes re-acceleration; if growth stays near flat, that multiple is generous.</li>
+        <li><strong>Europe/USD exposure</strong> — tied to a stressed European auto sector and to currency swings.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>KPIT is the purest listed bet on the idea that the car is becoming a computer — and FY26 was the year that bet reminded everyone it runs on someone else's spending decisions. The business quality is not really in dispute; the growth <em>durability</em> is. The single verdict to watch is constant-currency revenue growth pulling off its ~1% floor while the margin stays in the ~20–21% band and the revenue base broadens beyond the top few OEMs. The concrete milestone that would prove the thesis is not abstract: it is the FY27 second half accelerating as management has guided, and the Honda software-defined-mobility program scaling toward its 2030 headcount on plan. If those arrive, the de-rated leader of automotive software looks mispriced; if the second half slips again, the market will have been right to treat FY26 as a reset rather than a pause.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>KPIT Technologies — Q4 &amp; FY26 results ("KPIT delivers Q4FY26 with 12% YoY growth and strong deal wins"), kpit.com investor news.</li>
+    <li>KPIT Technologies — FY26 revenue of $724.8M, up 4.8% (Autocar Professional, 2026).</li>
+    <li>KPIT Technologies — Investor Overview / Investor Financials, kpit.com.</li>
+    <li>Screener.in — KPIT Technologies (KPITTECH) consolidated financials, valuation, shareholding.</li>
+    <li>ScanX / Kotak Neo — "KPIT Q4FY26: Revenue up 12% YoY, FY27 EBITDA guided at 20.5–21.2%".</li>
+    <li>MarketsMojo — "KPIT Technologies Q4 FY26: profit plunge masks revenue growth as margins compress".</li>
+    <li>EquityBulls — KPIT Q4 FY2025-26 consolidated net profit ₹163.04 Cr.</li>
+    <li>ICICI Direct — KPIT Technologies conviction idea (Sep 2025); HDFC Securities — KPIT initiating coverage.</li>
+    <li>Honda Global &amp; Autocar Professional — Honda–KPIT software partnership (2023) and SDM roadmap to 2030.</li>
+    <li>KPIT / Autocar Professional — Renault Group strategic SDV partnership; Mercedes-Benz R&amp;D India collaboration; Qorix JV (ZF, Qualcomm).</li>
+    <li>Revelio Labs / company disclosures — headcount ~12,545 (FY26).</li>
+    <li>Industry context: S&amp;P Global Mobility / AutoTechInsight on the software-defined vehicle.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; verify all numbers against primary sources before relying on them. Some figures — including the domain and geography revenue splits — are approximate reconstructions and are flagged as such. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "KPITTECH";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
