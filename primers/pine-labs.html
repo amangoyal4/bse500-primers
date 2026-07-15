@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pine Labs — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F4F8;
+    --paper-2:#FBFAFE;
+    --card:#FFFFFF;
+    --ink:#1A1726;
+    --ink-soft:#565070;
+    --ink-faint:#8E88A4;
+    --brand:#5B49C9;          /* payments-terminal violet */
+    --brand-bright:#7A67E0;   /* bright violet */
+    --gold:#D98A2B;           /* checkout amber - accent / warmth */
+    --iss:#128A4E;            /* issuing / gift-card green */
+    --intl:#3B7BD4;           /* international blue */
+    --pay:#5B49C9;            /* payments violet */
+    --line:#DEDCEA;
+    --line-soft:#EAE8F3;
+    --good:#128A4E;
+    --bad:#C4432E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#EEEAFB;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#F1EEFB;border:1px solid #DCD3F4;border-left:3px solid var(--brand);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#4a37a0;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"❒";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#2f2758;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F6FC;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#ECEAF6;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#5B49C9,#7A67E0);}
+  .fill.gold{background:linear-gradient(90deg,#D98A2B,#E8A44F);}
+  .fill.iss{background:linear-gradient(90deg,#128A4E,#2FA96C);}
+  .fill.intl{background:linear-gradient(90deg,#3B7BD4,#5B96E0);}
+  .fill.bad{background:linear-gradient(90deg,#C4432E,#D65C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a3550,#565070);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.pay{background:var(--pay);}
+  .node.iss{background:var(--iss);}
+  .node.intl{background:var(--intl);}
+  .node.spec{background:#2c2743;}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-pay{color:var(--pay);font-weight:600;}
+  .chain-iss{color:var(--iss);font-weight:600;}
+  .chain-intl{color:var(--intl);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF2E4;color:#5a3f14;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EEEAFB;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Payments-platform economics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The two engines</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; who owns it</a></li>
+    <li><a href="#p4"><span class="n">04</span> Engine 1 — the merchant platform</a></li>
+    <li><a href="#p5"><span class="n">05</span> Engine 2 — Qwikcilver &amp; gift cards</a></li>
+    <li><a href="#p6"><span class="n">06</span> The take-rate &amp; path to profit</a></li>
+    <li><a href="#p7"><span class="n">07</span> The industry &amp; rivals</a></li>
+    <li><a href="#p8"><span class="n">08</span> Going global</a></li>
+    <li><a href="#p9"><span class="n">09</span> Regulation</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: PINELABS · BSE: 544606</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Pine Labs, <em>the plumbing behind the payment</em></h1>
+  <p class="dek">A full walk through India's largest merchant-commerce and card-issuing platform — the swipe machines and online checkouts that move ~$194 billion a year, the "no-cost EMI" you tap at a shop that is quietly Pine Labs routing your loan, the gift-card empire (Qwikcilver) that supplies a surprising share of the profit, and the one question that decides everything: can enormous payment volume finally become durable profit?</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~$194 <small>bn GTV</small></div><div class="l">Value processed (FY26)</div></div>
+    <div class="cell"><div class="v">₹2,711 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">1M+ <small>merchants</small></div><div class="l">Client base · 20 markets</div></div>
+    <div class="cell"><div class="v">~₹17,900 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">15 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — first-ever annual profit of ₹113 Cr, revenue ₹2,711 Cr (+19%), GTV ~$194 bn (+50%), Adjusted EBITDA ₹559 Cr (21% margin); added the take-rate crux and RBI gift-card-breakage section.</div>
+  <div class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Pine Labs is a <strong>merchant-payments and card-issuing technology platform</strong>. In the physical world it makes the smart card-swipe terminals and QR checkouts sitting on shop counters; online it runs a payment gateway and checkout; and behind the scenes it powers the <strong>"no-cost EMI" and instalment offers</strong> you see at checkout, plus — through its <strong>Qwikcilver</strong> arm — the <strong>gift cards and prepaid programmes</strong> of India's biggest brands. It listed on the NSE and BSE in <strong>November 2025</strong> after one of the year's most-watched fintech IPOs.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>Vast scale, thin economics.</strong> Around <strong>$194 billion of gross transaction value (GTV)</strong> flowed across Pine Labs in FY26 — yet it booked <strong>₹2,711 Cr of revenue</strong> from it. Payments is a business of moving enormous sums and keeping a sliver of each. The whole investment question is whether that sliver, multiplied by rising volume, becomes real profit.</li>
+    <li><strong>It just turned its first-ever annual profit.</strong> FY26 delivered a <strong>₹113 Cr net profit</strong> — a swing from a <strong>₹342 Cr loss two years earlier</strong> — on 19% revenue growth and Adjusted EBITDA up 57% to ₹559 Cr (21% margin). One clean profitable year, though, is not yet a track record.</li>
+    <li><strong>Two engines, and the quiet one carries the margin.</strong> A <strong>Digital payments / merchant platform</strong> (~68% of revenue) does the volume; an <strong>Issuing &amp; prepaid</strong> business built on Qwikcilver (~32%) does the gift cards — and punches above its weight on profitability. A payments company where card swipes bring scale and <em>gift cards</em> bring margin is not what most people picture.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Pine Labs is the <strong>toll operator on a highway of retail spending</strong>. When you tap a card at a store, buy something online, split a purchase into instalments, or redeem a brand's gift card, there is a good chance Pine Labs' software sits somewhere in that flow — taking a tiny cut, or a monthly fee, or a fee for the value-added service wrapped around it. It rarely lends its own money and rarely holds your balance; it sells the <em>rails and the tooling</em>. The prize is that Indian retail spending is exploding and digitising; the catch is that the toll per transaction is minuscule and shrinking, so Pine Labs has to win on volume, on services stacked on top, and on the higher-margin issuing business — all while a crowd of well-funded rivals fights for the same counters.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Payments-platform economics 101</h2></div>
+  <p class="part-sub">No finance background needed — just how a company earns from moving money it doesn't own.</p>
+
+  <p class="lead">A payments platform never gets to keep the money that flows through it — that belongs to the shopper, the bank and the merchant. It earns a <strong>fee for enabling the transaction</strong>, plus fees for the hardware and software around it. To read Pine Labs, you need four ideas.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and Pine Labs' number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">GTV / TPV</td><td>"Gross (or Total) Transaction Value" — the total rupee value of everything processed. It is a <em>volume</em> gauge, not revenue. Pine Labs did <strong>~$194 bn in FY26 (+50%)</strong>.</td></tr>
+      <tr><td class="t-strong">Take rate</td><td>Revenue as a share of GTV — the sliver kept per transaction. Blended, Pine Labs keeps roughly <strong>0.16% — about 16 paise on every ₹100</strong> that crosses it (payments is inherently low take-rate; a card earns more than a zero-fee UPI push).</td></tr>
+      <tr><td class="t-strong">Revenue mix</td><td>Three streams: <strong>transaction fees</strong> (a cut of value), <strong>subscription / rental</strong> (steady monthly fees for the terminal and software), and <strong>value-added / platform</strong> fees (EMI, gift cards, analytics, lending referrals). The mix is what decides margin.</td></tr>
+      <tr><td class="t-strong">Merchant network</td><td>The installed base of shops, brands and banks — <strong>1M+ merchants, 716 consumer brands, 177 financial institutions</strong>. The wider it is, the harder to dislodge, and the more services can be sold across it.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the network is the moat, not the machine</div>
+    <p>A card terminal is just a box; anyone can make one. What is hard to copy is the <strong>installed base and the switching cost</strong>. Once a shop's billing, its EMI offers, its settlements and its reconciliation all run through one provider's terminal and dashboard, ripping it out is a genuine hassle — so merchants stay, and every extra service (a lending referral, a loyalty programme, a gift-card tie-up) can be sold across a base that is already there at near-zero extra cost. That is the platform logic: <strong>get onto the counter cheaply, then earn more per counter over time</strong>. The danger is the mirror image — if a rival gets onto the counter first, or UPI makes the counter free, the whole economic base thins out.</p>
+  </div>
+
+  <h3>Acceptance vs issuing — the two sides of a card</h3>
+  <ul class="clean">
+    <li><strong>Acceptance (acquiring)</strong> — helping a <em>merchant take money</em>: the terminal, the QR, the online gateway. This is Pine Labs' historic core and its volume engine.</li>
+    <li><strong>Issuing</strong> — helping a <em>brand or bank hand out spending power</em>: gift cards, prepaid cards, store credit, and the tech that lets a bank issue and run a card programme. This is the Qwikcilver side, and it carries a richer margin.</li>
+  </ul>
+  <p>Very few Indian fintechs sit on <em>both</em> sides. That span — from the shopper tapping a card to the brand issuing one — is Pine Labs' distinguishing claim.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The two engines, and where Pine Labs sits in a payment</h2></div>
+  <p class="part-sub">Read this diagram once and the business clicks into place.</p>
+
+  <p class="lead">Pine Labs reports as two segments: a <strong>Digital Infrastructure &amp; Transaction Platform</strong> (the merchant payments business — call it acceptance) and an <strong>Issuing &amp; Acquiring Platform</strong> (Qwikcilver prepaid/gift plus card-issuing tech). The first does the volume; the second does a disproportionate share of the profit. Here is how the money actually moves.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">One retail purchase — and the layers Pine Labs can touch</div>
+    <div class="flow-row">
+      <div class="node spec"><div class="ntag">Start</div><div class="nname">Shopper pays</div><div class="nwho">Card, UPI, wallet, or "split into EMI" at a shop or online checkout.</div></div>
+      <div class="arrow">→</div>
+      <div class="node pay"><div class="ntag">Engine 1 · Acceptance</div><div class="nname">Pine Labs terminal / checkout</div><div class="nwho">Captures the payment, offers instalments, routes it on. Earns fee + rental.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Rails</div><div class="nname">Banks &amp; card networks</div><div class="nwho">Visa/Mastercard/RuPay/UPI authorise; the merchant is settled.</div></div>
+      <div class="arrow">→</div>
+      <div class="node iss"><div class="ntag">Engine 2 · Issuing</div><div class="nname">Qwikcilver / prepaid</div><div class="nwho">The same brand issues gift cards &amp; store credit on Pine Labs' tech. Earns platform fees.</div></div>
+    </div>
+    <div class="flow-note">Engine 1 is where the ~$194 bn of GTV shows up — huge volume, thin take-rate. Engine 2 (issuing/prepaid) touches less value but earns a richer fee, so it lifts the blended margin. The affordability / "no-cost EMI" layer straddles the two: Pine Labs is the switch connecting the shop, the bank and the lender.</div>
+  </div>
+
+  <h3>Where the revenue comes from (FY26, approx.)</h3>
+  <div class="chart">
+    <div class="c-title">Revenue by engine</div>
+    <div class="c-sub">Total operating revenue ~₹2,711 Cr</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Digital payments platform<small>in-store POS + online + affordability</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~68%</div></div>
+      <div class="bar-row"><div class="blab">Issuing &amp; prepaid<small>Qwikcilver gift cards + issuing tech</small></div><div class="track"><span class="fill iss" style="width:47%"></span></div><div class="bval">~32%</div></div>
+    </div>
+    <div class="legend"><span>Shares approximate. In Q2 FY26 the split was ₹440 Cr payments (+12% YoY) and ~₹210 Cr issuing &amp; acquiring (+32% YoY) — the issuing engine is the faster grower.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The design choice that matters</div>
+    <p>Pine Labs deliberately built <strong>both a wide, low-margin acceptance business and a narrower, higher-margin issuing business, and cross-sells between them</strong>. A retailer that installs Pine Labs terminals is a natural buyer of its gift-card programme; a brand running gift cards is a natural buyer of its checkout tech. Each engine lowers the cost of winning the other. That is the strategic reason a payments company also happens to be India's dominant gift-card platform — not a diversification afterthought, but the way it makes the thin economics of pure payments add up.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A 1998 start-up, no single promoter, and a cap table stacked with global heavyweights.</p>
+
+  <p class="lead">Pine Labs was founded in <strong>1998</strong> by <strong>Lokvir Kapoor, Rajul Garg and Tarun Upadhyay</strong>, originally around smart-card and petro-pump loyalty technology, before pivoting into merchant payments. Its modern shape — a broad payments-and-issuing platform — was built under CEO <strong>Amrish Rau</strong>, who joined in 2020 from a fintech career (Citrus Pay, PayU). Unusually for an Indian listing, it has <strong>no identifiable promoter</strong>: it is a professionally managed company owned by a syndicate of private-equity and strategic investors.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1998</div><div class="ev">Founded by <strong>Lokvir Kapoor, Rajul Garg &amp; Tarun Upadhyay</strong> — early work in smart-card / loyalty and petro-retail technology.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Pivots hard into <strong>merchant payments</strong>: the smart POS terminal and the pioneering <strong>no-cost EMI / affordability</strong> stack become its signature product.</div></li>
+    <li class="major"><div class="yr">2019</div><div class="ev">Acquires <strong>Qwikcilver</strong>, India's leading gift-card / prepaid issuing platform (~$110m) — adding the second engine.</div></li>
+    <li><div class="yr">2020</div><div class="ev"><strong>Amrish Rau</strong> becomes CEO; the platform expands into online payments, issuing tech and international markets.</div></li>
+    <li><div class="yr">2021–22</div><div class="ev">Raised at a peak private valuation of <strong>~$5 bn</strong>; marquee backers include Peak XV (formerly Sequoia India), PayPal, Mastercard, Temasek, Actis and Alpha Wave.</div></li>
+    <li class="major"><div class="yr">Nov 2025</div><div class="ev"><strong>IPO</strong> — ₹3,900 Cr (₹2,080 Cr fresh + ₹1,820 Cr offer-for-sale) at ₹221/share, valuing it ~₹25,300 Cr (~$2.9 bn) — a deliberate cut from the ~$5 bn private mark. Lists 14 Nov 2025, opening +9.5% and spiking to ₹284.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Reports its <strong>first full-year net profit (₹113 Cr)</strong>; GTV ~$194 bn; crosses <strong>1 million merchants</strong>. Guides FY27 revenue growth of 21–23.5%.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>No promoter, PE-heavy cap table.</strong> Post-IPO the largest holders are <strong>Peak XV (~20.3%)</strong>, <strong>Temasek (~7.1%)</strong>, <strong>PayPal (~6.0%)</strong>, <strong>Actis (~5.8%)</strong>, <strong>Mastercard (~5.2%)</strong> and Alpha Wave (~3.4%). CEO Amrish Rau held ~2.35% pre-offer. There is no controlling family or founder block.</li>
+    <li><strong>What that ownership implies.</strong> A syndicate of financial investors means <em>eventual selling pressure</em> as lock-ins lapse (Peak XV, PayPal and Mastercard all trimmed at IPO) — but also strategic value: Mastercard and PayPal are payments giants, not passive money.</li>
+    <li><strong>Balance sheet.</strong> Fortified by the fresh IPO cash, Pine Labs sits on <strong>~₹2,449 Cr of net cash</strong> at FY26 — a genuine cushion for a business that spent years losing money, and firepower for expansion and potential acquisitions.</li>
+  </ul>
+
+  <div class="note gold"><b>The promoter-less nuance:</b> with no founder-promoter anchoring the register, governance rests on the board and a professional management team, and the free float is dominated by funds that are, by design, temporary owners. That is normal for a venture-built fintech — but it means the shareholder base can turn over heavily in the years after listing, independent of how the business performs.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Engine 1 — the merchant payments platform</h2></div>
+  <p class="part-sub">The terminals, the online checkout, and the affordability trick Pine Labs is known for.</p>
+
+  <p class="lead">The core business is <strong>helping merchants get paid</strong>, in-store and online — and then selling services on top of that connection. It is the volume engine (~68% of revenue) and the reason the brand is on so many shop counters.</p>
+
+  <h3>The three layers</h3>
+  <ul class="clean">
+    <li><strong>In-store acceptance.</strong> The Pine Labs <strong>smart POS terminal</strong> — a countertop device (increasingly Android-based) that accepts cards, UPI, wallets and QR, and doubles as a billing, inventory and offers device. Merchants pay a rental/subscription plus transaction fees. This is the sticky, recurring base.</li>
+    <li><strong>Online payments.</strong> A gateway and checkout for e-commerce and app payments, competing directly with Razorpay and Cashfree — a newer, faster-growing but fiercely contested arena.</li>
+    <li><strong>Affordability &amp; "no-cost EMI".</strong> Pine Labs' signature: at checkout, it lets a shopper <strong>split a purchase into instalments</strong>, or take a "no-cost EMI" where the brand or bank subsidises the interest so the sticker price is unchanged. Pine Labs is the <em>switch</em> wiring the merchant, the card networks and dozens of banks/NBFCs together, and earns a fee on that facilitation.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The surprise inside "No Cost EMI"</div>
+    <p>That little "No Cost EMI available" line at an electronics counter or an online checkout is, very often, <strong>Pine Labs plumbing you never see</strong>. It does not lend you the money — a bank or NBFC does — but it operates the rails that make the offer appear at the right price, match you to a lender, split the payment and settle everyone. Pine Labs reports this "affordability" business already runs roughly <strong>₹740 billion of GTV</strong>, and management pegs the addressable opportunity at close to <strong>₹3.4 trillion</strong> as it extends instalments from big-ticket electronics into everyday categories. It is a rare spot where a thin-take-rate payments firm attaches to genuine credit demand — and earns a fee without carrying the credit risk itself.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">1.84M</div><div class="msl">Digital checkout points (DCPs) across in-store &amp; online</div></div>
+    <div class="ms gold"><div class="msv">~₹740 bn</div><div class="msl">Affordability GTV today — TAM pegged near ₹3.4 trillion</div></div>
+    <div class="ms green"><div class="msv">+68%</div><div class="msl">UPI volume growth in FY26 — the free-but-huge rail</div></div>
+  </div>
+
+  <p>The tension in this engine is visible in those numbers: UPI volume is soaring, but UPI carries <em>zero merchant fee</em>. So the acceptance business grows spectacularly in <strong>volume</strong> while the revenue on each transaction is squeezed — which is exactly why the affordability layer and the issuing engine matter so much. Pure acceptance keeps Pine Labs on the counter; the services stacked on top are where the money is.</p>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Engine 2 — Qwikcilver and the gift-card empire</h2></div>
+  <p class="part-sub">A payments company's most reliable profit pool is not card swipes — it's gift cards.</p>
+
+  <p class="lead">In 2019 Pine Labs bought <strong>Qwikcilver</strong>, the company that effectively invented organised gift cards in India. Today the <strong>issuing &amp; prepaid engine is ~32% of revenue (~₹800 Cr)</strong> but a heavier contributor to profit — because issuing a stored-value instrument earns a richer fee than waving a card past a terminal.</p>
+
+  <h3>What Qwikcilver actually does</h3>
+  <ul class="clean">
+    <li><strong>Powers big brands' gift cards.</strong> When you buy an Amazon, Flipkart, Myntra or Croma gift card — physical or digital — Qwikcilver's platform typically issues, distributes, activates and reconciles it. It runs the plumbing for <em>hundreds</em> of enterprise gifting, rewards and loyalty programmes.</li>
+    <li><strong>Corporate rewards &amp; incentives.</strong> A large chunk is B2B: companies buying prepaid instruments for employee rewards, channel incentives and customer promotions.</li>
+    <li><strong>Issuing technology for banks.</strong> Beyond gift cards, the platform provides card-issuing and prepaid infrastructure that banks and fintechs use to launch their own card programmes — a stickier, tech-led revenue line.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The genuine surprise</div>
+    <p>Most people picture Pine Labs as the swipe machine on the counter. But the segment that quietly does an outsized share of the <strong>profit</strong> is the one nobody associates with it: <strong>gift cards</strong>. Around a third of revenue, and a larger slice of margin, comes from Qwikcilver issuing stored value for other brands — a higher take-rate, capital-light activity that has nothing to do with the terminal business the company is famous for. A firm sold to investors as an India digital-payments play earns some of its steadiest money by being the invisible engine behind everyone else's gift cards.</p>
+  </div>
+
+  <div class="note gold"><b>The "breakage" myth, cleared up:</b> gift-card businesses are often assumed to profit from <em>breakage</em> — money loaded onto cards that customers never spend. When RBI floated draft prepaid-instrument rules in April 2026 touching unused balances, some reports warned Pine Labs' profits were exposed. Pine Labs pushed back publicly (calling one such report "speculative, incorrect and misleading"), clarifying that under its <strong>co-branded distribution model the unspent balance belongs to the partner brand, not to Pine Labs</strong> — so breakage is not part of its revenue or profit pool. The episode is a useful reminder that this is a <em>technology-and-distribution</em> fee business, not a float-and-forfeiture one.</div>
+</section>
+
+<!-- 06 — BESPOKE CRUX -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The take-rate problem and the path to profit</h2></div>
+  <p class="part-sub">The single hardest question in the whole case — and the arithmetic that frames it.</p>
+
+  <p class="lead">Here is the fact that governs everything else about Pine Labs. In FY26, of the <strong>~$194 billion (≈ ₹16.7 lakh crore)</strong> that crossed its rails, it booked <strong>₹2,711 Cr of revenue</strong> — about <strong>16 paise on every ₹100</strong> — and <strong>₹113 Cr of profit</strong>, under <strong>one paise on every ₹100</strong>. That is not a failing of Pine Labs; it is the physics of payments. And it explains why volume alone never settles the argument.</p>
+
+  <blockquote>Same rails, same terminals: FY24 lost ₹342 crore; FY26 made ₹113 crore. A ₹455-crore swing in two years came not from processing much more value, but from finally earning more on top of it.</blockquote>
+
+  <p>That swing is the entire bull case compressed into one line. Revenue rose from roughly ₹1,770 Cr (FY24) to ₹2,711 Cr (FY26) — meaningful, but not transformational. What transformed was the <strong>quality</strong> of that revenue: richer affordability and issuing mix, more subscription income, disciplined costs. Adjusted EBITDA margin climbed from ~9% (FY24) to ~16% (FY25) to <strong>~21% (FY26)</strong>, and the losses turned to profit. The question for the next five years is whether that curve keeps bending — because at a 0.16% take rate, the operating leverage has to come from mix and scale, not from charging more per swipe.</p>
+
+  <div class="chart">
+    <div class="c-title">From deep losses to a first profit</div>
+    <div class="c-sub">Net profit / (loss) after tax, ₹ Crore</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">(342)</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill bad" style="width:42%"></span></div><div class="bval">(145)</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill iss" style="width:33%"></span></div><div class="bval">+113</div></div>
+    </div>
+    <div class="legend"><span>The first full year in the black. The debate is whether ₹113 Cr is a floor that compounds — or a fragile crossing that a single bad quarter, or a squeeze on card economics, could send back below the line.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The metric that settles the thesis</div>
+    <p>Ignore GTV headlines — huge volume is a given for any payments platform, and much of it (UPI) earns nothing. The number that decides Pine Labs is whether <strong>Adjusted EBITDA margin keeps climbing past ~21% <em>and</em> actually converts into a growing reported net profit year after year</strong>. That is the proof that thin-take-rate volume plus higher-margin affordability and issuing genuinely compound into durable earnings — rather than a one-year profit that stalls the moment competition or regulation tightens card economics. Watch the gap between "Adjusted EBITDA" and bottom-line PAT: as it closes, the business is real; if margin rises but reported profit doesn't follow, the adjustments are doing the heavy lifting.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A crowded, well-funded field — and a regulator quietly reshaping the economics.</p>
+
+  <p class="lead">India's merchant-payments market is <strong>enormous, fast-growing and brutally competitive</strong>. Digital payments have gone mainstream, but the field is crammed with heavyweights, each attacking a slightly different slice, and margins are pressured from above by regulation. Pine Labs' edge is the breadth of its stack; its challenge is that no single part of it is uncontested.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Strength</th><th>Vs Pine Labs</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Pine Labs</td><td>Broadest stack: in-store POS + online + affordability + issuing/gift cards</td><td><em>This company.</em> Deepest span across acceptance <em>and</em> issuing; strong in enterprise/large merchants and gift cards.</td></tr>
+      <tr><td class="t-strong">Razorpay</td><td>Online payments leader for start-ups &amp; SMBs; full software suite</td><td>Dominant online; expanding into POS. The head-to-head rival in the fast-growing online-checkout arena.</td></tr>
+      <tr><td class="t-strong">PhonePe</td><td>UPI volume king (~45%+ of UPI); huge consumer reach, now IPO-bound</td><td>Owns the free-but-massive UPI rail and is pushing into merchant devices &amp; lending — a scale threat on the counter.</td></tr>
+      <tr><td class="t-strong">Paytm (One97)</td><td>Vast merchant base, soundbox &amp; QR ubiquity, listed</td><td>Overlaps directly in-store; aggressive on devices &amp; merchant lending, though past regulatory turbulence.</td></tr>
+      <tr><td class="t-strong">BharatPe</td><td>QR + merchant lending for small shops</td><td>Targets the long tail of small merchants Pine Labs reaches less; heavy on lending distribution.</td></tr>
+      <tr><td class="t-strong">Cashfree / PayU</td><td>Online gateways &amp; payouts, enterprise processing</td><td>Compete on the online side; PayU deep in enterprise and cross-border.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The structural squeeze: zero-MDR UPI</div>
+    <p>The most important force in Indian payments is a policy one. <strong>UPI carries zero MDR</strong> — the government mandates that merchants pay no fee on UPI transactions — and UPI is now the default way Indians pay. So the country's payment volume is racing ahead while the <em>fee</em> on the fastest-growing rail is <strong>nil</strong>. Card transactions, where fees do exist, are governed by regulated interchange and MDR caps. The upshot: a payments company cannot simply ride rising volume to rising revenue — every player is scrambling to earn from <em>services around</em> the transaction (lending referrals, subscriptions, software, gift cards, analytics) rather than the transaction itself. Pine Labs' whole strategy — affordability, issuing, value-added merchant tools — is a direct response to this squeeze.</p>
+  </div>
+</section>
+
+<!-- 08 — BESPOKE -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Going global — the export of Indian payment rails</h2></div>
+  <p class="part-sub">A distinctive bet: take a home-grown fintech stack into 20 overseas markets.</p>
+
+  <p class="lead">Most Indian fintechs stay Indian. Pine Labs is unusual in running a real <strong>international business across ~20 markets</strong> — Southeast Asia (Singapore, Malaysia, Thailand, Vietnam), the Middle East (notably the UAE), and pockets of Australia, Africa and the US. It is exporting the same playbook: acceptance, affordability/instalments and issuing tech, tuned to local rails.</p>
+
+  <div class="chart">
+    <div class="c-title">The international footprint at a glance</div>
+    <div class="c-sub">Illustrative — where and how Pine Labs operates abroad</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Southeast Asia<small>Malaysia, Singapore, Thailand, Vietnam</small></div><div class="track"><span class="fill intl" style="width:100%"></span></div><div class="bval">core</div></div>
+      <div class="bar-row"><div class="blab">Middle East<small>UAE and Gulf</small></div><div class="track"><span class="fill intl" style="width:72%"></span></div><div class="bval">growth</div></div>
+      <div class="bar-row"><div class="blab">Rest<small>Australia, Africa, US</small></div><div class="track"><span class="fill ink" style="width:34%"></span></div><div class="bval">seed</div></div>
+    </div>
+    <div class="legend"><span>Between FY23 and FY25, Pine Labs' international revenue grew ~58%. In Malaysia it reports an annualised GTV of ~$1.3 bn and a 40%+ share of the instalments market — evidence the affordability model travels.</span></div>
+  </div>
+
+  <p>The Malaysia data point is the one to hold onto: a <strong>~40%+ share of a foreign country's instalment-payments market</strong> is not a token overseas flag — it is a real, leading position built on the same no-cost-EMI capability Pine Labs pioneered at home. Southeast Asia and the Gulf share India's structural set-up: young, digitising, card-and-instalment-hungry consumers, and merchants who want affordability at checkout.</p>
+
+  <div class="plain">
+    <div class="ptag">Why this is more than a growth slide</div>
+    <p>International expansion does two things for the thesis. First, it enlarges the runway beyond a home market where UPI's zero-MDR policy caps acceptance economics — several target markets have <em>healthier</em> card and instalment fees than India. Second, it diversifies away from Indian regulatory risk. The offset is obvious: competing abroad against local incumbents and global players is expensive and slow, and overseas is still a minority of revenue. It is optionality with a real, proven data point attached — not yet a second home market.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The regulator in the room</h2></div>
+  <p class="part-sub">In Indian payments, the RBI is a permanent, decisive presence — and a live risk.</p>
+
+  <p class="lead">Payments is one of India's most heavily regulated industries, and the <strong>Reserve Bank of India (RBI)</strong> can reshape the economics of an entire business line with a single circular. For Pine Labs, three regulatory fronts matter, and none is settled.</p>
+
+  <ul class="clean">
+    <li><strong>MDR &amp; interchange.</strong> The fees Pine Labs can earn on card and UPI acceptance are regulated. Zero-MDR UPI already erases fees on the fastest-growing rail; any tightening of card MDR or interchange would compress the acceptance engine further.</li>
+    <li><strong>Payment-aggregator &amp; tokenisation rules.</strong> Online payment aggregators need RBI authorisation and must follow card-tokenisation and data-localisation norms — compliance-heavy, and a moving target as rules evolve.</li>
+    <li><strong>Prepaid / PPI rules (the gift-card front).</strong> In <strong>April 2026 the RBI published a draft Master Direction on Prepaid Payment Instruments</strong> for consultation, with provisions touching the gift-card industry (including treatment of unused balances). Pine Labs argues its co-branded model insulates it, but the direction of prepaid regulation is a genuine watch-item for the issuing engine.</li>
+  </ul>
+
+  <div class="note"><b>A concrete reminder:</b> in March 2026 the RBI fined Pine Labs ₹3.1 lakh for KYC lapses in issuing full-KYC prepaid instruments. The rupee amount is trivial; the signal is not — a regulated payments platform lives inside a compliance regime where supervisory scrutiny is constant, and where a rule change can matter far more to earnings than any competitor's move.</div>
+
+  <div class="plain">
+    <div class="ptag">How to hold the regulatory risk</div>
+    <p>Regulation cuts both ways for Pine Labs. It <em>compresses</em> the easy money — zero-MDR UPI is the clearest example — which is precisely what has pushed the whole industry toward value-added services. But heavy regulation also <em>raises the barrier to entry</em>: authorisations, audits, data-localisation and prepaid licences are expensive to obtain and maintain, which protects incumbents with scale and compliance muscle. The risk to fear is not a competitor; it is a rule that reprices a whole revenue line — on card MDR, on prepaid balances, or on data — faster than the value-added stack can grow to cover it.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Strong growth, a fresh first profit — and a stock trading below its own IPO price.</p>
+
+  <p class="lead">Pine Labs' financials tell a clean story of accelerating scale and improving quality: revenue compounding at high-teens-to-20s, losses narrowing then flipping to profit, cash conversion improving sharply, and a net-cash balance sheet. The market's verdict, so far, has been cautious.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Operating revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:49%"></span></div><div class="bval">~1,330</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:65%"></span></div><div class="bval">~1,770</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:84%"></span></div><div class="bval">~2,280</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">2,711</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Adjusted EBITDA margin — the quality curve bending up</div>
+    <div class="c-sub">Adjusted EBITDA margin (%)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:41%"></span></div><div class="bval">~9%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:73%"></span></div><div class="bval">~16%</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill iss" style="width:95%"></span></div><div class="bval">~21%</div></div>
+    </div>
+    <div class="legend"><span>Adjusted EBITDA rose 57% to ₹559 Cr in FY26. Operating cash flow jumped roughly eight-fold to ₹395 Cr — the profit is starting to look like cash.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms green"><div class="msv">₹113 Cr</div><div class="msl">FY26 net profit — the first full profitable year (FY25: −₹145 Cr)</div></div>
+    <div class="ms"><div class="msv">₹2,449 Cr</div><div class="msl">Net cash at FY26 — debt-light, IPO-fortified</div></div>
+    <div class="ms red"><div class="msv">~119×</div><div class="msl">Trailing P/E (Jul '26) — richly priced on a first, thin profit</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to read the valuation</div>
+    <p>At ~₹17,900 Cr market cap on ₹113 Cr of FY26 profit, Pine Labs trades near <strong>119× trailing earnings</strong> — a number that looks extreme only because the "E" is a first, deliberately-hard-won profit off a low base. The more honest lens is growth and margin: a business scaling revenue ~20% with Adjusted EBITDA margin climbing 5 points a year can grow into a very different earnings figure quickly — if the curve holds. The market's caution is real, though: the stock trades around <strong>₹155, below its ₹221 IPO price</strong> and well off the ₹284 listing-day spike, having drifted toward its ₹135 low. Investors are paying up for the compounding but refusing to pay the IPO price until more than one profitable year is on the board.</p>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>FY26 scorecard (approx.)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY26</th><th>Read</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">GTV processed</td><td class="num">~$194 bn</td><td>+50% YoY — vast, UPI-led volume</td></tr>
+      <tr><td class="t-strong">Revenue</td><td class="num">₹2,711 Cr</td><td>+19% YoY</td></tr>
+      <tr><td class="t-strong">Adjusted EBITDA</td><td class="num">₹559 Cr</td><td>~21% margin (+57% YoY)</td></tr>
+      <tr><td class="t-strong">Net profit (PAT)</td><td class="num">₹113 Cr</td><td>First full-year profit</td></tr>
+      <tr><td class="t-strong">Operating cash flow</td><td class="num">₹395 Cr</td><td>~8× prior year</td></tr>
+      <tr><td class="t-strong">Net cash</td><td class="num">₹2,449 Cr</td><td>Balance-sheet cushion</td></tr>
+      <tr><td class="t-strong">Blended take rate</td><td class="num">~0.16%</td><td>Revenue ÷ GTV — the thin sliver</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A scaled platform that just proved it can make money — now it has to prove it can keep doing so.</p>
+
+  <p class="lead">Pine Labs sits at the centre of two structural waves — India's payments explosion and the digitisation of its merchants — with a stack that spans acceptance and issuing, a leading gift-card franchise, a real overseas business, and a balance sheet full of cash. It has also, at last, crossed into profit. The debate now is durability: whether one profitable year becomes a compounding one, against thin economics and a regulator that can move the goalposts.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Scale + breadth.</strong> 1M+ merchants, ~$194 bn GTV, and a stack spanning in-store, online, affordability and issuing that few rivals match end to end.</li>
+        <li><strong>Margin curve bending up.</strong> Adjusted EBITDA margin ~9%→~16%→~21% in three years; first annual profit booked; cash conversion improving.</li>
+        <li><strong>Higher-margin engines growing faster.</strong> Issuing/Qwikcilver (+32% YoY) and affordability attach richer fees on top of thin acceptance.</li>
+        <li><strong>Real international optionality.</strong> ~20 markets, a proven 40%+ instalments share in Malaysia — a runway beyond zero-MDR India.</li>
+        <li><strong>Net cash + strategic backers.</strong> ~₹2,449 Cr cushion; Mastercard and PayPal on the register are more than passive capital.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Structurally thin economics.</strong> A ~0.16% take rate means profit is always a small residual on a huge, low-margin flow — easily eroded.</li>
+        <li><strong>Zero-MDR UPI &amp; card-fee regulation.</strong> The fastest-growing rail earns nothing; RBI can reprice card MDR, prepaid rules or tokenisation at will.</li>
+        <li><strong>Ferocious competition.</strong> Razorpay, PhonePe, Paytm, BharatPe, Cashfree and PayU all attack overlapping ground with deep funding.</li>
+        <li><strong>A fragile first profit at ~119× earnings.</strong> One weak quarter or a policy shock could stall the just-crossed profit line and re-rate the stock.</li>
+        <li><strong>Promoter-less, PE-heavy float.</strong> Lock-in expiries and a fund-dominated register can pressure the share independent of results.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Pine Labs is the rare Indian fintech that sits on both sides of a card — helping merchants take money and helping brands hand it out — with the scale, the gift-card profit pool and the overseas beachhead to make the thin arithmetic of payments add up. FY26 answered the existential question (can it make money at all?) with a first ₹113 Cr profit. The next chapter answers the harder one: does that profit compound? The proof will be plain and near-term — management has guided to <strong>21–23.5% revenue growth in FY27</strong> with margins still rising, so a <strong>second, larger profitable year</strong> that lifts ₹113 Cr toward a few hundred crore, without the take-rate leaking, is the milestone that turns a promising listing into a franchise. Miss it, and a ₹113 Cr profit valued at ~119× has to justify itself all over again.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Pine Labs Ltd — Q2 FY26 press release &amp; results (quarter ended Sep 2025), investor relations, pinelabs.com.</li>
+    <li>Pine Labs Ltd — FY26 full-year results summary (year ended Mar 2026): revenue ₹2,711 Cr, PAT ₹113 Cr, Adjusted EBITDA ₹559 Cr, net cash ₹2,449 Cr.</li>
+    <li>Business Standard — "Pine Labs clocks PAT of Rs 59 crore in Q4 FY26" (May 2026).</li>
+    <li>Inc42 / Entrackr — Pine Labs DRHP shareholding, revenue model &amp; IPO analysis (2025).</li>
+    <li>The Economic Times / Medial — "Peak XV, Temasek, PayPal, Mastercard among largest Pine Labs shareholders after IPO."</li>
+    <li>Chittorgarh / Outlook Business — Pine Labs IPO details (₹3,900 Cr, ₹221/share, listing 14 Nov 2025); BSE scrip 544606.</li>
+    <li>Entrackr — "Inside Pine Labs' profit story: the gift card income stream" &amp; Pine Labs' exchange clarification on breakage (Jun 2026).</li>
+    <li>Business Today / ScanX — "RBI fines Pine Labs for KYC lapses in prepaid payment instruments" (Mar 2026); RBI draft PPI Master Direction (Apr 2026).</li>
+    <li>TechCrunch — "Pine Labs aims to take Indian fintech global even as it cuts valuation for IPO" (Nov 2025).</li>
+    <li>Screener.in / Trendlyne — Pine Labs (PINELABS) consolidated financials, market cap &amp; ratios (Jul 2026).</li>
+    <li>Company investor-relations disclosures, pinelabs.com/investor-relations; NSE/BSE filings.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; revenue and segment figures across sources reflect differing restated/adjusted bases and are shown approximately. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "PINELABS";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
