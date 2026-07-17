@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Food Services (TFS) — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F4F1;
+    --paper-2:#FBFAF6;
+    --card:#FFFFFF;
+    --ink:#17202B;
+    --ink-soft:#55606C;
+    --ink-faint:#8A95A0;
+    --brand:#173A5C;          /* terminal navy */
+    --brand-bright:#2E6E96;   /* runway / sky blue */
+    --gold:#E0872B;           /* departure-board amber - accent */
+    --coral:#DD5B44;          /* travel coral - lounges */
+    --sky:#2E6E96;            /* aviation blue */
+    --line:#DCDDD7;
+    --line-soft:#E9EAE4;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7EEF3;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✈";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F8F4;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EBEDE6;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#173A5C,#2E6E96);}
+  .fill.gold{background:linear-gradient(90deg,#E0872B,#EDA957);}
+  .fill.sky{background:linear-gradient(90deg,#2E6E96,#4A8CB4);}
+  .fill.coral{background:linear-gradient(90deg,#DD5B44,#E87C68);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a58,#55606C);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.n1{background:var(--sky);}
+  .node.n2{background:var(--brand);}
+  .node.n3{background:var(--coral);}
+  .node.n4{background:var(--gold);color:#3a2806;}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms.coral .msv{color:var(--coral);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF1F5;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Airport F&amp;B economics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The business model</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company, JV &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The network</a></li>
+    <li><a href="#p5"><span class="n">05</span> The lounge engine</a></li>
+    <li><a href="#p6"><span class="n">06</span> The aviation boom</a></li>
+    <li><a href="#p7"><span class="n">07</span> The moat &amp; concessions</a></li>
+    <li><a href="#p8"><span class="n">08</span> The rivals</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The growth runway</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: TRAVELFOOD · BSE: 544443</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Travel Food Services, <em>the toll gate at the departure gate</em></h1>
+  <p class="dek">A full walk through India's dominant airport food-court and lounge operator — how selling a cappuccino past security earns twice what it earns on the street, how a "concession" contract actually works, why an SSP–Kapur joint venture prints a ~39% margin on airport sandwiches, and why a business tied to India's aviation boom grew ~25% in a year when flyer numbers barely moved.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,648 <small>Cr</small></div><div class="l">Consolidated revenue (FY26)</div></div>
+    <div class="cell"><div class="v">550+ <small>outlets</small></div><div class="l">Across 20 airports · 39 lounges</div></div>
+    <div class="cell"><div class="v">~39% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹17,200 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">17 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — system-wide sales ₹3,214 Cr (+25%), PAT ₹452 Cr (+21.5%), 550+ outlets / 39 lounges / 20 airports; added the Adani &amp; GMR concession-JV structure and the first anniversary of the July 2025 IPO.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Travel Food Services runs the <strong>restaurants, cafés, bars, food courts and quick-service counters inside airports</strong> — the coffee you grab after security, the beer at the gate, the biryani in the food court — plus a large network of <strong>airport lounges</strong>, the premium waiting rooms you enter with a credit card or a boarding-class pass. It is <strong>India's dominant airport-F&amp;B and lounge operator</strong>, holding roughly a <strong>26% share of Indian airport "travel QSR"</strong> (quick-service restaurants) and about a <strong>45% share of Indian airport lounges</strong>, with a presence at 14 of the country's 15 busiest airports.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It sells to a captive, hurried, price-blind customer.</strong> A traveller past security has cleared a one-way door, has time to kill and few alternatives — so airport food commands premium pricing and high spend-per-head. That is why TFS earns a <strong>~39% EBITDA margin and a ~27% net margin</strong> on food-and-drink, numbers a street restaurant chain can only dream of.</li>
+    <li><strong>It's a concession business, not a property business.</strong> TFS wins long, exclusive contracts from airport operators — paying them a minimum-guarantee plus a revenue share for the right to sell food and run lounges in a terminal — then operates ~145 brands (its own plus licensed names like KFC, Starbucks, Krispy Kreme) across <strong>550+ outlets and 39 lounges</strong>. FY26 system-wide sales were <strong>~₹3,214 Cr (+25% YoY)</strong>; PAT was <strong>~₹452 Cr (+21.5%)</strong>.</li>
+    <li><strong>It's a bet on Indian flying — with a twist.</strong> The stock is pitched as a play on India's aviation boom, yet in FY26 passenger traffic rose barely <strong>1.2%</strong> while TFS's sales jumped ~25%. Almost none of last year's growth came from more flyers; it came from <em>spending more per flyer</em> and from <em>winning new terminal space</em>. That distinction is the whole investment argument.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>TFS is the landlord's favourite tenant and the traveller's only option at once. When an airport is built, the operator (Adani, GMR, a government authority) doesn't want to run 60 food counters itself — so it auctions the exclusive right to feed the terminal. TFS bids, wins, fits out the outlets, and then harvests a stream of hungry, captive passengers for the length of the contract. It keeps the cash and hands the airport a slice of every rupee. The airport gets guaranteed rent and zero operating hassle; TFS gets a franchise on a crowd that literally cannot walk out for a cheaper lunch. The catch: those contracts expire and get re-auctioned, and the whole machine only runs while planes are full.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Airport F&amp;B economics 101: why the same coffee costs double</h2></div>
+  <p class="part-sub">No aviation background needed — just why a captive crowd changes the maths.</p>
+
+  <p class="lead">A normal restaurant fights for customers: it competes on price, location and reviews, and most of its costs (rent, staff, food) leave thin margins. An <strong>airport</strong> restaurant plays a different game. Its customers have already arrived — they cleared security, they have 40–90 minutes to fill, and they cannot leave to find something cheaper. That single fact — a <strong>captive, time-rich, low-price-sensitivity audience</strong> — flips the economics.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Street QSR vs airport QSR — the same food, a different business</caption>
+    <thead><tr><th>Dimension</th><th>Street restaurant</th><th>Airport outlet (TFS)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Customer</td><td>Has infinite alternatives; shops on price</td><td>Captive past security; few options, time to spend</td></tr>
+      <tr><td class="t-strong">Pricing power</td><td>Low — undercut by the shop next door</td><td>High — a premium of 30–100%+ over street prices is normal</td></tr>
+      <tr><td class="t-strong">Footfall</td><td>Must be built through marketing</td><td>Delivered by the airport — millions walk past for free</td></tr>
+      <tr><td class="t-strong">Competition</td><td>Anyone can open next door</td><td>Exclusive concession — rivals are locked out of the terminal</td></tr>
+      <tr><td class="t-strong">Main cost quirk</td><td>Rent is a market lease</td><td>Rent is a revenue share + minimum guarantee to the airport</td></tr>
+      <tr><td class="t-strong">Margin</td><td>QSR chains often ~10–18% EBITDA</td><td>TFS ~39% EBITDA — driven by captive pricing</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one mechanism that explains the margin</div>
+    <p>Spend-per-passenger. An airport delivers a river of footfall for free; the operator's only job is to convert each passing traveller into a sale and lift the value of that sale. Because the customer is captive and unhurried by price, a ₹120 street cappuccino sells for ₹300–350 airside — and the passenger pays it, because the alternative is nothing. Multiply that premium across coffees, meals, beers and duty-adjacent snacks, and airport F&amp;B becomes structurally <em>higher-margin</em> than any high-street format. TFS's job is simply to (a) hold the exclusive right to that terminal, and (b) squeeze more spend out of each passenger through better brands, more outlets and lounges.</p>
+  </div>
+
+  <h3>The two businesses under one roof</h3>
+  <ul class="clean">
+    <li><strong>Travel QSR (~55% of revenue)</strong> — the food courts, cafés, bars, bakeries and grab-and-go counters. TFS operates a mix of <em>own brands</em> (Curry Kitchen, Dilli Streat, KaatiZone and dozens more) and <em>licensed international brands</em> (KFC, Starbucks-style formats, Krispy Kreme, etc.), so a single terminal can carry 20–30 different fascias — all billed through TFS.</li>
+    <li><strong>Lounges (~41% of revenue)</strong> — the premium waiting rooms. TFS runs the physical lounge; the <em>visits</em> are largely paid for by banks and card networks (your "complimentary lounge access" is your bank buying you a seat) or by pay-per-use travellers. It's a per-visit access-fee business bolted onto the same captive footfall.</li>
+    <li><strong>Management &amp; other (~4%)</strong> — services and fees, including work done through joint ventures with airport operators.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The business model: how a concession actually works</h2></div>
+  <p class="part-sub">Read this once and the entire company clicks into place.</p>
+
+  <p class="lead">Everything TFS does rests on one contract type: the <strong>concession</strong>. When an airport is built or a terminal is upgraded, the operator doesn't run the shops — it <strong>auctions exclusive rights</strong> to categories of retail. TFS bids for the food-and-beverage and lounge concessions, and if it wins, it gets the exclusive right to sell food in that terminal for a fixed number of years, in exchange for paying the airport.</p>
+
+  <h3>The rent formula — MG + revenue share</h3>
+  <p>The payment to the airport has two parts, and understanding both explains why this business is powerful <em>and</em> fragile:</p>
+  <ul class="clean">
+    <li><strong>Minimum Guarantee (MG)</strong> — a fixed floor the concessionaire pays <em>regardless of sales</em>. Win the terminal, and you owe this rent whether the planes are full or grounded.</li>
+    <li><strong>Revenue share</strong> — a percentage of every rupee of sales above a threshold, paid on top. The airport takes a cut of the upside.</li>
+  </ul>
+  <p>Together, rent (occupancy plus amortisation of the lease rights TFS pays upfront to win a contract) runs a hefty <strong>~32–38% of total expenses</strong>. That is the single biggest cost line — bigger than food, bigger than staff.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the MG cuts both ways — the operating-leverage engine</div>
+    <p>Because a large chunk of cost is a <em>fixed</em> minimum guarantee, TFS has powerful operating leverage. In good years, traffic and spend-per-passenger climb, sales blow past the MG threshold, and almost every extra rupee drops to profit — hence the ~39% EBITDA margin. In bad years the machine reverses brutally: the MG still has to be paid on empty terminals, so a traffic shock hits profit far harder than it hits sales. COVID was the live demonstration — grounded airports turned the fixed guarantees into a cash bonfire. The same lever that makes airport F&amp;B a compounder in a boom makes it a wipeout in a bust.</p>
+  </div>
+
+  <h3>The concession lifecycle — win, build, harvest, re-tender</h3>
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The life of one airport concession — each stage sets up the next</div>
+    <div class="flow-row">
+      <div class="node n1"><div class="ntag">Stage 1 · Win</div><div class="nname">Bid &amp; win the tender</div><div class="nwho">Beat rivals on MG + rev-share for exclusive F&amp;B rights.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n2"><div class="ntag">Stage 2 · Build</div><div class="nname">Fit out outlets &amp; lounges</div><div class="nwho">Upfront capex; near-empty until the terminal opens.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n3"><div class="ntag">Stage 3 · Harvest</div><div class="nname">Sell to captive footfall</div><div class="nwho">5–9 years of premium-priced, high-margin sales.</div></div>
+      <div class="arrow">→</div>
+      <div class="node n4"><div class="ntag">Stage 4 · Re-tender</div><div class="nname">Contract expires</div><div class="nwho">Re-auctioned — defend it, or lose the terminal to a rival.</div></div>
+    </div>
+    <div class="flow-note">The moat lives in Stage 3, and the single biggest risk lives in Stage 4: a flagship terminal lost at re-tender takes years of harvest with it.</div>
+  </div>
+
+  <h3>The newest twist — from tenant to partner</h3>
+  <p>The sharpest strategic shift is that TFS increasingly doesn't just <em>rent</em> from airport operators — it <strong>partners</strong> with them. Rather than bid against an Adani or a GMR at every re-tender, TFS has formed joint ventures with them, so the operator becomes a co-owner of the F&amp;B business rather than a landlord to be out-bid. This locks in the airport's biggest terminals and blunts re-tender risk on those assets (more in §07). It also, quirkily, changes how the accounts look — which produces one of the genuine surprises in this company (§09).</p>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the joint venture and who controls it</h2></div>
+  <p class="part-sub">A Mumbai hospitality family and a London-listed travel-food giant, fused.</p>
+
+  <p class="lead">TFS is a <strong>joint venture between two very different parents</strong>: India's <strong>K Hospitality Corp</strong> (the flagship hospitality business of the Mumbai-based <strong>Kapur family</strong>, of Bombay Brasserie / Copper Chimney fame) and the UK-listed <strong>SSP Group plc</strong>, one of the world's largest travel-food operators (owner of Upper Crust, Caffè Ritazza and hundreds of airport and rail outlets across 30+ countries). The Kapurs brought the Indian foothold and brands; SSP brought global airport-concession expertise and international lounge reach.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">2007–09</div><div class="ev">The Kapur family's <strong>K Hospitality</strong> moves into airport catering as India's private airports (Delhi, Mumbai, Bengaluru, Hyderabad) are modernised, seeding the travel-F&amp;B business.</div></li>
+    <li><div class="yr">Early 2010s</div><div class="ev">UK-listed <strong>SSP Group</strong> partners in, bringing global concession know-how and lounge operations — the JV that becomes Travel Food Services takes shape.</div></li>
+    <li><div class="yr">2013–2019</div><div class="ev">Rapid rollout across India's biggest airports; builds the leading airport-lounge network and adds Malaysia and Hong Kong via SSP links.</div></li>
+    <li class="major"><div class="yr">2020–21</div><div class="ev"><strong>COVID.</strong> Airports empty; travel F&amp;B collapses; the fixed minimum-guarantee model turns into a cash drain — the defining stress test of the business.</div></li>
+    <li><div class="yr">FY22–FY25</div><div class="ev">Sharp recovery as Indian flying rebounds to record highs; revenue climbs from ~₹1,067 Cr (FY23) to ~₹1,688 Cr (FY25) at ~33% EBITDA margin.</div></li>
+    <li class="major"><div class="yr">Jul 2025</div><div class="ev"><strong>IPO</strong> — a ~₹2,000 Cr (~US$233M) offer, entirely an offer-for-sale by the Kapur Family Trust; lists on NSE &amp; BSE on 14 Jul 2025 at ₹1,100, slipping slightly on debut. SSP lifts its stake to <strong>50.01%</strong> just before listing.</div></li>
+    <li><div class="yr">FY26</div><div class="ev">Crosses <strong>550+ outlets across 20 airports, 39 lounges, 145 brands</strong>; deepens JVs with <strong>Adani</strong> (Semolina Kitchens) and <strong>GMR</strong>; enters Hong Kong International; system-wide sales +25% to ~₹3,214 Cr.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; control</h3>
+  <ul class="clean">
+    <li><strong>Promoters (~86%):</strong> SSP Group and its subsidiaries hold ~50%, and the Kapur family group (Kapur Family Trust, Varun Kapur, Karan Kapur) hold the balance of the promoter block. Because the IPO was a pure offer-for-sale, the company raised <em>no</em> fresh money — the float simply moved shares from the Kapur trust to the public.</li>
+    <li><strong>Two-headed, and that matters.</strong> SSP contributes global airport-concession muscle and lounge brands; K Hospitality contributes the Indian relationships, kitchens and local brand stable. It's a rare structure — a foreign travel-food major and an Indian family running one listed vehicle — and it aligns TFS with the global playbook while keeping it native to India's airports.</li>
+    <li><strong>Balance sheet:</strong> highly cash-generative with modest reported borrowings (largely lease-related under accounting rules); it funds fit-outs from its own cash flow and pays a dividend (₹10.25/share for FY26).</li>
+  </ul>
+
+  <div class="note gold"><b>An unusual listing:</b> most IPOs raise growth capital. TFS's did not — it was 100% an exit for the promoter selling shareholder. So the listing changed <em>who owns</em> TFS, not what TFS can spend. That's worth remembering when you read "IPO" as a growth signal here: the growth was already being self-funded; the float was about liquidity and governance, not fresh firepower.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The network: where TFS actually operates</h2></div>
+  <p class="part-sub">A dominant Indian footprint, a modest international tail.</p>
+
+  <p class="lead">TFS's estate spans <strong>550+ travel-QSR outlets and 39 lounges across 20 airports</strong>, anchored in India and extended into Malaysia and Hong Kong. The Indian footprint is the crown jewel — it sits at 14 of the country's 15 busiest airports, the terminals that carry the overwhelming majority of the nation's flyers.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue mix (FY26, consolidated)</div>
+    <div class="c-sub">Two engines: food-and-drink counters and premium lounges</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Travel QSR<small>food courts, cafés, bars</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~55%</div></div>
+      <div class="bar-row"><div class="blab">Lounges<small>premium waiting rooms</small></div><div class="track"><span class="fill coral" style="width:75%"></span></div><div class="bval">~41%</div></div>
+      <div class="bar-row"><div class="blab">Management &amp; other<small>incl. JV services</small></div><div class="track"><span class="fill gold" style="width:8%"></span></div><div class="bval">~4%</div></div>
+    </div>
+    <div class="legend"><span>Shares approximate, FY26 consolidated. QSR is the bigger engine; lounges are the higher-growth, banking-funded second engine.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The footprint at a glance</caption>
+    <thead><tr><th>Where</th><th>What's there</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">India — big-6 airports</td><td>Outlets &amp; lounges at Mumbai, Delhi, Bengaluru, Hyderabad, Chennai, Kolkata and more</td><td>The core cash engine — the highest-footfall, highest-spend terminals in the country.</td></tr>
+      <tr><td class="t-strong">India — new-airport wave</td><td>Positions at/for Navi Mumbai, plus expanding Ahmedabad, Cochin, and others</td><td>The next leg of growth as India's airport-capex wave opens fresh terminals.</td></tr>
+      <tr><td class="t-strong">India — highways</td><td>~29 highway travel-QSR sites</td><td>A small non-airport diversification along expressways — same captive-traveller logic, lower margin.</td></tr>
+      <tr><td class="t-strong">Malaysia</td><td>~29 outlets across 2 airports + ~8 lounges</td><td>The largest international leg, via SSP's Asia-Pacific network.</td></tr>
+      <tr><td class="t-strong">Hong Kong</td><td>Lounge presence at Hong Kong International</td><td>A premium international lounge foothold — small but strategically placed.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note gold"><b>Concentration to keep in view:</b> the biggest airports carry the biggest share of revenue, so TFS's fortunes track a handful of flagship terminals. A disruption at — or the loss of — a Mumbai or Delhi concession would move the whole company. Breadth across 20 airports softens this, but the revenue is not evenly spread.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The lounge engine: the bit funded by your bank</h2></div>
+  <p class="part-sub">A second, higher-growth business hiding inside the food operator.</p>
+
+  <p class="lead">Ask most people what TFS does and they'll say "airport food". But roughly <strong>41% of revenue comes from lounges</strong> — the premium waiting rooms where you eat, drink, shower and work before a flight. It's a different model from the food court, and in many ways a better one: TFS is India's <strong>largest airport-lounge operator with ~45% market share</strong>, running the lounge, while someone else foots the bill for most visitors.</p>
+
+  <h3>Who actually pays for a lounge visit</h3>
+  <ul class="clean">
+    <li><strong>Banks &amp; card networks (the bulk).</strong> Your "complimentary lounge access" is not free — your bank has bought that seat from TFS as a perk to sell you a premium credit card. TFS bills the bank per visit. As India's affluent middle class piles into premium cards, this stream compounds with card issuance, not just with flying.</li>
+    <li><strong>Airlines &amp; loyalty programmes.</strong> Business-class and elite-tier flyers get access their airline pays for.</li>
+    <li><strong>Pay-per-use walk-ins.</strong> Economy travellers who simply buy a ₹1,000-ish pass at the door.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the lounge is a quietly excellent business</div>
+    <p>A lounge decouples TFS's earnings from a single passenger's willingness to spend. Instead of persuading a traveller to buy a ₹350 coffee, TFS collects a per-visit fee from a <em>bank</em> that has already decided lounge access is a cheap way to justify a premium card's annual fee. India's credit-card base and premiumisation trend are growing faster than passenger numbers — so the lounge stream has a demand driver (card penetration) layered on top of the aviation driver (flying). It's the part of TFS least dependent on any one flyer's mood, and the part most geared to India's rising affluence.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms coral"><div class="msv">~45%</div><div class="msl">Share of India's airport-lounge market — the clear #1</div></div>
+    <div class="ms"><div class="msv">39</div><div class="msl">Lounges operated (FY26) across India, Malaysia &amp; Hong Kong</div></div>
+    <div class="ms gold"><div class="msv">~41%</div><div class="msl">Of consolidated revenue from lounges — a co-engine, not a sideline</div></div>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE crux #1: the aviation boom, and its twist -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The India aviation boom — and the number that complicates it</h2></div>
+  <p class="part-sub">The tailwind everyone buys the stock for — and why FY26 tells a subtler story.</p>
+
+  <p class="lead">The headline case for TFS is simple and real: <strong>India is in the middle of a historic aviation build-out</strong>. Passenger numbers have surged past pre-COVID records; airlines have placed some of the largest aircraft orders in history; and a wave of new and expanded airports — <strong>Navi Mumbai, Noida/Jewar, and terminal upgrades everywhere</strong> — is adding capacity for hundreds of millions more flyers over the coming decade. More flyers, more terminals, more captive footfall: on paper, a rising tide for the company that feeds them.</p>
+
+  <p>But FY26 exposed the more interesting mechanics. <strong>Indian passenger traffic rose only ~1.2%</strong> in the year — subdued by airspace disruptions, capacity constraints and a cautious travel market — yet TFS's <strong>system-wide sales still jumped ~25%</strong>. If the "aviation boom" were doing the heavy lifting, sales should have crawled. Instead they sprinted. So where did the growth come from?</p>
+
+  <div class="chart">
+    <div class="c-title">Where FY26 growth actually came from</div>
+    <div class="c-sub">Decomposing system-wide sales growth — hint: not from more flyers</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Passenger traffic<small>more flyers</small></div><div class="track"><span class="fill ink" style="width:5%"></span></div><div class="bval">~1.2%</div></div>
+      <div class="bar-row"><div class="blab">Like-for-like<small>spend per passenger ↑</small></div><div class="track"><span class="fill sky" style="width:38%"></span></div><div class="bval">~9.4%</div></div>
+      <div class="bar-row"><div class="blab">Net contract gains<small>new terminal space</small></div><div class="track"><span class="fill coral" style="width:52%"></span></div><div class="bval">~13.1%</div></div>
+      <div class="bar-row"><div class="blab">System-wide sales<small>the total</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~25.4%</div></div>
+    </div>
+    <div class="legend"><span>FY26 growth was ~9% from selling more to each passenger and ~13% from winning new outlets/lounges — with barely 1% from the aviation "boom" itself.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The counter-intuitive read on the "aviation play"</div>
+    <p>TFS is sold as a leveraged bet on Indian flying, but FY26 shows it is really a bet on <strong>two self-help levers that work even when flying stalls</strong>: (1) extracting more spend from each passenger (better brands, more outlets per terminal, lounge upsell), and (2) winning more concession space at more airports. Passenger traffic is the free footfall underneath, but the growth engine is TFS's own execution on top of it. That's the good news — it means a flat-traffic year can still be a great year. It's also the discipline of the thesis: if spend-per-passenger and contract wins ever stall, no aviation tailwind will bail the company out, because in FY26 the tailwind was almost nil and TFS grew anyway on its own two levers.</p>
+  </div>
+
+  <p>The corollary is what makes the aviation backdrop matter over years, not quarters: TFS doesn't need flyer numbers to rocket <em>this</em> year, but it does need India's decade-long capacity build to keep opening new terminals it can bid for. The boom is the reservoir of future concessions; spend-per-passenger and contract wins are how TFS draws from it.</p>
+</section>
+
+<!-- 07 — BESPOKE crux #2: the moat -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The moat: scale, relationships, and owning the operators</h2></div>
+  <p class="part-sub">Why displacing TFS from a terminal is far harder than winning a bid on paper.</p>
+
+  <p class="lead">Airport concessions are, in theory, contestable — every few years they come up for re-tender, and anyone can bid. So what stops a rival from simply out-bidding TFS at every airport? Three things compound into a real, if not impregnable, moat: <strong>scale, operator relationships, and — increasingly — co-ownership of the concession itself.</strong></p>
+
+  <h3>1. Scale &amp; brand breadth</h3>
+  <p>Running airport F&amp;B well is operationally brutal: 24/7 shifts behind security, tight fit-out windows, ~145 brands to manage, food safety under scrutiny, and razor-thin tolerance for a queue at a departure gate. TFS's scale — 550+ outlets, decades of Indian airport operations, and SSP's global playbook — is a genuine barrier. A new entrant can win one terminal; running twenty to TFS's standard is another matter entirely.</p>
+
+  <h3>2. The dominant share</h3>
+  <div class="chart">
+    <div class="c-title">Market share in Indian airport concessions (approx.)</div>
+    <div class="c-sub">TFS is the clear leader in both halves of its business</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Airport lounges<small>TFS share</small></div><div class="track"><span class="fill coral" style="width:90%"></span></div><div class="bval">~45%</div></div>
+      <div class="bar-row"><div class="blab">Travel QSR<small>TFS share</small></div><div class="track"><span class="fill brand" style="width:52%"></span></div><div class="bval">~26%</div></div>
+    </div>
+    <div class="legend"><span>Roughly 45% of Indian airport-lounge and 26% of airport travel-QSR spend runs through TFS — dominance built terminal by terminal.</span></div>
+  </div>
+
+  <h3>3. From bidder to co-owner — the JV shift</h3>
+  <p>The sharpest defence against re-tender risk is to stop being a tenant the operator can replace and become the operator's <em>partner</em>. TFS has done exactly this at its two biggest airport groups:</p>
+  <div class="tbl-wrap">
+  <table>
+    <caption>TFS's concession joint ventures with airport operators</caption>
+    <thead><tr><th>JV</th><th>Ownership</th><th>Airports covered</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Semolina Kitchens (Adani JV)</td><td>Adani Airports ~50%, TFS ~25%, AJ Holding ~25%</td><td>Mumbai, Ahmedabad, Jaipur, Lucknow, Guwahati, Thiruvananthapuram — and the new Navi Mumbai airport</td></tr>
+      <tr><td class="t-strong">GMR Hospitality (GHL)</td><td>GMR ~70%, TFS ~30%</td><td>Hyderabad, Goa (Mopa)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>By handing the airport operator a majority stake in the F&amp;B business at its own terminals, TFS turns a re-tender adversary into an aligned co-owner — the operator now profits from TFS running the concession, so it has little reason to hand the terminal to a competitor. This is how TFS has reached <strong>14 of India's 15 largest airports</strong>. The trade-off is that TFS keeps a smaller slice (25–30%) of a bigger, safer pie at those airports.</p>
+
+  <div class="plain">
+    <div class="ptag">The genuine surprise a generalist should take away</div>
+    <p>TFS earns a ~27% <em>net</em> margin while handing the airport 32–38% of its total costs as rent — a landlord's cut that would sink an ordinary restaurant. It survives that because the captive-pricing premium is so large that even after paying the airport a fortune, what's left is still extraordinary for a food business. In other words, the airport and TFS are <em>both</em> feasting on the same captive traveller — the operator through the minimum guarantee, TFS through the markup — and there's still enough margin for both to prosper. That's how unusual airport pricing power is, and it's the core of why this is a business worth owning a slice of at all.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The rivals and the competitive set</h2></div>
+  <p class="part-sub">A short list of serious contenders — plus the operators themselves.</p>
+
+  <p class="lead">Airport F&amp;B is a concentrated, high-barrier market, so TFS faces a handful of credible rivals rather than a crowd. The threats come in three flavours: rival concessionaires who bid against it, lounge specialists, and the airport operators themselves choosing to in-source.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs TFS</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Travel Food Services</td><td>#1 in Indian airport F&amp;B (~26%) &amp; lounges (~45%)</td><td><em>This company.</em> Widest brand stable, deepest operator relationships, now co-owner of concessions with Adani &amp; GMR.</td></tr>
+      <tr><td class="t-strong">HMSHost (Autogrill/Avolta)</td><td>Global travel-F&amp;B major, active in India</td><td>The closest global-scale rival; strong brand access and international bidding muscle.</td></tr>
+      <tr><td class="t-strong">Lite Bite Foods</td><td>Established Indian airport-F&amp;B operator</td><td>A long-standing domestic competitor at major terminals; smaller brand breadth.</td></tr>
+      <tr><td class="t-strong">Encalm Hospitality</td><td>Fast-growing lounge &amp; F&amp;B specialist</td><td>Aggressive challenger, especially in premium lounges (e.g. Delhi) — the sharpest threat to TFS's lounge dominance.</td></tr>
+      <tr><td class="t-strong">Semolina / Saptagiri &amp; others</td><td>Operator-linked &amp; regional players</td><td>Some are partly TFS's own JV (Semolina); others bid independently at specific airports.</td></tr>
+      <tr><td class="t-strong">Airport operators in-sourcing</td><td>Adani, GMR &amp; authorities</td><td>The structural swing factor — an operator could run F&amp;B itself. TFS's JV strategy is partly designed to pre-empt exactly this.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive tension that actually matters</div>
+    <p>The everyday rivalry is at re-tender — Encalm, HMSHost, Lite Bite and TFS bidding for the same terminal, which can push minimum guarantees up and margins down. But the deeper contest is with the airport operators themselves. Adani and GMR control the terminals; if they decided airport F&amp;B was too profitable to outsource, they could squeeze concessionaires or run it in-house. TFS's answer — co-owning the concession with them — converts that threat into a partnership, but it also concedes that the operators hold the ultimate leverage. The company most able to hurt TFS is, in the long run, its own landlord.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Extraordinary margins, a debut-year listing — and an accounting quirk worth understanding.</p>
+
+  <p class="lead">TFS's financials read like few other "food" companies: a ~39% EBITDA margin, a ~27% net margin, and returns on capital north of 40%. But FY26 also carried a wrinkle that confuses the top line — so read the two revenue lines carefully.</p>
+
+  <div class="chart">
+    <div class="c-title">System-wide sales trajectory</div>
+    <div class="c-sub">Total sales across all outlets incl. JVs (₹ Crore, approx.)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:64%"></span></div><div class="bval">~2,050</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:80%"></span></div><div class="bval">~2,563</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~3,214</div></div>
+    </div>
+    <div class="legend"><span>System-wide sales (the whole estate, JVs included) grew ~25% in FY26 — the truest measure of the business's scale.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Consolidated revenue &amp; profit</div>
+    <div class="c-sub">Reported financials (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue FY23</div><div class="track"><span class="fill sky" style="width:63%"></span></div><div class="bval">1,067</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY25</div><div class="track"><span class="fill sky" style="width:100%"></span></div><div class="bval">1,688</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY26</div><div class="track"><span class="fill brand" style="width:98%"></span></div><div class="bval">~1,648</div></div>
+      <div class="bar-row"><div class="blab">PAT FY23</div><div class="track"><span class="fill coral" style="width:15%"></span></div><div class="bval">251</div></div>
+      <div class="bar-row"><div class="blab">PAT FY25</div><div class="track"><span class="fill coral" style="width:22%"></span></div><div class="bval">380</div></div>
+      <div class="bar-row"><div class="blab">PAT FY26</div><div class="track"><span class="fill gold" style="width:27%"></span></div><div class="bval">~452</div></div>
+    </div>
+    <div class="legend"><span>Note: consolidated <em>revenue</em> dipped FY25→FY26 even as PAT rose 21% — see the box below for why.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The accounting surprise: a "shrinking" top line at a growing company</div>
+    <p>Consolidated revenue went from ₹1,688 Cr (FY25) to ~₹1,648 Cr (FY26) — a slight <em>fall</em> — in a year the business grew ~25%. The reason is the JV shift. When TFS moved several big airports into the Semolina (Adani) JV, those terminals stopped being consolidated line-by-line into TFS's own revenue and instead flow in as TFS's <em>share of JV profit</em> below the operating line. So the terminals didn't shrink — they changed accounting address. The honest way to size the company is <strong>system-wide sales (~₹3,214 Cr, +25%)</strong>, which counts the whole estate. Anyone reading only the consolidated revenue line would badly misjudge a business that grew strongly. PAT (+21.5%) tells the real direction; the top line tells an accounting story.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~39%</div><div class="msl">FY26 EBITDA margin — exceptional for any food business</div></div>
+    <div class="ms green"><div class="msv">~42%</div><div class="msl">ROCE — captive pricing on a light capital base</div></div>
+    <div class="ms red"><div class="msv">~38×</div><div class="msl">Trailing P/E (Jul '26) — a premium, aviation-growth multiple</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the multiple — and the one metric that settles it</div>
+    <p>At ~₹17,200 Cr market cap on ~₹452 Cr of FY26 profit, TFS trades near <strong>38× trailing earnings</strong> — a premium that assumes years of double-digit growth from spend-per-passenger and new concessions, not a cyclical peak. Bulls point to the dominant share, the ~39% margin, the JV moat and India's decade-long airport build-out. Bears point to the fixed-cost operating leverage that cuts both ways, the re-tender risk on flagship terminals, and a debut-year stock still finding its valuation feet. The number that will actually prove or break the case is <strong>net contract gains combined with like-for-like (spend-per-passenger) growth</strong> — the two levers that delivered ~22 of FY26's ~25 points of sales growth. If TFS keeps winning fresh terminal space and lifting spend-per-flyer while re-securing its anchor concessions, the multiple is defensible; if net contract gains turn negative — a big terminal lost at re-tender — the premium unwinds fast, because the aviation tailwind alone (a ~1% traffic year) cannot carry it.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The growth runway</h2></div>
+  <p class="part-sub">New airports, more spend per flyer, and an international tail.</p>
+
+  <p class="lead">TFS has three stacked growth levers, and FY26 showed all three can fire even when passenger traffic is flat. Over the next few years the company targets roughly high-teens to low-20s system-wide-sales growth, drawn from a build-out that is largely already visible.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three growth engines</caption>
+    <thead><tr><th>Lever</th><th>What drives it</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">New concession space</td><td>India's airport-capex wave — Navi Mumbai, Noida/Jewar, terminal expansions</td><td>Fresh terminals to bid for; net contract gains were ~13% of FY26 growth alone.</td></tr>
+      <tr><td class="t-strong">Spend per passenger</td><td>Premiumisation, better brand mix, more outlets/lounges per terminal</td><td>Grows revenue with <em>no</em> extra flyers — ~9% like-for-like in FY26.</td></tr>
+      <tr><td class="t-strong">Lounge &amp; card penetration</td><td>Rising premium-credit-card issuance funding lounge visits</td><td>A demand driver (card growth) layered on top of aviation.</td></tr>
+      <tr><td class="t-strong">International</td><td>Malaysia footprint + Hong Kong lounge, via SSP</td><td>A small, optional tail — proof the model travels beyond India.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>The near-term pipeline</h3>
+  <ul class="clean">
+    <li><strong>Navi Mumbai</strong> — the marquee new airport, within the Adani/Semolina JV; a large new terminal to fill as it ramps.</li>
+    <li><strong>Expanding terminals</strong> — added QSR outlets and lounges across Mumbai, Delhi, Ahmedabad, Hyderabad, Cochin over the past year (76 outlets and two lounges added in FY26).</li>
+    <li><strong>Brand deepening</strong> — 145 brands and rising, letting TFS raise spend-per-passenger by matching more fascias to more traveller tastes in each terminal.</li>
+  </ul>
+
+  <blockquote>The next chapter is less about the aviation "boom" doing the work and more about TFS filling the terminals it has just won — Navi Mumbai above all — while re-securing the flagship concessions that come up for renewal.</blockquote>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A rare, high-margin franchise — priced as one, and cyclical underneath.</p>
+
+  <p class="lead">TFS is a genuinely unusual asset: a dominant, ~39%-margin, cash-generative operator sitting on a structural growth theme (India's airports) with a moat that gets stronger as it co-owns concessions with the operators. The debate is whether the premium multiple adequately respects the two things that can bite — traffic cyclicality and contract-renewal risk.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Captive-pricing margins</strong> — ~39% EBITDA and ~27% net margin that ordinary QSR can't approach, on a light capital base (~42% ROCE).</li>
+        <li><strong>Dominant, defended share</strong> — ~26% of airport QSR, ~45% of lounges, now protected by Adani &amp; GMR co-ownership JVs.</li>
+        <li><strong>Self-help growth</strong> — spend-per-passenger and contract wins drove ~22pts of FY26's ~25pts of growth, even with flat traffic.</li>
+        <li><strong>Long structural runway</strong> — India's multi-decade airport build-out (Navi Mumbai, Jewar) keeps opening terminals to bid for; card-funded lounges add a second driver.</li>
+        <li><strong>World-class parentage</strong> — SSP's global concession playbook plus K Hospitality's Indian relationships.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Traffic cyclicality</strong> — the fixed minimum-guarantee model turns a travel shock (pandemic, recession, airspace disruption) into an outsized profit hit; COVID showed how brutal.</li>
+        <li><strong>Re-tender risk</strong> — flagship concessions expire and are re-auctioned; losing a Mumbai or Delhi terminal erases years of harvest.</li>
+        <li><strong>Operator leverage</strong> — Adani/GMR control the terminals and could squeeze or in-source; the JV smaller-slice trade-off caps TFS's take.</li>
+        <li><strong>Premium multiple</strong> — ~38× on a debut-year, cyclical concession business; sensitive to any stumble in contract wins.</li>
+        <li><strong>Confusing optics</strong> — consolidated revenue understates the business; less-careful investors may misprice it in either direction.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Travel Food Services is the toll gate at the departure gate — a dominant operator harvesting India's most captive audience at margins street food can't touch, defended by scale and by co-owning its concessions with the very operators who could otherwise displace it. The business quality is not in doubt; the two live questions are cyclical (does traffic hold?) and contractual (does it keep — and keep winning — the terminals?). Watch one pairing above all: <strong>net contract gains alongside like-for-like spend growth</strong>. As long as both stay positive, TFS is compounding on its own two feet regardless of the aviation weather. The concrete gate ahead is <strong>Navi Mumbai ramping to full throughput and the first re-tender of a flagship terminal</strong> — the day TFS has to defend a Mumbai or Delhi concession in open bidding is the day the market learns exactly how deep this moat runs.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Travel Food Services — Q4 &amp; FY26 results (year ended 31 Mar 2026); company investor-relations disclosures, travelfoodservices.com.</li>
+    <li>The Moodie Davitt Report — "TFS delivers strong sales and profit growth in Q4 and FY2026 despite subdued traffic" (2026).</li>
+    <li>Indian Retailer / FranchiseTv — "Travel Food Services posts 21.5% PAT growth in FY26" (2026).</li>
+    <li>Whalesbook Corporate News — "TFS posts strong FY26 results with sales at ₹16,478 million".</li>
+    <li>Tradebrains — "TFS jumps 5% after FY26 PBT rises 20%; announces ₹10.25 dividend"; "How TFS turns airport footfall into profits".</li>
+    <li>BSE India — StockReach, scrip code 544443 (Travel Food Services Ltd); NSE India — TRAVELFOOD quote.</li>
+    <li>Screener.in — Travel Food Services consolidated financials, ratios &amp; shareholding.</li>
+    <li>ICICI Direct / StockAxis / SBI Securities / Deven Choksey — Travel Food Services IPO notes (Jul 2025).</li>
+    <li>Latham &amp; Watkins — "Latham advises Travel Food Services in US$233 million IPO" (Jul 2025); SSP Group plc RNS on the TFS IPO.</li>
+    <li>Forbes — "Travel food retailer SSP sees debut Indian IPO lose value" (Jul 2025); Chittorgarh/Zerodha IPO data.</li>
+    <li>Dhruva (Substack) — "The toll-bridge of Indian aviation: why TFS"; Moodie Davitt guest article on airport F&amp;B concession economics.</li>
+    <li>Industry: TFS RHP industry report (assessment of Indian travel-QSR and global lounges); Fortune Business Insights airport-F&amp;B market sizing.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; segment shares, market-share estimates and system-wide-sales figures are approximate and vary by source; verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "TRAVELFOOD";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
