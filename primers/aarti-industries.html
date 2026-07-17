@@ -1,0 +1,621 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aarti Industries — Stock Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Figtree:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F3;
+    --card:#FFFFFF;
+    --ink:#16211F;
+    --ink-soft:#4A5854;
+    --line:#E2E6E2;
+    --brand:#12726B;
+    --brand-deep:#0C4F4A;
+    --brand-tint:#E4F0EE;
+    --gold:#C4863A;
+    --gold-tint:#F6ECDD;
+    --bull:#1F7A54;
+    --bear:#B24437;
+    --shadow:0 1px 2px rgba(16,33,31,.04),0 8px 30px rgba(16,33,31,.06);
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Figtree",system-ui,sans-serif;font-size:17px;line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px;display:grid;grid-template-columns:232px 1fr;gap:44px}
+  @media(max-width:960px){.wrap{grid-template-columns:1fr;gap:0}}
+  a{color:var(--brand);text-decoration:none}
+  h1,h2,h3,h4{font-family:"Sora",system-ui,sans-serif;line-height:1.16;letter-spacing:-.012em;margin:0}
+  em{font-style:normal;color:var(--brand);font-style:italic}
+  .mono{font-family:"DM Mono",ui-monospace,monospace}
+
+  /* back link */
+  .sp-back{
+    position:fixed;top:16px;right:16px;z-index:60;
+    background:var(--ink);color:#fff;padding:8px 14px;border-radius:999px;
+    font-size:13px;font-weight:600;box-shadow:var(--shadow);
+  }
+  .sp-back:hover{background:var(--brand-deep);color:#fff}
+
+  /* TOC */
+  nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:30px 0 40px}
+  nav.toc .toc-brand{font-family:"Sora";font-weight:800;font-size:15px;letter-spacing:.02em;color:var(--brand-deep);margin-bottom:4px}
+  nav.toc .toc-sub{font-size:12px;color:var(--ink-soft);margin-bottom:20px}
+  nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:toc}
+  nav.toc li{margin:0}
+  nav.toc a{display:flex;gap:9px;padding:6px 10px;border-radius:8px;color:var(--ink-soft);font-size:13.5px;font-weight:500}
+  nav.toc a .n{font-family:"DM Mono";font-size:11.5px;color:var(--brand);opacity:.75;min-width:20px}
+  nav.toc a:hover{background:var(--brand-tint);color:var(--ink)}
+  @media(max-width:960px){nav.toc{display:none}}
+
+  main{padding:30px 0 80px;min-width:0}
+
+  /* cover */
+  header.cover{margin-bottom:30px}
+  .kicker{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .kicker span{font-family:"DM Mono";font-size:11.5px;letter-spacing:.02em;background:var(--card);border:1px solid var(--line);color:var(--ink-soft);padding:5px 10px;border-radius:999px}
+  .kicker span.k-code{background:var(--brand-deep);color:#fff;border-color:var(--brand-deep)}
+  header.cover h1{font-size:47px;font-weight:800;margin:6px 0 14px}
+  @media(max-width:640px){header.cover h1{font-size:34px}}
+  .dek{font-size:19px;color:var(--ink-soft);max-width:64ch;margin:0 0 24px}
+  .provenance{font-family:"DM Mono";font-size:11.5px;color:var(--ink-soft);opacity:.85;margin:0 0 22px}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+  @media(max-width:640px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+  .stat-strip .cell{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;box-shadow:var(--shadow)}
+  .stat-strip .lab{font-family:"DM Mono";font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  .stat-strip .val{font-family:"Sora";font-weight:700;font-size:23px}
+  .stat-strip .sub{font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+
+  /* refresh bar */
+  .refresh-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 15px;box-shadow:var(--shadow);margin:20px 0 8px}
+  .refresh-bar .badge{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--brand-deep)}
+  .refresh-bar .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px var(--gold-tint)}
+  .refresh-bar .upd{font-family:"DM Mono";font-size:12px;color:var(--ink-soft)}
+  .refresh-bar button{margin-left:auto;font-family:"Figtree";font-weight:600;font-size:13px;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:7px 13px;border-radius:8px;cursor:pointer}
+  .refresh-bar button:hover{border-color:var(--brand);color:var(--brand)}
+
+  /* sections */
+  section.part{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px 34px;margin:16px 0;box-shadow:var(--shadow);scroll-margin-top:20px}
+  @media(max-width:640px){section.part{padding:24px 20px}}
+  .pno{font-family:"DM Mono";font-size:12.5px;color:var(--brand);letter-spacing:.06em;font-weight:500}
+  section.part h2{font-size:27px;font-weight:700;margin:6px 0 4px}
+  @media(max-width:640px){section.part h2{font-size:23px}}
+  .part-sub{font-family:"DM Mono";font-size:12.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;margin-bottom:16px}
+  .lead{font-size:18.5px;color:var(--ink);margin:0 0 16px}
+  p{margin:0 0 15px}
+  ul.clean{list-style:none;margin:0 0 16px;padding:0}
+  ul.clean li{position:relative;padding-left:24px;margin-bottom:10px}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:10px;width:7px;height:7px;border-radius:2px;background:var(--brand);transform:rotate(45deg)}
+  ul.clean li strong{color:var(--ink)}
+
+  .plain{background:var(--brand-tint);border-left:3px solid var(--brand);border-radius:10px;padding:15px 18px;margin:18px 0}
+  .plain .tag{font-family:"DM Mono";font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--brand-deep);font-weight:500;display:block;margin-bottom:5px}
+  .plain p{margin:0}
+
+  .note{background:var(--gold-tint);border:1px solid #EAD9BE;border-radius:10px;padding:14px 17px;margin:18px 0;font-size:15.5px;color:#5B4527}
+  .note strong{color:#4A3719}
+
+  blockquote{margin:18px 0;padding:16px 20px;background:var(--paper);border-left:3px solid var(--gold);border-radius:8px;font-size:17px;color:var(--ink)}
+  blockquote .who{display:block;font-family:"DM Mono";font-size:12px;color:var(--ink-soft);margin-top:8px}
+
+  /* tables */
+  .tbl-wrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:12px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:440px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line)}
+  th{background:var(--paper);font-family:"Sora";font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-soft)}
+  td.num,th.num{text-align:right;font-family:"DM Mono"}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:var(--brand-tint)}
+  caption{caption-side:bottom;font-size:12px;color:var(--ink-soft);padding:8px 4px;text-align:left}
+
+  /* charts */
+  .chart{margin:20px 0}
+  .chart .ct{font-family:"Sora";font-weight:600;font-size:14.5px;margin-bottom:12px}
+  .bar-row{display:grid;grid-template-columns:120px 1fr 76px;align-items:center;gap:12px;margin-bottom:9px}
+  @media(max-width:560px){.bar-row{grid-template-columns:90px 1fr 64px}}
+  .bar-row .bl{font-size:13px;color:var(--ink-soft)}
+  .track{background:var(--paper);border-radius:6px;height:20px;overflow:hidden;border:1px solid var(--line)}
+  .fill{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-deep));border-radius:6px 0 0 6px}
+  .fill.g{background:linear-gradient(90deg,var(--gold),#9C6420)}
+  .bar-row .bv{font-family:"DM Mono";font-size:13px;text-align:right}
+
+  /* flow */
+  .flow{margin:22px 0}
+  .flow-lane{display:flex;align-items:stretch;flex-wrap:wrap;gap:10px}
+  .node{flex:1 1 130px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:13px 14px;min-width:120px}
+  .node .nt{font-family:"DM Mono";font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--brand);margin-bottom:5px}
+  .node .nb{font-size:14px;font-weight:600;line-height:1.3}
+  .node .nd{font-size:12.5px;color:var(--ink-soft);margin-top:4px}
+  .node.hl{background:var(--brand-tint);border-color:var(--brand)}
+  .arrow{align-self:center;color:var(--brand);font-size:20px;flex:0 0 auto}
+  @media(max-width:640px){.arrow{transform:rotate(90deg)}}
+
+  /* timeline */
+  .timeline{margin:20px 0;border-left:2px solid var(--line);padding-left:22px}
+  .tl-item{position:relative;margin-bottom:18px}
+  .tl-item::before{content:"";position:absolute;left:-29px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--brand)}
+  .tl-item .yr{font-family:"DM Mono";font-size:12.5px;color:var(--brand-deep);font-weight:500}
+  .tl-item .tx{font-size:15px;margin-top:2px}
+
+  /* mini stats */
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+  @media(max-width:640px){.mini-stats{grid-template-columns:1fr}}
+  .ms{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:15px}
+  .ms .msv{font-family:"Sora";font-weight:700;font-size:22px;color:var(--brand-deep)}
+  .ms .msl{font-size:13px;color:var(--ink-soft);margin-top:3px}
+
+  /* bull bear */
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+  @media(max-width:640px){.bb{grid-template-columns:1fr}}
+  .bb .col{border-radius:12px;padding:17px 19px;border:1px solid var(--line)}
+  .bb .bull{background:rgba(31,122,84,.07);border-color:rgba(31,122,84,.28)}
+  .bb .bear{background:rgba(178,68,55,.06);border-color:rgba(178,68,55,.26)}
+  .bb h4{font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .bb .bull h4{color:var(--bull)}
+  .bb .bear h4{color:var(--bear)}
+  .bb ul{list-style:none;margin:0;padding:0}
+  .bb li{position:relative;padding-left:20px;margin-bottom:9px;font-size:14.5px}
+  .bb li::before{position:absolute;left:0;top:0}
+  .bb .bull li::before{content:"▲";color:var(--bull);font-size:10px;top:4px}
+  .bb .bear li::before{content:"▼";color:var(--bear);font-size:10px;top:4px}
+
+  .settler{background:var(--ink);color:#F4F5F3;border-radius:14px;padding:22px 26px;margin:22px 0}
+  .settler .st{font-family:"DM Mono";font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .settler p{margin:0;font-size:17.5px}
+  .settler strong{color:#fff}
+
+  footer.src{margin-top:26px;padding:26px 30px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  footer.src h3{font-size:15px;margin-bottom:12px}
+  footer.src ol{margin:0 0 18px;padding-left:20px;font-size:13px;color:var(--ink-soft)}
+  footer.src li{margin-bottom:6px}
+  .disclaimer{font-size:12.5px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px;line-height:1.55}
+</style>
+
+<a href="../index.html" class="sp-back">← Stock Primers</a>
+
+<div class="wrap">
+
+  <nav class="toc">
+    <div class="toc-brand">Aarti Industries</div>
+    <div class="toc-sub">Specialty Chemicals · benzene chain</div>
+    <ol>
+      <li><a href="#snapshot"><span class="n">00</span> Snapshot</a></li>
+      <li><a href="#what"><span class="n">01</span> What Aarti actually makes</a></li>
+      <li><a href="#model"><span class="n">02</span> Two engines: spot vs. contract</a></li>
+      <li><a href="#spread"><span class="n">03</span> The benzene spread</a></li>
+      <li><a href="#owners"><span class="n">04</span> Owners & the demerger</a></li>
+      <li><a href="#downcycle"><span class="n">05</span> The down-cycle</a></li>
+      <li><a href="#contract"><span class="n">06</span> The cancelled contract</a></li>
+      <li><a href="#capex"><span class="n">07</span> The capex cycle</a></li>
+      <li><a href="#markets"><span class="n">08</span> Where it all ends up</a></li>
+      <li><a href="#financials"><span class="n">09</span> Financials & valuation</a></li>
+      <li><a href="#peers"><span class="n">10</span> Peers & position</a></li>
+      <li><a href="#risks"><span class="n">11</span> Risks</a></li>
+      <li><a href="#verdict"><span class="n">12</span> Bull, bear & the gate</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <header class="cover">
+      <div class="kicker">
+        <span class="k-code">NSE: AARTIIND · BSE: 524208</span>
+        <span>Chemicals</span>
+        <span>Specialty / Agro-intermediates</span>
+        <span>Gujarat · est. 1984</span>
+      </div>
+      <h1>Aarti Industries: India's <em>benzene-chain</em> king, caught mid-cycle</h1>
+      <p class="dek">One molecule — benzene — walked through a dozen reactions becomes the quiet backbone of the world's pesticides, dyes, pigments and plastic additives. Aarti is the Indian company that turns that molecule into money at scale. Right now it is doing so at the bottom of a brutal chemical winter, with returns at a visible trough.</p>
+      <p class="provenance">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+      <div class="stat-strip">
+        <div class="cell"><div class="lab">FY26 Revenue</div><div class="val">₹9,018 Cr</div><div class="sub">+~12–14% YoY</div></div>
+        <div class="cell"><div class="lab">FY26 EBITDA</div><div class="val">₹1,172 Cr</div><div class="sub">~13% blended margin</div></div>
+        <div class="cell"><div class="lab">FY26 PAT</div><div class="val">₹419 Cr</div><div class="sub">+~27% off a weak base</div></div>
+        <div class="cell"><div class="lab">ROCE</div><div class="val">~5.7%</div><div class="sub">a clear trough</div></div>
+      </div>
+
+      <div class="refresh-bar">
+        <span class="badge"><span class="dot"></span>Auto-primer</span>
+        <span class="upd">Last updated 17 Jul 2026</span>
+        <button id="refreshBtn">⟳ Update</button>
+      </div>
+    </header>
+
+    <!-- 00 -->
+    <section class="part" id="snapshot">
+      <div class="pno">00 — SNAPSHOT</div>
+      <h2>The one-screen version</h2>
+      <div class="part-sub">Who they are, in a paragraph</div>
+      <p class="lead">Aarti Industries Limited (AIL) is a Gujarat-based specialty chemicals maker that buys basic petrochemical feedstock — above all <strong>benzene</strong> — and converts it, through many chemistry steps, into hundreds of higher-value derivatives that feed agrochemicals, pharmaceuticals, dyes and pigments, polymer additives and fuel additives. It is one of the few companies anywhere that operates at world or India scale in a handful of these specific chemistries, and its edge is depth: it makes its own intermediates rather than buying them, which is where the cost and reliability advantage lives.</p>
+
+      <ul class="clean">
+        <li><strong>The core molecule.</strong> Benzene accounts for roughly <strong>60% of raw-material / revenue exposure</strong> — Aarti's economics are a benzene-derivatives story more than a diversified-chemicals story.</li>
+        <li><strong>Two ways it earns.</strong> Commodity-style specialty sales that swing with global demand and Chinese competition; and prized multi-year, take-or-pay <strong>long-term contracts</strong> with global majors — the annuity-like crown jewel.</li>
+        <li><strong>Where it is in the cycle.</strong> A severe down-cycle — Chinese oversupply and dumping plus weak global agrochemicals — pushed margins and returns to a trough (ROCE ~5.7%) and was bad enough that the company <strong>withdrew its FY25 guidance</strong>. The stock de-rated with it.</li>
+        <li><strong>What it now is.</strong> After spinning off its pharma arm as <strong>Aarti Pharmalabs</strong>, AARTIIND is a purer-play specialty and agro-intermediates chemicals company.</li>
+        <li><strong>Who owns it.</strong> The founding <strong>Gala family</strong> remains the promoter and operator.</li>
+      </ul>
+
+      <div class="plain">
+        <span class="tag">In plain terms</span>
+        <p>Aarti sits one rung above an oil refinery and several rungs below the shelf. A refiner splits crude into building-block molecules; Aarti takes one of those blocks — benzene — and does the patient, hazardous, capital-heavy chemistry that a Syngenta or a BASF would rather outsource. It does not sell you a product you recognise. It sells the ingredient inside the ingredient inside the thing you buy.</p>
+      </div>
+    </section>
+
+    <!-- 01 -->
+    <section class="part" id="what">
+      <div class="pno">01 — THE BUSINESS</div>
+      <h2>What Aarti actually makes</h2>
+      <div class="part-sub">From a tanker of benzene to a shelf of derivatives</div>
+      <p class="lead">Benzene is a colourless liquid that comes out of a refinery or naphtha cracker. On its own it is a cheap, hazardous commodity. Its value is that it is a ring of six carbon atoms onto which a chemist can bolt other groups — a nitro group, a chlorine, an amine — one reaction at a time. Each bolt-on step raises the value and narrows the field of companies that can do it safely at scale.</p>
+
+      <p>Aarti runs benzene (plus toluene and nitric acid) through a sequence of well-understood but demanding chemistries:</p>
+
+      <div class="flow">
+        <div class="flow-lane">
+          <div class="node hl"><div class="nt">Feedstock</div><div class="nb">Benzene</div><div class="nd">+ toluene, nitric acid</div></div>
+          <div class="arrow">→</div>
+          <div class="node"><div class="nt">Step 1</div><div class="nb">Nitration</div><div class="nd">add –NO₂ group</div></div>
+          <div class="arrow">→</div>
+          <div class="node"><div class="nt">Step 2</div><div class="nb">Chlorination</div><div class="nd">add chlorine</div></div>
+          <div class="arrow">→</div>
+          <div class="node"><div class="nt">Step 3</div><div class="nb">Hydrogenation<br>/ ammonolysis</div><div class="nd">reduce / aminate</div></div>
+          <div class="arrow">→</div>
+          <div class="node hl"><div class="nt">Output</div><div class="nb">Derivatives</div><div class="nd">NCB, PDA, nitrotoluenes…</div></div>
+        </div>
+      </div>
+
+      <p>The end of that line is a family of building blocks with unlovely names and large uses: <strong>nitrochlorobenzenes (NCB)</strong>, <strong>nitrotoluenes</strong>, <strong>phenylenediamines (PDA)</strong>, hydrogenated products and a long tail of downstream molecules. These are not consumer goods; they are the ingredients that agrochemical, pharma and dye companies buy by the tanker to make the next thing.</p>
+
+      <ul class="clean">
+        <li><strong>Nitration</strong> attaches a nitro group to the benzene ring — the first and most common value-adding step, and a genuinely dangerous one (nitration reactions are exothermic and unforgiving), which is part of why few players do it well.</li>
+        <li><strong>Chlorination</strong> adds chlorine to build chlorinated intermediates used across crop protection and pharma.</li>
+        <li><strong>Hydrogenation and ammonolysis</strong> convert nitro compounds into amines — a whole second family of high-value products.</li>
+      </ul>
+
+      <div class="note"><strong>Why the names matter less than the position.</strong> You do not need to remember NCB from PDA. What matters is that in several of these specific molecules Aarti is one of the largest producers in India — and in a couple, among the largest anywhere. Scale in a narrow chemistry is the whole game: it lets you undercut smaller rivals on cost and out-supply them on reliability.</div>
+    </section>
+
+    <!-- 02 -->
+    <section class="part" id="model">
+      <div class="pno">02 — THE MODEL</div>
+      <h2>Two engines under one roof</h2>
+      <div class="part-sub">Spot specialty sales vs. multi-year contracts</div>
+      <p class="lead">Aarti earns in two very different ways, and conflating them is the most common mistake made about the company. One engine is loud and cyclical; the other is quiet and annuity-like. Both run off the same plants and the same chemistry, but they behave nothing alike.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Engine</th><th>How it prices</th><th>What sets volume</th><th>Behaviour</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Spot specialty</strong></td><td>Market spread over benzene, moves quarter to quarter</td><td>Global demand + Chinese supply</td><td>Cyclical, margin swings hard</td></tr>
+            <tr><td><strong>Long-term contracts</strong></td><td>Pre-agreed, often take-or-pay, formula-linked to feedstock</td><td>Customer's pre-committed volume</td><td>Annuity-like, sticky, protected</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>The spot engine</strong> is what most people picture when they hear "chemicals company": Aarti makes a specialty intermediate, sells it into a global market, and the price it captures rises and falls with demand and with how much product Chinese producers are pushing out that year. In a good year, spreads are fat and the plants mint cash. In a bad one — like the current down-cycle — Chinese oversupply drags prices toward cost and the same plants earn a fraction as much.</p>
+
+      <p><strong>The contract engine</strong> is the one that makes Aarti more than a commodity chemicals company. Global majors — the big agrochem and specialty players — sign <strong>multi-year, take-or-pay supply contracts</strong>: the customer pre-commits to buy a defined volume every year for five, ten, even twenty years, and sometimes funds a dedicated plant that Aarti builds specifically for them. In exchange the customer gets guaranteed supply from a low-cost, proven partner outside China. Aarti gets a floor under its volumes and a large chunk of its capex de-risked before a brick is laid.</p>
+
+      <div class="plain">
+        <span class="tag">In plain terms</span>
+        <p>The spot business is a fishing boat — some seasons the nets are full, some they come up light. The contract business is a landlord's rent roll — the tenant signed for ten years and paid to fit out the unit. A company that is only the boat trades like a commodity. A company adding more rent roll every year is trying to trade like something better. Aarti is trying to do the second while the market is judging it as the first.</p>
+      </div>
+
+      <p>The strategic question for the next several years is simply the <strong>mix</strong>: how fast the contracted, annuity-like layer grows relative to the volatile spot layer. Every dedicated plant that fills up shifts a little more of Aarti's earnings from "fishing boat" to "rent roll" — and that, more than any single quarter's spread, is what a re-rating would be built on.</p>
+    </section>
+
+    <!-- 03 -->
+    <section class="part" id="spread">
+      <div class="pno">03 — THE DEVICE</div>
+      <h2>The benzene spread is the whole story</h2>
+      <div class="part-sub">Why the gap matters more than the price</div>
+      <p class="lead">Here is the single most useful lens on Aarti, and the one most easily missed: the company's fortunes do not hinge on what benzene costs, and they do not hinge on what a derivative sells for. They hinge on the <strong>gap between the two</strong> — the spread Aarti captures for converting one molecule into a more valuable one.</p>
+
+      <p>This distinction is not academic. Because roughly 60% of Aarti's input cost is benzene, and because much of its output is priced with reference to benzene, a rise or fall in the benzene price itself largely washes through. When benzene goes up, input cost rises but so does the realisation on the derivative; when it falls, both drop. What Aarti actually keeps is the <strong>conversion spread</strong> — the value it adds through nitration, chlorination, hydrogenation and the rest.</p>
+
+      <p>So the number to watch is not "benzene at $X a tonne" or "NCB at $Y a tonne." It is the difference — and how it moves when Chinese producers flood or starve the market.</p>
+
+      <div class="chart">
+        <div class="ct">A stylised year, same plant, same volume — only the spread changes</div>
+        <div class="bar-row"><div class="bl">Peak-cycle spread</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="bv">≈100</div></div>
+        <div class="bar-row"><div class="bl">Mid-cycle spread</div><div class="track"><div class="fill" style="width:64%"></div></div><div class="bv">≈64</div></div>
+        <div class="bar-row"><div class="bl">Trough spread (now)</div><div class="track"><div class="fill g" style="width:34%"></div></div><div class="bv">≈34</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--ink-soft);margin-top:-6px">Illustrative index, not company disclosure — to show the mechanism: the plant, headcount and tonnage barely change across the cycle, yet the money Aarti keeps roughly triples from trough to peak. That amplitude is why a specialty-chemicals stock can look cheap and expensive on the same earnings within eighteen months.</p>
+
+      <p>This is why the current trough is so instructive. Aarti's revenue in FY26 was ₹9,018 Cr — not a collapsed number. Volumes largely held; the plants ran. What cratered was the spread. Chinese producers, sitting on their own overbuilt capacity and a weak domestic economy, exported aggressively and compressed the gap that Aarti lives on. Same molecules, same tonnes, far less kept — and a ROCE that fell to roughly 5.7%.</p>
+
+      <div class="note">The non-obvious consequence: because the spread is so much more volatile than either volume or the benzene price, Aarti's <strong>earnings amplitude is far larger than its revenue amplitude</strong>. Revenue can wobble by a tenth while profit halves and returns fall by two-thirds. Anyone valuing the company off a single trough year — in either direction — is valuing the spread on the day, not the business across the cycle.</p>
+    </section>
+
+    <!-- 04 -->
+    <section class="part" id="owners">
+      <div class="pno">04 — OWNERS</div>
+      <h2>The Gala family, and the company that left</h2>
+      <div class="part-sub">Promoter control and the pharma demerger</div>
+      <p class="lead">Aarti was founded in 1984 and has been run throughout by the <strong>Gala family</strong>, still the promoter group. It is a first-generation-built, family-operated industrial house of the kind that dominates Indian specialty chemistry — patient, engineering-led, and comfortable committing capital years ahead of the demand it is betting on.</p>
+
+      <p>The most important corporate event of recent years was structural, not operational: Aarti <strong>demerged its pharmaceuticals business</strong> into a separately listed company, <strong>Aarti Pharmalabs</strong>. What remains under the AARTIIND ticker is now a cleaner, purer-play <strong>specialty and agro-intermediates chemicals</strong> company. The pharma cash flows, the pharma capex and the pharma cycle all moved out from under this entity.</p>
+
+      <ul class="clean">
+        <li><strong>Why it matters for an investor.</strong> The company you are analysing today is not the diversified Aarti of a few years ago. Comparisons to older financials must be adjusted for the fact that a whole division walked out of the door. AARTIIND is now a more concentrated bet on the benzene-derivatives chain.</li>
+        <li><strong>Cleaner, but more exposed.</strong> A pure specialty-chemicals company is easier to understand and value — and also has one fewer shock absorber. When the specialty cycle turns down, there is no pharma leg to lean on.</li>
+        <li><strong>Family stewardship.</strong> The Gala family's long tenure cuts both ways: deep operating knowledge and long-horizon capital allocation, set against the usual governance and succession questions that attend any promoter-controlled industrial.</li>
+      </ul>
+
+      <div class="timeline">
+        <div class="tl-item"><div class="yr">1984</div><div class="tx">Founded in Gujarat; builds out benzene-based chemistry over the following decades.</div></div>
+        <div class="tl-item"><div class="yr">2000s–2010s</div><div class="tx">Scales into a leading position in several benzene derivatives; deepens backward integration.</div></div>
+        <div class="tl-item"><div class="yr">2020</div><div class="tx">A global customer cancels a ~₹4,000 Cr, 10-year supply contract; Aarti retains compensation and redeploys the freed capacity.</div></div>
+        <div class="tl-item"><div class="yr">2022–2023</div><div class="tx">Pharma business demerged as Aarti Pharmalabs; AARTIIND becomes a pure specialty / agro-intermediates chemicals company.</div></div>
+        <div class="tl-item"><div class="yr">2024–2025</div><div class="tx">Chinese dumping and weak agrochemicals drive a severe down-cycle; the company withdraws its FY25 guidance.</div></div>
+        <div class="tl-item"><div class="yr">FY26</div><div class="tx">Revenue ₹9,018 Cr, EBITDA ₹1,172 Cr, PAT ₹419 Cr; ROCE at a ~5.7% trough with early Q4 margin recovery.</div></div>
+      </div>
+    </section>
+
+    <!-- 05 -->
+    <section class="part" id="downcycle">
+      <div class="pno">05 — THE TROUGH</div>
+      <h2>The down-cycle that forced a company to stop guiding</h2>
+      <div class="part-sub">China, agrochemicals, and a withdrawn forecast</div>
+      <p class="lead">Specialty chemicals is a cyclical industry, but the last down-cycle was worse than a normal one, and it is the single most important context for reading Aarti today. Two forces hit at once, and they compounded.</p>
+
+      <ul class="clean">
+        <li><strong>Chinese oversupply and dumping.</strong> China built enormous chemical capacity in the prior up-cycle. When its own demand softened, that capacity did not disappear — it was exported. Chinese producers pushed product into global markets at prices that compressed spreads worldwide, and Aarti's spread-dependent economics felt it directly.</li>
+        <li><strong>A weak agrochemical cycle.</strong> Aarti's largest end-market, crop protection, went through a sharp destocking and demand slump globally. Agrochem customers had over-ordered in the prior boom, then stopped buying to run down inventory — so even reliable volumes softened.</li>
+      </ul>
+
+      <p>The combination was severe enough that Aarti did something companies do only reluctantly: it <strong>suspended and withdrew its FY25 guidance</strong>. For a business that had grown structurally for years, telling the market "we can no longer forecast the year" was an admission of how little visibility the dumping-driven air-pocket had left. Margins compressed, ROCE fell toward 5.7%, and the stock de-rated from the premium multiple it had long enjoyed.</p>
+
+      <blockquote>
+        A structural grower that withdraws guidance is not the same as a structurally broken business. It is a signal about the <em>weather</em>, not the <em>climate</em> — but the market, in a trough, tends to price the weather as if it were permanent.
+        <span class="who">— the central tension in the current setup</span>
+      </blockquote>
+
+      <p>By the fourth quarter of FY26 there were early signs the worst had passed: <strong>Q4 EBITDA margin recovered to roughly 15.6%</strong>, well above the ~13% blended level for the full year, suggesting the spread had begun to normalise off the bottom. Full-year EBITDA of ₹1,172 Cr was up around 15%, and PAT of ₹419 Cr up around 27% — but that PAT growth is off a genuinely weak base, and should be read as "off the floor," not "back to trend." The recovery is visible; it is not yet confirmed.</p>
+
+      <div class="mini-stats">
+        <div class="ms"><div class="msv">~13%</div><div class="msl">FY26 blended EBITDA margin</div></div>
+        <div class="ms"><div class="msv">~15.6%</div><div class="msl">Q4 FY26 EBITDA margin — recovering</div></div>
+        <div class="ms"><div class="msv">~5.7%</div><div class="msl">ROCE at the trough</div></div>
+      </div>
+    </section>
+
+    <!-- 06 -->
+    <section class="part" id="contract">
+      <div class="pno">06 — THE SURPRISE</div>
+      <h2>The contract a customer walked away from — and paid to</h2>
+      <div class="part-sub">A cancellation that made Aarti money</div>
+      <p class="lead">Here is a fact that tends to surprise even people who follow the sector: one of the most valuable episodes in Aarti's recent history was a customer <em>cancelling</em> a contract on it.</p>
+
+      <p>In 2020, a global customer walked away from a multi-year supply arrangement worth roughly <strong>₹4,000 Cr over ten years</strong> — one of the largest long-term contracts Aarti had ever signed. On the face of it, losing a decade of committed volume sounds like a disaster. It was not, and the reason is exactly what makes the contract model powerful.</p>
+
+      <ul class="clean">
+        <li><strong>Aarti kept the compensation.</strong> Because these are take-or-pay style arrangements with a customer that had pre-committed and helped fund dedicated capacity, the cancellation triggered a payout. Aarti retained an estimated <strong>US$120–130 million (approx.)</strong> in compensation.</li>
+        <li><strong>Aarti kept the plant.</strong> The dedicated capacity built for that contract did not vanish; it could be redeployed to other customers and products, so the asset kept working.</li>
+        <li><strong>The customer paid to leave.</strong> The structure meant the risk of the customer changing its mind sat substantially with the customer, not with Aarti.</li>
+      </ul>
+
+      <div class="note"><strong>Why this is the tell.</strong> The episode reveals the real economics of Aarti's crown-jewel contracts. When they run, they are an annuity. When they break, they can break <em>in Aarti's favour</em>, because the counterparty has pre-paid, co-funded, and taken the volume risk. A commodity chemicals company has none of that protection. This is the clearest single piece of evidence that the contract engine is genuinely different in kind from the spot engine — not just a steadier version of it.</div>
+
+      <p>The flip side, kept for the risk section, is that contract concentration and contract disputes cut both ways — a walked contract is a windfall on the way out but a lost annuity thereafter, and not every dispute resolves so favourably. But as a window into how the model actually behaves under stress, the 2020 cancellation is the most revealing event in the file.</p>
+    </section>
+
+    <!-- 07 -->
+    <section class="part" id="capex">
+      <div class="pno">07 — THE NEXT LEG</div>
+      <h2>The capex cycle building the next volumes</h2>
+      <div class="part-sub">Roughly ₹1,125 Cr a year, spent ahead of the demand</div>
+      <p class="lead">While the spread was collapsing, Aarti did not stop building. FY26 capex was around <strong>₹1,125 Cr</strong>, and the multi-year capital cycle is the mechanism meant to drive the next volume leg once the cycle turns. This is the classic specialty-chemicals bet: spend heavily through the trough so the capacity is ready when demand returns.</p>
+
+      <p>The money is going into three broad buckets, each with a different return profile:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Capex bucket</th><th>What it adds</th><th>When it pays</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>New specialty capacity</strong></td><td>More tonnage in existing, proven chemistries</td><td>When the spot cycle recovers and plants fill</td></tr>
+            <tr><td><strong>New chemistry chains</strong></td><td>Entirely new value chains / molecules Aarti did not make before</td><td>As new products qualify with customers — longer-dated</td></tr>
+            <tr><td><strong>Dedicated long-contract plants</strong></td><td>Capacity built for a specific pre-committed customer</td><td>On commissioning — largely de-risked before build</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The financial cost of this is visible in the balance sheet: <strong>net debt-to-equity of roughly 0.72</strong>. That is a real number — not alarming for an asset-heavy chemicals company mid-build, but not trivial either, and it is the price of spending through a trough. The debt was taken on to build capacity that is not yet earning its keep, which is precisely why returns look so poor right now: the denominator (capital employed) has grown while the numerator (profit) sat at the bottom of the cycle.</p>
+
+      <div class="plain">
+        <span class="tag">In plain terms</span>
+        <p>Return on capital is depressed for two reasons at once, and only one of them is the cycle. The first is the thin spread. The second is arithmetic: Aarti has poured capital into plants that have not started earning. A ROCE of 5.7% is what you get when you divide trough profit by a capital base swollen with half-finished bets. As those plants commission and fill, the same profit recovery lands on a base that stops growing — which is why the ROCE recovery, when it comes, can be sharp rather than gradual.</p>
+      </div>
+
+      <p>The risk in this is equally plain: heavy capex only creates value when the plants fill. Capacity that commissions into a still-weak market earns nothing and still carries its depreciation and interest. The capex cycle is the bull case and the bear case in the same sentence — it is the source of the next volume leg, and the source of the returns drag if demand is slow to arrive.</p>
+    </section>
+
+    <!-- 08 -->
+    <section class="part" id="markets">
+      <div class="pno">08 — END MARKETS</div>
+      <h2>Where all those derivatives end up</h2>
+      <div class="part-sub">Five industries buy the benzene chain</div>
+      <p class="lead">Aarti's molecules disappear into other companies' products, which is why the brand is invisible to consumers and central to a surprising number of the things they use. Five end-markets absorb the benzene-derivative output, and the mix is part of what makes the company both defensive and cyclical at once.</p>
+
+      <div class="chart">
+        <div class="ct">Indicative end-market pull (relative, illustrative)</div>
+        <div class="bar-row"><div class="bl">Agrochemicals</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="bv">largest</div></div>
+        <div class="bar-row"><div class="bl">Dyes & pigments</div><div class="track"><div class="fill" style="width:66%"></div></div><div class="bv">large</div></div>
+        <div class="bar-row"><div class="bl">Pharma / other</div><div class="track"><div class="fill" style="width:52%"></div></div><div class="bv">mid</div></div>
+        <div class="bar-row"><div class="bl">Polymer additives</div><div class="track"><div class="fill" style="width:44%"></div></div><div class="bv">mid</div></div>
+        <div class="bar-row"><div class="bl">Fuel additives</div><div class="track"><div class="fill" style="width:30%"></div></div><div class="bv">smaller</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--ink-soft);margin-top:-6px">Relative widths are illustrative of order-of-magnitude pull across end-uses, not disclosed segment revenue.</p>
+
+      <ul class="clean">
+        <li><strong>Agrochemicals</strong> — the biggest pull. Benzene derivatives are the starting points for many herbicides, fungicides and insecticides. This is Aarti's largest exposure, which is exactly why the global agrochem destocking hurt so much.</li>
+        <li><strong>Dyes &amp; pigments</strong> — nitro and amine intermediates feed colourants for textiles, coatings and plastics. India is a global dye hub, and Aarti supplies the chemistry upstream of it.</li>
+        <li><strong>Pharma / other</strong> — even after the Aarti Pharmalabs demerger, benzene-derived intermediates feed pharmaceutical synthesis run by third parties.</li>
+        <li><strong>Polymer / plastic additives</strong> — additives that stabilise, colour and modify plastics.</li>
+        <li><strong>Fuel additives</strong> — a smaller but real end-use for certain nitrogen-containing derivatives.</li>
+      </ul>
+
+      <p>Overlaying all five is the structural tailwind Aarti bulls lean on hardest: <strong>China+1 and friend-shoring</strong>. Global agrochem, pharma and specialty buyers have spent the last few years trying to reduce dependence on Chinese supply — for resilience, for ESG, and for geopolitics. A proven, low-cost, integrated Indian producer of exactly these chemistries is a natural beneficiary. The irony of the moment is sharp: the same Chinese producers whose dumping caused the current trough are the ones China+1 is meant to route customers away from. Both forces are live at once, and which dominates in any given year is much of the debate around the stock.</p>
+    </section>
+
+    <!-- 09 -->
+    <section class="part" id="financials">
+      <div class="pno">09 — FINANCIALS</div>
+      <h2>The numbers, and how to value a trough</h2>
+      <div class="part-sub">FY26 results and the valuation problem</div>
+      <p class="lead">Read cold, Aarti's FY26 looks like a recovery year: revenue up double digits, EBITDA up ~15%, PAT up ~27%. Read in context, it is a business at the bottom of its returns cycle showing the first signs of a turn. Both readings are true, and the gap between them is the entire valuation question.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Metric (FY26)</th><th class="num">Value</th><th>Read</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Revenue</td><td class="num">₹9,018 Cr</td><td>+~12–14% YoY; volumes broadly held</td></tr>
+            <tr><td>EBITDA</td><td class="num">₹1,172 Cr</td><td>+~15%; ~13% blended margin</td></tr>
+            <tr><td>Q4 EBITDA margin</td><td class="num">~15.6%</td><td>above full-year — early recovery</td></tr>
+            <tr><td>PAT</td><td class="num">₹419 Cr</td><td>+~27% off a weak base</td></tr>
+            <tr><td>Capex</td><td class="num">~₹1,125 Cr</td><td>heavy build, ahead of demand</td></tr>
+            <tr><td>Net debt / equity</td><td class="num">~0.72</td><td>the cost of building through a trough</td></tr>
+            <tr><td>ROCE</td><td class="num">~5.7%</td><td>a clear trough</td></tr>
+          </tbody>
+          <caption>Figures self-verified against public sources; growth rates approximate.</caption>
+        </table>
+      </div>
+
+      <p>The awkward feature of the stock is that it is a <strong>structural grower that de-rated inside a trough</strong>, which produces a genuinely confusing optics problem: a premium price-to-earnings multiple sitting on depressed earnings. The high multiple is not necessarily the market paying up for quality — it is partly the mechanical result of dividing a still-elevated valuation by a profit number scraping the bottom. On mid-cycle earnings, the same price would look far more ordinary; on peak earnings, cheap. On today's trough earnings, expensive.</p>
+
+      <p>This is the trap in valuing any deep cyclical on spot earnings, and it is acute here because — as the spread section showed — Aarti's earnings amplitude is enormous relative to its revenue. The company can look statistically expensive at the bottom and statistically cheap at the top while the underlying business barely changes. Neither snapshot is the truth; the truth is the earning power across a full cycle, which no single year reveals.</p>
+
+      <div class="settler">
+        <div class="st">The metric that settles the thesis</div>
+        <p>Not the P/E, and not any one quarter's profit. The case for Aarti is proved or broken by <strong>the recovery in the benzene-to-derivative spread flowing through to ROCE — the climb off ~5.7% back toward the mid-teens — as the ~₹1,125 Cr/year of new plants commission and fill and the contracted layer grows.</strong> Volume growth plus spread normalisation plus rising asset-turns on that swollen capital base is the whole thesis in one chain. If ROCE grinds back to the mid-teens, the current multiple was cheap on trough earnings; if it stalls near the trough, the plants were built into a market that never showed up, and the premium was a mirage.</p>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="part" id="peers">
+      <div class="pno">10 — THE FIELD</div>
+      <h2>Peers, and where Aarti stands</h2>
+      <div class="part-sub">The Indian specialty-chemicals bench, plus China</div>
+      <p class="lead">Aarti competes in a crowded and generally high-quality Indian specialty-chemicals field, and — crucially — against Chinese producers whose behaviour sets the spread in Aarti's spot business more than any Indian rival does.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Peer</th><th>Overlap / distinction</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Deepak Nitrite</strong></td><td>Closest chemistry cousin — also deep in benzene/phenol-chain intermediates; a direct comparison on integration and returns.</td></tr>
+            <tr><td><strong>SRF</strong></td><td>Larger, more diversified (fluorochemicals, packaging films, chemicals); different chemistry, similar cyclicality.</td></tr>
+            <tr><td><strong>Navin Fluorine</strong></td><td>Fluorine specialist; premium multiple; a peer in the "specialty grower" bucket more than in chemistry.</td></tr>
+            <tr><td><strong>Vinati Organics</strong></td><td>Narrow, high-return specialty franchise (ATBS, IBB); the high-ROCE benchmark investors hold Aarti against.</td></tr>
+            <tr><td><strong>Atul</strong></td><td>Diversified chemicals with aromatics and crop-protection intermediates; broad overlap in end-markets.</td></tr>
+            <tr><td><strong>PI Industries</strong></td><td>Agrochem CSM leader; a benchmark for the contract / custom-synthesis model Aarti is scaling.</td></tr>
+            <tr><td><strong>Chinese producers</strong></td><td>Not listed peers but the decisive competitors — their oversupply sets the global spread in Aarti's spot business.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Aarti's distinctive claim within this field is the combination of <strong>deep backward integration</strong> (it makes its own intermediates rather than buying them, which is where its cost advantage originates) and <strong>world/India scale concentrated in a few benzene chemistries</strong>. It is not the highest-return name on the bench — Vinati and Navin have historically earned more on capital — but it operates at a scale and integration depth in nitroaromatics that few can match. The trade-off is that its scale is concentrated in chemistries more exposed to Chinese competition and agrochem cyclicality than, say, Vinati's niche franchises.</p>
+    </section>
+
+    <!-- 11 -->
+    <section class="part" id="risks">
+      <div class="pno">11 — RISKS</div>
+      <h2>The risks, stated plainly and once</h2>
+      <div class="part-sub">What can keep the trough a trough</div>
+      <p class="lead">The honest summary is that most of Aarti's risks are not hypothetical — the last two years demonstrated several of them in real financial terms. That is useful: it means the downside is observed, not imagined.</p>
+
+      <ul class="clean">
+        <li><strong>Specialty-chem cyclicality and Chinese dumping.</strong> Proved in the trough. If Chinese oversupply persists, the spread stays compressed and the ROCE recovery stalls — the single biggest external risk.</li>
+        <li><strong>Customer and contract concentration.</strong> The crown-jewel contracts are also a concentration: a large customer or a large dispute matters a lot. The 2020 cancellation resolved in Aarti's favour; not every dispute will.</li>
+        <li><strong>Benzene / crude spread volatility.</strong> The company's economics are the spread, and the spread is volatile. Sharp feedstock moves can whipsaw margins quarter to quarter even when volumes are stable.</li>
+        <li><strong>Heavy-capex execution.</strong> The ~₹1,125 Cr/year build only creates value when the plants fill. Capacity commissioning into a weak market earns nothing while carrying depreciation and interest — and net debt/equity is already ~0.72.</li>
+        <li><strong>Agrochemical weakness.</strong> Aarti's largest end-market has been in a demand and destocking slump. A slower-than-expected agrochem recovery directly delays the volume leg.</li>
+        <li><strong>Environmental and regulatory.</strong> Nitration and chlorination are hazardous, effluent-heavy chemistries. Environmental compliance, plant incidents and tightening regulation are permanent operating risks for this kind of business.</li>
+        <li><strong>Valuation.</strong> A structural grower de-rated inside a trough still trades at a premium multiple on depressed earnings — which means the recovery is, to a meaningful degree, already an expectation rather than a discount.</li>
+      </ul>
+
+      <div class="note">The through-line: every one of these risks routes back to the same variable — the spread, and whether the newly built capacity fills at a healthy one. Aarti does not have seven independent risks so much as one master risk (the spread staying thin) wearing seven costumes.</div>
+    </section>
+
+    <!-- 12 -->
+    <section class="part" id="verdict">
+      <div class="pno">12 — THE VERDICT</div>
+      <h2>Bull, bear, and the gate that decides it</h2>
+      <div class="part-sub">What each side actually believes</div>
+
+      <div class="bb">
+        <div class="col bull">
+          <h4>▲ The bull case</h4>
+          <ul>
+            <li>A structurally advantaged, deeply integrated producer bought at the bottom of its returns cycle, with ROCE at a visible ~5.7% trough.</li>
+            <li>The contract engine is genuinely annuity-like — the 2020 cancellation proved the model protects Aarti even when a customer walks.</li>
+            <li>~₹1,125 Cr/year of capex is loading the next volume leg during the trough, so recovery lands on capacity already built.</li>
+            <li>China+1 and friend-shoring structurally favour a proven non-Chinese supplier of exactly these chemistries.</li>
+            <li>Q4 FY26's ~15.6% EBITDA margin is early evidence the spread has begun to normalise.</li>
+          </ul>
+        </div>
+        <div class="col bear">
+          <h4>▼ The bear case</h4>
+          <ul>
+            <li>Chinese oversupply may not clear for years; the spread stays thin and the plants fill slowly.</li>
+            <li>The premium multiple sits on depressed earnings — the recovery is already priced as expectation, not discount.</li>
+            <li>Net debt/equity ~0.72 into capacity that isn't yet earning is a real drag if demand is late.</li>
+            <li>Concentration in agrochem-exposed, China-contested chemistries makes Aarti more cyclical than higher-return peers.</li>
+            <li>A pure specialty-chem company has one fewer shock absorber after the pharma spin-off.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>Both cases run through the same funnel, which is why this is a cleaner bet than most: there is one gate. The spread has to recover, and the newly built plants have to fill, so that ROCE climbs off ~5.7% back toward the mid-teens. Everything else — the multiple, the debt, the China+1 tailwind, the contract mix — is a downstream consequence of whether that one thing happens.</p>
+
+      <p>So the milestone to watch is concrete and named: the <strong>commissioning and ramp of the new benzene-derivative value chains and dedicated long-contract plants funded by the current capex cycle, and the ROCE crossing back above roughly 10% on its way to the mid-teens</strong>. That crossing is the gate. Below it, Aarti is a leveraged specialty-chemicals company that built into a Chinese air-pocket. Above it, the same plants and the same benzene chemistry become the earnings engine the premium multiple was always paying for — and the trough of FY26 becomes the entry point in hindsight rather than the warning it looks like today.</p>
+
+      <p>The company will tell you which one it is not through a slide or a slogan, but through a single line item, quarter after quarter: the spread it captures per tonne of benzene it converts. Watch that, and the rest of the story writes itself.</p>
+    </section>
+
+    <footer class="src">
+      <h3>Sources & notes</h3>
+      <ol>
+        <li>Company FY26 results and disclosures — revenue ₹9,018 Cr, EBITDA ₹1,172 Cr, PAT ₹419 Cr, capex ~₹1,125 Cr, net debt/equity ~0.72, ROCE ~5.7%, Q4 EBITDA margin ~15.6% (self-verified against public sources; growth rates approximate).</li>
+        <li>BSE India listing — scrip code 524208; NSE symbol AARTIIND.</li>
+        <li>Company history: 2020 cancellation of a ~₹4,000 Cr / 10-year supply contract; retained compensation estimated ~US$120–130m (approx.); redeployment of dedicated capacity.</li>
+        <li>Corporate action — demerger of the pharmaceuticals business as Aarti Pharmalabs, leaving AARTIIND a specialty / agro-intermediates chemicals company.</li>
+        <li>Down-cycle context — Chinese oversupply / dumping and weak global agrochemicals; withdrawal / suspension of FY25 guidance.</li>
+        <li>Peer set — Deepak Nitrite, SRF, Navin Fluorine, Vinati Organics, Atul, PI Industries, and Chinese producers.</li>
+      </ol>
+      <div class="disclaimer">
+        This primer is an educational, plain-English overview of Aarti Industries Limited — <strong>not investment advice</strong>, not a recommendation to buy or sell any security. Figures are approximate, may be outdated, and several are marked "approx." where full precision could not be confirmed; verify every number against primary sources (company filings, results and stock-exchange disclosures) before making any decision. The author holds no brief for or against the company. Auto-generated · figures self-verified against public sources · not investment advice.
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  const COMPANY_SYMBOL = "AARTIIND";
+  const REFRESH_ENDPOINT = "";
+  document.getElementById("refreshBtn").addEventListener("click", function(){
+    if(!REFRESH_ENDPOINT){
+      alert("Live updates coming soon.");
+      return;
+    }
+    // Phase 2: fetch(REFRESH_ENDPOINT + "?symbol=" + COMPANY_SYMBOL)
+  });
+</script>
