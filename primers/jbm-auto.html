@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JBM Auto — Stock Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F6F4;
+    --card:#FFFFFF;
+    --ink:#182019;
+    --ink-soft:#41504A;
+    --line:#E1E7E2;
+    --brand:#1E8A4C;      /* e-mobility green */
+    --brand-deep:#146138;
+    --brand-wash:#E6F2EA;
+    --gold:#C68A1C;
+    --gold-wash:#F6ECD6;
+    --red:#B23B3B;
+    --shadow:0 1px 2px rgba(20,50,30,.06),0 8px 26px rgba(20,50,30,.06);
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:'Figtree',system-ui,sans-serif;line-height:1.62;
+    font-size:17px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px;
+    display:grid;grid-template-columns:230px 1fr;gap:38px;}
+  @media(max-width:920px){.wrap{grid-template-columns:1fr;gap:0}}
+
+  /* back link */
+  .sp-back{position:fixed;top:14px;right:14px;z-index:50;
+    background:#182019;color:#fff;text-decoration:none;
+    font-family:'DM Mono',monospace;font-size:12.5px;letter-spacing:.02em;
+    padding:8px 13px;border-radius:999px;box-shadow:var(--shadow);opacity:.94}
+  .sp-back:hover{opacity:1}
+
+  /* TOC */
+  nav.toc{position:sticky;top:0;align-self:start;height:100vh;
+    overflow-y:auto;padding:26px 0 40px;font-size:13.5px}
+  @media(max-width:920px){nav.toc{position:static;height:auto;
+    border-bottom:1px solid var(--line);padding:18px 0}}
+  nav.toc .tt{font-family:'DM Mono',monospace;font-size:11px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+    margin:0 0 12px}
+  nav.toc a{display:block;color:var(--ink-soft);text-decoration:none;
+    padding:5px 10px;border-left:2px solid transparent;border-radius:0 6px 6px 0}
+  nav.toc a:hover{color:var(--brand-deep);background:var(--brand-wash);
+    border-left-color:var(--brand)}
+  nav.toc a b{color:var(--brand);font-family:'DM Mono',monospace;
+    font-size:11px;margin-right:8px}
+
+  main{padding:26px 0 80px;min-width:0}
+
+  /* cover */
+  header.cover{background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:34px 34px 30px;margin-bottom:26px}
+  .kicker{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .kicker span{font-family:'DM Mono',monospace;font-size:11.5px;
+    letter-spacing:.03em;padding:5px 10px;border-radius:999px;
+    background:var(--brand-wash);color:var(--brand-deep);white-space:nowrap}
+  .kicker span.alt{background:var(--gold-wash);color:#8a6414}
+  .kicker span.plain2{background:#EDF0EE;color:var(--ink-soft)}
+  header.cover h1{font-family:'Sora',sans-serif;font-weight:800;
+    font-size:clamp(30px,5vw,46px);line-height:1.08;margin:6px 0 14px;
+    letter-spacing:-.01em}
+  header.cover h1 em{font-style:normal;color:var(--brand);
+    border-bottom:3px solid var(--brand-wash)}
+  .dek{font-size:19px;color:var(--ink-soft);max-width:66ch;margin:0 0 8px}
+  .prov{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--ink-soft);
+    margin-top:14px;opacity:.85}
+
+  /* stat strip */
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+    margin-top:24px}
+  @media(max-width:640px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+  .stat-strip .s{background:var(--paper);border:1px solid var(--line);
+    border-radius:12px;padding:14px 15px}
+  .stat-strip .k{font-family:'DM Mono',monospace;font-size:10.5px;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+  .stat-strip .v{font-family:'Sora',sans-serif;font-weight:700;
+    font-size:22px;margin-top:5px;color:var(--ink)}
+  .stat-strip .n{font-size:12px;color:var(--ink-soft);margin-top:2px}
+
+  /* refresh bar */
+  .refresh{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    margin-top:22px;padding:12px 15px;background:var(--paper);
+    border:1px dashed var(--line);border-radius:12px;
+    font-family:'DM Mono',monospace;font-size:12px;color:var(--ink-soft)}
+  .refresh .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);
+    box-shadow:0 0 0 4px var(--brand-wash)}
+  .refresh button{margin-left:auto;font-family:'DM Mono',monospace;
+    font-size:12px;border:1px solid var(--line);background:var(--card);
+    color:var(--ink);padding:7px 13px;border-radius:8px;cursor:pointer}
+  .refresh button:hover{border-color:var(--brand);color:var(--brand-deep)}
+
+  /* sections */
+  section.part{background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:30px 34px;margin-bottom:22px}
+  @media(max-width:640px){section.part{padding:24px 20px}
+    header.cover{padding:26px 20px}}
+  .pno{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;
+    color:var(--brand);font-weight:500}
+  section.part h2{font-family:'Sora',sans-serif;font-weight:700;
+    font-size:clamp(21px,3vw,28px);margin:6px 0 4px;letter-spacing:-.01em}
+  .part-sub{font-family:'DM Mono',monospace;font-size:12.5px;
+    color:var(--ink-soft);margin-bottom:16px}
+  .lead{font-size:18.5px;color:var(--ink);margin:0 0 16px}
+  section.part p{margin:0 0 14px}
+  section.part h3{font-family:'Sora',sans-serif;font-weight:600;font-size:18px;
+    margin:24px 0 8px}
+  ul.clean{list-style:none;padding:0;margin:0 0 14px}
+  ul.clean li{padding-left:22px;position:relative;margin-bottom:8px}
+  ul.clean li::before{content:"▸";position:absolute;left:0;color:var(--brand);
+    font-size:13px;top:1px}
+  a.ext{color:var(--brand-deep);text-decoration:none;border-bottom:1px solid var(--brand-wash)}
+
+  /* plain callout */
+  .plain{background:var(--brand-wash);border-left:3px solid var(--brand);
+    border-radius:0 12px 12px 0;padding:15px 18px;margin:16px 0;
+    font-size:16.5px}
+  .plain .lbl{font-family:'DM Mono',monospace;font-size:10.5px;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--brand-deep);
+    display:block;margin-bottom:5px}
+
+  .note{background:var(--gold-wash);border-left:3px solid var(--gold);
+    border-radius:0 12px 12px 0;padding:13px 17px;margin:16px 0;font-size:15.5px}
+  .note .lbl{font-family:'DM Mono',monospace;font-size:10.5px;
+    letter-spacing:.12em;text-transform:uppercase;color:#8a6414;
+    display:block;margin-bottom:4px}
+
+  blockquote{margin:16px 0;padding:14px 20px;border-left:3px solid var(--line);
+    font-style:italic;color:var(--ink-soft);font-size:16.5px}
+
+  /* tables */
+  .tbl-wrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);
+    border-radius:12px}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:440px}
+  th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line)}
+  th{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--ink-soft);background:var(--paper);
+    font-weight:500}
+  td{color:var(--ink)}
+  td.num,th.num{text-align:right;font-family:'DM Mono',monospace}
+  tr:last-child td{border-bottom:none}
+  .tbl-cap{font-size:12.5px;color:var(--ink-soft);margin:6px 2px 0;
+    font-family:'DM Mono',monospace}
+
+  /* bar chart */
+  .chart{margin:18px 0}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 66px;gap:12px;
+    align-items:center;margin-bottom:9px;font-size:13.5px}
+  @media(max-width:560px){.bar-row{grid-template-columns:112px 1fr 56px}}
+  .bar-row .lab{color:var(--ink-soft)}
+  .track{background:var(--paper);border:1px solid var(--line);
+    border-radius:999px;height:18px;overflow:hidden}
+  .fill{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-deep));
+    border-radius:999px}
+  .fill.g{background:linear-gradient(90deg,var(--gold),#a06e12)}
+  .bar-row .val{font-family:'DM Mono',monospace;font-size:12.5px;text-align:right}
+  .chart-cap{font-size:12.5px;color:var(--ink-soft);font-family:'DM Mono',monospace;
+    margin-top:8px}
+
+  /* flow */
+  .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:20px 0}
+  .node{background:var(--paper);border:1px solid var(--line);border-radius:11px;
+    padding:12px 14px;flex:1;min-width:120px}
+  .node .nt{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--brand-deep)}
+  .node .nb{font-size:13.5px;margin-top:4px;color:var(--ink)}
+  .arrow{align-self:center;color:var(--brand);font-size:20px;font-weight:700}
+  @media(max-width:640px){.arrow{transform:rotate(90deg)}.flow{flex-direction:column}}
+
+  /* timeline */
+  .timeline{border-left:2px solid var(--line);margin:18px 0 10px;padding-left:20px}
+  .tl{position:relative;margin-bottom:16px}
+  .tl::before{content:"";position:absolute;left:-27px;top:4px;width:11px;
+    height:11px;border-radius:50%;background:var(--brand);
+    box-shadow:0 0 0 4px var(--brand-wash)}
+  .tl .yr{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--brand-deep);
+    font-weight:500}
+  .tl .ev{font-size:15px;margin-top:2px}
+
+  /* mini stats */
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+  @media(max-width:560px){.mini-stats{grid-template-columns:1fr 1fr}}
+  .ms{background:var(--paper);border:1px solid var(--line);border-radius:12px;
+    padding:14px}
+  .ms .v{font-family:'Sora',sans-serif;font-weight:700;font-size:21px;color:var(--brand-deep)}
+  .ms .k{font-size:12.5px;color:var(--ink-soft);margin-top:3px}
+
+  /* bull bear */
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+  @media(max-width:640px){.bb{grid-template-columns:1fr}}
+  .bb .col{border-radius:12px;padding:16px 18px;border:1px solid var(--line)}
+  .bb .bull{background:var(--brand-wash)}
+  .bb .bear{background:#FBEDED}
+  .bb h4{font-family:'Sora',sans-serif;margin:0 0 10px;font-size:16px}
+  .bb .bull h4{color:var(--brand-deep)}
+  .bb .bear h4{color:var(--red)}
+  .bb ul{list-style:none;padding:0;margin:0;font-size:14.5px}
+  .bb li{padding-left:20px;position:relative;margin-bottom:8px}
+  .bb .bull li::before{content:"+";position:absolute;left:0;color:var(--brand-deep);font-weight:700}
+  .bb .bear li::before{content:"−";position:absolute;left:0;color:var(--red);font-weight:700}
+
+  /* footer */
+  footer.src{background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 30px;
+    font-size:13.5px;color:var(--ink-soft)}
+  footer.src h3{font-family:'Sora',sans-serif;color:var(--ink);font-size:16px;
+    margin:0 0 12px}
+  footer.src ol{padding-left:20px;margin:0 0 16px}
+  footer.src li{margin-bottom:6px}
+  .disclaimer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;
+    line-height:1.5}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back">← Stock Primers</a>
+
+<div class="wrap">
+  <nav class="toc">
+    <p class="tt">Contents</p>
+    <a href="#snapshot"><b>00</b>Snapshot</a>
+    <a href="#two-businesses"><b>01</b>Two businesses, one roof</a>
+    <a href="#owners"><b>02</b>The Arya family &amp; JBM Group</a>
+    <a href="#components"><b>03</b>The components base</a>
+    <a href="#ebus"><b>04</b>Becoming an e-bus OEM</a>
+    <a href="#gcc"><b>05</b>The GCC / bus-as-a-service model</a>
+    <a href="#policy"><b>06</b>Policy: FAME &amp; PM e-Bus Sewa</a>
+    <a href="#orderbook"><b>07</b>The order book — the forward gauge</a>
+    <a href="#financials"><b>08</b>Financials &amp; the balance sheet</a>
+    <a href="#valuation"><b>09</b>Valuation &amp; the settling metric</a>
+    <a href="#competition"><b>10</b>Competition</a>
+    <a href="#risks"><b>11</b>Risks, bull &amp; bear</a>
+  </nav>
+
+  <main>
+    <header class="cover">
+      <div class="kicker">
+        <span>NSE: JBMA · BSE: 532605</span>
+        <span class="alt">Automobile &amp; Auto Components</span>
+        <span class="plain2">Tier-1 supplier → e-bus OEM</span>
+      </div>
+      <h1>JBM Auto: a sheet-metal supplier that now <em>runs city buses by the kilometre</em></h1>
+      <p class="dek">One company, two cash-flow shapes: a steady, margin-thin business pressing steel parts for India's carmakers — and a capital-hungry electric-bus arm that builds buses, then operates them for a decade on per-kilometre state contracts.</p>
+      <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+      <div class="stat-strip">
+        <div class="s"><div class="k">FY26 Revenue</div><div class="v">₹6,088 Cr</div><div class="n">consolidated, +15% YoY</div></div>
+        <div class="s"><div class="k">FY26 PAT</div><div class="v">≈₹238 Cr</div><div class="n">net profit</div></div>
+        <div class="s"><div class="k">EV share of sales</div><div class="v">≈38%</div><div class="n">and rising</div></div>
+        <div class="s"><div class="k">Net debt / equity</div><div class="v">≈2.1x</div><div class="n">GCC capex-heavy</div></div>
+      </div>
+
+      <div class="refresh">
+        <span class="dot"></span>
+        <span>Status: dormant · Last updated 17 Jul 2026</span>
+        <button onclick="jbmRefresh()">⟳ Update</button>
+      </div>
+    </header>
+
+    <!-- 00 -->
+    <section class="part" id="snapshot">
+      <div class="pno">00 — SNAPSHOT</div>
+      <h2>The one-paragraph version</h2>
+      <p class="part-sub">What JBM Auto actually is, before the detail</p>
+      <p class="lead">JBM Auto Limited is a New Delhi-headquartered auto company inside the JBM Group, controlled by the Arya family. For most of its life it was a classic Tier-1 supplier: it presses and welds sheet-metal parts, builds the tools and dies that stamp them, and ships body-in-white assemblies to carmakers like Maruti Suzuki, Tata Motors and Mahindra. That business is real, steady and low-margin. What has changed the company's identity is the second business bolted on top: JBM designs and manufactures its own electric buses under the ECOLIFE brand, and increasingly does not just sell them — it operates them, winning state and city tenders to supply, run and maintain fleets, billed per kilometre over 10–12 years.</p>
+
+      <p>The result is a company that reads as two very different animals stitched together. The components arm earns a few rupees of margin on a part, once. The e-bus arm signs a contract that pays JBM to keep a bus on the road for over a decade — closer to an infrastructure annuity than a sale. In FY26 the electric-vehicle side crossed roughly 38% of revenue and JBM claims a leading share (over 24%) of India's electric-bus market. The catch is written on the balance sheet: building and operating fleets you get paid for slowly is enormously capital-hungry, and net debt has climbed accordingly.</p>
+
+      <div class="plain">
+        <span class="lbl">In plain terms</span>
+        Two meters run inside JBM. One clicks once when a pressed panel leaves the factory. The other clicks every kilometre a JBM bus drives, for twelve years. The market is paying for the second meter; the first one keeps the lights on while the second slowly fills up.
+      </div>
+
+      <div class="mini-stats">
+        <div class="ms"><div class="v">≈₹5,273 Cr</div><div class="k">FY25 revenue (base year)</div></div>
+        <div class="ms"><div class="v">≈12.6%</div><div class="k">Q4 FY26 EBITDA margin</div></div>
+        <div class="ms"><div class="v">&gt;24%</div><div class="k">claimed e-bus market share</div></div>
+        <div class="ms"><div class="v">≈67%</div><div class="k">promoter (Arya family) holding, approx.</div></div>
+        <div class="ms"><div class="v">3</div><div class="k">segments: Components · Tool Room · EV/OEM</div></div>
+        <div class="ms"><div class="v">10–12 yrs</div><div class="k">life of a GCC e-bus contract</div></div>
+      </div>
+    </section>
+
+    <!-- 01 -->
+    <section class="part" id="two-businesses">
+      <div class="pno">01 — THE CORE IDEA</div>
+      <h2>Two businesses under one roof, and why that is the whole story</h2>
+      <p class="part-sub">A parts supplier and a transport operator, sharing a balance sheet</p>
+      <p class="lead">Most auto-component companies do one recognisable thing: they make parts and sell them to whoever assembles the vehicle. JBM Auto still does that. But it has also become the assembler — and then gone a step further and become the operator of the finished vehicle. Understanding JBM means holding those two identities in view at once, because they behave in opposite ways.</p>
+
+      <div class="flow">
+        <div class="node"><div class="nt">Business A</div><div class="nb">Press steel, build tools, weld assemblies, ship to OEMs</div></div>
+        <div class="arrow">→</div>
+        <div class="node"><div class="nt">Cash shape A</div><div class="nb">Sell part, get paid, done. Thin margin, quick turn</div></div>
+        <div class="arrow">≠</div>
+        <div class="node"><div class="nt">Business B</div><div class="nb">Design &amp; build ECOLIFE e-bus, then operate the fleet</div></div>
+        <div class="arrow">→</div>
+        <div class="node"><div class="nt">Cash shape B</div><div class="nb">Spend upfront, bill per-km for 10–12 years. Annuity, slow</div></div>
+      </div>
+
+      <p>Here is the single sentence that does not transfer to any other company in the sector: <strong>a pressed door panel earns JBM a sliver of margin one time and never again, while one ECOLIFE bus on a gross-cost contract bills a state transport undertaking by the kilometre for twelve years — the same corporate campus houses a business that behaves like a vending machine and a business that behaves like a mortgage.</strong> That contrast is not a rhetorical flourish; it is the reason the stock trades where it does and the reason the balance sheet looks the way it does.</p>
+
+      <p>The components business is the ballast: predictable, tied to how many cars and commercial vehicles India's OEMs build, and structurally low-margin because a Tier-1 supplier has little pricing power against a Maruti or a Tata. The e-bus business is the accelerant: fast-growing, policy-fed, and prized by investors — but it consumes cash today for revenue that arrives over a decade. JBM is deliberately using the ballast to help fund the accelerant.</p>
+
+      <div class="note">
+        <span class="lbl">The genuine surprise</span>
+        A company whose origins are in stamping sheet metal now runs public bus fleets in Indian cities and gets paid by the distance those buses travel. The pressing shop did not pivot to a shinier part — it pivoted to owning and operating the vehicle for its entire service life.
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section class="part" id="owners">
+      <div class="pno">02 — WHO CONTROLS IT</div>
+      <h2>The Arya family and the wider JBM Group</h2>
+      <p class="part-sub">A promoter-run group with several auto arms</p>
+      <p class="lead">JBM Auto sits inside the JBM Group, an automotive and engineering conglomerate built by the Arya family. The promoter group holds roughly two-thirds of the equity (approx. 67%), which matters: this is a founder-controlled company making a large, long-dated bet, not a widely held one steered by outside institutions.</p>
+
+      <p>The JBM Group spans several vehicles. JBM Auto (the listed entity here) carries the components, tool-room and OEM/EV businesses. Related group companies operate in areas such as auto systems and engineering. For an investor, the practical points are: (1) the family's alignment is high because their own wealth is concentrated in the shares; (2) related-party dealings and group structure are worth reading in the annual report, as with any promoter group; and (3) strategic direction — including the aggressive push into e-buses and the gross-cost-contract model — reflects the family's conviction rather than a committee's caution.</p>
+
+      <p>High promoter ownership with no pledged/encumbered shares reported in FY26 is a reassuring signal on the balance-sheet-stress question, because a leveraged group with pledged promoter stock is far more fragile. Here the leverage sits in the operating company for a specific reason — funding bus fleets — rather than at the promoter level against the shares.</p>
+
+      <ul class="clean">
+        <li><strong>Promoter holding:</strong> ≈67% (Arya family / promoter group), approx.</li>
+        <li><strong>Listed entity:</strong> JBM Auto Limited — NSE: JBMA, BSE: 532605.</li>
+        <li><strong>Reporting segments:</strong> Component Division, Tool Room Division, and the OEM/EV Business (the electric-bus arm, renamed in FY26 to reflect its EV focus).</li>
+      </ul>
+    </section>
+
+    <!-- 03 -->
+    <section class="part" id="components">
+      <div class="pno">03 — THE LEGACY ENGINE</div>
+      <h2>The components base: unglamorous, essential, thin</h2>
+      <p class="part-sub">Pressed metal, tools &amp; dies, welded assemblies, body-in-white</p>
+      <p class="lead">Before the buses, there was steel. JBM's foundation is the sheet-metal supply business that still funds the group: taking coils of steel and turning them into the structural and skin panels of vehicles — plus the tooling that makes such pressing possible in the first place.</p>
+
+      <h3>What it actually makes</h3>
+      <ul class="clean">
+        <li><strong>Sheet-metal components &amp; sub-assemblies</strong> — stamped body panels, structural parts, welded assemblies.</li>
+        <li><strong>Body-in-white (BIW)</strong> — the welded shell of a vehicle before paint and trim; a higher-value, engineering-intensive job than a single stamped part.</li>
+        <li><strong>Tools, dies &amp; moulds</strong> — the Tool Room division designs and builds the dies that stamp panels, a specialised capability that also wins export and OEM development work.</li>
+      </ul>
+
+      <p>The customer list is the Indian OEM roll-call: Maruti Suzuki, Tata Motors, Mahindra &amp; Mahindra and other car and commercial-vehicle makers. That is both the strength and the ceiling of the business. The strength: JBM is embedded in the supply chains of India's largest vehicle makers, with plants located near their assembly lines and long-standing relationships. The ceiling: a Tier-1 sheet-metal supplier is a price-taker. When a giant OEM squeezes costs, the supplier absorbs it. Margins here run structurally thin, and the volume rises and falls with the OEMs' own production schedules.</p>
+
+      <div class="plain">
+        <span class="lbl">In plain terms</span>
+        This division does not decide its own fortunes. If Maruti builds fewer cars next quarter, JBM presses fewer panels — full stop. It is a good, sticky, hard-to-displace business, but it will never carry a rich multiple on its own. Its job inside JBM is to be dependable and to throw off cash the exciting arm can spend.
+      </div>
+
+      <p>Why keep emphasising this? Because the components business is the reason JBM can attempt the e-bus bet at all. It provides the manufacturing muscle (pressing, welding, tooling, fabrication) that feeds directly into building a bus body, and it provides a base of recurring, if modest, cash flow. The vertical integration is genuine: the same core competencies that stamp a car panel help fabricate a bus chassis and body.</p>
+    </section>
+
+    <!-- 04 -->
+    <section class="part" id="ebus">
+      <div class="pno">04 — THE TRANSFORMATION</div>
+      <h2>Becoming an electric-bus OEM</h2>
+      <p class="part-sub">From supplying parts to designing the whole vehicle — ECOLIFE</p>
+      <p class="lead">The pivot that changed JBM's story was moving up the value chain from part to product. Rather than press panels for someone else's bus, JBM decided to design and build its own electric bus — the ECOLIFE range — and to integrate vertically into the aggregates that matter most in an EV: the battery pack, the drivetrain and increasingly the charging infrastructure.</p>
+
+      <p>An electric bus is a very different manufacturing challenge from a stamped part. It requires vehicle-level engineering, integration of high-voltage battery systems, electric motors and power electronics, telematics, and compliance with public-transport safety and duty-cycle standards. JBM built this capability up over several years, and by FY26 the EV business had grown to roughly 38% of consolidated revenue — a remarkable shift for a company that a decade ago was defined by its pressing shops.</p>
+
+      <h3>Why buses, specifically</h3>
+      <ul class="clean">
+        <li><strong>Electrification lands first on fleets, not cars.</strong> City buses run fixed routes, return to a depot nightly (ideal for charging), and clock high daily kilometres — so the fuel savings of going electric are large and predictable. Public transport is where EV economics work earliest.</li>
+        <li><strong>Government demand is enormous and concentrated.</strong> India's push to electrify public transport routes tens of thousands of buses through central schemes. A handful of large tenders can move the whole order book — very different from the fragmented car-parts market.</li>
+        <li><strong>Vertical integration is defensible.</strong> By making its own battery packs and drivetrain aggregates, JBM controls cost and quality on the most expensive parts of the bus, rather than reselling someone else's.</li>
+      </ul>
+
+      <div class="note">
+        <span class="lbl">Vertical integration</span>
+        JBM does not just bolt a bought-in battery into a bus. It builds the aggregates — packs, drivetrain — and is extending into charging infrastructure, so that when it operates a fleet it controls the full stack from cell to kilometre. That is what lets it credibly bid to run buses, not merely sell them.
+      </div>
+    </section>
+
+    <!-- 05 -->
+    <section class="part" id="gcc">
+      <div class="pno">05 — THE MODEL THAT CHANGES EVERYTHING</div>
+      <h2>Gross-cost contracts: bus-as-a-service</h2>
+      <p class="part-sub">Why JBM increasingly gets paid per kilometre, not per bus</p>
+      <p class="lead">The most important thing to understand about modern JBM is not that it makes e-buses — it is how it sells them. Increasingly, JBM does not sell a bus outright and walk away. It wins a tender under a gross-cost contract (GCC), in which it supplies the buses, operates them, maintains them, and often provides the drivers and charging — and the state transport undertaking pays JBM a fixed rate per kilometre run, for 10–12 years.</p>
+
+      <h3>Two ways to sell an e-bus</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Dimension</th><th>Outright sale</th><th>Gross-cost contract (GCC)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Who owns the bus</td><td>The customer (STU)</td><td>JBM / an SPV</td></tr>
+            <tr><td>How JBM is paid</td><td>Lump sum on delivery</td><td>Per kilometre, monthly, for 10–12 yrs</td></tr>
+            <tr><td>Revenue shape</td><td>One-time</td><td>Annuity-like, recurring</td></tr>
+            <tr><td>Capital needed</td><td>Working capital only</td><td>Full asset cost, upfront, financed</td></tr>
+            <tr><td>Who runs it</td><td>The customer</td><td>JBM operates &amp; maintains</td></tr>
+            <tr><td>Cash conversion</td><td>Fast</td><td>Slow — cash returns over years</td></tr>
+          </tbody>
+        </table>
+        <p class="tbl-cap">The GCC model turns a manufacturer into an operator-financier.</p>
+      </div>
+
+      <p>The appeal of GCC is real and worth spelling out. For the government, it removes upfront cost and operational risk: the city pays only for kilometres actually delivered, and if a bus is off the road it does not pay. For JBM, it converts a one-time sale into a decade of contracted, inflation-linked, recurring revenue — the kind of visibility that manufacturing rarely offers. A won GCC tender is effectively a ten-year revenue annuity on the books.</p>
+
+      <p>But the economics cut the other way on cash. Under GCC, JBM (or a project SPV) must buy or finance the entire fleet upfront — buses, batteries, depot charging — and only recovers that outlay slowly, kilometre by kilometre, over the contract life. That means the faster JBM wins and deploys, the more cash it consumes in the near term, even as its reported order book and future revenue swell. This is the central tension of the business, and it explains everything downstream on the balance sheet.</p>
+
+      <div class="plain">
+        <span class="lbl">In plain terms</span>
+        Winning a GCC tender is like agreeing to build a toll road and then collect tolls for a decade. The contract is valuable and the future income is contracted — but you pay for the whole road on day one and get your money back in small monthly instalments. Growth here shows up as rising debt before it shows up as rising cash.
+      </div>
+    </section>
+
+    <!-- 06 -->
+    <section class="part" id="policy">
+      <div class="pno">06 — THE POLICY BACKDROP</div>
+      <h2>FAME-II and PM e-Bus Sewa: the demand engine</h2>
+      <p class="part-sub">Why the order book is a creature of government schemes</p>
+      <p class="lead">JBM's e-bus demand does not come from consumers choosing a product on a showroom floor. It comes from government electrification programmes that tender fleets to cities and states. That makes policy both the fuel and the risk of the entire growth story.</p>
+
+      <p>The two schemes that matter:</p>
+      <ul class="clean">
+        <li><strong>FAME-II</strong> (Faster Adoption and Manufacturing of Electric Vehicles) — the earlier central subsidy programme that seeded electric-bus deployment across Indian cities, offering demand incentives that made early e-bus tenders viable.</li>
+        <li><strong>PM e-Bus Sewa</strong> — the large successor scheme targeting the deployment of many thousands of electric buses across cities, typically structured on the gross-cost / operator model. This is the pipeline that underwrites JBM's forward order book.</li>
+      </ul>
+
+      <p>The scale is what makes this investable. India's public-transport electrification ambition runs to tens of thousands of buses. For a company with a leading share of e-bus supply, that is a demand pool orders of magnitude larger than anything the components business could dream of. It is also why JBM has leaned so hard into capacity and the GCC model — it is positioning to capture a structural, policy-driven wave.</p>
+
+      <div class="note">
+        <span class="lbl">The dependency to name plainly</span>
+        Because demand is scheme-driven, JBM's growth is exposed to political and fiscal decisions it does not control: the pace of tender awards, subsidy structures, and — critically — how promptly state transport undertakings pay their monthly per-kilometre dues. A slowdown in scheme funding or a stretch in government payments hits JBM directly, and there is no consumer market to fall back on.
+      </div>
+    </section>
+
+    <!-- 07 -->
+    <section class="part" id="orderbook">
+      <div class="pno">07 — THE FORWARD GAUGE</div>
+      <h2>The e-bus order book: the number that leads everything</h2>
+      <p class="part-sub">Why the backlog, not the quarter, is the real signal</p>
+      <p class="lead">For a components company, the leading indicator is OEM production schedules. For JBM's e-bus arm, it is the order book: the stock of buses JBM has been awarded but not yet delivered and put on the road. Because GCC revenue is recognised over a decade, the order book — measured in thousands of buses (approx.) — is the clearest forward read on where revenue is going.</p>
+
+      <p>The order book matters for three reasons. First, it is contracted future revenue: each bus in the book represents years of per-kilometre payments once deployed. Second, it converts slowly, so a large book is a multi-year revenue pipeline, not a next-quarter number. Third, it is the gap between promise and delivery — the book only becomes cash once buses are manufactured, delivered, and actually running and billing kilometres. The distance between "order book" and "buses on the road" is exactly where execution risk and cash strain live.</p>
+
+      <div class="chart">
+        <div class="bar-row"><span class="lab">Order won (tender)</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">promise</span></div>
+        <div class="bar-row"><span class="lab">Bus built</span><span class="track"><span class="fill" style="width:70%"></span></span><span class="val">capex</span></div>
+        <div class="bar-row"><span class="lab">Bus deployed</span><span class="track"><span class="fill" style="width:45%"></span></span><span class="val">running</span></div>
+        <div class="bar-row"><span class="lab">Km billed &amp; paid</span><span class="track"><span class="fill g" style="width:25%"></span></span><span class="val">cash</span></div>
+        <p class="chart-cap">Illustrative: value in the order book only becomes cash at the last step — and each step takes capital and time.</p>
+      </div>
+
+      <p>This is why watching JBM by its quarterly revenue alone is misleading. A quarter can look strong on reported EV revenue while cash generation stays weak, because the money for buses already deployed is arriving in a slow trickle of per-kilometre payments while fresh capex flows out to build the next batch. The order book tells you the destination; the delivery run-rate and cash conversion tell you how bumpy the road there will be.</p>
+    </section>
+
+    <!-- 08 -->
+    <section class="part" id="financials">
+      <div class="pno">08 — THE NUMBERS</div>
+      <h2>Financials and the balance-sheet reality</h2>
+      <p class="part-sub">Growth on the top line, strain on the funding line</p>
+      <p class="lead">FY26 captured the shape of the transition perfectly: strong revenue growth led by EVs, decent profit growth, and — the part investors must not skip — rising debt and pressured cash flow as the GCC model does what it does.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Metric (consolidated)</th><th class="num">FY25</th><th class="num">FY26</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Revenue from operations</td><td class="num">≈5,273</td><td class="num">≈6,088</td></tr>
+            <tr><td>Net profit (PAT)</td><td class="num">≈213</td><td class="num">≈238</td></tr>
+            <tr><td>Q4 EBITDA margin</td><td class="num">~11%</td><td class="num">≈12.6%</td></tr>
+            <tr><td>EV share of revenue</td><td class="num">~lower</td><td class="num">≈38%</td></tr>
+          </tbody>
+        </table>
+        <p class="tbl-cap">₹ crore unless noted. FY26 figures per company results; treat margins and EV share as approx.</p>
+      </div>
+
+      <p>Revenue rose roughly 15% to about ₹6,088 crore, driven by the electric-vehicle business. Net profit landed near ₹238 crore. Reported EBITDA margin improved into the low-teens on a quarterly basis (~12.6% in Q4 FY26) — better than the mid-single/high-single-digit levels a pure components supplier would show, precisely because the EV/operating mix carries a different (and, over the life of a GCC, potentially richer) margin profile than stamping panels.</p>
+
+      <h3>The balance sheet is the honest part of the story</h3>
+      <p>Here is where the GCC model shows its bill. To fund fleets it supplies and operates, JBM has taken on substantial debt. FY26 pointed to a net debt-to-equity ratio around 2.1x and net-debt-to-EBITDA around 4x (approx.) — meaningful leverage — alongside a rising interest burden and cash flow that lagged the reported profit. None of this is a scandal; it is the arithmetic of building assets today that pay you back over a decade. But it is the constraint that governs how fast JBM can grow without straining itself.</p>
+
+      <div class="mini-stats">
+        <div class="ms"><div class="v">≈2.1x</div><div class="k">net debt / equity (approx.)</div></div>
+        <div class="ms"><div class="v">≈4x</div><div class="k">net debt / EBITDA (approx.)</div></div>
+        <div class="ms"><div class="v">↑ interest</div><div class="k">rising finance cost as fleets scale</div></div>
+      </div>
+
+      <p>The financial through-line: the income statement shows a company accelerating, while the cash-flow statement and balance sheet show a company investing heavily ahead of its returns. Neither picture is wrong; any read of JBM that celebrates one while ignoring the other is incomplete.</p>
+    </section>
+
+    <!-- 09 -->
+    <section class="part" id="valuation">
+      <div class="pno">09 — VALUATION</div>
+      <h2>What you are paying for, and the metric that settles it</h2>
+      <p class="part-sub">A rich multiple on thin margins and heavy capex</p>
+      <p class="lead">JBM trades at a high price-to-earnings multiple relative to its thin blended margins and its capital intensity. The market is not paying for the sheet-metal business; it is paying forward for the electrification annuity — the belief that a large e-bus order book will convert into a decade of recurring, high-visibility per-kilometre revenue at improving returns.</p>
+
+      <p>That is a legitimate thing to pay up for — contracted, inflation-linked, policy-backed revenue over ten years is genuinely valuable. But the valuation embeds an assumption that must be tested, not assumed: that JBM can win, build, deploy and get paid on these fleets fast enough, and at returns on capital high enough, to justify the capital being sunk now.</p>
+
+      <div class="plain">
+        <span class="lbl">The one metric that settles the thesis</span>
+        Watch the conversion of order book into buses actually on the road billing kilometres — and, alongside it, whether GCC cash comes back faster than net debt rises. Put concretely: is the fleet's cash-on-cash return, and the trajectory of net debt as deliveries scale, improving or deteriorating? If deployed-and-billing buses grow while net-debt-to-EBITDA flattens or falls, the annuity thesis is working. If the order book swells while net debt and receivables from state undertakings climb faster, the growth is being bought rather than earned.</p>
+      </div>
+
+      <p>Notice what the settling metric is <em>not</em>. It is not next quarter's headline revenue, which can look strong on EV growth while cash stays weak. It is not the order book in isolation, which is a promise, not a payment. It is the marriage of the two: deployed, billing buses versus the debt raised to put them there. That single relationship — cash conversion of the GCC fleet against leverage — is where this stock will be proven right or wrong.</p>
+    </section>
+
+    <!-- 10 -->
+    <section class="part" id="competition">
+      <div class="pno">10 — THE FIELD</div>
+      <h2>Who JBM is up against</h2>
+      <p class="part-sub">Two different competitive arenas</p>
+      <p class="lead">Because JBM runs two businesses, it fights two different competitive battles — and they look nothing alike.</p>
+
+      <h3>In electric buses (the arena that matters for the multiple)</h3>
+      <ul class="clean">
+        <li><strong>Tata Motors</strong> — a formidable, deep-pocketed CV maker with its own e-bus range and financing muscle.</li>
+        <li><strong>Olectra Greentech (with BYD tech)</strong> — a leading e-bus player with significant tender wins.</li>
+        <li><strong>Switch Mobility (Ashok Leyland)</strong> — the EV arm of a major bus manufacturer.</li>
+        <li><strong>VECV / others</strong> — established CV names electrifying their fleets.</li>
+      </ul>
+      <p>E-bus tenders are won on price, financing capacity and the ability to operate and maintain fleets reliably. That last point favours players who, like JBM, are willing to take on the operator role — but it also means bidding aggressively on per-kilometre rates, which pressures returns. This is a bidding market, and disciplined pricing matters as much as engineering.</p>
+
+      <h3>In components (the ballast)</h3>
+      <p>Here JBM competes in a broad, fragmented Tier-1 field of sheet-metal and BIW suppliers serving Indian OEMs. Competition is on cost, quality, proximity to the customer's plant and relationship depth. It is a grind of a market with modest margins, and JBM's position is solid but not differentiating in the way its e-bus role is.</p>
+    </section>
+
+    <!-- 11 -->
+    <section class="part" id="risks">
+      <div class="pno">11 — THE BALANCE OF RISK</div>
+      <h2>Risks, and the case each way</h2>
+      <p class="part-sub">Where this can go right, and where it can break</p>
+      <p class="lead">JBM's risks cluster tightly around the one thing that makes it interesting: the capital intensity of getting paid slowly for buses it must build and run now.</p>
+
+      <ul class="clean">
+        <li><strong>Capital intensity &amp; financing strain.</strong> The GCC model demands large upfront outlays recovered over a decade. Rising net debt and interest cost are the direct consequence; a tightening in credit or a rise in rates raises the cost of every new fleet.</li>
+        <li><strong>Slow government payments.</strong> State transport undertakings are the counterparties on per-kilometre dues, and public bodies can be slow payers. Stretched receivables against a debt-funded asset base is the sharpest near-term risk.</li>
+        <li><strong>Execution &amp; delivery run-rate.</strong> An order book is only worth its conversion. Delays in manufacturing, deploying or commissioning fleets push out the cash while the capex has already gone out.</li>
+        <li><strong>Policy dependence.</strong> Demand is a creature of FAME / PM e-Bus Sewa. Changes to subsidy design, tender pace or scheme funding hit JBM with no consumer market to cushion the blow.</li>
+        <li><strong>Competition &amp; bid discipline.</strong> Aggressive per-kilometre bidding by Tata, Olectra, Switch and others can compress the very returns the model is supposed to earn.</li>
+        <li><strong>Input &amp; battery costs.</strong> Battery and raw-material price swings move the economics of both building and operating buses.</li>
+        <li><strong>Rich valuation.</strong> The multiple leaves the stock sensitive to any wobble in the delivery-and-cash-conversion story it is priced on.</li>
+      </ul>
+
+      <div class="bb">
+        <div class="col bull">
+          <h4>The bull case</h4>
+          <ul>
+            <li>A leading share of a structural, multi-decade electrification of Indian public transport.</li>
+            <li>GCC wins convert to ten-year contracted, inflation-linked, recurring revenue — rare visibility for a manufacturer.</li>
+            <li>Vertical integration (packs, drivetrain, charging) protects cost and enables the operator model.</li>
+            <li>The steady components base funds the transition without a dilution-heavy story.</li>
+            <li>EV mix already ~38% of revenue and rising, with margins richer than pure components.</li>
+          </ul>
+        </div>
+        <div class="col bear">
+          <h4>The bear case</h4>
+          <ul>
+            <li>The order book grows on debt; cash returns arrive too slowly and leverage keeps climbing.</li>
+            <li>State undertakings pay late, and receivables balloon against financed assets.</li>
+            <li>Aggressive tender pricing erodes GCC returns below the cost of the capital funding them.</li>
+            <li>Policy or subsidy shifts stall the tender pipeline.</li>
+            <li>A rich multiple on thin blended margins and heavy capex has little tolerance for a delivery stumble.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>The bottom line</h3>
+      <p>JBM Auto is a genuine attempt to turn a low-margin parts supplier into an infrastructure-like operator of clean public transport — and the attempt is real, sizeable and already showing up as a leading e-bus share and a fast-rising EV revenue mix. Whether it creates value comes down to a race that will be visible in the accounts: buses moving from the order book onto the road and billing kilometres, versus the debt raised to put them there. The next few years of state-tender awards, delivery run-rate, and — above all — the direction of net debt as fleets are deployed will decide whether the toll road pays for itself or simply keeps costing more to build.</p>
+    </section>
+
+    <div class="timeline" style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 34px;box-shadow:var(--shadow);margin-bottom:22px;border-left:1px solid var(--line)">
+      <div class="pno" style="margin-bottom:14px">JBM AUTO — THE ARC</div>
+      <div class="tl"><div class="yr">Origins</div><div class="ev">Sheet-metal Tier-1 supplier — pressings, tools &amp; dies, welded assemblies, BIW for Indian OEMs.</div></div>
+      <div class="tl"><div class="yr">Build-up</div><div class="ev">Develops in-house EV capability; launches the ECOLIFE electric-bus range and vertically integrates into aggregates.</div></div>
+      <div class="tl"><div class="yr">FAME-II era</div><div class="ev">Wins early e-bus tenders under central subsidy; steps into the operator / gross-cost-contract model.</div></div>
+      <div class="tl"><div class="yr">PM e-Bus Sewa</div><div class="ev">Large scheme-driven pipeline underwrites a multi-thousand-bus order book (approx.); JBM scales GCC fleets.</div></div>
+      <div class="tl"><div class="yr">FY26</div><div class="ev">Revenue ≈₹6,088 Cr (+15%), EV ≈38% of sales, &gt;24% e-bus share claimed — and net debt ≈2.1x equity as capex funds the fleets.</div></div>
+    </div>
+
+    <footer class="src">
+      <h3>Sources</h3>
+      <ol>
+        <li>JBM Auto FY26 audited results — consolidated revenue ≈₹6,088.37 Cr, net profit ≈₹238.07 Cr (results coverage, ScanX / Business Standard, May 2026).</li>
+        <li>JBM Auto Q4 FY26 result analysis — EBITDA margin ≈12.6%, net-debt/equity ≈2.15x, net-debt/EBITDA ≈4.1x, rising interest burden (MarketsMojo).</li>
+        <li>JBM Auto FY26 segment / EV commentary — EV business ≈38% of sales, &gt;24% e-bus market share, OEM division renamed "EV Business" (Whalesbook, ScanX).</li>
+        <li>JBM Auto FY25 base (revenue ≈₹5,273 Cr) and business-model/segment detail — Screener, Trendlyne, Business Upturn.</li>
+        <li>Industry backdrop — FAME-II and PM e-Bus Sewa public-transport electrification schemes; gross-cost-contract (GCC) e-bus tender model (public scheme documentation and sector coverage).</li>
+      </ol>
+      <p class="disclaimer"><strong>Disclaimer.</strong> This primer is an educational, plain-English overview, not investment advice and not a recommendation to buy or sell any security. Figures are approximate, drawn from public sources, self-verified where possible, and may be outdated or revised — several (order-book size, promoter %, segment margins) are explicitly marked "approx." and must be confirmed against JBM Auto's own filings, results and investor materials before any decision. Do your own research and consult a licensed adviser.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+  const COMPANY_SYMBOL = "JBMA";
+  const REFRESH_ENDPOINT = "";
+  function jbmRefresh(){
+    if(!REFRESH_ENDPOINT){ alert("Live updates coming soon."); return; }
+  }
+</script>
+</body>
+</html>
