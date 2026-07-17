@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Natco Pharma — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F2F5;
+    --paper-2:#FBF8FB;
+    --card:#FFFFFF;
+    --ink:#1E1420;
+    --ink-soft:#5A4E5C;
+    --ink-faint:#948A97;
+    --brand:#6E2E5B;          /* deep oncology plum */
+    --brand-bright:#9C2D6B;   /* specialty magenta */
+    --gold:#BE7A2E;           /* molecular amber - accent / numbers */
+    --magenta:#9C2D6B;        /* US complex-generics */
+    --violet:#7E5AA2;         /* pipeline / specialty violet */
+    --api:#3F7C8C;            /* API / industrial teal */
+    --agro:#4E8B57;           /* crop-health green */
+    --line:#E4DDE4;
+    --line-soft:#EDE7ED;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F4E7EF;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:11px;color:var(--ink-faint);margin-top:16px;letter-spacing:.02em;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#F8ECF3;border:1px solid #E7CBDD;border-left:3px solid var(--brand-bright);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8a2160;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#43263a;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#FAF6F9;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EEE7EC;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#6E2E5B,#9C2D6B);}
+  .fill.gold{background:linear-gradient(90deg,#BE7A2E,#D69B4E);}
+  .fill.magenta{background:linear-gradient(90deg,#9C2D6B,#BE4E88);}
+  .fill.violet{background:linear-gradient(90deg,#7E5AA2,#9A77BB);}
+  .fill.api{background:linear-gradient(90deg,#3F7C8C,#5A9AAA);}
+  .fill.agro{background:linear-gradient(90deg,#4E8B57,#6BA974);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#4a3a48,#6a5c68);}
+  @media(max-width:560px){.bar-row{grid-template-columns:104px 1fr 64px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* value-chain flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.magenta{background:var(--magenta);}
+  .node.violet{background:var(--violet);}
+  .node.api{background:var(--api);}
+  .node.agro{background:var(--agro);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF2E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F4E7EF;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> The Para-IV lottery, explained</a></li>
+    <li><a href="#p2"><span class="n">02</span> The four-engine model</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The Revlimid windfall</a></li>
+    <li><a href="#p5"><span class="n">05</span> The cliff &amp; the reset</a></li>
+    <li><a href="#p6"><span class="n">06</span> Hunting the next FTF</a></li>
+    <li><a href="#p7"><span class="n">07</span> Domestic, APIs &amp; the base</a></li>
+    <li><a href="#p8"><span class="n">08</span> The agrochem twist</a></li>
+    <li><a href="#p9"><span class="n">09</span> Adcock &amp; the M&amp;A turn</a></li>
+    <li><a href="#p10"><span class="n">10</span> The industry &amp; rivals</a></li>
+    <li><a href="#p11"><span class="n">11</span> Financials &amp; valuation</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: NATCOPHARM · BSE: 524816</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Natco Pharma, <em>the patent-fighting jackpot machine</em></h1>
+  <p class="dek">A full walk through India's most concentrated bet on hard-to-make medicines — how a Hyderabad drugmaker picks a handful of patented blockbusters, sues to break the patent, and rides a short exclusivity window to enormous profit; why one drug (generic Revlimid) briefly became most of the company; the cliff now arriving as that window closes; and the agrochem spin-off, the acquisitions and the pipeline meant to build a floor under the lumpiness.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹4,078 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹1,418 <small>Cr</small></div><div class="l">Net profit (FY26, −25%)</div></div>
+    <div class="cell"><div class="v">~35% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹17,000 <small>Cr</small></div><div class="l">Market cap (Jul '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">17 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 results incorporated — revenue ₹4,078 Cr, PAT ₹1,418 Cr (down 25% as Revlimid winds down); added the FY27 guidance reset, the agrochemicals demerger (Natco Crop Health Sciences), and the Adcock Ingram stake move.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Natco Pharma is a <strong>Hyderabad-based, research-driven generic-drug maker that specialises in the hardest medicines to copy</strong> — complex oncology and specialty molecules that most rivals can't make and that innovators fight hard to protect. Its signature move is legal as much as chemical: it targets a small number of high-value <strong>patented</strong> blockbusters, challenges the patent in US courts (a "Paragraph-IV" filing), and if it wins or settles first, earns a limited window to sell the generic at extraordinary margins before everyone else piles in.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>The earnings are a lottery, not an annuity.</strong> Natco's profits arrive in lumps tied to individual drug wins, then fade when exclusivity ends. FY25 net profit was a record <strong>~₹1,883 Cr</strong>; FY26 fell ~25% to <strong>~₹1,418 Cr</strong>; management guides FY27 down again to <strong>~₹700–750 Cr</strong>. Same factory, same people — the swing is almost entirely one drug's exclusivity fading.</li>
+    <li><strong>One molecule did most of the heavy lifting.</strong> Generic Revlimid (lenalidomide), the multiple-myeloma blockbuster Natco launched in the US in 2022 with Teva, drove the lion's share of recent profit — by some estimates ~78% of FY24 revenue rode on export formulations led by it. As the settlement volumes and exclusivity taper through 2026, the whole near-term story is what replaces it.</li>
+    <li><strong>It looks cheap precisely because the peak won't repeat.</strong> Natco trades at only <strong>~12× trailing earnings</strong> with a <strong>net-cash balance sheet</strong> — optically a bargain, but on Revlimid-inflated profits that are set to halve. The debate is whether the pipeline, a bigger domestic and API base, an agrochemicals spin-off and overseas acquisitions can rebuild earnings before the market's patience runs out.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Natco is a <strong>prospector, not a farmer</strong>. A steady drugmaker plants fields and harvests a similar crop every year. Natco instead goes looking for buried gold — a handful of patent-protected blockbusters it believes it can crack legally and chemically — and when it strikes one, the payday dwarfs a normal year. Generic Revlimid was a mother lode: it swamped everything else for a few years and funded the whole company. The problem with prospecting is that the seam runs out. So the near-term question is simple to state and hard to answer: with the Revlimid vein now thinning, has Natco found the next strike — and can its quieter businesses (branded oncology at home, APIs, a crop-science arm, a South African acquisition) pay the bills between jackpots?</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>The Para-IV lottery, explained without the jargon</h2></div>
+  <p class="part-sub">The one mechanism that drives Natco's entire earnings shape — worth reading slowly.</p>
+
+  <p class="lead">To understand Natco you have to understand a specific corner of the US drug-pricing system: how a generic company can legally get to market <strong>before</strong> a branded drug's patents expire. This is the engine behind every Natco boom and bust.</p>
+
+  <h3>How a normal generic works</h3>
+  <p>A branded drug (say a cancer pill) is protected by patents for many years. Once those patents expire, generic makers file an <strong>ANDA</strong> — an Abbreviated New Drug Application — proving their copy is chemically identical, and sell it cheaply. Dozens of them launch at once, the price collapses ~90%, and it becomes a low-margin commodity. Fine, but no jackpot there.</p>
+
+  <h3>How Natco jumps the queue — the Paragraph IV challenge</h3>
+  <p>Instead of waiting for patents to expire, a generic filer can submit an ANDA with a <strong>"Paragraph IV" certification</strong> — a legal declaration that the innovator's patents are <em>invalid, unenforceable, or not infringed</em> by its version. In effect it says: <em>"your patent shouldn't stand, and we're coming to market early."</em> That triggers a patent lawsuit. It is high-stakes litigation against Big Pharma, and it is Natco's core competence.</p>
+  <ul class="clean">
+    <li><strong>First-to-file (FTF) is the prize.</strong> The <em>first</em> company to file a valid Paragraph-IV ANDA on a drug is rewarded, under US law, with <strong>180 days of generic exclusivity</strong> — six months where it is the only generic allowed to compete with the brand. During those months the generic sells near branded prices with almost no competition. The margins are spectacular.</li>
+    <li><strong>Most wins are actually settlements.</strong> Patent trials are risky for both sides, so the innovator often settles: it grants the challenger a licensed, dated, sometimes <em>volume-capped</em> entry ahead of full patent expiry. That is exactly how Natco's Revlimid launch worked — a negotiated, volume-limited early entry, not a courtroom knockout.</li>
+    <li><strong>The window is temporary by design.</strong> After the exclusivity or the settlement's capped period, the floodgates open, more generics arrive, price erodes hard, and the drug becomes an ordinary low-margin generic. The jackpot has a built-in expiry date.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why this shapes everything about Natco</div>
+    <p>A Para-IV portfolio produces <strong>binary, lumpy, front-loaded profits</strong>. Each target is a bet with three ways to lose — the court can uphold the patent, the US FDA can delay or reject the approval, or a rival can beat you to the filing — and one way to win big. When a win lands, one drug can out-earn the rest of the company combined. When the window closes, that profit doesn't taper gently; it steps down. This is why Natco's income statement looks like a series of pulses rather than a rising line, and why the same 15-odd manufacturing sites can produce a ₹1,883 Cr profit one year and a guided ~₹725 Cr two years later. The assets barely change; the <em>exclusivity calendar</em> does.</p>
+  </div>
+
+  <div class="note gold"><b>The counter-intuitive part:</b> Natco's most valuable asset isn't a plant or a molecule — it's a <em>legal-and-regulatory skill</em>. Picking which patents are beatable, drafting an invincible Para-IV, being first in the queue, and surviving years of litigation against companies with far deeper pockets is the real moat. A mid-cap in Hyderabad routinely out-litigating global pharma on its home turf is the surprise that a first-time reader should sit with.</div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The four-engine business model</h2></div>
+  <p class="part-sub">The jackpot machine is one engine of four — the other three exist to smooth it.</p>
+
+  <p class="lead">Natco is often described as if it were only its US complex-generics arm, but it actually runs <strong>four businesses</strong> of very different character. One is the volatile jackpot engine; the other three are quieter, steadier, and increasingly the point — the deliberate answer to "how do we survive between jackpots?"</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The four engines — one lumpy, three steadier</div>
+    <div class="flow-row">
+      <div class="node magenta"><div class="ntag">Engine 1 · ~60% of sales</div><div class="nname">US / export complex generics</div><div class="nwho">The Para-IV jackpot arm. Highest margin, most volatile.</div></div>
+      <div class="arrow">+</div>
+      <div class="node violet"><div class="ntag">Engine 2 · ~17%</div><div class="nname">Domestic formulations</div><div class="nwho">Branded oncology &amp; specialty in India. Steadier, sticky.</div></div>
+      <div class="arrow">+</div>
+      <div class="node api"><div class="ntag">Engine 3 · ~9%</div><div class="nname">APIs</div><div class="nwho">Bulk active ingredients — the vertically-integrated base.</div></div>
+      <div class="arrow">+</div>
+      <div class="node agro"><div class="ntag">Engine 4 · ~4%</div><div class="nname">Crop health / agrochem</div><div class="nwho">Newer diversification — now being demerged out.</div></div>
+    </div>
+    <div class="flow-note">Shares are approximate FY26 proportions. Engine 1 dominates revenue <em>and</em> profit volatility; the other three are the shock-absorbers the company is trying to grow.</div>
+  </div>
+
+  <h3>Why vertical integration matters here</h3>
+  <p>Natco makes many of its own <strong>APIs</strong> — the active chemical inside the pill — rather than buying them. For most drugmakers that's a cost centre. For a Para-IV challenger it's a weapon: controlling the chemistry end-to-end lets Natco develop very hard molecules, guarantee its own supply during a precious exclusivity window, and prove to a court and to the FDA that it can manufacture a complex drug reliably. The domestic and API arms also keep scientists, plants and cash flowing during the lean years between US wins.</p>
+
+  <div class="plain">
+    <div class="ptag">The design logic in one line</div>
+    <p>Engine 1 is where the money is <em>made</em> in a good year; engines 2–4 are where the lights are <em>kept on</em> in a bad one. The entire corporate strategy of the last few years — building domestic brands, expanding APIs, launching an agrochem arm, buying into overseas pharma — is one long attempt to widen engines 2–4 so that a fading jackpot in engine 1 doesn't take the whole company down with it. Whether that rebalancing works fast enough is the crux of the investment case, and we'll return to it.</p>
+  </div>
+</section>
+
+<!-- 02 note: keep going -->
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who controls it</h2></div>
+  <p class="part-sub">A family-run research house that once broke a Bayer patent — and set the template.</p>
+
+  <p class="lead">Natco is a <strong>founder-and-family business</strong>. It was started in <strong>1981 by V.C. Nannapaneni</strong>, who still chairs it as Managing Director; his son <strong>Rajeev Nannapaneni</strong> runs it as CEO. That continuity matters, because Natco's patent-fighting, high-risk temperament is a promoter culture, not a hired-in strategy — the willingness to sue Big Pharma and bet the year on a single molecule comes from the top.</p>
+
+  <h3>The moment that defined Natco's identity</h3>
+  <p>In <strong>March 2012</strong>, India's Patent Office granted Natco the country's <strong>first-ever compulsory licence</strong> — forcing Bayer to let Natco make a generic of the kidney/liver-cancer drug <strong>Nexavar (sorafenib)</strong> on public-interest grounds. Natco was allowed to sell a month's therapy for about <strong>₹8,880 against Bayer's ~₹2,84,428</strong>, paying Bayer a 6% royalty. Bayer fought it to the Supreme Court and lost. It was a landmark in global patent law — and it stamped Natco's brand: a mid-cap willing to take on the world's largest drugmakers over access and price, and win.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1981</div><div class="ev"><strong>V.C. Nannapaneni</strong> founds Natco in Hyderabad — a small API and formulations maker.</div></li>
+    <li><div class="yr">2000s</div><div class="ev">Builds a <strong>branded oncology franchise in India</strong> — affordable versions of high-cost cancer drugs — becoming a respected domestic oncology player.</div></li>
+    <li class="major"><div class="yr">Mar 2012</div><div class="ev">Wins India's <strong>first compulsory licence</strong> (Nexavar/sorafenib) against <strong>Bayer</strong>; upheld through to the Supreme Court. The patent-fighter identity is set.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Pivots aggressively to the <strong>US Para-IV / first-to-file</strong> complex-generics model; builds an ANDA pipeline of hard oncology and specialty molecules.</div></li>
+    <li class="major"><div class="yr">Mar 2022</div><div class="ev">Launches <strong>generic Revlimid (lenalidomide)</strong> in the US with Teva under a settlement — the windfall that reshapes the company's economics.</div></li>
+    <li><div class="yr">2024–25</div><div class="ev">Peak Revlimid years: FY25 revenue ~₹4,432 Cr and record PAT ~₹1,883 Cr. Launches a <strong>crop health / agrochemicals</strong> arm to diversify.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revlimid taper begins; PAT falls ~25% to ~₹1,418 Cr. Board approves <strong>demerging the agrochem business</strong> (Natco Crop Health Sciences); Natco raises its <strong>Adcock Ingram</strong> (South Africa) stake toward ~49%.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the <strong>Nannapaneni family holds ~49.4%</strong> of Natco (V.C. Nannapaneni ~15.7% individually, plus family and trusts) — with <strong>zero shares pledged</strong> as of FY26, a clean, aligned promoter block.</li>
+    <li><strong>Management:</strong> V.C. Nannapaneni (Chairman &amp; MD) and Rajeev Nannapaneni (Vice-Chairman &amp; CEO) — a father-son team that owns the strategy and the risk appetite.</li>
+    <li><strong>Balance sheet:</strong> effectively <strong>net cash</strong> — modest borrowings (~₹700 Cr) against a large cash-and-investments pile built from the Revlimid years, funding acquisitions and diversification internally.</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The Revlimid windfall — when one drug became the company</h2></div>
+  <p class="part-sub">The single most important thing to understand about Natco's recent numbers.</p>
+
+  <p class="lead"><strong>Revlimid (lenalidomide)</strong> is a blockbuster treatment for multiple myeloma, a blood cancer — historically a multi-billion-dollar drug for Celgene, later Bristol Myers Squibb. Natco was an early Para-IV filer and, through a settlement, launched an <strong>authorised, volume-capped generic in the US in March 2022 with partner Teva</strong>. What followed rewired the company: for roughly three years, this one molecule generated the majority of Natco's profit.</p>
+
+  <div class="chart">
+    <div class="c-title">One molecule, most of the company</div>
+    <div class="c-sub">Approximate share of Natco revenue tied to export formulations led by generic Revlimid</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24 export formulations<small>Revlimid-led</small></div><div class="track"><span class="fill magenta" style="width:100%"></span></div><div class="bval">~78%</div></div>
+      <div class="bar-row"><div class="blab">FY25 export formulations<small>still Revlimid-led</small></div><div class="track"><span class="fill magenta" style="width:100%"></span></div><div class="bval">~85%</div></div>
+      <div class="bar-row"><div class="blab">Everything else<small>domestic + API + agro</small></div><div class="track"><span class="fill ink" style="width:20%"></span></div><div class="bval">~15–22%</div></div>
+    </div>
+    <div class="legend"><span>Export/US formulations — dominated by lenalidomide — became the overwhelming share of sales in the peak years. That concentration is the source of both the record profits and the coming cliff.</span></div>
+  </div>
+
+  <p>The reason lenalidomide was so lucrative is structural. Under the settlement Natco got a <strong>defined, staggered volume of the US market ahead of full generic opening</strong>, at a time when few others were allowed in. Limited competition plus a very high-value oncology drug equals margins a normal generic never sees. Natco's blended profitability soared, its cash pile ballooned, and — critically — its market value came to depend on a stream that was always scheduled to shrink.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that makes this concrete</div>
+    <p>Hold the factories, the ~15 manufacturing sites and the headcount constant, and watch only the profit line: <strong>FY25 ₹1,883 Cr → FY26 ₹1,418 Cr → FY27 guided ~₹725 Cr</strong>. That is roughly <strong>₹1,150 Cr of net profit evaporating in two years with almost no change to the underlying company</strong>. Very little of that swing is operations or cost — it is one drug's exclusivity window opening and then closing on schedule. Few large Indian companies have a P&L where a single product's patent calendar moves reported profit by more than half; Natco does, and that is the fact a valuation has to price.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The cliff, and the FY27 reset</h2></div>
+  <p class="part-sub">A genuine earnings air-pocket — management is telling you it's coming.</p>
+
+  <p class="lead">Revlimid's Indian and US generic runway narrows sharply through <strong>2026</strong>, as settlement volume caps lift for the wider generic field and price erosion accelerates. Natco has been unusually candid about the drop. Its own <strong>FY27 guidance is revenue of ~₹3,400–3,500 Cr and PAT of ~₹700–750 Cr</strong> — a step down of roughly a half from the FY25 peak. This is not a surprise the market has to discover; it is a scheduled reset the company has flagged.</p>
+
+  <div class="chart">
+    <div class="c-title">Profit: the peak and the step-down</div>
+    <div class="c-sub">Consolidated net profit (₹ Crore); FY27 is company guidance midpoint</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22<small>pre-Revlimid</small></div><div class="track"><span class="fill ink" style="width:23%"></span></div><div class="bval">~425</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill magenta" style="width:66%"></span></div><div class="bval">~1,240</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>peak</small></div><div class="track"><span class="fill magenta" style="width:100%"></span></div><div class="bval">~1,883</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:75%"></span></div><div class="bval">~1,418</div></div>
+      <div class="bar-row"><div class="blab">FY27E<small>guided</small></div><div class="track"><span class="fill bad" style="width:39%"></span></div><div class="bval">~725</div></div>
+    </div>
+    <div class="legend"><span>The shape tells the story: a mountain built and un-built by one drug. FY22 and FY27E — the years without a live jackpot — sit at a similar, humbler altitude. Figures approximate; FY24/FY22 rounded.</span></div>
+  </div>
+
+  <p>The clear-eyed way to read this: FY25 was not a "normal" year to extrapolate — it was a <strong>peak inflated by a temporary exclusivity</strong>. The FY27 trough of ~₹725 Cr is closer to Natco's <em>underlying</em> earning power without a live jackpot, plus the early contribution of its newer engines. Everything above that trough in future years has to be <em>earned again</em> — with the next drug win, a bigger domestic base, or acquired earnings.</p>
+
+  <div class="note"><b>Why the cliff is a real air-pocket, not a mirage:</b> because the fade is contractual and mechanical, there is no operational lever that softens it in FY27 — no cost cut or volume push inside Natco can replace a US price that has collapsed as competition arrives. The bridge back up the cliff has to come from <em>new</em> products and businesses, which take years to land. That timing gap — profit down now, replacements not yet ready — is the single most important risk in the stock.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Hunting the next first-to-file</h2></div>
+  <p class="part-sub">The pipeline is the whole rebuild — and no single bet is yet a proven Revlimid.</p>
+
+  <p class="lead">The obvious question after a jackpot fades is: <strong>where's the next one?</strong> Natco's answer is a pipeline of complex generics and Para-IV challenges spread across oncology, complex injectables, respiratory and specialty molecules — plus a widely-watched push into <strong>semaglutide</strong>, the diabetes/obesity blockbuster (Ozempic / Wegovy). The strategy is unchanged; what's uncertain is whether any one of these can be as large as lenalidomide was.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The replacement pipeline — selected bets</caption>
+    <thead><tr><th>Bet</th><th>What it is</th><th>Why it matters / status</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Semaglutide (Ozempic / Wegovy)</td><td>The GLP-1 diabetes &amp; weight-loss blockbuster — one of the largest drug markets on earth</td><td>India filing targeted around early 2026 for a first-wave domestic launch as the local patent lapses; a US ANDA is filed with FTF ambitions on some strengths, but management calls a US launch "a few years away". The single highest-upside item — and the most contested.</td></tr>
+      <tr><td class="t-strong">Complex oncology generics</td><td>More Para-IV challenges on high-value cancer molecules — Natco's home turf</td><td>The core of the pipeline; several ANDAs pending. Individually smaller than Revlimid, but this is the recurring hunting ground.</td></tr>
+      <tr><td class="t-strong">Complex injectables &amp; respiratory</td><td>Hard-to-make sterile injectables and inhalation products</td><td>Higher barriers to entry mean fewer competitors and stickier margins — a way to make future wins less binary than a single oral blockbuster.</td></tr>
+      <tr><td class="t-strong">CDMO / contract manufacturing</td><td>Making drugs for other companies using Natco's plants and chemistry</td><td>A steadier, capacity-utilising revenue layer that doesn't depend on winning a patent fight — an emerging fourth leg to the pharma story.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The uncomfortable maths of replacement</div>
+    <p>Revlimid at peak contributed on the order of a thousand-plus crore of profit in a single year. To rebuild to the old peak, Natco doesn't need one new drug — it needs a <em>steady cadence</em> of wins, because each is temporary. That's why semaglutide draws so much attention: it is one of the few molecules large enough to be a Revlimid-scale event on its own. But it is also crowded, litigated and years from a US payday, so betting the rebuild on it alone would be fragile. The realistic base case is less "one new jackpot" and more "several mid-sized wins plus a bigger steady base" — slower, less spectacular, but less all-or-nothing.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Domestic formulations, APIs and the steadier base</h2></div>
+  <p class="part-sub">The unglamorous engines that decide how deep the trough gets.</p>
+
+  <p class="lead">If the US arm is the drama, the <strong>India business and the API arm are the ballast</strong>. They grow slowly and don't move the stock on a good day — but in a Revlimid-fade year they are what stands between Natco and a much uglier profit line. Building them is the quiet half of the strategy.</p>
+
+  <h3>Domestic formulations (~17% of revenue)</h3>
+  <ul class="clean">
+    <li><strong>Branded oncology is the crown jewel.</strong> At home Natco is a respected, affordable oncology brand — the reputation the Nexavar fight cemented — extending into <strong>specialty areas like hepatology (liver), cardiology and dermatology</strong>.</li>
+    <li><strong>Steadier economics.</strong> Branded domestic pharma earns recurring prescriptions, sticky doctor relationships and pricing that doesn't collapse the way a US generic does. It's the closest thing Natco has to an annuity.</li>
+    <li><strong>The semaglutide domestic launch sits here too</strong> — a potentially large India opportunity as the molecule's local patent lapses, feeding the branded book rather than the US lottery.</li>
+  </ul>
+
+  <h3>APIs (~9% of revenue)</h3>
+  <ul class="clean">
+    <li><strong>The vertically-integrated backbone.</strong> Making its own active ingredients lets Natco develop hard molecules, secure its own supply during exclusivity windows, and sell surplus API to other manufacturers.</li>
+    <li><strong>Lower-margin but useful.</strong> APIs won't excite anyone, but they utilise plants, employ chemists and diversify the customer base beyond Natco's own finished products.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">Revenue mix (FY26, approximate)</div>
+    <div class="c-sub">Share of sales by engine — US exports still dominate, but the base is being widened</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">US / export formulations<small>the jackpot arm</small></div><div class="track"><span class="fill magenta" style="width:100%"></span></div><div class="bval">~60%</div></div>
+      <div class="bar-row"><div class="blab">Domestic formulations<small>branded oncology + specialty</small></div><div class="track"><span class="fill violet" style="width:28%"></span></div><div class="bval">~17%</div></div>
+      <div class="bar-row"><div class="blab">Other operating income<small>licensing, misc.</small></div><div class="track"><span class="fill ink" style="width:17%"></span></div><div class="bval">~10%</div></div>
+      <div class="bar-row"><div class="blab">APIs<small>bulk actives</small></div><div class="track"><span class="fill api" style="width:15%"></span></div><div class="bval">~9%</div></div>
+      <div class="bar-row"><div class="blab">Crop health / agrochem<small>being demerged</small></div><div class="track"><span class="fill agro" style="width:7%"></span></div><div class="bval">~4%</div></div>
+    </div>
+    <div class="legend"><span>Proportions approximate, based on FY26 quarterly disclosures. The strategic goal is to shrink that top bar's dominance — not by cutting US sales, but by growing everything beneath it.</span></div>
+  </div>
+
+  <div class="note gold"><b>The dependency to watch:</b> the steadier engines are real, but today they are small. At ~17% domestic and ~9% API, they cannot yet fill a ₹1,000 Cr+ hole left by a fading blockbuster. The bull case needs these bars to keep climbing for years; the bear case is that they simply grow too slowly to matter before the next US window is needed.</div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The agrochem pivot — and the twist</h2></div>
+  <p class="part-sub">Natco built a crop-science arm to reduce pharma lumpiness. Then it decided to spin it off.</p>
+
+  <p class="lead">One of the more unusual moves in Indian pharma: a drugmaker deliberately walking into <strong>agrochemicals</strong>. Natco reasoned that its chemistry, synthesis and regulatory muscle could transfer to <strong>crop-protection products — pesticides, insecticides, herbicides and bio-stimulants</strong> — a large, growing market (India's agrochem sector is projected to compound around 13% a year) whose cycles are driven by <em>monsoons and crop prices</em>, not drug patents. The logic was diversification: a business that zigs when pharma zags.</p>
+
+  <h3>The surprise: it's being demerged out</h3>
+  <p>Here is the plot twist a generalist won't expect. Having built the crop arm to <em>smooth</em> the pharma lumpiness, in <strong>March 2026 Natco's board approved demerging it entirely</strong> into a separate listed company, <strong>Natco Crop Health Sciences Limited</strong>, with an appointed date of <strong>1 October 2026</strong>. Under the scheme, existing Natco shareholders get <strong>one share of the new agrochem company for each Natco share</strong>, ending up with ~80% of it directly, while Natco retains ~20%. The unit is slated to list on both the BSE and NSE.</p>
+
+  <div class="plain">
+    <div class="ptag">Why demerge the very thing you built to diversify?</div>
+    <p>Two reasons, and they sit in tension. First, the <strong>"conglomerate discount"</strong> argument: a fast-cyclical agrochem business bolted onto a lumpy pharma one made Natco harder to value, and management judged that two focused, separately-listed companies would each attract the right investors and capital. Second, <strong>focus</strong>: crop-science and drug-making need different management, sales forces and capital cycles. The irony is real — the diversification meant to <em>reduce</em> the concentration on US pharma is being handed back to shareholders, which arguably leaves the remaining Natco <em>more</em> exposed to the Para-IV lottery, not less. Bulls read the demerger as value-crystallising and disciplined; sceptics read it as Natco conceding the agrochem experiment won't be the shock-absorber it was pitched as.</p>
+  </div>
+
+  <div class="note gold"><b>Net effect for the reader:</b> after October 2026, "Natco Pharma" the listed stock becomes a <em>purer</em> pharma bet — US complex generics + domestic brands + APIs + overseas stakes — with only a residual ~20% in the crop business. If you're valuing Natco going forward, treat agrochem as a spin-off you'll hold separately, not as part of the smoothing story.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Adcock Ingram and the acquisition turn</h2></div>
+  <p class="part-sub">Deploying the Revlimid cash — into emerging-market brands, not just molecules.</p>
+
+  <p class="lead">A jackpot leaves you cash-rich. Natco's most visible answer to "what do we do with the Revlimid windfall?" has been to <strong>buy into established, branded pharma outside India</strong> — most notably <strong>Adcock Ingram</strong>, a leading South African drugmaker. Natco built a stake through Adcock's delisting process in 2025 and then added to it, reaching roughly <strong>49%</strong> for a total commitment on the order of ~₹2,000 Cr.</p>
+
+  <ul class="clean">
+    <li><strong>Why South Africa / emerging markets?</strong> Adcock is a steady, cash-generative branded business in growing markets — the opposite of a binary US patent bet. It adds <em>associate profit</em> to Natco's accounts (Natco's share of Adcock's earnings flows in below the operating line) and gives Natco a real footprint in African and emerging-market pharma.</li>
+    <li><strong>A strategic character change.</strong> Historically Natco grew organically by out-litigating rivals. The Adcock move signals a <strong>shift toward inorganic growth</strong> — using the balance sheet to buy steadier earnings rather than only chasing the next exclusivity.</li>
+    <li><strong>More to come.</strong> Management has flagged appetite for one or two further <strong>large acquisitions</strong>, similar in scale, focused on established brands in emerging markets — a deliberate rebuild of the earnings base through M&amp;A.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">What the acquisitions are really for</div>
+    <p>Read Adcock alongside the domestic build and the CDMO push and a pattern emerges: Natco is converting a <strong>one-off cash windfall into recurring, less-cyclical earnings</strong>. It's the classic move of a company that knows its core is lumpy — take the jackpot money and buy annuities with it. The risk is the flip side of any acquisition spree: overpaying, integration missteps, or diverting attention and capital from the R&amp;D pipeline that is still the heart of the business. Execution on these deals is now a genuine part of the Natco thesis, not a footnote.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">Everyone wants the complex-generics prize — Natco just concentrates its bets harder.</p>
+
+  <p class="lead">Indian pharma is a global powerhouse in generics, and the <strong>complex / Para-IV end</strong> — where the margins and the patent fights live — is contested by the biggest names in the sector. What sets Natco apart is not that it plays this game but <em>how concentrated</em> its bets are: larger rivals spread risk across huge, diversified portfolios; Natco stakes a big share of its fortunes on a handful of molecules.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The complex-generics competitive set</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Natco</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Natco Pharma</td><td>Concentrated Para-IV / FTF specialist, oncology-led</td><td><em>This company.</em> Punches above its size on hard molecules; earnings lumpiest in the group by design.</td></tr>
+      <tr><td class="t-strong">Dr Reddy's Laboratories</td><td>Large, diversified generics + biosimilars major</td><td>Far bigger and steadier; also a serious Para-IV player (it too partnered on generic Revlimid). Deeper pockets, less binary.</td></tr>
+      <tr><td class="t-strong">Sun Pharma</td><td>India's largest pharma; global specialty + generics</td><td>Vastly larger, with a branded-specialty engine that smooths cycles. Competes for the same complex US filings.</td></tr>
+      <tr><td class="t-strong">Cipla</td><td>Respiratory-led generics + strong India brand</td><td>Broader base, strong domestic franchise; complex injectables and inhalation overlap with Natco's ambitions.</td></tr>
+      <tr><td class="t-strong">Zydus Lifesciences</td><td>Diversified generics with a deep US ANDA book</td><td>High-volume US filer; competes across the complex-generics queue.</td></tr>
+      <tr><td class="t-strong">Aurobindo, Alembic &amp; others</td><td>Large US-focused generic filers</td><td>Scale and filing volume; contribute to the price erosion Natco faces once an exclusivity window opens.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The structural tension in the whole model</div>
+    <p>Every rival above is trying to be first through the same doors, and the moment an exclusivity ends, they are the ones who flood in and erode the price. So Natco competes on <strong>two fronts at once</strong>: it must be <em>faster and sharper</em> than giants at picking and winning patent fights (where its focus is an advantage), while being <em>smaller and less diversified</em> than them when a window closes (where its concentration is a weakness). A diversified major can lose a patent case and shrug; for Natco, each bet carries more of the company's weight. That is the trade-off of the concentrated model — higher highs, deeper troughs.</p>
+  </div>
+
+  <div class="note gold"><b>The regulatory backdrop:</b> the model lives or dies on two external referees — <strong>US courts</strong> (do the patent challenges hold?) and the <strong>US FDA</strong> (are the plants inspection-clean and the ANDAs approved on time?). A single warning letter on a key facility or an adverse ruling can delay or kill a launch worth a large slice of a year's profit. This is permanent, unavoidable exposure for any US-facing Indian generics maker, and it is sharpest for a concentrated one.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A cheap-looking, cash-rich pharma — cheap on earnings that aren't repeating.</p>
+
+  <p class="lead">Natco's financials are, quite literally, a picture of a jackpot: a mountain of revenue and profit built through the Revlimid years, a fortress balance sheet stuffed with the proceeds, and a low headline multiple that only makes sense once you understand <em>which</em> earnings you're buying.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore); FY27 is company guidance midpoint</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22<small>pre-Revlimid</small></div><div class="track"><span class="fill ink" style="width:48%"></span></div><div class="bval">~2,150</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:88%"></span></div><div class="bval">~3,900</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>peak</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~4,432</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:92%"></span></div><div class="bval">~4,078</div></div>
+      <div class="bar-row"><div class="blab">FY27E<small>guided</small></div><div class="track"><span class="fill bad" style="width:78%"></span></div><div class="bval">~3,450</div></div>
+    </div>
+    <div class="legend"><span>Figures approximate; FY22/FY24 rounded, FY27 is the company's own guidance. The revenue fall looks milder than the profit fall — because the disappearing Revlimid rupees were the highest-margin ones.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~35%</div><div class="msl">FY26 operating margin — inflated by high-margin Revlimid; set to normalise lower</div></div>
+    <div class="ms green"><div class="msv">Net cash</div><div class="msl">Debt-light (~₹700 Cr borrowings) against a large cash &amp; investments pile</div></div>
+    <div class="ms"><div class="msv">~12×</div><div class="msl">Trailing P/E (Jul '26) — optically cheap, but on peak earnings</div></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~17%</div><div class="msl">ROCE (FY26) — healthy returns on the capital deployed</div></div>
+    <div class="ms gold"><div class="msv">~49.4%</div><div class="msl">Promoter (Nannapaneni family) holding — zero pledged</div></div>
+    <div class="ms red"><div class="msv">~₹725 Cr</div><div class="msl">FY27 guided PAT — the "no-jackpot" earnings level to anchor on</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to read the ~12× multiple honestly</div>
+    <p>At ~₹17,000 Cr market cap on ~₹1,418 Cr of FY26 profit, Natco trades near <strong>12× trailing earnings</strong> — startlingly low for a debt-free, high-ROCE, cash-rich pharma. But that denominator is a Revlimid-inflated number that management itself expects to fall to ~₹725 Cr in FY27. On the <em>guided</em> FY27 profit, the same market cap is closer to <strong>~23×</strong> — no longer cheap, simply average, for a business whose future earnings must be rebuilt. Strip out the large net cash and the operating multiple looks better; layer in a successful pipeline and it looks like a bargain; assume the next jackpot doesn't land and the "cheap" multiple is just an accurate quote on shrinking earnings. The headline P/E is not lying — it's answering a different question than the one that matters.</p>
+  </div>
+
+  <div class="note gold"><b>The one number that settles the thesis:</b> <strong>non-Revlimid profit — the earnings Natco can generate <em>without</em> a live US jackpot, plus the next FTF's contribution.</strong> Watch whether the FY27 ~₹725 Cr base grows from here: a new first-to-file launch (semaglutide the swing candidate), domestic-branded scale-up, and Adcock/associate income all pushing the <em>ex-Revlimid</em> line up. If that base rises year on year, the cliff was a pothole and the cheap multiple was a gift; if it flatlines while the market waits for a jackpot that keeps slipping, the low P/E was the market being right.</p></div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A cash-rich research house in the awkward year after its biggest win.</p>
+
+  <p class="lead">Natco sits at an unusual point in its own cycle: it has just proven it can win a global blockbuster, it is sitting on the cash that win generated, and it is staring at the scheduled fade of that same win. The investment debate is not about whether Natco is capable — the Revlimid and Nexavar histories settle that — but about <strong>timing and repeatability</strong>: can it land the next win, and grow its steadier engines, before the market tires of the trough?</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Proven jackpot skill</strong> — a rare, demonstrated ability to pick, win and monetise very hard Para-IV challenges (Revlimid, Nexavar) that most rivals can't.</li>
+        <li><strong>Fortress balance sheet</strong> — net cash from the windfall funds pipeline, acquisitions and diversification without dilution or debt.</li>
+        <li><strong>Cheap on cash-adjusted, normalised earnings</strong> — a low multiple with a big cash cushion and optionality on the next win.</li>
+        <li><strong>Multiple rebuild levers</strong> — semaglutide, complex injectables, a growing domestic-branded base, APIs, CDMO, and Adcock/emerging-market M&amp;A.</li>
+        <li><strong>Value-crystallising demerger</strong> — the agrochem spin-off hands shareholders a separately-listed asset and sharpens the pharma story.</li>
+        <li><strong>Aligned promoters</strong> — a founder-family with skin in the game and an unpledged ~49% stake.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>The earnings cliff</strong> — profit guided to roughly halve from the peak, with no operational lever to stop it.</li>
+        <li><strong>No proven replacement yet</strong> — the pipeline is promising but unproven; semaglutide's US payday is years away and contested.</li>
+        <li><strong>Binary, external risk</strong> — every bet hinges on US courts and FDA inspections; one adverse ruling or warning letter can erase a launch.</li>
+        <li><strong>Concentration by design</strong> — less diversified than Sun, Dr Reddy's or Cipla, so each miss hurts more.</li>
+        <li><strong>Execution risk on the pivot</strong> — overseas acquisitions and a fledgling CDMO must be integrated and made to earn; the agrochem experiment is being handed back rather than scaled.</li>
+        <li><strong>US price erosion</strong> — even successful generics commoditise fast; the model needs a steady supply of new wins just to stand still.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Natco is a <strong>high-skill, high-variance research house caught in the down-slope of its greatest hit</strong>. The balance sheet is strong, the promoters are aligned, and the low multiple already discounts a lot of gloom — but the stock will not resolve on valuation arithmetic. It resolves on a calendar of events: the <strong>US semaglutide approval timeline</strong>, the next Para-IV launch, the FY27 ex-Revlimid profit base actually turning up rather than down, and the Adcock and demerger transactions delivering the value they promise. The clearest single milestone to circle is the day Natco converts its next first-to-file filing into an approved US launch — the moment that tells you the jackpot machine still works, or that the Revlimid years were the exception rather than the rule.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Natco Pharma — Q4 &amp; FY26 results (year ended Mar 2026) and FY27 guidance; company investor disclosures.</li>
+    <li>BSE India — Natco Pharma Ltd (scrip 524816) stock &amp; corporate pages, bseindia.com.</li>
+    <li>Screener.in — Natco Pharma consolidated financials, ratios and shareholding.</li>
+    <li>ScanX / Business Today / MarketsMojo — "Natco Pharma FY26 profit falls 25%; FY27 revenue seen at ₹3,400 crore" and Q4 FY26 result coverage (May 2026).</li>
+    <li>Multibagg — "Natco Q3 FY26: growth with strategic acquisitions and pipeline" (segment mix).</li>
+    <li>Capitalmind — "Cracking the Patent Code: Natco's Winning Formula"; Sana Securities — "Betting on the Jockey" (Para-IV / Revlimid model).</li>
+    <li>GaBI Online — "Celgene and Natco in generic lenalidomide battle"; Dolat Capital Q4FY24 result update.</li>
+    <li>Business Today / Global-Agriculture — "Natco approves demerger of agrochemicals into Natco Crop Health Sciences" (Mar 2026).</li>
+    <li>Tradebrains / Medical Dialogues — Natco completes additional 13.25% stake in Adcock Ingram, ~49% total (2026).</li>
+    <li>ZeusIP / MSF / Indian Patent Office — Natco v. Bayer, India's first compulsory licence (Nexavar/sorafenib), 2012.</li>
+    <li>Wikipedia — Natco Pharma (founding, promoters, history); company site natcopharma.co.in.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026) and FY27 company guidance, and may contain errors or become outdated; several segment and historical figures are rounded or estimated and should be verified against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "NATCOPHARM";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
