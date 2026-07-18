@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEAT — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4F3;
+    --paper-2:#FCFAF9;
+    --card:#FFFFFF;
+    --ink:#211615;
+    --ink-soft:#5F5350;
+    --ink-faint:#948985;
+    --brand:#C43A2E;          /* CEAT red */
+    --brand-bright:#D9483A;   /* brighter red accent */
+    --gold:#C9863C;           /* warm amber - accent / warmth */
+    --tw:#C43A2E;            /* two-wheeler */
+    --pv:#D9663C;            /* passenger car / SUV */
+    --tb:#8C332B;            /* truck & bus */
+    --oht:#B0682E;          /* off-highway tyres */
+    --line:#E0D9D7;
+    --line-soft:#EBE5E3;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#FCE9E7;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F4F3;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EEE7E5;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#C43A2E,#D9483A);}
+  .fill.gold{background:linear-gradient(90deg,#C9863C,#E0A75C);}
+  .fill.tw{background:linear-gradient(90deg,#C43A2E,#DB5346);}
+  .fill.pv{background:linear-gradient(90deg,#D9663C,#E7895C);}
+  .fill.tb{background:linear-gradient(90deg,#8C332B,#A94A3F);}
+  .fill.oht{background:linear-gradient(90deg,#B0682E,#C98A4A);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#5a4a47,#766461);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.tw{background:var(--tw);}
+  .node.pv{background:var(--pv);}
+  .node.tb{background:var(--tb);}
+  .node.oht{background:var(--oht);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-tw{color:var(--tw);font-weight:600;}
+  .chain-pv{color:var(--pv);font-weight:600;}
+  .chain-tb{color:var(--tb);font-weight:600;}
+  .chain-oht{color:var(--oht);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#FCE9E7;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> The tyre business 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> Four kinds of tyre</a></li>
+    <li><a href="#p3"><span class="n">03</span> Replacement vs OEM vs export</a></li>
+    <li><a href="#p4"><span class="n">04</span> RPG, the Goenkas &amp; owners</a></li>
+    <li><a href="#p5"><span class="n">05</span> What a tyre is made of</a></li>
+    <li><a href="#p6"><span class="n">06</span> The rubber-price spread</a></li>
+    <li><a href="#p7"><span class="n">07</span> Premiumisation, OHT &amp; Camso</a></li>
+    <li><a href="#p8"><span class="n">08</span> The industry &amp; rivals</a></li>
+    <li><a href="#p9"><span class="n">09</span> What drives the volumes</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: CEATLTD · BSE: 500878</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>CEAT, <em>a rubber-price bet dressed as a tyre company</em></h1>
+  <p class="dek">A complete walk through one of India's major tyre makers — how the RPG Group builds tyres for scooters, cars, trucks and tractors, why the replacement counter and the humble two-wheeler quietly carry the profit, and why a "tyre company's" quarter is really settled by the price of natural rubber and crude oil weeks before the tyres ever get sold.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹15,678 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~13.2% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹698 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹14,360 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">18 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — consolidated revenue ~₹15,678 Cr (+18.6%), EBITDA ~₹2,063 Cr at a ~13.2% margin, PAT ~₹698 Cr (+47.7%); Camso off-highway integration on track; Q1 FY27 revenue ~₹4,318 Cr (+22%). Added the raw-material-spread section as the crux of the case.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">CEAT makes <strong>tyres</strong> — the rubber rings that carry the weight of every scooter, car, truck and tractor in the country. It is one of India's four large listed tyre makers (alongside MRF, Apollo Tyres and JK Tyre), part of the <strong>RPG Group</strong> controlled by the <strong>Harsh Goenka</strong> family. It sells across four vehicle categories — two-wheelers, passenger cars and SUVs, trucks and buses, and off-highway (agri and industrial) tyres — through three channels: the <strong>replacement</strong> aftermarket (you buy a new tyre when the old one wears out), <strong>OEM</strong> (fitting tyres onto brand-new vehicles at the factory), and <strong>exports</strong>. In FY26 it turned over roughly <strong>₹15,678 crore</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>The profit lives in the aftermarket, not the assembly line.</strong> Roughly half of CEAT's sales come from the <em>replacement</em> market — a driver walking into a tyre shop to replace worn rubber. That channel is brand-driven, higher-margin and recurring; the tyres a vehicle-maker fits at the factory (OEM) are lower-margin volume that mainly buys CEAT the right to be the brand a customer re-buys. The mix between the two is a big part of the margin story.</li>
+    <li><strong>A tyre is mostly rubber and oil, so profit swings with commodity prices.</strong> More than <strong>60%</strong> of what it costs to make a tyre is raw material — natural rubber, crude-derived synthetic rubber and chemicals, carbon black, and steel wire. When those inputs spike faster than CEAT can raise tyre prices, margins get crushed; when they fall while prices hold, margins bloom. FY26 was the squeeze: EBITDA margin compressed to ~13.2% as natural rubber ran hot, and quarterly profit whipsawed accordingly.</li>
+    <li><strong>It is deliberately moving up-market.</strong> Once seen as a value brand, CEAT has spent a decade premiumising — sharper two-wheeler and passenger tyres, motorsport and cricket sponsorships, and a push into higher-margin <strong>off-highway tyres (OHT)</strong> capped by the 2023 acquisition of Michelin's <strong>Camso</strong> tracks-and-tyres business. FY26 revenue rose ~18.6% and PAT ~47.7%; the stock trades near <strong>24× earnings</strong> — a cyclical on a moderate multiple that re-rates when the mix and the margin move the right way.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>CEAT is a consumer brand welded onto a commodity conversion machine. On one side it buys natural rubber and oil-based chemicals at whatever the market charges that month; on the other it sells finished tyres, and — crucially — it can only raise the <em>selling</em> price with a lag, after negotiating with vehicle-makers and nudging the aftermarket. The gap between those two prices, quarter to quarter, is where nearly all the profit variation comes from. Everything else — volumes, market share, the premiumisation push — matters, but it moves the needle slowly; the rubber-versus-price spread moves it violently and immediately. A first-time reader should hold that single idea and the rest of the company falls into place.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>The tyre business 101: how a rubber ring makes money</h2></div>
+  <p class="part-sub">No engineering degree needed — just the handful of ideas that drive the whole business.</p>
+
+  <p class="lead">A tyre looks simple and is anything but. It is a precisely engineered composite — layers of rubber, fabric and steel cured together — designed to grip the road, carry a load, absorb shock and last tens of thousands of kilometres. But for an investor, the business reduces to a few plain ideas: every vehicle needs tyres, tyres <em>wear out</em>, so demand comes in two waves (first when the vehicle is built, then again and again over its life), and the whole thing is a contest between the cost of the raw material and the price the maker can charge. Get comfortable with five terms and the rest of this primer reads easily.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only vocabulary you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Replacement</td><td>The aftermarket — buying a new tyre because the old one is worn. Stickier, brand-driven, higher-margin, and <em>recurring</em>: a car sold today generates tyre demand for a decade. The heart of CEAT's profit.</td></tr>
+      <tr><td class="t-strong">OEM</td><td>"Original Equipment Manufacturer" — selling tyres to a vehicle-maker (Maruti, Hero, Tata Motors) to fit on new vehicles. High volume, low margin, fiercely negotiated, but it seeds the brand a buyer later re-purchases.</td></tr>
+      <tr><td class="t-strong">Natural rubber</td><td>The single biggest raw material — latex tapped from rubber trees, mostly grown in Kerala and imported from South-East Asia. Its price is set on global commodity markets and swings hard. When it rises, tyre margins fall.</td></tr>
+      <tr><td class="t-strong">Carbon black &amp; synthetic rubber</td><td>Crude-oil derivatives that make up much of the rest of the tyre. So a tyre's cost is tied to <em>both</em> rubber and crude — two independent commodities CEAT can't control.</td></tr>
+      <tr><td class="t-strong">OHT</td><td>"Off-Highway Tyres" — the big-lugged tyres on tractors, harvesters, loaders and mining gear. Lower volume, but specialist, export-oriented and <em>higher-margin</em> — the premium end CEAT is scaling.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The economics that decide everything: cost-in versus price-out</div>
+    <p>A tyre maker is, at heart, a spread business. On the cost side sits a basket of commodities — natural rubber, crude-linked synthetic rubber and chemicals, carbon black, steel wire — that together run <strong>above 60%</strong> of the cost of a tyre and are re-priced by global markets every day. On the revenue side sits a price CEAT sets, but only with friction: OEM prices are locked in contracts and renegotiated periodically, and aftermarket price hikes have to be pushed through thousands of dealers without losing share to MRF or Apollo. So costs move <em>fast and daily</em>; prices move <em>slow and lumpy</em>. The distance between them — and the delay — is the entire margin engine. A tyre company with flat volumes can double its profit or halve it in a year without selling a single extra tyre.</p>
+  </div>
+
+  <h3>Why the aftermarket is the prize</h3>
+  <ul class="clean">
+    <li><strong>It recurs.</strong> A new car buys one set of OEM tyres once. Over its life it will get through several replacement sets — and every one of those is an aftermarket sale to whoever the driver trusts. The installed base of vehicles on Indian roads is a slowly compounding annuity of tyre demand.</li>
+    <li><strong>It is branded, so it prices better.</strong> At the OEM counter a vehicle-maker beats the tyre supplier down on price. At the replacement counter the <em>consumer</em> chooses, often on brand and dealer recommendation — which lets a strong brand hold price and margin. This is why a premium image is worth real money in tyres.</li>
+    <li><strong>It is less cyclical.</strong> When new-vehicle sales dip, people still replace worn tyres on the cars they already own. The aftermarket softens the swings that batter the OEM order book.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>Four kinds of tyre — and they are not equal</h2></div>
+  <p class="part-sub">Two-wheeler, passenger, truck &amp; bus, and off-highway — each a different business.</p>
+
+  <p class="lead">"CEAT makes tyres" hides a lot. A scooter tyre and a mining-loader tyre are utterly different products with different customers, different competition and — the part that matters — different margins. CEAT plays in four buckets, and understanding which ones earn well is most of the investment case.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">CEAT's four tyre categories — the map of the business</div>
+    <div class="flow-row">
+      <div class="node tw"><div class="ntag">Category 1</div><div class="nname">Two-wheeler</div><div class="nwho">Scooter &amp; motorcycle tyres. A CEAT stronghold — strong brand, high margins.</div></div>
+      <div class="arrow">·</div>
+      <div class="node pv"><div class="ntag">Category 2</div><div class="nname">Passenger car / SUV</div><div class="nwho">The big premiumisation battleground — larger rims, better mix, growing fast.</div></div>
+      <div class="arrow">·</div>
+      <div class="node tb"><div class="ntag">Category 3</div><div class="nname">Truck &amp; bus (T&amp;B)</div><div class="nwho">Big commercial tyres. Huge market, competitive, exposed to cheap imports.</div></div>
+      <div class="arrow">·</div>
+      <div class="node oht"><div class="ntag">Category 4</div><div class="nname">Off-highway (OHT)</div><div class="nwho">Agri &amp; industrial tyres. Specialist, export-led, the highest-margin push.</div></div>
+    </div>
+    <div class="flow-note">Rough rule of thumb: two-wheeler and off-highway carry CEAT's best margins; passenger is the premiumisation growth engine; truck &amp; bus is the largest market but the most price-competitive.</div>
+  </div>
+
+  <h3>The four categories, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-tw">Two-wheeler (scooter &amp; motorcycle)</span></strong> — CEAT's crown jewel. India runs on two-wheelers, CEAT is a leading brand here, and these tyres punch above their weight on margin: they are relatively small, use less raw material per unit, sell heavily into the branded replacement market, and command genuine consumer preference. This is the quiet, high-return core.</li>
+    <li><strong><span class="chain-pv">Passenger car &amp; SUV</span></strong> — the segment CEAT has fought hardest to premiumise. As India buys bigger cars and SUVs, tyres get larger (higher rim sizes), pricier and better-mix. CEAT has won OEM fitments on new models and pushed its brand up-market to capture the replacement re-buy. Growing share here is central to the "CEAT is no longer a value brand" story.</li>
+    <li><strong><span class="chain-tb">Truck &amp; bus (T&amp;B)</span></strong> — the heavyweight of the tyre market by tonnes of rubber. Commercial-vehicle tyres are a large, essential business tied to freight and the economy, but they are the most commoditised and price-sensitive category, and the one most exposed to cheap <em>Chinese imports</em>. CEAT competes here, but it is a volume game, not a margin haven.</li>
+    <li><strong><span class="chain-oht">Off-highway (OHT — agri &amp; industrial)</span></strong> — the deliberate move up the margin curve. These are the specialist tyres and rubber tracks on tractors, combines, loaders and construction equipment, sold heavily into <em>export</em> markets (Europe, the Americas). They are lower-volume but far higher-value and higher-margin, and — as we'll see with Camso — the area where CEAT has spent real capital to build a global specialty position.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The surprise a newcomer never expects</div>
+    <p>Ask someone which tyre earns the most and they picture the glamorous, expensive car or SUV tyre. In fact, two of CEAT's best-margin businesses are the least glamorous: the humble <strong>two-wheeler</strong> tyre on a commuter scooter, and the mud-caked <strong>agricultural / off-highway</strong> tyre on a tractor. The scooter tyre wins on brand pull and a heavy branded-aftermarket skew; the farm and construction tyre wins on specialisation, export pricing and low competition from mass players. Meanwhile the giant, essential <strong>truck &amp; bus</strong> segment — the one that moves the most rubber — is often the <em>hardest</em> place to make money, squeezed by imports and haggling fleet owners. In tyres, size of market and size of margin routinely point in opposite directions.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>Three ways to sell a tyre: replacement, OEM, export</h2></div>
+  <p class="part-sub">The channel mix — read this once and CEAT's margin behaviour makes sense.</p>
+
+  <p class="lead">Cut CEAT a different way — not by <em>what</em> tyre but by <em>who buys it</em> — and you get three channels with very different economics. This split matters more for profitability than the vehicle categories do, because it decides how much pricing power CEAT actually has.</p>
+
+  <div class="chart">
+    <div class="c-title">How CEAT's sales split by channel</div>
+    <div class="c-sub">Approximate FY26 standalone (India) revenue mix; consolidated exports run higher on Camso's international book</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Replacement<small>aftermarket — the profit core</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~51%</div></div>
+      <div class="bar-row"><div class="blab">OEM<small>fitted on new vehicles</small></div><div class="track"><span class="fill tb" style="width:59%"></span></div><div class="bval">~30%</div></div>
+      <div class="bar-row"><div class="blab">Exports<small>standalone; ~33% of group incl. Camso</small></div><div class="track"><span class="fill oht" style="width:37%"></span></div><div class="bval">~19%</div></div>
+    </div>
+    <div class="legend"><span>Standalone channel split is roughly replacement ~51% / OEM ~30% / exports ~19%. On a consolidated basis, international sales climb toward ~33% of revenue once Camso's overseas off-highway business is included. Treat the exact percentages as <em>approx.</em></span></div>
+  </div>
+
+  <h3>The three channels, and what each one is worth</h3>
+  <ul class="clean">
+    <li><strong>Replacement (~half of sales, most of the profit).</strong> This is the branded aftermarket. A consumer or a dealer chooses CEAT over a rival, which means CEAT sets the price and defends the margin. It is recurring — driven by the huge, growing base of vehicles already on the road — and less volatile than new-vehicle demand. When analysts talk about CEAT "improving mix," they usually mean tilting more of the business toward here.</li>
+    <li><strong>OEM (~30%, thin margin, strategic).</strong> Selling to Maruti, Hyundai, Hero, Bajaj, Tata Motors and the rest to fit on new vehicles. The vehicle-maker has all the negotiating power, so margins are slim. But OEM is not charity: winning a fitment puts CEAT rubber under a brand-new vehicle, and many drivers re-buy the same brand at replacement time. OEM is a loss-leader that feeds the profitable aftermarket.</li>
+    <li><strong>Exports (~19% standalone, ~a third of the group).</strong> Selling into international markets — increasingly the higher-margin off-highway and specialty tyres, turbo-charged by the Camso acquisition. Exports diversify CEAT away from the Indian cycle and lift the mix, but they add currency risk and exposure to global trade friction and tariffs.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the channel mix is the real margin dial</div>
+    <p>The vehicle-category mix tells you where CEAT competes; the channel mix tells you how much it gets to keep. A company selling mostly into OEM is a price-taker running on thin, negotiated margins. A company skewed to branded <strong>replacement</strong> and specialist <strong>exports</strong> has genuine pricing power and can hold margin even when a customer pushes back. CEAT's long-run project — premiumise the brand, grow the aftermarket share, scale high-value OHT exports — is, underneath the marketing, a deliberate campaign to shift the channel mix toward the parts of the business where it, not the customer, sets the price.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>RPG, the Goenkas, and who controls CEAT</h2></div>
+  <p class="part-sub">A ~70-year-old brand inside one of India's storied business houses.</p>
+
+  <p class="lead">CEAT is not a start-up story. The brand dates to 1958 — it began as the Indian arm of an Italian tyre maker, <strong>Cavi Elettrici e Affini Torino</strong> (the "CEAT" acronym), and was acquired by the <strong>RPG Group</strong> in 1982. Today it sits under the <strong>Harsh Goenka</strong> side of the RPG empire, a diversified house spanning tyres, infrastructure, pharma, IT services and plantations. The tyre business is run with a clear premiumisation agenda and a family that has publicly backed heavy reinvestment.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1958</div><div class="ev">CEAT set up in India, tracing to the Italian cable-and-tyre maker Cavi Elettrici e Affini Torino — the origin of the "CEAT" name.</div></li>
+    <li class="major"><div class="yr">1982</div><div class="ev"><strong>RPG Group acquires CEAT</strong>, bringing the tyre brand into the Goenka family's industrial house.</div></li>
+    <li><div class="yr">2000s</div><div class="ev">CEAT modernises and expands manufacturing; builds out a nationwide dealer network and a value-brand reputation.</div></li>
+    <li class="major"><div class="yr">2010s</div><div class="ev">The <strong>premiumisation era</strong> begins — new plants (Halol, Nagpur, Chennai), a sharper brand, motorsport and cricket sponsorships, and a decisive push into two-wheeler and passenger radials.</div></li>
+    <li class="major"><div class="yr">2023</div><div class="ev">CEAT acquires Michelin's <strong>Camso</strong> off-highway construction-compact and agriculture tyres-and-tracks business (brand and assets), a major step up the specialty/export margin curve.</div></li>
+    <li><div class="yr">FY24–FY25</div><div class="ev">Record revenues on volume growth and premiumisation; margins swing with natural-rubber prices; capacity added across categories.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ~₹15,678 Cr (+18.6%); EBITDA ~₹2,063 Cr (~13.2% margin) after a rubber-cost squeeze; PAT ~₹698 Cr (+47.7%); Camso integration progressing; ~₹1,000 Cr capex.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the <strong>RPG Group / Goenka family</strong> (through entities such as Instant Holdings and other RPG group companies) hold the controlling stake — roughly the high-40s percent (<strong>~47% approx.</strong>). <strong>Harsh Goenka</strong> is chairman; <strong>Anant Goenka</strong> (vice-chairman of the group) has been closely associated with CEAT's premiumisation drive. Track the exact promoter holding and any pledge directly in the quarterly shareholding filings.</li>
+    <li><strong>Institutional &amp; public:</strong> the balance is held by domestic and foreign institutions and public shareholders. With ~4.05 crore shares outstanding, CEAT is a mid-cap by Indian standards — smaller than MRF or Apollo by market value.</li>
+    <li><strong>Balance sheet:</strong> CEAT carries moderate debt — a Debt/EBITDA of roughly <strong>~1.5×</strong> and Debt/Equity around <strong>~0.6×</strong> at FY26 — reflecting the heavy, ongoing capex to add capacity and integrate Camso. Net debt is in the order of <strong>~₹3,000 Cr (approx.)</strong>, comfortably serviced but worth watching through the capex cycle.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the ownership matters:</b> a promoter family that thinks in decades has let CEAT spend years — and a lot of capital — dragging the brand up-market and buying a global specialty business, accepting near-term margin and balance-sheet strain for a better long-run mix. That patience is an asset when the strategy works and a risk if capital keeps going in faster than returns come out. The scoreboard is whether the premium mix and OHT/export push actually lift through-cycle margins above where the old value-brand CEAT sat.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>What a tyre is actually made of — and why that is the whole story</h2></div>
+  <p class="part-sub">Follow the raw material and you have found the profit.</p>
+
+  <p class="lead">To understand CEAT's profit you have to understand its shopping list. A tyre is a bundle of commodities cured into a shape, and the cost of that bundle — not the cleverness of the shape — is what moves earnings from quarter to quarter. Here is what goes in, roughly, and where each ingredient's price is set.</p>
+
+  <div class="chart">
+    <div class="c-title">The raw-material stack of a tyre</div>
+    <div class="c-sub">Illustrative share of raw-material cost; raw material itself is ~60%+ of total cost of a tyre</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Natural rubber<small>latex — global commodity</small></div><div class="track"><span class="fill tw" style="width:100%"></span></div><div class="bval">largest</div></div>
+      <div class="bar-row"><div class="blab">Synthetic rubber<small>crude-derived</small></div><div class="track"><span class="fill pv" style="width:66%"></span></div><div class="bval">crude-linked</div></div>
+      <div class="bar-row"><div class="blab">Carbon black<small>crude-derived</small></div><div class="track"><span class="fill oht" style="width:52%"></span></div><div class="bval">crude-linked</div></div>
+      <div class="bar-row"><div class="blab">Chemicals &amp; fillers<small>various</small></div><div class="track"><span class="fill ink" style="width:40%"></span></div><div class="bval">mixed</div></div>
+      <div class="bar-row"><div class="blab">Steel wire &amp; fabric<small>reinforcement</small></div><div class="track"><span class="fill tb" style="width:34%"></span></div><div class="bval">steel-linked</div></div>
+    </div>
+    <div class="legend"><span>Shares are illustrative, not exact — but the shape is the point: natural rubber is the single biggest input, and much of the rest (synthetic rubber, carbon black) is <em>crude-oil-derived</em>. So a tyre's cost rides on two commodities CEAT cannot control — rubber and crude.</span></div>
+  </div>
+
+  <p>Two independent commodities dominate. <strong>Natural rubber</strong>, tapped from trees and traded globally, is the largest single input; its price swings on South-East-Asian supply, weather, disease and demand. <strong>Crude oil</strong> feeds the synthetic rubber, carbon black and many chemicals that make up much of the rest. Add steel wire for the reinforcing beads and belts, and you have a product whose cost is set almost entirely by markets outside the factory gate. When you read that CEAT's margin "expanded" or "compressed," nine times out of ten the sentence really means <em>rubber and crude moved, and CEAT's tyre prices had not yet caught up</em>.</p>
+
+  <div class="plain">
+    <div class="ptag">Where the money actually leaks or gushes</div>
+    <p>Because raw material is <strong>above 60%</strong> of the cost of a tyre, a modest move in rubber or crude swamps almost everything management can do operationally. Trim factory waste, improve a blend, run the plant a little harder — all real, all worth a fraction of a margin point. A double-digit move in the natural-rubber price, meanwhile, can move gross margin by several points in a single quarter. That asymmetry is why tyre companies are classified as <em>cyclicals</em>: their fortunes are chained to a commodity cycle they can influence only slowly, through the lag with which they raise prices. CEAT's skill is real, but it operates on top of a commodity wave it does not create.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE crux: the raw-material-vs-price spread + the lag -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The rubber-price spread and the lag</h2></div>
+  <p class="part-sub">The single most important idea in the case — and the one that is unique to a tyre maker.</p>
+
+  <p class="lead">Here is the mechanism that decides whether a CEAT quarter is good or grim. Costs move <strong>fast</strong>: natural rubber and crude re-price daily, and a factory buying rubber this month feels it almost immediately. Selling prices move <strong>slow</strong>: OEM contracts are renegotiated periodically, and aftermarket hikes have to be pushed through a dealer network without ceding share. So there is always a <em>gap</em> — and a <em>delay</em> — between when input costs change and when CEAT's realisations catch up. That gap, with its lag, is the whole margin story.</p>
+
+  <div class="chart">
+    <div class="c-title">Same tyres, very different profit — the spread at work</div>
+    <div class="c-sub">Illustrative of the FY26 pattern: how the rubber-vs-price gap whipsaws a quarter</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Rubber spikes<small>cost up, price not yet raised</small></div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">margin ↓↓</div></div>
+      <div class="bar-row"><div class="blab">Prices catch up<small>hikes pushed through</small></div><div class="track"><span class="fill gold" style="width:55%"></span></div><div class="bval">margin steadies</div></div>
+      <div class="bar-row"><div class="blab">Rubber eases<small>cost down, price still high</small></div><div class="track"><span class="fill oht" style="width:78%"></span></div><div class="bval">margin ↑↑</div></div>
+    </div>
+    <div class="legend"><span>The tyre volume barely changes across these states; the <em>profit</em> changes enormously. That is the spread — the gap between input cost and realisation, opening and closing with a delay.</span></div>
+  </div>
+
+  <p>FY26 is the illustration written in CEAT's own numbers. Natural rubber ran hot through much of the year, and CEAT could not raise tyre prices fast enough to keep up. The result: EBITDA margin compressed to about <strong>13.2%</strong>, and in the June-2025 quarter net profit collapsed by roughly <strong>96%</strong> year-on-year — not because CEAT sold fewer tyres (revenue that quarter actually grew ~22%), but because the spread had slammed shut. Later in the year, as rubber cooled and earlier price hikes stuck, the same business swung the other way: the December-2025 quarter saw profit jump about <strong>60%</strong>. Broadly the same volumes, broadly the same factories — and profit that lurched from near-zero growth to a 60% surge, dictated almost entirely by the rubber-versus-price gap.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits a tyre maker: profit is a rubber bet settled late</div>
+    <p>Most companies you can read through revenue growth. CEAT you have to read through a spread. Picture two dials CEAT does not fully control — the <strong>rubber-and-crude cost dial</strong> (moves daily, set by world markets) and the <strong>tyre-price dial</strong> (moves in lumpy steps, weeks or months later). When the cost dial jumps and the price dial hasn't yet turned, margins crater; when the cost dial falls and the price dial is still high, margins soar. The lag between them is why a tyre company's quarter is, in effect, a bet on natural rubber placed a quarter or two before the result is known. In FY26 that bet went badly, then well, inside twelve months. This is why volume growth can look healthy while profit halves — and why the very same order book can print a great quarter next time. No amount of good management removes the spread; it only lets CEAT ride it a little better than the next maker.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms red"><div class="msv">~96%</div><div class="msl">Q1 FY26 (Jun 2025) YoY profit drop — the spread slamming shut, despite ~22% revenue growth</div></div>
+    <div class="ms green"><div class="msv">~60%</div><div class="msl">Q3 FY26 (Dec 2025) YoY profit jump — the spread reopening as rubber eased</div></div>
+    <div class="ms gold"><div class="msv">~13.2%</div><div class="msl">FY26 EBITDA margin — compressed by the raw-material squeeze across the year</div></div>
+  </div>
+
+  <p>The takeaway is not that CEAT is uninvestable — it is that its quarterly profit line is the <em>least</em> reliable guide to the underlying business. To judge CEAT you look through the spread to the things that persist: the trajectory of the replacement and export mix, market-share trends by category, and whether through-cycle margins are structurally drifting higher as premiumisation takes hold. The rubber bet is noise around that signal — loud, unavoidable noise, but noise.</p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Moving up-market: premiumisation, OHT and Camso</h2></div>
+  <p class="part-sub">The long game that is meant to lift through-cycle margins above the old value-brand base.</p>
+
+  <p class="lead">If the spread is the noise, CEAT's premiumisation is the signal it hopes will slowly win out. For a decade the company has worked to shed its cheap-and-cheerful image and climb the value chain — better products, a stronger brand, and a growing tilt to the highest-margin corners of the tyre world. Three moves define the campaign.</p>
+
+  <h4>1 · Brand and product premiumisation</h4>
+  <p>CEAT has invested heavily in brand — motorsport associations, cricket sponsorship (the CEAT Cricket Ratings and IPL-era visibility), and a sharper premium-product line in two-wheeler and passenger radials. The aim is straightforward: a consumer who perceives CEAT as a premium tyre pays more and switches less, which lifts realisations and defends the replacement margin. Winning OEM fitments on aspirational new car and SUV models reinforces the halo and seeds future aftermarket re-buys.</p>
+
+  <h4>2 · Off-highway tyres — the high-margin specialty</h4>
+  <p>OHT (agricultural and industrial tyres) is where CEAT most deliberately chases margin. These are lower-volume, engineered, export-oriented products with far less competition from mass-market players and pricing that reflects specialisation. Scaling OHT lifts the group's overall margin mix and diversifies revenue toward export markets that don't move with the Indian auto cycle.</p>
+
+  <h4>3 · The Camso acquisition</h4>
+  <p>In 2023 CEAT acquired Michelin's <strong>Camso</strong> business — a well-regarded brand in off-highway construction-compact and agricultural tyres and rubber tracks, with international reach. This was the boldest move in the premiumisation story: it bought CEAT a global specialty footprint, brand and customer relationships that would have taken years to build organically. Integration is a multi-year job — around <strong>USD 30 million</strong> earmarked for upstream capabilities (compound mixing, calendering), with completion targeted around the <strong>end of FY27</strong> and the bulk of the margin benefit expected to show up from <strong>FY28</strong>.</p>
+
+  <div class="plain">
+    <div class="ptag">Why this is the part that could re-rate the stock</div>
+    <p>The rubber spread makes CEAT's <em>quarters</em> unpredictable; premiumisation is a bet on its <em>through-cycle</em> average. If the two-wheeler stronghold holds, passenger share keeps climbing, and OHT-plus-Camso grows into a materially larger, higher-margin slice of the group, then CEAT's mid-cycle margin settles structurally higher than the old value-brand CEAT ever managed — and a higher, steadier margin on a bigger revenue base is exactly what turns a cyclical's moderate multiple into a re-rating. The catch is that this is slow, capital-hungry work: Camso's full margin payoff is still a couple of years out, and every rupee of capex has to earn its keep against a balance sheet already carrying ~1.5× Debt/EBITDA. Premiumisation is the reason to own CEAT for years; the rubber spread is the reason its next few quarters are anyone's guess.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A four-way domestic contest, a specialist king, and the constant threat of cheap imports.</p>
+
+  <p class="lead">Indian tyres is a scaled, capital-intensive oligopoly. Building tyres at quality needs big plants, deep R&amp;D and a national dealer network, so a handful of players dominate — but they compete hard, and each has a distinct personality. CEAT is a strong number three or four by size, punching above its weight on brand and mix.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs CEAT</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">CEAT</td><td>RPG-owned; strong in two-wheeler &amp; passenger replacement, scaling OHT/exports via Camso</td><td><em>This company.</em> Premiumising mid-cap; margins ride the rubber spread; the debate is whether mix-up lifts through-cycle returns.</td></tr>
+      <tr><td class="t-strong">MRF</td><td>India's largest tyre maker; premium leader, famously high-priced stock</td><td>The brand benchmark — biggest, deep replacement franchise, strong pricing power. The one CEAT most wants to close the premium gap on.</td></tr>
+      <tr><td class="t-strong">Apollo Tyres</td><td>Large, diversified; strong in T&amp;B and passenger, with European operations (Vredestein)</td><td>Comparable scale and ambition; a genuine multi-category rival at home and, via Europe, abroad.</td></tr>
+      <tr><td class="t-strong">JK Tyre</td><td>Major truck-bus and passenger player</td><td>Strong in commercial tyres; competes head-on in the price-sensitive T&amp;B segment.</td></tr>
+      <tr><td class="t-strong">Balkrishna (BKT)</td><td>The off-highway specialist — a global export champion in agri &amp; industrial tyres</td><td>The margin king CEAT's OHT/Camso push is chasing; BKT shows how lucrative specialist off-highway can be at scale.</td></tr>
+      <tr><td class="t-strong">Bridgestone, Michelin, Goodyear</td><td>Global majors with Indian operations</td><td>Deep technology and premium brand power, especially in passenger/premium; set the top of the market CEAT premiumises toward.</td></tr>
+      <tr><td class="t-strong">Chinese imports</td><td>Low-cost tyres, concentrated in truck &amp; bus</td><td>A persistent price threat in the commoditised T&amp;B category; a reason margins there stay thin.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two patterns matter. First, the domestic majors mostly rise and fall <em>together</em> on the rubber cycle — when input costs squeeze one, they squeeze all, so relative performance comes down to mix and brand rather than beating peers on the commodity. Second, the sharpest competition is category-specific: in <strong>truck &amp; bus</strong> the enemy is cheap Chinese imports and thin pricing; in <strong>passenger premium</strong> it is the global brands (Michelin, Bridgestone); and in <strong>off-highway</strong> the benchmark to chase is Balkrishna, which has shown just how profitable a focused export specialist can be. CEAT's strategy — lean into two-wheeler strength, premiumise passenger, and scale OHT toward BKT-like economics — is essentially an attempt to spend more time in the profitable corners of that map and less in the bloody T&amp;B one.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>What actually drives the volumes</h2></div>
+  <p class="part-sub">Beneath the rubber spread sits a real, cyclical demand story.</p>
+
+  <p class="lead">The spread decides margins; demand decides how many tyres cross the counter. And tyre demand, usefully, has two engines that don't move in lockstep — which is part of why the aftermarket cushions the cycle.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The demand drivers</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Why it matters for CEAT</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">New-vehicle sales</td><td>Two-wheeler, car/SUV and commercial-vehicle production volumes.</td><td>Sets the OEM order book directly, and seeds the future replacement pool. Cyclical — rises and falls with the economy and financing conditions.</td></tr>
+      <tr><td class="t-strong">The vehicle parc &amp; replacement cycle</td><td>The vast installed base of vehicles already on the road, each needing new tyres every few years.</td><td>Drives the stickier replacement channel. Grows slowly and compounds — the ballast under CEAT's most profitable business.</td></tr>
+      <tr><td class="t-strong">Freight &amp; economic activity</td><td>Truck movement, mining and construction output.</td><td>Powers truck &amp; bus and off-highway demand — a direct read on GDP, infrastructure spend and the monsoon-linked rural economy.</td></tr>
+      <tr><td class="t-strong">Rural &amp; agri health</td><td>Monsoon, crop incomes, tractor sales.</td><td>Drives farm-tyre (OHT) demand and two-wheeler replacement in rural India — a swing factor CEAT is quite exposed to.</td></tr>
+      <tr><td class="t-strong">Exports &amp; global cycle</td><td>Overseas demand for passenger and off-highway tyres, plus Camso's markets.</td><td>Diversifies away from India but adds currency and trade-policy risk (tariffs, anti-dumping actions).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The mid-2025 GST rate cuts on vehicles gave CEAT a helpful demand tailwind — cheaper vehicles pull forward sales, which feeds both OEM fitments today and the replacement pool tomorrow. Q1 FY27 (June 2026) revenue of about <strong>₹4,318 crore</strong>, up ~22% year-on-year, shows the top line still growing briskly even as margins do their rubber-driven dance.</p>
+
+  <div class="plain">
+    <div class="ptag">The two-speed demand engine</div>
+    <p>New-vehicle sales are the flashy, cyclical engine — they roar in a boom and stall in a downturn, dragging OEM volumes with them. The replacement engine is the quiet, geared-down one: it runs off the millions of vehicles <em>already</em> on Indian roads, which keep wearing out tyres whether or not anyone is buying new cars this year. That is why a tyre maker with a big aftermarket franchise is more resilient than its OEM-heavy peers — and why CEAT's ~half-replacement mix is a genuine structural cushion under the volume line, even before you get to the premium brand's pricing power.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A growing top line, a rubber-battered margin, and a moderate multiple that hinges on mix.</p>
+
+  <p class="lead">FY26 tells the CEAT story in miniature: revenue grew handsomely, profit grew even faster off a soft base, but the margin line was hostage to natural rubber all year. The market prices CEAT as a decent-quality cyclical — not cheap, not expensive — with the upside case resting on the premium mix and OHT/exports lifting through-cycle returns.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill ink" style="width:84%"></span></div><div class="bval">~13,218</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~15,678</div></div>
+      <div class="bar-row"><div class="blab">Q1 FY27<small>quarter, +22% YoY</small></div><div class="track"><span class="fill gold" style="width:28%"></span></div><div class="bval">~4,318</div></div>
+    </div>
+    <div class="legend"><span>FY26 revenue rose ~18.6%, helped by volume growth, premiumisation and the Camso book. Growth is real and broad — the top line is not the problem; the margin is.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit &amp; margin (FY26)</div>
+    <div class="c-sub">₹ Crore — EBITDA squeezed by rubber; PAT up sharply off a soft FY25 base</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">EBITDA</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~2,063</div></div>
+      <div class="bar-row"><div class="blab">Net profit (PAT)</div><div class="track"><span class="fill oht" style="width:34%"></span></div><div class="bval">~698</div></div>
+      <div class="bar-row"><div class="blab">EBITDA margin</div><div class="track"><span class="fill gold" style="width:44%"></span></div><div class="bval">~13.2%</div></div>
+    </div>
+    <div class="legend"><span>EBITDA of ~₹2,063 Cr at a ~13.2% margin — compressed from a raw-material squeeze. PAT of ~₹698 Cr was up ~47.7%, but off a rubber-battered FY25 base; the year-on-year jump flatters the underlying trend.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~13.2%</div><div class="msl">FY26 EBITDA margin — the rubber-squeezed number the premiumisation story wants to lift</div></div>
+    <div class="ms"><div class="msv">~1.5×</div><div class="msl">Net Debt / EBITDA at FY26; D/E ~0.6× — moderate, watched through the capex &amp; Camso cycle</div></div>
+    <div class="ms red"><div class="msv">~24×</div><div class="msl">P/E on ~₹14,360 Cr market cap — a moderate cyclical multiple, forward ~20×</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: the gross-margin spread, read with the mix</div>
+    <p>At ~24× trailing earnings CEAT is priced as a competent premiumising cyclical — richer than a pure commodity tyre-maker, far cheaper than a branded consumer staple. The metric that proves or breaks that pricing is CEAT's <strong>gross margin — realisation per tyre minus raw-material cost per kg</strong> — read <em>through</em> the rubber cycle rather than in any single quarter, alongside three companions: the <strong>replacement + OHT/export share of the mix</strong> (is it structurally rising?), <strong>volume growth by category</strong> (is the two-wheeler stronghold holding and passenger share climbing?), and <strong>net debt</strong> (is the Camso-and-capex bill staying under control?). If through-cycle gross margin drifts upward as the premium mix takes hold, CEAT earns a re-rating toward the branded end of its peer set. If margins keep simply oscillating around the old level with every rubber swing — growth but no structural improvement — then it stays a moderately-priced cyclical whose good quarters and bad quarters cancel out. The spread is the scoreboard; the mix is what's meant to bend it upward over time.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results and third-party financial data and cross-checked across sources; several — notably net debt (~₹3,000 Cr, inferred from the ~1.5× Debt/EBITDA ratio), the promoter holding (~47%), and the illustrative raw-material and category splits — are <b>approx.</b> and should be verified against CEAT's filings before relying on any single number. The Q1 FY26 (−96%) and Q3 FY26 (+60%) profit swings are year-on-year and reflect the raw-material cycle, not a change in the business's scale.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A premiumising tyre brand riding a commodity wave it cannot control.</p>
+
+  <p class="lead">CEAT enters FY27 with real momentum — a growing top line, a strengthening premium brand, a scaling off-highway business, and a demand tailwind from cheaper vehicles post-GST. The honest question is whether the premiumisation and OHT push can lift through-cycle margins enough to matter, against the ever-present headwind of a raw-material bill it does not set.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Premiumisation working</strong> — a genuinely stronger brand, rising passenger share and a high-margin two-wheeler stronghold shifting the mix upward over time.</li>
+        <li><strong>OHT + Camso optionality</strong> — a scaling, high-margin, export-led specialty business, with Camso's full margin benefit still to arrive (targeted from ~FY28).</li>
+        <li><strong>Replacement-heavy mix</strong> — ~half of sales in the stickier, higher-margin aftermarket, cushioning the cycle and giving real pricing power.</li>
+        <li><strong>Demand tailwinds</strong> — post-GST vehicle affordability, a growing vehicle parc, and export diversification all feeding volume.</li>
+        <li><strong>Operating leverage on a falling rubber cycle</strong> — when input costs ease while prices hold, the same volumes can produce a step-change in profit.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Raw-material volatility &amp; the pricing lag</strong> — the recurring, dominant risk: a natural-rubber or crude spike CEAT can't pass on fast enough crushes margins, as FY26 showed.</li>
+        <li><strong>Intense competition &amp; imports</strong> — MRF, Apollo, JK, plus global majors and cheap Chinese truck-bus imports cap pricing, especially in commercial tyres.</li>
+        <li><strong>Cyclicality</strong> — auto sales, freight and the replacement cycle all swing with the economy; a downturn hits volumes as well as the spread.</li>
+        <li><strong>Capex &amp; debt</strong> — heavy ongoing capacity spend and Camso integration keep net debt around ~1.5× EBITDA; returns must justify the outlay.</li>
+        <li><strong>FX &amp; trade risk</strong> — a bigger export/OHT mix brings currency swings and exposure to tariffs and anti-dumping actions abroad.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>CEAT is two businesses stacked on one balance sheet: a slow, promising consumer-brand story — premiumise, grow the aftermarket, scale off-highway — sitting on top of a fast, brutal commodity engine that can make any single quarter look brilliant or dreadful regardless of how the brand is doing. The brand story is the reason to own it; the rubber spread is why you must not judge it a quarter at a time. The concrete milestones to watch are specific and dated: <strong>Camso's integration completing around end-FY27</strong>, with its margin benefit meant to show from FY28; and, every three months, whether CEAT's <strong>gross margin holds up as natural-rubber prices move</strong> — the single print that reveals whether pricing discipline and mix are finally winning the tug-of-war with the commodity cycle. Watch the spread each quarter and the mix each year; together they tell you whether CEAT is becoming a better tyre company or just a bigger one.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>CEAT Limited — Q4 &amp; FY26 earnings conference-call transcript (year ended Mar 2026), company investor-relations site.</li>
+    <li>Business Standard — "Ceat Q3 FY26 results: Profit soars 60% to ₹156 crore, revenue up 26%."</li>
+    <li>HDFC Sky / Indmoney — "CEAT shares sink after Q1 profit collapses 96%; margin pressure, cost inflation."</li>
+    <li>Tradebrains — "CEAT, JK Tyre, Apollo and BKT: What Drove the Strong FY26 Performance of These Tyre Stocks?"</li>
+    <li>EquityBulls — "CEAT Ltd Q1 FY26-27 Consolidated Revenue Rs. 4,318 crore, up 22% Y-o-Y."</li>
+    <li>StockAnalysis.com — CEAT Limited (BOM:500878) price, market cap, P/E and FY26 revenue/earnings.</li>
+    <li>Tyre-Trends — "CEAT Commits Around INR 10 Bln In FY26 Capex."</li>
+    <li>AlphaStreet / Investing.com — CEAT Q4 FY26 and Q1 FY26 earnings-call transcripts (channel &amp; segment commentary).</li>
+    <li>BSE India — CEAT Ltd stock page, scrip code 500878 (ISIN INE482A01020); NSE symbol CEATLTD.</li>
+    <li>CEAT / RPG Group disclosures — Camso (Michelin) off-highway acquisition and integration updates.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several items (net debt, promoter holding, and the illustrative raw-material and category mixes) are estimates flagged as approx. in the text. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "CEATLTD";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
