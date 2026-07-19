@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NMDC Steel — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F3F1;
+    --paper-2:#FCFAF9;
+    --card:#FFFFFF;
+    --ink:#20160F;
+    --ink-soft:#5E524A;
+    --ink-faint:#948577;
+    --brand:#8A4A32;          /* furnace rust - primary accent */
+    --brand-bright:#B5623F;   /* brighter molten rust */
+    --gold:#C0863C;           /* molten-gold accent / warmth */
+    --ore:#6E4A38;           /* iron ore */
+    --iron:#A0512F;          /* ironmaking / blast furnace */
+    --steel:#C56A3E;         /* steelmaking */
+    --roll:#8A6A46;          /* rolling / finished */
+    --line:#E4DBD4;
+    --line-soft:#EEE8E3;
+    --good:#2A7C52;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F4E7DF;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#FAF6F3;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#ECE4DE;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#8A4A32,#B5623F);}
+  .fill.gold{background:linear-gradient(90deg,#C0863C,#D8A85C);}
+  .fill.ore{background:linear-gradient(90deg,#6E4A38,#8A6250);}
+  .fill.iron{background:linear-gradient(90deg,#A0512F,#C06B45);}
+  .fill.steel{background:linear-gradient(90deg,#C56A3E,#DB8A5C);}
+  .fill.roll{background:linear-gradient(90deg,#8A6A46,#A88860);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#4a3d34,#65564b);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.ore{background:var(--ore);}
+  .node.iron{background:var(--iron);}
+  .node.steel{background:var(--steel);}
+  .node.roll{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-ore{color:var(--ore);font-weight:600;}
+  .chain-iron{color:var(--iron);font-weight:600;}
+  .chain-steel{color:var(--steel);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F4E7DF;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Steel-from-ore 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> One plant: Nagarnar</a></li>
+    <li><a href="#p3"><span class="n">03</span> The demerger &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The new-plant J-curve</a></li>
+    <li><a href="#p5"><span class="n">05</span> The privatisation ticket</a></li>
+    <li><a href="#p6"><span class="n">06</span> The captive iron-ore link</a></li>
+    <li><a href="#p7"><span class="n">07</span> Loss to profit: the turn</a></li>
+    <li><a href="#p8"><span class="n">08</span> Steel cycle &amp; commodity risk</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> The expansion runway</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: NSLNISP · BSE: 543768</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>NMDC Steel, <em>one giant furnace ramping up — and a privatisation ticket</em></h1>
+  <p class="dek">A complete walk through India's newest listed integrated steelmaker — how the country's biggest <em>iron-ore</em> miner built a ₹24,000 Cr steel plant at Nagarnar, then spun it off as a separate company; why a brand-new plant loses money until the tonnes arrive; and why a big part of the story is that the government wants to <em>sell</em> it.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹13,642 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~2.33 <small>MT</small></div><div class="l">Crude steel made (FY26)</div></div>
+    <div class="cell"><div class="v">~80% <small>util.</small></div><div class="l">Rated-capacity use (FY26)</div></div>
+    <div class="cell"><div class="v">~₹12,700 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">19 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ~₹13,642 Cr (+60%), first full-year net profit of ~₹59 Cr (versus a ~₹2,373 Cr loss in FY25), record crude-steel output of 2.33 MT at ~80% capacity utilisation, borrowings down to ~₹4,602 Cr; added the utilisation-ramp J-curve and the strategic-disinvestment section.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">NMDC Steel Limited is, in essence, <strong>one very large, very new steel plant that has been given its own stock listing</strong>. The plant is at <strong>Nagarnar in Chhattisgarh</strong>: a ₹24,000-crore, 3-million-tonne-a-year <em>integrated</em> steel works — meaning it takes iron ore and coal in at one end and pushes finished hot-rolled steel coil and plate out the other, doing every step in between itself. It was built by <strong>NMDC Ltd</strong>, India's largest iron-<em>ore</em> miner, as a bet to move downstream from digging ore into making steel. In 2023 that plant was carved out of NMDC and floated as a separate government company: <strong>NMDC Steel</strong>.</p>
+
+  <p>Three facts frame everything that follows:</p>
+  <ul class="clean">
+    <li><strong>It is basically a single asset.</strong> Unlike a SAIL or a JSW with plants scattered across the country, NMDC Steel's entire existence is the <em>one</em> Nagarnar plant. Its revenue, its profit, its debt, its risk — all of it is the output of a single blast furnace complex. That makes it unusually easy to understand and unusually concentrated: there is nowhere to hide if that one plant has a bad year.</li>
+    <li><strong>A brand-new plant loses money before it makes money.</strong> A fresh integrated steel plant carries the full weight of its ₹24,000 Cr build — depreciation and interest — from day one, but it only produces a trickle of steel while it is stabilising. That mismatch is why NMDC Steel bled cash early: in FY25 it lost a staggering <strong>~₹2,373 Cr</strong>. In FY26, as the plant finally ran near <strong>~80% of capacity</strong>, it swung to a small full-year <strong>profit of ~₹59 Cr</strong>. The whole story is that climb.</li>
+    <li><strong>The government wants out.</strong> NMDC Steel is a marquee <strong>privatisation candidate</strong>. New Delhi has approved selling its controlling stake (~50.79%) plus management control to a strategic buyer — an efficient private steelmaker who could run Nagarnar harder. So the stock trades on two clocks at once: the plant's operating ramp, and a government sale process that keeps moving in fits and starts.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>NMDC Steel is a <strong>start-up wearing a heavy-industry costume</strong>. It has exactly one product line — steel from the Nagarnar plant — and its financial life is the classic curve of any new factory: enormous fixed costs land immediately, revenue arrives slowly, so early years show deep losses that flip to profit only once the machine runs near flat-out. FY26 was the year the flip began. Sitting on top of that operating story is a separate, government-driven event: the state built this plant, listed it, and now intends to hand the keys to a private owner. You are buying a plant that is learning to run at full tilt, wrapped in a disinvestment that may or may not complete on schedule.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Steel-from-ore 101: what "integrated" actually means</h2></div>
+  <p class="part-sub">No metallurgy degree needed — just the handful of terms that decide the economics.</p>
+
+  <p class="lead">To follow NMDC Steel you need to understand one distinction: the difference between making steel <em>from scratch</em> and making it from scrap. NMDC Steel does it from scratch — the "integrated" route — and that choice explains both its huge fixed cost and its cost advantage. Here is the chain, in plain language.</p>
+
+  <p>An <strong>integrated steel plant</strong> starts with <strong>iron ore</strong> (rock rich in iron) and <strong>coking coal</strong> (a special coal that is baked into <em>coke</em>). Ore and coke are fed into a <strong>blast furnace</strong>, a giant tower where they react at extreme heat to produce molten <strong>pig iron</strong> — liquid iron with too much carbon to be useful yet. That hot metal goes into a <strong>basic oxygen furnace (BOF)</strong>, where oxygen is blown through it to burn off impurities and turn it into <strong>crude steel</strong>. The crude steel is then cast and <strong>hot-rolled</strong> into the shapes customers buy — flat <strong>HR coil</strong> (rolled-up sheet) and <strong>HR plate</strong>. Every one of those stages happens inside the Nagarnar fence.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Integrated plant</td><td>Makes steel from raw ore and coal, in-house, end to end. Big up-front cost, but low per-tonne cost once it runs at scale. Nagarnar is one of these — the opposite of a small scrap-melting "mini-mill."</td></tr>
+      <tr><td class="t-strong">Blast furnace / BOF</td><td>The two hearts of the plant. The blast furnace makes molten iron from ore + coke; the BOF turns that iron into crude steel. Both need to run continuously and near-full to be economic.</td></tr>
+      <tr><td class="t-strong">Crude steel</td><td>The headline output unit — raw steel before final shaping. Nagarnar is rated at <strong>3.0 million tonnes (MT)</strong> of crude steel a year. This is the number the whole business is measured in.</td></tr>
+      <tr><td class="t-strong">HR coil / plate</td><td>The finished, sellable products — hot-rolled sheet in coils and thick plate — used in autos, pipes, construction, engineering and appliances. What NMDC Steel actually invoices.</td></tr>
+      <tr><td class="t-strong">Capacity utilisation</td><td>How much of the 3.0 MT rating the plant actually produces. A new plant starts low and climbs. This single percentage is the make-or-break metric for NMDC Steel — everything below flows from it.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why integrated plants live and die on utilisation</div>
+    <p>An integrated steel plant is almost <em>all</em> fixed cost. The blast furnace, the coke ovens, the oxygen plant, the rolling mill — they cost the same to keep hot whether you make one tonne or three million. The raw materials (ore, coal) scale with output, but the crushing weight of depreciation, interest and a large permanent workforce does not. So the cost of producing each tonne falls sharply as volume rises: spread ₹24,000 Cr of assets over 1.5 MT and every tonne carries a fortune in fixed charges; spread it over 3 MT and each tonne carries half as much. That is the entire reason a new plant loses money at low utilisation and makes money at high utilisation — same furnace, more tonnes, radically different profit per tonne.</p>
+  </div>
+
+  <h3>Who buys this steel</h3>
+  <ul class="clean">
+    <li><strong>Pipe and tube makers</strong> — HR coil is the feedstock for welded steel pipe, a big volume outlet.</li>
+    <li><strong>Auto, engineering &amp; appliance makers</strong> — flat steel for bodies, structures, white goods and machinery.</li>
+    <li><strong>Construction &amp; infrastructure</strong> — plate and heavy sections for projects, fabrication and general engineering.</li>
+    <li><strong>Traders &amp; distributors</strong> — who move standard flat products into the wider market. As a ramping plant, NMDC Steel has leaned heavily on selling into this open market to move its rising output.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>One plant, four stages: the Nagarnar machine</h2></div>
+  <p class="part-sub">The whole company is this value chain — read it once and NMDC Steel clicks into place.</p>
+
+  <p class="lead">Because NMDC Steel <em>is</em> the Nagarnar plant, the best way to see the company is to walk the metal through it. Raw ore and coal arrive; finished coil and plate leave; and value is added — or destroyed — at each stage depending on how hard the plant is running. The plant sits in Bastar district, Chhattisgarh, roughly 100 km from its ore source.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The integrated steel chain — NMDC Steel does every stage on one site</div>
+    <div class="flow-row">
+      <div class="node ore"><div class="ntag">Stage 1 · Raw materials</div><div class="nname">Iron ore + coking coal</div><div class="nwho">Ore from the Bailadila mines (parent NMDC); coking coal largely imported.</div></div>
+      <div class="arrow">→</div>
+      <div class="node iron"><div class="ntag">Stage 2 · Ironmaking</div><div class="nname">Blast furnace → molten iron</div><div class="nwho">Coke ovens, sinter/pellet, one large blast furnace produce hot metal.</div></div>
+      <div class="arrow">→</div>
+      <div class="node steel"><div class="ntag">Stage 3 · Steelmaking</div><div class="nname">BOF → crude steel</div><div class="nwho">Oxygen furnace + caster turn hot metal into cast crude steel. Rated 3.0 MT/yr.</div></div>
+      <div class="arrow">→</div>
+      <div class="node roll"><div class="ntag">Stage 4 · Rolling</div><div class="nname">HR coil &amp; plate</div><div class="nwho">Hot-strip mill / plate mill make the finished, sellable flat products.</div></div>
+    </div>
+    <div class="flow-note">One site, one chain. The plant's profit is the gap between the price of Stage 4 output and the cost of Stage 1 inputs — minus the fixed charges that only shrink per-tonne as the whole line runs faster.</div>
+  </div>
+
+  <h3>What makes Nagarnar distinctive</h3>
+  <ul class="clean">
+    <li><strong>It is genuinely new.</strong> Most of India's integrated capacity is decades old and expanded in bolt-ons. Nagarnar was built as a single, modern, greenfield 3.0 MT works — commissioned in stages, with its blast furnace lit and the plant dedicated to the nation in <strong>October 2023</strong>. New plants can be efficient once stable, but they also have to be <em>learned</em> — every ramp has teething problems.</li>
+    <li><strong>It is next to the ore.</strong> The plant sits about 100 km from the <strong>Bailadila</strong> iron-ore belt, the source of some of India's highest-grade ore and the crown jewel of parent NMDC. Short haulage of the single heaviest input is a structural cost edge — provided the ore actually comes on good terms (more on that in §06).</li>
+    <li><strong>It is a flat-products plant.</strong> Nagarnar makes <em>flat</em> steel — HR coil and plate — not <em>long</em> products like the TMT rebar that the Godawaris and Gallantts of the sector specialise in. That places it in competition with the flat-steel majors (JSW, Tata, SAIL) rather than the regional rebar players.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The single-asset reality, stated plainly</div>
+    <p>When you own a share of NMDC Steel, you own a slice of one plant in Bastar. There is no second factory to average out a bad quarter, no diversified product book, no geographic spread. If Nagarnar runs well, the company thrives; if a furnace trips, an ore contract sours, or the flat-steel price sags, there is nothing else on the income statement to cushion it. This concentration is a double-edged blade: it makes NMDC Steel refreshingly simple to analyse — you are really just modelling one plant's tonnes, prices and costs — and it makes the stock unusually exposed to that one plant's fortunes.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The demerger, the parent, and who controls it</h2></div>
+  <p class="part-sub">A government company, freshly cut out of India's biggest iron-ore miner.</p>
+
+  <p class="lead">NMDC Steel exists because <strong>NMDC Ltd</strong> — a Central Public Sector Undertaking under the Ministry of Steel, and India's largest iron-ore producer — decided years ago to move downstream. Digging and selling ore is a good business, but it is a commodity with a ceiling; turning that same ore into steel captures far more value per tonne. So NMDC built the Nagarnar plant. Then, rather than keep a capital-hungry, loss-making new steel works inside a cash-rich mining company, it <strong>demerged</strong> the plant into a standalone listed entity.</p>
+
+  <h3>How the demerger worked</h3>
+  <p>In a demerger, the parent's own shareholders receive shares in the new company in proportion to what they already hold — no cash changes hands, the business is simply split into two separately traded pieces. NMDC Ltd shareholders were allotted shares of NMDC Steel, which listed on the NSE and BSE in 2023 under the symbol <strong>NSLNISP</strong>. Because the Government of India is the dominant shareholder of NMDC Ltd, it became the dominant shareholder of NMDC Steel too — which is precisely what sets up the privatisation story in §05.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">~2015</div><div class="ev">NMDC Ltd begins building a greenfield integrated steel plant at <strong>Nagarnar</strong>, Chhattisgarh — its move from mining ore to making steel.</div></li>
+    <li><div class="yr">2020</div><div class="ev">The government gives in-principle approval for <strong>strategic disinvestment</strong> of the steel plant, well before it was even finished — privatisation was the plan from early on.</div></li>
+    <li class="major"><div class="yr">2022</div><div class="ev">The scheme to <strong>demerge</strong> the steel business out of NMDC Ltd is approved, creating NMDC Steel as a separate company.</div></li>
+    <li class="major"><div class="yr">Aug–Oct 2023</div><div class="ev">Shares allotted to NMDC shareholders and <strong>listed</strong> (NSLNISP / BSE 543768); the blast furnace is lit and the plant is <strong>dedicated to the nation</strong> in October 2023.</div></li>
+    <li><div class="yr">FY24–FY25</div><div class="ev">The ramp begins — partial output, heavy fixed costs. FY25 records a deep loss of <strong>~₹2,373 Cr</strong> as the plant stabilises at roughly half of capacity.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Utilisation climbs to <strong>~80%</strong>, output hits a record <strong>2.33 MT</strong>, revenue ~₹13,642 Cr — and the company posts its first full-year <strong>profit (~₹59 Cr)</strong>. Borrowings fall to ~₹4,602 Cr.</div></li>
+    <li><div class="yr">FY27 (in progress)</div><div class="ev">Expression-of-interest stage of the government's <strong>stake sale</strong> underway; the market watches for a strategic buyer and for utilisation to push past 80% toward full.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Controlling shareholder:</strong> the <strong>Government of India</strong> is the promoter, holding a controlling majority (roughly <strong>~60%+, approx.</strong>). It has cleared the sale of a <strong>50.79%</strong> block together with management control to a strategic buyer, after which the parent <strong>NMDC Ltd</strong> is expected to be offered a residual ~10% stake. Treat the exact holding split as <em>approx.</em> and confirm against the latest shareholding filing.</li>
+    <li><strong>Classification:</strong> a listed CPSU under the <strong>Ministry of Steel</strong> — until any sale completes, it is run as a government company, with the governance style, board and pace that implies.</li>
+    <li><strong>The parent link:</strong> <strong>NMDC Ltd (NSE: NMDC)</strong> remains the natural ore supplier and is a separately listed miner in its own right. Do not confuse the two: NMDC Ltd mines and sells iron ore; NMDC Steel buys ore and makes steel. Their fortunes are linked (via the ore contract) but they are distinct companies with distinct shareholders.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the parentage matters:</b> NMDC Steel inherited two things from being a government-built, government-owned plant — a fortress balance sheet backing (the state funded a ₹24,000 Cr build) and a bureaucratic operating culture that a private buyer would argue can be run leaner. The disinvestment is, in effect, a bet that the <em>same plant</em> in private hands would sweat its assets harder. That is the whole logic of the sale.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: the new-plant J-curve / utilisation ramp -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The new-plant J-curve: the ramp that is the whole thesis</h2></div>
+  <p class="part-sub">The single most important idea in the entire case — and it is specific to a brand-new single plant.</p>
+
+  <p class="lead">Here is the mechanism that governs everything. A new integrated steel plant does not glide smoothly into profit; it traces a <strong>J-curve</strong>. On day one it carries the full annual weight of a ₹24,000 Cr build — depreciation of well over a thousand crore a year, plus interest on the debt that funded it — while producing far too little steel to cover those charges. So it loses money, deeply, at low utilisation. Then, as the furnace stabilises and tonnes climb, those fixed charges get spread over more and more output, per-tonne cost collapses, and the plant crosses from loss into profit. NMDC Steel is walking that curve right now, and you can watch it in three numbers.</p>
+
+  <div class="chart">
+    <div class="c-title">The utilisation ramp — the make-or-break line</div>
+    <div class="c-sub">Crude-steel output as a share of the 3.0 MT rated capacity, by year (FY27 illustrative)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24<small>partial year, commissioning</small></div><div class="track"><span class="fill ink" style="width:22%"></span></div><div class="bval">~low</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>~1.44 MT</small></div><div class="track"><span class="fill iron" style="width:48%"></span></div><div class="bval">~48%</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>~2.33 MT (record)</small></div><div class="track"><span class="fill steel" style="width:80%"></span></div><div class="bval">~80%</div></div>
+      <div class="bar-row"><div class="blab">FY27 target<small>toward full run-rate</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~100% aim</div></div>
+    </div>
+    <div class="legend"><span>FY26 output of ~2.33 MT was up ~62% on FY25 and lifted utilisation to ~80% of the 3.0 MT rating — the milestone that turned the plant from loss to profit. The FY27 push toward full run-rate is <em>approx.</em>, drawn from management's stabilisation commentary, not a promised figure.</span></div>
+  </div>
+
+  <p>Now overlay the profit line on that ramp and the J-curve leaps out. Same plant, same furnace, same 3.0 MT of steel capacity — but the profit result moved violently as the tonnes arrived. This is the analytical heart of NMDC Steel, and it is not transferable to any diversified steelmaker.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits NMDC Steel: one furnace, two numbers, a ₹2,430 Cr swing</div>
+    <p>In FY25, running at roughly half capacity, the Nagarnar plant lost about <strong>₹2,373 Cr</strong>. In FY26, running at roughly 80%, the <em>same plant</em> made a small profit of about <strong>₹59 Cr</strong> — a swing of over <strong>₹2,430 Cr</strong> in a single year, driven overwhelmingly by pushing output from ~1.44 MT to ~2.33 MT. Nothing about the asset changed; the plant simply ran harder, spread its fixed costs over ~62% more tonnes, and crossed the line. That is the J-curve in one comparison — and it tells you exactly where the next leg of value comes from: not from a new business, not from an acquisition, but from grinding utilisation from 80% toward 100% and holding it there. The metric that <em>is</em> the thesis is capacity utilisation, and its financial echo, EBITDA-per-tonne.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~80%</div><div class="msl">FY26 capacity utilisation — up from ~48% in FY25; the number that flipped the result</div></div>
+    <div class="ms gold"><div class="msv">+62%</div><div class="msl">FY26 crude-steel output growth (to ~2.33 MT); sales up ~74% to ~2.46 MT</div></div>
+    <div class="ms green"><div class="msv">₹832 Cr</div><div class="msl">Q4 FY26 EBITDA — versus <em>negative</em> ~₹272 Cr a year earlier; the operating leverage arriving</div></div>
+  </div>
+
+  <p>The FY26 exit is more telling than the full-year average. The fourth quarter alone did revenue of <strong>~₹3,879 Cr</strong> — the highest in the company's short history — with EBITDA of <strong>~₹832 Cr</strong> and a quarterly net profit of <strong>~₹392 Cr</strong>, a hard reversal from a loss of ~₹474 Cr in the same quarter a year before. In other words, the plant is not just averaging 80%; it is <em>exiting</em> the year running hot. Whether it can hold and extend that run-rate is the operational question that everything else hangs on.</p>
+
+  <div class="note gold"><b>A genuine surprise:</b> the country's <em>largest iron-ore miner</em> spun off its downstream steel bet as a <strong>separate, loss-making listed company</strong> — and did so while the plant was still learning to run. NMDC Steel arrived on the exchange not as a mature earner but as a J-curve in progress, which is why its first two years read like a start-up's: a brutal loss, then a knife-edge maiden profit. Investors are underwriting a ramp, not a track record.</p></div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The privatisation ticket: the second clock</h2></div>
+  <p class="part-sub">A government sale that could re-rate the stock — or keep slipping.</p>
+
+  <p class="lead">Alongside the operating ramp runs a completely separate storyline: NMDC Steel is one of the flagship names on India's <strong>strategic disinvestment</strong> list. The government's plan, cleared years ago, is to sell its controlling stake and hand management control to a private steelmaker who can run Nagarnar more aggressively. For a chunk of the shareholder base, that sale — not this year's earnings — is the reason to own the stock.</p>
+
+  <h3>What the sale actually involves</h3>
+  <ul class="clean">
+    <li><strong>The block:</strong> the Government of India has approved selling <strong>~50.79%</strong> of NMDC Steel together with <strong>management control</strong> — i.e. a genuine change of ownership, not a token stake sale.</li>
+    <li><strong>The residual:</strong> after a strategic buyer is chosen, parent <strong>NMDC Ltd</strong> is expected to be offered a roughly <strong>10%</strong> holding — keeping the ore-and-steel relationship alive even after control passes.</li>
+    <li><strong>The process:</strong> NMDC Steel sits in a basket of CPSEs the government is working through (alongside names like IDBI Bank, BEML, SCI, HLL Lifecare and PDIL). The Expression of Interest / preliminary bidding stage has been run; it is now a matter of the process converting into a binding, priced transaction.</li>
+    <li><strong>The rationale:</strong> a private owner with steel-operating DNA — the majors most often mentioned in the sector are the likes of JSW, Tata and Jindal (JSPL), though <em>no bidder is confirmed and any name should be treated as speculation</em> — could push utilisation, procurement and product mix harder than a government-run plant typically does.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why a privatisation is a real, separable source of value</div>
+    <p>Two forces make the disinvestment matter beyond mere sentiment. First, a strategic buyer usually pays a <strong>control premium</strong> and often runs the asset better, so a completed sale can lift both the price paid and the plant's steady-state earnings. Second, the government's own steel plant, run to bureaucratic norms, arguably carries a "PSU discount" — the market prices state-run companies below what a private operator's cash flows would justify. Removing the state as owner can shrink that discount. The catch is timing and certainty: a strategic sale of a large steel plant is a slow, politically sensitive, cyclically fragile thing. It has been on the runway for years, and disinvestment timetables in India routinely slip past elections, budget cycles and soft-market windows.</p>
+  </div>
+
+  <div class="note"><b>The honest tension in the disinvestment:</b> a stock partly valued on a government sale has no natural price floor from that source if the sale stalls. If the process drifts — as such processes have before — the shares fall back on plant fundamentals alone, and a single ramping plant in a soft steel market is a thin thing to stand on. The disinvestment is a catalyst, not a guarantee; size it as an option, not as owned value.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The captive iron-ore link to the parent</h2></div>
+  <p class="part-sub">The structural cost question that outlives the demerger.</p>
+
+  <p class="lead">The most important input into any integrated steel plant, after coal, is iron ore — and NMDC Steel's ore comes from the one place in India that has the most of the best of it: the <strong>Bailadila</strong> deposits in Chhattisgarh, mined by its own former parent, <strong>NMDC Ltd</strong>. That proximity is a genuine structural edge, but it is also a negotiation that never quite ends.</p>
+
+  <p>Here is why it matters. Iron ore is heavy and low-value relative to steel, so where you source it and how far you haul it moves the cost sheet meaningfully. Nagarnar sits roughly 100 km from Bailadila, some of the highest-grade ore in the country. A steel plant that can pull premium ore over a short distance starts each tonne of steel with a cost advantage over rivals who rail ore across states or import it. In principle, NMDC Steel should be one of the lowest ore-cost plants in India.</p>
+
+  <div class="plain">
+    <div class="ptag">The subtlety: "next to the ore" is not the same as "cheap ore"</div>
+    <p>Proximity guarantees short haulage; it does not guarantee a favourable <em>price</em>. NMDC Ltd is a separate listed company answerable to its own shareholders, and it sells ore at market-linked rates. So the terms on which NMDC Steel buys from its former parent — the price, the grade allocation, the reliability of supply — are a live commercial matter, not a family gift. If those terms are keen, Nagarnar enjoys a durable raw-material moat. If the parent extracts full market price, the "captive" advantage narrows to just the freight saving. And once a private buyer takes control through disinvestment, the ore relationship becomes an arm's-length contract between two unrelated firms — one of the quiet due-diligence questions any acquirer will price. Watch the ore linkage as carefully as the utilisation number; it is the second lever on the cost per tonne.</p>
+  </div>
+
+  <div class="note gold"><b>The coal side of the ledger:</b> the other big input, <strong>coking coal</strong>, India largely lacks and must import — so NMDC Steel is exposed to global coking-coal prices like every Indian integrated maker. A plant with a strong domestic ore position but an imported coal bill is only half-hedged against raw-material swings; a spike in seaborne coking coal hits Nagarnar's margins directly, ore advantage or not.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Loss to profit: anatomy of the turn</h2></div>
+  <p class="part-sub">How a ~₹2,373 Cr loss became a small profit in twelve months.</p>
+
+  <p class="lead">FY26 is the year NMDC Steel stopped being a cash-burning construction project and became — just barely — a profitable company. Understanding <em>how</em> it turned, and how fragile that turn still is, is the core of the financial story.</p>
+
+  <div class="chart">
+    <div class="c-title">The bottom-line swing</div>
+    <div class="c-sub">Full-year net profit / (loss), ₹ Crore — the J-curve crossing zero</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25<small>~48% utilisation</small></div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">−2,373</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>~80% utilisation</small></div><div class="track"><span class="fill steel" style="width:3%"></span></div><div class="bval">+59</div></div>
+    </div>
+    <div class="legend"><span>A swing of more than ₹2,430 Cr in a single year, driven by higher volume absorbing fixed costs, better realisations and lower unit costs. Note how <em>thin</em> the FY26 profit still is — the company only just crossed the line.</span></div>
+  </div>
+
+  <p>Three levers did the work. First and biggest, <strong>volume</strong>: output rose ~62% to 2.33 MT, and sales ~74% to ~2.46 MT, so a far larger tonnage carried the same fixed cost base — the operating-leverage effect described in §04. Second, <strong>cost absorption</strong>: as the plant stabilised, per-tonne conversion costs fell and the furnace ran more efficiently. Third, the <strong>revenue base</strong> itself grew ~60% to ~₹13,642 Cr, as more tonnes met a reasonably firm flat-steel market for much of the year.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue &amp; the Q4 exit</div>
+    <div class="c-sub">₹ Crore — full-year revenue and the record fourth-quarter run-rate</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25 revenue</div><div class="track"><span class="fill ink" style="width:63%"></span></div><div class="bval">~8,530</div></div>
+      <div class="bar-row"><div class="blab">FY26 revenue</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~13,642</div></div>
+      <div class="bar-row"><div class="blab">Q4 FY26<small>single quarter, record</small></div><div class="track"><span class="fill steel" style="width:28%"></span></div><div class="bval">~3,879</div></div>
+    </div>
+    <div class="legend"><span>FY26 revenue rose ~60%. The ~₹8,530 Cr FY25 base is <em>approx.</em> (implied from the ~60% growth). The ~₹3,879 Cr Q4 was the highest quarterly revenue on record — a ~₹15,500 Cr annualised run-rate, signalling the plant exited FY26 running well above its full-year average.</span></div>
+  </div>
+
+  <p>The balance sheet improved in step. <strong>Borrowings fell to ~₹4,602 Cr</strong> from ~₹5,898 Cr a year earlier, as the now cash-generating plant began paying down the debt that built it. For a business that spent its first two years consuming capital, throwing off enough cash to cut debt is itself a milestone — evidence that the J-curve has genuinely turned, not just flickered.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the FY26 profit is real but fragile</div>
+    <p>A ~₹59 Cr profit on ~₹13,642 Cr of revenue is a net margin under half a percent — the company cleared the bar by a whisker. That is exactly what you expect at the bottom of a J-curve: the first profitable year is razor-thin because depreciation and interest still loom large over an 80%-run plant. The encouraging read is the <em>trajectory</em> — a ₹392 Cr profit in Q4 alone shows the run-rate is far healthier than the full-year average suggests. The cautious read is the <em>fragility</em> — at this margin, a soft steel quarter or a coking-coal spike could tip the full year back toward breakeven. The turn is directional, not yet durable; that is the plain state of play.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The steel cycle and commodity risk</h2></div>
+  <p class="part-sub">Even a well-run plant is a passenger on prices it does not set.</p>
+
+  <p class="lead">Owning a steel plant means owning a spread — the gap between what your finished steel sells for and what your ore and coal cost — and that spread is set by global forces well beyond any single company. For a plant still climbing its ramp, an adverse move in that spread is doubly painful: it lands on a company with no diversification and only a wafer-thin margin to absorb it.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The forces that move NMDC Steel's spread</caption>
+    <thead><tr><th>Force</th><th>What it is</th><th>Why it bites here</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Steel prices</td><td>Domestic HR coil / plate prices, ultimately tied to global steel and Chinese export levels.</td><td>The revenue side of the spread. With a single flat-products plant and no value-added specialty mix, NMDC Steel is a near-pure taker of the benchmark flat price.</td></tr>
+      <tr><td class="t-strong">Coking coal</td><td>Imported metallurgical coal — a major, dollar-priced input India cannot source at home.</td><td>The biggest swing factor on cost. A seaborne coal spike hits Nagarnar directly and can wipe out a thin margin regardless of ore advantage.</td></tr>
+      <tr><td class="t-strong">Chinese / imported steel</td><td>Cheap steel exports from China and elsewhere flooding into India in soft global demand.</td><td>Caps domestic prices and squeezes the spread — the perennial threat to every Indian flat-steel maker, and to a ramping one's fragile economics especially.</td></tr>
+      <tr><td class="t-strong">Trade measures</td><td>Safeguard duties, anti-dumping actions and any import protection on flat steel.</td><td>A policy lever that can widen or narrow the spread. A domestic price floor helps a marginal producer disproportionately.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The cruel arithmetic of ramping into a downturn</div>
+    <p>Timing is everything for a new plant. If NMDC Steel completes its utilisation ramp into a <em>firm</em> steel market, the operating leverage and a healthy spread compound — rising tonnes meet good prices, and profit accelerates fast. If it ramps into a <em>soft</em> market — Chinese oversupply, weak domestic demand, a coal spike — then the very volume that was supposed to rescue the economics instead pours out at a poor spread, and the plant can stay stuck near breakeven even at high utilisation. The plant controls its tonnes; it does not control the price those tonnes fetch. That is why the steel cycle is not a footnote to this story — it is a co-author of it.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A single 3 MT plant standing among the integrated majors.</p>
+
+  <p class="lead">In the pecking order of Indian steel, NMDC Steel is a minnow by capacity — 3 MT against rivals running 20–35 MT — but it competes in the same flat-products arena as the giants. Understanding where it sits explains both its vulnerability and the logic of handing it to a bigger operator.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs NMDC Steel</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">NMDC Steel</td><td>One new 3.0 MT integrated flat-steel plant; government-owned, up for sale</td><td><em>This company.</em> A single-asset ramp story with an ore-proximity edge and a privatisation catalyst; thin margins, high concentration.</td></tr>
+      <tr><td class="t-strong">JSW Steel</td><td>India's largest private steelmaker; ~35 MT and expanding</td><td>Scale, efficiency and a low-cost reputation NMDC Steel can only aspire to — and one of the operators most often cited as a natural buyer.</td></tr>
+      <tr><td class="t-strong">Tata Steel</td><td>The blue-chip integrated major; large domestic + European operations</td><td>Deep captive raw materials and brand strength; a benchmark for what a well-run integrated franchise looks like.</td></tr>
+      <tr><td class="t-strong">SAIL</td><td>The other big steel PSU; ~20 MT across several plants</td><td>The closest peer in <em>ownership</em> — a state-run integrated maker — but far larger and multi-plant, so less exposed to any single furnace.</td></tr>
+      <tr><td class="t-strong">JSPL (Jindal Steel)</td><td>Large private integrated player, strong in plates &amp; long products</td><td>An aggressive, cost-focused operator and another name the market floats as a potential strategic acquirer.</td></tr>
+      <tr><td class="t-strong">NMDC Ltd (parent)</td><td>India's largest iron-<em>ore</em> miner — not a steel rival</td><td>Not a competitor but the supplier and former parent; its ore terms shape NMDC Steel's cost base.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two things define NMDC Steel's place. First, <strong>sub-scale in a scale game</strong>: at 3 MT it lacks the purchasing power, product breadth and cost curve of the 20–35 MT majors, which is exactly why a bigger operator could extract more from Nagarnar than the government does — the industrial rationale behind the sale. Second, it is a <strong>commodity flat-steel producer</strong>, not a niche specialist: it does not make the high-margin auto-grade or electrical steels that command premiums, so it competes squarely on cost and the benchmark price. Its edge is not product; it is location — the ore next door — plus the improvement a private owner might unlock. Everything else on the field is bigger.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A knife-edge maiden profit, a big asset, and a sale that muddies the multiple.</p>
+
+  <p class="lead">Valuing NMDC Steel on a normal earnings multiple is close to meaningless — a ~₹59 Cr profit against a ~₹12,700 Cr market cap implies a headline P/E in the hundreds, which tells you nothing except that FY26 earnings were a sliver. The sensible lenses are asset-based and forward-looking: what did the plant cost, what is it worth per tonne, and what could it earn at full run-rate.</p>
+
+  <div class="chart">
+    <div class="c-title">Enterprise value vs what the plant cost to build</div>
+    <div class="c-sub">₹ Crore — market's implied price for Nagarnar against its replacement cost</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Market cap<small>~mid-2026</small></div><div class="track"><span class="fill brand" style="width:53%"></span></div><div class="bval">~12,700</div></div>
+      <div class="bar-row"><div class="blab">+ Net debt<small>~borrowings</small></div><div class="track"><span class="fill iron" style="width:19%"></span></div><div class="bval">~4,602</div></div>
+      <div class="bar-row"><div class="blab">= Enterprise value</div><div class="track"><span class="fill steel" style="width:72%"></span></div><div class="bval">~17,300</div></div>
+      <div class="bar-row"><div class="blab">Plant build cost<small>replacement</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~24,000</div></div>
+    </div>
+    <div class="legend"><span>At an enterprise value of ~₹17,300 Cr for a plant that cost ~₹24,000 Cr to build, the market is valuing Nagarnar <em>below</em> its replacement cost — a discount that makes sense for an asset only just past breakeven, and that a completed privatisation could partly close. Figures approximate.</span></div>
+  </div>
+
+  <p>The bull's arithmetic runs off <strong>full-utilisation economics</strong>. If Nagarnar reaches and holds ~3 MT at a mid-cycle spread, the plant should generate materially more EBITDA than FY26's part-ramped result, and at a full run-rate the ~₹832 Cr Q4 EBITDA annualises to a very different profit picture than the thin full-year number. On that math, an EV below replacement cost looks cheap. The bear's arithmetic runs off <strong>fragility and timing</strong>: the FY26 profit was wafer-thin, the plant is one asset exposed to one commodity spread, and the disinvestment — the catalyst that could re-rate it — has repeatedly been a moving target.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~₹832 Cr</div><div class="msl">Q4 FY26 EBITDA — the run-rate signal; full-year EBITDA still modest (approx.)</div></div>
+    <div class="ms"><div class="msv">~₹4,602 Cr</div><div class="msl">Borrowings at FY26 exit, down from ~₹5,898 Cr — deleveraging under way</div></div>
+    <div class="ms red"><div class="msv">&lt;0.5%</div><div class="msl">FY26 net margin — the maiden profit cleared the line by a whisker</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: sustained utilisation, read through EBITDA-per-tonne</div>
+    <p>For NMDC Steel the scoreboard is not P/E and it is not the order book — it is <strong>capacity utilisation held near full, expressed as EBITDA-per-tonne turning solidly and steadily positive</strong>. That single chain — more tonnes → fixed costs absorbed → positive, rising EBITDA per tonne → a durable profit rather than a wafer-thin one — is what proves the J-curve has genuinely completed. Read it alongside three supports: <strong>net debt</strong> (is the plant paying down its build?), the <strong>ore-supply terms</strong> from parent NMDC (is the cost base protected?), and <strong>disinvestment progress</strong> (is a strategic buyer actually going to arrive?). If utilisation sits near 100% at a healthy per-tonne margin quarter after quarter, the below-replacement valuation and the sale optionality both look like gifts. If utilisation stalls in the 70s at a thin spread, this is a single sub-scale plant grinding at breakeven, and the discount is deserved.</p>
+  </div>
+
+  <div class="note">Several figures here are <b>approx.</b> and drawn from FY26 results and third-party summaries: the FY25 revenue base (implied from ~60% growth), full-year EBITDA, exact government/parent shareholding, and any prospective-buyer names are all to be verified against the company's filings and the government's disinvestment disclosures before relying on them. Forward run-rate math is illustrative, not guidance.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The expansion runway beyond the ramp</h2></div>
+  <p class="part-sub">What happens after the first plant hits full tilt.</p>
+
+  <p class="lead">The immediate story is getting the existing 3 MT plant to full utilisation. But the longer arc — and part of what would make Nagarnar attractive to a strategic buyer — is that the site was master-planned for far more than a single plant.</p>
+
+  <p>Greenfield integrated sites are chosen and permitted with future phases in mind: land, water, rail links, ore access and a workforce assembled once can support brownfield expansion at a fraction of the cost and time of building fresh. The Bastar location, its proximity to Bailadila ore, and the infrastructure already sunk into Nagarnar give the plant a credible path to add capacity in future phases — the kind of optionality a large private operator, with the balance sheet to fund it, could move on faster than a government owner. In that framing, the current 3 MT is not the ceiling; it is phase one of a site that could grow.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the runway matters to the disinvestment</div>
+    <p>The expansion potential and the privatisation are linked. A strategic acquirer is not just buying a plant running at 80%; it is buying a permitted, ore-adjacent site with room to grow, plus the chance to run the existing works harder. That combination — an under-utilised present asset <em>and</em> a low-cost future expansion — is precisely what lets a bidder justify a control premium. For the current shareholder, it means the value case does not end when utilisation hits 100%; the site's next phase is a further, longer-dated call on the same location. But keep the sequencing straight: none of the expansion optionality pays off until the first plant is reliably profitable at full run-rate. Phase one has to work before phase two is worth discussing.</p>
+  </div>
+
+  <div class="note gold"><b>The near-term reality check:</b> expansion is a story for after the ramp, not during it. With borrowings still around ₹4,602 Cr and a margin under half a percent, the priority for the next stretch is stabilising and deleveraging the existing plant — not committing fresh capital. Treat the runway as an option the eventual owner holds, valued at close to zero until the current asset proves itself.</div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A new plant that just crossed into profit — asked to prove it can stay there, and to find a new owner.</p>
+
+  <p class="lead">NMDC Steel enters FY27 having done the hardest thing a new integrated plant has to do: reach ~80% utilisation and post a maiden profit. What remains unproven is whether it can push utilisation to full and hold a real margin through the steel cycle — and whether the government's long-promised sale finally converts into a signed deal.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>The J-curve has turned</strong> — ~80% utilisation, record 2.33 MT output, a maiden profit and a ~₹832 Cr Q4 EBITDA exit-rate show the operating leverage arriving.</li>
+        <li><strong>Below replacement cost</strong> — an EV of ~₹17,300 Cr for a plant that cost ~₹24,000 Cr to build; full-run economics could look cheap.</li>
+        <li><strong>Ore next door</strong> — proximity to Bailadila's high-grade ore gives a structural raw-material edge few Indian plants match.</li>
+        <li><strong>Privatisation optionality</strong> — a strategic sale (~50.79% + control) could bring a sharper operator, a control premium and the removal of the PSU discount.</li>
+        <li><strong>Deleveraging</strong> — borrowings already falling as the plant turns cash-generative; expansion runway on a permitted site for the eventual owner.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Single-asset concentration</strong> — everything rides on one plant; any furnace disruption, outage or accident is existential, with nothing to cushion it.</li>
+        <li><strong>Wafer-thin profit</strong> — a &lt;0.5% net margin means the turn is directional, not durable; a soft quarter can tip it back to breakeven.</li>
+        <li><strong>Commodity &amp; import risk</strong> — flat-steel prices, imported coking-coal costs and Chinese steel dumping set a spread the company cannot control.</li>
+        <li><strong>Disinvestment slippage</strong> — the sale has been on the runway for years; if it stalls, the stock loses a key catalyst and its floor.</li>
+        <li><strong>Ramp &amp; ore-terms uncertainty</strong> — holding 80%+ is not guaranteed, and ore pricing from a now-separate parent is a live cost question a buyer will scrutinise.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>NMDC Steel is the rarest thing on the exchange: a single brand-new integrated steel plant, laid bare as its own listed company, caught in the exact moment its J-curve crosses from loss into profit. FY26 answered the first question — the plant <em>can</em> run near 80% and make money — but only just, and only at the very tail of the year. Two milestones now decide the case, and both are checkable, not rhetorical: first, <strong>Nagarnar sustaining full run-rate with EBITDA-per-tonne rising quarter after quarter</strong>, turning a wafer-thin annual profit into a thick one; and second, <strong>a signed, priced strategic-sale agreement</strong> that hands the plant to an operator who can push it harder. Watch the quarterly utilisation print and the disinvestment newsflow side by side — one tells you whether the plant works, the other whether it changes hands. Until both land, this is one furnace in Bastar, running hot, waiting on its numbers and its new owner.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>BSE India — NMDC Steel Ltd stock page, scrip code <strong>543768</strong> (ISIN INE0NNS01018), NSE symbol NSLNISP.</li>
+    <li>NSE India — NMDC Steel Limited get-quotes page (symbol NSLNISP, ISIN INE0NNS01018).</li>
+    <li>Indian Masterminds — "NMDC Steel Q4 FY26 Results: Profit at ₹392 Cr as Company Turns Profitable for Full Year, Debt Falls to ₹4,602 Cr."</li>
+    <li>MarketsMojo — "NMDC Steel Q4 FY26: Dramatic Turnaround as Steel Producer Posts First Profit in Years" (Q4 revenue ₹3,879 Cr, EBITDA ₹832 Cr, PAT ₹391.91 Cr).</li>
+    <li>Business News Week / Business News This Week — "NMDC Steel Turns Profitable in FY26; Records Best-Ever Production and Sales" (2.33 MT output +62%, ~80% utilisation, PAT ₹58.72 Cr vs loss ₹2,373 Cr).</li>
+    <li>Screener.in — NMDC Steel (NSLNISP) financials, market cap (~₹12,695 Cr) and revenue (~₹13,642 Cr).</li>
+    <li>DIPAM (Dept. of Investment &amp; Public Asset Management) — "Strategic Disinvestment of NMDC Steel Limited" query responses to PIM &amp; EOI (Jan 2023).</li>
+    <li>Construction World — "Government seeks proposals to privatise NMDC's Steel Plant" (~50.79% stake + management control; residual ~10% to NMDC).</li>
+    <li>Business Standard — NMDC Steel share price page (₹42.82, 4 May 2026) and BSE announcements.</li>
+    <li>Quartr / Investing.com — NMDC Steel &amp; NMDC Q4 FY26 earnings-call summaries (Nagarnar ~₹24,000 Cr build, 3.0 MTPA, Bailadila ore ~100 km).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated. Several items are explicitly marked approx. — notably the FY25 revenue base, full-year EBITDA, exact government/parent shareholding, and any prospective-buyer names — and forward run-rate math is illustrative, not guidance. The disinvestment is a government process that may change or slip. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "NSLNISP";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
