@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UTI Asset Management — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F8;
+    --paper-2:#FAFBFD;
+    --card:#FFFFFF;
+    --ink:#161C24;
+    --ink-soft:#54606E;
+    --ink-faint:#8792A0;
+    --brand:#2C456A;          /* deep asset-steel-blue */
+    --brand-bright:#3E5E8E;   /* UTI accent - steel blue */
+    --gold:#D9883C;           /* warm amber - accent / warmth */
+    --wtg:#3E5E8E;            /* MF equity - high fee */
+    --epc:#5E7BA6;            /* MF debt / liquid - low fee */
+    --om:#26405F;            /* NPS / retirement annuity */
+    --spec:#4A6C99;          /* PMS / offshore / alternatives */
+    --line:#DBE0E6;
+    --line-soft:#E7EBF0;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4ECF4;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F8FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E8ECF1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2C456A,#3E5E8E);}
+  .fill.gold{background:linear-gradient(90deg,#D9883C,#E7A75C);}
+  .fill.wtg{background:linear-gradient(90deg,#3E5E8E,#5E7BA6);}
+  .fill.om{background:linear-gradient(90deg,#26405F,#3E5E8E);}
+  .fill.spec{background:linear-gradient(90deg,#4A6C99,#6E8CB5);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4550,#59636e);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF0F6;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> The asset-manager model 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The three AUM numbers</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; who controls it</a></li>
+    <li><a href="#p4"><span class="n">04</span> The mutual-fund fee engine</a></li>
+    <li><a href="#p5"><span class="n">05</span> The market-share problem</a></li>
+    <li><a href="#p6"><span class="n">06</span> The equity-mix / fee-yield lever</a></li>
+    <li><a href="#p7"><span class="n">07</span> The hidden retirement giant</a></li>
+    <li><a href="#p8"><span class="n">08</span> Offshore, PMS &amp; alternatives</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; the own-book quirk</a></li>
+    <li><a href="#p11"><span class="n">11</span> Valuation — the cheap laggard</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: UTIAMC · BSE: 543238</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>UTI Asset Management, <em>the oldest fund house, still fighting to matter</em></h1>
+  <p class="dek">A complete walk through India's original asset manager — how a firm earns a thin annual fee on other people's money, why UTI runs a colossal ₹23-lakh-crore pile that earns like a far smaller one, and why the whole investment case turns on a single unglamorous line: whether UTI can stop losing share of the high-fee <em>equity</em> money that actually pays the bills.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹23.4 <small>L Cr</small></div><div class="l">Total group AUM (Mar 2026)</div></div>
+    <div class="cell"><div class="v">~₹3.88 <small>L Cr</small></div><div class="l">Mutual-fund QAAUM (FY26)</div></div>
+    <div class="cell"><div class="v">~₹1,698 <small>Cr</small></div><div class="l">Revenue (FY26, consol.)</div></div>
+    <div class="cell"><div class="v">~₹12,083 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">19 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — total group AUM ~₹23.4 lakh crore (+11%), MF QAAUM ~₹3.88 lakh crore (+14%), consolidated revenue ~₹1,698 Cr, reported PAT ~₹404 Cr (down ~45% on lower investment-book gains); MF market share slipped to ~4.76%. Added the fee-yield lever and the reported-Tata-stake situation.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">UTI Asset Management is an <strong>asset manager</strong> — a company that runs pools of other people's money and takes a small annual fee for doing so. Its flagship is <strong>UTI Mutual Fund</strong>, one of India's oldest and largest fund houses, but it also runs portfolio-management mandates (PMS), a large <strong>retirement and pension</strong> business (it is one of the biggest managers under the National Pension System), offshore/international funds, and alternatives. It does <em>not</em> take deposits, lend, or carry credit risk. It earns a percentage of the assets it manages — an <strong>asset-light, high-margin, sticky annuity</strong> that compounds as those assets grow.</p>
+
+  <p>Four facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is the original.</strong> UTI traces to the <strong>Unit Trust of India</strong>, created by an Act of Parliament in <strong>1963</strong> — for decades <em>the only</em> mutual fund an ordinary Indian could buy. Today's UTI AMC is the NAV-based fund business that was carved out of that legacy in 2003 and listed in 2020. No other listed AMC carries that history.</li>
+    <li><strong>Its AUM is enormous but its fee base is not.</strong> Group assets under management topped <strong>~₹23.4 lakh crore</strong> at March 2026. Yet the mutual-fund book — where the real fees live — is only <strong>~₹3.88 lakh crore</strong>. The vast remainder is low-fee retirement, pension and institutional money that earns a few basis points. <strong>AUM is not revenue; the mix is everything</strong>, and that gap is the single most important thing to understand about this company.</li>
+    <li><strong>It is losing share where it counts.</strong> UTI's slice of the Indian mutual-fund market has drifted <em>down</em> — roughly <strong>5.04% in March 2025 to ~4.76% in March 2026</strong>. In a booming SIP-fuelled market, the industry pie is growing fast; UTI is growing slower than the pie. The turnaround is about reversing that.</li>
+    <li><strong>It is cheap, and it pays you to wait.</strong> The stock trades near <strong>25–26× earnings</strong> — a wide discount to premium leaders like HDFC AMC — with a <strong>dividend yield around 4%</strong>. UTI is the value-priced laggard of the AMC shelf, owned not by a single parent but by a consortium of rival state-owned financial giants plus a US fund manager.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>UTI is a <strong>toll-collector on savings</strong>. When you put money into one of its funds, you don't pay it a bill — it quietly skims a small annual percentage off the pot, every year, for as long as you stay. Because managing ₹100 crore costs barely more than managing ₹10 crore, that fee falls almost straight to profit as the pot grows — a wonderful economic model. The catch for UTI specifically is twofold: much of its huge pot is <em>cheap</em> money (pension and institutional cash that pays a whisper of a fee), and its share of the <em>expensive</em> money (retail equity funds) has been slipping while rivals gain. The whole bet is whether the oldest name in Indian funds can win back the profitable kind of AUM.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>The asset-manager model 101: earning a fee on someone else's money</h2></div>
+  <p class="part-sub">No finance degree needed — just the handful of ideas that drive every AMC.</p>
+
+  <p class="lead">An asset management company (AMC) is one of the cleanest business models in finance. It collects money from many investors, pools it into funds run by professional managers, and charges a small annual <strong>management fee</strong> — quoted as a percentage of assets — for doing the investing. The investor's money stays the investor's; the AMC never owns it, never owes it back, and takes no credit risk. It simply manages, and clips a coupon. To follow UTI you need six terms.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only vocabulary you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">AUM</td><td>"Assets Under Management" — the total pile of money the firm looks after. The headline size number. UTI's group AUM is ~₹23.4 lakh crore; its mutual-fund slice is ~₹3.88 lakh crore.</td></tr>
+      <tr><td class="t-strong">QAAUM</td><td>"Quarterly Average AUM" — the average managed balance over a quarter, used because a single day's figure can be distorted by market swings and month-end institutional cash. Fees are effectively earned on average balances, so this is the number that maps to revenue.</td></tr>
+      <tr><td class="t-strong">Fee yield / TER</td><td>The fee expressed in <strong>basis points</strong> (1 bp = 0.01%). "TER" is the Total Expense Ratio — the all-in annual charge a fund levies, capped by SEBI. Equity funds carry a much higher TER (and fee yield) than debt or liquid funds.</td></tr>
+      <tr><td class="t-strong">Equity vs debt/liquid</td><td>The <em>mix</em> of what's in the pot. Equity (stock) funds are the <strong>high-fee, sticky, retail</strong> money. Debt, liquid and index funds are <strong>low-fee</strong>, often institutional, and quicker to leave. Mix decides revenue far more than size does.</td></tr>
+      <tr><td class="t-strong">SIP</td><td>"Systematic Investment Plan" — a fixed monthly contribution into a fund. India's SIP boom is the structural tailwind pouring retail money into equity funds every month, rain or shine.</td></tr>
+      <tr><td class="t-strong">NPS</td><td>"National Pension System" — the government-backed retirement scheme. UTI is a licensed NPS pension-fund manager, and a big one — a large, ultra-low-fee, ultra-sticky pool of long-term money.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one economic idea that makes AMCs special: operating leverage</div>
+    <p>Here is why investors love asset managers. The <em>cost</em> of running a fund — the manager, the research team, the compliance, the technology — is broadly <strong>fixed</strong>. It doesn't cost much more to run a ₹50,000 crore fund than a ₹5,000 crore one. So when AUM grows, almost every extra rupee of fee drops to the bottom line. Profit grows <em>faster</em> than assets. That's operating leverage, and it is why a mature AMC can post operating margins in the 40s or 50s of percent and throw off cash it can pay straight out as dividends. UTI enjoys exactly this leverage — its FY26 operating margin sat in the high-40s. The question is never whether the model works; it's whether UTI can feed it with the <em>right</em> kind of growing AUM.</p>
+  </div>
+
+  <h3>Where the money comes from — the value drivers</h3>
+  <ul class="clean">
+    <li><strong>AUM growth</strong> — more money in the funds, driven by market appreciation and by net inflows (the SIP boom, financialisation of household savings). The tide that lifts every AMC.</li>
+    <li><strong>The mix</strong> — the share of AUM that sits in high-fee equity/retail funds versus low-fee debt, liquid and institutional money. A rupee of equity AUM can earn <em>several times</em> the fee of a rupee of liquid AUM. Mix is the lever that separates a great AMC from a big one.</li>
+    <li><strong>The fee yield</strong> — the blended basis points the firm actually captures, squeezed over time by SEBI's TER caps and by competition, but lifted by a richer equity mix.</li>
+  </ul>
+  <p>Hold those three — <strong>size, mix, yield</strong> — in your head. UTI scores well on one, poorly on the second, and the third is the battleground. The rest of this primer is really about that.</p>
+</section>
+
+<!-- 02 — BESPOKE non-transferable device -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The three AUM numbers: why ₹23 lakh crore earns like ₹3</h2></div>
+  <p class="part-sub">The single idea that unlocks UTI — and it fits no other listed AMC.</p>
+
+  <p class="lead">Every asset manager reports one headline AUM and investors anchor on it. For UTI that instinct is actively misleading, because the firm carries <strong>three completely different piles of money stacked inside one number</strong>, and they earn fees that differ by an order of magnitude. Read this section once and the whole company reorganises itself in your mind.</p>
+
+  <div class="chart">
+    <div class="c-title">The funnel: from a giant AUM to the money that actually pays</div>
+    <div class="c-sub">Approximate FY26 figures — the same firm, three very different fee worlds</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Total group AUM<small>the headline pile</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~23.4 L Cr</div></div>
+      <div class="bar-row"><div class="blab">Mutual-fund QAAUM<small>where fees really live</small></div><div class="track"><span class="fill wtg" style="width:17%"></span></div><div class="bval">~3.88 L Cr</div></div>
+      <div class="bar-row"><div class="blab">Equity MF AUM<small>the high-fee retail core</small></div><div class="track"><span class="fill spec" style="width:12%"></span></div><div class="bval">~2.7 L Cr</div></div>
+      <div class="bar-row"><div class="blab">Core MF revenue<small>the fee actually earned</small></div><div class="track"><span class="fill gold" style="width:5%"></span></div><div class="bval">~1,255 Cr</div></div>
+    </div>
+    <div class="legend"><span>The headline pile is ~₹23.4 lakh crore. But strip out the low-fee retirement, pension and institutional money and the <em>fee-earning</em> mutual-fund book is only ~₹3.88 lakh crore — of which the high-fee equity core is ~₹2.7 lakh crore. The standalone core fee UTI actually collects on all of it is ~₹1,255 crore. Equity-MF AUM is the ~11% of the pile that pays most of the bills.</span></div>
+  </div>
+
+  <p>Look at the collapse from bar to bar. UTI "manages" ₹23.4 lakh crore, a number bigger than the <em>entire</em> AUM of some rival AMCs. But roughly <strong>five-sixths of it is money that barely pays</strong> — government retirement and provident-fund mandates, pension corpuses under NPS, and institutional/advisory assets, all managed at a handful of basis points because they are giant, low-touch and fiercely price-competitive. The fees that fund the salaries, the profits and the dividend come overwhelmingly from a thin top slice: the <strong>equity mutual-fund book</strong>, where the blended fee yield is many multiples of the institutional rate.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits UTI: total AUM → fee AUM → equity AUM</div>
+    <p>Most asset managers you can size with one AUM figure. UTI needs three, and the distance between them <em>is</em> the analysis. A headline of ₹23.4 lakh crore invites you to value UTI like a titan; the ₹3.88 lakh crore fee book says it is a mid-sized fund house; the ~₹2.7 lakh crore equity core says the profitable business is smaller still. Any bull case that leans on the big number is quietly bluffing. The only version of "UTI grows" that matters to profit is <strong>the equity mutual-fund slice growing and taking share</strong> — because a rupee added there is worth several rupees added to the pension pile. Watch the top slice, ignore the headline.</p>
+  </div>
+
+  <div class="note gold"><b>A genuine surprise:</b> a firm can manage a mountain of money and still be a modest earner. UTI's ₹23.4 lakh crore would, at a premium AMC's equity-heavy fee yield, throw off many multiples of what UTI actually books. It doesn't — because most of that mountain is near-zero-fee retirement and institutional money. When you hear "one of India's largest asset managers," remember that <em>large by AUM</em> and <em>large by profit</em> are, for UTI, two very different sentences.</p></div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the history, and who controls it</h2></div>
+  <p class="part-sub">The oldest name in Indian funds — with the strangest ownership on the shelf.</p>
+
+  <p class="lead">UTI's story is inseparable from the history of Indian mutual funds, because for nearly three decades it <em>was</em> the Indian mutual fund. Understanding how today's listed company emerged from that legacy explains both its scale and its peculiar ownership.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1963</div><div class="ev"><strong>Unit Trust of India</strong> is established by a special Act of Parliament — India's first mutual fund, and for years the only way an ordinary saver could own a diversified basket of shares. Its flagship <strong>US-64</strong> scheme became a household name.</div></li>
+    <li><div class="yr">1964–2000</div><div class="ev">UTI dominates. Even after private fund houses were allowed in the 1990s, UTI remained the giant of the industry — a quasi-government institution woven into India's savings culture.</div></li>
+    <li class="major"><div class="yr">2001–2003</div><div class="ev">The <strong>US-64 crisis</strong>: the assured-return legacy schemes proved unsustainable and had to be bailed out. The old UTI was split in two — <strong>SUUTI</strong> (the Specified Undertaking of UTI) took the government-backed legacy schemes, and a new <strong>UTI Asset Management Company</strong> took over the modern, NAV-based mutual-fund business.</div></li>
+    <li><div class="yr">2003–2010</div><div class="ev">The new UTI AMC is owned by four state-controlled financial institutions — <strong>SBI, LIC, Bank of Baroda and Punjab National Bank</strong> — each taking an equal stake. A quasi-government fund house with four public-sector parents and no single boss.</div></li>
+    <li><div class="yr">2010</div><div class="ev">US fund giant <strong>T. Rowe Price</strong> buys a large strategic stake, bringing a global asset manager into the register alongside the four PSUs.</div></li>
+    <li class="major"><div class="yr">Oct 2020</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE (issue price band ~₹552–554, approx.), partly to help the four sponsors trim their holdings toward the level SEBI's cross-holding rules require.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Group AUM ~₹23.4 lakh crore; MF QAAUM ~₹3.88 lakh crore; equity mix ~70:30 within the fund book; reported PAT ~₹404 Cr as investment-book gains fade. MF market share slips toward ~4.76%.</div></li>
+    <li class="major"><div class="yr">2026</div><div class="ev">Press reports (unconfirmed) that the <strong>Tata Group</strong> is in advanced talks to acquire a majority stake — which would end the ownership overhang and hand UTI a single, deep-pocketed parent for the first time in its listed life.</div></li>
+  </ul>
+
+  <h3>Ownership: the governance oddity</h3>
+  <p>Here is something you will not find in almost any other large listed Indian company: <strong>UTI AMC has no promoter</strong>. There is no founding family, no controlling parent, no single entity that runs it. Instead it is owned by a committee of institutions that happen to be <em>competitors</em> to each other in financial services.</p>
+  <ul class="clean">
+    <li><strong>The four PSU sponsors</strong> — <strong>SBI, LIC, Bank of Baroda and Punjab National Bank</strong> — together hold roughly <strong>45% (approx. 45.16%)</strong>. Each of these also runs, or is linked to, a <em>rival</em> mutual fund (SBI Funds, LIC MF, Baroda BNP Paribas, and so on). SEBI's cross-holding rule effectively bars a sponsor of one fund house from owning more than 10% of another AMC — so all four are, in principle, <strong>obliged to keep selling down</strong>. That mandated, overhanging supply of stock is a long-running weight on the shares.</li>
+    <li><strong>T. Rowe Price</strong> — the global US manager holds around <strong>23%</strong>, the largest single shareholder and UTI's strategic foreign partner.</li>
+    <li><strong>The float</strong> — the rest sits with domestic and foreign institutions and the public (shareholding as of mid-2026: roughly DII ~60%, FII ~7%, public ~34%, with no "promoter" category at all).</li>
+  </ul>
+
+  <div class="note gold"><b>Why the ownership matters so much:</b> a company run by four rival PSUs plus a foreign fund, with no single controlling mind and a legal obligation on the largest holders to keep selling, is structurally short of two things a growth business craves — <strong>decisive strategy and a supportive anchor shareholder</strong>. That is a large part of why UTI has been a laggard rather than a leader, and why a clean change of control (the reported Tata interest) would be such a big deal: it would finally give the oldest fund house in India a single owner with a reason to make it win.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The mutual-fund fee engine</h2></div>
+  <p class="part-sub">The ~₹3.88 lakh crore book that pays for almost everything.</p>
+
+  <p class="lead">Strip away the pension and institutional money and you reach the heart of UTI as a business: <strong>UTI Mutual Fund</strong>. This is the fee engine — the pool where a higher blended yield turns AUM into the revenue that funds the whole enterprise. It comes in three flavours, and they are not created equal.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">Inside the mutual-fund book — three fee worlds under one roof</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">High fee</div><div class="nname">Active equity</div><div class="nwho">Stock funds; retail SIP money. Highest TER, stickiest cash — the profit core.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Low fee</div><div class="nname">Debt &amp; liquid</div><div class="nwho">Bond and money-market funds; largely institutional, price-sensitive, quick to move.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Ultra-low fee</div><div class="nname">Index &amp; ETF (passive)</div><div class="nwho">Tracks an index at near-zero cost. Fast-growing — ~₹1.76 L Cr — but wafer-thin margin.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Blended</div><div class="nname">The fee UTI keeps</div><div class="nwho">~₹1,255 Cr standalone core revenue on ~₹3.88 L Cr — a blended yield of only ~32 bps.</div></div>
+    </div>
+    <div class="flow-note">The mix decides the yield. UTI's ~70:30 equity-to-non-equity ratio is actually better than the industry's ~61:39 — but a heavy and fast-growing passive slice, plus fierce fee competition, holds the blended yield down.</div>
+  </div>
+
+  <h3>The numbers that matter</h3>
+  <ul class="clean">
+    <li><strong>Size:</strong> mutual-fund QAAUM of <strong>~₹3.88 lakh crore</strong> in FY26, up ~14% year on year — real growth, riding the same SIP wave lifting the whole industry.</li>
+    <li><strong>Mix:</strong> the equity-to-non-equity ratio within the fund book is about <strong>70:30</strong>, versus an industry average nearer <strong>61:39</strong>. On this measure UTI is <em>more</em> equity-tilted than the average house — a genuinely underappreciated point, and a foundation the turnaround can build on.</li>
+    <li><strong>Passive surge:</strong> index and ETF QAAUM has climbed to roughly <strong>₹1.76 lakh crore</strong> (up ~25%). Growth, yes — but passive is a race to the bottom on fees, so it swells AUM while barely moving revenue.</li>
+    <li><strong>Yield:</strong> standalone core revenue of ~₹1,255 crore over a ~₹3.88 lakh crore book implies a blended fee yield of only <strong>~32 basis points (approx.)</strong> — respectable for the mix, but under permanent downward pressure.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Where does the money actually reach UTI? Through distribution</div>
+    <p>An AMC does not usually sell funds face-to-face; it relies on <strong>distributors</strong> — banks, national wealth chains, and a vast army of mutual-fund distributors (MFDs) and advisers — plus its own branches and the direct/digital channel. UTI's historic strength was reach into smaller towns (B-30 cities) through that legacy network. Its historic weakness has been <em>brand desirability</em> with the newer, urban, app-native investor, and shelf space at the big bank distributors that favour their own or larger houses. Winning back equity share is, in practice, a distribution and brand fight as much as an investment-performance one — and that is a slow, grinding contest.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The market-share problem</h2></div>
+  <p class="part-sub">Growing — but slower than the pie. The laggard's core complaint.</p>
+
+  <p class="lead">India's mutual-fund industry is in a historic boom: monthly SIP flows keep hitting records, household savings keep shifting from bank deposits and gold into funds, and total industry AUM keeps compounding. In that environment, almost every AMC's assets rise. The real scoreboard is not "did AUM grow?" — it nearly always does — but <strong>"did we grow faster or slower than everyone else?"</strong> On that scoreboard, UTI has been slipping.</p>
+
+  <div class="chart">
+    <div class="c-title">UTI's mutual-fund market share is drifting down</div>
+    <div class="c-sub">Approximate share of industry mutual-fund AUM — smaller slice of a bigger pie</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Mar 2025</div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~5.04%</div></div>
+      <div class="bar-row"><div class="blab">Q2 FY26<small>interim</small></div><div class="track"><span class="fill spec" style="width:97%"></span></div><div class="bval">~4.91%</div></div>
+      <div class="bar-row"><div class="blab">Mar 2026</div><div class="track"><span class="fill bad" style="width:94%"></span></div><div class="bval">~4.76%</div></div>
+    </div>
+    <div class="legend"><span>UTI's assets still grew (MF QAAUM +14%), but its <em>share</em> of the industry fell from ~5.04% to ~4.76% over FY26. In a boom, standing still means falling behind — and losing share of the high-fee equity pool is the version of this that hurts profit most.</span></div>
+  </div>
+
+  <p>Why does the oldest, most storied fund house keep ceding ground? A few structural reasons compound:</p>
+  <ul class="clean">
+    <li><strong>Brand fatigue with the new investor.</strong> The fastest-growing pool of money is young, urban and digital-first. That saver reaches for the houses with the loudest brands and the slickest apps — HDFC, ICICI, Nippon, SBI — where UTI, a quasi-government name, does not lead the consideration set.</li>
+    <li><strong>Distribution disadvantage.</strong> Bank-owned AMCs get a captive push through their parent's branches and relationship managers. UTI has no big bank parent selling its funds first, so it competes for third-party shelf space against houses that can offer distributors more.</li>
+    <li><strong>Performance and product cycles.</strong> Flows chase recent returns and hot categories. Any stretch of middling fund performance, or being under-weight the flavour of the season, quietly bleeds share to rivals.</li>
+    <li><strong>The passive shift.</strong> Where UTI <em>is</em> winning volume — index and ETF — is precisely where fees are thinnest, so share won there does little for revenue.</li>
+  </ul>
+
+  <div class="note gold"><b>The distinction that matters:</b> not all share loss is equal. Ceding a bit of low-fee liquid or institutional AUM barely dents profit. Ceding <strong>equity</strong> share — retail SIP money that would have compounded at a rich fee for years — is the expensive kind. The thesis-settling question is narrow and specific: is UTI's <em>equity</em> share stabilising, or still bleeding? That one line decides whether this is a turnaround or a slow melt.</div>
+</section>
+
+<!-- 06 — BESPOKE crux: the equity-mix / fee-yield lever -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The equity-mix / fee-yield lever</h2></div>
+  <p class="part-sub">The core turnaround idea — a mix shift, not just growth.</p>
+
+  <p class="lead">Here is the mechanism that decides whether UTI re-rates or stagnates. Because equity AUM earns several times the fee of debt, liquid or passive AUM, UTI's revenue depends far more on <strong>what kind of money it manages</strong> than on how much. The entire upside case is a <strong>mix shift</strong> — lifting the equity and retail share of the fee book to raise the blended yield — layered on top of ordinary market growth. Get the mix right and revenue climbs faster than AUM; leave the mix flat and UTI simply drifts with the market at a low yield.</p>
+
+  <div class="chart">
+    <div class="c-title">Why a rupee of equity beats a rupee of liquid</div>
+    <div class="c-sub">Illustrative blended fee yields by fund type — the reason mix dominates size</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Active equity<small>retail / SIP</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~high</div></div>
+      <div class="bar-row"><div class="blab">Hybrid / solution</div><div class="track"><span class="fill spec" style="width:62%"></span></div><div class="bval">~mid</div></div>
+      <div class="bar-row"><div class="blab">Debt / liquid</div><div class="track"><span class="fill epc" style="width:26%"></span></div><div class="bval">~low</div></div>
+      <div class="bar-row"><div class="blab">Index / ETF<small>passive</small></div><div class="track"><span class="fill ink" style="width:9%"></span></div><div class="bval">~tiny</div></div>
+    </div>
+    <div class="legend"><span>Schematic, not exact bps: an active equity fund can earn many times the fee of a liquid or index fund on the same rupee. That is why lifting the equity/retail share — not just growing total AUM — is the lever that moves UTI's revenue and margin.</span></div>
+  </div>
+
+  <p>The encouraging part, and it is easy to miss, is that UTI's mutual-fund mix is <em>already</em> more equity-tilted than the industry average (~70:30 vs ~61:39). So the turnaround is not starting from a debt-heavy base and hoping — it is a fund house that already skews to the profitable stuff, trying to <strong>grow that profitable stuff faster than rivals</strong> rather than merely defend it. The obstacles are the ones from the last section: brand pull, distribution reach, and the passive drift diluting yield even as it adds AUM.</p>
+
+  <div class="plain">
+    <div class="ptag">The lever, stated plainly</div>
+    <p>Two AMCs can manage the identical ₹4 lakh crore and one earns nearly double the revenue of the other — purely because one holds mostly equity and the other mostly liquid. That is the whole game, and it is why "UTI grew AUM 14%" tells you almost nothing on its own. What you actually need is: did the <em>equity</em> book grow faster than the debt/passive book, so the blended yield rose? If yes, operating leverage does the rest and profit accelerates. If the growth came from low-fee passive and institutional money, AUM looks great and revenue barely moves. For UTI, the mix shift <em>is</em> the investment case — everything else is weather.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~70:30</div><div class="msl">UTI's equity-to-non-equity MF mix — better than the ~61:39 industry average</div></div>
+    <div class="ms gold"><div class="msv">~32 bps</div><div class="msl">Blended MF fee yield (approx.) — the number the mix shift must lift</div></div>
+    <div class="ms red"><div class="msv">~4.76%</div><div class="msl">MF market share, down from ~5.04% — the share the lever must reverse</div></div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The hidden retirement giant</h2></div>
+  <p class="part-sub">The pension and provident-fund business almost nobody prices — a huge, sticky, low-fee annuity.</p>
+
+  <p class="lead">Return to that ₹23.4 lakh crore headline. The reason it dwarfs the fund book is that UTI is not only a mutual-fund house — it is one of India's largest managers of <strong>retirement money</strong>. This is the quiet, structural asset that makes UTI genuinely different from a pure mutual-fund peer, and it deserves its own section.</p>
+
+  <h3>National Pension System (NPS)</h3>
+  <p>Through <strong>UTI Pension Fund Ltd</strong> (formerly UTI Retirement Solutions), the group is one of a small number of licensed NPS pension-fund managers. Its NPS AUM reached roughly <strong>₹4.01 lakh crore</strong> at March 2026 — about <strong>24% of the entire NPS industry</strong>, making UTI one of the two or three biggest players in India's fast-growing government pension architecture. NPS money is the opposite of hot: it is retirement savings, locked in for decades, drip-fed monthly by millions of government and private employees. It pays a <em>tiny</em> fee (pension-fund charges are deliberately minuscule), but it is arguably the stickiest AUM in all of Indian finance.</p>
+
+  <h3>Government and institutional mandates</h3>
+  <p>Beyond NPS, UTI manages large <strong>retirement, provident-fund and institutional corpuses</strong> on behalf of public bodies and institutions — the kind of long-horizon money that public retirement funds place with a handful of trusted, quasi-government managers. This is the bulk of the gap between the ₹3.88 lakh crore fund book and the ₹23 lakh crore total. It earns a whisper of a fee per rupee, but at that scale even a whisper is a real, stable revenue line — and the mandates almost never move.</p>
+
+  <div class="plain">
+    <div class="ptag">Why a low-fee annuity is still worth owning</div>
+    <p>A pension mandate that earns, say, a couple of basis points sounds trivial next to a 100-bps equity fund. But it has three virtues an equity fund lacks: it is <strong>enormous</strong>, it is <strong>permanent</strong> (retirement money does not chase last quarter's returns and leave), and it grows <strong>automatically</strong> as India's formal workforce and pension coverage expand. It will never be the profit engine — that is the equity book — but it is ballast that keeps paying through every market cycle, and it gives UTI a structural foothold in India's retirement build-out that a pure fund house simply does not have. Whoever ends up owning UTI is also buying a front-row seat in the pensionisation of India.</p>
+  </div>
+
+  <div class="note gold"><b>The overlooked part of the story:</b> most investors size UTI as "a smallish AMC losing MF share." Fewer notice that it is simultaneously a <em>top-tier</em> pension manager sitting on ~24% of NPS and a mountain of institutional retirement money. That book won't rescue a weak equity franchise — but it is a real, defensible, compounding annuity that the market largely values at zero.</div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Offshore, PMS &amp; alternatives</h2></div>
+  <p class="part-sub">The smaller pockets that round out the platform.</p>
+
+  <p class="lead">Beyond mutual funds and retirement money, UTI runs a set of smaller businesses that broaden the platform and diversify the fee base. None is large enough to move the whole company on its own, but together they mark UTI out as a full-spectrum asset manager rather than a single-product fund house.</p>
+
+  <ul class="clean">
+    <li><strong>Offshore / international funds.</strong> Through <strong>UTI International</strong> (with operations in jurisdictions such as Guernsey, London, Dubai and Singapore), UTI manages money for foreign and NRI investors who want India exposure, plus India-dedicated funds sold overseas. It is one of the longer-established Indian AMCs in the offshore game — a modest but genuinely differentiated, hard-currency fee stream.</li>
+    <li><strong>Portfolio Management Services (PMS) &amp; advisory.</strong> Discretionary and advisory mandates for large clients — much of it the institutional and retirement money discussed earlier, plus advisory work. Big on AUM, thin on fee, but sticky.</li>
+    <li><strong>Alternatives (AIF).</strong> A growing but still small book of Alternative Investment Funds — private and specialised strategies for wealthy and institutional investors. This is where the industry's future high-fee growth partly lies, and UTI is building presence rather than leading.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the spread of businesses matters</div>
+    <p>A pure equity-mutual-fund house lives and dies by one market and one product cycle. UTI's spread — domestic funds, offshore, PMS, NPS, alternatives — means its revenue does not rest on a single lever. That diversification is real, and it is part of why the retirement and offshore books make UTI more resilient than its MF market share alone suggests. The flip side is focus: a firm spread across five businesses, none of them dominant, can struggle to build the concentrated, brand-leading equity franchise that actually commands a premium valuation. Breadth is ballast; it is not, by itself, a re-rating.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A consolidating shelf of scaled AMCs — and the passive wave underneath.</p>
+
+  <p class="lead">Indian asset management is a scale game dominated by a handful of large houses. The listed AMC comparison set is short, and UTI sits firmly in the second tier by profitability and valuation, not the first. It is important to be precise about who is a rival and who merely looks like one.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs UTI</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">UTI AMC</td><td>Oldest fund house; ~4.76% MF share; huge low-fee retirement book; cheap valuation</td><td><em>This company.</em> The value-priced laggard — better equity mix than average, but losing share and lacking a decisive owner.</td></tr>
+      <tr><td class="t-strong">HDFC AMC</td><td>The premium leader — large, equity-heavy, superb margins</td><td>The benchmark UTI is measured against. Commands a rich multiple UTI does not; the gap is the entire "cheap vs premium" debate.</td></tr>
+      <tr><td class="t-strong">Nippon Life India AMC</td><td>Large, listed, strong retail and B-30 reach</td><td>A direct scale rival that has gained retail share where UTI has lost it; also listed, so a live valuation comparison.</td></tr>
+      <tr><td class="t-strong">ICICI Pru / SBI Funds / ABSL AMC</td><td>Bank-parented giants (SBI, ICICI unlisted; ABSL listed)</td><td>Backed by captive bank distribution UTI lacks. SBI Funds in particular is a share-gaining PSU-linked juggernaut.</td></tr>
+      <tr><td class="t-strong">Kotak, Axis, Mirae &amp; others</td><td>Mid-to-large houses competing hard for equity flows</td><td>Each chips at the same retail equity pool UTI needs to win back; brand and performance battles.</td></tr>
+      <tr><td class="t-strong">Passive / index &amp; fintech</td><td>Low-cost ETFs and app-first platforms</td><td>Not a single rival but a structural force compressing active-fund economics industry-wide — the long-term margin threat.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note gold"><b>Who is NOT a competitor — an important distinction:</b> firms like <strong>CAMS</strong> and <strong>KFin Technologies</strong> are often lumped in with AMCs, but they are <em>registrar and transfer agents</em> — the record-keeping plumbing that services the funds. They earn on industry AUM growth without taking market or fee-yield risk, and they sell <em>to</em> AMCs like UTI; they do not compete for investors' money. UTI is on the other side of that fence: it is the actual manager that bears the market beta, the fee-yield squeeze and the share fight. Do not model UTI as if it were a servicer — its economics are riskier and its upside is bigger.</div>
+
+  <div class="plain">
+    <div class="ptag">The force reshaping the whole shelf</div>
+    <p>Two currents run under the entire industry. First, <strong>consolidation and scale</strong>: distribution, compliance and technology costs reward the biggest houses, squeezing sub-scale players. Second, <strong>passive and fee compression</strong>: as index funds and ETFs grow and SEBI keeps tightening expense-ratio caps, the fat fees of active management thin out year by year. Both currents favour the large, equity-brand leaders and pressure everyone else. UTI's task is to stay relevant enough — in brand, performance and reach — to keep a profitable equity franchise while these tides run. Being cheap is not the same as being safe from them.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; the own-book quirk</h2></div>
+  <p class="part-sub">A steady fee engine — bolted to a swinging investment portfolio.</p>
+
+  <p class="lead">UTI's income statement has two engines, and confusing them is the most common mistake in reading its results. One is the <strong>fee business</strong> — steady, growing, high-margin. The other is UTI's <strong>own investment book</strong> — the surplus capital and seed money it parks in its own funds and other securities, which is marked to market every quarter and swings with the market. In a good market that book flatters profit; in a weak one it clobbers it. FY26 was the clobbering year.</p>
+
+  <div class="chart">
+    <div class="c-title">FY26 vs FY25 — the fee engine grew, reported profit fell</div>
+    <div class="c-sub">₹ Crore, consolidated (approx.) — the gap is the investment book, not the business</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue FY25</div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~1,851</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY26</div><div class="track"><span class="fill brand" style="width:92%"></span></div><div class="bval">~1,698</div></div>
+      <div class="bar-row"><div class="blab">Reported PAT FY25</div><div class="track"><span class="fill wtg" style="width:44%"></span></div><div class="bval">~813</div></div>
+      <div class="bar-row"><div class="blab">Reported PAT FY26</div><div class="track"><span class="fill spec" style="width:22%"></span></div><div class="bval">~404</div></div>
+    </div>
+    <div class="legend"><span>Total income fell ~8% and reported PAT ~45% — but that overstates the damage. FY25's ₹813 Cr was inflated by <em>gains</em> on UTI's own investment book in a strong market; FY26's fall largely reflects those gains reversing, not the fee business shrinking. Core operating revenue (sale of services) actually <strong>grew</strong>.</span></div>
+  </div>
+
+  <p>Peel the two engines apart and the picture is far calmer than the headline "profit down 45%." <strong>Core revenue from selling fund-management services rose</strong> (standalone core income climbed to ~₹1,255 Cr from ~₹1,180 Cr), and on a <em>normalised</em> basis — stripping out the mark-to-market noise — consolidated PAT was roughly <strong>₹450–510 crore</strong>, a far gentler move. The dramatic reported drop, and even a small <strong>net loss of ~₹64 crore in the March 2026 quarter</strong>, came chiefly from investment-book losses in a soft market, not from the fee franchise deteriorating.</p>
+
+  <div class="plain">
+    <div class="ptag">The double dose of market beta — the surprise in the P&amp;L</div>
+    <p>Most people assume an asset manager's only link to the market is that fees rise and fall with AUM. UTI has that link <em>twice over</em>. Its fee revenue tracks the market through AUM — and its <em>own</em> balance-sheet investments (seed capital in its funds, surplus cash in securities) are marked to market and hit reported profit directly. So a bad market quarter can turn a fee business that grew into a company that reports a loss. That is exactly what happened in Q4 FY26. When you judge UTI's earnings, separate the fee engine (the business) from the investment book (the weather) — otherwise a market wobble reads as a broken company, which it is not.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~high-40s%</div><div class="msl">FY26 operating margin — the fee model's operating leverage intact</div></div>
+    <div class="ms green"><div class="msv">~₹40/sh</div><div class="msl">Final dividend proposed for FY26; dividend yield ~4% — it pays you to wait</div></div>
+    <div class="ms red"><div class="msv">~₹64 Cr</div><div class="msl">Q4 FY26 net loss — driven by investment-book mark-to-market, not fees</div></div>
+  </div>
+
+  <div class="note">Reported and normalised profit figures differ across sources because of how one-off and mark-to-market items are treated; FY26 consolidated reported PAT is variously cited around <b>₹404–472 Cr</b>. Treat the exact figure as <b>approx.</b> and the direction — core fees up, reported profit down on investment-book reversal — as the reliable story. Verify against UTI's audited results before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>Valuation — the cheap laggard vs the premium leaders</h2></div>
+  <p class="part-sub">A wide discount to the shelf — deserved, or an opportunity?</p>
+
+  <p class="lead">UTI is, on the numbers, the value stock of the listed AMC shelf. At a market capitalisation near <strong>₹12,083 crore</strong>, a P/E around <strong>25–26×</strong>, a book value near ₹350 a share, and a dividend yield close to <strong>4%</strong>, it trades at a marked discount to premium leaders like HDFC AMC, which command far richer multiples. The debate is whether that discount reflects a permanently sub-scale, share-losing franchise — or a mispriced pile of AUM, pension annuity and dividend that the market has written off too hard.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What the market is paying for (approx., mid-2026)</caption>
+    <thead><tr><th>Metric</th><th class="num">UTI AMC</th><th>Read-through</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Market cap</td><td class="num">~₹12,083 Cr</td><td>Small for the oldest fund house; ~0.5% of total AUM, ~3% of the fee-earning MF book.</td></tr>
+      <tr><td class="t-strong">P/E</td><td class="num">~25.7×</td><td>A deep discount to premium AMCs (often 30–40×+); the "laggard" is priced in.</td></tr>
+      <tr><td class="t-strong">Dividend yield</td><td class="num">~4.25%</td><td>Fat and well-covered — the model's cash generosity pays you to be patient.</td></tr>
+      <tr><td class="t-strong">ROE</td><td class="num">~10%</td><td>Modest for an AMC (leaders run far higher) — the low-yield mix and big equity base weigh on returns.</td></tr>
+      <tr><td class="t-strong">MF share trend</td><td class="num">~4.76% ↓</td><td>The problem in one figure — a smaller slice of a booming pie.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: the equity-QAAUM share line</div>
+    <p>At ~25× earnings and a ~4% yield, UTI is not priced for greatness — it is priced for slow decline. So the case is settled not by total AUM (which grows with the market regardless) and not by the pension book (a valuable but static annuity), but by <strong>UTI's share of the industry's <em>equity</em> mutual-fund assets</strong> — read alongside the <strong>blended fee yield</strong> and the <strong>operating margin</strong>. If equity share stops falling and starts to hold or tick up, the blended yield firms, operating leverage lifts margins, and a 25× stock with a 4% yield looks far too cheap. If equity share keeps bleeding to HDFC, Nippon and SBI Funds, the discount is deserved and the dividend is the only return. Everything else — the ₹23 lakh crore headline, the offshore book, the alternatives push — is second-order. Watch the equity-share line each quarter; it is the scoreboard.</p>
+  </div>
+
+  <div class="note gold"><b>The wildcard that could reprice everything:</b> the reported (and unconfirmed) prospect of the <strong>Tata Group</strong> taking a majority stake. A single, ambitious, brand-rich owner replacing a fractious four-PSU consortium would resolve the governance overhang, remove the forced-selling pressure on the shares, and potentially inject the distribution and brand muscle UTI has lacked. That is a genuine re-rating catalyst that has nothing to do with next quarter's flows — and, being unconfirmed, a genuine risk if it falls through. Track the deal news directly; treat it as optionality, not fact.</div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A cheap annuity with a real problem — and a possible new owner.</p>
+
+  <p class="lead">UTI enters the next phase as the odd one out among Indian AMCs: the oldest name, the biggest retirement book, a better-than-average equity mix — yet a share-loser trading at a discount, run by a committee with no controlling mind. The candid debate is whether the equity franchise can be stabilised before the passive-and-competition tide grinds it down, and whether a change of control finally gives it the owner it has never had.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Cheap with a paid wait</strong> — ~25× earnings and a ~4% dividend yield price in decline; any stabilisation re-rates the stock, and you're paid to hold meanwhile.</li>
+        <li><strong>Better mix than it gets credit for</strong> — ~70:30 equity-tilted fund book, more profitable than the ~61:39 industry average; the base for a yield-lifting turnaround already exists.</li>
+        <li><strong>Hidden retirement annuity</strong> — ~₹4 lakh crore NPS book (~24% share) plus giant institutional mandates, a sticky compounding asset the market values near zero.</li>
+        <li><strong>Ownership catalyst</strong> — a reported majority-stake sale (Tata) would end the governance overhang and hand UTI a decisive, distribution-rich parent.</li>
+        <li><strong>Structural SIP tailwind</strong> — India's financialisation of savings keeps the equity pool growing; UTI only has to keep its slice to compound.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Share loss is the base rate</strong> — MF share has drifted from ~5.04% to ~4.76%; the burden of proof is on any reversal, not the continued slide.</li>
+        <li><strong>Fee-yield compression</strong> — SEBI TER cuts, passive growth and price competition grind blended yields down industry-wide; UTI's low-fee mountain caps its upside.</li>
+        <li><strong>Double market beta</strong> — fees track AUM <em>and</em> the own investment book is marked to market, so a market fall hits UTI's reported profit twice, as Q4 FY26's loss showed.</li>
+        <li><strong>Governance / forced selling</strong> — four PSU sponsors legally nudged to keep selling down; strategy by committee; a deal that may not happen.</li>
+        <li><strong>Competitive squeeze</strong> — HDFC, Nippon, SBI Funds and passive players out-distribute and out-brand UTI for the very equity flows it needs.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>UTI is the oldest fund house in India selling at the price of a fading one — a genuinely cheap annuity wrapped around a genuine problem. The retirement book is a real, undervalued asset; the fee model's operating leverage is intact; the dividend is fat and covered. But none of that fixes the thing that actually ails it: a proud equity franchise that keeps ceding ground to hungrier, better-owned rivals in the middle of the biggest fund boom India has ever seen. The next chapters will be written in two specific places — <strong>the monthly direction of UTI's equity market share</strong>, and <strong>whether a new controlling owner arrives to change the trajectory</strong>. Stabilise the first, or resolve the second, and the discount closes. Do neither, and the market will keep paying you a 4% dividend to own the past.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>UTI Asset Management Company Ltd — Q4 &amp; FY26 results and investor disclosures (year ended Mar 2026), via company filings on BSE/NSE.</li>
+    <li>Business Standard — "UTI AMC Q4FY26 result: Net loss at ₹64 cr, revenue rises 4% to ₹390 cr."</li>
+    <li>Univest / ScanX — "UTI AMC Q4 FY26 Results: FY26 PAT ₹460 Cr (standalone), Revenue ₹1,255 Cr, Dividend ₹40/Share."</li>
+    <li>Multibagg — "UTI AMC FY26: Strong AUM engine, lower reported profits, push toward passive and digital."</li>
+    <li>Business Today — "UTI AMC shares tumble 11% after Q4 FY26 results; here's why."</li>
+    <li>Angel One / Outlook Business — UTI AMC FY26 results, PAT decline and ₹40 final dividend coverage.</li>
+    <li>UTI Pension Fund / NPS Trust data — UTI Pension Fund AUM ~₹4.01 lakh crore, ~24% NPS industry share (Mar 2026).</li>
+    <li>Screener.in — UTI AMC consolidated financials, market cap ~₹12,083 Cr, P/E ~25.7, book value, ROE/ROCE, dividend yield, shareholding.</li>
+    <li>BSE India — UTI Asset Management Company Limited, scrip code 543238 (ISIN INE094J01016); NSE symbol UTIAMC.</li>
+    <li>Private Banker International — "Tata Group in final round of talks to acquire majority stake in UTI AMC" (reported, unconfirmed).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; certain items (segment AUM splits, fee yields, normalised profit and the reported change-of-control talks) are estimates or unconfirmed and are flagged as approx. in the text. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "UTIAMC";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
