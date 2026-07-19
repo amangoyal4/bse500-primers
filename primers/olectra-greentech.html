@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olectra Greentech — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F6F5;
+    --paper-2:#FAFCFB;
+    --card:#FFFFFF;
+    --ink:#14201F;
+    --ink-soft:#53615F;
+    --ink-faint:#889492;
+    --brand:#145A73;          /* deep electric-blue */
+    --brand-bright:#1E7FA0;   /* electric-blue accent */
+    --gold:#D9883C;           /* warm amber - accent / warmth */
+    --wtg:#1E7FA0;            /* electric-bus manufacture */
+    --epc:#3A9BB8;            /* GCC deploy / operate */
+    --om:#0E4A5E;            /* per-km annuity */
+    --spec:#2C7A6E;          /* insulator cash engine (teal-green cross accent) */
+    --line:#D8DEDC;
+    --line-soft:#E6EAE8;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4F1F4;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F9F8;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAEEEC;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#145A73,#1E7FA0);}
+  .fill.gold{background:linear-gradient(90deg,#D9883C,#E7A75C);}
+  .fill.wtg{background:linear-gradient(90deg,#1E7FA0,#3A9BB8);}
+  .fill.om{background:linear-gradient(90deg,#0E4A5E,#1B6A82);}
+  .fill.spec{background:linear-gradient(90deg,#2C7A6E,#3FA090);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a47,#566461);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3F0;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> The e-bus &amp; GCC model 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> Two engines: what Olectra sells</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company, MEIL &amp; who controls it</a></li>
+    <li><a href="#p4"><span class="n">04</span> The BYD partnership &amp; localisation</a></li>
+    <li><a href="#p5"><span class="n">05</span> The electric-bus business up close</a></li>
+    <li><a href="#p6"><span class="n">06</span> Order book → delivery: the crux</a></li>
+    <li><a href="#p7"><span class="n">07</span> GCC economics &amp; the capital trap</a></li>
+    <li><a href="#p8"><span class="n">08</span> The insulator cash engine</a></li>
+    <li><a href="#p9"><span class="n">09</span> Why India is electrifying buses</a></li>
+    <li><a href="#p10"><span class="n">10</span> The industry &amp; rivals</a></li>
+    <li><a href="#p11"><span class="n">11</span> Financials &amp; valuation</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: OLECTRA · BSE: 532439</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Olectra Greentech, <em>the bus-maker with a 10,000-vehicle promise</em></h1>
+  <p class="dek">A complete walk through India's largest pure-play electric-bus manufacturer — how a company builds e-buses on Chinese (BYD) technology and sells them to state transport bodies under a decade-long pay-per-kilometre contract, why the entire story lives in the gap between buses <em>ordered</em> and buses <em>delivered</em>, and how a small, quietly lucrative power-line-insulator business bankrolls the whole electric-mobility bet.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹2,312 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">1,280 <small>EVs</small></div><div class="l">Deliveries FY26 (record)</div></div>
+    <div class="cell"><div class="v">~15% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹12,300 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">19 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹2,312 Cr (+28%), EBITDA ₹352 Cr, PAT ₹180 Cr, a record 1,280 EV deliveries and an order book past 10,000 vehicles; added the order-book-to-delivery conversion section and the insulator cash-engine breakdown.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Olectra Greentech makes <strong>electric buses</strong> — the big, quiet, battery-powered city and intercity buses replacing India's diesel fleet — and it is <strong>India's largest pure-play electric-bus manufacturer</strong>. It builds them at a plant near Hyderabad using technology from <strong>BYD of China</strong> (the world's biggest maker of electric vehicles and e-buses), and sells them overwhelmingly to <strong>state transport undertakings</strong> — the government bus corporations of states like Telangana, Maharashtra and others. Alongside the buses sits an older, smaller, and quietly very profitable business: <strong>composite polymer insulators</strong> for high-voltage power-transmission lines. Olectra is majority-owned by <strong>MEIL Holdings</strong> — part of the giant unlisted Hyderabad infrastructure group <strong>Megha Engineering &amp; Infrastructures (MEIL)</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>The order book is enormous; delivering it is the whole job.</strong> Olectra exited FY26 with an order book of <strong>over 10,000 vehicles</strong> — a mountain of tendered demand. Yet it <em>delivered</em> just <strong>1,280 EVs</strong> in FY26 (a record year, up ~32%), and has ~<strong>3,800 vehicles deployed</strong> and running across the country. At that pace the backlog is many years of work. The distance between "ordered" and "delivered" is the entire investment debate — not order wins.</li>
+    <li><strong>Two very different engines under one roof.</strong> The <strong>electric-mobility</strong> division did ~₹1,987 Cr of FY26 revenue (~86% of the total); the <strong>energy / insulator</strong> division did just ~₹325 Cr — but that small business earned a segment profit of ~₹112 Cr, a margin north of <strong>~34%</strong>. The buses are the growth story; the insulators are the cash that quietly de-risks it.</li>
+    <li><strong>It rides India's public-transport electrification — richly priced.</strong> FY26 revenue rose ~28% to ₹2,312 Cr, EBITDA ~₹352 Cr (a ~15% margin), and PAT ~₹180 Cr (+29%). The stock trades near <strong>~65× earnings</strong> on a market cap of ~₹12,300 Cr — a valuation that prices in years of flawless order-book conversion.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Olectra is really two companies stapled together. One is a fast-growing electric-bus manufacturer that keeps winning giant government tenders but is judged on a harder question — how many of those buses it actually builds, delivers and gets running each year. The other is a small, dull, decades-old business making the ceramic-replacement insulators that hang power lines, which throws off cash at margins the bus business can only dream of. The bet is that the buses become India's default public transport while the insulators keep the lights on financially. The catch: an order for 10,000 buses is a promise, and Olectra has to fund and build them years before the money fully comes back.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>The e-bus &amp; GCC model 101: how an electric bus earns its keep</h2></div>
+  <p class="part-sub">No engineering needed — just the handful of terms that drive the whole business.</p>
+
+  <p class="lead">An electric bus is a bus with a big battery instead of a diesel engine. It costs far more to buy up front (the battery alone is a large share of the price) but far less to run per kilometre (electricity is cheap, and there is almost no engine to service). That single trade — <strong>high up-front cost, low running cost</strong> — is the reason the whole industry is shaped the way it is. A cash-strapped state bus corporation cannot easily write a huge cheque to buy hundreds of expensive e-buses outright. So India invented a way around it. To follow Olectra, you need five terms.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only vocabulary you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">STU</td><td>"State Transport Undertaking" — the government-owned bus corporation of a state (e.g. TSRTC, MSRTC, BEST in Mumbai). These are Olectra's <strong>main customers</strong>. They run public buses and are usually loss-making and cash-tight — which shapes how they buy.</td></tr>
+      <tr><td class="t-strong">GCC / OPEX</td><td>"Gross Cost Contract," also called the OPEX model. Instead of buying the bus, the STU pays the supplier a fixed rate <strong>per kilometre run</strong>, typically for <strong>~12 years</strong>. Olectra builds, owns, operates and maintains the bus; the STU just runs the routes and pays per km. This is how most of India's e-buses are procured.</td></tr>
+      <tr><td class="t-strong">FAME / PM e-Bus Sewa</td><td>The central-government subsidy schemes that pay part of the e-bus cost. <strong>FAME-II</strong> seeded the first big tenders; <strong>PM e-Bus Sewa</strong> targets ~10,000 e-buses across ~169 cities. These schemes are the demand tap — and the policy risk.</td></tr>
+      <tr><td class="t-strong">Order book</td><td>The stock of buses Olectra has <em>won</em> in tenders but not yet delivered. Over <strong>10,000 vehicles</strong> at FY26 exit. A forward indicator of demand — but only a promise until each bus is built and deployed.</td></tr>
+      <tr><td class="t-strong">Deployment</td><td>A bus is only earning once it is <em>delivered and running</em> on a route. Olectra had ~<strong>3,800 vehicles deployed</strong> nationwide by FY26. Under GCC, deployment is the moment the per-km meter starts ticking.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The economics that decide everything: build now, collect per-km for a decade</div>
+    <p>Here is the crux of the GCC model, and why it is both brilliant and dangerous. Olectra spends the full cost of a bus — chassis, body, and an expensive battery — <em>up front</em>. Then it collects that money back slowly, a few rupees per kilometre, spread over roughly twelve years of the bus running its routes. So a big order win is not a windfall; it is a large <em>outflow</em> of cash today in exchange for a long, thin, annuity-like stream tomorrow. Win a thousand-bus GCC order and you have just signed up to fund a thousand buses out of your own pocket for years before the per-km payments repay you. That is why the electric-bus business is described as <strong>capital-hungry and slow-cash</strong>, and why the balance sheet — not the order book — is the thing that actually limits how fast Olectra can grow.</p>
+  </div>
+
+  <h3>How Olectra actually gets paid</h3>
+  <ul class="clean">
+    <li><strong>GCC / OPEX (the bulk)</strong> — Olectra owns and operates the bus and bills the STU per kilometre for ~12 years. Long, recurring, but front-loaded with cost. Working-capital intensive.</li>
+    <li><strong>Outright sale</strong> — some buyers (certain STUs, private operators, staff/employee transport) buy the bus outright. Cash comes in fast, but Olectra loses the long annuity tail.</li>
+    <li><strong>Insulators (the other business)</strong> — a completely separate, product-sale business: make an insulator, sell it, get paid. Short cash cycle, high margin, no decade-long wait. More on this in §08.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>Two engines: what Olectra actually sells</h2></div>
+  <p class="part-sub">The unusual two-segment shape — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">Most companies do one thing. Olectra does two things that have almost nothing in common except that both plug into the electricity system. One is a young, capital-hungry, fast-growing <strong>electric-vehicle</strong> business. The other is an old, cash-generating, slow-growing <strong>power-line insulator</strong> business. Understanding that they behave completely differently — in growth, in margin, and in how quickly cash comes back — is the key to reading the whole company.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The Olectra value chain — one company, two very different cash cycles</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Segment 1 · Build</div><div class="nname">Manufacture the e-bus</div><div class="nwho">Chassis, body, BYD-derived drivetrain &amp; battery pack. Plant near Hyderabad.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Segment 1 · Deploy</div><div class="nname">Win STU tender, deploy on GCC</div><div class="nwho">Own + operate the bus; the per-km meter starts.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Segment 1 · Collect</div><div class="nname">Bill per-km for ~12 years</div><div class="nwho">Long annuity, but capital tied up up-front.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Segment 2 · Fund</div><div class="nname">Insulators throw off cash</div><div class="nwho">Sell, get paid fast, ~34% margins — the ballast.</div></div>
+    </div>
+    <div class="flow-note">Segment 1 (electric mobility) is the growth and the capital drain; Segment 2 (insulators) is the small, high-margin cash engine that quietly steadies the group while the bus business scales.</div>
+  </div>
+
+  <h3>The two segments, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Electric mobility (e-buses, and now trucks/tippers)</span></strong> — the growth engine and ~86% of FY26 revenue (~₹1,987 Cr). Olectra makes 7-metre, 9-metre and 12-metre e-buses plus intercity coaches, and is extending into electric <strong>trucks and tippers</strong>. It is the largest domestic e-bus maker by deliveries. But it carries the capital intensity of the GCC model — big cash out today, thin margins, slow payback.</li>
+    <li><strong><span class="chain-om">Composite polymer insulators</span></strong> — the "energy" segment, ~14% of revenue (~₹325 Cr in FY26, up sharply from ~₹180 Cr). These are the silicone-rubber / composite insulators that hold up high-voltage transmission lines — the modern replacement for the old glass and porcelain discs. It is a mature, product-sale business with a short cash cycle and, crucially, <strong>far fatter margins</strong> than the buses.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the two-engine shape is worth explaining</div>
+    <p>A pure e-bus start-up has to fund every rupee of its brutal working-capital cycle from outside — debt or equity — because it has no other cash. Olectra doesn't. Its insulator business is a small internal cash machine that keeps producing while the bus business consumes. That matters because the single thing that kills capital-intensive manufacturers is running out of money mid-ramp. The insulators don't make Olectra safe, but they give it a cushion that a pure-play rival lacks — and they are why the company can chase a 10,000-vehicle order book without immediately drowning in it. The flip side: the insulators are tiny relative to the buses, so they can steady the ship but never carry it.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the MEIL parent, and who controls it</h2></div>
+  <p class="part-sub">An insulator maker that became an e-bus champion — now inside a giant infra group.</p>
+
+  <p class="lead">Olectra's history is stranger than its name suggests. The listed entity began life as an <strong>insulator manufacturer</strong> — it is one of India's older composite-insulator makers, listed under the old scrip code <strong>532439</strong>. The electric-bus business was bolted on later, through a partnership with China's <strong>BYD</strong>, and eventually the company was renamed and swept into the orbit of <strong>Megha Engineering &amp; Infrastructures (MEIL)</strong>, one of India's largest privately held infrastructure and construction conglomerates. That is the genuinely surprising lineage: India's biggest e-bus maker grew out of a power-line-parts company and now sits under an unlisted infra giant.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2000</div><div class="ev">Incorporated as a <strong>composite / silicone-rubber insulator</strong> manufacturer (the business later known as the "energy" segment) — the original, and still highly profitable, core.</div></li>
+    <li class="major"><div class="yr">~2015</div><div class="ev">Tie-up with <strong>BYD of China</strong> to bring electric buses to India — using BYD's proven e-bus platform, battery and drivetrain technology under a licensing / assembly arrangement. (Dates approx.)</div></li>
+    <li class="major"><div class="yr">~2018–2019</div><div class="ev">Renamed <strong>Olectra Greentech</strong>; the <strong>MEIL / Megha group</strong> acquires the controlling stake, giving the e-bus ambition a deep-pocketed infrastructure parent. (Approx.)</div></li>
+    <li><div class="yr">FY22–FY24</div><div class="ev">E-bus deliveries scale as FAME-II tenders and state contracts flow; Olectra establishes itself as India's largest pure-play e-bus maker by units.</div></li>
+    <li class="major"><div class="yr">2025</div><div class="ev"><strong>BYD collaboration extended to 2030</strong>, deepened into joint R&amp;D on <strong>Blade Battery</strong>-powered buses; new <strong>Seetharampur (Hyderabad)</strong> plant to lift capacity toward ~5,000 units/year.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record year: revenue ~₹2,312 Cr (+28%), EBITDA ~₹352 Cr, PAT ~₹180 Cr (+29%); a record <strong>1,280 EVs</strong> delivered; order book past <strong>10,000 vehicles</strong>; final dividend ₹0.60/share (FV ₹4). FY27 delivery target ~2,500 vehicles.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> <strong>MEIL Holdings Limited</strong> holds the entire promoter stake — <strong>~50.02%</strong> — and has kept it unchanged for several quarters. MEIL Holdings is part of the Megha Engineering group controlled by the <strong>P.&nbsp;Pitchi Reddy / P.&nbsp;V. Krishna Reddy</strong> family, a vast unlisted builder of dams, pipelines, roads and power projects.</li>
+    <li><strong>Public &amp; institutions:</strong> individual / public investors hold roughly <strong>~39%</strong>, foreign institutional investors ~<strong>5.4%</strong>, and domestic mutual funds a small ~<strong>0.2%</strong> — a notably retail-heavy register for a company this size (approx.).</li>
+    <li><strong>The related-party question:</strong> because the promoter is a giant private infra group, investors should watch related-party dealings, inter-group flows, and governance disclosures closely — a standard caveat for any listed company controlled by a large unlisted parent.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the parent matters:</b> a capital-hungry e-bus business needs a patient, deep-pocketed owner to fund the GCC ramp without panicking. MEIL — a multi-billion-dollar infrastructure group used to long-gestation projects — is exactly that kind of parent. It is also a concentration of control (~50%) in a single unlisted entity, which cuts both ways: strong backing, but governance and related-party scrutiny that a widely held company wouldn't attract.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The BYD partnership and the localisation pivot</h2></div>
+  <p class="part-sub">The technology backbone — and the dependence Olectra is now trying to unwind.</p>
+
+  <p class="lead">Olectra did not invent its electric bus from scratch. Its e-bus technology — the drivetrain, the battery architecture, the core platform — comes from <strong>BYD</strong>, the Chinese giant that is the world's largest manufacturer of electric vehicles and electric buses. That partnership is Olectra's single greatest asset and its single greatest vulnerability at the same time. It gave Olectra a proven, road-tested product years ahead of any home-grown rival; it also made India's e-bus champion dependent on Chinese technology and components at a moment when India–China trade friction is a live political issue.</p>
+
+  <div class="chart">
+    <div class="c-title">What BYD brings — and what localisation is trying to reclaim</div>
+    <div class="c-sub">Illustrative split of where value and dependence sit in an Olectra e-bus</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">BYD-derived core<small>drivetrain, battery tech, platform</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">high</div></div>
+      <div class="bar-row"><div class="blab">Local assembly &amp; body<small>built in India</small></div><div class="track"><span class="fill brand" style="width:70%"></span></div><div class="bval">rising</div></div>
+      <div class="bar-row"><div class="blab">Battery-pack localisation<small>the current push</small></div><div class="track"><span class="fill spec" style="width:45%"></span></div><div class="bval">in progress</div></div>
+    </div>
+    <div class="legend"><span>Illustrative, not to scale. The strategy: keep BYD's proven technology while progressively assembling packs and sourcing components in India — cutting cost, import exposure and geopolitical risk.</span></div>
+  </div>
+
+  <p>The relationship has recently been <strong>extended to 2030</strong> and deepened. The headline of the newer phase is the <strong>Blade Battery</strong> — BYD's distinctive lithium-iron-phosphate (LFP) battery design, prized for safety and packaging efficiency — which Olectra is bringing into its buses, with claims of up to <strong>~500 km of range on a single charge</strong> for certain models. In parallel, Olectra is pushing <strong>localisation</strong>: assembling battery packs and sourcing key components in India rather than importing them, to lower cost and reduce reliance on Chinese supply.</p>
+
+  <div class="plain">
+    <div class="ptag">The genuine surprise most people miss</div>
+    <p>India's largest <em>domestic</em> electric-bus champion runs on <em>Chinese</em> technology. The buses proudly badged as home-grown public transport are built on BYD's platform — the same company Indian policy is otherwise wary of. That is not a scandal; it is how Olectra got a decade's head start. But it reframes the whole thesis. Olectra's job over the next few years is not just to <em>deliver</em> buses — it is to <strong>indigenise</strong> them: to localise the battery and drivetrain enough that the product becomes genuinely Indian in cost and content, insulated from import curbs and border politics. Localisation is expensive and unproven, and if it stalls, the cost advantage and the political comfort both weaken. The BYD tie-up is the reason Olectra leads today and the reason its lead is not guaranteed tomorrow.</p>
+  </div>
+
+  <div class="note"><b>The dependence cuts three ways:</b> cost (imported content is dearer and FX-exposed), policy (India can restrict Chinese components or tighten local-content rules for subsidised buses), and competition (rivals building fully indigenous platforms can market themselves as "China-free"). Localisation addresses all three — but it is a multi-year engineering slog, not a switch to flip.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The electric-bus business up close</h2></div>
+  <p class="part-sub">The products, the plant, and the capacity Olectra is racing to build.</p>
+
+  <p class="lead">The electric-mobility division is the reason anyone owns this stock. In FY26 it generated ~<strong>₹1,987 Cr</strong> of revenue — about 86% of the company — up from ~₹1,622 Cr the year before. Its product line has widened from a single city bus into a proper range, and its whole near-term story is one of <strong>building enough factory capacity, fast enough</strong>, to convert the order book.</p>
+
+  <h3>The product range</h3>
+  <ul class="clean">
+    <li><strong>City e-buses</strong> — 9-metre and 12-metre buses for intra-city routes, the core of the STU tenders. The volume workhorses.</li>
+    <li><strong>Midi &amp; intercity</strong> — 7-metre buses for narrower routes and feeder services, plus intercity coach variants for longer hauls where range matters most (hence the Blade Battery / ~500 km push).</li>
+    <li><strong>Electric trucks &amp; tippers</strong> — the newer diversification. Olectra has begun delivering electric tippers (dump trucks) and is extending into cargo, using the same battery-and-drivetrain competence. A way to grow beyond the bus tender cycle.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">Deliveries: a record year, and a much bigger target</div>
+    <div class="c-sub">EV units delivered per year — FY27 is management's stated target</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25<small>prior year</small></div><div class="track"><span class="fill ink" style="width:39%"></span></div><div class="bval">~970</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>record delivered</small></div><div class="track"><span class="fill brand" style="width:51%"></span></div><div class="bval">1,280</div></div>
+      <div class="bar-row"><div class="blab">FY27<small>guided target</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~2,500</div></div>
+    </div>
+    <div class="legend"><span>FY26's 1,280 deliveries were the highest in the company's history (~32% growth). Management targets ~2,500 in FY27 with a quarter-on-quarter ramp — roughly a doubling. Treat the FY27 figure as a <em>target</em>, not a result.</span></div>
+  </div>
+
+  <p>To hit those targets, Olectra is expanding manufacturing. Its existing facility near Hyderabad is being supplemented by a new, larger plant at <strong>Seetharampur</strong> (Telangana), with the stated aim of lifting annual capacity toward ~<strong>5,000 units</strong>. Capacity is the physical constraint on the whole thesis: an order book of 10,000+ vehicles is meaningless if the factory can only build a couple of thousand a year. The plant build-out is, in effect, Olectra converting steel and land into the <em>ability</em> to deliver — the pre-requisite before any order becomes revenue.</p>
+
+  <div class="plain">
+    <div class="ptag">Why capacity is the tell, not orders</div>
+    <p>Order announcements are easy and cheap; every e-bus maker issues them. What is hard, slow and expensive is standing up a factory that can actually produce thousands of complex, battery-heavy buses a year to spec, on time, with imported and localised parts arriving in sync. When Olectra invests in a 5,000-unit plant, it is making a physical bet that the demand is real and durable — and simultaneously raising the stakes, because a big new plant only pays off if it runs near full. Watch the <strong>delivery run-rate</strong> climbing toward that capacity far more closely than any new order headline.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE crux -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Order book → delivery: the conversion that is the entire case</h2></div>
+  <p class="part-sub">The single most important idea in the whole primer — and it is specific to this company.</p>
+
+  <p class="lead">Every e-bus maker trumpets its order book, and Olectra's is genuinely huge — over <strong>10,000 vehicles</strong>. But an order book is a promise, not a profit. For Olectra the number that matters is not what it has <em>won</em>; it is what it can <strong>build, deliver and get running</strong>. Line up the three numbers and the whole company snaps into focus — and it is a picture no other primer could carry, because the gaps are this specific.</p>
+
+  <div class="chart">
+    <div class="c-title">The three numbers that tell Olectra's story</div>
+    <div class="c-sub">Approximate FY26 figures — the funnel from tendered promise to running buses</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Order book<small>vehicles won, not yet delivered</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~10,000+</div></div>
+      <div class="bar-row"><div class="blab">Deployed &amp; running<small>cumulative on roads</small></div><div class="track"><span class="fill wtg" style="width:38%"></span></div><div class="bval">~3,800</div></div>
+      <div class="bar-row"><div class="blab">Delivered in FY26<small>the record year</small></div><div class="track"><span class="fill gold" style="width:13%"></span></div><div class="bval">1,280</div></div>
+      <div class="bar-row"><div class="blab">FY27 target<small>guided ramp</small></div><div class="track"><span class="fill spec" style="width:25%"></span></div><div class="bval">~2,500</div></div>
+    </div>
+    <div class="legend"><span>An order book of 10,000+ against a record annual delivery of 1,280 means the backlog is the better part of a decade of work at current pace — even the FY27 target of ~2,500 barely bends the curve. Conversion, not order wins, is the scoreboard.</span></div>
+  </div>
+
+  <p>Look at that gap. Olectra has won more than 10,000 vehicles, has ~3,800 running, and managed a record 1,280 deliveries in its best-ever year. Even doubling to ~2,500 in FY27 still leaves years of backlog. This is not a demand problem — India clearly wants the buses. It is an <strong>execution and capital problem</strong>: can Olectra build the factory, fund the GCC working capital, get the components (some still from BYD), and physically deliver buses fast enough to turn that mountain of orders into billing, running fleet? Olectra has faced <strong>delivery delays</strong> before; the market has learned to discount the order book and watch the delivery line.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits Olectra: the conversion clock</div>
+    <p>Picture a bank account with ₹10,000 in "promised" deposits but a teller who can only process 1,280 a year. The balance looks spectacular; the throughput is the reality. Olectra's whole equity story is the <strong>throughput</strong>, not the balance. Two levers control it, and they pull against each other: <strong>capacity</strong> (the 5,000-unit plant — how many buses <em>can</em> be built) and <strong>capital</strong> (the GCC model — how many buses can be <em>funded</em> up-front before per-km cash returns). Push deliveries too hard without enough capital and working capital blows out; hold capital tight and the order book just sits there ageing. Every quarter, the single most informative line is simply: how many buses did Olectra deliver, and is that number accelerating toward the plant's capacity? That is the conversion clock, and it is the thesis.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">10,000+</div><div class="msl">Vehicles in the order book — the promise, the forward indicator</div></div>
+    <div class="ms gold"><div class="msv">1,280</div><div class="msl">Delivered in FY26 — a record, and the number that actually counts</div></div>
+    <div class="ms green"><div class="msv">~3,800</div><div class="msl">Deployed &amp; running nationwide — where the per-km meter ticks</div></div>
+  </div>
+
+  <p>The order wins come from a widening set of buyers — state transport corporations across multiple states, plus PM e-Bus Sewa city allocations. Breadth of demand is not in doubt. The question the market keeps asking is narrower and harder: not "can Olectra win orders?" but "can Olectra <strong>deliver</strong> them on schedule without choking on the working capital?"</p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>GCC economics and the capital-intensity trap</h2></div>
+  <p class="part-sub">Why a giant order book can be a cash drain before it is a windfall.</p>
+
+  <p class="lead">The Gross Cost Contract is the mechanism that made India's e-bus market possible — and the mechanism that makes Olectra hard to fund. It is worth walking through slowly, because it is the difference between a company that grows sustainably and one that grows itself into a cash crunch.</p>
+
+  <p>Under a GCC / OPEX contract, Olectra doesn't sell the bus to the STU. It <strong>keeps ownership</strong>, builds the bus at its own cost, deploys it, operates and maintains it, and bills the STU a fixed rate <strong>per kilometre</strong> for around twelve years. So the cash profile of a single GCC bus looks like this: a large lump of spending on day one (chassis, body, and a battery that can be a third or more of the cost), followed by a long, thin trickle of per-km receipts that only fully repay the outlay years later. Multiply by hundreds or thousands of buses being deployed at once, and the working-capital requirement becomes enormous.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Two ways to sell an e-bus — very different cash</caption>
+    <thead><tr><th>Model</th><th>Cash profile</th><th>Implication for Olectra</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">GCC / OPEX (dominant)</td><td>Big cash <em>out</em> up front; slow per-km cash <em>in</em> over ~12 years.</td><td>Ties up capital and working capital for years. Growth is capped by how much the balance sheet (and MEIL) can fund. The long tail is annuity-like once built.</td></tr>
+      <tr><td class="t-strong">Outright sale</td><td>Cash in on delivery.</td><td>Frees up the balance sheet and de-risks, but forgoes the decade-long per-km annuity. A faster-cash, lower-tail option.</td></tr>
+      <tr><td class="t-strong">Insulators</td><td>Short cash cycle; paid on sale.</td><td>The internal cash generator that partly offsets the e-bus drain (see §08).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the order book and the cash flow can point in opposite directions</div>
+    <p>This is the counter-intuitive heart of the GCC model: the <em>faster</em> Olectra grows its delivered fleet, the <em>more</em> cash it consumes in the near term, because every new GCC bus is a fresh up-front outlay waiting a decade to be repaid. A company delivering 1,280 buses on GCC is carrying a huge amount of capital "parked" in buses on the road that will only slowly return. Add slow-paying state customers (STUs are chronically cash-tight), and the receivables balloon. So a blowout order book and a strong delivery ramp can coincide with tight cash and rising debt — which is exactly why the balance sheet and working capital are non-negotiable things to watch, and why a patient parent like MEIL is part of the investment case rather than a footnote.</p>
+  </div>
+
+  <div class="note"><b>The precise net-debt figure should be verified (approx.):</b> Olectra funds its GCC ramp with a mix of internal cash (helped by the insulator business) and debt, so it carries working-capital borrowings that rise with the delivery pace. The exact net-debt number moves quarter to quarter with deployments and STU receipts — check the latest balance sheet rather than relying on a single stated figure. The <em>direction</em> is the point: faster delivery means more capital tied up before the per-km stream repays it.</div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The insulator business: the quiet cash engine</h2></div>
+  <p class="part-sub">Small in revenue, outsized in margin — the part of Olectra almost nobody talks about.</p>
+
+  <p class="lead">Tucked inside a company famous for electric buses is a business that does something the buses cannot: it makes a lot of money on a little revenue, and it gets paid quickly. Olectra's <strong>composite polymer insulator</strong> division — the "energy" segment, and the company's original business — is a masterclass in why revenue mix can mislead.</p>
+
+  <p>Insulators are the components that attach a live high-voltage wire to a transmission tower while stopping the current from leaking into the steel. For a century they were made of glass and porcelain. <strong>Composite / silicone-rubber insulators</strong> — lighter, tougher, better in pollution and coastal salt, harder to vandalise — are the modern replacement, and Olectra is one of India's established makers. As the grid expands and upgrades to carry more renewable power over long distances, demand for these parts grows steadily.</p>
+
+  <div class="chart">
+    <div class="c-title">The revenue-vs-profit paradox</div>
+    <div class="c-sub">FY26 segment revenue and segment profit (₹ Cr, approx.)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">E-mobility revenue</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~1,987</div></div>
+      <div class="bar-row"><div class="blab">Insulator revenue</div><div class="track"><span class="fill spec" style="width:16%"></span></div><div class="bval">~325</div></div>
+      <div class="bar-row"><div class="blab">Insulator segment profit</div><div class="track"><span class="fill gold" style="width:6%"></span></div><div class="bval">~112</div></div>
+    </div>
+    <div class="legend"><span>The insulator segment is ~14% of revenue but earns a segment profit of ~₹112 Cr — a margin north of ~34%, several times richer per rupee of sales than the capital-hungry bus business. Its revenue also nearly doubled year-on-year (from ~₹180 Cr).</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The number that reframes the whole company</div>
+    <p>Here is the surprise buried in the segment notes: a business that is one-sixth the size of the buses by revenue earns a margin several times higher — roughly ~34% at the segment level versus the low-double-digit economics of GCC buses. In plain arithmetic, the little insulator arm punches far above its revenue weight in <em>profit</em> and, more importantly, in <em>cash</em> — it sells a product, gets paid, and moves on, with none of the twelve-year GCC wait. For a company pouring capital into buses that repay slowly, an internal source of quick, high-margin cash is not a rounding error; it is the ballast that lets Olectra keep scaling the bus business without leaning entirely on debt and its parent. It will never be the growth story — but it is quietly the reason the growth story can be funded.</p>
+  </div>
+
+  <div class="note gold"><b>Keep it in proportion:</b> the insulator arm de-risks Olectra; it does not define it. At ~14% of revenue, even doubling it wouldn't move the group the way a delivery-ramp acceleration in buses would. Read it as the shock-absorber on a capital-intensive machine — valuable precisely because the machine is bumpy, not because it is the destination.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Why India is electrifying its buses</h2></div>
+  <p class="part-sub">The structural tailwind — and the policy dependence that comes with it.</p>
+
+  <p class="lead">Olectra's growth is not a company story alone; it rides a national one. India is trying to electrify public transport at scale, for reasons that are part climate, part economics, and part urban air quality. Understanding the drivers — and the policy scaffolding that funds them — tells you both why the order book is huge and why it carries a specific kind of risk.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What's driving the e-bus wave</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Why it helps Olectra</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Running-cost economics</td><td>An e-bus costs far less per km to run than diesel — cheap electricity, minimal engine servicing.</td><td>Over a 12-year GCC, the total cost of ownership can beat diesel — the core reason STUs switch.</td></tr>
+      <tr><td class="t-strong">PM e-Bus Sewa</td><td>Central scheme targeting ~10,000 e-buses across ~169 cities, with subsidy and operational support.</td><td>A direct, multi-year demand pipeline that Olectra bids into — much of the order book traces here.</td></tr>
+      <tr><td class="t-strong">FAME-II legacy</td><td>The earlier subsidy scheme that seeded the first big STU e-bus tenders.</td><td>Built the market and Olectra's early track record and installed base.</td></tr>
+      <tr><td class="t-strong">Urban air &amp; climate targets</td><td>City pollution and national net-zero commitments push diesel fleets toward electric.</td><td>A durable political mandate to keep converting fleets — demand rooted in policy, not fashion.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The double edge of policy-driven demand</div>
+    <p>The e-bus wave is real and structural — cities genuinely need clean buses, and the running-cost maths increasingly stacks up on its own. But the <em>pace</em> is set by government: by how fast subsidy schemes disburse, how tenders are structured, how promptly cash-tight STUs pay, and whether local-content rules tighten. That makes Olectra's demand both <strong>large and lumpy</strong> — huge tenders that can slip a year on a policy delay or a payment backlog. The tailwind is powerful; it is also, to a degree, at the mercy of the same governments that are its customers. Demand you can see for years, on a timetable you don't fully control.</p>
+  </div>
+
+  <p>None of this makes the wave fragile — the direction of travel toward electric public transport is hard to reverse. But it does mean Olectra's growth curve is shaped by budget cycles, subsidy notifications and state-finance health as much as by its own factory. The structural case is strong; the quarter-to-quarter timing is not fully in the company's hands.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A crowded, fast-consolidating e-bus market — and a quieter insulator niche.</p>
+
+  <p class="lead">Olectra may be the largest <em>pure-play</em> e-bus maker, but it does not have the market to itself. The e-bus tender space has drawn in India's biggest commercial-vehicle names and well-funded specialists, all chasing the same government orders. On the insulator side, it competes in a smaller, more specialised field. Knowing the shape of the competition tells you where Olectra's lead is real and where it is contested.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Olectra</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Olectra Greentech</td><td>Largest pure-play e-bus maker by deliveries; BYD-based tech; +insulator cash engine</td><td><em>This company.</em> Lead built on BYD platform and early scale; debate is delivery ramp, capital intensity and localisation.</td></tr>
+      <tr><td class="t-strong">Tata Motors</td><td>India's CV giant; large e-bus supplier with deep manufacturing and balance sheet</td><td>The heavyweight rival — scale, financing muscle and a full-line CV franchise; a formidable GCC bidder.</td></tr>
+      <tr><td class="t-strong">JBM Auto</td><td>Listed e-bus + auto-components maker, aggressive tender bidder</td><td>The closest listed comparison — another integrated e-bus play chasing the same STU/PM e-Bus Sewa orders.</td></tr>
+      <tr><td class="t-strong">Switch Mobility (Ashok Leyland)</td><td>The EV arm of Ashok Leyland, a top CV maker</td><td>Backed by a major bus manufacturer's engineering and dealer network; strong in specific states.</td></tr>
+      <tr><td class="t-strong">PMI Electro, VECV (Eicher/Volvo), others</td><td>Specialist and CV-backed e-bus makers</td><td>Fragment the tender market further; some tout fully indigenous platforms as a "China-free" edge.</td></tr>
+      <tr><td class="t-strong">Insulators: Aditya Birla Insulators, others</td><td>Established composite/porcelain insulator makers</td><td>Olectra's energy segment competes here — a smaller, steadier niche than the e-bus fight.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two forces define the fight. First, the e-bus tender market rewards whoever can <strong>deliver at scale and fund the GCC working capital</strong> — which favours players with deep balance sheets (Tata, Ashok Leyland) as much as pure e-bus specialists. Olectra's edge is its head start, its BYD-proven product and its installed base; its exposure is that better-capitalised CV giants are now serious. Second, the <strong>"China content" question</strong> is becoming a competitive axis: rivals marketing fully indigenous platforms can position against Olectra's BYD dependence, which is precisely why localisation is strategic and not just cost-saving. Olectra has to stay the low-cost, reliable-delivery bidder <em>while</em> indigenising — a two-front effort its rivals don't all face.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Real growth, real profit — priced for years of flawless conversion.</p>
+
+  <p class="lead">FY26 was Olectra's best year yet: record deliveries, revenue up ~28%, EBITDA and profit both higher, and a giant order book behind it. The market has already priced a great deal of the future in. The debate is whether the delivery machine keeps pace with the multiple.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue &amp; profit trajectory</div>
+    <div class="c-sub">Consolidated, ₹ Crore</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue FY25</div><div class="track"><span class="fill ink" style="width:78%"></span></div><div class="bval">~1,802</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~2,312</div></div>
+      <div class="bar-row"><div class="blab">EBITDA FY26</div><div class="track"><span class="fill wtg" style="width:15%"></span></div><div class="bval">~352</div></div>
+      <div class="bar-row"><div class="blab">PAT FY26</div><div class="track"><span class="fill spec" style="width:8%"></span></div><div class="bval">~180</div></div>
+    </div>
+    <div class="legend"><span>Revenue +28% to ~₹2,312 Cr; EBITDA ~₹352 Cr (+27%, a ~15% margin); PAT ~₹180 Cr (+29% from ~₹139 Cr). Q4 FY26 was strong — revenue ~₹645 Cr (+44%), PAT ~₹56 Cr.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~15%</div><div class="msl">FY26 EBITDA margin — thin, reflecting GCC capital intensity</div></div>
+    <div class="ms"><div class="msv">~28%</div><div class="msl">FY26 revenue growth; deliveries +32% to a record 1,280</div></div>
+    <div class="ms red"><div class="msv">~65×</div><div class="msl">P/E on ~₹12,300 Cr market cap — a steep growth multiple</div></div>
+  </div>
+
+  <p>The valuation is the uncomfortable part. At roughly <strong>65× earnings</strong>, Olectra is not priced as a lumpy, capital-intensive capital-goods company; it is priced as a compounder that will convert its 10,000-vehicle order book into years of rapid, profitable growth. That can be right — India's e-bus adoption is early and the runway is long. But a ~15% EBITDA margin and a working-capital-heavy GCC model mean the profit that has to justify the multiple is genuinely hard-won, and any stumble in the delivery ramp lands on an expensive stock.</p>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: the delivery run-rate against the order book</div>
+    <p>At ~65× earnings, the market has already granted Olectra the order book. So the figure that proves or breaks the case is <strong>the annual delivery run-rate — buses actually built, delivered and deployed — and whether it is accelerating toward the plant's ~5,000-unit capacity</strong>. Read it alongside three supports: the <strong>e-bus segment margin</strong> (is localisation lifting it, or is GCC pricing squeezing it?), <strong>working-capital / net debt</strong> (is the funding gap widening faster than deliveries?), and <strong>the insulator cash contribution</strong> (is the ballast still there?). If deliveries climb from 1,280 toward 2,500 and beyond, quarter after quarter, without the balance sheet buckling, the multiple is defensible. If deliveries stall — or grow only by piling on debt — the order book stays a promise and the valuation has nothing to stand on. Deliveries per year is the scoreboard; everything else is commentary.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results and cross-checked across reports; segment splits, deliveries and order-book figures are <b>approx.</b> The FY27 delivery figure (~2,500) is a company <b>target</b>, not a result, and the precise net-debt/working-capital position should be read from the latest balance sheet. Verify all numbers against the company's filings before relying on any single one.</div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A genuine leader in a real transition — asked to prove it can build fast enough.</p>
+
+  <p class="lead">Olectra enters FY27 as the pure-play leader of India's e-bus transition, with a record delivery year behind it, an order book that guarantees years of demand, a deep-pocketed parent, and a small cash engine on the side. The debate is not whether the buses are wanted. It is whether Olectra can convert a 10,000-vehicle promise into delivered, running, cash-generating fleet at the pace its price demands — while unwinding its dependence on Chinese technology.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural e-bus adoption</strong> — PM e-Bus Sewa and falling total cost of ownership make e-bus demand a multi-year, policy-backed transition, not a fad.</li>
+        <li><strong>Largest pure-play, huge order book</strong> — 10,000+ vehicles won and ~3,800 deployed give unmatched visibility if execution holds.</li>
+        <li><strong>Proven BYD technology</strong> — a road-tested platform (now with Blade Battery, ~500 km range) years ahead of ground-up rivals.</li>
+        <li><strong>Patient, deep-pocketed parent</strong> — MEIL can fund the capital-hungry GCC ramp that would starve a stand-alone start-up.</li>
+        <li><strong>Insulator cash engine</strong> — a small, ~34%-margin business that de-risks the bus ramp and is itself growing fast.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Delivery &amp; execution risk</strong> — a giant order book means little until buses are built and running; Olectra has slipped on delivery timelines before.</li>
+        <li><strong>Capital intensity of GCC</strong> — build-and-fund-now, collect-per-km-for-12-years ties up capital and working capital; faster growth can mean tighter cash.</li>
+        <li><strong>BYD / China dependence</strong> — reliance on Chinese tech and components amid India–China friction and import curbs; localisation is costly and unproven.</li>
+        <li><strong>STU payment &amp; policy risk</strong> — cash-tight state customers pay slowly; subsidy and tender timing can slip a year.</li>
+        <li><strong>Rich valuation &amp; competition</strong> — ~65× earnings on ~15% margins, with Tata, JBM, Switch and others chasing the same orders; promoter-concentration/related-party scrutiny.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Olectra has done the hard first thing: it has become India's default electric-bus name, with the tenders, the technology and the installed base to prove it. What it has not yet proven, at the scale its valuation assumes, is the unglamorous second thing — turning a 10,000-vehicle order book into thousands of delivered, funded, running buses a year while making the product genuinely Indian. The next several quarters answer it in one checkable figure: <strong>does the delivery count climb from 1,280 toward the ~2,500 target and beyond, quarter after quarter, without the balance sheet straining?</strong> The Seetharampur plant ramp and each quarter's deployment number are where you will see it first. Watch the buses that actually reach the road — that, not the size of the order book, is where this story is won or lost.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Olectra Greentech Ltd — Q4 &amp; FY26 results / press release ("Closes FY 2025-26 with ₹2,312 Cr revenue &amp; record EV deliveries"), via company disclosures, Business Standard and Business Upturn.</li>
+    <li>Saur Energy — "Olectra Greentech FY26 Profit Rises 29% to ₹180 Crore, Revenue Crosses ₹2,300 Crore."</li>
+    <li>Business Standard — "Olectra Greentech surges after Q4 PAT soars 164% YoY to ₹55 cr."</li>
+    <li>Quartr / Yahoo Finance — Olectra Greentech (BOM:532439) Q4 FY26 earnings-call highlights and summary.</li>
+    <li>MarketsMojo — "Olectra Greentech Q4 FY26: Strong Profit Surge Masks Valuation Concerns"; shareholding-pattern data (MEIL Holdings ~50.02%).</li>
+    <li>The Machine Maker — "Olectra Greentech Extends Collaboration with BYD Till 2030"; Blade Battery / ~500 km range coverage.</li>
+    <li>Saur Energy / company releases — Seetharampur plant, ~5,000-unit capacity, localisation of battery packs.</li>
+    <li>Screener.in — Olectra Greentech consolidated financials, segment split, market cap and P/E.</li>
+    <li>BSE India — Olectra Greentech Limited stock page, scrip code 532439 (formerly Goldstone-lineage listing).</li>
+    <li>Univest / company guidance — FY27 delivery target ~2,500 vehicles; order book &gt;10,000 vehicles; ~3,800 deployed.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several items (segment splits, order book, deliveries, and the FY27 target) are approximate or forward-looking rather than audited results. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "OLECTRA";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
