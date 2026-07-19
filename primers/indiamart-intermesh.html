@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IndiaMART InterMESH — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F6F4;
+    --paper-2:#FAFCFB;
+    --card:#FFFFFF;
+    --ink:#16211C;
+    --ink-soft:#54615B;
+    --ink-faint:#889489;
+    --brand:#2E6E4E;          /* marketplace green */
+    --brand-bright:#3B9668;   /* brighter green accent */
+    --gold:#C68B2E;           /* warm amber - accent / warmth */
+    --wtg:#46A06B;            /* paid supplier side */
+    --epc:#6FB98F;            /* buyer side */
+    --om:#1F5138;            /* deferred / recurring */
+    --spec:#2C9E93;          /* teal cross accent */
+    --line:#D8DED9;
+    --line-soft:#E6EAE6;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4F1EA;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF3E4;border:1px solid #EFDDB9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8f6216;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#453410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F9F6;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAEEEB;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2E6E4E,#3B9668);}
+  .fill.gold{background:linear-gradient(90deg,#C68B2E,#E0AB5C);}
+  .fill.wtg{background:linear-gradient(90deg,#46A06B,#6FB98F);}
+  .fill.om{background:linear-gradient(90deg,#1F5138,#2E6E4E);}
+  .fill.spec{background:linear-gradient(90deg,#2C9E93,#48B8AC);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a45,#56645e);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF3E4;color:#4a3712;}
+  .note.gold b{color:#8f6216;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#8f6216;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3EE;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> B2B marketplace 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> How it makes money</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> Suppliers × ARPU − churn</a></li>
+    <li><a href="#p5"><span class="n">05</span> The leaky bucket</a></li>
+    <li><a href="#p6"><span class="n">06</span> The collections float</a></li>
+    <li><a href="#p7"><span class="n">07</span> The network moat</a></li>
+    <li><a href="#p8"><span class="n">08</span> Busy &amp; the SME stack</a></li>
+    <li><a href="#p9"><span class="n">09</span> Rivals &amp; the AI shift</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: INDIAMART · BSE: 542726</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>IndiaMART InterMESH, <em>where 41 million buyers shop free and 220,000 sellers foot the bill</em></h1>
+  <p class="dek">A complete walk through India's largest online B2B marketplace — the giant classified directory where a factory hunts for raw material and a manufacturer pays to be found. How a business monetises only <em>one</em> side of a two-sided network, why its whole revenue reduces to a subscriber count times a price, and why the number that has quietly worried the market for three years is not demand but the suppliers who sign up and then walk away.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,569 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~220 <small>K</small></div><div class="l">Paying suppliers (FY26 exit)</div></div>
+    <div class="cell"><div class="v">~34% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹11,600 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">19 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹1,569 Cr (+13%), consolidated PAT ₹474.7 Cr (down on a Q4 treasury markdown), paying suppliers flat at ~220K (net loss of ~1,200 in Q4), ARPU ~₹67k (+8%), deferred revenue ~₹1,965 Cr; added the supplier-churn and collections-float sections.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">IndiaMART is a <strong>website where businesses find other businesses</strong>. A garment factory that needs zippers, a restaurant that needs a bulk supplier of cooking oil, a builder who needs steel — they type what they want into IndiaMART and get back a long list of manufacturers, wholesalers and traders who sell it, with phone numbers and price quotes. It is, in one line, <strong>India's largest online B2B (business-to-business) marketplace</strong> — a giant, searchable directory-plus-marketplace connecting <em>buyers</em> with <em>suppliers</em> across essentially every product category a business could want, from industrial pumps to packaging to plastic granules.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>Only the sellers pay — and almost none of them do.</strong> Around <strong>41 million</strong> buyers use IndiaMART for free. The money comes entirely from <strong>~220,000 paying suppliers</strong> who buy a subscription (branded Silver / Gold / Platinum "listing" packages) to appear prominently and receive the buyer enquiries, called <em>leads</em>. That is roughly half a percent of the platform's participants funding one hundred percent of its revenue — a lopsided, one-sided monetisation that is the first thing to understand about the business.</li>
+    <li><strong>The whole company is a subscriber count times a price.</strong> FY26 revenue was <strong>~₹1,569 Cr</strong>, up ~13%. Strip it back and IndiaMART's revenue is simply <em>paying suppliers × ARPU</em> (average revenue per supplier). In FY26, ARPU rose ~8% to ~₹67k while the supplier count stayed stuck at ~220K — meaning almost all the growth came from charging existing sellers more, not from adding new ones. That single sentence is the tension in the stock.</li>
+    <li><strong>It is a cash machine that just posted a shrinking profit.</strong> The model is beautifully asset-light: no factories, no inventory, ~34% operating margins, and a treasury pile of <strong>~₹3,280 Cr</strong> in cash and investments (effectively debt-free). Yet FY26 consolidated net profit <em>fell</em> to ~₹474.7 Cr, and Q4 profit dropped ~72% — largely a mark-down on that very treasury, not a hole in the core business. The disconnect is worth understanding early.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Picture the classified ads at the back of an old trade magazine — "manufacturers of ball bearings, call this number" — and now imagine that whole thing moved online, made searchable, and scaled to millions of products. The readers (buyers) flip through for free; the advertisers (suppliers) pay to have a bigger, better-placed ad and to get the phone calls it generates. IndiaMART is that magazine for the entire Indian small-business economy. It earns nothing from the buyer who found a supplier and everything from the supplier who wants to be found. So the business is only ever as healthy as its count of paying advertisers — and the uncomfortable truth of the last three years is that this count has barely grown.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>B2B marketplace 101: how a directory becomes a business</h2></div>
+  <p class="part-sub">The handful of ideas that make the whole model click.</p>
+
+  <p class="lead">To follow IndiaMART you need to understand what a <strong>two-sided marketplace</strong> is and why a plain directory is worth real money. On one side sit <em>buyers</em> — any business that needs to purchase something. On the other sit <em>suppliers</em> — manufacturers, wholesalers and traders who want customers. IndiaMART's entire job is to stand in the middle and make the two find each other faster than they could anywhere else. It never takes possession of a single product, never touches inventory, never ships a box. It sells <strong>discovery and connection</strong>.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Buyer</td><td>Any business searching for something to purchase. On IndiaMART buyers are <strong>free</strong> — they cost the company money to serve but pay nothing. There are ~41 million active buyers. Their volume is the bait that attracts paying sellers.</td></tr>
+      <tr><td class="t-strong">Supplier</td><td>A manufacturer, wholesaler or trader listing what it sells. A supplier can list for free (a basic "storefront") or <strong>pay</strong> for a premium subscription. Only the paying ones — ~220,000 — generate revenue.</td></tr>
+      <tr><td class="t-strong">Lead / enquiry</td><td>A buyer's request — "I need 5 tonnes of this, quote me." IndiaMART routes these leads to relevant suppliers. Paying suppliers get more and better leads. This is the product a supplier is really buying: <em>phone calls that turn into orders</em>.</td></tr>
+      <tr><td class="t-strong">Storefront</td><td>A supplier's mini-catalogue page on IndiaMART (products, photos, contact). ~8.7 million exist. Most are free; the paid tiers get prominence, more product slots, and a share of the enquiry flow.</td></tr>
+      <tr><td class="t-strong">ARPU</td><td>"Average revenue per user" — here, average annual revenue per <em>paying supplier</em> (~₹67k in FY26). Revenue = paying suppliers × ARPU, so this is one of the two levers that move the top line.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why a free directory is worth paying to be in</div>
+    <p>A supplier does not pay IndiaMART for a listing; it pays for <strong>attention it cannot buy anywhere cheaper</strong>. A small pump manufacturer in Coimbatore has no way to reach thousands of factories across India that might need pumps — no sales force, no ad budget, no way to be found on Google above larger rivals. IndiaMART hands it a stream of pre-qualified enquiries from buyers who are actively searching <em>right now</em> for exactly what it makes. For a lead that might become a ₹5-lakh order, an annual fee of a few tens of thousands of rupees is trivial. That is the value exchange the whole company rests on: cheap, high-intent demand delivered to small suppliers who have no other affordable way to get it.</p>
+  </div>
+
+  <h3>Who the players are</h3>
+  <ul class="clean">
+    <li><strong>The buyers</strong> — overwhelmingly India's small and mid-sized businesses (SMEs): the shops, factories, workshops, traders and contractors who buy inputs and goods. They use IndiaMART the way a consumer uses a search engine, and they pay nothing.</li>
+    <li><strong>The suppliers</strong> — also mostly SMEs: small manufacturers, distributors and traders. The vast majority list for free; a minority upgrade to a paid subscription because the leads justify it. Converting free suppliers to paid — and keeping them paid — is the entire commercial game.</li>
+    <li><strong>IndiaMART</strong> — the matchmaker in the middle, running the search, the storefronts, the lead-routing, a light CRM to help suppliers manage enquiries, and cloud-telephony and payment tools that make it stickier. It monetises the supplier side only.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>How IndiaMART actually makes money: one side pays, one side doesn't</h2></div>
+  <p class="part-sub">The subscription-and-leads engine — read this once and the economics fall into place.</p>
+
+  <p class="lead">IndiaMART runs a <strong>subscription business dressed as a marketplace</strong>. A supplier picks a paid plan — the tiers run from an entry "Star/Silver" package up through Gold and Platinum — and pays for a defined period (often a year or more, billed up front). In return it gets prominence in search results, a larger catalogue, priority in the lead flow, and tools to chase those leads. The buyer pays nothing, ever. So every rupee of revenue flows from one side of the network to a company that never touches a transaction.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The two-sided model — money flows from one side only</div>
+    <div class="flow-row">
+      <div class="node epc"><div class="ntag">Free side</div><div class="nname">41M buyers search</div><div class="nwho">Businesses hunting for inputs, goods and suppliers. Pay nothing.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">The platform</div><div class="nname">IndiaMART matches</div><div class="nwho">Search, storefronts, lead-routing, CRM &amp; telephony. Takes no cut of trades.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Paid side</div><div class="nname">220K suppliers subscribe</div><div class="nwho">Pay for prominence + the buyer enquiries. 100% of revenue.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">The float</div><div class="nname">Billed up front</div><div class="nwho">Cash collected before service is delivered — deferred revenue.</div></div>
+    </div>
+    <div class="flow-note">Buyers create the demand that makes a listing valuable; suppliers pay to reach that demand; the subscription is billed in advance, so cash arrives before revenue is booked. Every arrow but the first carries money.</div>
+  </div>
+
+  <h3>The revenue lines, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Supplier subscriptions</span></strong> — the overwhelming bulk of revenue. A paying supplier commits to a plan (monthly, annual, or multi-year) and pays for placement plus a slice of the enquiry flow. Higher tiers cost more and deliver more leads. This is a classic recurring, renew-every-period software-like revenue stream.</li>
+    <li><strong><span class="chain-epc">Lead / enquiry monetisation</span></strong> — inside the subscription, IndiaMART meters value by how many quality buyer enquiries a supplier receives. It also sells "BuyLead" credits — pay-as-you-go access to specific buyer requirements — which lets it charge for demand more granularly and nudge free suppliers toward paying.</li>
+    <li><strong><span class="chain-om">Value-added SME tools</span></strong> — a growing tail: a lightweight CRM to manage enquiries, cloud telephony, payment collection, and — via its subsidiary Busy — accounting software. These deepen the relationship and, crucially, make a paying supplier harder to dislodge.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The genuine surprise: the whole business monetises one side</div>
+    <p>It is easy to assume a "marketplace" earns a commission on what changes hands — the way a food-delivery app or a stockbroker does. IndiaMART earns <strong>nothing</strong> on the actual trade between buyer and seller. A buyer could find a supplier on IndiaMART and place a ₹1-crore order, and IndiaMART's cut of that order is zero. It only ever earns the supplier's <em>subscription</em>. That design has a startling consequence: the company's fortunes are almost completely detached from the value of commerce flowing across it, and tied instead to a single, countable number — how many small suppliers decide the leads are worth paying for this year. It is a demand-aggregation toll booth where only one lane has a toll, and even that lane is narrow.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the founder, and who controls it</h2></div>
+  <p class="part-sub">A founder-run, Noida-based internet original that survived the dot-com bust.</p>
+
+  <p class="lead">IndiaMART is unusually old for an internet company — it predates almost every consumer name in Indian tech. It was founded in <strong>1996</strong> by <strong>Dinesh Agarwal</strong> (still Managing Director &amp; CEO), later joined by co-founder <strong>Brijesh Agrawal</strong>, as a web-directory business in the earliest days of the Indian internet. It is headquartered in <strong>Noida</strong>, near Delhi, and listed on the NSE and BSE only in <strong>2019</strong> — more than two decades after it began.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1996</div><div class="ev">Dinesh Agarwal founds IndiaMART as an online business directory — connecting Indian exporters and manufacturers to buyers when barely anyone in India was online.</div></li>
+    <li><div class="yr">2000–2008</div><div class="ev">Survives the dot-com crash; pivots from an export-focused directory toward a broad domestic B2B listings and lead-generation marketplace as Indian SMEs come online.</div></li>
+    <li><div class="yr">2009–2015</div><div class="ev">The <strong>freemium supplier model</strong> matures — free listings for reach, paid subscriptions for prominence and leads. Paying-supplier count and ARPU become the reported operating metrics.</div></li>
+    <li><div class="yr">2016</div><div class="ev">Backing from investors (including Intel Capital and Amadeus over the years) helps scale; the platform consolidates its lead as India's #1 B2B marketplace by traffic and supplier base.</div></li>
+    <li class="major"><div class="yr">June 2019</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE (issue price ₹973; scrip code 542726). The stock debuts strongly, valued as a rare profitable, cash-generative Indian internet platform.</div></li>
+    <li class="major"><div class="yr">2020–2021</div><div class="ev">COVID pulls SMEs online fast. Paying suppliers and ARPU jump; the stock soars. IndiaMART acquires a majority stake in <strong>Busy Infotech</strong> (SME accounting software) to widen its SME footprint.</div></li>
+    <li><div class="yr">FY23–FY25</div><div class="ev">The <strong>churn problem surfaces</strong>: small suppliers sign up and leave, net supplier additions stall, and growth becomes ARPU-led rather than volume-led. The market starts pricing the leaky bucket.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ~₹1,569 Cr (+13%); paying suppliers essentially flat at ~220K (a net loss of ~1,200 in Q4); ARPU ~₹67k (+8%); consolidated PAT ~₹474.7 Cr; ₹60/share total dividend declared.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the <strong>Agarwal founding family</strong> and associated entities remain the controlling anchor, holding a large minority-to-majority block <strong>(roughly 50%, approx.)</strong>; the balance is with institutional and public investors. This is a genuine founder-led company — Dinesh Agarwal has run it for its entire ~30-year life. Track the exact promoter stake and any pledge in the quarterly shareholding filings.</li>
+    <li><strong>Group map:</strong> <strong>IndiaMART InterMESH Ltd (INDIAMART)</strong> is the marketplace — the company in this primer. Its most important subsidiary is <strong>Busy Infotech</strong> (Busy accounting software), majority-owned. It also holds minority stakes in a clutch of SME-focused SaaS and fintech startups (invoicing, logistics, HR-tech), acquired to embed deeper into the small-business workflow.</li>
+    <li><strong>Balance sheet:</strong> effectively <strong>debt-free with ~₹3,280 Cr of cash and investments</strong>. The company generates cash it cannot fully reinvest in an asset-light model, which is why it now pays chunky dividends (₹60/share in FY26, including a ₹30 special) — a signal that it is a cash cow first and a growth story second.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the founder point matters:</b> IndiaMART's moat was built patiently over three decades — a directory business is worthless until it has both enough suppliers to be useful and enough buyers to be worth paying for, and that flywheel took Dinesh Agarwal 20-plus years to spin up before the IPO. The flip side of a mature, founder-run cash cow is that the easy growth is behind it: the platform already has most of the SME suppliers worth having, which is precisely why the supplier count has plateaued and the debate has shifted to churn and pricing.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: the revenue identity -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The engine: paying suppliers × ARPU − churn</h2></div>
+  <p class="part-sub">The single most important idea in the whole investment case — and it is specific to this company.</p>
+
+  <p class="lead">IndiaMART's revenue is not complicated, and that simplicity is the point. It reduces almost perfectly to one identity: <strong>revenue = paying suppliers × ARPU</strong>. Two levers, nothing else. The number of sellers who pay, and the average price each pays. Every quarterly result, every management commentary, every analyst debate is really an argument about which of those two levers is moving, in which direction, and why. And lurking behind both is a third force — <strong>churn</strong> — that quietly drains the first lever every single quarter.</p>
+
+  <div class="chart">
+    <div class="c-title">Where FY26's ~13% revenue growth actually came from</div>
+    <div class="c-sub">Approximate decomposition — the two levers, side by side</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">ARPU growth<small>price per supplier</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~+8%</div></div>
+      <div class="bar-row"><div class="blab">Paying-supplier growth<small>volume of sellers</small></div><div class="track"><span class="fill ink" style="width:6%"></span></div><div class="bval">~flat</div></div>
+      <div class="bar-row"><div class="blab">Reported revenue<small>the combination</small></div><div class="track"><span class="fill brand" style="width:81%"></span></div><div class="bval">~+13%</div></div>
+    </div>
+    <div class="legend"><span>Nearly all of FY26's growth was <strong>price</strong>, not <strong>volume</strong>. ARPU rose ~8% to ~₹67k; the paying-supplier base ended flat at ~220K after losing ~1,200 in the March quarter. A subscriber business growing on price alone is a very different animal from one growing on new subscribers.</span></div>
+  </div>
+
+  <p>Hold that decomposition in mind, because it reframes the entire company. For years the bullish story was that IndiaMART would keep <em>adding</em> paying suppliers as India's tens of millions of SMEs came online — a volume story with a huge runway. What FY26 shows is a business that has quietly become a <strong>pricing story</strong>: the same ~220,000 sellers, charged more each year. Pricing power is real and valuable, but it has a ceiling that volume growth does not — push ARPU too hard and you accelerate the very churn that is already holding the base flat.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that fits only IndiaMART: two levers and a leak</div>
+    <p>Model IndiaMART as a bucket you are trying to fill. Each year you pour in <strong>new paying suppliers</strong> at the top; each year some leak out the bottom through <strong>churn</strong>; the water that stays gets charged a slightly higher <strong>ARPU</strong>. In a good year, the pour-in beats the leak and the price rises, so the bucket both fills and gets more valuable per litre. In FY26 the pour-in and the leak roughly cancelled — the bucket's level held at ~220K — and the only thing lifting revenue was the rising price on the water already in it. That is why you cannot judge this company on revenue growth alone: a healthy +13% can hide a base that isn't actually growing in bodies. The three numbers to read together, every quarter, are <strong>net supplier additions</strong> (is the bucket filling?), <strong>ARPU</strong> (is the price rising?), and the gap between <em>gross</em> adds and <em>net</em> adds (how fast is it leaking?).</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~220K</div><div class="msl">Paying suppliers at FY26 exit — roughly where it has sat for three years</div></div>
+    <div class="ms gold"><div class="msv">~₹67k</div><div class="msl">ARPU, up ~8% — the lever doing almost all the work</div></div>
+    <div class="ms red"><div class="msv">−1,200</div><div class="msl">Net paying suppliers <em>lost</em> in Q4 FY26 — the leak made visible</div></div>
+  </div>
+
+  <p>This is also why IndiaMART's revenue is so <strong>predictable in the short run and so contested in the long run</strong>. With subscriptions billed up front and a large installed base, next quarter's revenue is nearly locked in. But the direction of the <em>base</em> — whether ~220K becomes ~260K or drifts toward ~190K over the next few years — is genuinely uncertain, and it is the difference between a re-accelerating platform and a mature utility milking price. The identity is simple; its trajectory is not.</p>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The leaky bucket: why churn is the recurring villain</h2></div>
+  <p class="part-sub">The core weakness of the model, stated plainly — small suppliers sign up, then leave.</p>
+
+  <p class="lead">IndiaMART's greatest vulnerability is baked into who its customers are. Its paying suppliers are, overwhelmingly, <strong>very small businesses</strong> — a two-person trading firm, a single-workshop manufacturer, a home-run wholesaler. Small businesses are fragile and impatient: they sign up for a subscription, and if the leads don't convert into orders fast enough, or cash gets tight, or the founder gets busy, they simply don't renew. The result is a <strong>structurally high churn rate</strong> at the bottom of the customer pyramid that the company has never fully solved.</p>
+
+  <p>The mechanics are unforgiving. To grow the paying base <em>net</em>, IndiaMART must add enough new subscribers to cover everyone who leaves <em>and</em> then some. When churn among small suppliers runs hot, gross additions can look healthy while net additions flatline — exactly the pattern of the last three years, and exactly what produced a <strong>net loss of ~1,200 paying suppliers in Q4 FY26</strong>. The company is running up a down escalator: sprinting to stand still on the metric that matters most.</p>
+
+  <div class="chart">
+    <div class="c-title">The plateau — paying suppliers over time (illustrative)</div>
+    <div class="c-sub">Approximate; shows the shape of the stall, not exact quarterly counts</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY19 (IPO)<small>rising fast</small></div><div class="track"><span class="fill ink" style="width:52%"></span></div><div class="bval">~1.05 lakh</div></div>
+      <div class="bar-row"><div class="blab">FY22<small>COVID surge</small></div><div class="track"><span class="fill wtg" style="width:73%"></span></div><div class="bval">~1.5 lakh</div></div>
+      <div class="bar-row"><div class="blab">FY24<small>the stall begins</small></div><div class="track"><span class="fill spec" style="width:98%"></span></div><div class="bval">~2.1 lakh</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>flat, then down in Q4</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~2.2 lakh</div></div>
+    </div>
+    <div class="legend"><span>The base climbed steeply into and after the IPO, then flattened from around FY24. The line is not falling off a cliff — but a platform that once compounded its subscriber count now has to work hard to keep it from slipping. All figures approx.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the churn is a feature of the market, not a bug in the product</div>
+    <p>It would be comforting to think IndiaMART could fix churn with a better product or a smarter sales team, and it has tried — tiering plans, tightening onboarding, pushing annual and multi-year contracts to lock suppliers in. But the deeper cause is the <strong>mortality of Indian micro-businesses themselves</strong>. A meaningful share of the tiny firms that subscribe simply don't survive, or don't grow, or never had the volume to justify the spend in the first place. That churn floor is set by the health and turnover of the SME economy, which IndiaMART does not control. It can improve retention at the margin; it cannot make its smallest customers permanent. This is the single most important reason the paying base has plateaued — and why the company has leaned so hard on ARPU instead.</p>
+  </div>
+
+  <div class="note gold"><b>The uncomfortable feedback loop:</b> raising ARPU and churning small suppliers are linked. Push prices up to grow revenue, and the marginal small supplier — the one for whom the maths barely worked — is the first to drop off. So the two levers partly fight each other: the harder IndiaMART pulls the price lever, the more it strains the volume lever. Sustainable growth needs the paying base to resume net additions, not just endure another round of price hikes.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The collections float: cash before revenue</h2></div>
+  <p class="part-sub">A quiet feature that makes the model a cash machine — and a leading indicator hidden in plain sight.</p>
+
+  <p class="lead">Here is a mechanic that makes IndiaMART financially lovely and, for an analyst, unusually informative. Because subscriptions are <strong>billed and paid up front</strong> — often for a full year or more — the company collects cash <em>before</em> it has delivered the service. That upfront cash sits on the balance sheet as <strong>deferred revenue</strong> (money received but not yet earned), and it is released into the income statement month by month as the subscription is served. Two numbers fall out of this that lead reported revenue: <strong>collections</strong> (cash actually taken in) and <strong>deferred revenue</strong> (the stock of pre-paid subscriptions waiting to be recognised).</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The float numbers that lead the P&amp;L (FY26)</caption>
+    <thead><tr><th>Metric</th><th>FY26 figure</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Collections</td><td class="num">~₹1,674 Cr (+10%)</td><td>Cash taken from suppliers during the year. Because it's billed ahead of service, it signals what revenue will look like in coming quarters — a forward read on demand.</td></tr>
+      <tr><td class="t-strong">Deferred revenue</td><td class="num">~₹1,965 Cr (+17%)</td><td>The stock of pre-paid, not-yet-earned subscriptions. A growing balance means a fatter cushion of already-contracted future revenue. (Sources vary; ~₹1,900 Cr, approx.)</td></tr>
+      <tr><td class="t-strong">Revenue from ops</td><td class="num">~₹1,569 Cr (+13%)</td><td>The recognised, earned figure — trails collections and deferred revenue by design.</td></tr>
+      <tr><td class="t-strong">Cash from operations</td><td class="num">~₹694 Cr</td><td>The float plus high margins throw off cash well in excess of what an asset-light platform can reinvest — hence the ₹60 dividend.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the float is both a gift and a warning light</div>
+    <p>The gift: IndiaMART's customers <em>fund its working capital for it</em>. It never has to borrow to bridge the gap between spending and earning, because the cash lands before the cost of serving it is incurred. That is why the balance sheet holds ~₹3,280 Cr of investments and no real debt — the float compounds into a treasury. The warning light: because collections and deferred revenue lead recognised revenue, they are the <strong>early tremor</strong>. If small suppliers start balking at renewals, you will see it in <em>collections growth slowing</em> quarters before it shows up in the reported top line. When collections growth (~10%) runs below revenue growth (~13%), as it did in FY26, it is a subtle flag that the pipeline is filling a little more slowly than the P&amp;L is emptying it. The float is the most honest number the company reports.</p>
+  </div>
+
+  <p>This is the metric set a careful reader watches instead of the headline: not "did revenue grow?" (it almost always will, thanks to the float) but "<em>did collections and deferred revenue grow faster or slower than revenue?</em>" That comparison tells you whether the water going into the bucket is speeding up or slowing down, well before the reported number reacts.</p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The moat: the largest two-sided SME network in India</h2></div>
+  <p class="part-sub">Why a plateauing platform can still be extremely hard to displace.</p>
+
+  <p class="lead">For all the worry about churn, IndiaMART sits on a genuine, durable competitive advantage — a classic <strong>network effect</strong>. The value of the platform to any one participant rises with the number on the other side. More buyers searching makes a listing more valuable, which attracts more suppliers, which makes the search results richer, which attracts more buyers. IndiaMART has spent 30 years accumulating both sides of that network, and it now has the largest pool of Indian SME buyers and suppliers in one place. That is not easy to rebuild.</p>
+
+  <p>The moat shows up as three reinforcing barriers. First, <strong>scale of demand</strong>: a new entrant can build a slick website in months, but it cannot conjure 41 million active buyers — and without the buyers, no supplier will pay to list. Second, <strong>data and category depth</strong>: three decades of listings, categories, and enquiry history make IndiaMART's search useful across an enormous breadth of niche industrial products a generalist could never match. Third, <strong>switching inertia</strong>: a supplier that has built up reviews, a storefront, and a steady lead flow on IndiaMART loses all of it by leaving — and the value-added CRM, telephony and payments tools raise the cost of walking away.</p>
+
+  <div class="plain">
+    <div class="ptag">The subtle point: the moat protects share, not necessarily growth</div>
+    <p>It is important to separate two questions that get conflated. Can a rival take IndiaMART's <em>position</em> as India's dominant horizontal B2B marketplace? Very hard — the network effect makes that position sticky, and no direct challenger has come close. Can IndiaMART keep <em>growing</em> its paying base inside that dominant position? That is a completely different question, and the churn plateau suggests the answer is "only slowly." A moat can be wide and deep and still surround a business whose growth has matured. IndiaMART's moat is real; what it guarantees is durability and pricing power, not re-acceleration. Confusing the two is the most common mistake in reading this stock.</p>
+  </div>
+
+  <div class="note gold"><b>The horizontal-vs-vertical tension:</b> IndiaMART's breadth — every category under one roof — is its moat, but breadth is also its exposure. A vertical B2B specialist (steel, chemicals, textiles) can go deeper in one category, with better pricing data and logistics, and peel off the highest-value suppliers where the money is. IndiaMART is the general store; the risk is a thousand specialist boutiques nibbling at its best aisles.</div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Busy and the SME software stack: the second act</h2></div>
+  <p class="part-sub">The adjacency bet — from getting suppliers found to running their whole business.</p>
+
+  <p class="lead">If the core marketplace has matured, IndiaMART's answer is to sell its suppliers <em>more</em> — to move from being the place a small business gets discovered to being part of the software that runs it. The centrepiece is <strong>Busy</strong> (Busy Infotech), a widely used SME <strong>accounting and GST-billing software</strong> that IndiaMART bought a majority stake in around 2021. Around it sits a portfolio of minority stakes in SME-focused SaaS and fintech startups — invoicing, logistics, HR, payments.</p>
+
+  <p>The logic is a land-grab on the Indian small business's digital workflow. A supplier already pays IndiaMART for leads; if it also keeps its books, files its GST, sends invoices and collects payments through IndiaMART-owned tools, the relationship deepens from one annual subscription to an embedded operating system. That does three things: it lifts revenue per customer, it raises switching costs (churn's antidote), and it gives IndiaMART data on the supplier's actual business — a foundation for future fintech, like lending against verified sales.</p>
+
+  <div class="chart">
+    <div class="c-title">Busy is scaling faster than the core</div>
+    <div class="c-sub">Approximate FY26 growth signals for the accounting arm</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Busy billing growth<small>FY26</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~+43%</div></div>
+      <div class="bar-row"><div class="blab">Busy deferred-rev growth</div><div class="track"><span class="fill spec" style="width:102%"></span></div><div class="bval">~+44%</div></div>
+      <div class="bar-row"><div class="blab">Core marketplace revenue</div><div class="track"><span class="fill brand" style="width:30%"></span></div><div class="bval">~+13%</div></div>
+    </div>
+    <div class="legend"><span>Busy is growing several times faster than the core, off a small base — the accounting ecosystem now serves ~225k customers. It is not yet big enough to move the group, but it is the clearest evidence the second act is real. All figures approx.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the adjacency is the answer to churn — if it works</div>
+    <p>Every problem in the core business points to the same fix. Churn is high because small suppliers have a shallow relationship with IndiaMART — a listing they can drop. Give that supplier its accounting software, its billing, its payments, and dropping IndiaMART now means re-plumbing its whole back office. That is why Busy matters out of proportion to its current revenue: it is the mechanism by which a leaky, low-commitment marketplace subscription could become a sticky, multi-product SME platform. The execution risk is real — building or buying and integrating SaaS and fintech is a different muscle from running a directory — but the strategic direction squarely targets the model's central weakness.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The rivals — and the AI-discovery question</h2></div>
+  <p class="part-sub">A dominant platform with a fragmented competitive set and one genuinely new threat.</p>
+
+  <p class="lead">IndiaMART has no single equal-sized rival — its dominance in horizontal B2B classifieds is real. But it is squeezed from several directions at once, and one of those directions, the way buyers <em>discover</em> suppliers, is changing in a way that could matter more than any named competitor.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player / force</th><th>What it is</th><th>Vs IndiaMART</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">IndiaMART</td><td>India's #1 horizontal B2B marketplace by traffic &amp; supplier base</td><td><em>This company.</em> The default. The debate is churn and pricing, not survival.</td></tr>
+      <tr><td class="t-strong">JustDial</td><td>Local search &amp; listings (Reliance-owned), spanning B2C and B2B</td><td>The closest analogue in the "directory" lineage; competes for local supplier listings, less deep in pure industrial B2B.</td></tr>
+      <tr><td class="t-strong">TradeIndia / Exporters India</td><td>Older B2B directories</td><td>Direct but sub-scale rivals; lack IndiaMART's buyer volume and data depth.</td></tr>
+      <tr><td class="t-strong">Udaan / B2B commerce</td><td>Transaction-led B2B (takes a cut of trades, handles logistics)</td><td>A different model — actual wholesale commerce, not lead-gen. Competes for supplier attention and could disintermediate discovery in some categories.</td></tr>
+      <tr><td class="t-strong">Vertical B2B platforms</td><td>Category specialists (metals, chemicals, textiles, packaging)</td><td>Go deeper in one category with pricing and logistics; can skim IndiaMART's most valuable suppliers.</td></tr>
+      <tr><td class="t-strong">Google / WhatsApp / AI search</td><td>How buyers <em>find</em> suppliers directly</td><td>The structural threat — if discovery shifts to general search, AI assistants and direct messaging, the value of a paid IndiaMART listing erodes.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The threat that isn't a company: how buyers discover suppliers</div>
+    <p>IndiaMART's product is discovery — helping a buyer find a supplier. Its risk is that discovery is being <strong>rewired by AI</strong>. If a factory owner can ask an AI assistant "find me three verified suppliers of stainless-steel fasteners near Pune with prices," and get a useful answer without ever visiting IndiaMART, then the paid listing that sits at the heart of the model loses its reason to exist. This is not hypothetical erosion at the edges; it is a change to the fundamental behaviour IndiaMART monetises. The counter-argument is that IndiaMART owns something the AI needs — the actual database of verified Indian suppliers, their catalogues and their enquiry history — and could itself become the trusted supply-side layer that AI discovery draws on. Which way that resolves is the most important unknown in the long-term thesis, and it is genuinely open.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A high-margin cash machine, growing on price, priced more modestly than it once was.</p>
+
+  <p class="lead">FY26 crystallised the tension. Revenue grew a respectable ~13%, margins stayed rich in the mid-30s, and the treasury swelled — yet reported profit fell, and the operating metric that matters most, the paying-supplier count, went nowhere. The market has responded by de-rating the stock from its post-COVID highs to a far more sober multiple, which is itself the clearest statement of what investors now believe.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue &amp; the profit wobble</div>
+    <div class="c-sub">Consolidated, ₹ Crore — note profit fell while revenue rose</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue FY25</div><div class="track"><span class="fill ink" style="width:88%"></span></div><div class="bval">~1,388</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~1,569</div></div>
+      <div class="bar-row"><div class="blab">PAT FY25</div><div class="track"><span class="fill wtg" style="width:35%"></span></div><div class="bval">~551</div></div>
+      <div class="bar-row"><div class="blab">PAT FY26</div><div class="track"><span class="fill spec" style="width:30%"></span></div><div class="bval">~475</div></div>
+    </div>
+    <div class="legend"><span>Revenue +13%, but consolidated PAT fell ~14% — and Q4 PAT dropped ~72% to ~₹50 Cr. The profit dip is driven largely by a mark-down on treasury investments and higher costs, not by the core subscription business, whose operating margin held near ~34%.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Margins &amp; the cash pile (FY26)</div>
+    <div class="c-sub">The asset-light economics — and where the cash sits</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">EBITDA margin FY25</div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~37.6%</div></div>
+      <div class="bar-row"><div class="blab">EBITDA margin FY26</div><div class="track"><span class="fill brand" style="width:90%"></span></div><div class="bval">~33.8%</div></div>
+      <div class="bar-row"><div class="blab">Cash &amp; investments</div><div class="track"><span class="fill spec" style="width:100%"></span></div><div class="bval">~₹3,280 Cr</div></div>
+    </div>
+    <div class="legend"><span>Margins eased as the company spent on people and product, but remain high for any business. The ~₹3,280 Cr treasury (roughly a quarter of the market cap) means a large slice of the enterprise is just cash — and the source of both the dividend and the volatile "other income" that whipsawed Q4 profit.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~34%</div><div class="msl">FY26 EBITDA margin — asset-light, no inventory, no factories</div></div>
+    <div class="ms green"><div class="msv">₹60</div><div class="msl">Dividend/share (incl. ₹30 special) — a cash cow returning cash</div></div>
+    <div class="ms red"><div class="msv">~24×</div><div class="msl">P/E on ~₹11,600 Cr market cap — well below its post-IPO peak multiple</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: net paying-supplier additions</div>
+    <p>IndiaMART now trades around <strong>~24× earnings</strong> — no longer the 50-plus multiple of its COVID-era glory, but not cheap for a business growing revenue in the low teens. At that price the market is paying for a dominant, cash-rich franchise while withholding credit for re-acceleration. The metric that decides whether that scepticism is right is <strong>net paying-supplier additions</strong> — does the base break out of its ~220K plateau and start compounding again, or not? Read it alongside <strong>ARPU growth</strong> (is pricing still working without spiking churn?) and <strong>collections and deferred-revenue growth</strong> (is the forward pipeline filling faster than revenue?). If net adds turn convincingly positive for a few quarters, the plateau story dies and the multiple has room to expand on a dominant SME platform with a growing software attach. If the base keeps grinding sideways while ARPU does all the lifting, IndiaMART is a fine cash cow that the market will keep valuing like one. Supplier additions are the scoreboard; everything else is weather.</p>
+  </div>
+
+  <div class="note">FY25/FY26 figures here are drawn from company results and third-party summaries and cross-checked across sources; several are rounded and marked <b>approx.</b> Deferred revenue is reported in a ~₹1,832–1,965 Cr range across sources; ARPU (~₹67k), the paying-supplier count (~220K) and the Q4 net supplier loss (~1,200) are as disclosed for FY26. Market cap and P/E move daily — the ~₹11,600 Cr / ~24× figures are a mid-July 2026 snapshot. Verify against the company's filings before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A dominant, cash-generative platform asked to prove its subscriber base can grow again.</p>
+
+  <p class="lead">IndiaMART enters FY27 as what it has become: the unchallenged leader of Indian horizontal B2B discovery, a cash machine with a treasury larger than most rivals' entire market value, and a founder-run franchise 30 years in the making. The open question is no longer whether the business is good — it plainly is — but whether its central engine, the count of small suppliers willing to pay, can climb again, or whether the company is now a mature utility dressed as a growth stock.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Dominant network moat</strong> — the largest two-sided pool of Indian SME buyers and suppliers; no direct rival is close, and the position is very hard to rebuild.</li>
+        <li><strong>Asset-light cash machine</strong> — ~34% margins, negative working capital via the collections float, ~₹3,280 Cr treasury, and dividends to prove it.</li>
+        <li><strong>Pricing power intact</strong> — ARPU still rising ~8%; a long runway to charge more as suppliers extract more value from leads and tools.</li>
+        <li><strong>Software attach via Busy</strong> — accounting and SaaS growing ~40%+, deepening the relationship and directly attacking churn.</li>
+        <li><strong>Cheaper than it was</strong> — a de-rated multiple on a category-defining franchise; re-acceleration in net adds is not priced in.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Supplier plateau &amp; churn</strong> — the core metric has stalled near 220K and went negative in Q4; the model can't grow bodies faster than its tiny customers leave.</li>
+        <li><strong>Growth is price, not volume</strong> — leaning on ARPU has a ceiling and feeds the very churn it's trying to outrun.</li>
+        <li><strong>AI-discovery shift</strong> — if buyers find suppliers via AI, general search or WhatsApp, the value of a paid listing erodes at the root.</li>
+        <li><strong>SME cyclicality</strong> — subscription spend is discretionary and tied to fragile small-business health; a slowdown hits renewals fast.</li>
+        <li><strong>Adjacency execution &amp; treasury noise</strong> — SaaS/fintech is a new muscle, and a huge investment book makes reported profit lumpy, as Q4 FY26 showed.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>IndiaMART is a rare thing — a genuinely dominant, genuinely profitable Indian internet platform that funds its own growth and returns cash. Nothing about its moat, margins or balance sheet is in doubt. What is in doubt is arithmetic: a company whose revenue is paying suppliers times price cannot outrun the fact that, for three years, the first term has barely moved. The next act rests on two concrete, checkable things — whether Busy and the SME software stack lock suppliers in tightly enough to turn the churn tide, and whether AI-driven discovery becomes IndiaMART's replacement or its raw material. Watch one figure above all others each quarter: <strong>the net change in paying suppliers</strong>. The quarter that number breaks convincingly back above its old peak is the quarter IndiaMART stops being a cash cow the market prices for stagnation and starts, once more, being a growth story.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>IndiaMART InterMESH Ltd — Q4 FY26 &amp; FY26 press release (April 30, 2026), investor.indiamart.com.</li>
+    <li>IndiaMART InterMESH Ltd — Q4 FY26 earnings presentation (year ended Mar 2026).</li>
+    <li>Corporate.indiamart.com — "IndiaMART releases Q4FY26 and FY26 results … consolidated revenue ₹1,569 crore."</li>
+    <li>Whalesbook / ScanX / IndiaIPO — FY26 results coverage: revenue ₹1,569 Cr, PAT ₹474.7 Cr, ₹60 dividend.</li>
+    <li>Inc42 — "IndiaMART Q4: Net Profit Plunges 72% YoY To ₹50 Cr."</li>
+    <li>MarketsMojo — "IndiaMART Intermesh Q4 FY26: Profit Plummets 72% Despite Revenue Growth."</li>
+    <li>Tradebrains — IndiaMART subscriber base &amp; ~33.8% EBITDA margin analysis (FY26).</li>
+    <li>Angel One — IndiaMART Q3 FY26 results: revenue growth, collections and cash position.</li>
+    <li>GuruFocus — IndiaMART InterMESH (BOM:542726) Q4 2026 earnings-call highlights (ARPU, Busy, supplier metrics).</li>
+    <li>Motilal Oswal — IndiaMART initiation/update note (ARPU, collections, deferred revenue, Busy).</li>
+    <li>BSE India — IndiaMART InterMESH Ltd stock page, scrip code 542726 (ISIN INE933S01016); Screener.in — consolidated financials, market cap and P/E.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated. Market cap, P/E and share price are a mid-July 2026 snapshot and move daily; deferred revenue and certain operating metrics are reported in ranges across sources. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "INDIAMART";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
