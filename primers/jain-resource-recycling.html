@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jain Resource Recycling — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F3EF;
+    --paper-2:#FBF9F6;
+    --card:#FFFFFF;
+    --ink:#211A12;
+    --ink-soft:#61584D;
+    --ink-faint:#948B7F;
+    --brand:#7A4A1E;          /* deep smelted copper */
+    --brand-bright:#B5722A;   /* recycled-copper accent */
+    --gold:#C08A2E;           /* bronze-gold - accent / warmth */
+    --cu:#B5722A;            /* copper line */
+    --pb:#5F6B76;            /* lead line (slate) */
+    --al:#8A94A0;            /* aluminium line (silver) */
+    --spec:#9A5D1E;          /* darker copper cross accent */
+    --line:#E4DCD2;
+    --line-soft:#EFE9E0;
+    --good:#3C7A4E;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F5E9DB;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F4EF;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EDE7DE;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#7A4A1E,#B5722A);}
+  .fill.gold{background:linear-gradient(90deg,#C08A2E,#DBA954);}
+  .fill.cu{background:linear-gradient(90deg,#9A5D1E,#C88A3E);}
+  .fill.pb{background:linear-gradient(90deg,#525C66,#78848F);}
+  .fill.al{background:linear-gradient(90deg,#8A94A0,#AAB4BE);}
+  .fill.spec{background:linear-gradient(90deg,#9A5D1E,#B87A2E);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#4a4038,#6a5e52);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.cu{background:var(--cu);}
+  .node.pb{background:var(--pb);}
+  .node.al{background:var(--al);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-cu{color:var(--cu);font-weight:600;}
+  .chain-pb{color:var(--pb);font-weight:600;}
+  .chain-al{color:#6b7681;font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F5E9DB;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Non-ferrous recycling 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What Jain actually sells</a></li>
+    <li><a href="#p3"><span class="n">03</span> The family &amp; the 72-year climb</a></li>
+    <li><a href="#p4"><span class="n">04</span> The conversion-spread engine</a></li>
+    <li><a href="#p5"><span class="n">05</span> The imported-scrap loop</a></li>
+    <li><a href="#p6"><span class="n">06</span> The copper pivot</a></li>
+    <li><a href="#p7"><span class="n">07</span> Why the tailwinds are real</a></li>
+    <li><a href="#p8"><span class="n">08</span> The IPO-funded scale-up</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: JAINREC · BSE: 544537</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Jain Resource Recycling, <em>the furnace that turns the world's scrap into India's metal</em></h1>
+  <p class="dek">A complete walk through one of India's largest non-ferrous metal recyclers — how a 1953 Chennai rolling mill became a company that melts used batteries, copper cable and aluminium scrap back into refined copper, lead and aluminium, why its ₹9,500 Cr of revenue hides a business that actually earns a thin per-tonne fee, and what its October-2025 IPO is really funding.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹9,543 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~3.26 <small>lakh MTPA</small></div><div class="l">Recycling capacity</div></div>
+    <div class="cell"><div class="v">~5.8% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹11,700 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">19 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ~₹9,543 Cr (+34%), EBITDA ~₹558 Cr (5.8% margin), PAT ~₹347 Cr, ROCE ~25%; first full year of financials after the October-2025 NSE/BSE listing; copper mix and utilisation flagged as the numbers to watch.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Jain Resource Recycling melts <strong>metal scrap back into metal</strong>. It buys used lead-acid batteries, copper cable and cathode scrap, and aluminium offcuts — much of it <strong>imported from abroad</strong> — and runs it through smelters and refineries in Tamil Nadu to produce <strong>recycled lead, copper and aluminium</strong>, plus alloys, which it sells to battery makers, cable and wire manufacturers, and auto and engineering firms. It is <strong>one of India's largest non-ferrous metal recyclers</strong>, the operating company of Chennai's Jain Metal Group, and it listed on the NSE and BSE only in <strong>October 2025</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>The revenue is enormous; the margin is a sliver.</strong> FY26 revenue was ~₹9,543 Cr, but EBITDA was only ~₹558 Cr — a <strong>~5.8% operating margin</strong>. That is not a warning sign; it is the shape of the business. The value of the copper or lead flows straight through the accounts at a globally-set price. What Jain keeps is a thin <em>conversion spread</em> per tonne — the gap between what scrap costs and what refined metal fetches. This is a volume-and-spread business, not a metal-price bet.</li>
+    <li><strong>Copper is the pivot.</strong> Historically a lead recycler, Jain has swung hard into <strong>copper</strong> — copper products were ~45% of FY25 revenue against lead's ~40% — and its copper plant is the one still running with the most headroom. Copper is the metal of EVs, the electrical grid and electrification, and India mines almost none of it. That mix shift, not the tonnage of lead, is the growth story.</li>
+    <li><strong>It grew fast, then raised capital to grow faster.</strong> Revenue compounded at roughly <strong>45% a year</strong> over three years into FY26; profit grew faster still (ROE ~31%, ROCE ~25%). The October-2025 IPO raised ₹1,250 Cr (₹500 Cr fresh) to fund capacity and pay down debt. The stock trades near <strong>32× earnings</strong> — a premium the market attaches to a fast-scaling recycler riding the circular-economy theme.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Strip away the metal and Jain is a <strong>toll operator on the world's discarded non-ferrous metal</strong>. It doesn't dig ore out of the ground; it collects the copper and lead the world has already used once, cleans and re-melts it, and pockets a per-tonne processing fee. The metal it sells is worth a fortune, which is why revenue looks huge — but almost all of that value belongs to the metal, not to Jain. The company's real income is the narrow spread it earns for doing the conversion, multiplied across a lot of tonnes. So the questions that matter are simple: how many tonnes, at what spread, and how much of it is the higher-value copper.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Non-ferrous recycling 101: the circular metal loop</h2></div>
+  <p class="part-sub">No metallurgy degree needed — just the handful of ideas that drive the whole business.</p>
+
+  <p class="lead">"Ferrous" means iron and steel; "<strong>non-ferrous</strong>" means everything else — copper, lead, aluminium, zinc, nickel. These metals share a magical property: unlike paper or plastic, a metal atom does not wear out. Copper melted from a scrapped cable is <em>chemically identical</em> to copper dug from a mine, and it can be re-melted again and again, forever. That single fact is why metal recycling is a genuine industry and not a green afterthought — and why Jain's product competes head-to-head with freshly-mined metal on quality.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Non-ferrous</td><td>Metals other than iron/steel — here <strong>copper, lead, aluminium</strong> and their alloys. They command high prices and are costly to mine, so recycling them is worth real money. Jain's entire product range.</td></tr>
+      <tr><td class="t-strong">Scrap (feedstock)</td><td>The raw material: used lead-acid <strong>batteries</strong>, copper <strong>cable and cathode scrap</strong>, aluminium offcuts. Jain's cost base. Much of it is <em>imported</em> because India doesn't generate enough of its own yet.</td></tr>
+      <tr><td class="t-strong">Secondary metal</td><td>Metal made from scrap ("secondary") as opposed to from ore ("primary"). It is cheaper to make and carries a far smaller carbon footprint — recycled copper uses a fraction of the energy of mined copper.</td></tr>
+      <tr><td class="t-strong">LME</td><td>The London Metal Exchange — the global reference price for copper, lead and aluminium. Jain's selling price is set by the LME, not by Jain. This is why the metal price largely passes through and the spread is what's left.</td></tr>
+      <tr><td class="t-strong">Conversion spread</td><td>The per-tonne gap between scrap-input cost and the LME-linked price of refined metal, minus processing cost. <strong>This is Jain's actual profit engine</strong> — everything in this primer comes back to it.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The economics that decide everything: spread, not price</div>
+    <p>Here is the mechanism a first-timer must grasp. When the LME copper price rises, Jain's <em>selling</em> price rises — but so does the price it pays for copper scrap, because scrap is priced as a discount to LME. The two move together. So Jain does not get rich when copper goes up or poor when it falls; it gets paid the <strong>spread</strong> in between, which it locks in by hedging on the exchange. That converts a scary-looking commodity business into something closer to a <em>processing fee per tonne</em>. Profit therefore rises when Jain runs <strong>more tonnes</strong>, earns a <strong>wider spread</strong> (better sourcing, value-added products), or shifts the mix toward <strong>higher-spread copper and alloys</strong> — and not merely when metal prices are high.</p>
+  </div>
+
+  <h3>Why the world is pushing metal into this loop</h3>
+  <ul class="clean">
+    <li><strong>Carbon.</strong> Making metal from scrap emits a fraction of the CO₂ of mining and smelting ore. As buyers and regulators price carbon, recycled metal gets a structural cost-and-compliance edge.</li>
+    <li><strong>Scarcity.</strong> India is chronically short of copper and lead ore. Recycling — plus importing other countries' scrap — is how the country closes the gap without opening mines it doesn't have.</li>
+    <li><strong>Formalisation.</strong> Historically this trade was dominated by thousands of informal backyard smelters. Environmental rules and battery-recycling mandates are pushing volume toward large, compliant, organised players like Jain.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What Jain actually sells: three metals, one furnace discipline</h2></div>
+  <p class="part-sub">The product map — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">Jain does the <strong>same fundamental job three times over</strong>, once for each metal: collect scrap, sort and process it, smelt and refine it, and sell a refined metal or alloy that a manufacturer can drop straight into its production line. The three metals have very different economics, and the shift in weight between them is the single most important thing to track.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The circular value chain — Jain runs it end to end</div>
+    <div class="flow-row">
+      <div class="node spec"><div class="ntag">Stage 1 · Source</div><div class="nname">Collect the scrap</div><div class="nwho">Used batteries, copper cable &amp; cathode scrap, aluminium offcuts — much of it imported.</div></div>
+      <div class="arrow">→</div>
+      <div class="node cu"><div class="ntag">Stage 2 · Process</div><div class="nname">Sort &amp; smelt</div><div class="nwho">Break down, separate, and melt in furnaces at the three Tamil Nadu plants.</div></div>
+      <div class="arrow">→</div>
+      <div class="node pb"><div class="ntag">Stage 3 · Refine</div><div class="nname">Refine to spec</div><div class="nwho">Purify into refined copper, lead and aluminium plus tailored alloys.</div></div>
+      <div class="arrow">→</div>
+      <div class="node al"><div class="ntag">Stage 4 · Sell</div><div class="nname">Ship to makers</div><div class="nwho">Battery, cable/wire, auto and engineering firms — priced off the LME.</div></div>
+    </div>
+    <div class="flow-note">Every stage is a cost until the metal is sold; the profit is the thin spread that survives from scrap-in to metal-out, banked one tonne at a time.</div>
+  </div>
+
+  <h3>The three metal lines, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-cu">Copper (~45% of FY25 revenue)</span></strong> — the growth engine and the future. Jain recycles copper scrap and cathode into refined copper and copper products. It is the highest-value, highest-optionality line, tied to EVs, wiring, motors and the grid. Crucially, its copper plant ran at only <strong>~40% utilisation</strong> in FY25 — meaning most of the copper capacity is <em>not yet earning</em>, a coiled reserve rather than a maxed-out line.</li>
+    <li><strong><span class="chain-pb">Lead (~40% of FY25 revenue)</span></strong> — the mature, cash-generating base. Jain's roots. It recycles used lead-acid batteries into refined and alloyed lead sold back to battery manufacturers — a closed loop, since the same batteries come back for recycling at end of life. The lead line already ran near <strong>~88% utilisation</strong>: reliable, but with limited room to grow without new capacity.</li>
+    <li><strong><span class="chain-al">Aluminium (~4% of FY25 revenue) &amp; alloys</span></strong> — the smaller, newer leg. Recycled aluminium and aluminium alloys for auto and engineering customers, plus the balance of revenue from other alloys and products. Small today, but part of widening the non-ferrous footprint.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the utilisation split is the tell</div>
+    <p>Read those two utilisation numbers together and the strategy writes itself. Lead is <em>full</em> (~88%) — a solid base that funds the company but can't drive the next leg of growth on its own. Copper is <em>half-empty</em> (~40%) — the same furnaces, the same permits, the same people, with room to roughly double the throughput before Jain even needs to build. So the near-term earnings lever isn't a new plant or a metal-price windfall; it is simply <strong>filling the copper capacity that already exists</strong>. That is a rare, low-capital way to grow, and it is exactly why the copper mix — not the lead tonnage — is where the value sits.</p>
+  </div>
+
+  <h3>Who buys the metal</h3>
+  <ul class="clean">
+    <li><strong>Battery manufacturers</strong> — the natural home for recycled lead and lead alloys; the loop that made Jain.</li>
+    <li><strong>Cable, wire and electrical firms</strong> — the buyers of recycled copper as electrification demand climbs.</li>
+    <li><strong>Auto &amp; engineering makers</strong> — users of recycled aluminium and alloys, valuing both cost and the lower carbon footprint for their own green targets.</li>
+  </ul>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The family, the group, and a 72-year climb</h2></div>
+  <p class="part-sub">A Chennai metals house that spent seven decades getting to its IPO.</p>
+
+  <p class="lead">Jain Resource Recycling is the listed operating company of the <strong>Jain Metal Group</strong>, a Chennai (Tamil Nadu) family business led by <strong>Kamlesh Jain</strong> (Chairman &amp; Managing Director). Its lineage runs back to <strong>1953</strong>, when the family started a partnership called <em>Jain Metal Rolling Mills</em> — meaning the September-2025 IPO capped a seven-decade journey from a small rolling mill to one of India's largest organised non-ferrous recyclers.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1953</div><div class="ev">The family metals business begins as <strong>Jain Metal Rolling Mills</strong>, a partnership firm in the Chennai metals trade — the seed of a seven-decade legacy.</div></li>
+    <li><div class="yr">Historic base</div><div class="ev">The group builds its foundation in <strong>lead recycling</strong> — collecting and re-smelting used lead-acid batteries into refined and alloyed lead for battery makers.</div></li>
+    <li class="major"><div class="yr">Recent years</div><div class="ev">A hard push into <strong>copper</strong> and non-ferrous diversification transforms the group from a lead recycler into a multi-metal one; revenue compounds at ~45% a year into FY26.</div></li>
+    <li><div class="yr">FY22–FY24</div><div class="ev">By its own IPO disclosures, the group ranks as <strong>India's largest non-ferrous metal recycler by revenue</strong> for FY22, FY23 and FY24 — scale built well before the listing.</div></li>
+    <li class="major"><div class="yr">Sep–Oct 2025</div><div class="ev"><strong>IPO</strong>: a ₹1,250 Cr issue (₹500 Cr fresh + ₹750 Cr offer-for-sale) priced at ₹232/share; <strong>listed on NSE &amp; BSE on 1 October 2025</strong>. Fresh proceeds earmarked for capacity and debt reduction.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">First full year as a listed company: revenue ~₹9,543 Cr (+34%), PAT ~₹347 Cr, ROCE ~25%; copper capacity still with meaningful headroom to fill.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the <strong>Jain family</strong>, led by Kamlesh Jain, hold roughly <strong>73.6%</strong> after the IPO — a firmly promoter-controlled company. Institutions hold ~13% and the public ~13%. A high promoter stake this soon after listing means the family's own capital is squarely aligned with the scale-up, but also that public-market governance is still young here.</li>
+    <li><strong>Where it operates:</strong> three recycling plants in <strong>Tamil Nadu</strong>, with an aggregate installed capacity of ~<strong>3.26 lakh tonnes a year (approx.)</strong> across copper, lead and aluminium. The Chennai base gives it port access — which matters enormously for a business that imports much of its scrap (see §5).</li>
+    <li><strong>Balance sheet:</strong> a growth-stage balance sheet, not a fortress one. FY26 total debt was ~₹1,276 Cr against equity of ~₹1,561 Cr, leaving net debt of roughly <strong>₹615 Cr (approx.)</strong>. That is real leverage for a company scaling working capital fast — manageable at ~25% ROCE, but a line item to watch every quarter.</li>
+  </ul>
+
+  <div class="note gold"><b>Read the group name carefully.</b> "Jain Resource Recycling" (NSE: JAINREC) is a distinct listed entity — do not confuse it with the various unrelated companies that share the common surname "Jain" on Indian exchanges. The relevant parent brand is <em>Jain Metal Group</em>, Chennai; the promoter to track in the filings is the Kamlesh Jain family.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: the conversion-spread / EBITDA-per-tonne engine -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The conversion-spread engine: why ₹9,500 Cr earns ₹558 Cr</h2></div>
+  <p class="part-sub">The single most important idea in the whole case — and it is specific to how this company makes money.</p>
+
+  <p class="lead">Look at Jain's income statement and one thing jumps out: revenue of ~₹9,543 Cr, EBITDA of ~₹558 Cr. A ~5.8% margin would look alarming at a normal manufacturer. Here it is the entire point. Jain is not marking up a product; it is <strong>collecting a per-tonne fee to convert scrap into metal</strong>, while the LME-set value of the metal itself passes straight through the top line. To understand Jain you have to stop reading the revenue as "sales" and start reading it as "metal value flowing through" — and read the spread underneath as the real business.</p>
+
+  <div class="chart">
+    <div class="c-title">Where a rupee of Jain's revenue really goes</div>
+    <div class="c-sub">Illustrative structure of the FY26 P&amp;L — the metal owns almost all of it</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Scrap &amp; input cost<small>the metal itself</small></div><div class="track"><span class="fill ink" style="width:94%"></span></div><div class="bval">~94%</div></div>
+      <div class="bar-row"><div class="blab">EBITDA<small>the conversion spread</small></div><div class="track"><span class="fill cu" style="width:6%"></span></div><div class="bval">~5.8%</div></div>
+      <div class="bar-row"><div class="blab">Net profit<small>after interest, tax, depreciation</small></div><div class="track"><span class="fill spec" style="width:4%"></span></div><div class="bval">~3.6%</div></div>
+    </div>
+    <div class="legend"><span>Roughly 94 paise of every revenue rupee is simply the cost of the metal, largely a pass-through of LME prices. Jain keeps a ~6-paise operating spread — small in percentage, but it is charged on a very large and growing pile of tonnes.</span></div>
+  </div>
+
+  <p>Because the spread is thin, the arithmetic of the business is dominated by two numbers most investors ignore: <strong>tonnes processed</strong> and <strong>EBITDA earned per tonne</strong>. Multiply them and you get operating profit. On ~3.26 lakh tonnes of capacity and ~₹558 Cr of FY26 EBITDA, the implied spread is on the order of <strong>₹15,000–20,000 per tonne (approx., implied — Jain does not disclose exact realised tonnage)</strong>. Whether that per-tonne spread widens or narrows — and whether tonnes rise — is the whole game.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits Jain: same three furnaces, half the copper idle</div>
+    <p>Here is a lens you can apply to Jain and to almost no other listed company cleanly. In FY25 the lead line ran at ~88% and the copper line at just ~<strong>40%</strong>. That means the profit Jain reported was earned on a business that was, in copper terms, <em>running at less than half throttle</em> — same furnaces, same permits, same workforce, with the other ~60% of copper capacity standing idle. Filling that gap requires almost no new fixed cost: it is incremental tonnes over an already-built plant, which is exactly the kind of volume that drops through to the spread. So the near-term earnings question is not "will copper prices rise?" — it is "<strong>how fast does Jain fill the copper line it already owns?</strong>" A recycler with a full plant grows by building; Jain can grow, first, simply by switching on what it has.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~5.8%</div><div class="msl">FY26 EBITDA margin — a per-tonne fee, not a product mark-up</div></div>
+    <div class="ms"><div class="msv">~40%</div><div class="msl">FY25 copper-plant utilisation — the un-booked half of the business</div></div>
+    <div class="ms green"><div class="msv">~25%</div><div class="msl">ROCE — thin margins, but high asset turns lift the return on capital</div></div>
+  </div>
+
+  <p>That last point resolves the apparent paradox of a 5.8%-margin company earning a ~25% return on capital. Because the metal turns over so quickly — scrap in, metal out, cash back, repeat — Jain sweats its assets hard. A thin spread on rapidly-recycled capital can out-earn a fat margin on slow-moving capital. The engine is velocity, not markup.</p>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The imported-scrap loop: India's metal made from the world's waste</h2></div>
+  <p class="part-sub">The counter-intuitive fact at the heart of the business — and its biggest single dependency.</p>
+
+  <p class="lead">Here is the part that surprises most people. India is one of the world's largest and fastest-growing metal consumers — yet it barely <em>mines</em> copper or lead. Its ore reserves are thin, its smelting capacity for primary copper has actually shrunk, and demand keeps climbing. So how does the country get its non-ferrous metal? Increasingly, by <strong>importing other nations' discarded metal</strong> — the scrapped cables, spent batteries and aluminium offcuts the developed world throws away — and recycling it on Indian soil. Jain sits precisely on that bridge.</p>
+
+  <div class="plain">
+    <div class="ptag">The genuine surprise</div>
+    <p>A company selling "Indian recycled copper" is, in large part, refining copper that was first mined in Chile or the Congo, wired into a building in Europe or the Gulf, used for decades, ripped out, and shipped to Chennai as scrap. India recycles <em>imported</em> waste not because it is greener to ship metal across oceans, but because the country cannot dig enough of its own — recycling foreign scrap is how India substitutes for the copper and lead mines it does not have. Jain's furnaces turn the world's cast-off cables and batteries into India's new working metal. It is a circular economy, but a <em>globe-spanning</em> one — and it means Jain's fortunes are tied as much to the price and availability of imported scrap as to anything happening in India.</p>
+  </div>
+
+  <p>This bridge is a strength and a vulnerability at once. The strength: it lets Jain scale far beyond what domestic scrap collection alone could feed, and a coastal Tamil Nadu base with port access makes importing feedstock practical at volume. The vulnerability is equally real, and it is the risk to underline. Because so much feedstock is imported, Jain is exposed to:</p>
+
+  <ul class="clean">
+    <li><strong>Import policy and duties.</strong> A change in scrap-import rules, tariffs or quality norms — India's or an exporting country's — can raise Jain's input cost or restrict supply at short notice.</li>
+    <li><strong>Scrap availability and price.</strong> Global scrap is itself a competitive, sometimes tight market; other recyclers worldwide bid for the same batteries and cables. A scrap squeeze compresses the very spread Jain lives on.</li>
+    <li><strong>Currency.</strong> Scrap is bought in dollars and often sold in rupees against LME references — an FX layer on top of the metal exposure, hedged but never perfectly.</li>
+  </ul>
+
+  <div class="note gold"><b>The dependency in one line:</b> Jain's growth assumes it can keep buying imported scrap at a workable discount to LME. If a trade barrier goes up, or global scrap gets scarce and expensive, the spread narrows regardless of how good the plant is. Feedstock security is to a recycler what a coal linkage is to a power plant.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The copper pivot: from batteries to the electrification metal</h2></div>
+  <p class="part-sub">Why the mix shift toward copper is the value creation — not the tonnage of lead.</p>
+
+  <p class="lead">Jain was born a lead recycler, and lead is a fine, cash-generative business — but it is mature. The company's re-rating rests on a deliberate swing toward <strong>copper</strong>, which was already ~45% of FY25 revenue and is where the spare capacity lives. To see why that matters, look at what copper <em>is</em> in a decarbonising economy.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Lead vs copper — two very different growth stories</caption>
+    <thead><tr><th>Dimension</th><th class="t-strong">Lead (the base)</th><th class="t-strong">Copper (the pivot)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Core demand driver</td><td>Lead-acid batteries — autos, backup power, inverters</td><td>Wiring, motors, EVs, grid, renewables, data centres</td></tr>
+      <tr><td class="t-strong">Structural growth</td><td>Steady, but a mature, closed loop</td><td>Rising with electrification and the energy transition</td></tr>
+      <tr><td class="t-strong">Jain's utilisation (FY25)</td><td class="t-strong">~88% — near full</td><td class="t-strong">~40% — big headroom</td></tr>
+      <tr><td class="t-strong">Value / spread potential</td><td>Solid, defensive</td><td>Higher-value; room for alloys and value-added products</td></tr>
+      <tr><td class="t-strong">Role in the thesis</td><td>The ballast that funds the pivot</td><td>The engine that justifies the multiple</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Copper is often called the metal of electrification for a plain reason: an electric vehicle uses several times more copper than a petrol car, a wind or solar farm is copper-intensive, and every new data centre and grid upgrade is a fresh copper order. Global mined copper supply, meanwhile, struggles to keep pace. That widening gap is precisely the space secondary (recycled) copper is being pulled in to fill — and India, importing scrap and short of ore, is one of the places it gets filled.</p>
+
+  <div class="plain">
+    <div class="ptag">Why copper mix beats copper price</div>
+    <p>It is tempting to treat Jain as a way to play a rising copper price. Resist it — the hedged, pass-through structure means the LME level mostly washes out. The right way to read the copper pivot is as a <strong>mix and utilisation story</strong>: every tonne that moves Jain's blend toward copper and copper alloys tends to carry a better spread than commodity lead, and every point of copper-plant utilisation Jain recovers is near-free incremental profit on a plant that is already built and permitted. The copper thesis is won in Jain's own capacity-utilisation and product-mix tables, not on the LME ticker.</p>
+  </div>
+
+  <p>There is a further leg: <strong>value-added products and alloys</strong>. Selling refined cathode-grade copper is a commodity; supplying a specific copper or aluminium <em>alloy</em> tuned to a customer's spec earns more per tonne and is stickier. As Jain climbs that ladder — more copper, more alloys, more custom grades — the average spread can rise even if headline tonnage grows only steadily. That climb, quarter by quarter, is the part of the story worth watching most closely.</p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Why the tailwinds are real, not just a green slogan</h2></div>
+  <p class="part-sub">Four structural forces pushing volume toward large, organised recyclers.</p>
+
+  <p class="lead">Plenty of companies claim an ESG tailwind and mean very little by it. For a non-ferrous recycler the drivers are unusually concrete and policy-backed. Four of them stack on top of each other, and together they explain why an organised recycler can grow faster than the metal market itself.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What's pushing metal into the organised recycling loop</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Why it helps Jain</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">EPR &amp; formalisation</td><td>Extended Producer Responsibility rules and battery-waste mandates force proper, traceable recycling and squeeze informal backyard smelters.</td><td>Shifts volume from thousands of small unregulated units toward large compliant players — a share-gain tailwind independent of market growth.</td></tr>
+      <tr><td class="t-strong">Import substitution</td><td>India is short of copper and lead ore and its primary smelting has shrunk; recycling reduces reliance on imported <em>refined</em> metal.</td><td>Positions Jain as part of the answer to a national metal-supply gap — a policy priority, not a niche.</td></tr>
+      <tr><td class="t-strong">ESG / low-carbon metal</td><td>Recycled metal carries a fraction of the carbon of mined metal; buyers increasingly want it to hit their own targets.</td><td>Gives Jain's output a preference and, over time, potentially a pricing edge with green-conscious customers.</td></tr>
+      <tr><td class="t-strong">Electrification demand</td><td>EVs, the grid, renewables and data centres drive relentless growth in copper (and aluminium) demand.</td><td>Expands the pie Jain's copper pivot is aimed at, precisely where its spare capacity sits.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The insight that separates recycling from a commodity bet</div>
+    <p>Most metals exposure is a wager on the price cycle — you win if copper rises, you lose if it falls. Jain's tailwind is different in kind: it is a <strong>share-shift</strong> from the informal sector to the organised one, layered on a <strong>volume-growth</strong> in metal demand. An organised recycler can grow even in a flat-price year by taking tonnes away from unregulated smelters that can no longer meet the environmental and traceability bar. That is why formalisation is the quiet workhorse of this thesis — less glamorous than "the copper supercycle," but more durable, because it is driven by regulation and compliance rather than by a price that can reverse.</p>
+  </div>
+
+  <p>None of this makes recycling risk-free. Environmental rules that push volume toward Jain also raise the bar Jain itself must clear — smelting is a polluting activity, and a recycler that trips pollution norms faces exactly the enforcement it benefits from elsewhere. The tailwind and the compliance burden are the same wind blowing on both sides of the sail.</p>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The IPO-funded scale-up</h2></div>
+  <p class="part-sub">What the October-2025 listing raised, and what it is meant to build.</p>
+
+  <p class="lead">Recycling at Jain's scale is <strong>working-capital hungry</strong>: it must buy and pay for large volumes of scrap — often imported and paid for up front in dollars — well before the refined metal is sold and the cash comes back. Growing fast makes that hunger worse, because each extra tonne needs financing before it earns. The IPO was, in large part, about funding that growth without choking on it.</p>
+
+  <div class="chart">
+    <div class="c-title">The revenue ramp</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore); FY24 is an approximate implied figure</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24<small>approx., implied</small></div><div class="track"><span class="fill ink" style="width:56%"></span></div><div class="bval">~5,300</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill cu" style="width:75%"></span></div><div class="bval">~7,126</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~9,543</div></div>
+    </div>
+    <div class="legend"><span>FY26 revenue rose ~34% on FY25, capping a ~45% three-year revenue CAGR (per screener data). The FY24 bar is an <em>approx.</em> implied figure to show the trajectory, not a reported result — verify against filings.</span></div>
+  </div>
+
+  <p>The <strong>₹1,250 Cr IPO</strong> (bidding 24–26 September 2025, listed 1 October 2025 at ₹232/share) split into a <strong>₹500 Cr fresh issue</strong> and a <strong>₹750 Cr offer-for-sale</strong>. Only the fresh portion adds capital to the company — the OFS is existing holders selling down. The fresh proceeds were directed at the two things a scaling recycler needs most: <strong>capacity and capability expansion</strong>, and <strong>reducing debt</strong> to make room for the working capital that faster volumes demand.</p>
+
+  <div class="plain">
+    <div class="ptag">Why fresh capital is the permission slip</div>
+    <p>A recycler running its copper plant at ~40% has an obvious growth path — fill it — but filling it means financing far more scrap in-flight at any moment. If the balance sheet is already stretched, every extra tonne competes with debt service for the same rupee, and growth stalls exactly where it should accelerate. The ₹500 Cr of fresh equity, plus the debt reduction it enables, is meant to remove that constraint: to let Jain buy the scrap, run the furnaces harder, and carry the receivables that a higher copper mix requires. It does not guarantee the volumes arrive — but it removes the cash reason they might not.</p>
+  </div>
+
+  <div class="note gold"><b>Keep the OFS in view.</b> Three-quarters of the IPO was an offer-for-sale — cash to selling shareholders, not to the company. That is normal, but it means the listing did less balance-sheet repair than the ₹1,250 Cr headline suggests; the company itself received ~₹500 Cr before issue costs. Judge the deleveraging against that figure, and watch net debt in the FY26 and FY27 accounts to confirm it is actually falling.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">Organised recyclers, the vast informal sector, and primary-metal producers.</p>
+
+  <p class="lead">Jain competes on three fronts at once, and they are quite different animals. Against other <strong>organised recyclers</strong> for scrap and customers; against the <strong>informal sector</strong> that still handles a large share of India's scrap; and, ultimately, against <strong>primary (mined) metal</strong>, since a buyer can always choose freshly-smelted copper over recycled. Understanding where Jain sits against each is the key to sizing its moat.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player / group</th><th>Position</th><th>Vs Jain</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Jain Resource Recycling</td><td>One of India's largest non-ferrous recyclers; copper + lead + aluminium; Tamil Nadu; newly listed</td><td><em>This company.</em> Copper-heavy mix, import-scrap sourcing, spare copper capacity, premium multiple, short public track record.</td></tr>
+      <tr><td class="t-strong">Gravita India</td><td>The best-known listed recycler; historically lead-led, diversifying into aluminium, plastics and more</td><td>The obvious listed comparison, with a longer public record. Gravita leans lead/multi-material and multi-geography; Jain's distinction is its larger <strong>copper</strong> tilt and Chennai import base.</td></tr>
+      <tr><td class="t-strong">Other organised recyclers</td><td>A growing set of formal secondary smelters and battery recyclers</td><td>Compete for the same imported scrap and the same customers; formalisation is enlarging this cohort.</td></tr>
+      <tr><td class="t-strong">The informal sector</td><td>Thousands of small, unregulated backyard smelters</td><td>Not a quality rival, but a price and feedstock competitor. EPR/environment rules are steadily shifting volume <em>away</em> from them and toward players like Jain.</td></tr>
+      <tr><td class="t-strong">Primary-metal producers</td><td>Mined-and-smelted copper, lead and aluminium (domestic and imported refined metal)</td><td>The ultimate alternative on a buyer's desk. Recycled metal wins on cost and carbon; it must keep matching primary metal on quality/spec.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two features stand out. First, this is <strong>not a winner-take-all fight</strong> among organised recyclers — the formalisation wave is enlarging the whole organised pool, so Gravita and Jain can both grow by taking share from the informal sector rather than only from each other. Second, Jain's clearest point of difference from the listed comparison is <strong>metal mix and sourcing</strong>: a heavier copper weighting aimed at electrification demand, fed by an import-scrap model run out of a coastal Chennai base. Whether that tilt is an advantage or an added risk depends entirely on execution — the very thing a company with barely a year of listed history has yet to prove through a full cycle.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Fast growth and high returns on capital — priced at a premium the track record hasn't yet earned.</p>
+
+  <p class="lead">The financials tell a coherent story: rapid revenue growth, a thin but stable spread margin, and — the striking part — a high return on capital driven by fast asset turns. The valuation asks investors to trust that a young listed company keeps that combination running as it scales. Here is what the numbers actually say.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Key financials — FY25 vs FY26 (consolidated, approx.)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY25</th><th class="num">FY26</th><th>Comment</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue (₹ Cr)</td><td class="num">~7,126</td><td class="num">~9,543</td><td>+34% — metal value flowing through a growing tonnage</td></tr>
+      <tr><td class="t-strong">EBITDA (₹ Cr)</td><td class="num">~375</td><td class="num">~558</td><td>The conversion spread; +~49% YoY</td></tr>
+      <tr><td class="t-strong">EBITDA margin</td><td class="num">~5.3%</td><td class="num">~5.8%</td><td>Thin by design; a per-tonne fee, edging up on mix</td></tr>
+      <tr><td class="t-strong">Net profit (₹ Cr)</td><td class="num">~223</td><td class="num">~347</td><td>+~56% — operating leverage on a wider spread</td></tr>
+      <tr><td class="t-strong">EPS (₹)</td><td class="num">~6.9</td><td class="num">~10.1</td><td>Per-share earnings growing fast</td></tr>
+      <tr><td class="t-strong">ROCE</td><td class="num">—</td><td class="num">~25%</td><td>High despite thin margins — asset velocity, not markup</td></tr>
+      <tr><td class="t-strong">Net debt (₹ Cr)</td><td class="num">—</td><td class="num">~615</td><td><em>Approx.</em> — leverage to fund working capital; watch it</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit &amp; returns (FY26)</div>
+    <div class="c-sub">The unusual signature — a low-margin business earning high returns on capital</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">EBITDA margin</div><div class="track"><span class="fill cu" style="width:19%"></span></div><div class="bval">~5.8%</div></div>
+      <div class="bar-row"><div class="blab">Net margin</div><div class="track"><span class="fill pb" style="width:12%"></span></div><div class="bval">~3.6%</div></div>
+      <div class="bar-row"><div class="blab">ROCE</div><div class="track"><span class="fill spec" style="width:83%"></span></div><div class="bval">~25%</div></div>
+      <div class="bar-row"><div class="blab">ROE</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~31%</div></div>
+    </div>
+    <div class="legend"><span>Thin margins, high returns: the metal turns over so quickly that a small spread on rapidly-recycled capital compounds into a ~25% ROCE and ~31% ROE. The return profile, not the margin, is what the market is paying up for.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms red"><div class="msv">~32×</div><div class="msl">P/E on ~₹11,700 Cr market cap — a premium for a recycler</div></div>
+    <div class="ms gold"><div class="msv">~7.3×</div><div class="msl">Price-to-book — the market pricing in continued high returns</div></div>
+    <div class="ms green"><div class="msv">~45%</div><div class="msl">3-year revenue CAGR into FY26 — the growth being extrapolated</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: EBITDA per tonne × the copper mix</div>
+    <p>At ~32× earnings and ~7× book, Jain is not priced as a thin-margin commodity processor; it is priced as a compounding, share-gaining recycler. So the metric that proves or breaks the case is the <strong>conversion spread — EBITDA per tonne — read together with the copper/value-added mix and copper-plant utilisation</strong>. If Jain fills its copper line and climbs into higher-spread alloys, EBITDA per tonne holds or rises even as volume grows, and ~25% ROCE stays intact — the premium is defensible. If scrap gets scarce or dear, or the copper ramp stalls, the spread compresses, and a ~32× multiple on a ~3.6% net margin has little to lean on. Alongside that, keep two guardrails in view: <strong>net debt / working-capital intensity</strong> (is growth being bought with balance-sheet risk?) and <strong>ROCE</strong> (is the capital still turning hard?). Everything else is narrative; the spread and the mix are the scoreboard.</p>
+  </div>
+
+  <div class="note">FY24–FY26 figures here are drawn from screener aggregation of company results and cross-checked against IPO disclosures; several are <b>approx.</b> — notably net debt (~₹615 Cr, an estimate after cash adjustments), the FY24 revenue base, and the implied per-tonne spread (Jain does not disclose exact realised tonnage). Market cap and P/E move daily. Verify every figure against the company's own filings before relying on it.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A fast, capital-efficient recycler in a real structural loop — asked to prove it through a cycle it has not yet seen as a public company.</p>
+
+  <p class="lead">Jain enters its life as a listed company with a rare combination: fast growth, high returns on capital, a genuine formalisation tailwind, and spare copper capacity it can fill at low cost. Set honestly against that is a short public record, real leverage, a heavy dependence on imported scrap, and a premium price. The debate is not whether the business works — the returns say it does — but whether it keeps working at this pace once the easy capacity is filled and the first bad scrap cycle arrives.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Fill-the-plant growth</strong> — copper running at ~40% utilisation is near-free incremental profit on already-built, already-permitted capacity.</li>
+        <li><strong>Copper &amp; electrification tilt</strong> — a mix skewed to the metal of EVs, grid and data centres, where demand structurally outruns mined supply.</li>
+        <li><strong>Formalisation share-gain</strong> — EPR and environment rules push tonnes from informal smelters to organised players like Jain, independent of the price cycle.</li>
+        <li><strong>High return velocity</strong> — thin margins but ~25% ROCE and ~31% ROE from fast asset turns; capital compounds quickly.</li>
+        <li><strong>Hedged, spread-based model</strong> — profit is a per-tonne conversion fee, largely insulated from the LME level itself.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Scrap-supply &amp; import dependence</strong> — a trade barrier, duty change or global scrap squeeze can raise input cost or starve the furnaces, compressing the spread.</li>
+        <li><strong>Spread, FX &amp; inventory whipsaw</strong> — LME swings, scrap-price moves, currency and inventory timing can jolt a thin margin quarter to quarter despite hedging.</li>
+        <li><strong>Newly-listed, unproven through a cycle</strong> — barely a year of public history, fast scale-up, real net debt and heavy working capital; governance and disclosure track record still young.</li>
+        <li><strong>Rich valuation</strong> — ~32× earnings and ~7× book on a ~3.6% net margin leaves the price leaning heavily on the copper ramp landing.</li>
+        <li><strong>Competition &amp; regulation</strong> — Gravita and other organised recyclers, the informal sector and primary metal all compete; smelting pollution and scrap-import norms can bite.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Jain Resource Recycling took seventy-two years to travel from a Chennai rolling mill to a stock ticker, and it arrives as an unusually capital-efficient machine: it turns the world's spent cables and batteries into India's working copper and lead, and it does so at a return on capital most manufacturers would envy. What it has not yet done — because it has barely been public a year — is prove that the model holds when imported scrap gets tight and a metal cycle turns against it. The next few years answer that in one checkable place: <strong>the copper plant's utilisation climbing off ~40%, at a conversion spread per tonne that does not shrink as it fills</strong>. Watch that pair of numbers each results season; they will tell you whether the premium was paying for a compounding recycler or for a fast start that had already banked its easiest gains.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>BSE India — Jain Resource Recycling Ltd, StockReach page, scrip code 544537 (m.bseindia.com/StockReach.aspx?scripcd=544537).</li>
+    <li>Screener.in — Jain Resource Recycling (JAINREC) consolidated financials: FY25/FY26 revenue, EBITDA, PAT, EPS, ROCE, ROE, debt, market cap and P/E.</li>
+    <li>SPTulsian.com — Jain Resource Recycling IPO analysis (FY25 revenue, EBITDA, PAT, product mix and utilisation).</li>
+    <li>Trade Brains — "Jain Resource: How Copper Recycler Is Transforming into Global Non-Ferrous Metals Powerhouse."</li>
+    <li>Chittorgarh / Business Standard / Zerodha — Jain Resource Recycling IPO details: dates, ₹232 price, ₹1,250 Cr size (₹500 Cr fresh + ₹750 Cr OFS), 1 Oct 2025 listing.</li>
+    <li>Jain Metal Group — company website and investor presentation / results intimations (jainmetalgroup.com).</li>
+    <li>Trendlyne — Jain Resource Recycling shareholding pattern (promoter ~73.6%, institutions, public).</li>
+    <li>Business India — "Reclaim and reuse, Jain Resource Recycling shows the way" (group history, Jain Metal Group, Kamlesh Jain).</li>
+    <li>Recycling Today — "Doing well while doing good — Jain Metal Group" (operations and non-ferrous scope).</li>
+    <li>India Infoline / SBI Securities — Jain Resource Recycling IPO notes (capacity ~3.26 lakh MTPA, Tamil Nadu plants, financial profile).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures, IPO documents and third-party aggregators as of FY26 (year ended March 2026), and may contain errors or become outdated; several items (net debt, the FY24 revenue base, and the implied per-tonne conversion spread) are estimates or approximations, not audited results. Market capitalisation, P/E and utilisation figures change over time. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "JAINREC";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
