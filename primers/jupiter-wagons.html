@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jupiter Wagons — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4F2;
+    --paper-2:#FCFBFA;
+    --card:#FFFFFF;
+    --ink:#201814;
+    --ink-soft:#61554F;
+    --ink-faint:#94877F;
+    --brand:#6E3A20;          /* deep freight rust */
+    --brand-bright:#96502E;   /* freight-rust accent */
+    --gold:#C08A3C;           /* warm amber - accent / warmth */
+    --wtg:#96502E;            /* freight wagons */
+    --epc:#B9683C;            /* components */
+    --om:#4E2916;            /* commercial vehicles */
+    --spec:#8A6A3A;          /* electric mobility */
+    --line:#E0D9D4;
+    --line-soft:#EBE5E1;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F4E7DF;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F9F6F4;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EFE9E5;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#6E3A20,#96502E);}
+  .fill.gold{background:linear-gradient(90deg,#C08A3C,#DCAA63);}
+  .fill.wtg{background:linear-gradient(90deg,#96502E,#B9683C);}
+  .fill.om{background:linear-gradient(90deg,#4E2916,#6E3A20);}
+  .fill.spec{background:linear-gradient(90deg,#8A6A3A,#A98A56);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#4a423e,#665c56);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F4E7DF;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Freight wagons 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The four businesses</a></li>
+    <li><a href="#p3"><span class="n">03</span> From CEBBCO to Jupiter</a></li>
+    <li><a href="#p4"><span class="n">04</span> The component vertical</a></li>
+    <li><a href="#p5"><span class="n">05</span> The wheelset gate</a></li>
+    <li><a href="#p6"><span class="n">06</span> The order book &amp; how it converts</a></li>
+    <li><a href="#p7"><span class="n">07</span> Load bodies &amp; containers</a></li>
+    <li><a href="#p8"><span class="n">08</span> The electric-LCV bet</a></li>
+    <li><a href="#p9"><span class="n">09</span> Who buys wagons now</a></li>
+    <li><a href="#p10"><span class="n">10</span> The industry &amp; rivals</a></li>
+    <li><a href="#p11"><span class="n">11</span> Financials &amp; valuation</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: JWL · BSE: 533272</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Jupiter Wagons, <em>the wagon maker that sells parts to its own rivals</em></h1>
+  <p class="dek">A complete walk through one of India's largest private freight-wagon builders — how a goods wagon actually gets made and paid for, why Jupiter deliberately spent a decade buying its way <em>backwards</em> into castings, bogies, couplers and brakes, how a single missing part cratered a record-order-book year, and what a wagon company is doing building electric trucks.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹2,961 <small>Cr</small></div><div class="l">Revenue (FY26, consol)</div></div>
+    <div class="cell"><div class="v">~₹4,675 <small>Cr</small></div><div class="l">Order book (31 Mar 2026)</div></div>
+    <div class="cell"><div class="v">~12.4% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹11,100 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">20 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — consolidated income ₹2,961 Cr (down from ₹4,008 Cr in FY25), EBITDA ₹363 Cr, PAT ₹166 Cr, order book ₹4,675 Cr, net-cash balance sheet; added the wheelset-supply section and the Jupiter Electric Mobility launch.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Jupiter Wagons builds <strong>freight wagons</strong> — the steel goods carriages that haul coal, cement, steel, fertiliser, grain and containers up and down India's rail network. It is one of India's largest <strong>private</strong> wagon manufacturers, based in Kolkata and controlled by the <strong>Lohia family</strong>. Its main customer is <strong>Indian Railways</strong>, which buys wagons through periodic tenders; a growing slice comes from private and industrial buyers who now own their own wagons. Around that core sit three other businesses: <strong>wagon components</strong> (castings, bogies, couplers, draft gears, wheelsets, braking systems), <strong>commercial-vehicle load bodies and marine containers</strong>, and a new venture in <strong>electric light commercial vehicles</strong>.</p>
+
+  <p>Four facts frame everything that follows:</p>
+  <ul class="clean">
+    <li><strong>It is not just an assembler — it is vertically integrated.</strong> Jupiter runs its own alloy-steel foundry, makes its own bogies and couplers, has a wheelset joint venture, and produces railway braking systems through a JV with the Czech firm <strong>DAKO-CZ</strong>. The unusual consequence: it sells critical wagon parts to <em>other wagon builders</em>, so it earns money even on wagons it does not assemble.</li>
+    <li><strong>FY26 was a hard year, not a victory lap.</strong> Consolidated income fell to <strong>~₹2,961 Cr</strong> from ~₹4,008 Cr in FY25, and PAT dropped to <strong>~₹166 Cr</strong> from ~₹380 Cr. Margins compressed to ~12.4% EBITDA. The order book was <em>full</em> the whole time. What went wrong was supply, not demand — most visibly a shortage of <strong>wheelsets</strong>, the one major component the industry cannot easily source.</li>
+    <li><strong>The book is there for the recovery.</strong> The order book stood at <strong>~₹4,675 Cr</strong> on 31 March 2026 — comfortably more than a year of revenue at FY26's run rate — and wagon capacity has been lifted from 6,000 units a year toward <strong>8,000–10,000</strong>. Net debt is negative: the company sits on more cash than borrowings.</li>
+    <li><strong>The market still pays up.</strong> At roughly <strong>₹11,100 Cr</strong> of market value against ~₹166 Cr of consolidated FY26 profit, the stock trades near <strong>65× trailing earnings (approx.)</strong> — a multiple that assumes FY26 was an interruption rather than a new level.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Two companies build the same freight wagon. One buys the wheels, the bogies (the wheeled trolleys under the wagon), the couplers and the brakes, bolts a steel box on top, and ships it. The other <em>casts</em> the steel parts itself, machines its own couplers, makes the brakes in a licensed JV, and then sells those same parts to the first company. Jupiter is the second one. That is why a wagon leaving its Jabalpur or Kolkata gate carries more profit per unit than a bare assembly job — and why the interesting number here is not how many wagons it built, but how much of each wagon it made itself.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Freight wagons 101: how a goods wagon earns money</h2></div>
+  <p class="part-sub">No engineering background needed — just the handful of terms that drive the whole business.</p>
+
+  <p class="lead">A freight wagon is a steel container on wheels, coupled into a train and dragged by a locomotive. It looks simple. It is not: it must carry 60-plus tonnes of coal at speed for decades, survive brutal loading, brake safely in a rake of sixty wagons, and satisfy an exacting Indian Railways design standard. That combination — heavy engineering plus certification plus a single dominant buyer — shapes everything about the industry's economics.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only vocabulary you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Wagon</td><td>The goods carriage itself. Types are named by code: <strong>BOXN</strong> (open-top, for coal and ore), <strong>BCN</strong> (covered, for cement and grain), <strong>BOST</strong> (steel coils), <strong>BFNS</strong> (flat, for containers), plus tankers and specialised designs. Jupiter builds across the range.</td></tr>
+      <tr><td class="t-strong">Bogie</td><td>The wheeled trolley assembly under each end of a wagon — it carries the load, holds the wheelsets and absorbs track shock. A high-value casting-and-machining job, and one Jupiter does in-house.</td></tr>
+      <tr><td class="t-strong">Wheelset</td><td>Two wheels pressed onto a common axle. Every wagon needs four of them per bogie pair. Historically supplied by a small set of certified producers — and the industry's tightest bottleneck.</td></tr>
+      <tr><td class="t-strong">Coupler &amp; draft gear</td><td>The knuckle that joins wagons and the shock absorber behind it. Safety-critical, precision-cast, certified — not a commodity part. Another Jupiter in-house line.</td></tr>
+      <tr><td class="t-strong">RDSO approval</td><td>The Research Designs &amp; Standards Organisation certifies wagon designs and component vendors for Indian Railways. Without approval you cannot sell — which is the single biggest barrier to entry in this industry.</td></tr>
+      <tr><td class="t-strong">Order book</td><td>Contracted work not yet delivered, in rupees. In a tender-driven business this is the closest thing to revenue visibility — Jupiter's stood at ~₹4,675 Cr at FY26 end.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Where the money actually comes from</div>
+    <p>A wagon order is priced per unit and delivered over months. The maker buys steel, castings and components, fabricates the shell, fits the running gear and brakes, gets it inspected, and hands it over. Revenue is recognised on delivery and acceptance — so a wagon sitting half-built, or built but missing its wheelsets, is pure working capital with zero revenue attached. Two variables then decide the profit: the <strong>price of steel</strong> between bid and build (most Railways contracts carry some escalation, but not always full and not always fast), and <strong>how much of the wagon you made yourself</strong> rather than bought in. The first is largely outside management's control. The second is entirely a strategic choice — and it is the choice Jupiter has spent a decade making.</p>
+  </div>
+
+  <h3>Why this is a genuinely protected business</h3>
+  <ul class="clean">
+    <li><strong>Certification, not capital, is the moat.</strong> Anyone can weld steel. Very few firms hold RDSO approval for wagon designs <em>and</em> for the safety-critical castings inside them. That approval takes years and a plant audit trail, which is why India's wagon industry is a short list of names rather than a crowded field.</li>
+    <li><strong>The buyer is enormous and slow-moving.</strong> Indian Railways runs one of the world's largest freight networks and buys wagons in multi-thousand-unit tranches. That gives scale — and gives the buyer pricing leverage, and the power to pause.</li>
+    <li><strong>Delivery is physical, not financial.</strong> You cannot flex a wagon plant like a software team. Capacity, fabrication bays, foundry tonnage and component supply all have to be built ahead of the orders — which is why a demand upturn arrives faster than the industry can serve it, and why bottlenecks show up mid-cycle.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What Jupiter actually sells: four businesses, one steel spine</h2></div>
+  <p class="part-sub">Read this once and the rest of the company clicks into place.</p>
+
+  <p class="lead">Jupiter is easiest to understand as a single heavy-fabrication and metallurgy capability pointed at four different customers. The steel foundry, the machining shops and the fabrication bays feed a wagon plant, a component business, a truck-body business and now an EV plant. The four legs are very different in size, margin and maturity.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The Jupiter value chain — it owns the middle of it, not just the end</div>
+    <div class="flow-row">
+      <div class="node epc"><div class="ntag">Upstream · In-house</div><div class="nname">Foundry &amp; castings</div><div class="nwho">Alloy-steel castings, bogies, couplers, draft gears, crossings.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Upstream · JV</div><div class="nname">Wheelsets &amp; brakes</div><div class="nwho">Jupiter Tatravagonka Railwheel Factory; JWL DAKO-CZ braking systems.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Core · Assembly</div><div class="nname">Freight wagons</div><div class="nwho">BOXN, BCN, BOST, container flats and specials, for Railways &amp; private buyers.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Adjacent</div><div class="nname">CVs, containers, e-LCVs</div><div class="nwho">Truck load bodies &amp; tippers, ISO marine containers, JEM electric LCVs.</div></div>
+    </div>
+    <div class="flow-note">The unusual arrow is the one that leaves this diagram sideways: castings, bogies, couplers and brakes are also sold <em>out</em>, to rival wagon builders and to Indian Railways' own production units — revenue that does not depend on Jupiter winning the wagon order.</div>
+  </div>
+
+  <h3>The four legs, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Freight wagons</span> — the core.</strong> The largest revenue line by far, and the one that swings with Railways' tender cycle. Capacity has been raised from about <strong>6,000 to 8,000 wagons a year</strong>, with a stated path toward ~10,000. This is order-book-to-delivery work: win the tender, buy the steel, build to schedule, get inspected, invoice.</li>
+    <li><strong><span class="chain-epc">Components</span> — the margin leg.</strong> Castings, bogies, couplers, draft gears, brake discs, wheels, axles and complete wheelsets, plus cast manganese-steel track crossings. Sold internally into Jupiter's own wagons <em>and</em> externally. Structurally better margin than bare assembly, because certification limits who else can make them.</li>
+    <li><strong><span class="chain-om">Commercial vehicles &amp; containers</span> — the inherited business.</strong> Application-based load bodies fitted onto truck chassis, tippers, and ISO marine containers. This is the legacy of the company's previous life as Commercial Engineers &amp; Body Builders (CEBBCO), and it plugs Jupiter into road freight and container logistics rather than only rail.</li>
+    <li><strong><span class="chain-epc">Electric mobility</span> — the option.</strong> <strong>Jupiter Electric Mobility (JEM)</strong> makes small electric light commercial vehicles for last-mile and mid-mile delivery, from a plant at Pithampur near Indore. Tiny today; capital-hungry; genuinely a different industry.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the "sells to rivals" bit is the tell</div>
+    <p>Most integrated manufacturers integrate defensively — they make a part in-house so nobody can hold them hostage. Jupiter did that too, but then went one step further and turned the internal capability into an external product line. A competitor bidding against Jupiter for a Railways wagon tender may still need Jupiter's castings, couplers or brake sets to fulfil the order it wins. That converts a share-of-tender fight into something closer to a toll: whoever wins the wagon, some of the value flows through the same foundry. It also caps how nasty the price war can get, because your rival is your customer.</p>
+  </div>
+
+  <div class="note gold"><b>Keep the group map straight:</b> the listed entity is <strong>Jupiter Wagons Limited</strong> (NSE: JWL, BSE: 533272). Around it sit <strong>Jupiter Tatravagonka Railwheel Factory</strong> (wheelsets — crossed ₹500 Cr of revenue in FY26), <strong>JWL DAKO-CZ India</strong> (railway braking systems, a 50% JV formed in 2022 with DAKO-CZ a.s. of the Czech Republic), and <strong>Jupiter Electric Mobility</strong> (e-LCVs). Consolidated numbers include these; standalone numbers do not, which is why standalone and consolidated profit can diverge.</div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>From CEBBCO to Jupiter: the turnaround nobody expected</h2></div>
+  <p class="part-sub">A distressed truck-body maker, a Kolkata wagon family, and a Slovak co-promoter.</p>
+
+  <p class="lead">The listed shell you are buying was not born a wagon company. It was incorporated in <strong>1979 as Commercial Engineers &amp; Body Builders Company</strong> — a Jabalpur-based maker of truck load bodies. It listed in 2010, ran into serious trouble in the commercial-vehicle downturn that followed, and by the mid-2010s was a distressed asset. The Lohia family's Kolkata wagon business took control, folded its own operations in, and in <strong>May 2022</strong> renamed the whole thing Jupiter Wagons. The stock's ticker history still carries the old name in some filings — corporate announcements have appeared under "CEBBCO" long after the rebrand.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1979</div><div class="ev">Incorporated as <strong>Commercial Engineers &amp; Body Builders Company</strong>, a Jabalpur truck-body fabricator.</div></li>
+    <li><div class="yr">2010</div><div class="ev">Converts to a public limited company and lists. The commercial-vehicle cycle then turns down hard and the business struggles for years.</div></li>
+    <li class="major"><div class="yr">2016–2019</div><div class="ev">The <strong>Lohia family's Jupiter wagon business</strong> takes control of the distressed listed entity and begins rebuilding it around rail rolling stock rather than truck bodies.</div></li>
+    <li class="major"><div class="yr">2022</div><div class="ev">Renamed <strong>Jupiter Wagons Limited</strong> (effective 25 May 2022). The <strong>JWL DAKO-CZ</strong> braking-systems JV is formed with the Czech brake specialist DAKO-CZ a.s.</div></li>
+    <li class="major"><div class="yr">2023–2024</div><div class="ev">The build-out years: alloy-steel foundry, the <strong>Tatravagonka railwheel</strong> venture for wheelsets, capacity lifted toward 8,000 wagons a year, entry into ISO marine containers. Profit and the share price both re-rate sharply.</div></li>
+    <li><div class="yr">FY25</div><div class="ev">Peak year so far — consolidated income ~<strong>₹4,008 Cr</strong> (+9%), PAT ~<strong>₹380 Cr</strong> (+15%).</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">The setback. Consolidated income ~<strong>₹2,961 Cr</strong>, EBITDA ~₹363 Cr (12.4%), PAT ~<strong>₹166 Cr</strong> — hit by wheelset supply constraints and slower order execution, even as the order book held at ~₹4,675 Cr. <strong>Jupiter Electric Mobility</strong> launches the JEM TEZ e-LCV and opens its Pithampur plant.</div></li>
+  </ul>
+
+  <h3>Ownership</h3>
+  <ul class="clean">
+    <li><strong>Promoter group ~68% (approx.).</strong> The controlling shareholders are the <strong>Lohia family</strong> (Vivek Lohia and Vikash Lohia lead the business; the Reg-31 encumbrance declarations for FY26 cover a promoter group of roughly a dozen individuals and entities). Reported promoter-group holding sits in the high-60s percent — treat the precise figure as <strong>approx.</strong> and read it off the latest shareholding filing.</li>
+    <li><strong>No promoter shares encumbered in FY26.</strong> The company disclosed that neither the promoters nor the promoter group pledged or otherwise encumbered shares during the year — a small but meaningful governance positive for a capital-intensive engineering firm.</li>
+    <li><strong>A foreign strategic sits inside the promoter group.</strong> <strong>TATRAVAGONKA a.s.</strong>, the Slovak wagon maker, is part of the disclosed promoter/promoter-group set following an equity allotment. It is not a passive financial holder — it is an operating wagon manufacturer with a very large European market share, and it is also Jupiter's technology and JV partner on wheels and bogies.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The surprise buried in the shareholding table</div>
+    <p>Jupiter's co-owner is a European wagon manufacturer. Tatravagonka — a Slovak firm reckoned to hold better than half the European freight-wagon market — is simultaneously a promoter-group shareholder, a joint-venture partner in the railwheel business, and a technology source for bogies and specialised wagon designs. That is a genuinely unusual arrangement for an Indian capital-goods company: the strategic partner did not take a minority stake and a licensing fee, it took a seat inside the promoter block. The practical effect is that a Kolkata wagon builder gets access to European design libraries and export-grade component know-how without having to develop them from a standing start — and it explains how the component business got credible so fast.</p>
+  </div>
+
+  <div class="note gold"><b>Why the history matters commercially:</b> the CEBBCO legacy is not a footnote — it is why Jupiter has a commercial-vehicle load-body business at all. A pure wagon start-up would never have built truck bodies. Jupiter inherited a road-freight fabrication franchise as a by-product of a distressed-asset acquisition, and that inherited plant and customer base is the launchpad it is now using for electric LCVs. The EV venture looks like a leap only if you forget the company has been bolting bodies onto truck chassis since 1979.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The component vertical: where the extra margin comes from</h2></div>
+  <p class="part-sub">The strategic core of the company, and the thing that most distinguishes it from a wagon assembler.</p>
+
+  <p class="lead">Strip a freight wagon into its cost stack and you find that the visible steel box is the cheap part. The expensive, engineered, certified content sits underneath: the bogies, the wheelsets, the couplers and draft gear, and the brake system. A pure assembler buys all of that from vendors and keeps the fabrication margin. Jupiter has systematically pulled each of those items in-house — and that decision, more than wagon volumes, is what determines how much profit each wagon leaves behind.</p>
+
+  <div class="chart">
+    <div class="c-title">Where value sits inside a freight wagon</div>
+    <div class="c-sub">Illustrative — the engineered content is worth more than the fabrication</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Bogies &amp; castings<small>load-bearing, certified</small></div><div class="track"><span class="fill epc" style="width:100%"></span></div><div class="bval">high value</div></div>
+      <div class="bar-row"><div class="blab">Wheelsets<small>wheels + axles</small></div><div class="track"><span class="fill spec" style="width:82%"></span></div><div class="bval">high value</div></div>
+      <div class="bar-row"><div class="blab">Couplers &amp; draft gear<small>safety-critical</small></div><div class="track"><span class="fill gold" style="width:58%"></span></div><div class="bval">mid-high</div></div>
+      <div class="bar-row"><div class="blab">Braking system<small>DAKO-CZ JV</small></div><div class="track"><span class="fill wtg" style="width:52%"></span></div><div class="bval">mid-high</div></div>
+      <div class="bar-row"><div class="blab">Shell fabrication<small>plate, welding, paint</small></div><div class="track"><span class="fill ink" style="width:44%"></span></div><div class="bval">commodity</div></div>
+    </div>
+    <div class="legend"><span>Indicative relative value, not audited figures. The point is directional and it is the whole strategy: the parts a buyer never sees carry the engineering premium, and they are the parts Jupiter chose to own.</span></div>
+  </div>
+
+  <h3>What Jupiter has actually built</h3>
+  <ul class="clean">
+    <li><strong>An alloy-steel foundry.</strong> Castings are the metallurgical heart of a wagon — bogie frames, bolsters, coupler knuckles. Getting foundry approval for railway-grade castings is slow and exacting. Jupiter runs its own and has been expanding tonnage, including a further foundry investment at <strong>Jabalpur</strong> (reported at roughly 2,000 tonnes of additional capacity, serving both captive needs and exports — treat the tonnage as <strong>approx.</strong>).</li>
+    <li><strong>Wheelsets, through the Tatravagonka railwheel venture.</strong> Wheels and axles have been the industry's hardest input to secure. <strong>Jupiter Tatravagonka Railwheel Factory</strong> crossed <strong>₹500 Cr of revenue</strong> in FY26 while remaining profitable — a subsidiary that is now a substantial business in its own right.</li>
+    <li><strong>Braking systems, through JWL DAKO-CZ.</strong> The 50/50 Kolkata JV with DAKO-CZ a.s. produces axle-mounted disc brakes for LHB passenger coaches and bogie-mounted brake systems for freight wagons. Brakes are certified, safety-critical and import-substituting — a strong niche.</li>
+    <li><strong>Couplers, draft gear, brake discs, crossings.</strong> A long tail of precision rail products, sold to Jupiter's own wagon lines, to Indian Railways' production units, and to other builders.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The mechanism, stated plainly</div>
+    <p>Suppose a wagon sells for a fixed tender price. An assembler's profit is that price minus everything it bought in. Every component Jupiter brings in-house converts a purchase (someone else's margin) into internal manufacture (its own margin), on the same wagon, at the same selling price. Do that across bogies, wheelsets, couplers and brakes and the profit per wagon rises without winning a single extra order. Then sell the surplus component capacity to rivals and Indian Railways, and you have added a second revenue stream whose demand is the <em>whole industry's</em> wagon output rather than just your own. That is the entire argument for owning Jupiter rather than a plain wagon builder — and it is testable: watch EBITDA margin and profit per wagon, not the wagon count.</p>
+  </div>
+
+  <div class="note">The same integration cuts the other way in a downturn. A foundry, a wheel plant and a brake JV are <b>fixed-cost assets</b>. When wagon volumes fall — as they did in FY26 — those plants carry their overheads regardless, and under-absorption drags the margin down harder than it would at an asset-light assembler. FY26's fall in EBITDA margin to ~12.4% is partly that mechanism running in reverse.</div>
+</section>
+
+<!-- 05 — BESPOKE crux -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The wheelset gate: how one missing part broke a full order book</h2></div>
+  <p class="part-sub">The single most instructive episode in the company's recent history — and it is specific to this business.</p>
+
+  <p class="lead">Here is the fact that should stop a first-time reader in their tracks. In FY26, Jupiter's order book was <strong>full</strong>. Demand from Indian Railways and private buyers was <strong>not</strong> the problem. And consolidated revenue still fell roughly <strong>26%</strong>, from ~₹4,008 Cr to ~₹2,961 Cr, while profit more than halved from ~₹380 Cr to ~₹166 Cr. The company was not short of orders. It was short of <em>wheels</em>.</p>
+
+  <div class="chart">
+    <div class="c-title">A record book, a shrinking top line</div>
+    <div class="c-sub">Consolidated income (₹ Cr) versus the closing order book (₹ Cr)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25 income</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~4,008</div></div>
+      <div class="bar-row"><div class="blab">FY26 income</div><div class="track"><span class="fill wtg" style="width:74%"></span></div><div class="bval">~2,961</div></div>
+      <div class="bar-row"><div class="blab">FY26 order book<small>at 31 Mar 2026</small></div><div class="track"><span class="fill gold" style="width:117%;max-width:100%"></span></div><div class="bval">~4,675</div></div>
+      <div class="bar-row"><div class="blab">FY26 PAT</div><div class="track"><span class="fill ink" style="width:4%"></span></div><div class="bval">~166</div></div>
+    </div>
+    <div class="legend"><span>Revenue fell ~26% while the closing order book <em>exceeded</em> a full year of that reduced revenue. This is the signature of a supply-constrained year, not a demand-constrained one — an entirely different diagnosis, with an entirely different fix.</span></div>
+  </div>
+
+  <p>The proximate cause, flagged repeatedly through the year's results, was <strong>wheelset supply</strong>. A wagon cannot be delivered without wheels and axles, and wheelsets are among the most tightly certified and capacity-constrained items in Indian rolling stock. When they are short, wagon shells stack up in the yard — complete in every respect except the one that lets them roll. Revenue is recognised on delivery, so those near-finished wagons contributed cost, working capital and depreciation, and nothing at all to the top line.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits Jupiter: the completion-gating part</div>
+    <p>Most manufacturers can be understood through one number — units built. Jupiter cannot, because its output is gated by whichever single certified component is scarcest that year, and a wagon that is 97% complete is worth zero revenue. In FY26 that gating part was the wheelset. This is why Jupiter's vertical integration is not a slide-deck flourish but the operating answer to its own worst failure mode: the ₹500 Cr-revenue <strong>Jupiter Tatravagonka Railwheel Factory</strong> exists precisely so that the part that gated FY26 is one the company increasingly makes itself. The test of the strategy is therefore very concrete — does the next supply squeeze land outside the wagon, or does it stop the line again? If in-house wheelsets, castings and brakes mean the company can complete wagons when peers cannot, the integration case is proved in the only currency that counts: deliveries in a tight year.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms red"><div class="msv">−26%</div><div class="msl">FY26 consolidated income change — with the order book still full</div></div>
+    <div class="ms gold"><div class="msv">~₹4,675 Cr</div><div class="msl">Order book at 31 Mar 2026 — more than a year of FY26 revenue</div></div>
+    <div class="ms"><div class="msv">~₹500 Cr</div><div class="msl">Revenue crossed by the railwheel JV — the fix for the FY26 bottleneck</div></div>
+  </div>
+
+  <p>Two defensible readings of the same episode exist and an investor has to pick one. The generous reading: this was a timing problem in a business whose demand never wavered, and the deferred wagons show up in FY27 alongside a fatter order book — a coiled year rather than a lost one. The severe reading: a company that markets itself as India's most integrated rail engineer was still stopped by a component it does not fully control, and if that can happen at the top of a rail-capex cycle, the integration story is less complete than the multiple implies. The way to adjudicate is not to argue about it — it is to watch quarterly wagon deliveries against the order book and see whether the gap closes.</p>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The order book and how it turns into cash</h2></div>
+  <p class="part-sub">Lumpy tenders, fixed prices, long conversion — the rhythm of a wagon business.</p>
+
+  <p class="lead">A wagon order does not behave like a product sale. It arrives in a lump, sometimes after a quiet stretch of months, at a price fixed by competitive bid, and then converts to revenue over quarters as physical wagons are delivered and accepted. Understanding that rhythm is the difference between reading a weak quarter as a collapse and reading it as a scheduling artefact.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>From tender to cash — the conversion path</caption>
+    <thead><tr><th>Stage</th><th>What happens</th><th>What can go wrong</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">1 · Tender</td><td>Indian Railways (or a private buyer) floats a requirement for a wagon type and quantity. Approved builders bid.</td><td>Awards slip by quarters for budgetary or administrative reasons. Nothing you can do; the book simply stops growing.</td></tr>
+      <tr><td class="t-strong">2 · Award</td><td>Order lands in the book at a bid price, usually with a delivery schedule and often with steel supplied or price-adjusted under contract terms.</td><td>Aggressive bidding by a rival compresses the price for everyone. Wagon tenders are competitively bid, not negotiated.</td></tr>
+      <tr><td class="t-strong">3 · Procurement</td><td>Steel, castings, wheelsets, brakes and couplers are secured — increasingly from Jupiter's own plants and JVs.</td><td><strong>The FY26 failure mode.</strong> A scarce certified component stalls completion even with everything else ready.</td></tr>
+      <tr><td class="t-strong">4 · Build &amp; inspect</td><td>Fabrication, fit-out, then inspection and acceptance by the customer's inspecting agency.</td><td>Inspection queues and rework push deliveries across a quarter-end — moving revenue, not destroying it.</td></tr>
+      <tr><td class="t-strong">5 · Delivery &amp; payment</td><td>Wagons handed over; revenue recognised; receivables collected.</td><td>Working capital sits in inventory and receivables throughout. A slow-paying cycle strains cash even in a good order year.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the order book alone tells you less than you'd like</div>
+    <p>A ₹4,675 Cr book is real money and real visibility, but it says nothing about three things that decide profit: at what <em>price</em> the work was bid, how fast it will <em>convert</em>, and whether steel costs will move against the bid in between. Two wagon makers can hold identical order books and earn very different margins on them. So the useful reading is always the pair — the book <em>and</em> the delivery rate against it — plus the quiet third number, EBITDA margin, which reveals whether the book was won at sensible prices and executed with enough in-house content to be worth having.</p>
+  </div>
+
+  <h3>Capacity, and why it was raised before the orders</h3>
+  <p>Wagon capacity has been taken from roughly <strong>6,000 units a year to about 8,000</strong>, with a stated ambition of ~10,000. That sequencing is deliberate and slightly uncomfortable: in this industry you must have the bays, the foundry tonnage and the approvals in place <em>before</em> a large tender lands, because delivery schedules are tight and you cannot conjure certified capacity mid-contract. The cost is that in a soft year — FY26 — you are carrying capacity you are not using, which is exactly what compressed margins. The benefit is that when Railways awards a large tranche, you can actually take it.</p>
+
+  <div class="note gold"><b>A structural point worth internalising:</b> wagon orders are <b>lumpy by design</b>. Indian Railways procures in bursts tied to budget allocations and network plans; private buyers order when their own freight economics justify a rake. A wagon maker's quarterly revenue chart will therefore never look like an FMCG company's. Judging Jupiter on a single quarter's revenue print is close to meaningless; judging it on rolling four-quarter deliveries against the order book is not.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Load bodies and marine containers: the road-freight leg</h2></div>
+  <p class="part-sub">The CEBBCO inheritance, still earning — and quietly strategic.</p>
+
+  <p class="lead">Alongside the rail business, Jupiter fabricates <strong>application-based load bodies</strong> that are mounted onto truck chassis supplied by commercial-vehicle makers — tippers for mining and construction, cargo bodies, specialised carriers — and it makes <strong>ISO marine containers</strong> for domestic and export use. Neither line rivals wagons in scale, but both matter more than their revenue share suggests.</p>
+
+  <h3>Why the load-body business exists at all</h3>
+  <p>A truck manufacturer sells a chassis with a cab and an engine. Somebody else builds the actual body — the tipping bucket, the box, the tanker — to suit the customer's cargo. Historically much of this was done by small regional fabricators of variable quality. As commercial-vehicle regulation tightened (safety norms, dimensional standards, mandated fitment of approved bodies), the work has been shifting toward organised, approved fabricators with real engineering. That is a slow, structural formalisation of a fragmented trade, and Jupiter — which has been in this business under one name or another since 1979 — sits on the right side of it.</p>
+
+  <h3>Marine containers: import substitution with a policy tailwind</h3>
+  <p>The standard shipping container is a global commodity historically dominated by Chinese manufacturing. India's push to build a domestic container-manufacturing base — supported by budgetary allocation and production-linked incentive attention for the sector — creates room for domestic makers with steel fabrication capability and corrosion-grade welding. Jupiter entered this deliberately: a container is, in manufacturing terms, a close cousin of a covered wagon body. Company commentary has pointed to the commercial-vehicle and container businesses as the lines positioned to accelerate on the back of PLI attention and a reported <strong>₹10,000 Cr budgetary allocation (approx.)</strong> directed at the space — treat both the size and the mechanism of that support as approximate and verify against the scheme documents.</p>
+
+  <div class="plain">
+    <div class="ptag">The quiet reason this leg earns its place</div>
+    <p>Rail and road freight are, at the margin, competitors — cargo that moves by wagon does not move by truck. A pure wagon maker is therefore a leveraged bet on one mode. Jupiter fabricates for both, and for the containers that move between them. That does not make it recession-proof; freight volume is freight volume and a general slowdown hurts everything. But it does mean a policy shift that pushes cargo from road to rail, or a mode-share swing the other way, does not simply pick the company's pocket. The steel, the welding and the approvals are the same either way — only the customer changes.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Jupiter Electric Mobility: a wagon maker builds electric trucks</h2></div>
+  <p class="part-sub">The most speculative leg — small today, and playing on a much harder field.</p>
+
+  <p class="lead">In FY26, a 47-year-old railway engineering company started selling electric delivery trucks. <strong>Jupiter Electric Mobility (JEM)</strong> launched the <strong>JEM TEZ</strong>, an electric light commercial vehicle rated at roughly a <strong>1.05-tonne payload</strong> with a certified range above <strong>300 km</strong>, built at a new plant at <strong>Pithampur, near Indore</strong>, with a stated annual capacity of <strong>8,000–10,000 vehicles</strong>. Management has spoken of a first-year revenue target around <strong>$12 million</strong>, and JEM has signed a memorandum with the logistics firm <strong>Pickkup</strong> to deploy 300 TEZ vehicles.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~1.05 t</div><div class="msl">JEM TEZ payload — the small e-LCV last-mile class</div></div>
+    <div class="ms gold"><div class="msv">300+ km</div><div class="msl">Certified range claimed for the TEZ</div></div>
+    <div class="ms"><div class="msv">8–10k</div><div class="msl">Stated annual vehicle capacity at Pithampur, Indore</div></div>
+  </div>
+
+  <h3>The case for it</h3>
+  <ul class="clean">
+    <li><strong>The segment is real and policy-supported.</strong> Last-mile and mid-mile urban delivery is the single most logical place for electrification: short, predictable, depot-returning duty cycles where a battery's range limitation barely bites and fuel savings are large. Schemes such as <strong>PM E-DRIVE</strong> support adoption.</li>
+    <li><strong>The fleet buyer thinks in total cost, not sticker price.</strong> A logistics operator running fixed daily routes can calculate diesel-versus-electricity savings precisely. That makes commercial e-LCVs an easier sell than consumer EVs, where range anxiety is emotional rather than arithmetic.</li>
+    <li><strong>Jupiter is not starting from zero on the vehicle body.</strong> It has been fabricating truck load bodies for four decades. The novel content is the powertrain, battery integration, service network and dealer finance — not the metal.</li>
+  </ul>
+
+  <h3>The case against it</h3>
+  <ul class="clean">
+    <li><strong>The competition is formidable.</strong> <strong>Tata Motors</strong>, <strong>Mahindra</strong> and <strong>Switch Mobility</strong> — plus a crowd of EV specialists — already contest this segment with distribution, service networks and financing relationships a new entrant cannot replicate quickly.</li>
+    <li><strong>Vehicles need after-sales, not just manufacturing.</strong> Selling a wagon to Indian Railways requires one relationship and one inspection regime. Selling trucks requires dealers, workshops, spare-parts logistics and warranty operations across geographies — an organisational capability, not a plant.</li>
+    <li><strong>It consumes capital while the core needs it.</strong> Every rupee into an e-LCV ramp is a rupee not going into foundry tonnage or wagon capacity, and the payback horizon is longer and less certain.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">How to hold this leg in your head</div>
+    <p>At a first-year ambition near $12 million, JEM is a rounding error against a ₹2,961 Cr consolidated business — perhaps 3% of revenue if everything goes to plan. So it cannot justify the valuation on its own, and any argument that leans on it is doing too much work. Judge it instead on the narrow question of whether it destroys value: is the capital committed modest and staged, are the vehicles actually being delivered to paying fleets, and is JEM's loss contained? A small, disciplined venture that finds product-market fit in a growing segment is a decent use of surplus cash from a cyclical core. A subscale plant absorbing capital and management attention through a wagon downturn is not. The distinction will be visible in the consolidated-versus-standalone profit gap long before it shows up in headlines.</p>
+  </div>
+
+  <div class="note gold"><b>The point of tension worth naming:</b> Jupiter's standalone FY26 PAT (~₹183 Cr) came in <i>above</i> its consolidated PAT (~₹166 Cr). That gap is where the subsidiaries and ventures net out — the profitable railwheel JV on one side, the investment-phase businesses on the other. Tracking that spread quarter by quarter is the cheapest available read on whether the diversification is currently paying for itself.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Who buys wagons now — and why that changed</h2></div>
+  <p class="part-sub">Indian Railways is still the anchor, but it is no longer the only buyer.</p>
+
+  <p class="lead">For most of independent India's history, the answer to "who buys freight wagons?" was one word: Railways. That is still mostly true, and it is the industry's biggest single risk. But over the last decade the government has deliberately opened wagon <em>ownership</em> to private parties, and that has quietly widened the customer base for every wagon maker in the country.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The buyer set</caption>
+    <thead><tr><th>Buyer</th><th>What they are</th><th>What it means for Jupiter</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Indian Railways</td><td>The anchor customer, procuring wagons in large tendered tranches tied to budget allocations and network capacity plans.</td><td>Volume and visibility — and concentration risk. A slow award season directly starves the order book.</td></tr>
+      <tr><td class="t-strong">Private wagon owners (GPWIS &amp; similar schemes)</td><td>Schemes such as the <strong>General Purpose Wagon Investment Scheme</strong> let private firms buy and own wagons, which then run on the Railways network on agreed terms.</td><td>A structurally new customer class. Cement, steel, power and logistics firms buying their own rakes to guarantee supply.</td></tr>
+      <tr><td class="t-strong">Industrial &amp; captive users</td><td>Cement plants, steel mills, power stations and port/logistics operators needing dedicated rakes for their own cargo.</td><td>Often more specialised wagon types, ordered in smaller lots — better mix, less brutal price competition than mass tenders.</td></tr>
+      <tr><td class="t-strong">Wagon leasing companies</td><td>Firms that own rakes and lease them to shippers who don't want the capital cost.</td><td>Financialises wagon demand — a rake can be bought on a leasing balance sheet rather than a cement company's.</td></tr>
+      <tr><td class="t-strong">Other wagon builders &amp; Railways' own units</td><td>Rivals and Railways production shops buying certified components.</td><td>The component channel — demand tied to <em>industry</em> output, not Jupiter's tender win rate.</td></tr>
+      <tr><td class="t-strong">Export markets</td><td>Wagons and components sold abroad, aided by the Tatravagonka relationship.</td><td>Small but strategically useful — diversifies away from a single sovereign buyer.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The structural shift most people miss</div>
+    <p>A cement company that owns its own rake is buying something quite different from what Railways buys. Railways buys wagons to run a national freight network at a policy-set tariff. A cement company buys wagons to guarantee that its clinker moves on <em>its</em> schedule rather than waiting in a national allocation queue. That is a supply-security purchase, and supply-security buyers are far less price-sensitive than a state procurement agency running a reverse auction. As the private-ownership share of India's wagon fleet grows, the industry's revenue mix slowly shifts from tender-priced volume toward negotiated, specification-led sales. It does not remove the dependence on Railways — nothing does, at these volumes — but it changes the character of the marginal order, and it is one reason the wagon industry's margins are structurally better than they were a decade ago.</p>
+  </div>
+
+  <h3>The backdrop: a rail-capex cycle with real momentum</h3>
+  <p>The demand case rests on things that are visible rather than speculative: sustained government capital expenditure on railways, the dedicated freight corridors shifting bulk cargo off congested mixed-traffic lines, a policy ambition to raise rail's share of national freight (it has been losing share to road for decades), and an ageing existing wagon fleet that requires replacement regardless of growth. Add wagon-modernisation programmes — higher-axle-load designs, better braking, specialised wagons for automobiles and containers — and there is a multi-year requirement that does not depend on any single year's tender.</p>
+
+  <div class="note">The countervailing truth: <b>none of this is contractual</b>. Railway capital expenditure is set annually, awards can be deferred, and a fiscal squeeze or an administrative pause translates almost immediately into a thinner order book. Jupiter's FY26 showed the company can be hurt by supply; a slow procurement year would show it can equally be hurt by demand. Both risks are live at once.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A short list of approved names — with one very close listed twin.</p>
+
+  <p class="lead">India's wagon industry is a handful of certified players, split between listed private companies and public-sector or state-linked builders. Certification keeps the field short; competitive tendering keeps it disciplined on price. The comparison every investor makes first is Jupiter versus Titagarh.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Jupiter Wagons</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Jupiter Wagons</td><td>Large private freight-wagon builder, deeply integrated into castings, wheelsets, couplers and brakes; plus CVs, containers and e-LCVs</td><td><em>This company.</em> Freight-led, component-heavy, with a road-freight and EV tail. The debate is margin per wagon versus tender dependence.</td></tr>
+      <tr><td class="t-strong">Titagarh Rail Systems</td><td>The closest listed twin — but has pushed hard into <strong>passenger</strong> rolling stock: metro coaches and Vande Bharat-type trainsets, alongside freight wagons</td><td>The key contrast. Titagarh diversified <em>sideways</em> into passenger rail; Jupiter diversified <em>backwards</em> into components and outward into road. Same starting point, opposite strategies — and different risk profiles.</td></tr>
+      <tr><td class="t-strong">Texmaco Rail &amp; Engineering</td><td>Long-established wagon maker with rail infrastructure and hydro-mechanical businesses</td><td>Direct competitor in freight-wagon tenders; another Kolkata-region heavy engineering name with its own component ambitions.</td></tr>
+      <tr><td class="t-strong">BEML</td><td>State-owned heavy engineering — rail coaches, metro cars, mining and defence equipment</td><td>Competes in rolling stock broadly rather than freight wagons specifically; a public-sector cost structure and mandate.</td></tr>
+      <tr><td class="t-strong">Braithwaite &amp; Co.</td><td>Government-owned wagon builder</td><td>A traditional public-sector wagon supplier — capacity that competes for the same tenders.</td></tr>
+      <tr><td class="t-strong">Component specialists</td><td>Foundries, coupler and brake makers supplying the wagon industry</td><td>Jupiter's rivals in its <em>second</em> business. Its edge is certified breadth — castings, wheelsets and brakes under one group.</td></tr>
+      <tr><td class="t-strong">Tata Motors, Mahindra, Switch</td><td>Established commercial-vehicle and e-LCV makers</td><td>Not rail rivals at all — but they are exactly who JEM must beat in the electric-LCV segment, with far deeper distribution.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The comparison that actually matters</div>
+    <p>Titagarh and Jupiter both began as Kolkata-area freight-wagon builders and then went looking for something better than bare tender-priced assembly. Titagarh went <strong>downstream and sideways</strong> — into passenger rolling stock, metro cars and trainsets, where contracts are enormous, technology-partnered and multi-year, but execution risk and capital intensity are higher. Jupiter went <strong>upstream</strong> — into the castings, wheels, couplers and brakes that sit inside every wagon in the country, including its rivals'. Neither is obviously right. Titagarh's route offers bigger, longer contracts and a passenger-rail growth story; Jupiter's offers better margin on a business it already understands and a revenue line indexed to industry output rather than its own win rate. An investor choosing between the two is really choosing between <em>new markets</em> and <em>deeper value capture in an old one</em>.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A weak year, a strong balance sheet, and a multiple that assumes recovery.</p>
+
+  <p class="lead">FY26 is the awkward centre of any Jupiter analysis. Revenue and profit both fell materially; the order book and the balance sheet both held up well. The market has treated the year as an interruption rather than a re-basing, and the valuation reflects that judgement rather than the reported numbers.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue and profit: FY25 versus FY26</div>
+    <div class="c-sub">Consolidated, ₹ Crore</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25 income</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~4,008</div></div>
+      <div class="bar-row"><div class="blab">FY26 income</div><div class="track"><span class="fill wtg" style="width:74%"></span></div><div class="bval">~2,961</div></div>
+      <div class="bar-row"><div class="blab">FY25 PAT</div><div class="track"><span class="fill spec" style="width:9.5%"></span></div><div class="bval">~380</div></div>
+      <div class="bar-row"><div class="blab">FY26 PAT</div><div class="track"><span class="fill ink" style="width:4.1%"></span></div><div class="bval">~166</div></div>
+    </div>
+    <div class="legend"><span>Income down ~26%; profit down ~56%. Profit fell far faster than revenue — the signature of a fixed-cost-heavy manufacturer running below capacity, exactly what the vertical-integration strategy implies in a soft year.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">FY26 profitability, consolidated vs standalone</div>
+    <div class="c-sub">₹ Crore and margin — note that standalone PAT exceeds consolidated</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Consol. income</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~2,961</div></div>
+      <div class="bar-row"><div class="blab">Standalone income</div><div class="track"><span class="fill wtg" style="width:87%"></span></div><div class="bval">~2,577</div></div>
+      <div class="bar-row"><div class="blab">Consol. EBITDA<small>~12.4% margin</small></div><div class="track"><span class="fill gold" style="width:12.3%"></span></div><div class="bval">~363</div></div>
+      <div class="bar-row"><div class="blab">Standalone EBITDA<small>~11.8% margin</small></div><div class="track"><span class="fill spec" style="width:10.1%"></span></div><div class="bval">~300</div></div>
+      <div class="bar-row"><div class="blab">Standalone PAT</div><div class="track"><span class="fill om" style="width:6.2%"></span></div><div class="bval">~183</div></div>
+      <div class="bar-row"><div class="blab">Consol. PAT</div><div class="track"><span class="fill ink" style="width:5.6%"></span></div><div class="bval">~166</div></div>
+    </div>
+    <div class="legend"><span>Consolidated EBITDA margin ~12.4%; standalone ~11.8%. The subsidiaries lift the operating margin but drag reported profit — the railwheel JV earns, the investment-phase ventures cost.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~12.4%</div><div class="msl">FY26 consolidated EBITDA margin — down from the prior year's level</div></div>
+    <div class="ms green"><div class="msv">Net cash</div><div class="msl">Reported average net-debt-to-equity around −0.08 (approx.) — more cash than borrowings</div></div>
+    <div class="ms red"><div class="msv">~65×</div><div class="msl">Approx. trailing P/E on ~₹11,100 Cr market cap and ~₹166 Cr FY26 consolidated PAT</div></div>
+  </div>
+
+  <h3>The balance sheet is the reassuring part</h3>
+  <p>For a business that must carry steel, castings and part-built wagons across quarters, a clean balance sheet is not a luxury. Jupiter runs a <strong>net-cash</strong> position (reported average net-debt-to-equity around <strong>−0.08, approx.</strong>), with no promoter shares encumbered in FY26. That combination means a weak year like FY26 is survivable without dilution or distress, and that the capacity expansion and the EV venture are being funded from strength rather than leverage. It is the single most underrated fact in the file: the company can afford to be wrong for a year.</p>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: EBITDA margin against in-house component content</div>
+    <p>At roughly 65× trailing earnings on a year when profit halved, the market is not paying for FY26 — it is paying for the proposition that Jupiter earns structurally more per wagon than a bare assembler because it makes the expensive parts itself. That proposition has exactly one honest test: <strong>consolidated EBITDA margin, read alongside the share of each wagon Jupiter builds in-house and the external revenue of the component and railwheel businesses.</strong> If deliveries recover against the ₹4,675 Cr book <em>and</em> margin climbs back toward and through the mid-teens as foundry, wheelset and brake content rises, the integration strategy is proved and the multiple has a foundation. If deliveries recover but margin stays near 12%, then the vertical integration is buying capacity and security rather than profitability — a fine industrial outcome, and a much cheaper stock than 65×. Order book tells you the work exists. Deliveries tell you it converted. Only margin tells you the strategy worked.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results reporting and third-party summaries and cross-checked where possible. The <b>market cap (~₹11,100 Cr, mid-July 2026)</b> and the derived <b>P/E (~65×)</b> move with the share price and are indicative only. The <b>promoter-group holding (~68%)</b>, the <b>net-debt-to-equity (−0.08)</b>, the <b>Jabalpur foundry tonnage</b> and the <b>₹10,000 Cr sectoral allocation</b> are marked <b>approx.</b> — verify each against the company's filings and the relevant scheme documents before relying on them. Segment-wise revenue splits between wagons, components and commercial vehicles were not disclosed with enough precision to publish here; they should be read from the annual report's segment note.</div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A well-built company with a full book, asked to prove that integration means profit.</p>
+
+  <p class="lead">Jupiter enters FY27 with a bigger order book than its last year's revenue, more wagon capacity than it used, a net-cash balance sheet, a wheelset plant designed to fix the exact problem that broke FY26, and two adjacent businesses in different stages of proving themselves. What it does not have is a recent year that demonstrates the margin thesis working at scale.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Deep vertical integration</strong> — foundry, bogies, couplers, wheelsets and brakes in-house means more profit on the same wagon, plus a component revenue line indexed to the whole industry's output rather than Jupiter's own tender wins.</li>
+        <li><strong>Order book covers the shortfall</strong> — ~₹4,675 Cr at FY26 close, comfortably above the year's ~₹2,961 Cr revenue, with wagon capacity already lifted to ~8,000 units.</li>
+        <li><strong>Structural rail-freight demand</strong> — sustained railway capital expenditure, dedicated freight corridors, an ageing fleet needing replacement, and a policy push to move freight share back to rail.</li>
+        <li><strong>A widening buyer base</strong> — private wagon ownership schemes and captive industrial buyers are less price-brutal customers than mass tenders, improving mix over time.</li>
+        <li><strong>Financial resilience</strong> — net-cash, no promoter encumbrance, and a profitable ₹500 Cr-revenue railwheel venture funding itself.</li>
+        <li><strong>Optionality that costs little</strong> — containers benefiting from import-substitution policy, and a staged e-LCV venture with a real product and early fleet orders.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>FY26 happened</strong> — a 26% revenue fall and a 56% profit fall with a full book showed the operating model can be stopped by a single scarce component.</li>
+        <li><strong>Railways concentration</strong> — one dominant, tender-driven, budget-dependent customer. Slow awards or a procurement pause hits the book directly, and bidding is competitive, not negotiated.</li>
+        <li><strong>Lumpiness and steel</strong> — orders arrive in bursts at fixed bid prices; a steel move between bid and build compresses margin on work already won.</li>
+        <li><strong>Fixed-cost leverage cuts both ways</strong> — foundry, wheel plant and brake JV amplify margin in a strong year and punish it in a weak one, as FY26 demonstrated.</li>
+        <li><strong>The EV venture is a hard game</strong> — Tata, Mahindra and Switch already own distribution, service and financing in e-LCVs; capital and management attention spent there is not spent on the core.</li>
+        <li><strong>Valuation</strong> — roughly 65× trailing earnings on a halved profit base assumes both a delivery recovery and a margin recovery. Only one of those has an obvious mechanism behind it.</li>
+        <li><strong>Real competition</strong> — Titagarh, Texmaco, BEML and Braithwaite all chase the same tenders, and component specialists contest the second business too.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Jupiter Wagons is a distressed truck-body maker that a Kolkata rail family rebuilt into one of India's most integrated wagon manufacturers, then armed with a Slovak co-promoter, a Czech brake licence and its own wheel plant. The strategy is coherent and unusual: rather than chase bigger, riskier contracts the way its closest listed rival did, it went digging into its own bill of materials until it was selling parts to the competition. FY26 was the year that strategy got tested and came up short — the company that makes almost everything was still stopped by wheelsets it did not yet make enough of. The fix is already built and already earning ₹500 Cr. So the next milestone is specific and datable: the first full year in which wagon deliveries against the ₹4,675 Cr book run at capacity <em>and</em> consolidated EBITDA margin prints above the FY26 12.4%. Until both happen in the same twelve months, the integration premium in the share price is a hypothesis with a foundry attached.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>BSE India — Jupiter Wagons Ltd stock page, scrip code <strong>533272</strong> (NSE symbol JWL; ISIN INE209L01016).</li>
+    <li>Jupiter Wagons Limited — Q4 &amp; FY26 results press release and investor presentation (year ended 31 March 2026), company website.</li>
+    <li>Jupiter Wagons Limited — Q3 &amp; 9M FY26 results release: total income ₹2,172 Cr, PAT ₹138 Cr for 9M FY26.</li>
+    <li>Quartr / Yahoo Finance — Jupiter Wagons (JWL) Q4 FY26 earnings-call summary and transcript.</li>
+    <li>Manufacturing Today India — "Jupiter Wagons' FY26 numbers show steady momentum" (FY26 revenue, EBITDA, PAT, order book).</li>
+    <li>InvestyWise — Jupiter Wagons FY26 results coverage: consolidated income ₹2,961 Cr, EBITDA ₹363 Cr, PAT ₹166 Cr, order book ₹4,675 Cr.</li>
+    <li>Angel One / Free Press Journal — Jupiter Wagons Q3 FY26 results coverage, including wheelset supply constraints.</li>
+    <li>Angel One / Bajaj Broking — Jupiter Wagons Q4 FY25 results: FY25 income ~₹4,008 Cr, PAT ~₹380 Cr.</li>
+    <li>Screener.in and Trendlyne — Jupiter Wagons consolidated financials, market capitalisation and ratio history.</li>
+    <li>Jupiter Wagons Limited — "Global Partnerships" and "Group" pages: Tatravagonka and DAKO-CZ relationships, JWL DAKO-CZ India JV (2022).</li>
+    <li>Forbes India — "How Jupiter Wagons became India's largest railway engineer behemoth" (company history, capacity, foundry plans).</li>
+    <li>Wikipedia — Jupiter Wagons (corporate history: incorporated 1979 as Commercial Engineers &amp; Body Builders; renamed 25 May 2022).</li>
+    <li>ScanX — Jupiter Wagons promoter and promoter-group encumbrance disclosures for FY26 (SEBI Regulation 31(4)).</li>
+    <li>Jupiter Electric Mobility — JEM TEZ product information; Construction World and Manufacturing Today India coverage of the launch, Pithampur plant and Pickkup deployment MoU.</li>
+    <li>Indian Railways / Ministry of Railways — General Purpose Wagon Investment Scheme and private wagon ownership policy documents.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated. Several items — notably promoter-group holding, net-debt-to-equity, foundry tonnage, the sectoral budgetary allocation, market capitalisation and the derived P/E — are explicitly marked approximate and move with time or price. Segment-wise revenue splits are not published here because they were not available at sufficient precision; read them from the annual report's segment note. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "JWL";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
