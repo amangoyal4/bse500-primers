@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyient — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F6;
+    --paper-2:#FAFCFC;
+    --card:#FFFFFF;
+    --ink:#141E21;
+    --ink-soft:#525F62;
+    --ink-faint:#879295;
+    --brand:#2E5E6E;          /* engineering slate */
+    --brand-bright:#3E8FA6;   /* drafting blue accent */
+    --gold:#C6803A;           /* drafting-pencil bronze */
+    --wtg:#3E8FA6;            /* aerospace & defence */
+    --epc:#5AA8B8;            /* transportation / rail */
+    --om:#1E4753;            /* connectivity */
+    --spec:#1F7A6B;          /* sustainability / green cross accent */
+    --line:#D8DEDE;
+    --line-soft:#E6EAEA;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4F1F4;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F9F9;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAEEEE;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2E5E6E,#3E8FA6);}
+  .fill.gold{background:linear-gradient(90deg,#C6803A,#DC9E5E);}
+  .fill.wtg{background:linear-gradient(90deg,#3E8FA6,#5AA8B8);}
+  .fill.om{background:linear-gradient(90deg,#1E4753,#2E6A7C);}
+  .fill.spec{background:linear-gradient(90deg,#1F7A6B,#33977F);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a47,#566461);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3F0;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What ER&amp;D actually is</a></li>
+    <li><a href="#p2"><span class="n">02</span> What Cyient sells</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> Aerospace &amp; defence</a></li>
+    <li><a href="#p5"><span class="n">05</span> Transportation &amp; rail</a></li>
+    <li><a href="#p6"><span class="n">06</span> Connectivity &amp; sustainability</a></li>
+    <li><a href="#p7"><span class="n">07</span> Cyient DLM, the listed arm</a></li>
+    <li><a href="#p8"><span class="n">08</span> The semiconductor carve-out</a></li>
+    <li><a href="#p9"><span class="n">09</span> The programme clock</a></li>
+    <li><a href="#p10"><span class="n">10</span> The industry &amp; rivals</a></li>
+    <li><a href="#p11"><span class="n">11</span> Financials &amp; valuation</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: CYIENT · BSE: 532175</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Cyient, <em>the firm that draws the aircraft, not the app</em></h1>
+  <p class="dek">A complete walk through one of India's leading engineering R&amp;D companies — why designing a jet's wiring harness is a fundamentally different business from writing a bank's software, how a Hyderabad firm ended up engineering European rail signalling and American fibre networks, and why a company whose revenue tracks its customers' <em>product programmes</em> has spent the last two years quietly breaking itself into separately valued pieces.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹7,268 <small>Cr</small></div><div class="l">Revenue (FY26, consol.)</div></div>
+    <div class="cell"><div class="v">~9.5% <small>EBIT</small></div><div class="l">Group margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹463 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹9,400 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">21 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — consolidated revenue ~₹7,268 Cr, group EBIT margin 9.5% (down ~254 bps), PAT ~₹463 Cr; added the Cyient Semiconductors carve-out section following the ₹300 Cr raise at a ~₹4,650 Cr valuation, the ₹720 Cr buyback, and the paused "Project Astro" acquisition.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Cyient is an <strong>engineering R&amp;D (ER&amp;D) company</strong>. That phrase does a lot of work, so start here: when Boeing, Airbus, Pratt &amp; Whitney, Alstom, a European rail operator or a large American telecom company needs engineering done — the actual design of a physical thing — a big share of that work is now outsourced, and a meaningful slice of it lands in Hyderabad. Cyient's engineers draw aircraft structures and cabin wiring, write and certify the software inside rail signalling systems, design where fibre-optic and power lines physically run across a city, and build the electronics and now the silicon inside industrial products. <strong>The deliverable is a design, a drawing set, a certification file — not an app.</strong></p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is not an IT-services company, and the distinction is the whole primer.</strong> An IT-services firm builds and runs a client's <em>business</em> software — the payroll system, the core banking platform, the e-commerce site. Cyient works on the client's <em>product</em>: the aircraft, the train, the network, the medical device, the chip. That changes what drives revenue. Cyient's work is funded out of a customer's <strong>R&amp;D and engineering budget</strong>, tied to a specific product programme with a specific start and end date — not out of the corporate IT budget.</li>
+    <li><strong>FY26 was a hard year.</strong> Consolidated revenue was roughly flat-to-down at <strong>~₹7,268 Cr</strong> (FY25: ~₹7,360 Cr), group EBIT margin fell about <strong>254 basis points to ~9.5%</strong>, and net profit dropped to <strong>~₹463 Cr</strong> from ~₹648 Cr. The services business (which Cyient calls <strong>DET</strong> — Digital, Engineering &amp; Technology) ran at roughly <strong>$650M (approx.)</strong> for the year and shrank slightly in constant currency. Management has since reaffirmed an aspiration of mid- to high-single-digit organic growth and a <strong>15% EBIT margin</strong> for FY27.</li>
+    <li><strong>It has been busy dismantling itself — deliberately.</strong> In 2023 it listed its electronics-manufacturing arm, <strong>Cyient DLM</strong>, through an IPO. In 2025 it set up <strong>Cyient Semiconductors</strong> as a separately capitalised subsidiary, and in May 2026 that subsidiary raised <strong>₹300 Cr at a reported ~₹4,650 Cr valuation</strong>. The parent's own market capitalisation around that time was roughly <strong>₹9,400 Cr</strong>. Read those two numbers next to each other and you have the most interesting arithmetic in the company.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Every physical product you use — a plane, a train, a CT scanner, a broadband network — required thousands of hours of engineering before it existed. Somebody had to decide where each bracket goes, how the wiring routes through a fuselage, how a signalling system fails safely, where a fibre trench is dug. Historically the manufacturer's own engineers did all of it. Over the last three decades a large chunk has been handed to specialist firms in lower-cost engineering hubs, and Cyient is one of the Indian companies that grew up doing exactly that. Its revenue is therefore an <strong>engineering-hours business attached to physical product programmes</strong> — and that is both its moat and its vulnerability. When a customer launches a new aircraft variant or rolls out a signalling upgrade, Cyient's headcount on that programme rises. When the customer defers the programme, the work simply stops, regardless of how healthy the wider technology market looks.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>ER&amp;D 101: engineering services vs IT services</h2></div>
+  <p class="part-sub">The single most important distinction for a first-time reader — get this and the rest follows.</p>
+
+  <p class="lead">India's technology export industry is usually discussed as one thing. It is really two, and they behave very differently. Understanding which one Cyient belongs to is worth more than any ratio in this primer.</p>
+
+  <h3>The two industries, side by side</h3>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>IT services vs engineering R&amp;D services</caption>
+    <thead><tr><th>&nbsp;</th><th>IT services (Infosys, TCS, Zensar, Wipro)</th><th>Engineering R&amp;D — ER&amp;D (Cyient, LTTS, KPIT, Tata Elxsi)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">What is worked on</td><td>The customer's <em>business systems</em> — ERP, core banking, CRM, websites, data platforms, cloud migration.</td><td>The customer's <em>product</em> — the aircraft, locomotive, medical scanner, chip, telecom network.</td></tr>
+      <tr><td class="t-strong">Whose budget pays</td><td>The CIO's IT budget — a cost of running the business.</td><td>The R&amp;D / engineering budget — a cost of <em>creating</em> the next product.</td></tr>
+      <tr><td class="t-strong">What gets delivered</td><td>Code, a running system, a managed service, a support desk.</td><td>Drawings, CAD models, stress analyses, embedded software, test rigs, certification dossiers.</td></tr>
+      <tr><td class="t-strong">Who the engineers are</td><td>Computer-science graduates, developers, cloud and data specialists.</td><td>Mechanical, aerospace, electrical, electronics, civil and VLSI engineers — many with domain certifications.</td></tr>
+      <tr><td class="t-strong">The demand cycle</td><td>Enterprise IT spending; discretionary projects get cut in a downturn, run-the-business work persists.</td><td><em>Programme</em> cycles: an aircraft variant, a rail rollout, a chip tape-out. Multi-year, lumpy, and tied to industrial capex and OEM confidence.</td></tr>
+      <tr><td class="t-strong">Stickiness</td><td>High once embedded in a system landscape; but re-biddable.</td><td>Very high inside a programme — the engineer who certified a part is expensive to replace mid-programme. But when the programme ends, so can the revenue.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the certification angle is the real moat</div>
+    <p>Designing an aircraft bracket is not simply drawing it. In aerospace, rail and medical devices, a design must be <strong>certified</strong> against safety standards before it can fly, run or be implanted — DO-178C for airborne software, EN 50128 for rail software, and FDA-regulated design-control processes for medical devices, to name three. Building an organisation that can produce work an aviation regulator will accept takes years of audited process, trained people and demonstrated history. That is why an aerospace supplier does not casually switch its engineering partner: it is not just changing a vendor, it is re-qualifying a safety-critical process. This regulatory ballast is what an ER&amp;D firm has that a generalist coding shop does not — and it is why margins in ER&amp;D can, at their best, sit above commodity IT services.</p>
+  </div>
+
+  <h3>Why manufacturers hand engineering work out at all</h3>
+  <ul class="clean">
+    <li><strong>Cost per engineering hour.</strong> The blunt driver. A qualified mechanical or avionics engineer in India costs a fraction of one in Toulouse, Seattle or Munich. On a programme requiring hundreds of thousands of hours, that arithmetic is decisive.</li>
+    <li><strong>Elastic capacity.</strong> Product programmes are peaky — an OEM may need 400 extra engineers for eighteen months and then not need them. Hiring and firing that many in Europe is difficult and expensive; renting them through a partner is not.</li>
+    <li><strong>Scarcity of engineers in the West.</strong> Ageing engineering workforces in aerospace and rail mean OEMs genuinely cannot staff every programme domestically, irrespective of cost.</li>
+    <li><strong>Depth in a niche.</strong> A firm that has drawn thousands of wiring harnesses or laid out thousands of kilometres of fibre routes gets faster and more accurate at it than a customer's generalist team ever will.</li>
+  </ul>
+
+  <p>Set against that, ER&amp;D has a structural drag that pure IT services do not carry: engineering work is <strong>closer to the customer's crown jewels</strong>. Intellectual property, export-control rules (particularly in defence), and simple institutional caution mean OEMs keep the most strategic design work in-house and outsource the layers beneath it. Cyient therefore competes for a large but bounded slice of the pie, and it competes on domain credibility rather than on scale of headcount alone.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What Cyient actually sells: one company, three structures</h2></div>
+  <p class="part-sub">Services, manufacturing and silicon — and how they fit together.</p>
+
+  <p class="lead">Cyient today is best read as <strong>three distinct businesses sitting under one listed parent</strong>, which is unusual for an Indian technology company and is the source of both its complexity and its optionality.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The Cyient group — three pockets of value</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Pocket 1 · The core</div><div class="nname">Cyient DET</div><div class="nwho">Digital, Engineering &amp; Technology services. ~$650M (approx.) revenue. Aerospace, rail, networks, energy, medtech.</div></div>
+      <div class="arrow">+</div>
+      <div class="node epc"><div class="ntag">Pocket 2 · Listed</div><div class="nname">Cyient DLM</div><div class="nwho">Electronics manufacturing (EMS). IPO'd 2023, separately listed on NSE/BSE; Cyient retains a controlling stake.</div></div>
+      <div class="arrow">+</div>
+      <div class="node om"><div class="ntag">Pocket 3 · Carved out</div><div class="nname">Cyient Semiconductors</div><div class="nwho">Chip / ASIC design and turnkey silicon. Separately capitalised subsidiary; raised ₹300 Cr in 2026.</div></div>
+      <div class="arrow">=</div>
+      <div class="node spec"><div class="ntag">The listed entity</div><div class="nname">Cyient Ltd</div><div class="nwho">What you buy on the exchange — a services business plus two stakes.</div></div>
+    </div>
+    <div class="flow-note">Most Indian technology companies are one operating business. Cyient is a services company that has deliberately spun its hardware-adjacent activities into separately financed vehicles — a structure closer to a small industrial group than to an IT firm.</div>
+  </div>
+
+  <h3>Inside DET — the five domains</h3>
+  <p>The services core, which the company reports as <strong>DET</strong>, is organised by industry vertical rather than by technology. That is telling in itself: in ER&amp;D, knowing the industry <em>is</em> the product.</p>
+
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Aerospace &amp; Defence</span></strong> — the flagship and historically the largest vertical (roughly <strong>30% of DET, approx.</strong>). Structural design, wiring and cabin systems, avionics software, engineering support for aircraft OEMs, engine makers and tier-one suppliers, plus aftermarket and MRO engineering.</li>
+    <li><strong><span class="chain-epc">Transportation</span></strong> — largely <em>rail</em>: signalling design and safety-critical software, rolling-stock engineering, train-control systems and interlocking design, with a genuinely strong European franchise built partly through acquisition. Roughly <strong>15–17% of DET (approx.)</strong>.</li>
+    <li><strong><span class="chain-om">Connectivity</span></strong> — designing and engineering communications networks for telecom operators: where the fibre goes, how a network is planned, engineered and documented. Roughly <strong>15–18% of DET (approx.)</strong>.</li>
+    <li><strong>Sustainability (energy &amp; utilities)</strong> — engineering for electricity grids, utilities, mining and renewables: network design, asset data, grid modernisation. Roughly <strong>15–18% of DET (approx.)</strong>.</li>
+    <li><strong>New Growth Areas</strong> — the company's stated growth engines: <strong>medical technology</strong> (device design under regulated design controls), <strong>hi-tech and industrial</strong>, <strong>automotive</strong>, <strong>mining</strong>, and <strong>semiconductors</strong>. Collectively around <strong>20% of DET (approx.)</strong> and the pool from which the next decade's mix shift is meant to come.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">Where DET revenue comes from</div>
+    <div class="c-sub">Approximate FY26 vertical mix of the services business — treat as indicative, not audited</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Aerospace &amp; Defence<small>design, certification, aftermarket</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~30%</div></div>
+      <div class="bar-row"><div class="blab">New Growth Areas<small>medtech, hi-tech, auto, semis</small></div><div class="track"><span class="fill gold" style="width:67%"></span></div><div class="bval">~20%</div></div>
+      <div class="bar-row"><div class="blab">Connectivity<small>telecom network engineering</small></div><div class="track"><span class="fill om" style="width:57%"></span></div><div class="bval">~17%</div></div>
+      <div class="bar-row"><div class="blab">Sustainability<small>utilities, grid, mining</small></div><div class="track"><span class="fill spec" style="width:57%"></span></div><div class="bval">~17%</div></div>
+      <div class="bar-row"><div class="blab">Transportation<small>rail signalling &amp; rolling stock</small></div><div class="track"><span class="fill wtg" style="width:53%"></span></div><div class="bval">~16%</div></div>
+    </div>
+    <div class="legend"><span>The mix matters because these verticals do not move together. Aerospace and transportation follow long industrial programme cycles; connectivity follows telecom operator capex, which has been weak; sustainability follows utility spending. A single soft vertical can flatten the whole company even when the others grow — which is roughly what FY26 looked like.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The unit of production is a billable engineer on a programme</div>
+    <p>Strip the corporate language away and the engine is simple: Cyient puts qualified engineers onto a customer's product programme and bills for their time, increasingly bundled into fixed-price work packages and outcome-based deals. Growth therefore comes from three levers and only three — <strong>more engineers deployed</strong>, <strong>a higher rate per engineer</strong> (won by moving up from drafting toward design ownership and full programme responsibility), and <strong>more work delivered per engineer</strong> (automation, reuse, and now AI tooling). Any story about this company's future must ultimately show up in one of those three.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the founder, and who owns it</h2></div>
+  <p class="part-sub">A Hyderabad institution — with a surprisingly small promoter stake.</p>
+
+  <p class="lead">Cyient was founded in <strong>1991 in Hyderabad by B.V.R. Mohan Reddy</strong> as <strong>Infotech Enterprises</strong>, at a moment when the idea of doing Western engineering work from India was still novel. Its earliest business was, appropriately, unglamorous and physical: converting engineering drawings and maps into digital form, then geospatial services for utilities and telecom firms. From that base it moved steadily up the value chain into design, embedded software and full programme engineering, and renamed itself <strong>Cyient</strong> in 2014 to reflect the shift.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1991</div><div class="ev"><strong>Infotech Enterprises</strong> founded in Hyderabad by <strong>B.V.R. Mohan Reddy</strong> — digitisation of engineering drawings and geospatial data for Western utilities and telecom operators.</div></li>
+    <li><div class="yr">1997</div><div class="ev">Listed on Indian exchanges; begins moving from data conversion into genuine design and engineering services.</div></li>
+    <li><div class="yr">2000s</div><div class="ev">Builds the <strong>aerospace</strong> franchise — long-term engineering relationships with aircraft OEMs and tier-one suppliers become the company's identity and its largest vertical.</div></li>
+    <li><div class="yr">2014</div><div class="ev">Renamed <strong>Cyient</strong>. The rebrand marks the transition from a services vendor to a self-described design-and-build partner.</div></li>
+    <li><div class="yr">2015–2022</div><div class="ev">Expansion through acquisition — rail and transportation capability in Europe, medtech and design capability in the US and UK; builds the electronics-manufacturing arm (formerly Rangsons) into <strong>Cyient DLM</strong>.</div></li>
+    <li class="major"><div class="yr">Jun 2023</div><div class="ev"><strong>Cyient DLM IPO</strong> — the electronics-manufacturing subsidiary is separately listed on NSE and BSE. Cyient retains a controlling stake; the market gets a standalone price for the manufacturing business.</div></li>
+    <li class="major"><div class="yr">Apr 2025</div><div class="ev"><strong>Cyient Semiconductors</strong> is set up as a dedicated subsidiary for chip and ASIC design — a formal carve-out of the silicon business from the services parent.</div></li>
+    <li><div class="yr">FY25</div><div class="ev">A softer year for services as connectivity and parts of the industrial base weaken; the company builds a record cash position (~$157M, roughly ₹1,240 Cr, at FY25 close).</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ~₹7,268 Cr (roughly flat/down); group EBIT margin falls ~254 bps to ~<strong>9.5%</strong>; PAT ~₹463 Cr. A planned acquisition codenamed <strong>"Project Astro" is paused</strong>, with due-diligence costs charged to the P&amp;L. Board approves a <strong>₹720 Cr buyback</strong>.</div></li>
+    <li class="major"><div class="yr">May 2026</div><div class="ev">Cyient Semiconductors raises <strong>₹300 Cr</strong> (debt and equity instruments) at a reported <strong>~₹4,650 Cr valuation</strong> to scale power-semiconductor and custom-silicon programmes.</div></li>
+  </ul>
+
+  <h3>Ownership</h3>
+  <ul class="clean">
+    <li><strong>Promoters: ~23.3% (Mar 2026).</strong> The founding Reddy family and associated entities hold roughly <strong>23.28%</strong> — strikingly low for an Indian founder-led company, where 50–75% promoter stakes are the norm. Company disclosures for FY26 indicate <strong>no promoter share encumbrance</strong>, which is a positive.</li>
+    <li><strong>Domestic institutions: ~41%.</strong> Indian mutual funds, insurers and other DIIs hold roughly <strong>40.98%</strong> — almost <em>twice</em> the promoter stake. Foreign institutions hold about <strong>15.3%</strong>, and the retail/public float roughly <strong>19.8%</strong>.</li>
+    <li><strong>Management.</strong> <strong>B.V.R. Mohan Reddy</strong> remains founder and executive chairman; his son <strong>Krishna Bodanapu</strong> serves as executive vice-chairman and managing director, with a professional executive team running the services, manufacturing and semiconductor businesses. Leadership at the DET services level has been refreshed in recent years (approx. — verify current designations against the latest annual report).</li>
+  </ul>
+
+  <div class="note gold"><b>A genuine surprise:</b> Cyient's founding family owns less than a quarter of the company, while Indian mutual funds and insurers own about forty-one percent. That inverts the usual Indian mid-cap picture. Practically, it means two things. First, the stock's price behaviour is set largely by <strong>domestic institutional flows</strong> rather than by a controlling family's actions — and DIIs at that weight can move a ₹9,400 Cr company hard in either direction. Second, control is genuinely contestable in a way it is not at most founder-run peers; the company operates more like a professionally managed corporation than a family holding, and the ₹720 Cr buyback and the dividend record (a yield above 3% — unusual for anything labelled "IT") are consistent with a board answering to institutions rather than to a dominant owner.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Aerospace &amp; defence: the flagship</h2></div>
+  <p class="part-sub">The vertical that defines Cyient's identity — and its longest, slowest cycles.</p>
+
+  <p class="lead">If Cyient has a signature business, this is it. Roughly <strong>a third of services revenue (approx.)</strong> comes from aerospace and defence, and the work spans nearly the entire life of an aircraft programme — from early structural design through detailed engineering, manufacturing engineering, avionics and cabin systems, all the way to the aftermarket work that keeps decades-old fleets flying.</p>
+
+  <h3>What the work actually looks like</h3>
+  <ul class="clean">
+    <li><strong>Structures and mechanical design</strong> — the airframe parts: brackets, fittings, panels, doors, secondary structures. Each has to be modelled, stress-analysed, weight-optimised and released as a manufacturable drawing package.</li>
+    <li><strong>Wiring and cabin systems</strong> — a modern airliner contains many kilometres of wiring. Routing it, harness design, electrical load analysis and interior/cabin engineering (seats, galleys, lavatories and other cabin "monuments", in-flight entertainment integration) is enormous, detailed, repeatable engineering — exactly the kind of work that migrates well.</li>
+    <li><strong>Avionics and embedded software</strong> — safety-critical code written to standards such as DO-178C, plus verification and validation. The certification burden here is what keeps the work sticky.</li>
+    <li><strong>Manufacturing engineering &amp; tooling</strong> — translating a design into something a factory can actually build: jigs, fixtures, assembly sequences, process plans.</li>
+    <li><strong>Aftermarket and MRO engineering</strong> — repair design, modification packages, obsolescence management and documentation for aircraft already in service. This is the least cyclical slice, because a flying fleet needs supporting whether or not new programmes are launched.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why an aerospace engineering relationship, once won, is remarkably durable</div>
+    <p>Aerospace runs on <strong>configuration control</strong>: every part on a certified aircraft is traceable to an approved design, produced under an approved process, by an approved organisation. When a partner has spent years being audited into an OEM's approved-supplier framework, has its engineers trained on that OEM's tools and standards, and holds the accumulated knowledge of a specific aircraft's design intent, switching partners mid-programme is not a procurement decision — it is a re-qualification project with schedule risk attached to a certified product. That is why these relationships are measured in decades, and why aerospace revenue tends to be far more predictable than the headline growth rate of the company suggests.</p>
+  </div>
+
+  <h3>The flip side: aerospace moves on aerospace's clock</h3>
+  <p>The same properties that make aerospace sticky make it slow. Aircraft programmes are decided years ahead; a delayed engine certification, a supply-chain problem at an airframer, a shift in defence budget priorities, or simply an OEM deciding to slow a development programme by two quarters flows almost directly into an engineering partner's staffing plan. There is no substitute demand to redeploy those engineers onto overnight. Cyient's aerospace franchise is a genuine asset, but it delivers its returns on a schedule set by a handful of very large customers — and industry-wide supply-chain strain and production-rate wobbles at the major airframers over recent years have been felt right down the engineering chain.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~30%</div><div class="msl">Share of DET services revenue from aerospace &amp; defence (approx.)</div></div>
+    <div class="ms gold"><div class="msv">Decades</div><div class="msl">Typical length of an aircraft programme relationship, including aftermarket support</div></div>
+    <div class="ms"><div class="msv">DO-178C</div><div class="msl">The airborne-software certification standard that gates who is even allowed to bid</div></div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Transportation: the European rail franchise</h2></div>
+  <p class="part-sub">Signalling, rolling stock, and safety-critical software for railways — a business most investors miss.</p>
+
+  <p class="lead">Cyient's transportation vertical is overwhelmingly a <strong>rail</strong> business, and much of it sits in <strong>Europe</strong>, built up through acquisitions and long relationships with rail OEMs and infrastructure operators. It is one of the least-understood parts of the company and one of the most defensible.</p>
+
+  <h3>Two kinds of rail engineering</h3>
+  <ul class="clean">
+    <li><strong>Signalling and train control</strong> — the systems that decide which train may occupy which section of track, at what speed, and that must fail safely. This includes interlocking design, ETCS/ERTMS (the European standard) rollouts, and the safety-critical software written to standards such as EN 50128. Getting this wrong kills people, so the process rigour and independent-safety-assessment requirements are extreme — a very high barrier to entry.</li>
+    <li><strong>Rolling stock</strong> — the trains themselves: car-body and bogie engineering, interiors, electrical systems, traction and control electronics, plus the modification and refurbishment engineering that keeps fleets running for thirty-plus years.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Rail's quiet advantage: the spending is political, not commercial</div>
+    <p>Aerospace demand ultimately reflects airline profitability and OEM order books. European rail demand reflects something steadier — <strong>government policy</strong>. Decarbonisation targets, mandated ERTMS signalling migration across the European network, urban congestion, and national infrastructure programmes create engineering work that is budgeted years in advance and is politically difficult to cancel outright. That does not make it fast-growing or free of delay; public infrastructure timelines slip routinely. But it does mean this vertical's demand driver is largely uncorrelated with the enterprise technology spending cycle that determines whether an IT-services peer has a good year. When Cyient reported year-on-year and sequential growth in transportation and mobility in a period when the rest of the portfolio was soft, this is why.</p>
+  </div>
+
+  <p>The strategic value of the rail vertical goes beyond its revenue share. It gives Cyient a second, genuinely differentiated safety-critical franchise — one where the credentials are as hard-won as in aerospace, but where the customer base and the funding cycle are entirely different. For a company whose central problem is that its verticals occasionally soften at the same time, having rail on a public-infrastructure clock rather than a corporate-capex clock is real diversification rather than the cosmetic kind.</p>
+
+  <div class="note gold"><b>Worth knowing:</b> India is itself becoming a rail engineering market of consequence — dedicated freight corridors, metro systems in a dozen-plus cities, station redevelopment, and the domestic Kavach train-protection system. A firm with European signalling credentials is unusually well placed to work on Indian rail modernisation, and vice versa. Whether Cyient converts that adjacency into meaningful domestic revenue is a live question rather than a settled fact.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Connectivity &amp; sustainability: engineering the invisible networks</h2></div>
+  <p class="part-sub">The oldest part of the company — mapping and designing where fibre and power physically go.</p>
+
+  <p class="lead">These two verticals — together roughly <strong>a third of services revenue (approx.)</strong> — trace directly back to Cyient's founding business. Both are about <strong>networks that exist physically in the ground and on poles</strong>, and both involve a kind of engineering that almost nobody thinks about until it fails.</p>
+
+  <h3>Connectivity: telecom network engineering</h3>
+  <p>When a telecom operator rolls out fibre-to-the-home across a city, or densifies a mobile network, an enormous amount of unglamorous engineering has to happen first. Somebody must survey what already exists, decide the physical route of every cable, design where splitters and cabinets sit, calculate optical budgets, produce the permit drawings a municipality will accept, and then maintain an accurate record of what was actually built. Cyient does this at scale for operators, principally in the US and Europe: network planning, engineering design, GIS-based asset records, field-data capture and the ongoing documentation that keeps a network's digital record accurate.</p>
+
+  <h3>Sustainability: utilities, grid and mining</h3>
+  <p>The same discipline applied to electricity. Utilities need their distribution networks designed, mapped and modernised — where the lines run, what condition the assets are in, how to connect a wave of rooftop solar and EV chargers without destabilising a feeder, how to plan grid reinforcement. Add mining engineering and renewables-related design work and you have a vertical squarely aimed at the energy transition, which is a genuinely multi-decade capital cycle.</p>
+
+  <div class="plain">
+    <div class="ptag">The counter-intuitive part: this is field-and-drawing work, not software</div>
+    <p>It is tempting to file "connectivity" and "sustainability" under digital transformation. Much of the actual output is closer to <strong>civil and electrical engineering documentation</strong> — geospatial datasets, route designs, permit packages, as-built records. The economics follow accordingly: volume-driven, competitive, priced per unit of design output, and sensitive to how much capital an operator or utility is deploying in a given year. That is exactly why the connectivity vertical has been a drag. Telecom operators worldwide pulled back sharply on network capex after the 5G and fibre build-out surge, and when an operator halves its build programme, the engineering partner's volumes halve with it. There is no clever mitigation; the work simply is not there to be done.</p>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The four established verticals, and what each is really riding on</caption>
+    <thead><tr><th>Vertical</th><th>The underlying driver</th><th>Recent direction</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Aerospace &amp; Defence</td><td>Aircraft programme launches, production rates, defence budgets, fleet aftermarket</td><td>Structurally sound; hostage to OEM programme timing and supply-chain normalisation</td></tr>
+      <tr><td class="t-strong">Transportation (rail)</td><td>Government infrastructure and decarbonisation policy; ERTMS/signalling migration</td><td>The relative bright spot — growth reported both sequentially and year-on-year</td></tr>
+      <tr><td class="t-strong">Connectivity</td><td>Telecom operator network capex — fibre and wireless build programmes</td><td>The principal drag; operator capex discipline has cut engineering volumes</td></tr>
+      <tr><td class="t-strong">Sustainability</td><td>Utility grid spending, energy transition, mining capex</td><td>Long-cycle positive, but utility budgets move slowly and unevenly</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Cyient DLM: the manufacturing arm it chose to list</h2></div>
+  <p class="part-sub">A services company that also builds circuit boards — and gave the market a separate price for it.</p>
+
+  <p class="lead"><strong>Cyient DLM</strong> is an <strong>electronics manufacturing services (EMS)</strong> business: it builds electronic assemblies — printed circuit boards, box-builds, cable harnesses, complete electro-mechanical units — for customers in aerospace and defence, medical devices and industrial markets. It listed via IPO in <strong>June 2023</strong>, with Cyient retaining a controlling stake (roughly two-thirds, approx. — confirm against the latest shareholding disclosure).</p>
+
+  <h3>Why a services firm owns a factory</h3>
+  <p>The logic is "design-led manufacturing", which is the D-L-M in the name. In regulated, low-to-medium-volume, high-reliability electronics — a defence sub-system, a medical instrument, an avionics box — the hard part is not stamping out millions of units cheaply. It is producing complex assemblies to exacting standards, in modest volumes, with full traceability and qualification. A firm that already <em>designs</em> such systems has a natural claim to building them: it can take a customer from concept through design to a qualified, manufacturable product, which is a genuinely differentiated proposition versus a pure contract manufacturer competing on cost per board.</p>
+
+  <div class="plain">
+    <div class="ptag">The tension inside owning an EMS business</div>
+    <p>An engineering-services business and a contract-manufacturing business have almost opposite financial shapes. Services is asset-light: the balance sheet is people and receivables, cash conversion is good, and the constraint is billable capacity. EMS is capital- and working-capital-intensive: you buy components months ahead, hold inventory, run a factory, and margins depend on utilisation and materials pricing. Bolting them together produces a consolidated set of accounts where the group's revenue growth, margin and working-capital ratios are a blend of two unlike things — which is precisely why the market usually prefers to price them apart. Listing DLM separately was, in effect, an admission of that: let each business be valued on its own terms rather than averaged into a single confusing multiple.</p>
+  </div>
+
+  <p>DLM's own recent record has been mixed — FY26 saw <strong>PAT of about ₹73 Cr, up ~7.6%, on a revenue dip</strong>, i.e. profitability improving while the top line went backwards. As a listed subsidiary it carries its own volatility, its own investor base and its own story, but it consolidates into Cyient's reported numbers. For anyone analysing the parent, that means two housekeeping rules: strip DLM out when you want to see how the <em>services</em> business is really doing, and remember that a share of DLM's profits belongs to DLM's minority shareholders, not to Cyient's.</p>
+</section>
+
+<!-- 08 — BESPOKE CRUX 1 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The semiconductor carve-out, and the arithmetic it creates</h2></div>
+  <p class="part-sub">The most consequential — and most contestable — thing happening at this company.</p>
+
+  <p class="lead">In April 2025 Cyient established <strong>Cyient Semiconductors</strong> as a dedicated subsidiary for chip design: ASIC and custom-silicon turnkey work, power semiconductors, and the design services that sit between a customer's requirement and a fabricated chip. In May 2026 the board approved a <strong>₹300 Cr raise</strong> for the subsidiary through a mix of debt and equity instruments, reported at a valuation of roughly <strong>₹4,650 Cr</strong>, with the parent providing a corporate guarantee and pledging its shareholding as security. The stated purpose was to give the semiconductor business an independent capital structure and the operational freedom to chase large customer programmes.</p>
+
+  <h3>What a chip-design services business actually does</h3>
+  <ul class="clean">
+    <li><strong>ASIC / custom silicon turnkey</strong> — a customer wants a chip purpose-built for its product. The design partner takes the specification through architecture, RTL design, verification, physical design, tape-out to a foundry, packaging and test — handing back working silicon rather than a document.</li>
+    <li><strong>Power semiconductors</strong> — the devices that switch and convert electrical power in EVs, chargers, industrial drives and renewable inverters. A different discipline from digital logic, and one with strong secular demand from electrification.</li>
+    <li><strong>Design services</strong> — augmenting a semiconductor company's own engineering teams on verification, physical design and embedded firmware.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why it needed to be carved out rather than run inside the parent</div>
+    <p>Chip design is a poor fit inside a services P&amp;L. It requires heavy up-front investment in EDA tool licences (which cost a fortune), IP blocks, specialised engineers who are bid over by global chip firms, and — in turnkey work — actual capital tied up in mask sets and inventory. The payback arrives years later, if the customer's product succeeds. Run that inside a company being judged quarterly on services margin, and it looks like nothing but a cost. Give it a separate balance sheet, separate investors and a separate valuation, and it can be funded on its own timeline and judged on its own milestones. The carve-out is a governance and financing decision as much as a strategic one.</p>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">The arithmetic that makes this company unusual</div>
+    <div class="c-sub">₹ Crore — the parent's whole market value against the private mark on one subsidiary (approx., mid-2026)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Cyient Ltd market cap<small>the entire listed company</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~9,400</div></div>
+      <div class="bar-row"><div class="blab">Cyient Semiconductors<small>valuation in the May-2026 raise</small></div><div class="track"><span class="fill gold" style="width:49%"></span></div><div class="bval">~4,650</div></div>
+      <div class="bar-row"><div class="blab">FY26 group revenue<small>for scale</small></div><div class="track"><span class="fill om" style="width:77%"></span></div><div class="bval">~7,268</div></div>
+      <div class="bar-row"><div class="blab">FY26 group PAT</div><div class="track"><span class="fill spec" style="width:5%"></span></div><div class="bval">~463</div></div>
+    </div>
+    <div class="legend"><span>A private funding round marked the wholly owned semiconductor subsidiary at roughly half the parent's entire public market capitalisation — while the semiconductor business contributes a negligible share of the ~₹7,268 Cr of group revenue that same market cap is nominally paying for.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The device that fits only Cyient: the private mark against the public one</div>
+    <p>Here is the construct that cannot be lifted onto any other primer in this library. At mid-2026, Cyient Ltd was capitalised at roughly <strong>₹9,400 Cr</strong> on the exchange. A private financing round marked <strong>Cyient Semiconductors</strong> — which Cyient wholly owns — at about <strong>₹4,650 Cr</strong>. Cyient also owns a controlling stake in <strong>listed Cyient DLM</strong>, which carries its own daily quoted price. So the public market was, on the face of it, assigning a strikingly modest residual value to a <strong>~$650M engineering services business</strong> with a three-decade aerospace franchise and a European rail practice, once you credit those two stakes at anything close to their marked values. Either the ₹4,650 Cr private mark is optimistic for a business that has yet to prove commercial scale — entirely possible, since private rounds price a plan while public markets price a print — or the listed services business is being valued as an eroding asset rather than a franchise. <strong>Both cannot be right.</strong> Reconciling those two numbers is, in a single sentence, the analytical work this stock requires, and it is a question no other Indian ER&amp;D company poses in this form.</p>
+  </div>
+
+  <p>The bear reading is straightforward and should be stated plainly. Chip design services is a fiercely competitive field populated by global specialists with decades of tape-out history and by the captive design centres of the chip companies themselves. Talent is scarce and expensive. Programmes take years to convert into revenue. A subsidiary financed partly with debt, guaranteed by the parent and secured on a pledge of the parent's shareholding, means the parent's balance sheet is genuinely on the hook if the venture underdelivers. A private valuation is not a realisation; it becomes real only when the business generates revenue and profit, or when a third party pays cash for the stake at or above that mark.</p>
+</section>
+
+<!-- 09 — BESPOKE CRUX 2 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The programme clock: why growth stalled in a good market</h2></div>
+  <p class="part-sub">The central operating problem — and the reason Cyient behaves unlike an IT-services stock.</p>
+
+  <p class="lead">FY26 delivered an uncomfortable result: revenue slightly down, EBIT margin down about <strong>254 basis points to ~9.5%</strong>, PAT down roughly a quarter. This was not a year in which global technology spending collapsed. It was a year in which <strong>Cyient's specific customers' specific product programmes ran slow</strong> — and that is the distinction that explains the whole company.</p>
+
+  <div class="chart">
+    <div class="c-title">Three years of standing still</div>
+    <div class="c-sub">Consolidated revenue and net profit, ₹ Crore (FY24–FY26)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue FY24</div><div class="track"><span class="fill ink" style="width:98%"></span></div><div class="bval">~7,147</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY25</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~7,360</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY26</div><div class="track"><span class="fill wtg" style="width:99%"></span></div><div class="bval">~7,268</div></div>
+      <div class="bar-row"><div class="blab">PAT FY24</div><div class="track"><span class="fill gold" style="width:9.6%"></span></div><div class="bval">~703</div></div>
+      <div class="bar-row"><div class="blab">PAT FY25</div><div class="track"><span class="fill gold" style="width:8.8%"></span></div><div class="bval">~648</div></div>
+      <div class="bar-row"><div class="blab">PAT FY26</div><div class="track"><span class="fill bad" style="width:6.3%"></span></div><div class="bval">~463</div></div>
+    </div>
+    <div class="legend"><span>Revenue has moved within a ~3% band for three years while profit has fallen ~34% from the FY24 peak. Flat revenue with falling profit is the signature of a services business carrying cost for growth that has not arrived — and of pricing and utilisation pressure inside the delivered work.</span></div>
+  </div>
+
+  <h3>How a programme-driven business goes wrong</h3>
+  <ul class="clean">
+    <li><strong>A deferral is not a lost deal — but it costs the same.</strong> When an OEM slides a design programme by two quarters, the contract is not cancelled and the pipeline still looks healthy. But the engineers staffed for it are on the payroll now. Utilisation falls, margin compresses, and the revenue simply moves out of the year.</li>
+    <li><strong>Verticals can go quiet simultaneously.</strong> Connectivity weakened with telecom capex discipline; parts of the industrial and hi-tech base softened; aerospace supply-chain normalisation ran slower than hoped. Rail growing does not offset three verticals pausing.</li>
+    <li><strong>Cost cannot be cut at the same speed.</strong> Domain engineers — an avionics software specialist, a signalling safety engineer — take years to train and cannot be released and rehired on a quarterly cycle without destroying the very capability that wins the next programme. So the company absorbs the margin hit and waits.</li>
+    <li><strong>One-off costs land in a bad year.</strong> FY26 also carried a charge for due-diligence expenses on <strong>"Project Astro"</strong>, a planned acquisition the company paused amid geopolitical uncertainty and the changing AI landscape — real money spent on a transaction that did not happen.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The frame that separates Cyient from an IT-services peer</div>
+    <p>Ask what would have to be true for an application-services company to grow. Answer: enterprises must spend more on their technology estate. Ask what must be true for Cyient to grow, and the answer is entirely different — <strong>industrial companies must be actively developing new physical products</strong>. An airframer launching a variant. A rail authority migrating to a new signalling standard. A device maker taking a new instrument through regulatory approval. A telecom operator building network. When those programmes are running, Cyient's engineers are billable and the revenue compounds. When boards defer product development to protect cash — which is what a nervous industrial company does first — the work evaporates even while enterprise software budgets are perfectly healthy. Cyient can therefore have a bad year in a good technology market, and a decent year in a poor one. Anyone benchmarking it against Infosys's growth rate is reading the wrong industry.</p>
+  </div>
+
+  <h3>The AI question, without the hedging</h3>
+  <p>Generative AI is a real variable for engineering services, and it cuts both ways with no settled verdict yet. On the deflationary side, AI-assisted design, automated code generation, simulation surrogates and document automation could compress the number of engineering hours a given work package needs — and in a business that bills hours, fewer hours is fewer rupees unless pricing shifts to outcomes. On the expansionary side, the regulated, safety-critical, physically consequential work at Cyient's core is precisely the category where an unverifiable machine output is unacceptable: an aviation regulator will not certify a wiring design because a model produced it. Companies that redeploy the productivity gain into taking on <em>more programme scope per client</em> — moving from executing packages to owning whole work-streams at fixed price — can convert the threat into share gain. The company's own reference to AI developments contributing to the pause of Project Astro is a candid signal that management does not consider the question resolved either.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A small, specialised peer group — and a global set of much larger competitors.</p>
+
+  <p class="lead">India's listed ER&amp;D universe is short. Unlike IT services, where a dozen companies of scale compete, engineering services in India is a handful of firms that mostly specialise by vertical — which means Cyient's competitive position differs from one vertical to the next.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Cyient</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Cyient</td><td>Broad ER&amp;D across aerospace, rail, connectivity, utilities, medtech; plus listed EMS arm and a semiconductor subsidiary</td><td><em>This company.</em> The most diversified vertical spread of the Indian pure-plays, with the most unusual group structure — and the weakest recent growth record.</td></tr>
+      <tr><td class="t-strong">L&amp;T Technology Services (LTTS)</td><td>The closest direct comparator — a scaled, broad-based Indian ER&amp;D firm backed by the L&amp;T group</td><td>Larger, with the L&amp;T parentage as a credential in industrial and plant engineering. The peer against which Cyient's growth and margin are most often measured, usually unfavourably in recent years.</td></tr>
+      <tr><td class="t-strong">Tata Technologies</td><td>ER&amp;D concentrated in automotive and manufacturing, anchored by the Tata group and JLR relationships</td><td>Deeper in automotive product engineering; less exposure to aerospace and rail. A different vertical bet with its own concentration issue.</td></tr>
+      <tr><td class="t-strong">KPIT Technologies</td><td>Pure-play automotive software — electrification, autonomous, software-defined vehicles</td><td>Narrow but deep, riding one powerful secular theme. Has historically commanded a far richer multiple than Cyient, illustrating how much the market pays for a single clean growth vector.</td></tr>
+      <tr><td class="t-strong">Tata Elxsi</td><td>Design and product engineering across media, automotive and healthcare</td><td>Strong brand and historically premium margins; a design-led positioning rather than volume engineering.</td></tr>
+      <tr><td class="t-strong">Capgemini Engineering (ex-Altran), Alten, Akka</td><td>The European ER&amp;D majors — the incumbents in aerospace and rail engineering</td><td>Far larger, physically close to the OEMs, and often the prime contractor Cyient works alongside or beneath. The real competition for a European aerospace or rail package.</td></tr>
+      <tr><td class="t-strong">The OEM's own engineers</td><td>The in-house design organisation</td><td>The permanent alternative. Every outsourced hour is an hour an OEM decided not to do itself — and in a downturn, insourcing to protect internal jobs is a genuine risk.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The shape of the competition, in one observation</div>
+    <p>Cyient's peer set splits into two groups that squeeze from opposite directions. Above it sit the European ER&amp;D majors — bigger, embedded next to the OEMs, and holding the prime relationships on the largest programmes. Alongside it sit narrower Indian specialists like KPIT, which have chosen one theme, gone deep, and been rewarded with premium valuations for the clarity. Cyient occupies the middle: broader than the specialists, smaller than the majors. Breadth genuinely helped when it meant no single vertical could sink the company. It hurts when it means no single vertical is big enough to carry the company either, and the market has no obvious growth theme to attach to the name. That positional question — is diversification resilience or dilution? — sits underneath the valuation discount.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Cheap on the face of it — with the cheapness itself being the argument.</p>
+
+  <p class="lead">FY26's numbers are the honest starting point for any view on this company: revenue of about <strong>₹7,268 Cr</strong>, essentially flat against FY25's ~₹7,360 Cr and FY24's ~₹7,147 Cr; operating profit of roughly <strong>₹899 Cr</strong> (~12% OPM); group EBIT margin of about <strong>9.5%</strong>, down some 254 basis points year on year; and net profit of about <strong>₹463 Cr</strong>, against ~₹648 Cr in FY25 and ~₹703 Cr in FY24. Earnings per share came in near <strong>₹38.5</strong>.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three-year picture (consolidated, ₹ Crore)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY24</th><th class="num">FY25</th><th class="num">FY26</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue</td><td class="num">7,147</td><td class="num">7,360</td><td class="num">7,268</td></tr>
+      <tr><td class="t-strong">Operating profit</td><td class="num">~1,150</td><td class="num">~1,080</td><td class="num">899</td></tr>
+      <tr><td class="t-strong">Net profit</td><td class="num">703</td><td class="num">648</td><td class="num">463</td></tr>
+      <tr><td class="t-strong">Group EBIT margin</td><td class="num">~13%</td><td class="num">~12.0%</td><td class="num">~9.5%</td></tr>
+      <tr><td class="t-strong">EPS (₹)</td><td class="num">~63</td><td class="num">~58</td><td class="num">38.5</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:var(--ink-faint);padding:0 16px 12px;margin:0;">FY24 and FY25 operating-profit, margin and EPS figures marked with "~" are <strong>approx.</strong>, derived from reported data and third-party compilations rather than restated company statements; FY26 figures are the reported ones. Company-reported group PAT for FY26 has also been cited at ~₹534 Cr on a slightly different basis — the ~₹463 Cr figure used here is the attributable net profit per standard financial compilations. Verify against the annual report.</p>
+  </div>
+
+  <h3>The balance sheet is the reassuring part</h3>
+  <p>Whatever the profit-and-loss says, the balance sheet is in good order. Cyient built its cash position to a record of roughly <strong>$157M (about ₹1,240 Cr) at the close of FY25</strong> and has continued to generate cash through the softness — a reminder that engineering services, even when growth stalls, is an asset-light business that converts profit into cash reasonably well. Book value per share is around <strong>₹511</strong>, return on equity around <strong>8.6%</strong> and return on capital employed around <strong>12.3%</strong> — both depressed versus history by the FY26 profit fall. The board approved a <strong>₹720 Cr buyback</strong>, and the dividend yield sits above <strong>3%</strong>, which is remarkable for a company in a sector where 1% is generous.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~19.9×</div><div class="msl">Trailing P/E at ~₹847/share and ~₹9,400 Cr market cap</div></div>
+    <div class="ms gold"><div class="msv">~3.1%</div><div class="msl">Dividend yield — unusual for anything classified as Information Technology</div></div>
+    <div class="ms red"><div class="msv">8.6%</div><div class="msl">Return on equity — well below the company's own history</div></div>
+  </div>
+
+  <h3>What the market is actually saying</h3>
+  <p>A trailing multiple near <strong>20×</strong> is a long way below where Indian ER&amp;D names have historically traded, and far below the specialists. The market is not paying for the aerospace franchise's durability, nor pricing in the semiconductor subsidiary's private mark, nor giving much credit to the DLM stake. It is pricing three years of flat revenue and falling profit, and it is asking whether the FY27 aspiration — <strong>mid- to high-single-digit organic growth with a 15% EBIT margin</strong> — is a plan the company can execute or a target it has now missed for consecutive years. Getting from ~9.5% to 15% EBIT margin is not a rounding adjustment; it is a roughly 550-basis-point climb that requires utilisation, pricing and mix all to move together.</p>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: constant-currency DET growth, with the margin attached</div>
+    <p>For this company the decisive figure is <strong>organic constant-currency revenue growth in the DET services business, read together with group EBIT margin</strong> — and it must be both, because either alone can mislead. Growth bought by discounting proves nothing; margin squeezed out of a shrinking book proves less. Cyient exited FY26 with DET at roughly <strong>$650M (approx.)</strong> and Q4 DET revenue of <strong>$163.5M</strong>, down 2.4% sequentially and 1.5% year on year in constant currency, at a normalised DET EBIT margin of <strong>12.4%</strong>. The thesis turns on those two lines moving in the same direction at once: constant-currency DET growth crossing decisively into positive territory and holding through consecutive quarters, while group EBIT margin walks up from ~9.5% toward the stated 15% aspiration. Two clean quarters of that combination and the ₹4,650 Cr semiconductor mark and the DLM stake start being treated as value rather than as a distraction. Without it, the sum-of-the-parts argument stays an argument — a spreadsheet exercise the market declines to endorse — and the discount persists precisely because the core keeps shrinking underneath it.</p>
+  </div>
+
+  <div class="note">Several figures here are drawn from third-party financial compilations and earnings-call summaries and are marked <b>approx.</b> where they could not be tied directly to a company filing — notably the vertical mix percentages, the FY24/FY25 margin and EPS series, the FY26 DET dollar revenue total, the current Cyient DLM stake, and the reported ~₹4,650 Cr valuation of Cyient Semiconductors. The two differing FY26 PAT figures (~₹463 Cr and ~₹534 Cr) reflect different reporting bases. Verify all of these against the annual report and stock-exchange filings before relying on them.</div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A differentiated engineering franchise that has stopped growing — and is being rebuilt in public.</p>
+
+  <p class="lead">Cyient enters FY27 as a genuinely unusual proposition: a three-decade engineering franchise with credentials that are hard to replicate, trading at a multiple that implies decline, while simultaneously running a semiconductor venture that private capital has marked at half the parent's public value. The company is not in distress — it is cash-generative, dividend-paying, buying back stock and debt-light at the core. What it has not done is grow.</p>
+
+  <h3>What has to go right</h3>
+  <ul class="clean">
+    <li><strong>Connectivity has to stop shrinking.</strong> The largest single drag on group growth is telecom-operator capex discipline. Stabilisation there, even without recovery, changes the arithmetic of the whole company.</li>
+    <li><strong>Aerospace programme volumes have to normalise.</strong> As airframer production rates and supply chains steady, engineering demand follows. This is the vertical with the most operating leverage attached to it.</li>
+    <li><strong>The margin bridge has to be real.</strong> Roughly 550 basis points from ~9.5% toward the 15% aspiration, via utilisation, pyramid mix, offshore share, pricing on renewals and automation gains. Each quarter's EBIT print is a public progress report.</li>
+    <li><strong>The carve-outs have to produce something.</strong> Cyient Semiconductors converting programmes into revenue, and DLM growing its top line rather than only its margin, are what turn a sum-of-the-parts thesis from arithmetic into cash.</li>
+  </ul>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Hard-to-replicate credentials</strong> — audited aerospace approvals, DO-178C and EN 50128 safety-critical capability, and decades of programme history that a new entrant cannot buy.</li>
+        <li><strong>Two clocks, not one</strong> — European rail runs on government infrastructure policy, aerospace on OEM programmes; neither is tied to the enterprise IT cycle.</li>
+        <li><strong>Sum-of-the-parts</strong> — a ~₹4,650 Cr private mark on the wholly owned semiconductor arm plus a controlling stake in listed Cyient DLM, against a ~₹9,400 Cr parent.</li>
+        <li><strong>Balance sheet and shareholder returns</strong> — record cash built through the downturn, a ₹720 Cr buyback, and a dividend yield above 3%.</li>
+        <li><strong>Low expectations</strong> — near 20× trailing earnings on depressed profit, with an ROE at a cyclical low; modest execution improvement moves both the E and the multiple.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Three flat years</strong> — revenue within a ~3% band since FY24 while PAT fell ~34%. Inconsistent organic growth is the core indictment, and targets have been missed before.</li>
+        <li><strong>Programme and customer concentration</strong> — revenue tracks specific OEM product programmes and a handful of large accounts; a deferral, a cancelled variant or a budget cut lands directly on the P&amp;L.</li>
+        <li><strong>Semiconductor execution and funding risk</strong> — a capital- and talent-hungry field with multi-year payback, financed partly with debt guaranteed by the parent and secured on a pledge of its shareholding.</li>
+        <li><strong>AI in engineering</strong> — an hours-based delivery model faces genuine deflation risk if automation compresses work packages faster than scope expands.</li>
+        <li><strong>Structural noise</strong> — a consolidated DLM with minority interests, a separately financed semiconductor arm, and a paused acquisition whose costs still hit the P&amp;L make the reported numbers harder to read than a single-business peer's.</li>
+        <li><strong>Wage and currency exposure</strong> — engineering salary inflation and rupee/euro/dollar swings move margin without any change in operating performance.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Cyient built something durable and then stopped compounding it. The credentials are real — the wiring diagrams, signalling logic and certification files it produces sit inside aircraft and trains that carry people, and no amount of price competition dislodges an approved engineering partner mid-programme. But durability is not growth, and for three years the top line has not moved while profit has fallen by a third. Management's answer has been structural: list the manufacturing arm, carve out the silicon business, buy back stock, and let each piece find its own capital and its own price. That answer has an unavoidable test date. In the coming quarters, DET constant-currency revenue has to cross from negative into positive and stay there while group EBIT margin climbs off ~9.5% toward the promised 15% — and Cyient Semiconductors, marked at ₹4,650 Cr on a plan, has to start reporting customer programmes and revenue against that mark. Until the design work in Hyderabad is growing again, the carve-outs are financial engineering wrapped around an engineering company that needs more engineers billing.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>BSE India — Cyient Ltd stock page, scrip code <strong>532175</strong> (NSE symbol CYIENT); Cyient corporate filings archive on bseindia.com.</li>
+    <li>Cyient Ltd — Q4 &amp; FY26 earnings conference call transcript and results release (year ended March 2026), via company investor-relations filings.</li>
+    <li>GuruFocus / Investing.com — "Cyient Ltd (BOM:532175) Q4 2026 Earnings Call Highlights" (group EBIT margin 9.5%, group PAT ₹534 Cr, DET Q4 revenue $163.5M, FY27 15% EBIT aspiration).</li>
+    <li>Yahoo Finance — Cyient Limited (CYIENT.BO) Q4 FY26 earnings-call transcript.</li>
+    <li>Screener.in — Cyient Ltd consolidated financials (FY24–FY26 revenue, operating profit, net profit, EPS), market cap, P/E, book value, ROE/ROCE and shareholding pattern (March 2026).</li>
+    <li>Cyient — "Cyient Builds Further Strength in Q2 FY26" and "Cyient Declares Strong Q3 FY26; YoY PAT Up 40%" company news releases.</li>
+    <li>Cyient — "Cyient Announces the Launch of Semiconductor Subsidiary" / "Set-Up of a Subsidiary for Semiconductor Business" (2025).</li>
+    <li>ScanX — "Cyient Semiconductors raises ₹300 crore at ₹4,650 crore valuation" (May 2026) and "Cyient confirms no share encumbrance by promoters in FY26".</li>
+    <li>Cyient — "Cyient Board Approves ₹720 Crore Share Buy-Back".</li>
+    <li>Whalesbook — "Cyient DLM FY26 PAT Rises 7.6% to ₹73.28 Cr Despite Revenue Dip".</li>
+    <li>Wikipedia — Cyient (founding as Infotech Enterprises 1991, B.V.R. Mohan Reddy, 2014 rename, Cyient DLM June 2023 listing).</li>
+    <li>Cyient Semiconductors — cyientsemi.com (ASIC and turnkey silicon service description).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures, earnings-call summaries and third-party financial compilations as of FY26 (year ended March 2026), and may contain errors or become outdated; items explicitly marked "approx." — including the vertical revenue mix, the FY24/FY25 margin and EPS series, the FY26 DET dollar revenue total, the Cyient DLM stake, and the reported valuation of Cyient Semiconductors — are estimates or third-party figures that could not be tied directly to a company filing. Forward-looking items (FY27 growth and the 15% EBIT margin aspiration) are management guidance, not results. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "CYIENT";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
