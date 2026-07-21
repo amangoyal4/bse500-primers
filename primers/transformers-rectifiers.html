@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transformers &amp; Rectifiers (India) — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F7;
+    --paper-2:#FAFCFD;
+    --card:#FFFFFF;
+    --ink:#141F22;
+    --ink-soft:#53615F;
+    --ink-faint:#889492;
+    --brand:#134C5C;          /* deep grid-cyan */
+    --brand-bright:#1E6A7E;   /* TARIL grid-cyan accent */
+    --gold:#C8862F;           /* transformer-copper amber */
+    --wtg:#1E6A7E;            /* power transformers */
+    --epc:#3A8FA2;            /* distribution transformers */
+    --om:#0F3A46;            /* furnace transformers */
+    --spec:#2C7D7A;          /* rectifier / reactors */
+    --line:#D8DEDC;
+    --line-soft:#E6EAE8;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4F1F4;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F9F8;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAEEEC;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#134C5C,#1E6A7E);}
+  .fill.gold{background:linear-gradient(90deg,#C8862F,#DDA355);}
+  .fill.wtg{background:linear-gradient(90deg,#1E6A7E,#3A8FA2);}
+  .fill.om{background:linear-gradient(90deg,#0F3A46,#1A5A6B);}
+  .fill.spec{background:linear-gradient(90deg,#2C7D7A,#3E9B93);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a47,#566461);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3F0;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What a transformer is</a></li>
+    <li><a href="#p2"><span class="n">02</span> The four product families</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; the Mamtoras</a></li>
+    <li><a href="#p4"><span class="n">04</span> The transformer shortage</a></li>
+    <li><a href="#p5"><span class="n">05</span> CRGO: the scarce steel</a></li>
+    <li><a href="#p6"><span class="n">06</span> MVA × realisation</a></li>
+    <li><a href="#p7"><span class="n">07</span> The order book</a></li>
+    <li><a href="#p8"><span class="n">08</span> Building the capacity</a></li>
+    <li><a href="#p9"><span class="n">09</span> Exports &amp; the global grid</a></li>
+    <li><a href="#p10"><span class="n">10</span> The rivals</a></li>
+    <li><a href="#p11"><span class="n">11</span> Financials &amp; valuation</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: TARIL · BSE: 532928</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Transformers &amp; Rectifiers (India), <em>the factory the order book is waiting for</em></h1>
+  <p class="dek">A complete walk through one of India's largest dedicated transformer manufacturers — what a transformer actually does, why the world suddenly cannot get enough of them, why the binding constraint is a specialised imported steel almost nobody has heard of, and why this Ahmedabad company's entire story reduces to one piece of arithmetic: megawatt-amperes shipped, multiplied by the price per megawatt-ampere.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹2,509 <small>Cr</small></div><div class="l">Revenue (FY26, consol.)</div></div>
+    <div class="cell"><div class="v">₹6,630 <small>Cr</small></div><div class="l">Order book (30 Jun 2026)</div></div>
+    <div class="cell"><div class="v">~40,000 <small>MVA</small></div><div class="l">Installed capacity</div></div>
+    <div class="cell"><div class="v">~₹9,500 <small>Cr</small></div><div class="l">Market cap (Jul 2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">21 Jul 2026</b> · source: Q1 FY27 results (quarter ended Jun 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>Q1 FY27 incorporated — revenue ₹572 Cr (+8% YoY), EBITDA margin ~19%, PAT ~₹64 Cr; order inflow up ~218% YoY to ~₹2,114 Cr including a ₹1,000 Cr-plus PGCIL award; unexecuted order book at a record ₹6,630 Cr. FY26 full-year: revenue ₹2,509 Cr, EBITDA ₹383 Cr, PAT ₹272 Cr, ~33,000 MVA produced. Changodar expansion slipped ~4 months to Q2 FY27.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Transformers and Rectifiers (India) Limited — everyone calls it <strong>TARIL</strong> — is an Ahmedabad-based manufacturer of <strong>transformers</strong>: the heavy steel-and-copper boxes that raise or lower the voltage of electricity so it can travel hundreds of kilometres and then be used safely at the other end. Every power station, every substation, every steel mill, every railway line and every distribution network in the country contains them. TARIL builds the full range — from the enormous <strong>765 kV-class power transformers</strong> that sit inside national-grid substations down to workaday distribution units, plus two specialised niches most investors have never considered: <strong>furnace transformers</strong> for electric-arc steelmaking and <strong>rectifier transformers</strong> for electro-chemical plants.</p>
+
+  <p>Four facts frame everything that follows:</p>
+  <ul class="clean">
+    <li><strong>The world has run short of transformers.</strong> A simultaneous global build-out — renewable evacuation lines, data centres, ageing grid replacement in the US and Europe, India's own transmission programme — collided with an industry that had spent two decades under-investing in capacity. Delivery lead times that used to be measured in months now run into years. After a long era of commoditised, cut-throat bidding, the makers hold the pen on price.</li>
+    <li><strong>The bottleneck runs through a steel India barely makes.</strong> A transformer's core is built from <strong>CRGO</strong> — cold-rolled grain-oriented electrical steel — a highly specialised product made by a short list of mills worldwide. India produces roughly <strong>10–12% of what it consumes</strong> and imports the rest, and CRGO is around a third of a transformer's raw-material bill. That single import line is simultaneously TARIL's biggest margin risk and the moat that keeps casual new entrants out.</li>
+    <li><strong>Demand is not the constraint; the factory is.</strong> TARIL's unexecuted order book hit a record <strong>₹6,630 Cr on 30 June 2026</strong>, on top of an enquiry pipeline management sizes at roughly <strong>₹23,000 Cr</strong>. Yet Q1 FY27 revenue grew only <strong>8%</strong>, because the plants were being rebuilt underneath the business. Capacity is going from about <strong>40,000 MVA to roughly 75,000–77,000 MVA</strong>, funded by a ~₹600 Cr capex programme.</li>
+    <li><strong>The stock has already been re-rated for all of it.</strong> FY26 consolidated revenue ₹2,509 Cr (+24%), EBITDA ₹383 Cr (~15%), PAT ₹272 Cr (+26%), ROCE ~23%. Market capitalisation is around <strong>₹9,500 Cr</strong> at roughly <strong>37× trailing earnings</strong> — a once-obscure capital-goods maker now priced as a structural growth story.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>TARIL sells a heavy metal object by the megawatt-ampere. Its revenue is very nearly just two numbers multiplied together: how many <strong>MVA</strong> of transformer capacity it can physically build and ship in a year, and what price it gets per MVA. In FY26 those numbers were roughly <strong>33,000 MVA</strong> and <strong>₹7.6 lakh per MVA</strong> — and the plant's ceiling was about 40,000 MVA. The order book on hand is now worth more than two full years of that maximum. Nothing in this business is about winning work. Everything is about whether the steel arrives, the new bays commission on time, and the price holds while they do.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What a transformer is, and why the grid cannot exist without one</h2></div>
+  <p class="part-sub">Six terms, no engineering degree. Read this once and every later section makes sense.</p>
+
+  <p class="lead">Electricity is easy to make and hard to move. Push a given amount of power down a wire at low voltage and you need a huge current, which heats the wire and wastes energy as it goes. Push the same power at very high voltage and the current falls dramatically — so the losses collapse and the electricity can travel hundreds of kilometres economically. A <strong>transformer</strong> is the device that converts between the two: it takes electricity in at one voltage and hands it out at another, with no moving parts, using nothing but coils of wire wound around a steel core.</p>
+
+  <p>That is why a transformer appears at every hand-off point in the electricity system. At the power station, a <em>generator transformer</em> steps the output up to transmission voltage. At the far end, substations step it down in stages. On the street, a small pole-mounted or pad-mounted unit steps it down again to the 415/230 volts that reaches a house. A single unit of solar power generated in Rajasthan and consumed in Mumbai will typically pass through four or five separate transformers on the way.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only vocabulary you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">kV (kilovolt)</td><td>The voltage class a transformer is built for. India's grid runs at 11 kV and 33 kV in distribution, 132/220 kV in sub-transmission, and <strong>400 kV and 765 kV</strong> at the top of the national transmission network. Higher kV = harder engineering, tighter insulation, more qualification, better price. TARIL is qualified up to the <strong>765 kV class</strong> — the entry ticket to the highest-value tenders.</td></tr>
+      <tr><td class="t-strong">MVA</td><td>"Mega Volt-Ampere" — the power rating of a transformer, and the industry's unit of everything. Order books, factory capacity and output are all counted in MVA. A large grid transformer might be 500 MVA; a distribution unit, well under 1 MVA. <strong>TARIL's capacity is ~40,000 MVA a year; it produced ~33,000 MVA in FY26.</strong></td></tr>
+      <tr><td class="t-strong">Core</td><td>The stack of thin, laminated steel sheets the coils are wound around. Its job is to carry the magnetic field with as little energy loss as possible. The core is made of <strong>CRGO steel</strong> — see section 05, because this material is the whole plot.</td></tr>
+      <tr><td class="t-strong">Windings</td><td>The copper (occasionally aluminium) conductors wound around the core. Copper is the second big raw-material line after CRGO, and it is exchange-traded and volatile.</td></tr>
+      <tr><td class="t-strong">EHV / UHV</td><td>Extra-High Voltage (typically 220–400 kV) and Ultra-High Voltage (765 kV and above). The premium end of the market: fewer qualified makers, longer approval cycles, materially better margins. TARIL's new Changodar capacity is aimed here.</td></tr>
+      <tr><td class="t-strong">Type test</td><td>The brutal qualification process — including a short-circuit test that deliberately tries to destroy the unit — that a design must survive before a utility will buy it. Passing type tests at each voltage class is what separates a real transformer maker from a fabricator, and it takes years.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why this is not a commodity, even though it looks like one</div>
+    <p>A transformer is steel, copper, oil and paper in a tank. It looks like something anyone with a welding shop could assemble — and at 11 kV, roughly, they can. But at 400 kV a failure takes out a chunk of the national grid, so buyers like Power Grid Corporation do not shop on price alone. They demand type-test certificates, a track record of units in service, factory audits, and vendor registration that can take several years to obtain. That approval ladder is why the industry has a long tail of small distribution-transformer shops and a very short list of firms who can build a 765 kV unit. The economics of the two ends could not be more different.</p>
+  </div>
+
+  <h3>Who buys transformers</h3>
+  <ul class="clean">
+    <li><strong>Central transmission utilities</strong> — above all <strong>Power Grid Corporation of India (PGCIL)</strong>, which owns and operates the inter-state backbone. The single most important customer class for EHV/UHV units; a PGCIL order is both revenue and a credential.</li>
+    <li><strong>State transmission and distribution companies</strong> — bodies like GETCO in Gujarat and RRVPNL in Rajasthan, plus the state discoms buying distribution transformers in bulk. Reliable volume, slower payment.</li>
+    <li><strong>Independent power producers and renewable developers</strong> — every solar or wind farm needs step-up transformers and reactors to push its output into the grid. This is where the renewable build-out shows up directly in a transformer maker's order book.</li>
+    <li><strong>Industrial buyers</strong> — steel mills (furnace transformers), chlor-alkali, aluminium and metal-refining plants (rectifier transformers), cement, refineries and, increasingly, <strong>data centres</strong>.</li>
+    <li><strong>Railways</strong> — traction and trackside transformers for an electrified network.</li>
+    <li><strong>Export customers</strong> — utilities and EPC contractors in the US, Africa, the Middle East and Southeast Asia, all facing the same shortage.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What TARIL actually makes: four product families under one roof</h2></div>
+  <p class="part-sub">The range is unusually wide — and two of the four lines are ones most investors never look at.</p>
+
+  <p class="lead">Most Indian transformer companies pick a lane. Voltamp and Bharat Bijlee are strongest in the industrial and distribution end; Hitachi Energy and Siemens Energy dominate the very top of the voltage ladder; a long tail of small firms builds 11 kV distribution units. TARIL is unusual in spanning almost the entire spectrum, and in carrying two specialised industrial lines that sit outside the utility cycle altogether.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The four product families — one factory complex, four different customers</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Family 1 · The core earner</div><div class="nname">Power transformers</div><div class="nwho">Generator, station-auxiliary and grid units up to the 765 kV class. Bought by PGCIL, state transcos, IPPs. The high-value, high-barrier line.</div></div>
+      <div class="arrow">+</div>
+      <div class="node epc"><div class="ntag">Family 2 · The volume line</div><div class="nname">Distribution transformers</div><div class="nwho">Smaller units, including energy-efficient designs, sold in bulk to discoms and industrial estates. Competitive, but steady.</div></div>
+      <div class="arrow">+</div>
+      <div class="node om"><div class="ntag">Family 3 · The niche</div><div class="nname">Furnace transformers</div><div class="nwho">Purpose-built for electric-arc and submerged-arc steelmaking — huge currents, violent duty cycles. Very few qualified suppliers.</div></div>
+      <div class="arrow">+</div>
+      <div class="node spec"><div class="ntag">Family 4 · The niche</div><div class="nname">Rectifier transformers &amp; reactors</div><div class="nwho">For electro-chemical and metal-refining processes that need DC, plus shunt/series reactors for renewable evacuation lines.</div></div>
+    </div>
+    <div class="flow-note">The company's name is literally its product map: "Transformers <em>and Rectifiers</em>" — the rectifier line has been in the business since the 1990s and is the part outsiders consistently overlook.</div>
+  </div>
+
+  <h3>The four lines, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Power transformers</span></strong> — the heart of the business and the reason the stock exists. These are the multi-tonne units installed in transmission substations, rated from tens to hundreds of MVA and built for voltage classes up to 765 kV. They require type-test qualification, long-cycle engineering and heavy fixed assets. Because so few Indian firms are approved at the top classes, this is where pricing power lives, and where TARIL is directing almost all of its new capacity.</li>
+    <li><strong><span class="chain-epc">Distribution transformers</span></strong> — the commodity-adjacent end. Sold in tenders by the hundred to state distribution utilities and industrial customers. Margins are thinner and competition is broad, but the volume keeps the shop floor loaded and the business benefits from India's rural-electrification and loss-reduction programmes.</li>
+    <li><strong><span class="chain-om">Furnace transformers</span></strong> — a genuinely specialised product. An electric-arc furnace melting scrap steel draws colossal, wildly fluctuating currents; a transformer feeding it endures mechanical and thermal stresses an ordinary grid unit would never survive. The qualified supplier list globally is short. Every new electric-arc steel plant — and India is adding them steadily as steelmakers move away from blast furnaces — needs one.</li>
+    <li><strong>Rectifier transformers and reactors</strong> — rectifier units feed processes that need direct current rather than alternating current: chlor-alkali chemistry, aluminium smelting, copper and zinc refining, electroplating. Reactors, meanwhile, are the unglamorous companion product to renewables: long transmission lines carrying variable solar and wind output need shunt and series reactors to keep voltage stable. TARIL's new Changodar bay is explicitly aimed at EHV transformers <em>and</em> green-energy reactors.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The surprise hiding in the product list</div>
+    <p>Almost every write-up of the "Indian transformer story" frames it as a bet on the electricity grid. But two of TARIL's four families — furnace and rectifier — are not sold to utilities at all. They are sold to <strong>metallurgy and chemistry</strong>: to steel mills that melt scrap with electricity, and to plants that split chemicals apart with direct current. Those cycles run on their own clock, driven by steel capacity additions and chemical capex, not by transmission tenders. It is a small but real diversifier inside what looks like a pure grid play, and it explains why TARIL's engineering capability is broader than its revenue mix alone suggests.</p>
+  </div>
+
+  <div class="note gold"><b>Backward integration is the quiet theme.</b> TARIL does not only assemble transformers. Through group and subsidiary operations it has moved up its own supply chain into transformer tanks and radiators, and — most consequentially — into <strong>CRGO core lamination</strong> via its controlling stake in Posco-Poggenamp Electrical Steel. In a business where a third of raw-material cost is a scarce import, owning the processing step is worth more than owning another assembly bay.</div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the Mamtoras, and who controls it</h2></div>
+  <p class="part-sub">A thirty-year-old Ahmedabad engineering family business that spent most of its life unnoticed.</p>
+
+  <p class="lead">TARIL was incorporated in <strong>July 1994</strong> in Ahmedabad, Gujarat, built around the transformer engineering of founder <strong>Jitendra U. Mamtora</strong>. It listed in 2008 and then spent roughly fifteen years as an anonymous small-cap: a competent regional transformer maker in a chronically over-supplied, price-driven industry, with mediocre returns on capital and a share price nobody watched. The last four years have re-written that entirely. The business is run today by <strong>Satyen J. Mamtora</strong> as Managing Director &amp; CEO, with the founder as Chairman — a second-generation transition completed just as the industry cycle turned.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1994</div><div class="ev">Incorporated in Ahmedabad by the Mamtora family as a transformer manufacturer. The "rectifier" half of the name reflects an early bet on industrial DC applications rather than pure utility supply.</div></li>
+    <li><div class="yr">2000s</div><div class="ev">Builds out the Changodar and Moraiya plants near Ahmedabad; climbs the voltage ladder through type-test qualification at successively higher classes.</div></li>
+    <li class="major"><div class="yr">2008</div><div class="ev"><strong>IPO and listing</strong> on BSE (scrip 532928) and NSE. The company then spends well over a decade in the wilderness of a low-margin, over-crowded transformer market.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Qualification extends to the <strong>765 kV class</strong> — the credential that later becomes the company's most valuable asset when the EHV cycle arrives.</div></li>
+    <li class="major"><div class="yr">Nov 2024 – Jan 2025</div><div class="ev">Announces and then completes the acquisition of a <strong>controlling stake in Posco-Poggenamp Electrical Steel</strong>, an Ahmedabad CRGO lamination and processing plant (~24,000 tonnes a year, capable of serving units up to 1200 kV / 500 MVA). A direct grab at the industry's scarcest input.</div></li>
+    <li class="major"><div class="yr">FY25</div><div class="ev">Revenue ₹2,017 Cr, PAT ₹216 Cr; production ~29,118 MVA. The order book and the share price both begin to re-rate hard as the transformer shortage becomes visible.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ₹2,509 Cr (+24%), EBITDA ₹383 Cr, PAT ₹272 Cr; production ~33,000 MVA. Order book ₹5,005 Cr at year-end. Announces ~<strong>₹600 Cr capex</strong> over 15 months to take capacity to ~75,000+ MVA.</div></li>
+    <li class="major"><div class="yr">Q1 FY27</div><div class="ev">Order inflow up ~218% to ~₹2,114 Cr including a <strong>₹1,000 Cr-plus PGCIL award</strong>; order book at a record <strong>₹6,630 Cr</strong>. But revenue grows only 8% — the Changodar expansion has slipped ~4 months and is disrupting the shop floor.</div></li>
+  </ul>
+
+  <h3>Ownership</h3>
+  <ul class="clean">
+    <li><strong>Promoters (the Mamtora family and associated entities):</strong> approximately <strong>64.4%</strong>, down from around <strong>74.9% in September 2023</strong>. That ~10-point reduction reflects capital-raising and stake dilution during the expansion phase rather than an exit, but it is a real fact worth knowing: the family sold down into strength. Investors should read the shareholding filings directly for the current split and any pledge.</li>
+    <li><strong>Institutions:</strong> foreign institutional investors around <strong>7.8%</strong> and domestic institutions around <strong>1.5%</strong> — a rising but still modest institutional base for a company of this size, with the public holding roughly <strong>26%</strong>. A shareholder register still dominated by promoters and retail means the stock can move violently on quarterly prints.</li>
+    <li><strong>Balance sheet:</strong> reserves of roughly <strong>₹1,485 Cr</strong> against borrowings of roughly <strong>₹457 Cr</strong> at FY26 (approx.) — a modestly geared balance sheet by capital-goods standards, with net debt lower still after cash. That matters because the ₹600 Cr capex is largely self-fundable from operating cash flow rather than requiring a rescue equity raise.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">What the promoter sell-down tells you (and what it doesn't)</div>
+    <p>A promoter stake falling from ~75% to ~64% in under three years is the kind of fact that deserves to be stated plainly rather than buried. In TARIL's case it coincided with the period of maximum capital need and maximum share-price appreciation, which is exactly when a family-owned engineering firm would rationally convert paper wealth into funding capacity and improving liquidity in the stock. It is not, on the evidence, a walk-away — the family still controls a clear majority and the second generation is running the company. But it does mean the family has already monetised part of the re-rating, and any further reduction should be read carefully in the shareholding pattern rather than assumed benign.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The transformer shortage: how a commoditised business got its pricing back</h2></div>
+  <p class="part-sub">Two decades of under-investment met four simultaneous demand waves. This is the whole industry backdrop.</p>
+
+  <p class="lead">For most of the 2000s and 2010s, making transformers was a poor business almost everywhere. Grids in the developed world were mature and replacing equipment slowly; India's own capacity build ran ahead of demand; and dozens of manufacturers chased the same tenders on price. Capacity was closed, not added. Then, within roughly the space of three years, four separate forces started pulling on the same finite pool of factories.</p>
+
+  <div class="chart">
+    <div class="c-title">Four demand waves, one supply base</div>
+    <div class="c-sub">Illustrative weighting of what is pulling on global transformer capacity — directional, not a measured statistic</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Renewable evacuation<small>solar/wind → grid</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">Largest</div></div>
+      <div class="bar-row"><div class="blab">Grid replacement<small>ageing US/EU assets</small></div><div class="track"><span class="fill brand" style="width:82%"></span></div><div class="bval">Very large</div></div>
+      <div class="bar-row"><div class="blab">Data centres &amp; AI<small>new load, fast</small></div><div class="track"><span class="fill gold" style="width:64%"></span></div><div class="bval">Large</div></div>
+      <div class="bar-row"><div class="blab">Electrification<small>EVs, industry, rail</small></div><div class="track"><span class="fill spec" style="width:55%"></span></div><div class="bval">Large</div></div>
+      <div class="bar-row"><div class="blab">Supply-side response<small>new factory capacity</small></div><div class="track"><span class="fill ink" style="width:26%"></span></div><div class="bval">Lagging</div></div>
+    </div>
+    <div class="legend"><span>The gap between the top four bars and the bottom one <em>is</em> the shortage. Building a transformer factory takes years and requires type-tested designs and skilled winding labour; it cannot respond in a quarter.</span></div>
+  </div>
+
+  <h4>Wave one: renewables need far more grid than fossil plants did</h4>
+  <p>A coal plant sits next to a coalfield and feeds a nearby line. A solar park sits where the sun is and a wind farm where the wind is — usually far from where the electricity is consumed. Connecting India's target of <strong>500 GW of non-fossil capacity by 2030</strong> requires an enormous new transmission network, and every kilometre of it needs step-up transformers, substation transformers and reactors. Renewable generation is also variable, which means more reactive-power equipment per MW than a conventional plant ever required.</p>
+
+  <h4>Wave two: the developed world's grid is old</h4>
+  <p>Large parts of the US and European transmission fleet were installed in the 1960s and 1970s and are at or past design life. Replacement was deferred for years; it can no longer be. Because those utilities buy to the same technical standards Indian utilities do, they compete for the same global manufacturing slots — and they can pay more.</p>
+
+  <h4>Wave three: data centres arrived with unusual speed</h4>
+  <p>A large AI-era data-centre campus can draw the electricity of a small city, and it wants that power in two or three years, not ten. Every campus needs its own substation and transformer set. This demand did not exist at scale five years ago and was not in anyone's capacity plan.</p>
+
+  <h4>Wave four: electrification of everything</h4>
+  <p>Electric vehicles, electrified railways, industrial process heat moving from gas to electricity, and electric-arc steelmaking replacing blast furnaces all add load at the distribution and industrial level — which is transformers again, in a different size class.</p>
+
+  <div class="plain">
+    <div class="ptag">Why supply cannot simply respond</div>
+    <p>In most industries a price spike attracts capacity within a year or two. Transformers resist that for three concrete reasons. First, <strong>type testing</strong>: a new design must survive destructive short-circuit testing at an accredited lab before a serious utility will buy it, and lab slots themselves are scarce. Second, <strong>vendor approval</strong>: buyers like PGCIL maintain registered vendor lists that take years to enter, and no procurement officer wants to be the one who approved an untested 765 kV supplier. Third, <strong>skilled labour</strong>: winding a large transformer is a craft, and the workforce shrank during the lean decades. A new entrant can buy a shed and a crane in twelve months. It cannot buy a decade of qualification history.</p>
+  </div>
+
+  <blockquote>Lead times that were once quoted in weeks are now quoted in years. For the first time in a generation, the transformer maker sets the terms — and every maker in the world knows this window will not stay open forever.</blockquote>
+
+  <div class="note gold"><b>Hold on to the caveat.</b> Everything in this section is a description of a <em>cycle</em>, however powerful. The same forces that handed pricing power to incumbents are, right now, funding capacity expansions at every listed and unlisted transformer maker on earth — TARIL's own ₹600 Cr programme included. The shortage is real; the question a buyer of this stock is implicitly answering is how many years it lasts, and what margins look like on the other side.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>CRGO: the scarce steel that gates the world's grid build-out</h2></div>
+  <p class="part-sub">The most important input in this primer, and the one nobody outside the industry has heard of.</p>
+
+  <p class="lead">A transformer's core is not ordinary steel. It is <strong>cold-rolled grain-oriented electrical steel</strong> — CRGO — a silicon-iron alloy rolled into sheets a fraction of a millimetre thick and processed so that the metal's crystal grains all point the same way. That grain alignment is what lets the core magnetise and de-magnetise fifty times a second with minimal energy loss. Get it wrong and the transformer runs hot, wastes power for its entire thirty-year life, and fails a utility's loss guarantees.</p>
+
+  <p>Making CRGO is genuinely difficult metallurgy. Fewer than a dozen mills worldwide do it at scale — clustered in Japan, South Korea, China, Russia and a handful of European and American plants. The technology is closely held. And India, which is building one of the world's largest grid expansions, makes almost none of it.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~10–12%</div><div class="msl">Share of India's CRGO demand met by domestic production — the rest is imported (GTRI estimate)</div></div>
+    <div class="ms red"><div class="msv">~30%</div><div class="msl">Estimated shortfall in CRGO availability against India's power-sector requirement</div></div>
+    <div class="ms gold"><div class="msv">~33–35%</div><div class="msl">CRGO's share of a transformer's raw-material cost — the single largest input line</div></div>
+  </div>
+
+  <p>The numbers behind those figures are stark. In FY24 India needed roughly <strong>400,000 tonnes</strong> of CRGO and produced around <strong>50,000 tonnes</strong> domestically, importing the balance — a couple of hundred thousand tonnes — principally from China, Japan, Russia and South Korea. Demand is growing at a low-double-digit rate as the grid programme accelerates. Meanwhile India's own quality-control order requires foreign suppliers to hold <strong>BIS certification</strong>, which raises the floor on quality but narrows the approved vendor list further and lengthens lead times. A well-intentioned standard has, in practice, tightened an already tight market.</p>
+
+  <div class="plain">
+    <div class="ptag">The dependency, stated bluntly</div>
+    <p>An Ahmedabad engineering company's operating margin is meaningfully determined by the output decisions of a handful of steel mills in Japan, Korea and China, and by Indian trade and certification policy on their product. That is an uncomfortable amount of exposure to something entirely outside management's control. It cuts both ways: a CRGO price spike or an allocation squeeze compresses margins on orders already priced; but the same scarcity is precisely why a would-be competitor cannot flood into the market, because a new entrant with no supply relationships cannot secure core steel at any sensible price. The bottleneck is a tax and a wall at the same time.</p>
+  </div>
+
+  <h3>What TARIL did about it</h3>
+  <p>In November 2024 TARIL announced the acquisition of a <strong>controlling stake in Posco-Poggenamp Electrical Steel Private Limited</strong>, completing it in January 2025. Posco-Poggenamp, set up in 2010 as a joint venture involving the Korean steel group, runs a CRGO <strong>lamination and processing</strong> facility in Ahmedabad with an installed capacity of about <strong>24,000 tonnes a year</strong> — among the largest in India, and equipped to cut and process laminations for units up to the 1200 kV / 500 MVA class.</p>
+
+  <p>It is worth being precise about what this does and does not achieve. Posco-Poggenamp <em>processes</em> CRGO — slitting, cutting, stacking and forming the imported master coils into finished core laminations. It does not <em>make</em> CRGO from scratch; the underlying steel still comes from the same global mills. So the acquisition does not immunise TARIL against the price of CRGO. What it does secure is <strong>priority access, processing margin and turnaround time</strong>: TARIL controls its own core-cutting queue rather than waiting behind competitors at a third-party job-worker, captures the value-add that used to leak out of the company, and can qualify core designs faster. In an industry where a delayed core stops an entire order, that is a genuine operating advantage — and it is the clearest evidence available that management understands where its real constraint sits.</p>
+
+  <div class="note"><b>The risk this creates:</b> owning a processing plant does not fix an import dependency; it concentrates it. If CRGO prices spike or Indian duty policy shifts, TARIL now feels it in two places — as a transformer maker paying more for core steel, and as the owner of a lamination business whose volumes depend on that steel arriving. Track the raw-material-to-sales ratio in the quarterly results alongside the EBITDA margin; that is where a CRGO squeeze shows up first.</div>
+</section>
+
+<!-- 06 — BESPOKE crux: the non-transferable device -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>MVA × realisation: the arithmetic that is this company</h2></div>
+  <p class="part-sub">The single most useful idea in this primer. Two numbers, one ceiling.</p>
+
+  <p class="lead">Strip away the narrative and TARIL is an unusually literal business. It converts steel, copper, oil and skilled labour into rated capacity, and sells that capacity by the MVA. So its revenue is very nearly the product of two disclosed numbers: <strong>MVA produced</strong> and <strong>realisation per MVA</strong>. Almost nothing else moves the top line. Here is the arithmetic, using the company's own production disclosures.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The two numbers that make the revenue line — TARIL, FY25 vs FY26</caption>
+    <thead><tr><th>Measure</th><th class="num">FY25</th><th class="num">FY26</th><th class="num">Change</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">MVA produced</td><td class="num">29,118</td><td class="num">~33,000</td><td class="num">+13%</td></tr>
+      <tr><td class="t-strong">Revenue (consolidated, ₹ Cr)</td><td class="num">2,017</td><td class="num">2,509</td><td class="num">+24%</td></tr>
+      <tr><td class="t-strong">Implied realisation (₹ lakh / MVA)</td><td class="num">~6.9</td><td class="num">~7.6</td><td class="num">+10%</td></tr>
+      <tr><td class="t-strong">Installed capacity (MVA)</td><td class="num">~40,000</td><td class="num">~40,000</td><td class="num">flat</td></tr>
+      <tr><td class="t-strong">Implied utilisation</td><td class="num">~73%</td><td class="num">~83%</td><td class="num">+10 pp</td></tr>
+      <tr><td class="t-strong">EBITDA margin</td><td class="num">~16%</td><td class="num">~15%</td><td class="num">−1 pp</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:12.5px;color:var(--ink-faint);max-width:74ch;">Realisation and utilisation are derived by the author from disclosed production and revenue figures and are approximate — mix shifts between voltage classes move realisation independently of price. Consolidated revenue is used; the standalone entity reported ~₹2,395 Cr for FY26.</p>
+
+  <p>Read the table slowly, because it contains the entire company. Revenue grew 24% in FY26. Roughly half of that came from making more units and roughly half from getting a better price per unit — the shortage showing up as realisation, exactly as theory predicts. Utilisation climbed from about three-quarters of the plant to about five-sixths of it. And the last line is the warning: despite better pricing, the <strong>EBITDA margin went down a point</strong>, because input costs and expansion-phase inefficiency ate the gain.</p>
+
+  <div class="plain">
+    <div class="ptag">The ceiling, calculated</div>
+    <p>Take TARIL's FY26 realisation of roughly <strong>₹7.6 lakh per MVA</strong> and multiply it by its full nameplate capacity of <strong>40,000 MVA</strong>. That gives a theoretical maximum revenue of about <strong>₹3,040 Cr a year</strong> — the absolute most this company could bill if every bay ran flat out at current prices and mix. Now set that against the order book on hand at 30 June 2026: <strong>₹6,630 Cr</strong>. The backlog is worth roughly <em>two-and-a-quarter years of maximum possible output</em>. TARIL is not a company trying to win work. It is a company that has already sold more than its factory can build, and whose entire near-term earnings path depends on pouring concrete.</p>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Sold vs buildable — TARIL, mid-2026</div>
+    <div class="c-sub">Order book on hand against what the current plant can physically produce in a year at FY26 realisation</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Order book<small>30 Jun 2026</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">₹6,630 Cr</div></div>
+      <div class="bar-row"><div class="blab">Enquiry pipeline<small>under negotiation</small></div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~₹23,000 Cr</div></div>
+      <div class="bar-row"><div class="blab">Max annual revenue<small>40,000 MVA × ₹7.6 L</small></div><div class="track"><span class="fill brand" style="width:46%"></span></div><div class="bval">~₹3,040 Cr</div></div>
+      <div class="bar-row"><div class="blab">Actual FY26 revenue<small>33,000 MVA shipped</small></div><div class="track"><span class="fill wtg" style="width:38%"></span></div><div class="bval">₹2,509 Cr</div></div>
+      <div class="bar-row"><div class="blab">Post-expansion ceiling<small>~77,000 MVA × ₹7.6 L</small></div><div class="track"><span class="fill spec" style="width:88%"></span></div><div class="bval">~₹5,850 Cr</div></div>
+    </div>
+    <div class="legend"><span>The enquiry-pipeline bar is capped for scale. The gap between the fourth bar and the fifth is the entire equity story — and it is a construction schedule, not a sales problem.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The genuine surprise</div>
+    <p>In the June 2026 quarter, TARIL's order inflow rose <strong>218%</strong> year on year, it landed a single <strong>₹1,000 Cr-plus</strong> award from Power Grid, and its backlog hit an all-time high. Revenue that quarter grew <strong>8%</strong>, and standalone profit actually <em>fell</em> about 9% year on year. A company in the middle of the best demand environment its industry has seen in thirty years reported a near-flat quarter — because the Changodar plant was torn up for expansion and the new bays slipped four months. That single contrast is the most instructive thing in TARIL's recent history: in this business, good news arrives as an order and gets paid out as a shipment, and the two can be eighteen months and one construction delay apart.</p>
+  </div>
+
+  <p>This framing also tells you which line items actually matter each quarter. The order book tells you about demand, which is not in doubt. Revenue tells you about the factory. The <strong>gap between realisation growth and EBITDA-margin movement</strong> tells you what CRGO and copper are doing to the company. And <strong>MVA production</strong>, which TARIL discloses, is the cleanest read on whether the expansion is real.</p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The order book: what ₹6,630 crore is actually made of</h2></div>
+  <p class="part-sub">The forward indicator, its composition, and the ₹23,000 Cr behind it.</p>
+
+  <p class="lead">In an order-book manufacturing business, the backlog is the closest thing to a forecast that exists. TARIL's has been compounding steeply: roughly ₹5,005 Cr at 31 March 2026, and a record <strong>₹6,630 Cr by 30 June 2026</strong> — up about 26% year on year and, more tellingly, up over 30% in a single quarter. Behind it management points to an enquiry pipeline of roughly <strong>₹23,000 Cr</strong> under discussion, which is not an order book but is a reasonable proxy for how much work the market is trying to place.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Order-book and inflow trajectory (₹ Cr)</caption>
+    <thead><tr><th>Period</th><th class="num">Order inflow</th><th class="num">Closing order book</th><th>Notable awards</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Q1 FY26</td><td class="num">~665</td><td class="num">~5,270</td><td>Mixed utility and industrial awards</td></tr>
+      <tr><td class="t-strong">FY26 (full year)</td><td class="num">~2,374</td><td class="num">5,005</td><td>Includes a US export order (~$16.3 mn, five transformers, delivery by mid-2027)</td></tr>
+      <tr><td class="t-strong">Q1 FY27</td><td class="num">~2,114</td><td class="num">6,630</td><td><strong>PGCIL ₹1,000 Cr-plus</strong> multi-rating award; GETCO; RRVPNL; a US export order</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:12.5px;color:var(--ink-faint);max-width:74ch;">Inflow and closing-book figures are drawn from company quarterly releases and trade-press reports; intra-year book values are approximate and reporting basis (standalone vs consolidated) can vary between releases.</p>
+
+  <p>The composition matters as much as the size. A ₹1,000 Cr-plus single order from <strong>PGCIL</strong> — India's inter-state transmission monopoly — is qualitatively different from an equivalent value of distribution-transformer tenders. It is high-voltage work, it validates TARIL's standing on the country's most demanding vendor list, and it will be executed at the premium end of the margin range. State transcos like GETCO (Gujarat) and RRVPNL (Rajasthan) add volume in the 220 kV-and-below classes. The export awards, though smaller in value, carry the best pricing of all.</p>
+
+  <div class="plain">
+    <div class="ptag">How to read an order book without fooling yourself</div>
+    <p>Three habits are worth building. First, <strong>divide, don't admire</strong>: ₹6,630 Cr against a capacity ceiling of roughly ₹3,040 Cr of annual revenue is about 2.2 years of cover — healthy, but it also means orders won today will not be recognised as revenue for a long time. Second, ask <strong>at what price it was booked</strong>: a backlog signed at 2025 CRGO assumptions is a liability if 2027 CRGO costs more, and fixed-price contracts are the norm. Third, watch the <strong>book-to-bill ratio</strong>: FY26 inflow of ~₹2,374 Cr against ~₹2,509 Cr of revenue was slightly below 1.0 — the book grew mainly because of a spectacular Q1 FY27, not a steady run-rate. One quarter of ₹2,114 Cr does not yet make a trend.</p>
+  </div>
+
+  <p>There is a subtler point about lumpiness. When a single award is worth ₹1,000 Cr against annual revenue of ₹2,500 Cr, the inflow line will swing wildly quarter to quarter — a 218% increase one quarter and a decline the next tells you almost nothing about underlying demand. The pipeline figure, and the pace at which enquiries convert to awards, is the steadier signal.</p>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Building the capacity: 40,000 → ~77,000 MVA</h2></div>
+  <p class="part-sub">The most consequential thing happening at this company right now is a construction project.</p>
+
+  <p class="lead">TARIL has committed roughly <strong>₹600 Cr of capital expenditure over about fifteen months</strong> to take annual transformer capacity from around <strong>40,000 MVA to roughly 75,000–77,000 MVA</strong> — very nearly a doubling. The expansion is split across the company's two main Ahmedabad-area sites, and its composition is more interesting than its size.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The expansion programme, plant by plant</caption>
+    <thead><tr><th>Site</th><th class="num">Added MVA</th><th>What it builds</th><th>Timing</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Changodar</td><td class="num">~15,000</td><td>Almost entirely <strong>EHV transformers and green-energy reactors</strong> — the highest-value, highest-complexity, highest-margin end of the range</td><td>Slipped ~4 months; now guided to <strong>Q2 FY27</strong></td></tr>
+      <tr><td class="t-strong">Moraiya</td><td class="num">~22,000</td><td>Broader transformer capacity across the mid and upper voltage classes</td><td>Guided to <strong>Q3 FY27</strong></td></tr>
+      <tr><td class="t-strong">Total programme</td><td class="num">~37,000</td><td>Roughly doubles nameplate capacity; ~₹600 Cr capex, largely internally funded</td><td>Substantially complete by FY27 exit</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The mix is the point. Adding 15,000 MVA of <strong>EHV and reactor</strong> capacity is not the same as adding 15,000 MVA of ordinary capacity: it lifts realisation per MVA and margin at the same time as it lifts volume, because the premium classes carry both a higher price tag and a shorter qualified-supplier list. If the expansion lands as designed, TARIL's average realisation should rise structurally rather than merely cyclically — a mix effect, not just a shortage effect.</p>
+
+  <div class="plain">
+    <div class="ptag">Why a four-month slip is a bigger deal than it sounds</div>
+    <p>Expanding a working transformer plant is not like building on a greenfield site. Bays are taken out of service, cranes and testing facilities are shared between old and new work, and skilled winders move onto commissioning duty. That is precisely why TARIL's Q1 FY27 revenue grew only 8% while its order book hit a record — the expansion is a temporary tax on current output before it becomes a permanent addition to it. A four-month slip therefore costs twice: it defers the new capacity, and it extends the period during which the existing capacity runs disrupted. Any further slippage should be read as a direct hit to FY27 revenue, not merely a delay in FY28's.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~₹600 Cr</div><div class="msl">Capex programme, deployed over roughly 15 months</div></div>
+    <div class="ms gold"><div class="msv">~+92%</div><div class="msl">Increase in nameplate MVA capacity if the full ~37,000 MVA lands</div></div>
+    <div class="ms green"><div class="msv">~₹5,850 Cr</div><div class="msl">Theoretical revenue ceiling post-expansion at FY26 realisation (author's calculation)</div></div>
+  </div>
+
+  <p>Two practical checks are available to any reader each quarter. The first is TARIL's own <strong>MVA production disclosure</strong> — if the quarterly run-rate does not begin climbing above the ~8,250 MVA implied by FY26, the expansion is not yet showing up. The second is <strong>capital work-in-progress</strong> in the balance sheet converting into gross block: capex that stays parked in CWIP is capacity that is not yet earning.</p>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Exports and the global grid wave</h2></div>
+  <p class="part-sub">The most valuable orders TARIL wins are the ones it ships out of the country — but disclosure here is thin.</p>
+
+  <p class="lead">The transformer shortage is not an Indian phenomenon; it is a global one, and that has opened a door Indian manufacturers spent decades knocking on without success. US and European utilities facing multi-year lead times from their traditional suppliers have become willing to qualify Indian vendors, and Indian plants — with lower labour costs and, crucially, available slots — are winning work at prices that would have been unthinkable a decade ago.</p>
+
+  <p>TARIL's export progress is visible at the order level. It secured an export contract worth about <strong>US$16.26 million</strong> for the manufacture and supply of five transformers, with delivery scheduled by mid-2027. It reported a further <strong>US export order</strong> among its Q1 FY27 wins alongside the domestic PGCIL and state-utility awards. Trade press has also reported the company crossing meaningful cumulative export order thresholds during this cycle.</p>
+
+  <div class="note gold"><b>A gap in the data, stated openly:</b> TARIL does not publish a clean, consistently defined export-revenue percentage in its quarterly releases, and third-party estimates of its export share vary widely. Rather than assert a figure, this primer reports what is verifiable — specific named export orders and their values — and flags the aggregate share as <strong>unconfirmed</strong>. Anyone underwriting an "export re-rating" thesis should insist on the segment disclosure in the annual report rather than a headline percentage from a screener.</div>
+
+  <div class="plain">
+    <div class="ptag">Why an export order is worth more than its rupee value</div>
+    <p>Three reasons, in ascending order of importance. It usually prices better, because the buyer is comparing against a Western supplier's quote and a two-year wait. It is paid better, because a US utility settles faster than an Indian state distribution company. And it is a <strong>qualification asset</strong>: passing an American or European utility's technical audit is a credential that opens the rest of that market and can be cited in every subsequent bid. For a company whose competitive position rests on approvals rather than on price, each new jurisdiction cleared is a durable widening of the addressable market.</p>
+  </div>
+
+  <p>The counterweight is straightforward. Export execution is unforgiving — logistics for a 200-tonne object are non-trivial, liquidated-damages clauses are real, and a delay that an Indian utility might tolerate can trigger penalties abroad. And an export order shipped in 2027 against a price agreed in 2026 carries currency and CRGO risk for the whole intervening period.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The rivals: a crowded field with a very narrow top</h2></div>
+  <p class="part-sub">Who TARIL actually competes with depends entirely on the voltage class.</p>
+
+  <p class="lead">"Indian transformer maker" describes a set of companies with almost nothing in common commercially. At 11 kV there are hundreds of competitors and razor-thin margins. At 765 kV there are a handful, and the economics are entirely different. Understanding where each rival sits is the only way to judge TARIL's position.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive set — where each player fights</caption>
+    <thead><tr><th>Company</th><th>Where it plays</th><th>Why it matters to TARIL</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Hitachi Energy India</td><td>The full range including the very top of the voltage ladder; HVDC and grid automation</td><td>The technology benchmark and the incumbent on the most demanding PGCIL work. Deep global R&amp;D and a brand utilities never get fired for choosing.</td></tr>
+      <tr><td class="t-strong">Siemens Energy India</td><td>High-voltage transformers, switchgear, grid technologies</td><td>A global parent's engineering base plus an Indian manufacturing footprint — competes directly for EHV/UHV awards.</td></tr>
+      <tr><td class="t-strong">GE Vernova T&amp;D India</td><td>Power transformers, HVDC, substation systems</td><td>Long-established Indian plants and a large installed base with central and state utilities.</td></tr>
+      <tr><td class="t-strong">Voltamp Transformers</td><td>Industrial and distribution transformers; conservative, debt-free, dividend-paying</td><td>The disciplined-capital comparison. Voltamp deliberately does not chase the EHV race — a useful reminder that TARIL's growth is a choice with risk attached.</td></tr>
+      <tr><td class="t-strong">Shilchar Technologies</td><td>Distribution and small power transformers, with a strong export skew</td><td>Also Gujarat-based, also re-rated hard in this cycle; competes for the same export slots and the same skilled labour.</td></tr>
+      <tr><td class="t-strong">Bharat Bijlee</td><td>Transformers plus electric motors and drives</td><td>A diversified electrical engineering peer with a long utility relationship history.</td></tr>
+      <tr><td class="t-strong">New entrants &amp; capacity adders</td><td>Across classes — existing players expanding, plus firms attracted by current margins</td><td><strong>The medium-term risk.</strong> Nearly every incumbent is expanding simultaneously. Capacity added in 2026–27 arrives in 2028.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Where TARIL genuinely stands out</div>
+    <p>Three things distinguish it from the domestic peer group. It is <strong>qualified at the 765 kV class</strong>, which most Indian-owned peers are not, and it is directing new capacity specifically at that end. It carries the <strong>furnace and rectifier niches</strong>, which nobody else in the listed Indian set combines with a serious utility business. And it has <strong>moved backwards into CRGO lamination</strong>, which no other listed Indian transformer maker of its size controls. Against the multinationals it remains the challenger on technology and scale; against the domestic field it is one of very few able to bid the premium work at all.</p>
+  </div>
+
+  <p>The pressure point is the middle. TARIL is not large enough to out-engineer Hitachi or Siemens on the most complex HVDC-adjacent work, and it is not narrow enough to enjoy Voltamp's low-capital, high-return discipline. Its chosen path — spend heavily, scale fast, climb the voltage ladder — is the highest-return and highest-variance option on the board.</p>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A high-return business, a rich multiple, and one number that will settle the argument.</p>
+
+  <p class="lead">TARIL's financial transformation over five years is the reason the stock is where it is. Profit has compounded at an extraordinary rate off a tiny base — a five-year profit CAGR of roughly <strong>106%</strong> — as the company moved from marginal profitability in a glutted market to a genuinely high-return manufacturer in a tight one.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Consolidated financial summary (₹ Cr unless stated)</caption>
+    <thead><tr><th>Measure</th><th class="num">FY25</th><th class="num">FY26</th><th class="num">Q1 FY27</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue</td><td class="num">2,017</td><td class="num">2,509</td><td class="num">572</td></tr>
+      <tr><td class="t-strong">Operating profit (EBITDA)</td><td class="num">327</td><td class="num">383</td><td class="num">~110</td></tr>
+      <tr><td class="t-strong">EBITDA margin</td><td class="num">~16%</td><td class="num">~15%</td><td class="num">~19%</td></tr>
+      <tr><td class="t-strong">Net profit</td><td class="num">216</td><td class="num">272</td><td class="num">~64</td></tr>
+      <tr><td class="t-strong">EPS (₹)</td><td class="num">7.14</td><td class="num">8.81</td><td class="num">—</td></tr>
+      <tr><td class="t-strong">MVA produced</td><td class="num">29,118</td><td class="num">~33,000</td><td class="num">—</td></tr>
+      <tr><td class="t-strong">Order book (closing)</td><td class="num">~4,300</td><td class="num">5,005</td><td class="num">6,630</td></tr>
+      <tr><td class="t-strong">Reserves</td><td class="num">—</td><td class="num">~1,485</td><td class="num">—</td></tr>
+      <tr><td class="t-strong">Borrowings</td><td class="num">—</td><td class="num">~457</td><td class="num">—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:12.5px;color:var(--ink-faint);max-width:74ch;">Figures are consolidated and approximate, compiled from company releases, exchange filings and Screener.in. Standalone results differ — the standalone entity reported FY26 revenue of ~₹2,395 Cr, EBITDA ~₹370 Cr (15.1%) and PAT ~₹225 Cr, and standalone Q1 FY27 PAT was reported down ~9% YoY at ~₹61.5 Cr against consolidated ~₹64 Cr. Reconcile against the audited statements before relying on any single line. The FY25 closing order book is approximate.</p>
+
+  <h3>Returns, leverage and quality</h3>
+  <ul class="clean">
+    <li><strong>ROCE ~23%, ROE ~19%.</strong> Genuinely good numbers for a heavy-engineering business, and the honest core of the bull case: this is not a growth story built on value-destructive capital deployment. The test is whether the ₹600 Cr expansion earns a similar return once it is loaded.</li>
+    <li><strong>Borrowings of roughly ₹457 Cr against reserves of ~₹1,485 Cr.</strong> Comfortable gearing, and the capex is broadly fundable from operations — meaning shareholders are not facing an obvious dilution event to complete the expansion.</li>
+    <li><strong>Working capital is the thing to watch.</strong> Utility customers, especially state discoms, pay slowly, and a business growing revenue 25%+ while doubling capacity absorbs cash into inventory and receivables. Rising debtor days alongside rising revenue is the classic way an order-book manufacturer's growth turns into a balance-sheet problem.</li>
+    <li><strong>Margin direction, not margin level.</strong> The FY26 margin dipped a point despite better pricing; Q1 FY27's ~19% suggests mix and pricing can push it back up. Neither is yet a trend.</li>
+  </ul>
+
+  <h3>The valuation</h3>
+  <p>At roughly <strong>₹317 a share</strong> and a market capitalisation near <strong>₹9,500 Cr</strong>, TARIL trades at about <strong>37× trailing earnings</strong> and something over <strong>6× book value</strong>. That is a full price for a capital-goods manufacturer, and it is entirely a function of the last three years: a company that was once valued as a cyclical fabricator is now valued as a structural beneficiary of a global grid super-cycle.</p>
+
+  <p>The debate is unusually clean. One side argues that transmission investment in India and abroad is a decade-long programme, that transformer capacity cannot respond quickly because of type-testing and CRGO, that TARIL is nearly doubling capacity into that window with a mix skewed to the premium end, and that a business earning 23% on capital with two years of backlog deserves a growth multiple. The other side argues that this is, in the end, an equipment maker at the top of an unusually good cycle, that every competitor on earth is adding capacity at the same time, that realisation gains built on scarcity reverse when scarcity ends, and that a 37× multiple on peak-cycle margins is a bet on the cycle's <em>duration</em> rather than on the company.</p>
+
+  <div class="plain">
+    <div class="ptag">The one metric that settles it</div>
+    <p>Not the order book — that already tells a story everyone agrees on. The number to track is <strong>realisation per MVA, held above roughly ₹7.5 lakh while quarterly MVA production climbs past the ~8,250 MVA FY26 run-rate, with EBITDA margin at 17% or better.</strong> All three have to move together. Rising MVA with falling realisation means TARIL bought volume by cutting price — the shortage is over. Rising realisation with flat MVA means the factory did not get built. And either of those with a sinking margin means CRGO won. That single composite — <em>MVA shipped × realisation, with the margin held</em> — is the entire thesis expressed in numbers the company already discloses every quarter.</p>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>Future, risks, and the bull/bear case</h2></div>
+  <p class="part-sub">What has to go right, what can go wrong, and what to watch next.</p>
+
+  <p class="lead">TARIL's next two years are unusually legible. The demand is contracted, the capacity plan is announced with dates attached, and the input risk is identifiable and measurable. Very little about the story is mysterious — which means the risks are about execution and cycle length, not about whether the business works.</p>
+
+  <h3>The risks, taken seriously</h3>
+  <ul class="clean">
+    <li><strong>CRGO cost and availability.</strong> The largest raw-material line, ~a third of material cost, is a scarce import from a handful of foreign mills, subject to Indian BIS certification requirements and to trade-policy decisions on duty. A price spike or an allocation squeeze compresses margins on a backlog already priced. The Posco-Poggenamp stake secures processing and priority, not the underlying steel price.</li>
+    <li><strong>Execution and the capacity ramp.</strong> The Changodar bay has already slipped four months. Converting ₹6,630 Cr of backlog into shipped MVA requires the expansion to land close to schedule while existing lines keep running; fixed-price contracts against rising input costs make delay expensive rather than merely disappointing.</li>
+    <li><strong>Cycle risk — the real medium-term question.</strong> Today's pricing power is the product of a capex surge meeting under-built capacity. Every serious manufacturer worldwide is now expanding. Capacity commissioned in 2027–28 could erode realisation exactly as TARIL's own new bays come on stream. This, not CRGO, is the risk that would break the investment case rather than dent it.</li>
+    <li><strong>Competition.</strong> Hitachi Energy, Siemens Energy and GE Vernova sit above TARIL on technology and scale; Voltamp, Shilchar and Bharat Bijlee compete for overlapping segments and for the same scarce skilled labour; and the boom is attracting new entrants at the lower voltage classes.</li>
+    <li><strong>Customer concentration and payment cycles.</strong> A single ₹1,000 Cr-plus PGCIL award is wonderful revenue visibility and uncomfortable concentration at the same time. State utilities and discoms are slow payers, and a fast-growing order book financed through receivables is a working-capital trap.</li>
+    <li><strong>Valuation.</strong> At ~37× trailing earnings on margins that are near the best this industry has recorded, the multiple embeds several years of continued expansion and sustained pricing. The promoter stake has already come down ~10 points from 2023 levels.</li>
+    <li><strong>Reporting consistency.</strong> Standalone and consolidated figures differ materially (FY26 PAT ~₹225 Cr vs ~₹272 Cr), and several widely quoted "TARIL" numbers in the press mix the two. Read the audited statements, not the headlines.</li>
+  </ul>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>A structural, not cyclical, demand base.</strong> India's 500 GW renewable target, the US/EU replacement cycle and data-centre load are decade-length programmes, not a one-year order surge.</li>
+        <li><strong>Capacity nearly doubling into a shortage</strong> — ~40,000 to ~77,000 MVA — with the Changodar addition weighted to high-margin EHV transformers and reactors, so mix improves alongside volume.</li>
+        <li><strong>A real barrier to entry.</strong> Type-testing, vendor registration at 765 kV and CRGO access together mean new competition cannot arrive quickly at the premium end.</li>
+        <li><strong>Backward integration into CRGO lamination</strong> via Posco-Poggenamp — priority access, captured processing margin and faster core turnaround that no listed domestic peer of this size matches.</li>
+        <li><strong>Genuinely good returns:</strong> ROCE ~23%, ROE ~19%, modest borrowings, and an expansion largely fundable from operating cash flow.</li>
+        <li><strong>Order book of ₹6,630 Cr</strong> — over two years of maximum current output — plus a ~₹23,000 Cr enquiry pipeline.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Peak-cycle margins on a peak-cycle multiple.</strong> 37× trailing earnings for an equipment maker assumes the shortage persists for years.</li>
+        <li><strong>Everyone is expanding.</strong> Industry-wide capacity additions commissioning from 2028 could reverse the realisation gains that drove half of FY26's revenue growth.</li>
+        <li><strong>The input is imported and scarce.</strong> CRGO prices, foreign mill allocations and Indian duty/BIS policy are all outside management's control, and the backlog is largely fixed-price.</li>
+        <li><strong>Execution is already slipping.</strong> Four months lost at Changodar, an 8% revenue quarter at the peak of the demand cycle, and standalone Q1 FY27 profit down ~9% YoY.</li>
+        <li><strong>Working capital.</strong> Utility and discom receivables in a business growing this fast can consume the cash the expansion needs.</li>
+        <li><strong>Promoter holding down from ~75% to ~64%</strong> since September 2023 — the family has already realised part of the re-rating.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>What to watch, in order</h3>
+  <ul class="clean">
+    <li><strong>Changodar commissioning (guided Q2 FY27)</strong> and <strong>Moraiya (guided Q3 FY27)</strong> — the two dated events that determine FY28 revenue capacity. Any further slip is a direct FY27 revenue cut, not a deferral.</li>
+    <li><strong>Quarterly MVA production</strong> climbing decisively above the ~8,250 MVA FY26 run-rate.</li>
+    <li><strong>Realisation per MVA</strong> (derive it: quarterly revenue ÷ quarterly MVA) holding above ~₹7.5 lakh.</li>
+    <li><strong>EBITDA margin at 17%+</strong> and the raw-material-to-sales ratio, as the read on CRGO and copper.</li>
+    <li><strong>Book-to-bill above 1.0 on a rolling four-quarter basis</strong>, not on a single spectacular quarter.</li>
+    <li><strong>Debtor days and CWIP</strong> — the two balance-sheet lines where a fast ramp goes wrong first.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>TARIL spent thirty years as a competent Ahmedabad transformer maker in an industry that gave away its product, and then the world discovered it could not build a grid without one. What it has now is a backlog worth more than two years of everything its factories can physically produce, a mix tilting toward the 765 kV work only a few firms can bid, and an input line running through a specialised steel India makes barely a tenth of. What it does not yet have is the factory to ship it. The next two dates on this company's calendar matter more than any earnings estimate: the <strong>Changodar EHV bay in Q2 FY27</strong> and <strong>Moraiya in Q3 FY27</strong>. Watch the quarterly MVA number cross 10,000 with realisation intact — that is the moment the order book stops being a promise and starts being revenue.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>BSE India — Transformers and Rectifiers (India) Ltd stock page, <strong>scrip code 532928</strong> (NSE symbol TARIL; ISIN INE763I01026); scrip code independently confirmed on bseindia.com.</li>
+    <li>Screener.in — Transformers &amp; Rectifiers India Ltd, consolidated financials, shareholding pattern, MVA production and order-book data.</li>
+    <li>Electrical Mirror — "Transformers &amp; Rectifiers India Ltd Reports Strong FY26 Performance: Revenue Rises 23% YoY to Rs 2,395 Crore."</li>
+    <li>Investywise — Transformers and Rectifiers (India) Limited Q4 and full-year FY26 results summary.</li>
+    <li>Power Peak Digest — "Transformers &amp; Rectifiers posts strong FY26 growth."</li>
+    <li>ICICI Direct research — TARIL Q4 FY26 and Q2 FY26 result updates (idirect_taril_q4fy26 / q2fy26).</li>
+    <li>EquityBulls / SolarQuarter — TARIL Q1 FY27 results: consolidated revenue ₹572.34 Cr, PAT ₹64.29 Cr, order book ₹6,630 Cr.</li>
+    <li>T&amp;D India — "TARIL: Order inflow more than trebles in Q1FY27" (₹2,114 Cr inflow; PGCIL, GETCO, RRVPNL, US export order).</li>
+    <li>Upstox — "TARIL Q1 results: net profit falls 9% YoY to ₹61.5 crore, revenue moderates" (standalone basis; Changodar expansion cited).</li>
+    <li>CableCommunity — "TARIL Plans Transformer CapEx of 37,000 MVA and Backward Integration" (Changodar ~15,000 MVA, Moraiya ~22,000 MVA, ~₹600 Cr).</li>
+    <li>AlphaStreet — Transformers and Rectifiers (India) Ltd Q3 FY26 and Q4 FY26 earnings-call transcripts.</li>
+    <li>Business Standard / Business Upturn / Trade Brains — TARIL acquires controlling stake in Posco-Poggenamp Electrical Steel (CRGO lamination, ~24,000 TPA, up to 1200 kV/500 MVA class).</li>
+    <li>Global Trade Research Initiative (GTRI), via SteelOrbis, Businessworld, KNN India and Deccan Herald — India's ~30% CRGO shortage; domestic output ~10–12% of demand; FY24 requirement ~400,000 MT vs ~50,000 MT produced; BIS quality-control order constraints.</li>
+    <li>Simply Wall St / Morningstar India — BSE:532928 company profile, product description and consensus growth data.</li>
+    <li>Transformer Magazine — TARIL export order coverage; company disclosures on the ~US$16.26 mn five-transformer export contract (delivery by mid-2027).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures, exchange filings and third-party reports as of Q1 FY27 (quarter ended June 2026), and may contain errors or become outdated. Standalone and consolidated figures differ materially and press reports mix the two; realisation per MVA, utilisation and the revenue-ceiling calculations in section 06 are the author's own derivations from disclosed production and revenue data, not company-reported metrics. TARIL's aggregate export-revenue share is not consistently disclosed and is flagged as unconfirmed. Capacity, capex and commissioning dates are management guidance, not results. Verify all numbers against primary sources — the audited financial statements and exchange filings — before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "TARIL";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
