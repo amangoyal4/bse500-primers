@@ -1,0 +1,48 @@
+name: Refresh one primer (on-demand)
+
+# Triggered by the Cloudflare Worker (repository_dispatch) when someone clicks ⟳ on a primer.
+# Runs the free feed-driven pipeline for that ONE company and commits only if something
+# material actually changed. Safety is in code (surgical exact-match, no invented numbers).
+
+on:
+  repository_dispatch:
+    types: [refresh-one]
+
+permissions:
+  contents: write
+
+# Coalesce rapid repeat clicks on the same company; let different companies run in parallel.
+concurrency:
+  group: refresh-${{ github.event.client_payload.slug }}
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Refresh the requested primer
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SLUG: ${{ github.event.client_payload.slug }}
+        run: |
+          case "$SLUG" in
+            ""|*[!a-z0-9-]*) echo "invalid or empty slug: '$SLUG'"; exit 1 ;;
+          esac
+          node refresh/refresh-one.mjs "$SLUG"
+
+      - name: Commit only if a passage actually changed
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "primer-refresh"
+            git config user.email "actions@users.noreply.github.com"
+            git add -A
+            git commit -m "refresh: re-true ${{ github.event.client_payload.slug }} (on-demand)"
+            git push
+          else
+            echo "No material change — nothing to commit."
+          fi

@@ -688,25 +688,30 @@
      GitHub Action that regenerates ONLY this company — incremental, on demand. */
   const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed
   const COMPANY_SYMBOL = "AWL";
+  const COMPANY_SLUG = "awl-agri-business";
 
   async function requestRefresh(){
     const btn = document.getElementById('rb-refresh');
     if(!REFRESH_ENDPOINT){
-      alert("Live updates coming soon.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Update will then trigger an on-demand, incremental refresh of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      alert("Live refresh isn't enabled on this copy of the page yet.");
       return;
     }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
     btn.classList.add('spinning'); btn.disabled = true;
     try{
       const r = await fetch(REFRESH_ENDPOINT, {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
       });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
       if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
       btn.innerHTML = '<span class="rbi">✓</span> Queued';
-      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Update'; }, 5000);
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
     }catch(e){
       btn.classList.remove('spinning'); btn.disabled=false;
-      btn.innerHTML = '<span class="rbi">⟳</span> Update';
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
       alert('Refresh request failed: '+e.message);
     }
   }

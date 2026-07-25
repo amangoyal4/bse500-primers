@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Primer refresh — integrated into the primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Figtree:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F5F1; --card:#FFFFFF; --ink:#1c1b19; --muted:#6b6a65;
+    --brand:#1E4D34; --gold:#C08A2E; --line:rgba(0,0,0,.09);
+    --ok:#137a4a; --ok-bg:#e7f4ec; --radius:12px;
+    --sans:'Figtree',system-ui,sans-serif; --head:'Sora',system-ui,sans-serif; --mono:'DM Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .shell{max-width:1040px;margin:0 auto;padding:34px 20px;display:grid;grid-template-columns:200px 1fr;gap:34px}
+  @media(max-width:760px){.shell{grid-template-columns:1fr}.toc{display:none}}
+
+  /* --- sticky TOC --- */
+  .toc{position:sticky;top:24px;align-self:start;font-size:13px}
+  .toc .lbl{font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--muted);margin-bottom:10px}
+  .toc a{display:block;color:var(--muted);text-decoration:none;padding:4px 0;border-left:2px solid transparent;padding-left:10px;transition:.15s}
+  .toc a:hover{color:var(--ink)} .toc a.new{color:var(--brand);border-left-color:var(--brand);animation:rise .5s ease both}
+
+  /* --- cover --- */
+  .kick{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.03em;margin-bottom:10px}
+  h1{font-family:var(--head);font-weight:700;font-size:34px;line-height:1.15;margin:0 0 8px}
+  h1 em{color:var(--brand);font-style:normal}
+  .dek{font-size:16px;color:var(--muted);margin:0 0 20px;max-width:60ch}
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 18px}
+  @media(max-width:560px){.strip{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
+  .stat .k{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+  .stat .v{font-family:var(--head);font-weight:600;font-size:19px;margin-top:3px;transition:color .4s}
+  .stat.bump .v{color:var(--brand)}
+
+  /* --- refresh bar --- */
+  .rf-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:11px 15px;margin-bottom:26px}
+  .rf-status{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);font-family:var(--mono)}
+  .rf-dot{width:8px;height:8px;border-radius:50%;background:var(--gold)} .rf-dot.fresh{background:var(--ok)}
+  .rf-btn{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-family:var(--head);font-weight:500;font-size:14px;color:#fff;background:var(--brand);border:none;border-radius:9px;padding:9px 16px;cursor:pointer;transition:transform .12s,filter .12s}
+  .rf-btn:hover{filter:brightness(1.06)} .rf-btn:active{transform:scale(.97)} .rf-btn .ic{width:16px;height:16px}
+
+  /* --- primer sections (the update uses this SAME styling) --- */
+  .part{padding:22px 0;border-top:1px solid var(--line)}
+  .pno{font-family:var(--mono);font-size:12px;color:var(--brand);letter-spacing:.05em}
+  .part h2{font-family:var(--head);font-weight:600;font-size:22px;margin:4px 0 4px}
+  .part-sub{font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 12px}
+  .lead{font-size:15.5px;margin:0 0 12px}
+  .part p{font-size:15px}
+  .upd-tag{font-family:var(--mono);font-size:10.5px;color:var(--brand);background:color-mix(in srgb,var(--brand) 10%,transparent);padding:2px 8px;border-radius:6px;vertical-align:middle;margin-left:8px}
+
+  /* developments rendered as native primer prose (not a card) */
+  .dev{padding:14px 0;border-top:1px dashed var(--line)}
+  .dev:first-of-type{border-top:none}
+  .dev-tag{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-bottom:5px}
+  .dev-tag .imp{color:var(--gold);font-weight:500}
+  .dev h3{font-family:var(--head);font-weight:600;font-size:16.5px;margin:0 0 6px}
+  .dev .why{color:var(--muted);font-size:14px;margin-top:6px}
+  .dev .src{font-family:var(--mono);font-size:11.5px;margin-top:7px}
+  .dev .src a{color:var(--brand);text-decoration:none} .dev .src a:hover{text-decoration:underline}
+
+  /* --- modal --- */
+  .rf-ov{position:fixed;inset:0;z-index:60;background:rgba(20,20,18,.42);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .25s}
+  .rf-ov.on{opacity:1;pointer-events:auto}
+  .rf-modal{width:420px;max-width:100%;background:var(--card);border-radius:16px;padding:26px;box-shadow:0 24px 60px rgba(0,0,0,.22);transform:translateY(10px) scale(.98);opacity:0;transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .28s}
+  .rf-ov.on .rf-modal{transform:none;opacity:1} .rf-modal.shake{animation:shake .38s}
+  .rf-h{display:flex;align-items:center;gap:10px;font-family:var(--head);font-weight:600;font-size:17px;margin-bottom:4px}
+  .rf-h .ic{width:20px;height:20px;color:var(--brand)}
+  .rf-sub{font-size:13px;color:var(--muted);margin:0 0 16px}
+  .rf-input{width:100%;font-family:var(--sans);font-size:15px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+  .rf-input:focus{border-color:var(--brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 16%,transparent)}
+  .rf-err{font-size:12.5px;color:#c0392b;margin:8px 2px 0;display:none}
+  .rf-row{display:flex;gap:9px;margin-top:16px}
+  .rf-primary{flex:1;font-family:var(--head);font-weight:500;font-size:14px;color:#fff;background:var(--brand);border:none;border-radius:10px;padding:11px;cursor:pointer;transition:filter .12s,transform .12s}
+  .rf-primary:hover{filter:brightness(1.06)} .rf-primary:active{transform:scale(.98)}
+  .rf-ghost{font-family:var(--head);font-weight:500;font-size:14px;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:10px;padding:11px 16px;cursor:pointer}
+  .rf-hint{font-size:11px;font-family:var(--mono);color:var(--muted);text-align:center;margin:13px 0 0}
+  .rf-load .rf-h .spin{animation:spin 1s linear infinite}
+  .rf-track{height:5px;background:var(--paper);border-radius:6px;overflow:hidden;margin:16px 0 4px;position:relative}
+  .rf-fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--gold));border-radius:6px;transition:width .5s cubic-bezier(.3,.7,.3,1)}
+  .rf-fill.busy::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-100%);animation:shimmer 1.3s infinite}
+  .rf-pct{font-size:12px;font-family:var(--mono);color:var(--muted);text-align:right}
+  .rf-steps{margin-top:8px;display:grid;gap:2px}
+  .rf-step{display:flex;align-items:center;gap:11px;padding:6px 0;font-size:13.5px;color:var(--muted);opacity:.55;transition:opacity .3s,color .3s}
+  .rf-step.on,.rf-step.done{opacity:1;color:var(--ink)}
+  .rf-sdot{width:18px;height:18px;flex:none;display:flex;align-items:center;justify-content:center}
+  .rf-sdot .ring{width:12px;height:12px;border:2px solid var(--line);border-radius:50%}
+  .rf-step.on .rf-sdot .ring{border-color:var(--brand);border-top-color:transparent;animation:spin .8s linear infinite}
+  .rf-sdot .chk{width:16px;height:16px;color:var(--ok);display:none}
+  .rf-step.done .rf-sdot .ring{display:none} .rf-step.done .rf-sdot .chk{display:block}
+  .rf-done{text-align:center;padding:6px 0}
+  .rf-badge{width:62px;height:62px;border-radius:50%;background:var(--ok-bg);margin:2px auto 14px;display:flex;align-items:center;justify-content:center;animation:pop .4s cubic-bezier(.2,1.4,.4,1) both}
+  .rf-badge.quiet{background:color-mix(in srgb,var(--brand) 12%,transparent)}
+  .rf-badge svg{width:32px;height:32px}
+  .rf-badge .draw{stroke:var(--ok);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30;animation:draw .5s .15s ease forwards}
+  .rf-badge.quiet .draw{stroke:var(--brand)}
+  .rf-done h3{font-family:var(--head);font-weight:600;font-size:18px;margin:0 0 5px}
+  .rf-done p{font-size:13.5px;color:var(--muted);margin:0 0 18px}
+  .hide{display:none!important}
+  @keyframes spin{to{transform:rotate(360deg)}}@keyframes shimmer{to{transform:translateX(100%)}}
+  @keyframes draw{to{stroke-dashoffset:0}}@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+  @keyframes rise{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+  @keyframes shake{10%,90%{transform:translateX(-2px)}30%,70%{transform:translateX(4px)}50%{transform:translateX(-4px)}}
+  @keyframes glow{0%{background:color-mix(in srgb,var(--brand) 7%,transparent)}100%{background:transparent}}
+  .just-added{animation:glow 2.2s ease}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- TOC -->
+  <nav class="toc" id="toc">
+    <div class="lbl">Contents</div>
+    <a href="#p0">00 · Snapshot</a>
+    <a href="#p2">02 · The crude-price driver</a>
+    <a href="#p3">03 · The NRL refinery leg</a>
+  </nav>
+
+  <!-- PRIMER BODY -->
+  <main id="primer">
+    <div class="kick">NSE: OIL · BSE: 533106 · Oil Gas &amp; Consumable Fuels</div>
+    <h1>Oil India — the upstream <em>crude-price proxy</em></h1>
+    <p class="dek">India's #2 national upstream oil-and-gas producer — a cheap, dividend-paying proxy for the crude price, with a majority-owned refinery (NRL) that hedges the cycle.</p>
+
+    <div class="strip">
+      <div class="stat" data-k="pat"><div class="k">Consol PAT (FY26)</div><div class="v">₹7,551 Cr</div></div>
+      <div class="stat"><div class="k">Crude realisation</div><div class="v">$69/bbl</div></div>
+      <div class="stat" data-k="pe"><div class="k">P/E</div><div class="v">~10.4×</div></div>
+      <div class="stat"><div class="k">Div. yield</div><div class="v">~2.7%</div></div>
+    </div>
+
+    <div class="rf-bar">
+      <span class="rf-status"><span class="rf-dot" id="rf-dot"></span><span id="rf-when">updated 5 Jul 2026</span></span>
+      <button class="rf-btn" id="rf-open">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+        Refresh
+      </button>
+    </div>
+
+    <section class="part" id="p0">
+      <div class="pno">00</div><h2>The 30-second snapshot</h2>
+      <p class="part-sub">What Oil India is, in one screen</p>
+      <p class="lead">Oil India is a Navratna upstream explorer-producer: it finds and pumps crude oil and natural gas, so its profits track the global crude price almost one-for-one.</p>
+      <p>Unlike the pure explorers, it owns ~69.6% of Numaligarh Refinery (NRL) — a downstream hedge that earns refining margins when crude is high and upstream realisations soften.</p>
+    </section>
+
+    <!-- refreshed developments get inserted HERE, as a native section -->
+
+    <section class="part" id="p2">
+      <div class="pno">02</div><h2>The crude-price driver</h2>
+      <p class="part-sub">Why Brent is the master variable</p>
+      <p class="lead">Every dollar on Brent flows almost directly to Oil India's realisation and profit — the single biggest swing factor in the story.</p>
+      <p>FY26 realisation averaged ~$69/bbl versus ~$78 the year before, which is most of the year-on-year earnings move.</p>
+    </section>
+
+    <section class="part" id="p3">
+      <div class="pno">03</div><h2>The NRL refinery leg</h2>
+      <p class="part-sub">The 3→9 MTPA expansion that hedges the cycle</p>
+      <p class="lead" id="p3-lead">NRL is the crown jewel — its tripling to 9 MTPA is the biggest growth leg, adding a refining-margin stream that cushions the upstream cycle.</p>
+      <p id="p3-body">The ~₹34,000 Cr project has been the key thing to watch for commissioning timing.</p>
+    </section>
+  </main>
+</div>
+
+<!-- OVERLAY -->
+<div class="rf-ov" id="rf-ov">
+  <div class="rf-modal" id="rf-modal">
+    <div id="rf-pass">
+      <div class="rf-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Refresh this primer</div>
+      <p class="rf-sub">Enter the password to scan for material developments. Verified on the server.</p>
+      <input class="rf-input" id="rf-input" type="password" placeholder="Password" autocomplete="off" />
+      <p class="rf-err" id="rf-err">That password's wrong. Try again.</p>
+      <div class="rf-row"><button class="rf-primary" id="rf-go">Unlock and refresh</button><button class="rf-ghost" id="rf-cancel">Cancel</button></div>
+      <p class="rf-hint" id="rf-hint"></p>
+    </div>
+    <div id="rf-loading" class="rf-load hide">
+      <div class="rf-h"><svg class="ic spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg><span id="rf-lh">Scanning…</span></div>
+      <div class="rf-track"><div class="rf-fill busy" id="rf-fill"></div></div>
+      <div class="rf-pct" id="rf-pct">0%</div>
+      <div class="rf-steps" id="rf-stepbox"></div>
+    </div>
+    <div id="rf-doneview" class="rf-done hide">
+      <div class="rf-badge" id="rf-badge"><svg viewBox="0 0 24 24"><path class="draw" d="M20 6L9 17l-5-5"/></svg></div>
+      <h3 id="rf-dt">Primer updated</h3>
+      <p id="rf-dp"></p>
+      <button class="rf-primary" id="rf-close" style="width:100%">See what changed</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const CONFIG = {
+    REFRESH_ENDPOINT: "",                 // Worker URL. Empty => demo/mock.
+    COMPANY_SLUG:"oil-india", COMPANY_SYMBOL:"OIL",
+    DEMO_PASSWORD:"opus"
+  };
+  const STEPS=["Authenticating","Reading exchange filings","Cross-checking reliable news","Verifying & pulling figures","Judging materiality","Updating the primer"];
+  const $=id=>document.getElementById(id);
+  const ov=$("rf-ov"),modal=$("rf-modal");
+  const CHK='<svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+  const view=w=>["rf-pass","rf-loading","rf-doneview"].forEach(v=>$(v).classList.toggle("hide",v!==w));
+  const fmt=iso=>{const d=new Date(iso);return isNaN(d)?iso:d.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});};
+
+  function openOv(){ov.classList.add("on");view("rf-pass");$("rf-err").style.display="none";$("rf-input").value="";setTimeout(()=>$("rf-input").focus(),120);$("rf-hint").textContent=CONFIG.REFRESH_ENDPOINT?"":"demo mode · password: "+CONFIG.DEMO_PASSWORD;}
+  function closeOv(){ov.classList.remove("on");}
+  function wrong(){const e=$("rf-err");e.textContent="That password's wrong. Try again.";e.style.display="block";modal.classList.add("shake");setTimeout(()=>modal.classList.remove("shake"),400);}
+
+  // ===== the important bit: WEAVE the update INTO the primer =====
+  function applyToPrimer(delta){
+    if(!delta||delta.status!=="updates") return {n:0};
+    let n=0, first=null;
+    // rewrite the AFFECTED sentences/paragraphs of the primer itself — in place
+    (delta.edits||[]).forEach(e=>{const el=document.querySelector(e.sel);if(el){el.innerHTML=e.html;
+      el.classList.remove("just-added");void el.offsetWidth;el.classList.add("just-added");if(!first)first=el;n++;}});
+    // refresh any stat-strip figures in place
+    (delta.statUpdates||[]).forEach(su=>{const el=document.querySelector('.stat[data-k="'+su.k+'"]');if(el){
+      el.querySelector(".v").textContent=su.v;el.classList.add("bump");if(!first)first=el;n++;}});
+    $("rf-when").textContent="updated "+fmt(delta.asOf); $("rf-dot").classList.add("fresh");
+    return {n, big:delta.bigChange, first};
+  }
+
+  function buildSteps(){const b=$("rf-stepbox");b.innerHTML="";return STEPS.map(s=>{const d=document.createElement("div");d.className="rf-step";d.innerHTML='<span class="rf-sdot"><span class="ring"></span>'+CHK+'</span><span>'+s+'</span>';b.appendChild(d);return d;});}
+  function runAnim(rows,hold){return new Promise(res=>{let i=0;const fill=$("rf-fill"),pct=$("rf-pct");(function t(){if(i>0)rows[i-1].className="rf-step done";const p=Math.round(i/STEPS.length*100);fill.style.width=p+"%";pct.textContent=p+"%";if(i>=STEPS.length){res();return;}if(i===hold){rows[i].className="rf-step on";res({rows,i});return;}rows[i].className="rf-step on";i++;setTimeout(t,650);})();});}
+  function finishAnim(st){return new Promise(res=>{let {rows,i}=st;const fill=$("rf-fill"),pct=$("rf-pct");fill.classList.remove("busy");(function t(){if(i>0)rows[i-1].className="rf-step done";const p=Math.round(i/STEPS.length*100);fill.style.width=p+"%";pct.textContent=p+"%";if(i>=STEPS.length){fill.style.width="100%";pct.textContent="100%";res();return;}rows[i].className="rf-step on";i++;setTimeout(t,420);})();});}
+
+  async function fetchDelta(pw){
+    if(CONFIG.REFRESH_ENDPOINT){
+      const r=await fetch(CONFIG.REFRESH_ENDPOINT,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({slug:CONFIG.COMPANY_SLUG,symbol:CONFIG.COMPANY_SYMBOL,password:pw})});
+      if(r.status===401) throw{code:401}; if(!r.ok) throw{code:r.status}; return await r.json();
+    }
+    if(pw!==CONFIG.DEMO_PASSWORD) throw{code:401};
+    await new Promise(res=>setTimeout(res,2600));
+    // The real pipeline returns targeted EDITS to the primer's own passages (+ stat updates),
+    // not a separate feed. Each edit rewrites one existing paragraph in place.
+    return {status:"updates",asOf:new Date().toISOString().slice(0,10),bigChange:false,
+      statUpdates:[{k:"pe",v:"~11.2×"}],
+      edits:[
+        {sel:"#p3-lead",html:"NRL is the crown jewel — its tripling to 9 MTPA, a ~₹34,000 crore project, is mechanically complete and commissioning in H1 FY27, adding the refining-margin stream that cushions the upstream cycle."},
+        {sel:"#p3-body",html:"Funding is in place: the board has approved a ₹4,000 crore bond raise toward the NRL equity contribution and exploration capex, keeping the balance sheet comfortable through the peak-capex phase."}
+      ]};
+  }
+
+  let firstEdit=null;
+  async function refresh(){
+    const pw=$("rf-input").value.trim(); if(!pw){wrong();return;}
+    view("rf-loading"); $("rf-lh").textContent="Scanning "+CONFIG.COMPANY_SYMBOL+"…";
+    const rows=buildSteps(); const st=await runAnim(rows,1);
+    try{
+      const delta=await fetchDelta(pw); await finishAnim(st);
+      const r=applyToPrimer(delta); firstEdit=r.first||null;
+      const quiet=r.n===0;
+      $("rf-badge").classList.toggle("quiet",quiet);
+      $("rf-dt").textContent=quiet?"All quiet":"Primer updated";
+      $("rf-dp").textContent=quiet?"No material changes — the primer is already current.":("The latest developments are now woven into the primer — "+r.n+" passage"+(r.n>1?"s":"")+" refreshed"+(r.big?" · flagged for a full rebuild":"")+".");
+      view("rf-doneview");
+    }catch(err){ if(err&&err.code===401){view("rf-pass");wrong();return;} view("rf-pass");$("rf-err").textContent="Couldn't refresh right now. Try again.";$("rf-err").style.display="block"; }
+  }
+
+  $("rf-open").onclick=openOv; $("rf-cancel").onclick=closeOv; $("rf-go").onclick=refresh;
+  $("rf-close").onclick=function(){closeOv();if(firstEdit)firstEdit.scrollIntoView({behavior:"smooth",block:"center"});};
+  $("rf-input").addEventListener("keydown",e=>{if(e.key==="Enter")refresh();});
+  ov.addEventListener("click",e=>{if(e.target===ov)closeOv();});
+})();
+</script>
+</body>
+</html>

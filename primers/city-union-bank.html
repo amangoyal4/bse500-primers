@@ -680,20 +680,31 @@
   // ---- Refresh bar (DORMANT — Phase 2 wiring) ----
   const REFRESH_ENDPOINT = "";              // set in Phase 2
   const COMPANY_SYMBOL = "CUB";
-  function requestRefresh(){
+  const COMPANY_SLUG = "city-union-bank";
+  async function requestRefresh(){
     const btn = document.getElementById('rb-refresh');
     if(!REFRESH_ENDPOINT){
-      const old = btn.innerHTML;
-      btn.classList.add('spinning');
-      btn.innerHTML = '<span class="rbi">⟳</span> Checking…';
-      setTimeout(function(){
-        btn.classList.remove('spinning');
-        btn.innerHTML = old;
-        alert("Live updates coming soon.");
-      }, 650);
+      alert("Live refresh isn't enabled on this copy of the page yet.");
       return;
     }
-    // Phase 2: fetch(REFRESH_ENDPOINT + "?symbol=" + COMPANY_SYMBOL) …
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
   }
 </script>
 </body>

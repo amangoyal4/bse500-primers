@@ -686,12 +686,30 @@
 <script>
   const REFRESH_ENDPOINT = "";
   const COMPANY_SYMBOL = "DIVISLAB";
-  function requestRefresh(){
-    var btn = document.getElementById('rb-refresh');
+  const COMPANY_SLUG = "divis-laboratories";
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
     if(!REFRESH_ENDPOINT){
-      btn.classList.add('spinning');
-      setTimeout(function(){ btn.classList.remove('spinning'); alert('Live updates coming soon.'); }, 600);
+      alert("Live refresh isn't enabled on this copy of the page yet.");
       return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
     }
   }
 </script>
