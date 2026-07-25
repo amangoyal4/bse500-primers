@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C.E. Info Systems (MapmyIndia) — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F6F4;
+    --paper-2:#FAFCFB;
+    --card:#FFFFFF;
+    --ink:#16211B;
+    --ink-soft:#54615A;
+    --ink-faint:#889489;
+    --brand:#2E7D46;          /* map green */
+    --brand-bright:#3FA35C;   /* bright map green accent */
+    --gold:#C7871F;           /* warm amber - accent / warmth */
+    --wtg:#3FA35C;            /* A&E / Map & Data */
+    --epc:#5FB87A;            /* enterprise / API */
+    --om:#1B5E32;            /* IoT / recurring */
+    --spec:#2E7D46;          /* map-green cross accent */
+    --line:#D7DED9;
+    --line-soft:#E5EAE6;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4F1E8;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF3E4;border:1px solid #EFDCB9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473610;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F9F6;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E9EEE9;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#1B5E32,#3FA35C);}
+  .fill.gold{background:linear-gradient(90deg,#C7871F,#E0A64C);}
+  .fill.wtg{background:linear-gradient(90deg,#3FA35C,#5FB87A);}
+  .fill.om{background:linear-gradient(90deg,#1B5E32,#2E7D46);}
+  .fill.spec{background:linear-gradient(90deg,#2E7D46,#4FB06E);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a43,#566459);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF3E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3ED;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+</head>
+<body>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Digital mapping 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What MapmyIndia sells</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; the Vermas</a></li>
+    <li><a href="#p4"><span class="n">04</span> Build once, licence many</a></li>
+    <li><a href="#p5"><span class="n">05</span> Automotive &amp; Enterprise</a></li>
+    <li><a href="#p6"><span class="n">06</span> IoT: moving things</a></li>
+    <li><a href="#p7"><span class="n">07</span> The free-Google shadow</a></li>
+    <li><a href="#p8"><span class="n">08</span> The map, the moat, the app</a></li>
+    <li><a href="#p9"><span class="n">09</span> The rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: MAPMYINDIA · BSE: 543425</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>C.E. Info Systems, <em>the map India built and licenses</em></h1>
+  <p class="dek">A complete walk through MapmyIndia / Mappls — how a Delhi family spent three decades hand-building a proprietary digital map of India, why the money is made not by the free consumer app but by <em>licensing</em> that map into cars, apps and government systems, and how the "Indian Google Maps" ended up being one of the few new-age Indian tech firms that is properly, cash-generatively profitable.</p>
+  <p class="prov">Auto-generated · figures self-verified against public sources · not investment advice.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹474 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~37% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹134 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹10,000 <small>Cr</small></div><div class="l">Market cap (approx, mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">25 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue from operations ~₹474 Cr (+2.3%), EBITDA ~₹176 Cr (~37% margin), PAT ~₹134 Cr; open order book ~₹1,754 Cr; ~₹685 Cr of cash &amp; investments; a strong Q4 (income +55%, PAT ~3×) after a soft first half. Added the licence-the-map-many-times device and the free-Google-Maps section.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">C.E. Info Systems — brand name <strong>MapmyIndia</strong>, newer product brand <strong>Mappls</strong> — is India's homegrown <strong>digital-mapping and location-technology company</strong>. Over roughly three decades it has built a proprietary, deeply detailed digital map of India: every road, address, landmark, point of interest, and increasingly house-level, 3D and lane-level detail. It then <strong>licenses that map and the software around it</strong> to businesses and governments. It is, in effect, India's own answer to Google Maps — except it makes real money, because it is a business-to-business licensing engine, not a free consumer utility.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>Two segments, one crown jewel.</strong> The core, high-margin engine is <strong>Automotive &amp; Enterprise Digital Transformation (A&amp;E)</strong> — often labelled Map &amp; Data — which puts navigation maps inside cars, sells location APIs to enterprises, and supplies geospatial data to government. Around it sits a smaller, lower-margin <strong>IoT (Internet of Moving Things)</strong> business selling tracking hardware and telematics. A&amp;E is roughly <strong>85%+ of revenue (approx.)</strong> and almost all of the profit.</li>
+    <li><strong>It is genuinely, unusually profitable.</strong> FY26 revenue from operations was ~<strong>₹474 Cr</strong> with an EBITDA margin near <strong>37%</strong> and a PAT margin of ~<strong>25.5%</strong> — software-like economics, net cash of ~₹685 Cr in the bank, no meaningful debt, and returns on capital in the high teens to twenties. Among India's crop of new-age tech IPOs — many still loss-making — that combination is rare.</li>
+    <li><strong>It lives under a giant's free shadow.</strong> The permanent question hanging over the stock is simple: <em>why pay MapmyIndia when Google Maps is free?</em> Google gives consumers maps for nothing and prices enterprise APIs aggressively; Ola has built its own Ola Maps and exited Google. MapmyIndia trades on a rich, software-like multiple (roughly <strong>70×+ earnings, approx.</strong>) that assumes it keeps embedding its map into more of India's digital plumbing faster than free maps commoditise the base beneath it.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Strip the company to one sentence and it is this: MapmyIndia built a map once and sells it many times. The expensive, decades-long work — surveying India road by road and address by address, then keeping it fresh — is largely done and paid for. Every additional car that ships with its navigation, every app that calls its location API, every government department that licenses its data adds revenue at very little extra cost, which is why margins are so high. The whole investment question is whether it can keep <em>signing up</em> new cars, apps and departments faster than a free global map erodes what people are willing to pay for the base underneath.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Digital mapping 101: what a "map company" actually sells</h2></div>
+  <p class="part-sub">No GIS degree needed — just the handful of ideas that drive the whole business.</p>
+
+  <p class="lead">A modern digital map is not a picture. It is a vast, structured <strong>database</strong>: every road as a line with a name, direction, speed limit and turn restriction; every junction, flyover and one-way; millions of addresses and "points of interest" (a shop, an ATM, a hospital) each with coordinates and attributes; and layers of extra detail — building footprints, 3D shapes, lane markings, terrain. On top of that database sits <strong>software</strong> that does useful things with it: find me the fastest route, tell me where this delivery boy is, estimate this journey's time, geo-tag this bank branch. MapmyIndia builds and owns both the database and the software. To follow the business, you need five ideas.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">The map database</td><td>The structured record of India's roads, addresses and places. This is the asset — built painstakingly over ~30 years, refreshed continuously. Everything MapmyIndia sells is a way of monetising this one database.</td></tr>
+      <tr><td class="t-strong">POI</td><td>"Point of Interest" — a specific place with coordinates and details (name, category, hours). Tens of millions of them. Rich POI data is a big part of why a business would license MapmyIndia rather than build its own map.</td></tr>
+      <tr><td class="t-strong">API / SDK</td><td>The software "plug" a business uses to tap the map — a mapping API returns routes, distances or place-lookups on demand; an SDK embeds maps inside an app. Enterprises pay per usage or per subscription. This is the asset-light, recurring way MapmyIndia sells its map.</td></tr>
+      <tr><td class="t-strong">Embedded navigation</td><td>The map baked into a car's dashboard screen. An automaker licenses MapmyIndia's map + navigation software; MapmyIndia earns up-front and often a per-vehicle royalty as cars ship. Long-lived, sticky, high-value.</td></tr>
+      <tr><td class="t-strong">Geospatial data / services</td><td>Selling the underlying data and analytics to governments and large enterprises — national mapping, asset geo-tagging, land records, logistics network design. Often lumpy, project-shaped, but high-value and hard for a free consumer app to serve.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The economics that decide everything: build cost vs. sell cost</div>
+    <p>A map business has a brutal upfront cost and a wonderful marginal cost. Surveying a country, structuring the data and keeping it current takes decades of labour and money — that is the wall that keeps new entrants out. But once the database exists, selling it <em>again</em> to the next customer costs almost nothing: no factory, no raw material, no new survey. That gap — enormous fixed investment already sunk, trivial cost to serve the next licence — is the entire reason MapmyIndia can run a ~37% EBITDA margin. It is a software P&amp;L wrapped around a physical-world dataset.</p>
+  </div>
+
+  <h3>Who pays for maps, and why</h3>
+  <ul class="clean">
+    <li><strong>Automakers</strong> — they need in-dash navigation that works offline, is India-tuned, and comes with a support and update relationship. They license an embedded map rather than depend on a phone app.</li>
+    <li><strong>Enterprises</strong> — e-commerce, logistics, food/grocery delivery, ride-hailing, banks, telcos and fintechs that need routing, address verification, geo-tagging and tracking woven into their own apps and back-ends.</li>
+    <li><strong>Government &amp; PSUs</strong> — ministries, states and agencies needing authoritative national/Indian-owned geospatial data for planning, land records, utilities, disaster management and defence-adjacent uses, where a foreign consumer map is often unsuitable.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What MapmyIndia actually sells: two segments, very different economics</h2></div>
+  <p class="part-sub">The structure — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">MapmyIndia reports in <strong>two segments</strong>, and they could hardly be more different. One is a high-margin, asset-light licensing engine built on the map database. The other is a lower-margin hardware-and-service business that rides on top of it. Getting the split straight is the single most useful thing a first-time reader can do — because the market pays for one of them far more than the other.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">One map database → four ways to monetise it</div>
+    <div class="flow-row">
+      <div class="node spec"><div class="ntag">The asset</div><div class="nname">The India map database</div><div class="nwho">Roads, addresses, ~30M+ POIs, 3D/lane data. Built once, kept fresh.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">A&amp;E · Auto</div><div class="nname">Cars &amp; navigation</div><div class="nwho">Embedded maps + per-vehicle royalties to OEMs.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">A&amp;E · Enterprise</div><div class="nname">APIs &amp; data to business</div><div class="nwho">Location APIs, SDKs, analytics — subscription/usage.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">IoT</div><div class="nname">Moving-things tracking</div><div class="nwho">Telematics devices + software; lower margin, hardware-linked.</div></div>
+    </div>
+    <div class="flow-note">The first three arrows are all "sell the map" — pure A&amp;E, software-like margins. The fourth (IoT) attaches hardware and services, which is useful and growing, but structurally dilutes the blended margin.</div>
+  </div>
+
+  <h3>Segment 1 — Automotive &amp; Enterprise (A&amp;E) / Map &amp; Data</h3>
+  <p>This is the crown jewel: roughly <strong>85%+ of revenue (approx.)</strong> and the overwhelming majority of profit. It bundles three ways of selling the same database — <span class="chain-wtg">in-car navigation to automakers</span>, <span class="chain-epc">map/location APIs and SDKs to enterprises</span>, and geospatial <span class="chain-om">data and services to government</span>. The revenue arrives as licences, subscriptions and royalties — much of it recurring, sticky and paid regardless of whether MapmyIndia ships a single physical object. This is where the ~37% margin lives.</p>
+
+  <h3>Segment 2 — IoT (Internet of Moving Things)</h3>
+  <p>The smaller line: <strong>telematics and tracking</strong> — GPS trackers, fleet-tracking devices, connected-vehicle hardware and the software dashboards that go with them, sold to logistics fleets, insurers, and consumers. It is a real, growing business that deepens MapmyIndia's grip on movement data, but it involves hardware and services, so its margins are structurally lower than the licensing core. When the blended EBITDA margin wobbles, the mix between these two segments is often why.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the segment split is the first thing to internalise</div>
+    <p>A reader who treats MapmyIndia as "a maps app" will misjudge it completely. The consumer Mappls app is essentially free marketing and a data-collection layer — it is not where the money comes from. The money comes from A&amp;E: a Hyundai shipping cars with MapmyIndia navigation, a delivery firm calling its routing API a million times a day, a ministry licensing its data. When you read the results, watch the A&amp;E line and its margin. The IoT line and the app are supporting cast; the licensing engine is the star.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the family, and who controls it</h2></div>
+  <p class="part-sub">A Verma-family company that spent 30 years building before it ever listed.</p>
+
+  <p class="lead">MapmyIndia is not a venture-funded overnight story. It was founded in the mid-1990s by <strong>Rakesh Verma and Rashmi Verma</strong>, a husband-and-wife team who began the unglamorous, patient work of digitising India's geography long before "location data" was a business anyone valued. Their son <strong>Rohan Verma</strong> now runs it as CEO. The company came to the market only in December 2021 — after nearly three decades of building the asset — and remains firmly promoter-controlled.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1992–1995</div><div class="ev">C.E. Info Systems founded by <strong>Rakesh &amp; Rashmi Verma</strong>; begins the multi-year project of building a digital map of India from the ground up.</div></li>
+    <li><div class="yr">2004</div><div class="ev">Launches the consumer web portal <strong>mapmyindia.com</strong> — one of India's first online maps.</div></li>
+    <li><div class="yr">2007–2009</div><div class="ev">Enters navigation devices and lands its first <strong>automotive OEM</strong> deals — the map starts riding inside cars.</div></li>
+    <li><div class="yr">2015–2020</div><div class="ev">Pivots hard toward <strong>enterprise APIs</strong> and IoT; deepens the data with POIs, 3D and richer attributes; builds the modern <strong>Mappls</strong> platform.</div></li>
+    <li class="major"><div class="yr">Dec 2021</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE — a landmark listing for a <em>profitable</em> Indian tech company; the issue was massively oversubscribed and listed at a large premium.</div></li>
+    <li><div class="yr">2022</div><div class="ev">Relaunches the consumer <strong>Mappls app</strong> as a homegrown Google-Maps alternative; signs an <strong>MoU with ISRO</strong> to build a joint India-focused geoportal blending ISRO's satellite imagery with MapmyIndia's maps.</div></li>
+    <li class="major"><div class="yr">FY24–FY25</div><div class="ev">Revenue scales from ~₹380 Cr (FY24) to ~₹463 Cr (FY25); order book and enterprise/auto client base broaden; margins stay in the mid-30s%.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ~₹474 Cr (+2.3%), EBITDA ~₹176 Cr (~37% margin), PAT ~₹134 Cr; open order book ~₹1,754 Cr; a soft H1 gives way to a strong Q4 (income +55%, PAT ~3×).</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the <strong>Verma family</strong> — Rakesh Verma (Chairman &amp; Managing Director), Rashmi Verma (co-founder), and Rohan Verma (CEO &amp; Executive Director) — hold the controlling block, roughly <strong>~53% (approx.)</strong>. Founder-run, founder-owned, with the people who built the map still steering it.</li>
+    <li><strong>Institutional interest:</strong> the float carries a notable roster of domestic and foreign institutions, plus early strategic investors from before the IPO (Qualcomm and Zenrin, a Japanese mapping company, were historic backers). A tightly held register with a modest free float amplifies the stock's moves.</li>
+    <li><strong>Balance sheet:</strong> effectively debt-free, with ~<strong>₹685 Cr of cash and investments</strong> at FY26 year-end. This is a company that funds itself, returns cash via dividends (FY26 final dividend ~₹3.50/share), and has no financing pressure on its operating decisions.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the founder story matters commercially:</b> a map is only as valuable as it is trusted and current, and trust in geospatial data is built over decades, not quarters. The Vermas' 30-year head start <em>is</em> the moat — you cannot venture-fund your way to a 30-year-old, continuously-updated, India-specific map database overnight. That same longevity is also the risk the bears press on: a base built patiently by hand can, in an AI-and-satellite era, be approached far faster than it once could.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: the licence-the-map-many-times device -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Build once, licence many: the economics that define the company</h2></div>
+  <p class="part-sub">The single most important idea in the entire investment case — and it is specific to this business.</p>
+
+  <p class="lead">Every mapping company reports revenue. But for MapmyIndia, the number that explains the whole P&amp;L is not revenue — it is <strong>how many times the same map gets sold</strong>. The database is a fixed asset that has already been paid for in decades of survey work. From here, each new licensee — a carmaker, an app, a ministry — is a fresh revenue stream layered onto the identical underlying data, at almost no incremental cost. Multiplication, not addition, is the engine.</p>
+
+  <div class="chart">
+    <div class="c-title">The same map, monetised over and over</div>
+    <div class="c-sub">Illustrative — one database, licensed across many channels, each at high incremental margin</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">One-time build cost<small>the survey, over ~30 yrs</small></div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">sunk</div></div>
+      <div class="bar-row"><div class="blab">Cost to serve<small>the next licence</small></div><div class="track"><span class="fill spec" style="width:8%"></span></div><div class="bval">~near-zero</div></div>
+      <div class="bar-row"><div class="blab">Resulting margin<small>FY26 EBITDA</small></div><div class="track"><span class="fill brand" style="width:74%"></span></div><div class="bval">~37%</div></div>
+      <div class="bar-row"><div class="blab">Q4 FY26 margin<small>as volume built</small></div><div class="track"><span class="fill gold" style="width:89%"></span></div><div class="bval">~45%</div></div>
+    </div>
+    <div class="legend"><span>Because the build cost is already sunk and the cost to serve the next customer is tiny, incremental revenue drops to the bottom line at very high rates — which is why a big-volume quarter (Q4 FY26) can carry a ~45% EBITDA margin.</span></div>
+  </div>
+
+  <p>This is the whole company in one mechanism. A carmaker signing a multi-year navigation deal does not just buy the map — it agrees to a <strong>per-vehicle royalty</strong> that keeps paying as long as those cars keep rolling off the line. An enterprise wiring MapmyIndia's routing into its app does not buy once — it pays a <strong>subscription that recurs</strong> and grows with its usage. A government licensing the data commits to a <strong>multi-year project</strong>. Each of these is the same database, sold again into a new pocket of the economy, and each one — once won — is sticky because ripping out an embedded map is disruptive and risky.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that fits only MapmyIndia: one asset, N annuities</div>
+    <p>Most companies you value by asking "how much can they sell?" MapmyIndia you value by asking a stranger question: "how many independent, recurring annuities can they hang off a single, already-built dataset?" Every design-win — a new car model that ships with its nav, a new enterprise on its API, a new government contract — is a fresh annuity bolted onto a fixed asset, at almost no marginal cost. The order book (~₹1,754 Cr against ~₹474 Cr of annual revenue) is exactly this: years of already-contracted map-selling stacked up in advance. The thesis is not "will revenue grow?" — it is "how fast can it keep multiplying the count of licences on the one map before the base underneath gets commoditised?"</p>
+  </div>
+
+  <div class="note gold"><b>A genuine surprise:</b> the "Indian Google Maps" is not a loss-making land-grab like most new-age Indian tech IPOs — it earns a ~25% net margin and sits on ~₹685 Cr of cash. It makes money in precisely the corner of the market where Google Maps is free. The reason is that Google's free product is a <em>consumer</em> utility, while MapmyIndia's money comes from <em>businesses and governments</em> licensing an owned, India-specific dataset — a different customer, a different sale, a different economics entirely.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Automotive &amp; Enterprise: inside the profit engine</h2></div>
+  <p class="part-sub">The 85%+ of revenue that actually matters — decoded into its three motors.</p>
+
+  <p class="lead">The A&amp;E segment is where MapmyIndia earns its keep. It is best understood as three distinct motors running off one map: <strong>automotive royalties</strong>, <strong>enterprise APIs</strong>, and <strong>government data &amp; services</strong>. Each has its own rhythm, and together they are what a buyer of the stock is really paying for.</p>
+
+  <h3>Motor 1 — Automotive: the map inside the dashboard</h3>
+  <p>When you sit in many new Indian cars and the built-in navigation screen lights up, there is a real chance the map underneath is MapmyIndia's, not Google's. The company supplies embedded, offline-capable navigation to a broad set of automakers — historically names such as <strong>Hyundai, Kia, MG Motor, Tata Motors, Mahindra, Honda and BMW</strong>, plus a growing list of two-wheeler and EV makers. The economics are attractive: an up-front integration fee, then a <strong>per-vehicle royalty</strong> that keeps flowing for years as those models ship. As India's car parc grows and more models add connected navigation, this royalty base compounds.</p>
+
+  <h3>Motor 2 — Enterprise: the API business</h3>
+  <p>This is the fastest-moving motor. Any company that needs to move something, verify an address, or place a pin on a map is a potential customer: <strong>e-commerce and logistics</strong> (route planning, delivery tracking), <strong>food and grocery delivery</strong>, <strong>fintech and banking</strong> (branch/ATM location, address verification, fraud geo-checks), <strong>ride-hailing and mobility</strong>, and <strong>telcos</strong>. They pay via subscriptions and usage-based API calls. It is the most recurring, most scalable slice — and the one most directly exposed to Google's aggressively priced enterprise Maps Platform.</p>
+
+  <h3>Motor 3 — Government &amp; data services</h3>
+  <p>Here MapmyIndia sells the underlying geospatial data and bespoke services to the public sector — national and state mapping, asset geo-tagging, utility and infrastructure planning, and analytics — including its high-profile <strong>collaboration with ISRO</strong> to fuse satellite imagery with its map. This motor is lumpier and project-shaped, so it can swing quarter to quarter, but it is high-value and structurally hard for a foreign consumer app to serve, because Indian public bodies often want an Indian-owned, sovereignty-friendly data partner.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~85%+</div><div class="msl">Share of revenue from A&amp;E / Map &amp; Data (approx.) — the profit core</div></div>
+    <div class="ms gold"><div class="msv">Per-vehicle</div><div class="msl">Auto royalties recur as licensed car models keep shipping</div></div>
+    <div class="ms green"><div class="msv">~₹1,754 Cr</div><div class="msl">Open order book at FY26 exit — years of contracted work</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Where to look when the quarter lands</div>
+    <p>Because the three motors have different cadences, a single quarter can mislead. Auto royalties are steady and compounding; enterprise APIs grow with the digital economy; government is lumpy and can make a quarter look feast-or-famine on its own. The soft first half and blowout Q4 of FY26 were largely this — timing of orders, not a change in the franchise. When judging the business, read the <em>full-year</em> A&amp;E trajectory and margin, and treat any one government-heavy quarter with caution.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>IoT: the Internet of Moving Things</h2></div>
+  <p class="part-sub">The smaller, hardware-tinged segment — useful, growing, and margin-dilutive.</p>
+
+  <p class="lead">The second segment, IoT, is MapmyIndia's answer to a natural question: if you own the map, why not also sell the devices that move across it and feed data back? IoT bundles <strong>tracking hardware and telematics software</strong> — GPS trackers, fleet-management devices, connected-vehicle units, dashcams — with dashboards that turn a moving vehicle into a stream of live location data.</p>
+
+  <p>The customers are logistics fleets wanting to see where their trucks are, insurers wanting driving-behaviour data, and consumers wanting to track a vehicle or asset. It is a genuinely useful extension: it deepens MapmyIndia's grip on <em>movement</em> data (which in turn improves the map — live traffic, road conditions), and it opens a recurring device-plus-subscription relationship. But because it involves physical hardware and field services, its gross margins are structurally lower than the pure licensing core.</p>
+
+  <div class="plain">
+    <div class="ptag">The margin tell hidden in the segment mix</div>
+    <p>When MapmyIndia's blended EBITDA margin ticks down, the culprit is often IoT growing faster than A&amp;E in that period — more hardware in the mix drags the average. That is not necessarily bad news: IoT can be strategically valuable and still dilutive. The discipline for a reader is to separate the two. A quarter where IoT surged and the blended margin dipped is very different from one where the high-margin A&amp;E core itself softened. The former is mix; the latter is the thing that would actually threaten the thesis.</p>
+  </div>
+
+  <div class="note gold"><b>The nuance:</b> IoT is best read as an <em>option</em> and a data-feeder, not the core valuation driver. If it scales into a large connected-vehicle and fleet-telematics platform, it adds a second growth leg. If it stays sub-scale, it barely dents a valuation that is really being paid for the A&amp;E licensing engine. Do not let a good or bad IoT quarter distract from where the profit — and the multiple — actually sits.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The free-Google-Maps shadow</h2></div>
+  <p class="part-sub">The defining bear point — met head-on, because everything else rests on it.</p>
+
+  <p class="lead">No honest primer on MapmyIndia can dodge the one question every sceptic asks first: <strong>why would anyone pay for a map when Google Maps is free?</strong> Google's map is superb, ubiquitous, and costs consumers nothing; its enterprise Maps Platform is priced to win developers globally; and now Ola has built <strong>Ola Maps</strong> and publicly ditched Google, proving a well-funded Indian player can roll its own. This is the shadow the whole stock trades under, and it deserves a straight answer rather than a wave-away.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Why businesses still pay MapmyIndia despite free maps</caption>
+    <thead><tr><th>The "free Google" pressure</th><th>MapmyIndia's actual answer</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">"Consumers get Google Maps free"</td><td>True — and irrelevant to MapmyIndia's P&amp;L, which is B2B. Free consumer maps don't compete for the licensing rupees; they compete for the (non-revenue) consumer app.</td></tr>
+      <tr><td class="t-strong">"Google's enterprise APIs are cheap and global"</td><td>The real battleground. MapmyIndia counters on India-specific depth (addresses, POIs, local road logic), price/usage terms, data-localisation and support — and wins where Indian granularity or ownership matters.</td></tr>
+      <tr><td class="t-strong">"Automakers could just use phone mirroring"</td><td>Many still want embedded, offline, India-tuned nav they control and warrant — a licensed relationship, not a dependence on the driver's phone and a foreign consumer app.</td></tr>
+      <tr><td class="t-strong">"Government could use anyone"</td><td>Often it explicitly cannot: sovereignty, data-localisation and security push public bodies toward an <strong>Indian-owned</strong> map — a structural moat Google cannot easily cross.</td></tr>
+      <tr><td class="t-strong">"Ola built its own map"</td><td>The sharpest threat — proof a determined, deep-pocketed rival can enter. But building and <em>maintaining</em> a national map to MapmyIndia's depth is a decades-long grind, and Ola competes mainly in the enterprise/API arena, not government.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The distinction that resolves the "why pay?" question</div>
+    <p>The free-Google objection quietly assumes one market. There are two. In the <strong>consumer</strong> market, Google is free and dominant, and MapmyIndia does not really try to win rupees there — the Mappls app is brand and data, not revenue. In the <strong>business-and-government</strong> market, buyers want ownership, India-specific depth, localisation, control and support — and there they pay, contract, and stick. MapmyIndia's whole model is to be irrelevant to the free consumer fight and indispensable to the paid enterprise-and-government one. Whether that separation holds as Google's enterprise pricing and Ola's ambition press in is the crux of the bear case.</p>
+  </div>
+
+  <p>The bear does not need MapmyIndia to disappear. It only needs the <em>price</em> of a licence to fall — for Google or Ola to make the enterprise API cheap enough, or the automaker relationship contestable enough, that MapmyIndia's software-like margin slowly compresses toward something ordinary. That is the slow-squeeze risk beneath the rich multiple, and it is why the A&amp;E margin, not the headline growth, is the number worth guarding.</p>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The map, the moat, and the app</h2></div>
+  <p class="part-sub">What actually protects MapmyIndia — and what the consumer app is really for.</p>
+
+  <p class="lead">If the map can be copied by a free giant, where is the durable advantage? It rests on four things that are genuinely hard to replicate quickly, plus one thing that is widely misunderstood — the consumer app.</p>
+
+  <ul class="clean">
+    <li><strong>Depth and Indian-specificity of the data.</strong> Thirty years of surveying produces address logic, unnamed lanes, local POIs and road behaviour that a globally-templated map struggles to match in India's messy, fast-changing built environment.</li>
+    <li><strong>Switching costs.</strong> An embedded car navigation system or an enterprise's routing back-end, once integrated and warranted, is disruptive and risky to rip out and re-validate. Design-wins are sticky by construction.</li>
+    <li><strong>Sovereignty and localisation.</strong> For government and security-sensitive work, being an <strong>Indian-owned</strong> map is not a marketing line — it is often a hard procurement requirement that structurally excludes foreign rivals.</li>
+    <li><strong>The data flywheel.</strong> More devices, cars and app users generating live movement data feed back into a fresher, better map — a loop that improves the very asset being licensed.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">What the Mappls app is genuinely for</div>
+    <p>Newcomers assume the consumer Mappls app is MapmyIndia's product and revenue. It is neither. The app is a shop window and a sensor. As a shop window it keeps the brand credible as a real, living map people can use — important when pitching a carmaker or a government. As a sensor it collects the anonymised movement, traffic and change-detection data that keeps the licensed database current. It is a cost centre that makes the profit centre better. Reading it as the business is the most common mistake made about this company.</p>
+  </div>
+
+  <div class="note gold"><b>The candid limit of the moat:</b> every one of these advantages is a matter of degree, not a wall. AI-assisted mapping, cheap high-resolution satellite imagery and crowd-sourced data are all lowering the cost of building a "good enough" map. The moat is real today; the open question is how much of MapmyIndia's head start technology quietly erodes over the next decade. That, not next quarter's growth, is the debate that decides whether the multiple is deserved.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The competitive set</h2></div>
+  <p class="part-sub">One free giant, one aggressive newcomer, a few global specialists, and a domestic peer.</p>
+
+  <p class="lead">MapmyIndia competes on several fronts at once, and no single rival threatens all of it. The map that beats it in cars is not the one that beats it in government; the API that undercuts it for a start-up is not the one that wins a defence contract. Holding the competitive map straight is essential.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs MapmyIndia</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">MapmyIndia</td><td>India's leading homegrown map &amp; location-tech licensor; A&amp;E + IoT</td><td><em>This company.</em> Profitable, net-cash, India-specific depth, government-friendly ownership; the debate is the free-map shadow and the multiple.</td></tr>
+      <tr><td class="t-strong">Google Maps</td><td>The dominant global map; free to consumers, priced Maps Platform for enterprise</td><td>Owns the consumer world outright; the real competitor for enterprise API rupees. Cannot easily serve sovereignty-sensitive government work.</td></tr>
+      <tr><td class="t-strong">Ola Maps</td><td>Ola's in-house map, built after ditching Google</td><td>The sharpest new threat — proof a funded Indian rival can enter. Competes mainly in enterprise/mobility APIs; far behind in government and depth.</td></tr>
+      <tr><td class="t-strong">HERE / TomTom</td><td>Global mapping specialists, strong in automotive</td><td>Deep auto-nav heritage worldwide, but less India-granular and without the Indian-ownership advantage for local government work.</td></tr>
+      <tr><td class="t-strong">Genesys International</td><td>Listed Indian geospatial/3D-mapping firm</td><td>The closest domestic peer — overlaps in 3D/HD mapping and government data, though smaller and less diversified across auto/enterprise.</td></tr>
+      <tr><td class="t-strong">IoT / telematics players</td><td>Numerous fleet-tracking and device vendors</td><td>Compete in the lower-margin IoT segment; fragmented, hardware-led, not a threat to the A&amp;E licensing core.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two takeaways. First, MapmyIndia's safest ground is exactly where Google is weakest — Indian-owned, sovereignty-sensitive, deeply-localised government and automotive work — and its most contested ground is the enterprise API market, where Google and Ola press hardest on price. Second, the competition is not one battle but several, so the company can be losing ground in cheap consumer-grade APIs while extending its lead in embedded auto nav and government data at the same time. Judge each motor on its own front, not on a single "Google is winning / losing" verdict.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Rare, real profitability — priced as if the compounding is guaranteed.</p>
+
+  <p class="lead">The financial story has two halves that pull against each other. The business quality is excellent — high margins, net cash, strong returns, a healthy order book. The valuation is demanding — a software-like multiple that assumes years of steady compounding with the margin intact. FY26 itself was a study in patience: a soft first half on order timing, then a Q4 that snapped back hard.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Revenue from operations (₹ Crore) — steady compounding, with a flattish FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:59%"></span></div><div class="bval">~281</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill wtg" style="width:80%"></span></div><div class="bval">~380</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill spec" style="width:98%"></span></div><div class="bval">~463</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~474</div></div>
+    </div>
+    <div class="legend"><span>Multi-year compounding at ~30%+ slowed to just ~2.3% in FY26 — a flat year that spooked the market mid-year before Q4 reaccelerated. FY23–FY25 figures are <em>approx.</em></span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">FY26 profitability &amp; the Q4 snap-back</div>
+    <div class="c-sub">₹ Crore and margins — the operating leverage of a licensing model</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue (ops)<small>FY26</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~474</div></div>
+      <div class="bar-row"><div class="blab">EBITDA<small>FY26 · ~37%</small></div><div class="track"><span class="fill spec" style="width:37%"></span></div><div class="bval">~176</div></div>
+      <div class="bar-row"><div class="blab">PAT<small>FY26 · ~25.5%</small></div><div class="track"><span class="fill wtg" style="width:28%"></span></div><div class="bval">~134</div></div>
+      <div class="bar-row"><div class="blab">Q4 EBITDA margin<small>vs 37% full-year</small></div><div class="track"><span class="fill gold" style="width:45%"></span></div><div class="bval">~45%</div></div>
+    </div>
+    <div class="legend"><span>Q4 FY26 total income rose ~55% and PAT ~3× as volumes landed, lifting the quarterly EBITDA margin to ~45% — a vivid demonstration of how incremental map-licensing revenue drops through at very high rates.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~37%</div><div class="msl">FY26 EBITDA margin; Q4 touched ~45% on volume</div></div>
+    <div class="ms green"><div class="msv">~₹685 Cr</div><div class="msl">Cash &amp; investments; debt-free, self-funding, dividend-paying</div></div>
+    <div class="ms red"><div class="msv">~70×+</div><div class="msl">P/E on ~₹10,000 Cr market cap (both approx.) — a premium software multiple</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: A&amp;E revenue growth at a held margin</div>
+    <p>At a software-like multiple on ~₹134 Cr of profit, MapmyIndia is not priced as a niche data vendor; it is priced as a compounder. So the metric that proves or breaks the case is narrow and specific: <strong>the growth rate of the A&amp;E / Map &amp; Data segment, with its EBITDA margin intact</strong>, powered by a rising count of <strong>automotive and enterprise design-wins that build the recurring royalty base</strong>. Not the IoT line. Not the consumer app's download count. Not one lumpy government quarter. If A&amp;E keeps compounding at 20%+ while holding its margin, the flat FY26 reads as a timing wobble and the multiple survives. If A&amp;E growth stalls <em>or</em> its margin drifts down under Google/Ola price pressure, the premium unwinds regardless of how many app users Mappls has. A&amp;E growth-at-margin is the scoreboard; everything else is commentary.</p>
+  </div>
+
+  <div class="note">Market cap (~₹10,000 Cr) and P/E (~70×+) are <b>approx.</b> and move with the share price; the FY23–FY25 revenue figures are <b>approx.</b> The segment split (~85%+ A&amp;E) is indicative. Verify all figures against the company's filings and a live quote before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A rare profitable Indian tech asset — asked to keep multiplying its map faster than a free map commoditises it.</p>
+
+  <p class="lead">MapmyIndia is that unusual thing: a new-age Indian tech company that already makes money, throws off cash, and owns a genuinely hard-to-build asset. The debate is not whether it is a real business — it plainly is — but whether it can keep expanding the count of paid licences on its map, at its current margin, for the many years its valuation assumes, all while Google gives maps away and Ola builds its own.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Asset-light licensing economics</strong> — ~37% EBITDA margin, ~25% net margin, net cash; incremental revenue drops through at very high rates (Q4 ~45%).</li>
+        <li><strong>Build-once, licence-many runway</strong> — every new car model, enterprise and government contract is a fresh annuity on an already-built map; ~₹1,754 Cr order book underwrites visibility.</li>
+        <li><strong>India digitisation tailwind</strong> — logistics, e-commerce, fintech, EVs and connected cars all need location data woven in; the addressable base keeps widening.</li>
+        <li><strong>Sovereignty moat in government</strong> — Indian-ownership and data-localisation structurally favour it where foreign maps can't easily go.</li>
+        <li><strong>Founder-owned, patient</strong> — 30-year-built data asset run by the people who built it; no debt, real dividends.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>The free-Google shadow</strong> — free consumer maps and cheap enterprise APIs cap pricing power; the "why pay?" question never fully goes away.</li>
+        <li><strong>New entrant proof</strong> — Ola Maps shows a funded rival can build its own; enterprise API pricing is the most contestable rupee.</li>
+        <li><strong>Concentration &amp; lumpiness</strong> — reliance on a limited set of large auto/enterprise/government clients; renewals, royalty terms and lumpy government orders swing quarters (see soft-H1 FY26).</li>
+        <li><strong>Margin dilution &amp; commoditisation</strong> — IoT drags the blend; AI-mapping and cheap satellite data lower the cost of a "good enough" rival map over time.</li>
+        <li><strong>Very rich valuation</strong> — a ~70×+ multiple on a company that grew ~2% in FY26 leaves the price highly sensitive to any A&amp;E growth or margin wobble.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>MapmyIndia has already answered the hardest question most Indian tech IPOs never do — it is profitable, cash-rich and built on an asset a competitor cannot conjure overnight. What it has not yet settled is whether it can keep multiplying paid licences on that map at a software margin for a decade, in the teeth of a free global map and a hungry domestic newcomer. The next few years turn on one checkable thing: the pace at which new automotive and enterprise design-wins add to the recurring royalty base while the A&amp;E margin holds near the mid-30s%. Watch each results season for A&amp;E growth alongside that margin line — a flat FY26 followed by a ~45%-margin Q4 is exactly the kind of split signal that will keep the map-licensing bull and the free-Google sceptic arguing, print by print, until the segment's trajectory makes the call for them.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>C.E. Info Systems Ltd (MapmyIndia) — Q4 &amp; FY26 results, investor presentation and press release (year ended Mar 2026), via company disclosures and BSE filings.</li>
+    <li>Construction World — "MapmyIndia Posts Strong Q4 and FY26 Results" (FY26 revenue, EBITDA, PAT, margins, order book).</li>
+    <li>Indian Startup News — "MapmyIndia FY26 revenue rises to ₹474 crore, Q4 profit jumps nearly 3x."</li>
+    <li>Whalesbook Corporate News — "MapmyIndia FY26 Revenue Up 2.3% to ₹474.1 Cr, Order Book ₹1,754.4 Cr."</li>
+    <li>InvestyWise — "C.E. Info Systems (MapmyIndia) Q4 FY2026 Results: Sequential Growth, Margin Expansion &amp; Dividend."</li>
+    <li>BSE India — C.E. Info Systems Limited stock &amp; filings page, scrip code 543425.</li>
+    <li>NSE India — MAPMYINDIA (C.E. Info Systems Ltd) quote and shareholding pattern.</li>
+    <li>Screener.in — C.E. Info Systems consolidated financials, segment mix, market cap and P/E.</li>
+    <li>Company IPO prospectus (Dec 2021) &amp; annual reports — business model, segments (A&amp;E vs IoT), promoter &amp; shareholding history, ISRO/Zenrin/Qualcomm relationships.</li>
+    <li>Media coverage of Ola Maps, Google Maps Platform pricing, and Indian geospatial policy — competitive and regulatory backdrop.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; segment splits, market cap and P/E are indicative and move with the share price. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "MAPMYINDIA";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Refresh isn't wired up yet.\n\nOnce the free Cloudflare Worker is deployed, set REFRESH_ENDPOINT at the top of this page's script. Clicking Refresh will then trigger an on-demand, incremental update of "+COMPANY_SYMBOL+": it pulls the latest results, concall and news, and rewrites only the sections that changed — then re-publishes this page. No API tokens ever touch the browser.");
+      return;
+    }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ symbol: COMPANY_SYMBOL })
+      });
+      if(!r.ok) throw new Error('status '+r.status);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(()=>{ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 5000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
