@@ -109,10 +109,11 @@ sequential run is where quality silently erodes — guard against it).
 
 - Footer disclaimer (always): educational, plain-English, **not investment
   advice**, figures approximate / may be outdated, verify against primary sources.
-- Auto-generated primers additionally carry a small provenance line near the
-  cover: **"Auto-generated · figures self-verified against public sources ·
-  not investment advice."** Hand-reviewed exemplars (Rainbow, Waaree, eClerx,
-  Paradeep) omit it.
+- **No cover provenance line.** The old "Auto-generated · figures self-verified
+  against public sources · not investment advice." line near the cover was
+  **removed from all primers on 2026-07-25** at the owner's request — do NOT add
+  it to new primers. (The footer disclaimer above is the only required
+  not-investment-advice statement.)
 
 ---
 
