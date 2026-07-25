@@ -117,6 +117,17 @@ sequential run is where quality silently erodes — guard against it).
 
 ---
 
+## 3b. Download-PDF button + print header (every primer)
+
+Every primer carries a **"⬇ Download PDF" button** (fixed pill, top-right, gold,
+under the back-link) that calls `window.print()`, plus a print-only Guardian
+Capital **logo header** (`.pdf-head`, `../assets/logo.png`) and a dedicated
+`@media print` stylesheet (injected as `<style id="pdf-print-style">`). The print
+CSS: shows the logo header on top, collapses the two-column layout to a single
+aligned column, renders background colours, and **hides from the PDF** the TOC
+sidebar, back-link, refresh bar, What's-new block, and the button itself. New
+primers must include this block — reuse `scratchpad/add-pdf-button.mjs` (idempotent).
+
 ## 4. The refresh bar (DORMANT for now — Phase 2)
 
 Include the refresh control in every primer (cover area), but **unwired**:
