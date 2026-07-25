@@ -78,6 +78,18 @@ sequential run is where quality silently erodes — guard against it).
   - **Cover** (`header.cover`): kicker tags (incl. `NSE: … · BSE: …`), an `<h1>`
     with an `<em>` accent phrase, a `dek`, a 4-cell `stat-strip`, and the
     **refresh bar** (see §4).
+    - **CURRENCY RULE (binding) — the top `stat-strip` financial cells MUST be in
+      ₹ (Rupees Crore / Lakh Crore), never USD.** This applies to revenue, PAT,
+      EBITDA (absolute), market cap, order book, GTV/AUM and any headline money
+      figure — even for IT/pharma exporters that report primarily in dollars
+      (show ₹ revenue, e.g. `₹1,75,000 Cr`, not `$20.2 bn`). Use the company's
+      OWN reported ₹ figure; do not naive-FX-convert if a ₹ number is published.
+      The ONLY numbers that may stay in USD at the top are genuine per-unit
+      industry-convention metrics — refining **GRM `$/bbl`**, crude realisation
+      `$/bbl`, LME metal cost/realisation **`$/t`**. Dollar figures may still
+      appear inside body prose/tables (e.g. USD revenue for context), just not as
+      a headline `stat-strip` money cell. Percentages, tonnage, headcount, etc.
+      are unaffected.
   - **Numbered sections** `00 … N` (`section.part` with `.pno` + `<h2>`), a
     `.part-sub`, a `.lead` paragraph, `ul.clean` lists, "In plain terms"
     callouts (`.plain`), `.tbl-wrap` tables, `.chart` bar charts, the `.flow`
