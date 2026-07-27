@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sansera Engineering — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F5F6;
+    --paper-2:#FAFBFC;
+    --card:#FFFFFF;
+    --ink:#161E21;
+    --ink-soft:#54605F;
+    --ink-faint:#87938F;
+    --brand:#4A6670;          /* steel grey - forged & machined */
+    --brand-bright:#6E93A0;   /* brighter steel accent */
+    --gold:#C08A3E;           /* warm bronze - accent / warmth */
+    --wtg:#4A6670;            /* auto-ICE (engine parts) */
+    --epc:#6E93A0;            /* tech-agnostic / xEV */
+    --om:#2E464E;            /* aerospace / defence */
+    --spec:#537E8A;          /* cross accent */
+    --line:#D9DEDD;
+    --line-soft:#E7EAE9;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4EEF1;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF2E3;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F8F8;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAEEEC;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#334E57,#4A6670);}
+  .fill.gold{background:linear-gradient(90deg,#C08A3E,#DDAB65);}
+  .fill.wtg{background:linear-gradient(90deg,#4A6670,#6E93A0);}
+  .fill.om{background:linear-gradient(90deg,#2E464E,#456670);}
+  .fill.spec{background:linear-gradient(90deg,#537E8A,#77A0AB);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a47,#566461);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF2E3;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF2F0;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Forged-and-machined 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What Sansera makes</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The EV question</a></li>
+    <li><a href="#p5"><span class="n">05</span> The aerospace &amp; defence pivot</a></li>
+    <li><a href="#p6"><span class="n">06</span> Tech-agnostic &amp; xEV parts</a></li>
+    <li><a href="#p7"><span class="n">07</span> Why the parts are sticky</a></li>
+    <li><a href="#p8"><span class="n">08</span> Exports &amp; the customer book</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: SANSERA · BSE: 543358</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Sansera Engineering, <em>the engine-parts maker racing to outgrow the engine</em></h1>
+  <p class="dek">A complete walk through a Bengaluru precision-components company — how it forges and machines the safety-critical metal parts that go inside cars, bikes and trucks, why the whole investment case turns on a single mix number rather than total revenue, and how an "auto-component" firm is quietly building an aerospace-and-defence machining business to hedge the day the internal-combustion engine fades.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹3,498 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹327 <small>Cr</small></div><div class="l">PAT (FY26)</div></div>
+    <div class="cell"><div class="v">~31.5<small>%</small></div><div class="l">Non-ICE revenue mix (FY26)</div></div>
+    <div class="cell"><div class="v">~₹20,300 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">27 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹3,498 Cr (+16%), EBITDA ₹632 Cr at an 18.1% margin, PAT ₹327 Cr (+51%); ADS (aerospace/defence/semiconductor) revenue up 155% to ~₹315 Cr with a ~₹4,464 Cr unexecuted backlog; non-ICE mix at ~31.5%.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Sansera Engineering makes <strong>precision metal parts</strong> — the small, complex, safety-critical components buried inside an engine, a gearbox, a suspension or a braking system. It takes a lump of steel or aluminium, <strong>forges</strong> it into a rough shape under enormous pressure, then <strong>machines</strong> it on computer-controlled tools to micron tolerances, and ships a finished, ready-to-fit part to a vehicle maker. Think connecting rods, rocker arms, crankshafts, gear-shift forks and a long tail of others. Its customers are the world's big engine and vehicle makers — Indian and global, across two-wheelers, passenger cars and commercial vehicles — plus a fast-growing book of <strong>non-automotive</strong> work in aerospace, defence and off-road machinery.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is a Tier-1 precision supplier, not a bulk forger.</strong> Sansera doesn't sell tonnes of rough steel; it sells finished, qualified, safety-critical parts that are <em>designed in</em> to a customer's engine or platform and stay there for the model's whole life. That makes the revenue sticky and the margins tied to complexity, not commodity prices. FY26 revenue was <strong>~₹3,498 Cr</strong> (+16%), EBITDA <strong>~₹632 Cr</strong> at an <strong>18.1% margin</strong>, and PAT jumped ~51% to <strong>~₹327 Cr</strong>.</li>
+    <li><strong>A big chunk of its "auto" content dies with the combustion engine — and it knows it.</strong> Connecting rods and rocker arms exist because there is a piston engine to serve. If the car goes electric, those parts vanish. So Sansera is deliberately shrinking its exposure to internal-combustion engine (ICE) parts and growing everything that <em>survives</em> electrification: tech-agnostic auto parts, electric-vehicle (xEV) components, and non-auto aerospace and defence work. In FY26 the mix was roughly <strong>68.5% Auto-ICE / 13% tech-agnostic + xEV / 18.5% non-auto</strong>.</li>
+    <li><strong>The aerospace bet is bigger than it looks.</strong> Sansera's Aerospace, Defence &amp; Semiconductor (ADS) arm did only ~₹315 Cr of revenue in FY26 — under a tenth of the company — but it grew <strong>~155%</strong> and sits on an <strong>unexecuted order backlog of ~₹4,464 Cr</strong>, which is larger than the <em>entire company's</em> FY26 revenue. That backlog is the clearest signal that the diversification is real, not a slide in an investor deck.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Sansera is a precision-parts workshop for the world's engine and vehicle makers — it forges and machines the metal bits that have to be exactly right or something breaks. The uncomfortable truth at its core is that a large slice of what it sells only exists because engines burn fuel, and the world is slowly moving away from that. So the company is in a race against its own product: grow the parts that don't need an engine — for electric cars, for aircraft, for defence — fast enough to replace the engine parts before they fade. The whole investment question is not "how big is Sansera?" but "how quickly is the non-engine half of Sansera growing, and is it as profitable as the half it's replacing?"</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Forged-and-machined 101: how a lump of metal becomes a con-rod</h2></div>
+  <p class="part-sub">No engineering degree needed — just the handful of ideas that drive the whole business.</p>
+
+  <p class="lead">Every complex machine — a car engine, an aircraft actuator, a truck gearbox — is a stack of precisely shaped metal parts that must fit together and survive years of stress. Two manufacturing steps turn raw metal into those parts, and Sansera does both. Understand them and you understand what the company sells and why it is hard to copy.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only process terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Forging</td><td>Shaping metal by hammering or pressing it under huge force, usually hot. The metal's internal grain flows to follow the shape, which makes a forged part far <strong>stronger and more fatigue-resistant</strong> than a cast or machined-from-bar one. That is exactly what you want in a part that flexes millions of times, like a connecting rod.</td></tr>
+      <tr><td class="t-strong">Machining (CNC)</td><td>Cutting the forged blank to exact size on computer-controlled (CNC) tools — drilling, milling, grinding to tolerances measured in microns. This is where a rough forging becomes a finished, fit-ready component. It is the step that adds most of the value and the difficulty.</td></tr>
+      <tr><td class="t-strong">Safety-critical</td><td>A part whose failure could cause an accident or destroy the machine — a con-rod, a crankshaft, an aircraft bracket. These parts face the toughest qualification and can't be sourced casually, which is what makes the supplier relationship sticky.</td></tr>
+      <tr><td class="t-strong">Tolerance</td><td>How little variation a part is allowed — often a few microns (thousandths of a millimetre). Tight tolerances demand better equipment and process control; they are the moat between a precision supplier and a general job-shop.</td></tr>
+      <tr><td class="t-strong">Aluminium vs steel</td><td>Steel forgings dominate engine internals (strength). Aluminium forgings are lighter — prized for electric vehicles and aerospace, where every kilogram saved matters. Sansera does both, and its aluminium capability is central to its future mix.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The economics that decide everything: value-add per part</div>
+    <p>Sansera's profit is not in the metal — steel and aluminium are commodities anyone can buy. It is in the <strong>transformation</strong>: taking a cheap blank and turning it into a certified, micron-accurate, safety-critical part that a customer will pay a large multiple of the raw-material cost for, and will keep buying for the life of the vehicle. The more complex the part and the tighter the tolerance, the more of that price is Sansera's engineering rather than pass-through metal. This is why the company chases <em>complexity</em> — high-precision, high-difficulty parts — rather than volume. A more complex part with an aerospace-grade finish carries far more margin per kilogram than a simple stamping, even though both start as the same metal.</p>
+  </div>
+
+  <h3>Where these parts end up</h3>
+  <ul class="clean">
+    <li><strong>Inside engines &amp; transmissions</strong> — connecting rods, crankshafts, rocker arms, gear-shift forks. The traditional heart of the business, and the part most exposed to electrification.</li>
+    <li><strong>In the "rolling chassis"</strong> — suspension, braking and steering components that a vehicle needs whether it runs on petrol, a battery or a hybrid. These are the <em>tech-agnostic</em> parts that survive the switch to EVs.</li>
+    <li><strong>In aircraft, defence and off-road machines</strong> — precision-machined brackets, structural and actuation parts for aerospace; components for defence platforms; parts for agricultural and off-highway equipment. The non-auto book Sansera is scaling hard.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What Sansera actually sells: three books under one roof</h2></div>
+  <p class="part-sub">The product families — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">It is easy to see Sansera as "an auto-parts maker" and stop there. The more useful lens — and the one management itself uses — is to split the company into <strong>three books of business</strong> defined not by what the part <em>is</em> but by <strong>whether it needs a combustion engine to exist</strong>. That single distinction is the spine of the investment case, so it is worth drawing the value chain around it.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The Sansera revenue map — one factory base, three destinies under electrification</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Book 1 · Auto-ICE</div><div class="nname">Engine &amp; transmission parts</div><div class="nwho">Con-rods, rocker arms, crankshafts, gear forks. ~68.5% of FY26. Shrinks as engines fade.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Book 2 · Tech-agnostic + xEV</div><div class="nname">Powertrain-neutral parts</div><div class="nwho">Suspension, braking, transmission-agnostic, plus EV-specific parts. ~13% of FY26. Survives / grows.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Book 3 · Non-auto (ADS+)</div><div class="nname">Aerospace, defence, off-road</div><div class="nwho">Machined aero components, defence, ag/off-highway. ~18.5% of FY26. Fastest-growing, engine-free.</div></div>
+    </div>
+    <div class="flow-note">Books 2 and 3 are the parts that do not care whether the world drives petrol, hybrid or electric. The whole thesis is how fast their combined share rises to replace the shrinking Book 1 — at a margin that holds.</div>
+  </div>
+
+  <h3>The three books, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Book 1 — Auto-ICE (internal-combustion) parts</span></strong> — the historical core: <strong>connecting rods</strong> (Sansera is among the world's larger makers), <strong>rocker arms</strong>, <strong>crankshafts</strong>, gear-shift forks and other engine/transmission internals for two-wheelers, cars and commercial vehicles. High-quality, sticky, cash-generative — but structurally tied to the piston engine. This is the ~68.5% of FY26 revenue that faces the long, slow headwind of electrification.</li>
+    <li><strong><span class="chain-epc">Book 2 — Tech-agnostic auto + xEV</span></strong> — parts a vehicle needs <em>regardless</em> of what powers it: suspension, braking, steering and other chassis components, plus components designed specifically for electric and hybrid powertrains (motor and battery-system parts, EV-specific structural and driveline pieces). ~13% of FY26 and growing. Crucially, this book turns the EV threat into an opportunity — an EV still needs a suspension arm and a brake component; some even need <em>more</em> precision aluminium than an ICE car.</li>
+    <li><strong><span class="chain-om">Book 3 — Non-automotive (ADS &amp; off-road)</span></strong> — the diversification engine: precision-machined <strong>aerospace</strong> components, <strong>defence</strong> parts, <strong>semiconductor</strong>-related and industrial work (grouped as "ADS"), plus agricultural and off-highway machinery components. ~18.5% of FY26, the highest-margin ambition, and the book with a multi-year order backlog behind it.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why splitting the company this way matters</div>
+    <p>A normal auto-ancillary is valued on the auto cycle: when vehicle sales rise, it earns more; when they fall, it earns less. Sansera is asking to be valued on something different — a <strong>deliberate migration</strong> from a shrinking pool (engine parts) to growing ones (everything engine-free). If you only track total revenue, you miss the entire point: the company could grow revenue modestly while quietly transforming <em>what</em> that revenue is made of, and it is the composition, not the total, that decides whether Sansera is a melting ice-cube or a re-rating growth story. That is why every section that follows keeps returning to one figure — the share of revenue that does not depend on a combustion engine.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the founders, and who controls it</h2></div>
+  <p class="part-sub">A Bengaluru precision house, founder-built — with a surprisingly small promoter stake.</p>
+
+  <p class="lead">Sansera Engineering was founded in <strong>Bengaluru in 1981</strong> by <strong>S. Sekhar Vasan</strong> (Chairman &amp; Managing Director) and <strong>F.R. Singhvi</strong> (Joint Managing Director), who between them have run the business for over four decades. From a single precision-machining operation it grew into a multi-plant forging-and-machining group with facilities across India and a footprint in Sweden, and it listed on the NSE and BSE in September 2021.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1981</div><div class="ev">Founded in Bengaluru by S. Sekhar Vasan and F.R. Singhvi as a precision-engineering company serving Indian and, over time, global vehicle makers.</div></li>
+    <li><div class="yr">2000s–2010s</div><div class="ev">Scales into a full <strong>forging + machining</strong> Tier-1 supplier of connecting rods, rocker arms, crankshafts and other engine internals; builds an export book with global OEMs and adds finishing/assembly capability.</div></li>
+    <li class="major"><div class="yr">Sep 2021</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE (issue price ~₹744/share); the listing was largely an offer-for-sale, with private-equity and founder holders monetising stakes.</div></li>
+    <li><div class="yr">FY22–FY24</div><div class="ev">Pushes <strong>diversification</strong>: builds out aluminium forging, xEV components and the Aerospace-Defence-Semiconductor (ADS) vertical; expands its Sweden aluminium-forging operation and adds domestic capacity.</div></li>
+    <li><div class="yr">~2023</div><div class="ev">Acquires <strong>Fitwel Tool &amp; Forgings</strong> (approx.) to deepen forging and machining capability — one of several bolt-ons supporting the mix shift.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record year: revenue ~₹3,498 Cr (+16%), PAT ~₹327 Cr (+51%), EBITDA margin up to 18.1%; <strong>ADS revenue +155%</strong> with a ~₹4,464 Cr unexecuted backlog; non-ICE mix ~31.5%.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters (approx. ~29%):</strong> the founding families around <strong>S. Sekhar Vasan</strong> and <strong>F.R. Singhvi</strong>. Note this carefully — the promoter holding is <strong>unusually low</strong> for an Indian founder-run company (many peers sit at 50–75%). A large part of the register is institutional and public, a legacy of the private-equity backing that pre-dated the IPO and the offer-for-sale at listing. It means the founders run the business but do not hold a commanding equity majority — worth tracking in the shareholding filings.</li>
+    <li><strong>Institutional base:</strong> domestic mutual funds and foreign investors hold a substantial slice, reflecting the market's appetite for the diversification story. This also means the stock trades on institutional expectations — and can be punished quickly if the mix-shift narrative wobbles.</li>
+    <li><strong>Operating footprint:</strong> a network of manufacturing plants across India (Karnataka, Maharashtra, Uttarakhand and others) plus a Sweden aluminium-forging facility, giving it both low-cost Indian machining and a European presence close to global customers.</li>
+  </ul>
+
+  <div class="note gold"><b>The ownership quirk worth noticing:</b> a promoter stake near ~29% is low enough that Sansera behaves more like a professionally-run, institution-owned company than a typical family-controlled ancillary. That cuts both ways — it aligns management with public shareholders and keeps the register liquid, but it also removes the deep promoter cushion that steadies many Indian small-caps when a cycle turns. The founders' operating record, not a controlling block, is what underwrites the story.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: the powertrain-agnostic mix shift -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The EV question: the mix shift that is the whole thesis</h2></div>
+  <p class="part-sub">The single most important idea in the investment case — and it is specific to this company.</p>
+
+  <p class="lead">Here is the problem Sansera cannot escape and does not pretend to. A connecting rod exists to connect a piston to a crankshaft. A rocker arm exists to open and close an engine valve. A crankshaft <em>is</em> the engine's spine. Take away the combustion engine — as electrification eventually will, at some pace, in some markets — and those parts have <strong>no reason to be manufactured at all</strong>. There is no EV version of a con-rod. This is not a cyclical headwind that passes; for the engine-parts book it is a slow, structural sunset. Every serious question about Sansera reduces to one thing: <strong>how fast can the engine-free half of the company grow to replace the engine half before that sunset arrives?</strong></p>
+
+  <div class="chart">
+    <div class="c-title">The three books, by exposure to the combustion engine (FY26)</div>
+    <div class="c-sub">Approximate share of revenue — and which way each is heading under electrification</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Auto-ICE<small>engine/transmission — shrinks</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~68.5%</div></div>
+      <div class="bar-row"><div class="blab">Non-auto (ADS+)<small>aero/defence/off-road — grows</small></div><div class="track"><span class="fill om" style="width:27%"></span></div><div class="bval">~18.5%</div></div>
+      <div class="bar-row"><div class="blab">Tech-agnostic + xEV<small>engine-neutral — grows</small></div><div class="track"><span class="fill epc" style="width:19%"></span></div><div class="bval">~13.0%</div></div>
+    </div>
+    <div class="legend"><span>Combine the bottom two bars and you get the number that matters: <strong>~31.5% of FY26 revenue does not depend on a combustion engine</strong>. Management wants to push the ICE share down from ~70% toward ~60% over time — which means growing the other two books faster than the whole.</span></div>
+  </div>
+
+  <p>This is why total revenue is the wrong scoreboard. Imagine Sansera grows revenue 12% next year but every rupee of that growth comes from ICE engine parts — the company got <em>bigger</em> and <em>more</em> exposed to the very thing that threatens it. Now imagine flat total revenue but the non-ICE books doubling their share — the company stood still on size while transforming its terminal value. The market is not paying ~₹20,000 Cr for the first outcome; it is paying for the second. The number that separates them is the non-ICE mix and its rate of change.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits Sansera: the crossover clock, not the revenue line</div>
+    <p>Most manufacturers you can judge by whether the top line grows. Sansera you have to judge by a <em>race between two curves inside the top line</em>. Curve one: the ICE engine-parts book, sticky and cash-rich today, on a multi-decade fade as engines slowly disappear from new vehicles. Curve two: the engine-free books (tech-agnostic + xEV + aerospace/defence), small today at ~31.5% but compounding fast. The entire equity value hinges on the <strong>crossover</strong> — the point where the growing curves out-earn the shrinking one and the fade in engine parts stops mattering. FY26's ~31.5% non-ICE share, up from a lower base, is the clock reading. If that share marches toward 40% and then a majority while margins hold, Sansera earns its multiple by <em>becoming a different company</em>. If the share stalls in the low-30s, the market is paying a growth price for a business quietly running down its own core.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~31.5%</div><div class="msl">Non-ICE revenue share in FY26 — the clock reading for the whole thesis</div></div>
+    <div class="ms"><div class="msv">~70%→60%</div><div class="msl">Management's stated aim: pull ICE share down over the coming years</div></div>
+    <div class="ms green"><div class="msv">+155%</div><div class="msl">FY26 growth in the ADS (aerospace/defence/semiconductor) book</div></div>
+  </div>
+
+  <div class="note gold"><b>A genuine surprise:</b> electrification is usually told as a pure threat to engine-parts makers. For Sansera it is only half a threat — because a meaningful part of its "auto" book is <em>powertrain-agnostic</em> (a brake or suspension part an EV needs just as much) and its xEV book actively <em>wins</em> from the switch (EVs use lots of precision aluminium). So the honest exposure to electrification is not the whole auto book; it is the ~68.5% ICE slice minus whatever content migrates to EV platforms. The threat is real, but narrower than "Sansera is an ICE company," and the company has been engineering that narrowing on purpose.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The aerospace &amp; defence pivot: the hedge being built in plain sight</h2></div>
+  <p class="part-sub">The smallest book today, the biggest strategic lever — and the one with a backlog behind it.</p>
+
+  <p class="lead">The most striking thing about Sansera is not what it sells today but what it is <em>building</em>. Grouped as <strong>ADS — Aerospace, Defence &amp; Semiconductor</strong> — this vertical takes the same forging-and-machining skill Sansera honed on engine parts and points it at components that have nothing to do with cars: precision-machined structural and actuation parts for aircraft, components for defence platforms, and industrial/semiconductor-related work. It is small — ~₹315 Cr in FY26, under a tenth of revenue — but it is where the company's future optionality lives.</p>
+
+  <div class="chart">
+    <div class="c-title">ADS: a small book with an outsized order behind it</div>
+    <div class="c-sub">Approximate FY26 figures, ₹ Crore — revenue vs the unexecuted backlog</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">ADS revenue FY26<small>up ~155% YoY</small></div><div class="track"><span class="fill spec" style="width:7%"></span></div><div class="bval">~315</div></div>
+      <div class="bar-row"><div class="blab">Total company revenue FY26</div><div class="track"><span class="fill wtg" style="width:78%"></span></div><div class="bval">~3,498</div></div>
+      <div class="bar-row"><div class="blab">ADS unexecuted backlog<small>as of Mar 2026</small></div><div class="track"><span class="fill om" style="width:100%"></span></div><div class="bval">~4,464</div></div>
+    </div>
+    <div class="legend"><span>Read the bars again: the aerospace-and-defence <em>order backlog</em> (~₹4,464 Cr) is larger than the <em>entire company's</em> annual revenue (~₹3,498 Cr) and more than fourteen times ADS's current yearly sales. That is multi-year execution visibility for a business most investors still file under "auto components."</span></div>
+  </div>
+
+  <p>Why does this matter so much for such a small book today? Because aerospace and defence work is the strongest possible answer to the EV question. It is <strong>completely engine-agnostic</strong> — an aircraft bracket doesn't care what powers cars. It is <strong>higher-margin</strong> — aerospace tolerances and certifications command premium pricing. And it is <strong>extraordinarily sticky</strong>: once a part is qualified onto an aircraft or defence programme, it is designed in for the platform's life, often decades, with switching costs that dwarf anything in autos. A large qualified backlog in ADS is therefore not just revenue-in-waiting; it is proof that global aerospace primes have accepted Sansera as a supplier — the hardest gate in the industry to pass.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the backlog is the tell, not the current revenue</div>
+    <p>Aerospace has a brutal on-ramp: qualifying a single part can take years of audits, test articles and certification before the first rupee of production revenue appears. That lag is exactly why the <em>backlog</em>, not today's ~₹315 Cr, is the number to watch. A ~₹4,464 Cr book of orders already won means the hard, slow qualification work is largely done and the revenue is now a question of <em>ramping production</em>, not winning trust. For a company racing a crossover clock, having a multi-year, high-margin, engine-free order pipeline already banked is the single most valuable asset it owns — it converts the diversification story from "we hope to grow ADS" into "we have to execute an ADS book we've already signed."</p>
+  </div>
+
+  <div class="note gold"><b>The India angle:</b> the timing of Sansera's aerospace-and-defence push lines up with two national tailwinds — India's drive to localise defence manufacturing and its ambition to become a global aerospace machining hub as Western OEMs diversify supply chains away from single-country dependence. A qualified, low-cost, precision-machining supplier in India is exactly what that shift needs. It means Sansera's ADS ramp is riding a structural sourcing move, not just its own sales effort.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Tech-agnostic &amp; xEV parts: the auto content that survives</h2></div>
+  <p class="part-sub">The overlooked middle book — why not all of "auto" is at risk from electrification.</p>
+
+  <p class="lead">Between the shrinking engine book and the glamorous aerospace book sits the quietly important middle: automotive parts that either <strong>don't care what powers the vehicle</strong> (tech-agnostic) or are <strong>made specifically for electric and hybrid vehicles</strong> (xEV). Together ~13% of FY26 revenue, this book is the reason "Sansera is an ICE company" is too crude a summary — a large part of its automotive expertise carries straight across the electric transition.</p>
+
+  <p>Split it in two. <strong>Tech-agnostic parts</strong> are the ones every vehicle needs whatever is under the bonnet: suspension components, braking-system parts, steering and other chassis pieces. A battery-electric car still has four wheels, a suspension that has to absorb bumps, and brakes that have to stop it — often needing <em>heavier-duty</em> versions because EVs are heavier. <strong>xEV parts</strong> go further: components designed for the electric powertrain itself — motor and gearbox parts, battery-housing and structural aluminium, driveline pieces unique to EVs. Here the switch to electric is not a threat at all; it is net-new demand Sansera can win precisely because it already knows how to forge and machine precision aluminium.</p>
+
+  <div class="plain">
+    <div class="ptag">Why aluminium is the through-line</div>
+    <p>The single capability that ties Sansera's future together is <strong>precision aluminium forging and machining</strong>. Aluminium is light, and lightness is what both electric vehicles and aircraft are desperate for — an EV wants to offset its heavy battery, an aircraft wants to burn less fuel. So the same aluminium skill feeds three of Sansera's growth vectors at once: xEV structural parts, tech-agnostic lightweight components, and aerospace machined parts. A company that spent decades forging steel con-rods for engines has been retooling toward the material that the post-engine world runs on. That is the connective tissue beneath the three-book story — one core competency, pointed at wherever the metal is going.</p>
+  </div>
+
+  <div class="note gold"><b>The nuance to hold:</b> tech-agnostic and xEV content is genuinely defensive against electrification, but it is not automatically high-margin. Some chassis and EV parts are more commoditised than a complex engine internal, and EV programmes can be fiercely price-negotiated. So this book protects <em>volume</em> through the transition, but whether it protects <em>margin</em> depends on Sansera winning the complex, high-value pieces rather than the simple ones. Watch the mix within the mix.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Why the parts are sticky: the qualification moat</h2></div>
+  <p class="part-sub">The economics of a designed-in Tier-1 precision supplier.</p>
+
+  <p class="lead">Precision forging-and-machining is not a business you win on price alone, and that is the whole reason Sansera can earn respectable margins on what looks, from a distance, like metal-bashing. The moat is <strong>qualification</strong>: the long, exacting process by which a customer certifies a part and a supplier before trusting them with something safety-critical. Once through it, the supplier is embedded for years.</p>
+
+  <p>Consider what it takes to become the con-rod supplier for a global engine, or a machined bracket for an aircraft. The customer audits your plant, your metallurgy, your process controls. They run your sample parts through fatigue and stress testing. They validate that you can hold micron tolerances batch after batch, for millions of parts, without a single failure — because a failed con-rod destroys an engine and a failed aircraft part can be catastrophic. That process takes <strong>months in autos and years in aerospace</strong>. Having invested all that, a customer does not casually re-shop the part to save a few percent; the risk and cost of re-qualifying a new supplier dwarf the saving. So the part stays with the incumbent for the model's or platform's entire life.</p>
+
+  <div class="plain">
+    <div class="ptag">Why "designed-in" is the phrase that matters</div>
+    <p>The best precision parts are not bought off a shelf; they are <strong>designed in</strong> — engineered jointly with the customer for a specific engine, chassis or aircraft, and locked into the bill of materials before the product ever launches. A designed-in part carries three gifts: pricing power (the customer can't easily substitute it), longevity (it sells for the whole product cycle, often 5–10 years in autos and decades in aerospace), and a head-start on the <em>next</em> programme, because the incumbent supplier is first in line. Sansera's decades of designed-in engine parts are what funded its diversification; its designed-in aerospace and xEV wins are what will fund the next decade. The moat isn't a factory — anyone can buy CNC machines — it's the accumulated trust that gets you designed in.</p>
+  </div>
+
+  <p>The flip side is that this stickiness works against Sansera too. Winning <em>new</em> content — especially in a fresh vertical like aerospace — means running that same slow qualification gauntlet before earning a rupee. That is why the ADS ramp takes years and why the backlog matters more than current revenue: it represents qualification gates already passed. And it is why customer concentration is a real risk — losing a large designed-in programme, or a big customer losing share, hits hard precisely because the relationships are so deep.</p>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Exports and the customer book</h2></div>
+  <p class="part-sub">A genuinely global supplier — with the concentration that implies.</p>
+
+  <p class="lead">Sansera is not an India-only ancillary that happens to export a little. A large share of its revenue comes from <strong>global customers</strong>, and it supplies engine and vehicle makers across Europe, North America and Asia alongside the big Indian names. That international footprint is both a strength — access to the world's most demanding, highest-value programmes — and a source of currency and concentration risk.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The shape of the customer book (illustrative)</caption>
+    <thead><tr><th>Customer type</th><th>Who / what</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Global 2W &amp; PV OEMs</td><td>International two-wheeler and passenger-car makers and their engine programmes across Europe and Asia.</td><td>The demanding customers that push Sansera up the quality curve and anchor its export revenue.</td></tr>
+      <tr><td class="t-strong">Indian OEMs</td><td>Leading Indian two-wheeler, car and commercial-vehicle makers.</td><td>The domestic base — large, cyclical, and increasingly a source of xEV and tech-agnostic content too.</td></tr>
+      <tr><td class="t-strong">Tier-1 systems suppliers</td><td>Large auto systems integrators (e.g. fuel-system and driveline specialists) that buy Sansera's precision parts.</td><td>Sansera often sits one layer below the OEM, supplying the Tier-1s who assemble complete systems.</td></tr>
+      <tr><td class="t-strong">Aerospace &amp; defence primes</td><td>Global aerospace machining customers and defence programmes feeding the ADS backlog.</td><td>The newest, highest-margin, engine-free relationships — the ones the ADS backlog represents.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why exports raise the stakes both ways</div>
+    <p>Selling to global OEMs is a badge of quality — you don't supply a European engine programme without world-class metallurgy and process control, and that credibility is what lets Sansera pursue aerospace at all. But a heavily export-and-large-customer book means the revenue is <strong>concentrated</strong>: a handful of big programmes and customers drive a large slice of sales, so a model going out of production, a customer losing share, or a demand air-pocket in one region lands directly on Sansera. And because much of the revenue is in foreign currency, the rupee's moves swing reported results even when volumes are steady. The global footprint is what makes the diversification credible; it is also what makes the earnings lumpier than a purely domestic ancillary's.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A scaled forging-and-machining field — where Sansera is the precision-and-diversification specialist.</p>
+
+  <p class="lead">Forging and precision machining in India is a business of a few serious, scaled players, because the capital, metallurgy and qualifications needed to make safety-critical parts keep out the casual entrant. Sansera competes with the country's forging majors, but it has staked out a distinct position: <strong>higher-complexity precision components and a faster tilt into non-auto</strong>, rather than sheer forging tonnage.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Sansera</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Sansera Engineering</td><td>Precision forged-and-machined complex components; deliberate non-auto / xEV diversification</td><td><em>This company.</em> Not the biggest forger, but among the more precision-and-complexity-focused; the clearest engine-to-engine-free pivot story.</td></tr>
+      <tr><td class="t-strong">Bharat Forge</td><td>India's forging giant — huge scale across autos, industrials, defence and aerospace</td><td>Far larger and more diversified, with its own big defence/aerospace push. The heavyweight benchmark; Sansera is the smaller, nimbler precision specialist.</td></tr>
+      <tr><td class="t-strong">Ramkrishna Forgings</td><td>Large CV-heavy forging player, expanding beyond commercial vehicles</td><td>More commercial-vehicle and forging-tonnage weighted; competes on scale in heavy forgings rather than Sansera's precision-machining niche.</td></tr>
+      <tr><td class="t-strong">MM Forgings</td><td>Export-oriented forging and machining supplier</td><td>Overlaps in exported forged-and-machined auto parts; similar exposure to the global auto cycle and the same electrification question.</td></tr>
+      <tr><td class="t-strong">Global precision &amp; aero machinists</td><td>International component and aerospace-machining suppliers</td><td>The competition in ADS — deep-pocketed, long-qualified incumbents. Sansera competes on India's cost base and its willingness to invest to qualify.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two things stand out. First, Sansera is not trying to out-tonnage Bharat Forge — it is competing on <strong>precision and complexity</strong>, the harder-to-copy, higher-value end of forging-and-machining, and on how quickly it can move that skill into engine-free work. Second, almost every domestic peer faces the same electrification question at once, which makes the diversification <em>pace</em> the real differentiator: the forger that grows its non-auto and xEV share fastest, at the best margin, wins the re-rating; the one that stays anchored to ICE tonnage gets valued as a fading cyclical. Sansera is betting that being smaller and more focused lets it pivot faster than the giants — but it is pivoting against rivals who are far better capitalised.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Record profits and rising margins — priced for the pivot to keep working.</p>
+
+  <p class="lead">FY26 was Sansera's best year on record: revenue grew, margins expanded, and profit jumped by half. The market has rewarded the mix-shift story with a premium multiple. The debate is whether the non-ICE books grow fast enough, at a good enough margin, to justify being valued as a diversifying growth company rather than an engine-parts cyclical.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:80%"></span></div><div class="bval">~2,812</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill wtg" style="width:86%"></span></div><div class="bval">~3,017</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~3,498</div></div>
+    </div>
+    <div class="legend"><span>FY26 revenue rose ~16% — solid, but the headline growth is not the point. What changed underneath is the composition: the non-ICE share climbing while ADS grew ~155%. Treat FY24 as an <em>approx.</em> base.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit &amp; margin (FY26)</div>
+    <div class="c-sub">₹ Crore — and the margin expansion that drove the profit jump</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">EBITDA<small>margin 18.1%</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~632</div></div>
+      <div class="bar-row"><div class="blab">PAT<small>margin 9.3%, +51% YoY</small></div><div class="track"><span class="fill spec" style="width:52%"></span></div><div class="bval">~327</div></div>
+      <div class="bar-row"><div class="blab">PAT FY25</div><div class="track"><span class="fill ink" style="width:34%"></span></div><div class="bval">~217</div></div>
+    </div>
+    <div class="legend"><span>EBITDA rose ~23% to ~₹632 Cr as margin improved to 18.1% (from 17.1%); PAT climbed ~51% to ~₹327 Cr with margin up to 9.3% from 7.2% — operating leverage and a richer mix both helping.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">18.1%</div><div class="msl">FY26 EBITDA margin, up from 17.1% — the mix and leverage showing through</div></div>
+    <div class="ms green"><div class="msv">Low</div><div class="msl">Modest net leverage (near net-neutral, approx.) despite heavy diversification capex</div></div>
+    <div class="ms red"><div class="msv">~55–60×</div><div class="msl">Approx. P/E on ~₹20,300 Cr market cap — a growth multiple, not a cyclical one</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: the non-ICE share and its margin</div>
+    <p>At roughly ~₹20,300 Cr of market value on ~₹327 Cr of FY26 profit, Sansera trades at a growth-stock multiple — the market is not pricing an engine-parts cyclical, it is pricing a company that <em>will</em> transform its mix. So the metric that proves or breaks the case is <strong>the combined non-ICE revenue share (tech-agnostic + xEV + aerospace/defence) and its growth, at a held-or-rising EBITDA margin</strong>. Watch it alongside the <strong>ADS order backlog converting to revenue</strong> (is the ~₹4,464 Cr book turning into sales on schedule?) and <strong>EBITDA margin holding ~18%+</strong> as the mix changes. If the ~31.5% non-ICE share climbs toward 40% and beyond while margins stay firm, the multiple is defensible and Sansera really is becoming an engine-free precision company. If the share stalls in the low-30s or the new books come in at thinner margins, the market is paying a growth price for a business still tethered to a fading engine core. Total revenue is the distraction; the non-ICE share at margin is the scoreboard.</p>
+  </div>
+
+  <div class="note">FY24–FY26 figures here are drawn from company results and investor materials and cross-checked across reports; segment splits (Auto-ICE ~68.5% / tech-agnostic+xEV ~13% / non-auto ~18.5%), the ADS backlog (~₹4,464 Cr), net-leverage and the valuation multiple are <b>approx.</b> and can move with capex and market price. Verify against the company's filings and latest quarterly results before relying on any single figure.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A precision supplier engineering its way out of its own core market — asked to prove it can do so at pace and at margin.</p>
+
+  <p class="lead">Sansera enters the next phase with a rare setup: a cash-generative engine-parts base funding a deliberate migration into engine-free, higher-margin work, a multi-year aerospace-and-defence backlog already banked, and a management team that has run the business for four decades. The real debate is not whether the diversification exists — the ADS backlog settles that — but whether it scales fast enough, and profitably enough, to outrun the slow sunset of the engine-parts book before the market's patience with a premium multiple runs out.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Real, banked diversification</strong> — a ~₹4,464 Cr ADS backlog and a non-ICE share already ~31.5% mean the pivot is executing, not aspirational.</li>
+        <li><strong>Margin expansion with mix</strong> — FY26 EBITDA margin rose to 18.1% as higher-value work grew; the richer the mix, the better the margin should get.</li>
+        <li><strong>One skill, three growth vectors</strong> — precision aluminium forging feeds xEV, tech-agnostic and aerospace at once, so the core competency compounds across markets.</li>
+        <li><strong>Qualification moat</strong> — designed-in, safety-critical parts are sticky for a platform's life; new aerospace wins are decade-long annuities.</li>
+        <li><strong>Structural tailwinds</strong> — India's defence localisation and global aerospace supply-chain diversification pull demand toward exactly Sansera's ADS offering.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Electrification erodes the core</strong> — ~68.5% of revenue is ICE engine content with no EV equivalent; the pivot must outrun a structural, not cyclical, decline.</li>
+        <li><strong>Rich valuation</strong> — a growth multiple on a component maker prices the pivot working; a stall in the non-ICE share or a margin slip can de-rate it sharply.</li>
+        <li><strong>Execution &amp; scale-up risk</strong> — aerospace qualification takes years; converting the ADS backlog to margin-accretive revenue on schedule is unproven at scale.</li>
+        <li><strong>Cyclicality &amp; concentration</strong> — a few large OEMs and programmes drive much of revenue; a lost platform, a demand air-pocket, or FX swings hit hard.</li>
+        <li><strong>Capex, working capital &amp; well-funded rivals</strong> — diversification is capital-hungry, and Bharat Forge and others chase the same non-auto and aerospace pools with deeper pockets.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Sansera is that unusual thing: a company knowingly building the replacement for its own best business. Its engine-parts book is excellent and doomed in the same breath — cash-rich today, structurally fading tomorrow — and every rupee it throws off is being redeployed into the parts a post-engine world will still buy: brake and suspension components an EV needs, aluminium for electric powertrains, and machined structures for aircraft and defence. The setup is genuinely attractive; the catch is the arithmetic of a race. The next few years answer it in a single, checkable figure — <strong>the pace at which the non-ICE share climbs from ~31.5% toward a majority while the EBITDA margin holds at 18%-plus</strong>, with the ~₹4,464 Cr aerospace backlog as the leading indicator of whether that climb is on track. Watch that mix number and that backlog conversion each quarter; together they tell you whether Sansera is out-running the engine's sunset or merely spending richly to postpone it.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Sansera Engineering Ltd — Q4 &amp; FY26 results, earnings release and investor presentation (year ended Mar 2026), sansera.in.</li>
+    <li>Sansera Engineering Ltd — Q4 FY26 earnings-call transcript, sansera.in.</li>
+    <li>The Machine Maker — "Sansera Engineering Delivers Record FY26 Performance."</li>
+    <li>Business Standard — "Sansera Engineering surges as Q4 PAT jumps 108% YoY."</li>
+    <li>InvestyWise — "Sansera Engineering Achieves Record Financial Performance in FY26."</li>
+    <li>Multibagg.ai — "Sansera Q4 FY26: Record quarter, expanding margins, and the ADS inflection."</li>
+    <li>Trade Brains — "Why Is Sansera Engineering Quietly Shifting from Its Main Business to Aerospace and Defence?"</li>
+    <li>ICICI Direct — Sansera Engineering company update (Feb 2026).</li>
+    <li>NSE / BSE — Sansera Engineering Limited filings; BSE scrip code 543358, NSE symbol SANSERA.</li>
+    <li>Screener.in — Sansera Engineering consolidated financials, market cap, shareholding and ratios.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; segment splits, backlog, leverage and valuation multiples in particular are approximations that move with capex and market price. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "SANSERA";
+  const COMPANY_SLUG = "sansera-engineering";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
