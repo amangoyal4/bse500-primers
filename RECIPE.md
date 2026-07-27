@@ -1,6 +1,6 @@
 # Primer Recipe — the standard every run must match
 
-**This file is the single source of truth for how a BSE 500 primer is built.**
+**This file is the single source of truth for how an NSE 750 primer is built.**
 Each scheduled run is a fresh Claude session with no memory of prior chats. Follow
 this exactly. The quality bar is the hand-crafted exemplars in `primers/` —
 especially `rainbow-childrens-medicare.html` (the style template, kept on disk

@@ -13,7 +13,7 @@ Repo → Settings → Secrets and variables → Actions → **New repository sec
 
 ## 2. GitHub token for the Worker
 Create a **fine-grained PAT** (github.com → Settings → Developer settings → Fine-grained tokens):
-- Repository access: **only** `amangoyal4/bse500-primers`
+- Repository access: **only** `amangoyal4/nse750-primers`
 - Permissions: **Contents → Read and write** (this also allows repository_dispatch)
 - Copy the token (starts `github_pat_…`). You'll paste it into the Worker in step 3 — never into any file.
 

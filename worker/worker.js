@@ -1,4 +1,4 @@
-// Cloudflare Worker — refresh trigger for BSE-500 primers.
+// Cloudflare Worker — refresh trigger for NSE-750 primers.
 // The primer's ⟳ button POSTs {slug, symbol, password} here. The Worker verifies the
 // shared password server-side, then fires a GitHub `repository_dispatch` event that runs
 // the refresh-one workflow for that one company. No GitHub token or Gemini key ever
