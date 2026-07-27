@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MTAR Technologies — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F3F2;
+    --paper-2:#FCFAFA;
+    --card:#FFFFFF;
+    --ink:#201615;
+    --ink-soft:#615653;
+    --ink-faint:#948784;
+    --brand:#9C3A3A;          /* deep precision red */
+    --brand-bright:#BE5450;   /* brighter red accent */
+    --gold:#C0883C;           /* warm amber - accent / warmth */
+    --clean:#2F8A63;         /* clean energy / fuel cells */
+    --nuclear:#9C3A3A;       /* civil nuclear */
+    --aero:#3A6E9C;          /* space & defence */
+    --product:#C0883C;       /* product / other */
+    --line:#E0D6D4;
+    --line-soft:#ECE4E2;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F6E4E3;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F3F2;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EFE6E4;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#7E2E2E,#9C3A3A);}
+  .fill.gold{background:linear-gradient(90deg,#C0883C,#D8A860);}
+  .fill.clean{background:linear-gradient(90deg,#2F8A63,#46A87C);}
+  .fill.nuclear{background:linear-gradient(90deg,#9C3A3A,#BE5450);}
+  .fill.aero{background:linear-gradient(90deg,#3A6E9C,#5A8CB8);}
+  .fill.product{background:linear-gradient(90deg,#C0883C,#D8A860);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a2c2b,#584645);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.clean{background:var(--clean);}
+  .node.nuclear{background:var(--nuclear);}
+  .node.aero{background:var(--aero);}
+  .node.product{background:var(--product);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-clean{color:var(--clean);font-weight:600;}
+  .chain-nuclear{color:var(--nuclear);font-weight:600;}
+  .chain-aero{color:var(--aero);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F6E4E3;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Precision engineering 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What MTAR sells</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The Bloom Energy engine</a></li>
+    <li><a href="#p5"><span class="n">05</span> Qualification moat vs concentration</a></li>
+    <li><a href="#p6"><span class="n">06</span> The nuclear franchise</a></li>
+    <li><a href="#p7"><span class="n">07</span> Space &amp; defence</a></li>
+    <li><a href="#p8"><span class="n">08</span> The diversification thesis</a></li>
+    <li><a href="#p9"><span class="n">09</span> The July-2026 Bloom scare</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: MTARTECH · BSE: 543270</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>MTAR Technologies, <em>the Hyderabad machine shop for things that cannot fail</em></h1>
+  <p class="dek">A complete walk through one of India's most specialised precision-engineering houses — a company that machines mission-critical components for hydrogen fuel cells, nuclear reactors, space rockets and defence systems, where a single defect is catastrophic, qualification takes years, and one American customer both built the business and remains its biggest single risk.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">₹876.2 <small>Cr</small></div><div class="l">Revenue (FY26, +29.6%)</div></div>
+    <div class="cell"><div class="v">₹2,582 <small>Cr</small></div><div class="l">Order book (FY26)</div></div>
+    <div class="cell"><div class="v">~19.5% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">₹94 <small>Cr</small></div><div class="l">Net profit (FY26, +76%)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">27 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹876.2 Cr (+29.6%), EBITDA ₹171.2 Cr (~19.5% margin), PAT ₹94 Cr (+76.2%), order book ₹2,581.9 Cr on record inflows of ₹2,453.3 Cr; added the July-2026 Bloom-Energy scare and the diversification section.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">MTAR Technologies is a <strong>precision-engineering manufacturer</strong> — it does not sell a finished product you would recognise on a shelf. It machines, fabricates, assembles and tests <strong>tight-tolerance metal components and sub-systems</strong> for customers whose products absolutely cannot fail: hydrogen fuel-cell power modules, nuclear reactors, space launch vehicles and defence platforms. Based in <strong>Hyderabad</strong> and founded by the MTAR group decades ago, it listed in a heavily oversubscribed 2021 IPO. Its work is invisible to the public but sits inside some of the most demanding machines on earth.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>Its biggest business is clean energy — and clean energy here means fuel cells, not solar panels.</strong> Roughly half of FY26 revenue (~51%) came from the clean-energy segment, dominated by components MTAR builds for the American solid-oxide fuel-cell and electrolyser giant <strong>Bloom Energy</strong>. Add nuclear (~26%), aerospace &amp; defence (~14%) and its product/other line (~8.5%), and you have a company that touches four of the most qualification-heavy industries that exist.</li>
+    <li><strong>The moat is qualification; the risk is concentration.</strong> Winning approval to supply a nuclear reactor, a rocket engine or a fuel-cell stack takes years of testing and near-zero defect tolerance — once designed in, MTAR is very hard to replace. The same sword cuts back: <strong>Bloom Energy alone is roughly 55–65% of revenue</strong>, so when Bloom slows, destocks or in-sources, MTAR's results swing hard.</li>
+    <li><strong>FY26 was a strong recovery year, and management is guiding for far more.</strong> Revenue rose ~29.6% to ₹876.2 Cr, EBITDA jumped ~41.7% to ₹171.2 Cr (a ~19.5% margin) and net profit surged ~76.2% to ₹94 Cr; Q4 alone did ₹306.1 Cr of revenue and ₹44.3 Cr of PAT (up ~222%). The order book stands at ₹2,581.9 Cr on record FY26 inflows of ₹2,453.3 Cr, and management targets roughly <strong>80% revenue growth and ~24% margins in FY27</strong>. Then, in July 2026, a Bloom-related scare cut the stock ~34% — a live reminder of the concentration risk.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>MTAR is a <strong>contract precision-manufacturer for mission-critical industries</strong>. It is the shop a customer goes to when a part has to hold an impossibly tight tolerance, survive extreme conditions, and never fail — because the fuel cell, reactor or rocket it goes into cannot fail either. That is what makes MTAR hard to displace: getting qualified to supply these industries takes years, and once you are the approved source, switching you out is expensive and slow. The catch is written into the same sentence — MTAR's fortunes ride a small number of very large customers, above all Bloom Energy, so the story is really about how fast it can widen that base while its clean-energy engine recovers.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Precision engineering 101: what "mission-critical" really means</h2></div>
+  <p class="part-sub">No engineering degree needed — just why some metal parts are worth far more than others.</p>
+
+  <p class="lead">Most manufacturing is about making a lot of something cheaply. MTAR's world is the opposite: making a <strong>small number of things to an extreme standard</strong>. A component destined for a nuclear reactor core or a cryogenic rocket engine has to be machined to tolerances measured in microns, made from exotic alloys, and proven — with documentation — to behave perfectly under heat, pressure, radiation or vibration that would destroy an ordinary part. To follow the business, a handful of ideas do all the work.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The concepts that drive the whole business</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Tolerance</td><td>How close a finished part must be to its exact intended dimensions. MTAR works to <strong>micron-level</strong> tolerances — a fraction of a hair's width. The tighter the tolerance, the fewer shops on earth can hold it, and the more the work is worth.</td></tr>
+      <tr><td class="t-strong">Qualification</td><td>The multi-year process of proving to a customer (and often a regulator) that your part, your process and your factory can be trusted for a critical application. In nuclear, space and fuel cells this can take <strong>years</strong> and is near-impossible to shortcut. It is MTAR's real moat.</td></tr>
+      <tr><td class="t-strong">Build-to-print vs build-to-spec</td><td>Sometimes MTAR machines exactly to a customer's drawing (build-to-print); sometimes it co-engineers the part and process itself (build-to-spec). The deeper the engineering MTAR contributes, the stickier — and more valuable — the relationship.</td></tr>
+      <tr><td class="t-strong">Special processes</td><td>Beyond machining: fabrication, specialised welding, heat-treatment, surface treatment, sheet-metal work, assembly and rigorous <strong>testing</strong>. Doing many of these in-house lets MTAR deliver a finished, certified sub-assembly rather than a raw part.</td></tr>
+      <tr><td class="t-strong">Import substitution</td><td>Many of MTAR's Indian defence, space and nuclear parts were previously imported. Being qualified to make them domestically is strategically prized — it is why national programmes want a supplier like MTAR to exist.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "hard to make" equals "hard to replace"</div>
+    <p>In ordinary manufacturing, a customer who dislikes your price can switch suppliers next quarter. In MTAR's world they cannot, and that single fact explains the whole economics. When a fuel-cell maker, a space agency or a reactor builder qualifies a component and a factory, they are certifying that this exact part, from this exact shop, made by these exact processes, is safe for a machine where failure is catastrophic. Re-qualifying a second source means repeating years of testing and paperwork for a part that might be a tiny fraction of their bill of materials. So they don't. The friction that makes MTAR slow and expensive to design in is precisely what makes it slow and expensive to design <em>out</em> — the qualification wall protects the incumbent on both sides.</p>
+  </div>
+
+  <h3>Who buys precision components like this</h3>
+  <ul class="clean">
+    <li><strong>Clean-energy / fuel-cell makers</strong> — companies building solid-oxide fuel cells and electrolysers that turn hydrogen (or natural gas) into electricity, or electricity into hydrogen. MTAR's single largest customer class, led overwhelmingly by Bloom Energy.</li>
+    <li><strong>National nuclear &amp; space programmes</strong> — India's civil nuclear operator (NPCIL) and space agency (ISRO), which need domestic, qualified suppliers for reactor and launch-vehicle hardware they cannot simply import.</li>
+    <li><strong>Defence primes &amp; agencies</strong> — makers of missiles, launch systems and defence platforms needing precision sub-systems, increasingly under India's indigenisation push.</li>
+    <li><strong>Industrial &amp; product buyers</strong> — the smaller product/other line, including machined and engineered products where MTAR sells a more complete item.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What MTAR actually sells: one skill, four very different worlds</h2></div>
+  <p class="part-sub">The segment mix — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">MTAR has <strong>one core capability</strong> — ultra-precision manufacturing — pointed at <strong>four end-markets</strong> that have almost nothing else in common. The same machining, fabrication, assembly and testing skill that makes a fuel-cell component also makes a reactor part and a rocket-engine part. What differs is the customer, the cycle and the risk. Understanding the mix is understanding the company.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">One precision engine, four end-markets — FY26 revenue share</div>
+    <div class="flow-row">
+      <div class="node clean"><div class="ntag">~51% · largest</div><div class="nname">Clean energy</div><div class="nwho">Fuel-cell "hot boxes", stack &amp; electrolyser components. Dominated by Bloom Energy (US).</div></div>
+      <div class="arrow">·</div>
+      <div class="node nuclear"><div class="ntag">~26%</div><div class="nname">Civil nuclear</div><div class="nwho">Fuel machines, grid plates, drive mechanisms &amp; reactor parts for India's programme (NPCIL).</div></div>
+      <div class="arrow">·</div>
+      <div class="node aero"><div class="ntag">~14%</div><div class="nname">Aerospace &amp; defence</div><div class="nwho">ISRO rocket &amp; cryogenic-engine parts; missiles and defence sub-systems.</div></div>
+      <div class="arrow">·</div>
+      <div class="node product"><div class="ntag">~8.5%</div><div class="nname">Product / other</div><div class="nwho">Engineered products, ball screws, machined items and newer diversification bets.</div></div>
+    </div>
+    <div class="flow-note">Clean energy is the growth engine and the risk; nuclear and space are the slow, sticky, strategically-prized franchises; product/other is the diversification seedbed.</div>
+  </div>
+
+  <h3>The four segments, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-clean">Clean energy (~51%)</span></strong> — the largest and fastest-moving segment. MTAR makes precision components for <strong>solid-oxide fuel cells</strong> — the metal "hot boxes" and internal parts of power modules that convert fuel into electricity electrochemically — and, increasingly, parts for <strong>electrolysers</strong> that split water into hydrogen. This is where <strong>Bloom Energy</strong> sits, and it is why "clean energy" here means hydrogen and fuel cells, not the solar and wind most people picture.</li>
+    <li><strong><span class="chain-nuclear">Civil nuclear (~26%)</span></strong> — reactor-grade hardware for India's nuclear power programme: <strong>fuel machines, grid plates, drive mechanisms, sealing plugs and bridge &amp; column assemblies</strong>. The customer is effectively the national nuclear complex (NPCIL and associated bodies). Orders are lumpy and slow, but the qualification is extraordinary and the relationship measured in decades.</li>
+    <li><strong><span class="chain-aero">Aerospace &amp; defence (~14%)</span></strong> — precision parts for <strong>ISRO's launch vehicles and cryogenic engines</strong>, plus defence sub-systems for missiles and platforms. A prestige franchise that rides India's space cadence and defence indigenisation — high-value, but again lumpy and program-driven.</li>
+    <li><strong>Product / other (~8.5%)</strong> — a smaller line of more complete engineered products (including precision components like ball screws and specialised machined items) and MTAR's newer diversification efforts. Modest today, but strategically it is where the company is trying to seed less Bloom-dependent revenue.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why one factory can serve four industries</div>
+    <p>It looks strange that a fuel-cell part, a reactor part and a rocket part come off the same shop floor. The reason is that MTAR does not sell to an industry — it sells a <em>capability</em>. What a nuclear regulator, a space agency and a fuel-cell engineer all need is identical in kind: a metal component held to punishing tolerances, made from difficult materials, and certified never to fail. A shop that can prove it holds that standard for one catastrophic-failure industry is a credible candidate for the others. That is how a Hyderabad engineering house ends up simultaneously inside an American hydrogen company's power modules, India's reactors, and ISRO's rockets — the end-uses are wildly different, but the underlying demand is the same rare thing: precision you can bet a life or a reactor on.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, its roots, and who controls it</h2></div>
+  <p class="part-sub">A Hyderabad precision house with defence-and-space DNA, listed in 2021.</p>
+
+  <p class="lead">MTAR Technologies grew out of the <strong>MTAR founding group in Hyderabad</strong>, built over decades as a precision-engineering supplier to India's strategic sectors — nuclear, space and defence — long before "clean energy" was part of the story. That heritage is the point: the company earned its qualification credentials in the hardest domestic programmes first, then extended the same skill to export fuel-cell work. It came to the public market in a 2021 IPO that was heavily oversubscribed, riding exactly this scarce-capability appeal.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1970s onward</div><div class="ev">MTAR founded in <strong>Hyderabad</strong> as a precision-engineering supplier, building components for India's <strong>nuclear, space and defence</strong> programmes — the strategic-sector DNA that still defines it.</div></li>
+    <li><div class="yr">2000s–2010s</div><div class="ev">Deepens its role across ISRO launch vehicles, NPCIL reactor hardware and defence work; qualifies for high-tolerance, import-substitution components that few Indian firms can make.</div></li>
+    <li class="major"><div class="yr">2010s</div><div class="ev">Wins and scales the <strong>clean-energy / fuel-cell</strong> export relationship with <strong>Bloom Energy</strong> of the US — the engagement that transforms MTAR's size and growth profile.</div></li>
+    <li class="major"><div class="yr">2021</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE (MTARTECH · 543270) — heavily oversubscribed, the market prizing a rare pure-play precision-engineering exposure to fuel cells, nuclear and space.</div></li>
+    <li><div class="yr">FY24–FY25</div><div class="ev">A tougher patch as Bloom's own ordering cadence and clean-energy destocking weigh on revenue and margins; MTAR leans into diversification and new customer qualification.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Sharp recovery: revenue ₹876.2 Cr (+29.6%), EBITDA ₹171.2 Cr, PAT ₹94 Cr (+76.2%); record order inflows of ₹2,453.3 Cr lift the book to ₹2,581.9 Cr. Guides ~80% FY27 growth.</div></li>
+    <li><div class="yr">Jul 2026</div><div class="ev">A Bloom-Energy-related scare knocks the stock ~<strong>34%</strong> — the concentration risk made vivid in a single move.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the MTAR founding group holds roughly <strong>30.4%</strong> of the company — a relatively modest promoter stake for an Indian mid-cap, leaving a large free float held by institutions and public shareholders. Track the exact holding and any pledge levels in the shareholding filings.</li>
+    <li><strong>What it is:</strong> a focused, single-listed precision-engineering company — not a sprawling group. There is no confusing web of holdcos here; the complexity in MTAR is in its <em>customers</em> and <em>end-markets</em>, not its corporate structure.</li>
+    <li><strong>Where it sits:</strong> classified under <strong>Capital Goods</strong>, but it is really a specialist precision-manufacturing and strategic-components play — closer in spirit to a qualified aerospace/nuclear supplier than to a general machinery maker.</li>
+  </ul>
+
+  <div class="note gold"><b>The heritage matters because it built the moat:</b> MTAR did not start as a fuel-cell parts vendor and stumble into nuclear. It was forged in India's most demanding strategic programmes, where qualification is unforgiving, and only then exported that hard-won credibility to a US clean-energy customer. The order of events is the whole story — strategic-sector rigour first, commercial scale second.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The Bloom Energy engine: MTAR's maker and its dependence</h2></div>
+  <p class="part-sub">The single relationship that built the modern company — and defines its risk.</p>
+
+  <p class="lead">To understand MTAR's size, margins and share price, you have to understand one American company: <strong>Bloom Energy</strong>. Bloom builds <strong>solid-oxide fuel-cell "servers"</strong> — refrigerator-to-container-sized units that generate on-site electricity from natural gas or hydrogen without combustion — and, increasingly, electrolysers that produce hydrogen. MTAR is a key precision-components supplier into Bloom's power modules, making the <strong>"hot box" and stack components</strong> at the heart of the system. That single engagement is the largest slice of MTAR's revenue.</p>
+
+  <div class="chart">
+    <div class="c-title">Where MTAR's FY26 revenue comes from</div>
+    <div class="c-sub">Segment share of FY26 revenue (approx.); Bloom sits inside clean energy</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Clean energy<small>fuel cells / Bloom-led</small></div><div class="track"><span class="fill clean" style="width:100%"></span></div><div class="bval">~51.2%</div></div>
+      <div class="bar-row"><div class="blab">Civil nuclear<small>NPCIL reactor parts</small></div><div class="track"><span class="fill nuclear" style="width:51%"></span></div><div class="bval">~26.3%</div></div>
+      <div class="bar-row"><div class="blab">Aerospace &amp; defence<small>ISRO / missiles</small></div><div class="track"><span class="fill aero" style="width:27%"></span></div><div class="bval">~14%</div></div>
+      <div class="bar-row"><div class="blab">Product / other</div><div class="track"><span class="fill product" style="width:17%"></span></div><div class="bval">~8.5%</div></div>
+    </div>
+    <div class="legend"><span>Clean energy is over half of revenue, and Bloom Energy alone is estimated at <strong>~55–65% of total revenue</strong> — a share larger than the entire clean-energy segment percentage suggests, because Bloom work also touches other lines. That single concentration is the most important number in the whole company.</span></div>
+  </div>
+
+  <p>Why did MTAR win such a large role? Because fuel-cell components are exactly the kind of work it is built for: <strong>tight-tolerance, high-material-integrity metal parts</strong> where a defect degrades performance or safety, and where a supplier must be qualified into the design and then trusted to scale. Once MTAR was designed into Bloom's platform and proven able to deliver at volume and quality, it became very hard to replace — the qualification wall works in MTAR's favour here just as it does in nuclear.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the clean-energy leg rides someone else's cycle</div>
+    <p>MTAR does not control its largest business — Bloom does. MTAR's clean-energy revenue is a function of Bloom's own order flow, which in turn depends on US energy demand, data-centre power needs, hydrogen policy, Bloom's balance sheet, and Bloom's own inventory decisions. When Bloom ramps, MTAR's plants hum; when Bloom destocks or pushes orders out, MTAR's largest segment cools no matter how good MTAR's execution is. This is the uncomfortable truth of being a qualified, hard-to-replace supplier to a dominant customer: the moat that protects the relationship does nothing to smooth the <em>volume</em> flowing through it. MTAR's job is to be indispensable to Bloom while making itself less dependent on Bloom — two goals that pull in different directions.</p>
+  </div>
+
+  <div class="note gold"><b>A genuine surprise:</b> the phrase "clean energy" conjures solar farms and wind turbines. For MTAR it means something quite different — precision metalwork for <strong>hydrogen fuel cells and electrolysers</strong> made for a US customer. A Hyderabad machine shop's biggest business is building the guts of American fuel-cell servers; its second is India's nuclear reactors; its third is ISRO's rockets. Very few companies anywhere sit at that particular three-way intersection.</div>
+</section>
+
+<!-- 05 — BESPOKE crux: qualification moat vs customer concentration -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The qualification moat versus the concentration trap</h2></div>
+  <p class="part-sub">The single most important idea in the entire investment case — and it is unique to this company.</p>
+
+  <p class="lead">MTAR's whole identity is a <strong>two-sided coin that cannot be flipped to show only one face</strong>. The very thing that makes it valuable — that it is qualified into mission-critical products where suppliers are almost impossible to swap — is the same thing that makes it fragile: those few qualified relationships are enormous, so the loss or slowdown of any one, above all Bloom, hits disproportionately. You cannot own the moat without owning the concentration; they are the same fact seen from two angles.</p>
+
+  <div class="chart">
+    <div class="c-title">The coin, both faces</div>
+    <div class="c-sub">How the same qualification wall protects and endangers MTAR at once</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Moat side<small>hard to replace MTAR</small></div><div class="track"><span class="fill clean" style="width:100%"></span></div><div class="bval">years to qualify</div></div>
+      <div class="bar-row"><div class="blab">Concentration side<small>Bloom share of revenue</small></div><div class="track"><span class="fill bad" style="width:60%"></span></div><div class="bval">~55–65%</div></div>
+      <div class="bar-row"><div class="blab">The hedge<small>non-Bloom revenue today</small></div><div class="track"><span class="fill gold" style="width:38%"></span></div><div class="bval">~35–45%</div></div>
+    </div>
+    <div class="legend"><span>The qualification wall means MTAR keeps the business it wins for years. But because a majority of that business is one customer, MTAR's results are effectively a leveraged bet on Bloom's order cadence — until the non-Bloom ~35–45% grows enough to change the arithmetic.</span></div>
+  </div>
+
+  <p>This is the whole company in one construct. Think through what happens in each direction. On the <strong>upside</strong>, MTAR's qualified positions in fuel cells, nuclear and space are near-impregnable — competitors cannot simply undercut it, because being cheaper is worthless without years of qualification. On the <strong>downside</strong>, that same durability concentrates MTAR's fate in a handful of order cycles, and one of them — Bloom's — is more than half the business. A slowdown at Bloom does not chip at the edges of MTAR; it moves the whole result.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits MTAR: a moat and a fault-line are the same wall</div>
+    <p>For most suppliers, the analysis of "how sticky is the customer?" and "how concentrated am I?" are two separate questions. For MTAR they are <em>one</em>. The qualification barrier that keeps MTAR designed into Bloom's fuel cells for years is the identical barrier that made MTAR so dependent on Bloom in the first place — it takes so long to qualify a new relationship that MTAR could not quickly diversify away even if it wanted to. So the moat and the concentration are not a trade-off to be balanced; they are the same structural wall, protecting the downside of losing a customer and creating the danger of leaning on one. The thesis is not "does MTAR have a moat" (it plainly does) — it is <strong>whether MTAR can qualify enough <em>new</em> mission-critical relationships fast enough to spread the same protection across more customers</strong> before the next Bloom air-pocket.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">Years</div><div class="msl">Typical time to qualify a new nuclear / space / fuel-cell relationship — the moat's timescale</div></div>
+    <div class="ms red"><div class="msv">~55–65%</div><div class="msl">Estimated Bloom Energy share of revenue — the concentration the moat created</div></div>
+    <div class="ms gold"><div class="msv">₹2,582 Cr</div><div class="msl">Order book — the spread of which, not its size, is what settles the thesis</div></div>
+  </div>
+
+  <p>So when you read MTAR's numbers, do not lead with total revenue. Lead with the <strong>composition</strong>: how large the order book is, yes, but above all <em>how diversified</em> it is — how much comes from non-Bloom clean-energy customers, from nuclear award cycles, from space and defence, and from new qualifications. A rising total revenue that is still ~60% Bloom is a stronger version of the same fragility; a flatter total revenue with a broadening base is a genuinely de-risked company. The market keeps learning this the hard way.</p>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The nuclear franchise: slow, lumpy, and almost unassailable</h2></div>
+  <p class="part-sub">The strategic anchor that Bloom can never be — because no one else is allowed in.</p>
+
+  <p class="lead">If clean energy is MTAR's growth engine and its risk, <strong>civil nuclear (~26% of FY26 revenue)</strong> is its strategic anchor. MTAR makes reactor-grade hardware for India's nuclear power programme — <strong>fuel machines, grid plates, control-rod drive mechanisms, sealing plugs, bridge &amp; column assemblies</strong> and related components — for what is effectively the national nuclear complex (NPCIL and associated bodies). This is the segment where the qualification moat is at its most extreme.</p>
+
+  <p>Nuclear work behaves nothing like commercial manufacturing. Orders are <strong>lumpy and slow</strong>, tied to the cadence at which India sanctions and builds new reactors; a big award can arrive and then take years to execute. But the flip side is that the field is almost closed: a supplier qualified to make safety-critical reactor internals for the national programme is not competing in an open market — it is one of a tiny handful of trusted domestic sources, protected by decades of proven work and the sheer impossibility of a regulator casually approving a newcomer.</p>
+
+  <div class="plain">
+    <div class="ptag">Why nuclear is the ballast even though it's small and slow</div>
+    <p>Nuclear will probably never grow as fast as clean energy did in a good Bloom year — the whole point of a reactor programme is that it moves deliberately. But that same slowness is a feature: nuclear demand does not evaporate in a destocking cycle the way a commercial customer's orders can. India's push to expand nuclear capacity as part of its energy transition gives this leg a long, government-backed runway, and MTAR's entrenched qualification means it is positioned to supply the hardware as reactors are built. In a company whose largest segment can swing violently on one foreign customer, the un-glamorous, near-unassailable nuclear franchise is exactly the kind of revenue that steadies the ship — and it is a large part of why MTAR's diversification story is credible rather than aspirational.</p>
+  </div>
+
+  <p>India's nuclear ambitions — expanding installed capacity, indigenous reactor designs, and a policy tilt toward nuclear as firm low-carbon power — set a multi-year backdrop for this segment. The timing is uneven and the awards infrequent, but each one is high-value and each deepens a relationship that no competitor can quickly contest.</p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Space &amp; defence: rockets, cryogenics and indigenisation</h2></div>
+  <p class="part-sub">The prestige franchise that rides India's launch cadence and defence self-reliance.</p>
+
+  <p class="lead">MTAR's <strong>aerospace &amp; defence segment (~14% of FY26 revenue)</strong> is its smallest of the three strategic legs but perhaps its most storied. It makes precision components for <strong>ISRO's launch vehicles and cryogenic rocket engines</strong> — the notoriously demanding parts that must survive the extremes of a rocket launch — as well as sub-systems for <strong>missiles and defence platforms</strong>. This is import-substitution engineering at the highest end: parts that were once bought abroad, now qualified to be made domestically.</p>
+
+  <p>Like nuclear, this segment is <strong>program-driven and lumpy</strong>. Revenue rises and falls with India's space launch cadence and defence procurement cycles rather than with any smooth commercial demand curve. But the strategic pull behind it is strong and getting stronger: India's expanding space programme (including a growing private space-launch ecosystem) and its <strong>defence indigenisation drive</strong> both actively want qualified domestic suppliers of exactly the components MTAR makes. Being one of the few firms trusted with cryogenic-engine and missile-grade hardware is a scarce, strategically-valued position.</p>
+
+  <div class="plain">
+    <div class="ptag">The common thread across nuclear, space and defence</div>
+    <p>Nuclear, space and defence look like three different businesses, but for MTAR they are one strategic proposition: <strong>India wants critical hardware made at home, by a supplier the state can trust</strong>. Each of these programmes has a national-security or strategic-autonomy motive to reduce reliance on imports, and each requires the extreme qualification MTAR has already earned. That gives MTAR a policy tailwind no commercial customer can offer — the buyer is not just trying to save money, it is trying to build sovereign capability, and it needs firms like MTAR to exist. Together these three legs are the domestic, harder-to-disrupt counterweight to the foreign, faster-moving Bloom relationship.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The diversification thesis: making the moat wider than one customer</h2></div>
+  <p class="part-sub">The strategic project on which the whole re-rating case rests.</p>
+
+  <p class="lead">Everything so far points to one conclusion: MTAR's future is less about growing revenue and more about <strong>changing the shape of that revenue</strong>. The company knows this. Its explicit strategy is to widen the base — adding <strong>new clean-energy customers beyond Bloom, deepening nuclear and defence, and building out product lines</strong> — so that no single relationship can dictate the whole result. The FY26 order book of ₹2,581.9 Cr and record inflows of ₹2,453.3 Cr matter most for <em>who</em> they come from, not just how big they are.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The diversification levers</caption>
+    <thead><tr><th>Lever</th><th>What it is</th><th>Why it de-risks MTAR</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">New fuel-cell / clean-energy customers</td><td>Qualifying components for hydrogen and fuel-cell players beyond Bloom, plus electrolyser work.</td><td>Keeps MTAR in its best market while cutting the single-customer share — the most direct fix to the concentration risk.</td></tr>
+      <tr><td class="t-strong">Deeper nuclear content</td><td>More reactor hardware as India expands nuclear capacity.</td><td>Grows a slow, sticky, government-backed leg that doesn't swing with commercial destocking.</td></tr>
+      <tr><td class="t-strong">Defence indigenisation</td><td>More missile and platform sub-systems under "make in India" defence policy.</td><td>Adds strategically-favoured, high-value domestic demand with a policy tailwind.</td></tr>
+      <tr><td class="t-strong">Product / new engineered lines</td><td>Higher-value finished products (ball screws, engineered assemblies, new bets).</td><td>Shifts some revenue from build-to-print components toward stickier, self-directed product IP.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The reason this is hard — and therefore the reason it is the whole thesis — goes back to the qualification wall. MTAR cannot diversify quickly, because every new mission-critical relationship takes years to qualify. Diversification is not a marketing decision it can execute in a quarter; it is a slow, deliberate campaign of getting designed into new platforms one certification at a time. That is why progress should be judged over years, and why each new qualified customer is worth more than an equivalent rupee of incremental Bloom volume.</p>
+
+  <div class="plain">
+    <div class="ptag">What "success" actually looks like here</div>
+    <p>A naive read of MTAR cheers rising revenue and a fat order book. A sharper read asks a different question: <strong>is the non-Bloom share of that order book climbing?</strong> If MTAR grows to, say, a materially larger revenue base but Bloom is still ~60% of it, the company is bigger but no safer — a larger bet on the same single cycle. If instead MTAR holds Bloom as an anchor while non-Bloom clean-energy, nuclear, space and product each add real weight, then the same order book becomes something structurally different: a diversified precision-engineering franchise rather than a leveraged proxy for one US fuel-cell company. The re-rating case is not "MTAR grows"; it is "MTAR spreads."</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The July-2026 Bloom scare: the risk made vivid</h2></div>
+  <p class="part-sub">A single month that showed exactly how the thesis breaks.</p>
+
+  <p class="lead">Every risk in this primer is abstract until it isn't. In <strong>July 2026</strong>, a Bloom-Energy-related scare sent MTAR's stock down roughly <strong>34%</strong> — a sharp, concentrated drop that had little to do with MTAR's own factories or execution and everything to do with its largest customer. It is the clearest possible illustration of the concentration risk that sits at the heart of the company.</p>
+
+  <p>The mechanism is exactly what section 05 describes. When the market fears that Bloom's demand, ordering or outlook might weaken, it does not mark down MTAR's clean-energy segment in isolation — it re-prices the whole company, because a majority of revenue rides that one relationship. A premium precision-engineering stock, valued for its scarce qualifications and its growth guidance, de-rates hard the moment the durability of its biggest customer relationship is questioned. The qualification moat protects MTAR from <em>losing</em> Bloom's business to a competitor; it does nothing to protect the share price from <em>fear</em> about Bloom's own trajectory.</p>
+
+  <div class="note"><b>Read the scare correctly:</b> a ~34% move on a Bloom-related worry is not a verdict that MTAR's business is broken — it is the market repricing the concentration it already knew about. The episode is less a new fact than a stress test that confirms the old one: until the non-Bloom base is materially larger, MTAR's share price will keep behaving like a leveraged option on Bloom Energy's fortunes, lurching on news that is not even MTAR's own.</p></div>
+
+  <div class="plain">
+    <div class="ptag">Why the volatility is structural, not incidental</div>
+    <p>It would be comforting to treat the July drop as a one-off overreaction. It is better understood as the natural behaviour of a stock built this way. When one customer is more than half your revenue and that customer is itself a volatile, policy-and-demand-sensitive US growth company, your equity inherits that volatility whether or not your own operations wobble. This is the price of MTAR's model in its current shape: the same design that gives it years-long, hard-to-displace revenue also hands it a share price that can fall a third on a customer's headline. The only durable cure is the diversification thesis — and that takes years, not a reassuring press release.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A strong recovery year, a bold guidance, and a premium the market re-prices on every Bloom wobble.</p>
+
+  <p class="lead">FY26 was a clear recovery. Revenue, EBITDA and profit all grew strongly, margins improved, and the order book set records — while management set an aggressive FY27 target. The market has long paid a premium multiple for MTAR's scarce capabilities, which is precisely why it falls so hard when the biggest customer's outlook is questioned.</p>
+
+  <div class="chart">
+    <div class="c-title">FY26 in numbers</div>
+    <div class="c-sub">Consolidated figures (₹ Crore); growth vs FY25</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue<small>+29.6%</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">876.2</div></div>
+      <div class="bar-row"><div class="blab">EBITDA<small>+41.7%</small></div><div class="track"><span class="fill clean" style="width:20%"></span></div><div class="bval">171.2</div></div>
+      <div class="bar-row"><div class="blab">Net profit (PAT)<small>+76.2%</small></div><div class="track"><span class="fill gold" style="width:11%"></span></div><div class="bval">94.0</div></div>
+    </div>
+    <div class="legend"><span>Profit grew far faster than revenue — the hallmark of operating leverage in a precision-manufacturing business, where filling qualified capacity drops disproportionately to the bottom line. EBITDA margin reached ~19.5%, up from the mid-teens, and management targets ~24% in FY27.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">The Q4 FY26 acceleration</div>
+    <div class="c-sub">₹ Crore — the exit quarter that underpins the FY27 guidance</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Q4 revenue</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">306.1</div></div>
+      <div class="bar-row"><div class="blab">Q4 PAT<small>+222% YoY</small></div><div class="track"><span class="fill clean" style="width:14%"></span></div><div class="bval">44.3</div></div>
+    </div>
+    <div class="legend"><span>Q4 alone delivered ₹306.1 Cr of revenue — over a third of the full year — and ₹44.3 Cr of PAT, up ~222% year-on-year. That exit-run-rate momentum is what gives management the confidence to guide for ~80% revenue growth in FY27; it is also entirely dependent on clean-energy (Bloom) volumes staying strong.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">₹2,582 Cr</div><div class="msl">Order book at FY26 exit, on record inflows of ₹2,453.3 Cr</div></div>
+    <div class="ms green"><div class="msv">~24%</div><div class="msl">FY27 EBITDA-margin target; ~80% revenue growth guided</div></div>
+    <div class="ms red"><div class="msv">~34%</div><div class="msl">Stock fall in the July-2026 Bloom scare — the premium's downside</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: the non-Bloom share of the order book</div>
+    <p>MTAR trades as a premium precision-engineering name, valued for scarce qualifications and a bold growth path — which is why it de-rates so violently on Bloom wobbles. So the metric that proves or breaks the case is not total revenue and not even total order book; it is <strong>the diversification of that order book — the share of revenue coming from outside Bloom</strong> — read alongside <strong>clean-energy / Bloom recovery</strong> (is the largest leg re-accelerating?), <strong>order inflows</strong> (are new qualified relationships landing?) and <strong>EBITDA margin</strong> (is the ~24% target within reach?). If the non-Bloom base — new clean-energy customers, nuclear awards, space and defence — climbs while Bloom recovers, the premium is defensible and the FY27 guidance credible. If revenue grows but stays ~60% Bloom, MTAR is simply a bigger, still-fragile bet, and the next Bloom headline will re-price it again. Total revenue flatters; composition decides.</p>
+  </div>
+
+  <div class="note">FY26 figures (revenue ₹876.2 Cr, EBITDA ₹171.2 Cr, PAT ₹94 Cr, order book ₹2,581.9 Cr, inflows ₹2,453.3 Cr) are from the company's FY26 results. Segment shares, the Bloom revenue-share range (~55–65%) and the ~34% stock move are <b>approx.</b> and drawn from company disclosures and third-party reports; FY27 growth (~80%) and margin (~24%) are management <b>guidance</b>, not results. Verify against primary filings before relying on any single figure.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A scarce, hard-to-replace supplier asked to prove it can stand on more than one customer.</p>
+
+  <p class="lead">MTAR enters FY27 with real momentum: a record order book, a strong Q4 exit rate, improving margins and bold guidance. The honest debate is not whether the business is special — its qualifications plainly are — but whether it can widen its base fast enough that its results, and its share price, stop lurching on a single American customer's cadence.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Scarce, qualified capability</strong> — designed into fuel cells, nuclear reactors, rockets and defence; years-long qualification makes MTAR very hard to replace once in.</li>
+        <li><strong>Strong FY26 recovery</strong> — revenue +29.6%, EBITDA +41.7%, PAT +76.2%; Q4 PAT up ~222% shows operating leverage kicking in.</li>
+        <li><strong>Record order book</strong> — ₹2,581.9 Cr on record inflows of ₹2,453.3 Cr, supporting a ~80% FY27 growth ambition.</li>
+        <li><strong>Multiple secular tailwinds</strong> — hydrogen/fuel cells, India's nuclear expansion, a growing space programme and defence indigenisation all pull the same precision skill.</li>
+        <li><strong>Diversification underway</strong> — new clean-energy customers, deeper nuclear/defence and product lines aiming to cut single-customer dependence over time.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Customer concentration</strong> — Bloom at ~55–65% of revenue; a Bloom slowdown, destock or in-sourcing craters results, as the July-2026 ~34% drop showed. The defining risk.</li>
+        <li><strong>Order lumpiness &amp; long cycles</strong> — nuclear and space awards are slow and infrequent; qualification and execution stretch over years, so revenue can be uneven.</li>
+        <li><strong>Foreign-cycle &amp; policy dependence</strong> — the clean-energy leg rides Bloom's own fortunes and US energy/hydrogen policy, outside MTAR's control.</li>
+        <li><strong>Execution, capacity &amp; working capital</strong> — scaling qualified capacity and funding in-flight inventory/receivables strains cash in a rapid ramp.</li>
+        <li><strong>Premium valuation</strong> — a highly-rated precision name that de-rates sharply on any Bloom wobble; competition and customer in-sourcing sit in the background.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>MTAR is a genuinely rare asset — a Hyderabad precision house qualified into an American hydrogen company's fuel cells, India's nuclear reactors and ISRO's rockets, protected by a qualification wall that competitors cannot climb quickly. The same wall, though, built a dependence on one customer that now moves the whole company; FY26's fine recovery and the July-2026 crash are two sides of that single fact. What to watch is not the headline revenue line and not even the size of the order book — it is <strong>the pace at which non-Bloom revenue grows as a share of the total</strong>, quarter by quarter and award by award, as Bloom recovers alongside it. When that share climbs durably, MTAR stops being a leveraged bet on one customer and becomes what its qualifications say it should be: a diversified supplier of things that cannot fail. Until then, every Bloom headline will keep writing MTAR's stock chart for it.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>MTAR Technologies Ltd — Q4 &amp; FY26 results and investor presentation (year ended Mar 2026), company disclosures.</li>
+    <li>MTAR Technologies — FY26 earnings-call transcript &amp; management commentary (segment mix, order book, FY27 guidance).</li>
+    <li>BSE India — MTAR Technologies Limited stock page, scrip code 543270.</li>
+    <li>NSE India — MTAR Technologies Limited (MTARTECH) company &amp; shareholding data.</li>
+    <li>MTAR Technologies — Red Herring Prospectus / 2021 IPO documents (business, clean-energy &amp; strategic-sector overview).</li>
+    <li>Bloom Energy Corporation — investor disclosures on solid-oxide fuel cells and electrolysers (context for MTAR's clean-energy segment).</li>
+    <li>Screener.in — MTAR Technologies consolidated financials, segment and shareholding data.</li>
+    <li>Business-press coverage of MTAR's July-2026 Bloom-Energy-related share-price move (~34% decline).</li>
+    <li>Coverage of India's civil-nuclear expansion (NPCIL) and defence-indigenisation policy relevant to MTAR's order pipeline.</li>
+    <li>Third-party equity research and brokerage notes on MTAR's customer concentration and diversification strategy.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several figures (segment shares, the Bloom revenue-share range, and the July-2026 stock move) are approximate, and forward figures (FY27 growth and margin) are management guidance, not results. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "MTARTECH";
+  const COMPANY_SLUG = "mtar-technologies";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
