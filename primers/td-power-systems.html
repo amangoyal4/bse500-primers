@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TD Power Systems — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F3F7;
+    --paper-2:#FBFAFC;
+    --card:#FFFFFF;
+    --ink:#1E1826;
+    --ink-soft:#585065;
+    --ink-faint:#8D8699;
+    --brand:#5A2E76;          /* deep violet */
+    --brand-bright:#8C5AA8;   /* violet accent */
+    --gold:#C0872E;           /* warm amber - accent / warmth */
+    --wtg:#8C5AA8;            /* generator core */
+    --epc:#A579BE;            /* integration / OEM */
+    --om:#4A2563;            /* aftermarket / deep */
+    --spec:#7A4A96;          /* cross accent */
+    --line:#DED8E4;
+    --line-soft:#EAE5EF;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#EFE6F4;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F4FA;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#ECE7F1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#5A2E76,#8C5AA8);}
+  .fill.gold{background:linear-gradient(90deg,#C0872E,#DDA954);}
+  .fill.wtg{background:linear-gradient(90deg,#8C5AA8,#A579BE);}
+  .fill.om{background:linear-gradient(90deg,#4A2563,#6C3E88);}
+  .fill.spec{background:linear-gradient(90deg,#7A4A96,#9968B4);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#4a4453,#6a6272);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EFE6F4;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Generators 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What TD Power sells</a></li>
+    <li><a href="#p3"><span class="n">03</span> The OEM channel</a></li>
+    <li><a href="#p4"><span class="n">04</span> The fuel-agnostic niche</a></li>
+    <li><a href="#p5"><span class="n">05</span> Exports &amp; the data-centre pull</a></li>
+    <li><a href="#p6"><span class="n">06</span> The company &amp; owners</a></li>
+    <li><a href="#p7"><span class="n">07</span> Order book &amp; intake</a></li>
+    <li><a href="#p8"><span class="n">08</span> Margins &amp; the balance sheet</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: TDPOWERSYS · BSE: 533553</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>TD Power Systems, <em>the generator behind every kind of power plant</em></h1>
+  <p class="dek">A complete walk through a Bengaluru niche engineer that makes the <em>alternator</em> — the machine that turns a spinning shaft into electricity — and sells it to the world's turbine and engine makers. It never builds the turbine or the engine; it builds the one component every power source needs, whether the power comes from steam, gas, water, wind or diesel, and it ships most of it abroad.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,856 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹239 <small>Cr</small></div><div class="l">PAT (FY26)</div></div>
+    <div class="cell"><div class="v">~₹1,973 <small>Cr</small></div><div class="l">Order book (Mar 2026)</div></div>
+    <div class="cell"><div class="v">~₹18,000 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">27 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹1,856 Cr (+45%), PAT ₹239 Cr (+37%), EBITDA margin ~18%, order book ₹1,973 Cr, order inflow ₹2,238 Cr with ~80% from exports; net-cash balance sheet; 1:2 stock split approved with Q4 results.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">TD Power Systems makes <strong>AC generators</strong> — also called <strong>alternators</strong>. A generator is the machine that converts a spinning shaft into electricity. Crucially, TD Power makes <em>only</em> the generator: it does <strong>not</strong> build the steam turbine, gas turbine, hydro turbine or diesel/gas engine that spins that shaft. Those are made by other, much larger firms — the turbine and engine OEMs. TD's job is to design and manufacture the custom generator that bolts onto the end of the OEM's machine, so that together they form a complete power-generating set. It sells that generator to marquee global OEMs, ships roughly <strong>four-fifths of its order intake abroad</strong>, and runs a clean, net-cash balance sheet.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is a component supplier to the whole power industry, not a bet on one fuel.</strong> TD builds generators for steam-turbine, gas-turbine, gas-engine, diesel-engine, hydro and wind applications — every major way the world makes electricity. It doesn't care whether coal, gas, water or wind wins the next decade; each of those still needs a generator, and TD makes it. In FY26 revenue rose ~45% to <strong>₹1,856 Cr</strong> and PAT rose ~37% to <strong>₹239 Cr</strong> as demand ran strong across steam, gas and hydro at once.</li>
+    <li><strong>It is an exporter first, a domestic supplier second.</strong> Of FY26's ₹2,238 Cr of new orders, roughly <strong>80% came from exports</strong> — generators shipped to turbine and engine makers in the US, Europe and beyond. TD says its machines run in over <strong>110 countries</strong>, with more than <strong>8,000 generators</strong> installed. This is a small Bengaluru company that competes globally in a specialist niche.</li>
+    <li><strong>It carries no financial baggage.</strong> The company is effectively <strong>net-cash / debt-free</strong>, funding its own working capital and capacity. The market has noticed: the stock trades near <strong>45–46× earnings</strong> on a market cap of roughly <strong>₹18,000 Cr</strong> — a premium multiple that prices in years of continued global power capex.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Picture a power plant as a two-part machine. One part spins — a turbine driven by steam, gas or falling water, or an engine burning diesel or gas. The other part turns that spin into electric current — the generator. Almost every company you've heard of makes the <em>spinning</em> part. TD Power Systems makes the <em>other</em> part, and it makes it to order for whichever spinning machine a customer has chosen. That single design choice is the whole business: TD isn't in the coal camp or the gas camp or the wind camp — it supplies all of them, so it grows as global electricity generation grows, regardless of which fuel is winning that year. The catch is that its fortunes ride on a handful of large OEM customers and on the swings of the global power-capex cycle.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Generators 101: the machine that makes electricity</h2></div>
+  <p class="part-sub">No engineering degree needed — just the difference between the thing that spins and the thing that makes current.</p>
+
+  <p class="lead">Almost all the electricity in the world is made the same way: something spins a magnet inside a coil of wire, and that motion induces an electric current. The device that does this is a <strong>generator</strong> (in AC form, an <strong>alternator</strong>). To make it spin, you need a <strong>prime mover</strong> — a turbine or an engine — to supply the mechanical rotation. Understand that split and you understand exactly where TD Power sits.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The two halves of a generating set</caption>
+    <thead><tr><th>Part</th><th>What it does (and who makes it)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Prime mover</td><td>The machine that spins the shaft: a <strong>steam turbine</strong>, <strong>gas turbine</strong>, <strong>hydro (water) turbine</strong>, or a <strong>diesel / gas engine</strong>. Made by large turbine and engine OEMs — <em>not</em> by TD Power.</td></tr>
+      <tr><td class="t-strong">Generator / alternator</td><td>Bolts onto the prime mover's shaft and converts the rotation into electricity. <strong>This is TD Power's entire product.</strong> It is custom-engineered to match the speed, torque and voltage of the specific prime mover it's paired with.</td></tr>
+      <tr><td class="t-strong">MVA</td><td>"Mega-Volt-Ampere" — the size rating of a generator, the way MW rates a turbine. TD builds generators from small machines up to roughly <strong>250 MVA</strong> for the largest turbine sets. Bigger MVA = bigger, higher-value machine.</td></tr>
+      <tr><td class="t-strong">Genset</td><td>The complete "generating set" — prime mover + generator coupled together. When you hear "diesel genset" for a data centre or a hospital, TD may have made the alternator inside it while another firm made the engine.</td></tr>
+      <tr><td class="t-strong">OEM</td><td>"Original Equipment Manufacturer" — the turbine or engine maker that buys TD's generator, pairs it with its own prime mover, and sells the finished set under its own name. TD's customers are OEMs, not power plants directly.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "custom-engineered" is the real product</div>
+    <p>A generator is not a commodity you pull off a shelf. It has to be matched precisely to its prime mover — a slow-turning hydro turbine, a fast-spinning gas turbine and a reciprocating diesel engine each demand a completely different generator design (different pole counts, cooling, bearings, mechanical strength). So TD Power's product is really <strong>engineering-to-order</strong>: each generator is designed for a named customer's named machine, qualified through that OEM's testing, and then built. That is what makes the business defensible — once your generator is designed into an OEM's turbine platform and has passed its qualification, you are hard to rip out. It is also what makes it lumpy: revenue arrives project by project, not as a steady flow of identical units.</p>
+  </div>
+
+  <h3>Where the spinning comes from — and why TD doesn't care</h3>
+  <ul class="clean">
+    <li><strong>Steam</strong> — coal, biomass, waste-heat or nuclear boilers raise steam to drive a steam turbine. TD makes the <strong>steam-turbine generator</strong> on the end.</li>
+    <li><strong>Gas</strong> — a gas turbine or a gas-fired reciprocating engine burns natural gas. TD makes the <strong>gas-turbine generator</strong> and the <strong>gas-engine generator</strong>.</li>
+    <li><strong>Water</strong> — a hydro plant drops water through a turbine. TD makes both <strong>horizontal and vertical hydro generators</strong>.</li>
+    <li><strong>Wind</strong> — a wind turbine's rotor spins a generator in the nacelle. TD makes <strong>wind-turbine generators</strong> for turbine OEMs.</li>
+    <li><strong>Diesel &amp; oil</strong> — engines for standby and prime power. TD makes the <strong>diesel-engine generator</strong>.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What TD Power actually sells: one product, many prime movers</h2></div>
+  <p class="part-sub">Read this section once and the whole company clicks into place.</p>
+
+  <p class="lead">TD Power's catalogue looks varied — steam-turbine generators, gas-turbine generators, gas-engine generators, hydro generators, wind generators, diesel generators, plus a smaller line of industrial and traction <strong>motors</strong>. But it is really <em>one</em> competence expressed many ways: the ability to design and build a rotating electrical machine that reliably converts mechanical power into electricity, custom-fit to whatever is spinning it. The variety is the point — it lets one factory serve the entire power industry.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">Where TD sits in the value chain — the component maker, not the plant builder</div>
+    <div class="flow-row">
+      <div class="node spec"><div class="ntag">Made by others</div><div class="nname">The prime mover</div><div class="nwho">Steam / gas / hydro turbine or diesel-gas engine, built by the OEM.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Made by TD Power</div><div class="nname">The generator</div><div class="nwho">Custom alternator, engineered to the OEM's exact machine. TD's whole business.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">OEM integrates</div><div class="nname">The genset / power block</div><div class="nwho">OEM couples prime mover + generator and sells the finished set.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">End use</div><div class="nname">Electricity</div><div class="nwho">Power plant, captive plant, or data-centre / backup genset feeding load.</div></div>
+    </div>
+    <div class="flow-note">TD Power owns exactly one box in this chain — the generator — and sells it into every path that leads to it. It is a supplier to the OEMs in the first box, not a competitor to them.</div>
+  </div>
+
+  <h3>The product range, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Turbo generators (steam &amp; gas turbine)</span></strong> — the core, highest-value line: large machines up to roughly <strong>250 MVA</strong> that pair with steam and gas turbines in utility, captive and industrial power plants. This is where the biggest tickets and the marquee global OEM relationships sit.</li>
+    <li><strong><span class="chain-epc">Gas-engine &amp; diesel-engine generators</span></strong> — alternators for reciprocating-engine gensets (up to roughly 25 MVA class). This is the line most exposed to the fast-growing <strong>data-centre and distributed-power</strong> demand, sold largely to US and European engine OEMs.</li>
+    <li><strong><span class="chain-om">Hydro generators</span></strong> — horizontal and vertical machines (up to ~45 MVA) for small and mid-size hydro plants, a steady, long-cycle business tied to global hydro build-out.</li>
+    <li><strong>Wind-turbine generators</strong> — generators supplied to wind-turbine OEMs; TD makes the electrical machine inside the nacelle, not the turbine itself.</li>
+    <li><strong>Motors &amp; special machines</strong> — a smaller line of industrial AC motors and traction/special-application machines that leverages the same rotating-machine engineering. It broadens the addressable market beyond generation.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why one competence, many products, is the quiet strength</div>
+    <p>A firm that only made hydro generators would live or die on hydro capex. A firm that only made data-centre genset alternators would ride one hot theme up and, eventually, down. TD Power spreads the <em>same</em> engineering across steam, gas, hydro, wind and diesel — so when one application cools, another is usually warming. In FY26 that showed up as strong demand across steam, gas <em>and</em> hydro simultaneously. The product list looks like diversification; mechanically, it's a single skill sold into every corner of the power market, which is what smooths a business that would otherwise be hostage to one fuel's cycle.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The OEM channel: selling to the turbine and engine makers</h2></div>
+  <p class="part-sub">TD doesn't sell to power plants — it sells to the companies that build the machines for power plants.</p>
+
+  <p class="lead">This is the part first-time readers usually get backwards. TD Power's customers are almost never the utility or the factory that ultimately owns the power plant. Its customers are the <strong>OEMs</strong> — the global turbine and engine manufacturers — who buy TD's generator, integrate it into their own prime mover, and ship the complete set to the end user. TD is a business-to-business component supplier, one layer up the chain from the power plant itself.</p>
+
+  <p>That channel shapes everything about how TD operates. To win an OEM, TD's generator has to be <strong>designed into</strong> the OEM's turbine or engine platform and pass that OEM's qualification and testing — a slow, technical, trust-heavy process. But once it's in, TD becomes the qualified supplier for that platform, and re-orders follow the OEM's own sales. The relationship is sticky in both directions: sticky-good, because you're hard to displace; sticky-risky, because your fate is tied to a small number of large customers.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">110+</div><div class="msl">Countries where TD Power generators are installed</div></div>
+    <div class="ms gold"><div class="msv">8,000+</div><div class="msl">Generators installed worldwide over the company's life</div></div>
+    <div class="ms"><div class="msv">~250 MVA</div><div class="msl">Top of the turbo-generator range TD can build</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The moat is a qualification, not a patent</div>
+    <p>TD Power's protection isn't a single clever invention — it's the accumulated status of being an <em>approved, qualified generator source</em> on many OEMs' platforms across many applications. A turbine maker choosing a generator is choosing a partner whose machine will sit inside its product for decades of warranty and service; it will not switch on price alone. That qualification barrier is why a mid-size Bengaluru company can hold its own against far larger electrical majors — and why new entrants, especially low-cost ones, find it slow going to break into the same OEMs. The flip side: the same barrier that protects TD also concentrates it into a limited roster of demanding customers.</p>
+  </div>
+</section>
+
+<!-- 04 — BESPOKE crux: the prime-mover-agnostic niche -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The fuel-agnostic niche: why TD wins whichever source wins</h2></div>
+  <p class="part-sub">The single most important idea in the whole investment case — and it belongs to no other company.</p>
+
+  <p class="lead">The great argument of the energy transition is <em>which</em> source wins: coal or gas, gas or renewables, grid power or on-site gensets. Almost every energy company is a wager on one answer. TD Power Systems has quietly opted out of the argument entirely — and that is the crux of the case.</p>
+
+  <p>Draw every way humanity turns fuel or force into electricity. Burn coal or biomass to raise steam; fire natural gas through a turbine; drop water through a dam; catch the wind; combust diesel or gas in an engine. Each path uses a completely different, expensive <strong>prime mover</strong>, made by a different set of giants. But trace all of those paths forward and they narrow to a single, identical last part: a spinning shaft that must be converted into electric current by a <strong>generator</strong>. Every path, no exceptions, ends at that one component — and that one component is all TD Power makes.</p>
+
+  <blockquote>Every road to electricity is different at the start and identical at the end: a spinning shaft that needs a generator. TD Power stationed itself at the end.</blockquote>
+
+  <div class="chart">
+    <div class="c-title">One product, sold into every prime mover</div>
+    <div class="c-sub">Illustrative — relative emphasis across applications, not reported segment shares</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Steam turbine<small>coal / biomass / waste-heat</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">core</div></div>
+      <div class="bar-row"><div class="blab">Gas turbine &amp; engine<small>fastest-growing (data centres)</small></div><div class="track"><span class="fill wtg" style="width:88%"></span></div><div class="bval">rising</div></div>
+      <div class="bar-row"><div class="blab">Hydro<small>horizontal &amp; vertical</small></div><div class="track"><span class="fill spec" style="width:60%"></span></div><div class="bval">steady</div></div>
+      <div class="bar-row"><div class="blab">Wind<small>generators to WTG OEMs</small></div><div class="track"><span class="fill om" style="width:38%"></span></div><div class="bval">niche</div></div>
+      <div class="bar-row"><div class="blab">Diesel &amp; special<small>gensets, motors, traction</small></div><div class="track"><span class="fill gold" style="width:34%"></span></div><div class="bval">niche</div></div>
+    </div>
+    <div class="legend"><span>The bars show breadth, not exact revenue splits (TD does not report tidy public percentages by application). The point is coverage: strength in steam and a surging gas line, backed by steady hydro and optional wind, diesel and motors.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The device that fits only TD Power: the neck of the funnel</div>
+    <p>Picture the electricity system as a funnel with five inlets — coal, gas, water, wind, diesel — and one narrow neck where every inlet converges before power reaches the grid. Most energy investing is a bet on <em>which inlet</em> will pour the most through. TD Power ignored the inlets and bought the neck. It doesn't need to forecast the fuel mix, win the coal-versus-gas debate, or time the renewables curve; it needs global electricity generation, in aggregate, to keep being built — and it collects a generator on the way past, whichever inlet supplied the flow. That is why the thesis is <strong>not</strong> "gas will beat coal" or "hydro is back." It is simpler and sturdier: as long as the world keeps adding generating capacity of any kind, the neck of the funnel gets busier.</p>
+  </div>
+
+  <div class="note gold"><b>A genuine surprise:</b> a mid-cap company headquartered in Bengaluru is a qualified generator supplier to <em>global</em> turbine and engine OEMs, exporting the overwhelming majority of its new orders — and it has never built a single turbine or engine of its own. It makes the component, not the powerplant. Most investors assume a "power equipment" company builds power plants; TD Power's edge is precisely that it doesn't — it sells one part to everyone who does.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Exports and the data-centre pull</h2></div>
+  <p class="part-sub">Why an ~80%-export order book is riding one of the loudest themes in global infrastructure.</p>
+
+  <p class="lead">TD Power is unusual for an Indian capital-goods company in how much of its demand comes from abroad. In FY26 roughly <strong>80% of the ₹2,238 Cr order intake originated from exports</strong>, and in the March quarter export share of inflow was around <strong>79%</strong>. It is, in effect, an Indian factory plugged directly into global power capex — with all the upside and the currency and cyclicality that implies.</p>
+
+  <p>The loudest driver right now is the <strong>data-centre build-out</strong>. The global race to build AI and cloud infrastructure needs enormous, reliable, on-site power — both prime power and backup — and much of it is delivered by gas and diesel <strong>gensets</strong>. TD Power supplies the generators inside many of those sets, largely to US and European engine and turbine OEMs. That has turned its gas-engine and gas-turbine generator lines into the fastest-growing part of the order book, and made TD one of the cleaner listed ways to ride the AI-driven power-capex wave without owning a data centre or a chip.</p>
+
+  <div class="plain">
+    <div class="ptag">The counter-intuitive read on the AI power boom</div>
+    <p>The obvious way to play the AI build-out is chips and clouds. The less obvious dependency is <em>electricity</em> — data centres are, physically, giant electrical loads that need power delivered reliably, often on-site, before a single model can train. That demand flows down to the humble components inside the gensets that back them up and, increasingly, run them. TD Power sits at exactly that unglamorous layer: it doesn't need any particular AI company to win, only for the aggregate to keep needing power. It is the same fuel-agnostic logic one rung further out — agnostic not just to which fuel wins, but to which hyperscaler wins.</p>
+  </div>
+
+  <div class="note gold"><b>The two-edged sword of exports:</b> selling four-fifths of new orders abroad brings scale, harder currency and exposure to the world's biggest capex pools — but it also imports <strong>FX risk</strong> and the <strong>global</strong> power-capex cycle straight onto TD's order book. A slowdown in US or European turbine and genset demand, or a sharp rupee move, lands on this company more directly than on a domestically-focused peer. Breadth of geography is a strength; it is not the same as safety.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The company, the founders, and who owns it</h2></div>
+  <p class="part-sub">A founder-built Bengaluru engineer with a surprisingly low promoter stake.</p>
+
+  <p class="lead">TD Power Systems was founded in <strong>1999 in Bengaluru</strong>, building AC generators with early technical collaborations drawn from Japanese and European electrical engineering. It grew from a domestic alternator maker into a globally qualified generator supplier, listed in <strong>2011</strong>, weathered a rough patch of over-ambitious overseas expansion in the mid-2010s, refocused hard on its core generator business, and emerged debt-free and export-led.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1999</div><div class="ev">TD Power Systems founded in Bengaluru — associated with founders including <strong>Nikhil Kumar</strong> (long-time Managing Director) and <strong>Mohib Khericha</strong> (Chairman) — to manufacture AC generators, leaning on technical collaborations with global electrical majors.</div></li>
+    <li><div class="yr">2000s</div><div class="ev">Builds a reputation supplying steam and hydro generators; begins qualifying with international turbine OEMs, seeding the export model.</div></li>
+    <li class="major"><div class="yr">2011</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE; capital funds capacity for larger turbo-generators at the Bengaluru complex.</div></li>
+    <li><div class="yr">2013–2017</div><div class="ev">An over-stretched push into overseas subsidiaries strains profitability; management retreats, rationalises the foreign units, and <strong>refocuses on the core Indian generator business</strong>.</div></li>
+    <li class="major"><div class="yr">2018–2023</div><div class="ev">The disciplined years — net-cash balance sheet, widening OEM roster, and a steadily rising export share across steam, gas and hydro applications.</div></li>
+    <li class="major"><div class="yr">FY25</div><div class="ev">Revenue ~₹1,279 Cr, PAT ~₹175 Cr (up ~50%); order book and export intake building on gas-engine and turbine wins.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record year: revenue ~₹1,856 Cr (+45%), PAT ~₹239 Cr (+37%), order inflow ₹2,238 Cr (~80% exports), order book ₹1,973 Cr; a <strong>1:2 stock split</strong> approved with Q4 results.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the founding group (associated with Nikhil Kumar, Mohib Khericha and family/associate entities) holds a controlling promoter stake of roughly <strong>27%</strong> — notably <em>low</em> for an Indian founder-run company, and reduced over recent years. The corollary is a large public float, with institutions holding a meaningful chunk. Track the exact promoter and pledge figures in the shareholding filings.</li>
+    <li><strong>Manufacturing base:</strong> the operations are anchored in <strong>Bengaluru (Karnataka)</strong>, with in-house facilities spanning generator assembly, machining and testing — a single, focused industrial footprint rather than a sprawling multi-site group.</li>
+    <li><strong>Balance sheet:</strong> effectively <strong>net-cash / debt-free</strong>, with cash and investments comfortably exceeding modest borrowings — the financial posture that lets it fund working-capital-heavy export orders without a lender's leash.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the ~27% promoter stake is worth a second look:</b> a low founder holding cuts both ways. It means a genuinely large public float and less family control of the register — investors, not promoters, own most of the company — but it also means less promoter "skin in the game" than the typical Indian mid-cap, and it puts a premium on the quality and continuity of professional management. For a business whose value is qualification, engineering talent and OEM trust, management continuity is not a footnote — it is part of the moat.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The order book and the intake that fills it</h2></div>
+  <p class="part-sub">A project business — so the leading indicator is orders won, not just revenue booked.</p>
+
+  <p class="lead">Because each generator is engineered to order for a specific OEM machine, TD Power is a <strong>project business</strong>: revenue is the tail-end of orders won months earlier. That makes the <strong>order book</strong> (work in hand) and, even more, the <strong>order intake</strong> (new wins) the numbers that lead the story. In FY26 both moved sharply — intake up ~51% to ₹2,238 Cr, and the closing order book at ₹1,973 Cr, roughly a year of revenue in hand.</p>
+
+  <div class="chart">
+    <div class="c-title">Order intake and book — the leading indicators</div>
+    <div class="c-sub">₹ Crore; intake = new orders won in the year, book = backlog at year-end</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25 intake</div><div class="track"><span class="fill ink" style="width:66%"></span></div><div class="bval">~1,478</div></div>
+      <div class="bar-row"><div class="blab">FY26 intake<small>~80% from exports</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~2,238</div></div>
+      <div class="bar-row"><div class="blab">Order book<small>backlog at Mar 2026</small></div><div class="track"><span class="fill wtg" style="width:88%"></span></div><div class="bval">~1,973</div></div>
+      <div class="bar-row"><div class="blab">Q4 FY26 intake<small>79% exports</small></div><div class="track"><span class="fill gold" style="width:30%"></span></div><div class="bval">~667</div></div>
+    </div>
+    <div class="legend"><span>New orders grew faster than revenue, and the backlog now covers roughly a year of sales — a book-to-bill above one, driven overwhelmingly by exports. That is the leading evidence that FY26's growth was not a one-off.</span></div>
+  </div>
+
+  <p>The composition of that intake matters as much as the size. A rising share is <strong>gas-engine and gas-turbine</strong> generators for export — the data-centre-linked demand — layered on a steady base of steam and hydro. When the mix tilts toward larger, higher-value turbo-generators, both the ticket size and, usually, the margin improve. When it tilts toward smaller machines, volume can rise while average value per order softens. Reading TD Power well means watching not just <em>how much</em> it books, but <em>what</em> it books.</p>
+
+  <div class="plain">
+    <div class="ptag">The uncomfortable arithmetic of a project book: lumpiness</div>
+    <p>A handful of large export orders from a few big OEMs can swing intake dramatically from quarter to quarter. One marquee turbine platform win can lift a quarter; a customer deferring a project can flatten the next. This is the structural cost of being an engineered-to-order supplier to a concentrated set of large buyers: the trend can be genuinely up while any single quarter is noisy. Judge TD Power on the <em>trailing order intake and book-to-bill over several quarters</em>, not on one print — the lumpiness is a feature of the model, not a signal in itself.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Margins and the balance sheet</h2></div>
+  <p class="part-sub">Mid-teens-to-high-teens margins, a net-cash war chest, and a copper-and-steel cost base.</p>
+
+  <p class="lead">TD Power runs at operating margins in the <strong>high-teens</strong> — an EBITDA margin around <strong>18%</strong> in FY26, up modestly year-on-year, though it can wobble quarter to quarter with mix and input costs (the March quarter ran closer to 17%). The bigger structural fact is the balance sheet: the company is <strong>net-cash</strong>, which for a working-capital-hungry export project business is not a nicety but an enabler.</p>
+
+  <div class="chart">
+    <div class="c-title">The financial shape, FY26</div>
+    <div class="c-sub">₹ Crore and % — a growing top line on a debt-free base</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue FY25</div><div class="track"><span class="fill ink" style="width:69%"></span></div><div class="bval">~1,279</div></div>
+      <div class="bar-row"><div class="blab">Revenue FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~1,856</div></div>
+      <div class="bar-row"><div class="blab">EBITDA FY26<small>~18% margin</small></div><div class="track"><span class="fill wtg" style="width:18%"></span></div><div class="bval">~336</div></div>
+      <div class="bar-row"><div class="blab">PAT FY26</div><div class="track"><span class="fill spec" style="width:13%"></span></div><div class="bval">~239</div></div>
+    </div>
+    <div class="legend"><span>Revenue up ~45% and PAT up ~37% on a stable, high-teens margin — with the profit dropping to a debt-free balance sheet rather than servicing borrowings. Figures are approximate, drawn from FY26 results.</span></div>
+  </div>
+
+  <p>Two forces set the margin. On the cost side, generators are built from <strong>copper</strong> (windings), <strong>electrical steel</strong> and structural steel — so the price of those metals, and TD's ability to pass them through in contracts, moves the gross margin. On the value side, <strong>mix</strong> is king: larger turbo-generators and higher-spec export machines carry richer margins than small commodity alternators. Hold input costs and lift the mix, and margins drift up; let metals spike or the mix skew small, and they compress.</p>
+
+  <div class="plain">
+    <div class="ptag">Why net-cash is the permission slip for an export project business</div>
+    <p>An engineered-to-order exporter carries a lot of value in-flight at any moment: raw copper and steel bought, machines part-built, finished generators shipped and awaiting payment across borders and currencies. Do that on borrowed money and every delay in an OEM's payment squeezes you. Net-cash flips the posture: TD can build ahead, absorb a slow-paying customer or a long shipping cycle, and take on large export orders without a banker's covenant deciding what it can accept. It doesn't guarantee growth — but it removes the financial fragility that has broken plenty of ambitious capital-goods exporters before they scaled.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A specialist competing against divisions of electrical giants — and against low-cost challengers.</p>
+
+  <p class="lead">The market for independent, made-to-order generators sits in an unusual spot. The customers (turbine and engine OEMs) are enormous. Some of those OEMs make their <em>own</em> generators in-house; others prefer to buy from qualified specialists like TD Power so they can focus on the prime mover. TD's competition is therefore a mix of the in-house generator divisions of electrical majors and a set of independent generator makers, including lower-cost challengers from China and elsewhere.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player type</th><th>Position</th><th>Vs TD Power</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">TD Power Systems</td><td>Independent, fuel-agnostic generator specialist; export-led; net-cash</td><td><em>This company.</em> Wins on qualification breadth across every prime mover, custom engineering, and a clean balance sheet; the debate is order-cyclicality and concentration.</td></tr>
+      <tr><td class="t-strong">In-house OEM generator arms</td><td>Divisions of large turbine / engine majors that build their own alternators</td><td>Deep pockets and captive demand — but TD wins the OEMs that would rather <em>buy</em> a specialist generator than build one, and can serve many OEMs at once.</td></tr>
+      <tr><td class="t-strong">Global electrical majors</td><td>Rotating-machine divisions of diversified electrical / power groups</td><td>Scale and brand, but often less nimble on custom, mid-size, engineered-to-order work where TD is focused and cost-competitive.</td></tr>
+      <tr><td class="t-strong">Low-cost challengers</td><td>Generator makers competing chiefly on price (incl. Chinese suppliers)</td><td>Pressure on price, but the OEM qualification barrier and reliability record slow their entry into TD's marquee platforms.</td></tr>
+      <tr><td class="t-strong">The turbine / engine OEMs</td><td>TD's <em>customers</em>, not its rivals</td><td>Crucial distinction: TD supplies a component to these firms; it does not compete to build turbines or engines. Its fortunes rise with theirs.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>TD Power's position is that of a trusted specialist supplier, not a scale champion. It will never out-spend a global electrical major, and it does not try to; it competes by being the qualified, flexible, engineered-to-order generator partner across more prime movers than most rivals bother to serve, at a cost that a big OEM finds hard to beat in-house for mid-size machines. The standing risk is that a determined low-cost entrant eventually qualifies into the same platforms, or that a major OEM decides to bring generator-making back in-house. The defence is the same thing that built the business: the slow, sticky accumulation of design wins that a price list alone can't dislodge.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A high-quality niche compounder — priced for the global power cycle to keep running.</p>
+
+  <p class="lead">FY26 was TD Power's best year on record: revenue up ~45% to ₹1,856 Cr, PAT up ~37% to ₹239 Cr, a high-teens margin, a rising export order book and a debt-free balance sheet. The market has rewarded that clarity — the stock trades near <strong>45–46× earnings</strong> on a market cap around <strong>₹18,000 Cr</strong>. That is not a beaten-down cyclical multiple; it is a quality-and-growth multiple that assumes the global power-capex tailwind persists and the margin holds.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~18%</div><div class="msl">FY26 EBITDA margin; the mix-and-metals number to watch each quarter</div></div>
+    <div class="ms green"><div class="msv">Net cash</div><div class="msl">Effectively debt-free — funds working-capital-heavy export orders itself</div></div>
+    <div class="ms red"><div class="msv">~46×</div><div class="msl">Trailing P/E on ~₹18,000 Cr market cap — a premium, quality multiple</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one thing that settles the thesis: order intake, export share and margin, read together</div>
+    <p>At ~46× earnings, TD Power is not priced as a lumpy exporter; it is priced as a durable niche compounder. So the case is proven or broken by a single composite scoreboard, in the company's own terms: <strong>order intake (with export/OEM share) growing, converting into a rising order book, at a stable-to-improving EBITDA margin.</strong> If intake keeps compounding — especially the higher-value gas-turbine and gas-engine export wins tied to the data-centre build-out — while margin holds in the high teens and the balance sheet stays net-cash, the premium multiple is defensible and the growth is real, not a spike. If intake stalls, or growth comes only through smaller, thinner-margin machines that dilute the mix, then a fuel-agnostic niche supplier gets re-rated to what it structurally is: a well-run but cyclical capital-goods exporter. Intake × export share × margin is the whole verdict; revenue is just the lagging echo of orders already won.</p>
+  </div>
+
+  <div class="note">The figures here (FY25/FY26 revenue, PAT, EBITDA margin, order book and intake, market cap and P/E) are drawn from company results and market data as of mid-2026 and cross-checked across reports; several are <b>approximate</b> and a 1:2 stock split approved with the Q4 results affects per-share optics. Verify against the company's filings and a current quote before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A debt-free specialist riding global power capex — asked to prove the intake compounds without the mix or the cycle turning.</p>
+
+  <p class="lead">TD Power enters FY27 in strong shape: a record year behind it, a book-to-bill above one, an export order book skewed to the surging gas and data-centre theme, and no debt to slow it. The debate is not whether the business works — it plainly does — but whether a niche, order-driven, export-led supplier can keep compounding intake at a pace that justifies a ~46× multiple, through a global capex cycle it does not control.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Fuel-agnostic by design</strong> — sells the one component every power source needs, so it grows with total generating capacity regardless of which fuel wins.</li>
+        <li><strong>Global data-centre pull</strong> — gas-engine and gas-turbine generator exports ride the AI-driven power-capex wave, the fastest-growing part of the book.</li>
+        <li><strong>Sticky OEM qualifications</strong> — designed into marquee turbine and engine platforms; hard to displace, re-orders follow the OEMs' own sales.</li>
+        <li><strong>Net-cash, self-funding</strong> — no debt to service; can take on large export orders and absorb payment lags without a lender's leash.</li>
+        <li><strong>Broad float, clean franchise</strong> — record FY26, high-teens margins, and a large public float in a rare, focused global niche.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Order lumpiness &amp; concentration</strong> — a few large global OEMs drive intake; project timing swings quarters, and losing a platform hurts.</li>
+        <li><strong>Global-cycle &amp; FX exposure</strong> — ~80% export intake imports the world power-capex cycle and rupee moves straight onto the order book.</li>
+        <li><strong>Rich valuation</strong> — ~46× earnings prices in sustained compounding; any intake stall or mix-down can trigger a sharp de-rating.</li>
+        <li><strong>Input costs &amp; mix</strong> — copper, electrical steel and shipping move the margin; a skew to smaller machines dilutes value per order.</li>
+        <li><strong>Competition &amp; management continuity</strong> — low-cost challengers, in-house OEM generator arms, and a ~27% promoter stake that puts a premium on professional-management continuity.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>TD Power Systems made a quietly radical choice: instead of betting on a fuel, it built the one part that every fuel's power plant needs, and sold it to the world's turbine and engine makers. That is why a Bengaluru firm with no turbine of its own can export generators to over a hundred countries and ride the global build-out — coal or gas, hydro or wind, grid or data-centre genset — from the neck of the funnel. What it has to prove now is not relevance but <em>durability of intake</em>: that the export order book keeps compounding, led by the higher-value gas and turbo-generator wins, without the margin thinning or the global capex cycle turning. Watch each quarter's order intake, its export share, and the EBITDA margin in one glance — three numbers that, together, tell you whether FY26 was a peak or a base camp.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>TD Power Systems Ltd — Q4 &amp; FY26 results and investor presentation (year ended Mar 2026), via company disclosures and InvestyWise.</li>
+    <li>Business Standard — "TD Power Systems ends higher after Q4 PAT rises 36% YoY; announces 1:2 stock split."</li>
+    <li>MarketsMojo — "TD Power Systems Q4 FY26: Stellar Growth Momentum Continues Despite Premium Valuation."</li>
+    <li>Yahoo Finance — "TD Power Systems Ltd (BOM:533553) Full Year 2026 Earnings Call Highlights."</li>
+    <li>Univest / Whalesbook — TD Power Systems Q4 FY26 results, order inflow and export-share figures.</li>
+    <li>Tradebrains / MSN — "TD Power Systems: Are data centres quietly driving the company's entire growth?"</li>
+    <li>Screener.in — TD Power Systems consolidated financials, market cap and P/E.</li>
+    <li>Alpha Spread / betatoalpha — TD Power Systems FY26 order book and margin commentary.</li>
+    <li>BSE India — TD Power Systems Limited stock page, scrip code 533553 (ISIN INE419M01027).</li>
+    <li>Company product literature — generator range across steam, gas, hydro, wind and diesel applications, and installed base across 110+ countries.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; some figures are affected by the 1:2 stock split approved with the Q4 results. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "TDPOWERSYS";
+  const COMPANY_SLUG = "td-power-systems";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
