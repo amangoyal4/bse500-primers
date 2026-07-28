@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apollo Micro Systems — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F1ED;
+    --paper-2:#FBF8F5;
+    --card:#FFFFFF;
+    --ink:#211812;
+    --ink-soft:#5F544D;
+    --ink-faint:#938A82;
+    --brand:#7A4126;          /* deep terracotta */
+    --brand-bright:#9C5A3A;   /* terracotta accent */
+    --gold:#C0873E;           /* warm brass - accent / warmth */
+    --wtg:#9C5A3A;            /* electronic / embedded systems */
+    --epc:#B5763F;            /* control & software */
+    --om:#5E3A22;            /* own products / integration */
+    --spec:#8A6D3B;          /* energetics / cross accent */
+    --line:#E1D8D0;
+    --line-soft:#ECE4DC;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F3E4DA;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F4F0;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EDE6DE;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#7A4126,#9C5A3A);}
+  .fill.gold{background:linear-gradient(90deg,#C0873E,#D6A45E);}
+  .fill.wtg{background:linear-gradient(90deg,#9C5A3A,#B5763F);}
+  .fill.om{background:linear-gradient(90deg,#5E3A22,#7A4126);}
+  .fill.spec{background:linear-gradient(90deg,#8A6D3B,#A98A4E);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a3430,#5a5049);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--spec);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F3E4DA;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Defence electronics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What Apollo actually builds</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; founder</a></li>
+    <li><a href="#p4"><span class="n">04</span> The design-in moat</a></li>
+    <li><a href="#p5"><span class="n">05</span> Order book &amp; indigenisation</a></li>
+    <li><a href="#p6"><span class="n">06</span> The climb to own products</a></li>
+    <li><a href="#p7"><span class="n">07</span> The energetics leap (IDL)</a></li>
+    <li><a href="#p8"><span class="n">08</span> Capex &amp; the working-capital test</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: APOLLO · BSE: 540879</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Apollo Micro Systems, <em>the brains and nervous systems inside India's missiles</em></h1>
+  <p class="dek">A complete walk through a Hyderabad design house that builds the electronic and electro-mechanical guts of India's guided weapons — the onboard computers, control electronics, power supplies, fuzes and seeker circuits that go <em>inside</em> missiles, torpedoes and weapon platforms — and why its whole re-rating rests on one shift: from a build-to-print subcontractor toward a maker of its own products, riding the defence-indigenisation wave.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹904 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹1,432 <small>Cr</small></div><div class="l">Order book (Mar 2026)</div></div>
+    <div class="cell"><div class="v">~24% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹15,000 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">28 Jul 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹904 Cr (+61%), EBITDA ~₹218 Cr, PAT ₹113 Cr (roughly doubled), order book ~₹1,432 Cr; added the IDL Explosives (energetics) acquisition and the ₹250 Cr+ capacity expansion.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Apollo Micro Systems <strong>designs and builds the electronics and electro-mechanical hardware that goes inside weapons</strong>. When India's defence labs develop a missile, a torpedo, a guided bomb or a rocket, someone has to build the box of circuitry that guides it, the computer that flies it, the power supply that keeps it alive, and the fuze that decides when it detonates. Apollo is one of the private firms that does exactly that — a Hyderabad-based, design-led supplier of onboard computers, control and actuation electronics, power systems, fuzes and seeker/guidance circuitry, plus the system integration that ties them together. Its customers are the <strong>DRDO labs, defence PSUs (BDL, BEL, HAL) and the armed forces</strong>, largely on India's own missile and weapon programmes.</p>
+
+  <p>Three facts frame the whole business:</p>
+  <ul class="clean">
+    <li><strong>It sits <em>inside</em> the weapon, by its own design.</strong> Apollo is not a raw-component vendor and it is not a pure radar/RF house — it builds the embedded computing, control and electro-mechanical subsystems that make a guided weapon actually guide. Because much of that hardware is <em>designed in</em> by Apollo and then qualified into a specific programme, it is genuinely hard to rip out and replace. That embeddedness is the moat.</li>
+    <li><strong>It is climbing the value ladder — and buying its way up it.</strong> Historically Apollo did a lot of <em>build-to-print</em> work (make what the customer designed). The re-rating thesis is the shift toward <strong>higher-value own products and complete systems</strong> — and, in a genuine plot-twist, it has acquired an explosives maker (IDL) so it can supply the warhead's energetics too. FY26 revenue jumped <strong>61% to ₹904 Cr</strong> and PAT roughly <strong>doubled to ₹113 Cr</strong>, helped by that expansion.</li>
+    <li><strong>It rides indigenisation — with a real balance-sheet catch.</strong> A ~₹1,432 Cr order book, a lifetime arms-manufacturing licence, and a wall of new missile/torpedo/mine programmes give years of visibility. But defence customers pay slowly: debtor days ran near <strong>194</strong>, net debt rose to ~₹376 Cr, and Apollo is mid-way through a <strong>₹250 Cr+ capacity expansion</strong>. The stock trades on a steep multiple (well over 100× trailing earnings) — priced for the climb to succeed, not just continue.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Every guided weapon has a body, a warhead, and a "brain-and-nervous-system" — the electronics that sense, decide, steer and fire. Apollo Micro Systems is a specialist in that middle layer: the sensing, computing and actuation hardware that turns a tube of propellant into something that finds its target. For years it mostly built to other people's blueprints. The bet now is that it earns more per contract by supplying its <em>own</em> designs and complete systems — and, unusually, that it can widen from the brains into the warhead's explosive filling. The reward is a stickier, higher-margin book; the price is a working-capital-heavy business, dependent on government programme timing, carried at a full defence-boom valuation.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Defence electronics 101: the layer Apollo lives in</h2></div>
+  <p class="part-sub">No engineering degree needed — just the handful of ideas that explain what Apollo sells.</p>
+
+  <p class="lead">A modern weapon is less a lump of metal than a flying computer wrapped in explosive. Take a guided missile: it has to know where it is, where the target is, correct its flight thousands of times a second, survive brutal vibration and heat, and detonate at exactly the right instant. Each of those jobs is done by a piece of purpose-built electronics or electro-mechanics. Apollo makes several of those pieces. To follow the business, you need five terms.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only vocabulary you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Onboard computer</td><td>The weapon's brain — the ruggedised processor and software that reads the sensors and commands the flight. A core Apollo product; it must work first time, in extreme conditions, with zero chance of a reboot.</td></tr>
+      <tr><td class="t-strong">Control &amp; actuation</td><td>The "muscles &amp; nerves" — electronics and small electro-mechanical actuators that move fins/control surfaces to steer the weapon. Apollo's blend of electronics <em>and</em> electro-mechanics is exactly this layer.</td></tr>
+      <tr><td class="t-strong">Seeker / guidance electronics</td><td>The circuitry behind the "eye" that homes onto a target (radar, infrared, laser or acoustic for torpedoes). Apollo builds the electronics that process the seeker's signal — the front-of-the-brain.</td></tr>
+      <tr><td class="t-strong">Fuze</td><td>The safety-and-firing device that decides <em>when</em> the warhead goes off (on impact, at a set height, near a ship's hull). Tiny, life-or-death, and a specialist niche Apollo plays in.</td></tr>
+      <tr><td class="t-strong">Build-to-print vs own design</td><td>The whole investment story in four words. <em>Build-to-print</em> = the customer hands you the drawing, you manufacture it (low margin, replaceable). <em>Own design / own product</em> = you designed it, so you keep the IP, the margin, and the customer (high value, sticky).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "designed in" is the whole game</div>
+    <p>When a component is <em>designed into</em> a weapon programme, it is qualified through years of testing — vibration, temperature, live firing, safety certification. Once it passes, swapping it for a rival's part means re-qualifying the entire chain, a slow and expensive process no programme manager wants to repeat. So a supplier that gets its own design embedded early doesn't just win one order; it wins the reorders, the variants and the export versions for the life of the programme. That is why Apollo's push from "make what you're told" to "design it yourself" is not a slogan — it is the difference between a vendor that can be re-tendered every year and a partner that is welded into the platform.</p>
+  </div>
+
+  <h3>Who buys this — and why it's a peculiar market</h3>
+  <ul class="clean">
+    <li><strong>DRDO labs</strong> — India's defence-research organisation designs the weapons; it needs private partners to design-and-build subsystems and to act as production agencies once a design is proven. Apollo works across a wide span of DRDO's missile and weapon projects.</li>
+    <li><strong>Defence PSUs (BDL, BEL, HAL)</strong> — the state giants that assemble and deliver finished weapons. They subcontract subsystems downward; Apollo is one of the private houses that feeds them, and increasingly a co-development partner rather than a mere vendor.</li>
+    <li><strong>The armed forces / MoD</strong> — the ultimate customer, whose budgets, programme timing and indigenisation mandates set the tempo. When the Defence Acquisition Council clears a programme, it ripples down to firms like Apollo — and when a programme slips, that ripples down too.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What Apollo actually builds: the guts of a guided weapon</h2></div>
+  <p class="part-sub">One diagram, and the company's product range clicks into place.</p>
+
+  <p class="lead">Apollo's range is best understood not as a catalogue but as a <strong>map of where its content sits inside a weapon</strong>. Follow a missile or a torpedo from nose to tail and you pass through several Apollo-addressable boxes — and, since the IDL acquisition, even the explosive filling of the warhead is now in scope. This breadth is the point: Apollo aims to own more of each weapon's bill of materials over time.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">Inside a guided weapon — where Apollo's content sits</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Nose · sense</div><div class="nname">Seeker &amp; guidance electronics</div><div class="nwho">Signal-processing for the "eye" — radar / IR / laser / acoustic homing.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Mid · decide</div><div class="nname">Onboard computer &amp; control</div><div class="nwho">Ruggedised processor + flight software; the weapon's brain.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Body · act &amp; power</div><div class="nname">Power supplies &amp; actuation</div><div class="nwho">Batteries, power electronics, electro-mechanical fin actuators — the muscles.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Tail · fire</div><div class="nname">Fuze &amp; warhead energetics</div><div class="nwho">Safety-and-firing device + (via IDL) the explosive fill itself.</div></div>
+    </div>
+    <div class="flow-note">Apollo's differentiator is spanning the electronic <em>and</em> electro-mechanical layers, then integrating them into a working subsystem — and now reaching into the warhead's chemistry. Astra Microwave lives mainly in the seeker/RF box; MTAR in precision mechanical parts; Apollo's home is the computing-control-actuation spine that ties a weapon together.</div>
+  </div>
+
+  <h3>The product families, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Onboard computers &amp; embedded systems</span></strong> — ruggedised computing boards and integrated avionics-style units that run a weapon's or platform's control logic. This is Apollo's design-heavy core, where its own IP is most valuable.</li>
+    <li><strong><span class="chain-epc">Control, actuation &amp; power electronics</span></strong> — the electro-mechanical layer: servo/actuation electronics that steer the weapon, plus power-supply and conditioning units. Blending electronics with electro-mechanics is what the name "Micro Systems" really points to.</li>
+    <li><strong><span class="chain-om">Fuzes, seeker electronics &amp; sub-systems</span></strong> — specialist safety-critical devices and the front-end electronics for guidance, supplied into missiles, torpedoes and guided munitions.</li>
+    <li><strong>System integration &amp; testing</strong> — assembling multiple subsystems into a qualified, tested package and running the environmental/live-fire qualification. This is where build-to-print evolves into "we deliver the whole working box".</li>
+    <li><strong>Adjacent markets</strong> — the same competencies feed <strong>avionics, ground and radar systems, space (launch-vehicle and satellite electronics) and homeland security</strong>. Defence is the anchor; space and homeland are the diversifiers.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the electro-mechanical blend is unusual</div>
+    <p>Most defence-electronics names specialise narrowly — one does RF and antennas, another does precision-machined mechanical parts, a third does software-defined radios. Apollo's pitch is that it straddles the <em>electronic</em> and the <em>electro-mechanical</em> together and then integrates them, so a customer can hand over a whole subsystem-level requirement (sense-decide-steer-fire) rather than stitching together five vendors. That is harder to do and slower to build, but once you are the firm that delivers the integrated box, you are far more entrenched than any single-layer supplier. The trade-off is that integration work is engineering-intensive and lumpy — it does not scale as cleanly as selling one repeatable component.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the founder, and who controls it</h2></div>
+  <p class="part-sub">A founder-run Hyderabad design house that IPO'd into the defence-electronics boom.</p>
+
+  <p class="lead">Apollo Micro Systems is a <strong>founder-led company built by Karunakar Reddy Baddam</strong>, an engineer who grew it from a Hyderabad electronics-design shop into a listed defence supplier. It is not part of a large industrial group; the promoter family still runs and controls it, which makes founder execution both the biggest asset and a concentration risk.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1985</div><div class="ev">Founded in Hyderabad by <strong>Karunakar Reddy Baddam</strong> as an electronic-design and embedded-systems house, gradually specialising in ruggedised electronics for defence and space.</div></li>
+    <li><div class="yr">2000s–2010s</div><div class="ev">Becomes an established design-and-build partner to <strong>DRDO labs and defence PSUs</strong>, supplying onboard computers, control electronics, power supplies and fuzes across missile and weapon programmes.</div></li>
+    <li class="major"><div class="yr">2018</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE — a rare listed pure-play in weapon-embedded electronics, arriving just as "Make in India" for defence began to gather pace.</div></li>
+    <li><div class="yr">2020–2024</div><div class="ev">Indigenisation accelerates; order intake broadens across missiles, torpedoes, mines and guided munitions. Apollo begins its deliberate push up the value ladder toward <strong>own products and complete systems</strong>.</div></li>
+    <li class="major"><div class="yr">2025</div><div class="ev">Acquires <strong>IDL Explosives</strong> (via subsidiary Apollo Defence Industries) from GOCL, completed Nov 2025 — a leap into military energetics; IDL later secures a 15-year licence to make <strong>HMX and TNT</strong>.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue jumps <strong>61% to ₹904 Cr</strong>; PAT roughly doubles to ₹113 Cr; obtains a <strong>DPIIT lifetime arms-manufacturing licence</strong> (missiles, ATGMs, torpedoes, loitering munitions); launches a ₹250 Cr+ capacity expansion.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> founder <strong>Karunakar Reddy Baddam</strong> and family hold the controlling stake — reported around the <strong>~52–55%</strong> range. A meaningful slice of promoter holding has been <strong>pledged</strong> (reported around ~30% of the promoter stake at points) — a real item to track directly in the shareholding and encumbrance filings, given how capital-hungry the expansion is.</li>
+    <li><strong>Group map:</strong> the listed entity is <strong>Apollo Micro Systems Ltd (APOLLO)</strong> — the electronics-and-systems maker in this primer. <strong>Apollo Defence Industries Pvt Ltd</strong> is the subsidiary vehicle that bought <strong>IDL Explosives</strong>, adding the energetics arm. Keep the two straight: one builds the brains, the other now supplies the bang.</li>
+    <li><strong>Balance sheet:</strong> growth has been funded partly by debt and periodic capital-raising (including fresh shares listed in 2026). Net debt rose to roughly <strong>₹376 Cr (Mar 2026)</strong> from ~₹206 Cr a year earlier, and receivables are heavy — the financial signature of a defence supplier scaling fast into slow-paying government customers.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the founder-led, pledged, capital-hungry combination matters:</b> Apollo's strengths — deep design relationships, willingness to bet on own-products and even on an explosives acquisition — flow directly from a founder able to move fast. But the same profile means key-person dependence, promoter pledge to watch, and a balance sheet stretched by ambition. The bull and bear cases both start from the same fact: this is one entrepreneur's high-conviction climb up the defence value chain.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: the design-in / value-ladder device -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The design-in moat: three rungs of value</h2></div>
+  <p class="part-sub">The single most important idea in the investment case — and it is specific to how Apollo makes money.</p>
+
+  <p class="lead">Two defence suppliers can report the same revenue and be worth wildly different multiples, because <em>where they sit on the value ladder</em> decides how sticky and how profitable each rupee is. Apollo's entire re-rating thesis is a climb up three rungs — from making what it's told, to designing what it makes, to owning the whole product. Watch how the economics change as you climb.</p>
+
+  <div class="chart">
+    <div class="c-title">The value ladder — why the climb re-rates the business</div>
+    <div class="c-sub">Illustrative: relative value, margin and stickiness at each rung (schematic, not reported segment data)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Rung 1 · Build-to-print<small>make the customer's design</small></div><div class="track"><span class="fill ink" style="width:34%"></span></div><div class="bval">Low</div></div>
+      <div class="bar-row"><div class="blab">Rung 2 · Own-designed subsystem<small>your IP, qualified in</small></div><div class="track"><span class="fill wtg" style="width:66%"></span></div><div class="bval">Higher</div></div>
+      <div class="bar-row"><div class="blab">Rung 3 · Complete own product / system<small>you deliver the whole box</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">Highest</div></div>
+    </div>
+    <div class="legend"><span>The higher the rung, the more IP Apollo keeps, the harder it is to re-tender the work, and the better the margin — because you are paid for design and integration, not just assembly. The thesis is a mix-shift <em>up</em> this ladder over time.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The device that fits only Apollo: the re-qualification lock</div>
+    <p>Here is the mechanism a generalist misses. When Apollo's <em>own-designed</em> onboard computer or control unit is qualified into, say, a specific missile, it is signed off through vibration rigs, thermal cycling and live firings — a multi-year, multi-crore gauntlet. To replace it with a competitor's box, the programme would have to re-run much of that qualification and re-certify the whole weapon. No programme manager reopens a proven, flight-certified guidance chain to save a few percent on one subsystem. So each design-win is not a one-off sale — it is a claim on every future unit, variant and export order of that weapon, for as long as the programme lives. That is why the shift from Rung 1 to Rung 3 matters far more than the headline order number: a build-to-print rupee can be re-tendered next year; a designed-in rupee is welded into the platform.</p>
+  </div>
+
+  <p>This is also why Apollo's revenue can grow faster than the defence budget for a while. Every year the indigenisation wave qualifies more of Apollo's own designs into more programmes; each qualified design then compounds as those programmes move from prototype to series production to export. The company is, in effect, trying to convert a stream of one-time contracts into a portfolio of embedded, recurring positions inside India's weapon fleet.</p>
+
+  <div class="note gold"><b>A genuine surprise:</b> the popular mental image of "defence electronics" is radar and radio — the Astra Microwave lane. Apollo's content is different and arguably more intimate: it is the <em>guidance and control brain</em> and the electro-mechanical muscles inside the weapon, the part that actually flies it to the target. A Hyderabad firm most investors have never heard of designs the flight computers and fuzing electronics sitting inside India's missiles and torpedoes — and is now moving to supply the explosive in the warhead too.</p></div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The order book and the indigenisation wave</h2></div>
+  <p class="part-sub">Where the demand comes from — and why it has surged.</p>
+
+  <p class="lead">Apollo's opportunity is inseparable from a policy shift: India is deliberately trying to <strong>build its weapons at home</strong> rather than import them, and to source subsystems from Indian private firms rather than only from state PSUs. That "indigenisation" push is the tide lifting the entire defence-electronics sector — and Apollo, embedded across DRDO's missile programmes, is positioned squarely in its path.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~₹1,432 Cr</div><div class="msl">Consolidated order book at 31 Mar 2026 — roughly 1.6× FY26 revenue</div></div>
+    <div class="ms gold"><div class="msv">₹52,000 Cr</div><div class="msl">Defence deals cleared by the DAC in mid-2026, including missile/mine programmes Apollo feeds</div></div>
+    <div class="ms green"><div class="msv">Lifetime</div><div class="msl">DPIIT arms-manufacturing licence — missiles, ATGMs, torpedoes, loitering munitions</div></div>
+  </div>
+
+  <p>The pipeline is unusually concrete for a small-cap. A few examples of what sits behind the order book give a sense of the breadth:</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Selected programmes feeding the pipeline</caption>
+    <thead><tr><th>Programme / area</th><th>What it is</th><th>Apollo's angle</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Anti-tank &amp; guided missiles</td><td>Man-portable and platform-launched guided missiles (e.g. MPATGM-class) under DRDO development.</td><td>Guidance/control electronics, onboard computing and subsystems across multiple missile projects.</td></tr>
+      <tr><td class="t-strong">Torpedoes (ALWT / EHWT)</td><td>Advanced light-weight and electronic heavy-weight torpedoes for the Navy.</td><td>MoD approval for ALWT-related work; EHWT order flow expected to route via BDL sub-contracting to Apollo.</td></tr>
+      <tr><td class="t-strong">Sea mines (MIGM)</td><td>Multi-Influence Ground Mine — an underwater mine to detect and destroy stealth ships/submarines; large multi-year order potential.</td><td>Named a DRDO production agency for the MIGM (Vighana); order potential split between BDL and Apollo.</td></tr>
+      <tr><td class="t-strong">Warhead / EFP technology</td><td>Omni-directional multi-EFP (explosively formed projectile) warhead technology transferred from DRDO.</td><td>Transfer-of-technology recipient — deepening Apollo's move from electronics into complete lethal systems.</td></tr>
+      <tr><td class="t-strong">Naval Make-II &amp; DPSU orders</td><td>Indigenous-development contracts and steady subsystem orders from DRDO/DPSUs and private primes.</td><td>A rolling stream of ₹25–75 Cr-type orders that keeps the base book replenished.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Read the order book as visibility, not as cash</div>
+    <p>A ~₹1,432 Cr book against ₹904 Cr of revenue is real visibility — well over a year of work already contracted, in a sector where new programmes keep arriving faster than old ones close. But two cautions belong right next to that number. First, defence order books are <em>lumpy and long-dated</em>: a mine or torpedo programme can take years to convert into deliveries, and timing swings with budgets and trials, not with Apollo's effort. Second, an order booked is not cash collected — and as the next sections show, the gap between the two is precisely where a defence supplier's risk lives. The order book tells you demand exists; it does not tell you when the money arrives.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The climb to own products — and new-age weapons</h2></div>
+  <p class="part-sub">The re-rating lever: from subsystem supplier toward complete systems.</p>
+
+  <p class="lead">If Section 04 explained <em>why</em> climbing the value ladder matters, this is <em>how far</em> Apollo is trying to climb. The ambition is to stop being only the firm that builds a piece of someone else's weapon and to become a firm that develops and sells <strong>its own products and complete systems</strong> — including the fast-growing "new-age" categories that didn't exist a decade ago.</p>
+
+  <h3>Three directions of travel</h3>
+  <ul class="clean">
+    <li><strong>Own products &amp; systems.</strong> Turning proven subsystem expertise into Apollo-owned, Apollo-designed products it can sell repeatedly and, ideally, export — the highest rung of the ladder, where margins and stickiness are best.</li>
+    <li><strong>New-age unmanned &amp; loitering munitions.</strong> Its lifetime licence explicitly covers <strong>loitering munitions</strong> (drones that circle a battlefield and dive onto a target) and unmanned systems — categories where India wants indigenous supply and where an electronics-and-guidance house has a natural right to play.</li>
+    <li><strong>Deeper into the weapon.</strong> The warhead-technology transfers and the IDL energetics acquisition (next section) push Apollo from "the brains" toward "a complete weapon" — owning more of each system's value.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The reason own-products change the multiple, not just the revenue</div>
+    <p>Extra build-to-print revenue makes the company bigger; own-product revenue makes it <em>worth more per rupee of sales</em>. A completed system carries Apollo's design margin and its integration margin, ties the customer in through qualification, and can be sold across variants and to export buyers with far less incremental engineering. So the market is not really paying for Apollo's current sales — it is paying for the <em>expected mix</em> a few years out, when (the bulls hope) a much larger share of revenue is own-designed systems rather than contract manufacturing. That expected mix-shift is the engine under the valuation, which also means a <em>stalled</em> mix-shift is the single most dangerous outcome for the shares.</p>
+  </div>
+
+  <div class="note gold"><b>The honest tension in this story:</b> owning products is more valuable but also harder and riskier than build-to-print. Apollo must fund the development, win the qualification, carry the inventory, and prove it can deliver complete systems at scale — none of it guaranteed, all of it capital-hungry. The climb is the whole reason to own the stock and the whole reason it could disappoint; those are the same sentence.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The energetics leap: buying the bang (IDL Explosives)</h2></div>
+  <p class="part-sub">The move that surprised the market — and reshaped the story.</p>
+
+  <p class="lead">In November 2025 Apollo completed, through its subsidiary <strong>Apollo Defence Industries</strong>, the acquisition of <strong>IDL Explosives</strong> from GOCL Corporation. On paper an electronics-and-systems company had just bought an explosives maker. In practice it was a deliberate reach for the one part of a weapon Apollo did <em>not</em> yet touch: the energetic material inside the warhead.</p>
+
+  <p>The logic follows directly from the value-ladder thesis. Apollo already builds the brains, the muscles and the fuze; the warhead's explosive fill was the missing piece to offer a <strong>more complete weapon</strong>. IDL brings established explosives manufacturing, and it subsequently secured a <strong>15-year licence to produce HMX and TNT</strong> — high-grade military energetic materials with both defence-supply and export potential, and a domestic-substitution angle India actively wants filled.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">Nov 2025</div><div class="msl">IDL Explosives acquisition completed via Apollo Defence Industries</div></div>
+    <div class="ms"><div class="msv">15-yr</div><div class="msl">Licence for IDL to manufacture HMX &amp; TNT — military-grade energetics</div></div>
+    <div class="ms green"><div class="msv">+61%</div><div class="msl">FY26 revenue growth, with the energetics expansion a meaningful contributor</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the surprise is also a strategy</div>
+    <p>Buying an explosives business looks like a swerve for an electronics firm — until you see the weapon as a whole. A guided munition is guidance electronics <em>plus</em> a warhead; owning both lets Apollo pitch a fuller system and capture value it previously handed to others. Energetics is also structurally attractive: it is licence-gated (a barrier to entry), import-substituting (a policy tailwind), and export-capable (HMX/TNT have global demand). The flip side is that Apollo has taken on a very different industrial and safety profile — explosives manufacturing carries regulatory, environmental and safety obligations an electronics-design house has never had to run. It widens the moat and widens the risk surface at the same time.</p>
+  </div>
+
+  <p>Strategically, IDL is the clearest signal of what Apollo is trying to become: not a component vendor to weapon-makers, but a <strong>vertically broader defence company</strong> that can supply progressively more of a complete system — sensing, computing, actuation, fuzing and now the energetic payload. Whether that breadth translates into durable margins, or simply into a more complex company to run, is one of the questions the coming years will answer.</p>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Capex and the working-capital test</h2></div>
+  <p class="part-sub">The least glamorous section — and, for Apollo specifically, the one that most decides the outcome.</p>
+
+  <p class="lead">Growth this fast is not free. To take larger production orders and build an export portfolio, Apollo is putting up a <strong>new manufacturing facility with ₹250 Cr+ of capex</strong>, aiming for a step-change in capacity, plus a further ~₹60 Cr for testing equipment. Capacity is the enabler of the whole own-products ambition. But defence manufacturing is brutally <strong>working-capital-hungry</strong>, and that — not demand — is where Apollo's story is most exposed.</p>
+
+  <div class="chart">
+    <div class="c-title">The financial signature of a fast-scaling defence supplier</div>
+    <div class="c-sub">Approximate FY26 markers — growth and strain in the same picture</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue growth<small>FY26 YoY</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">+61%</div></div>
+      <div class="bar-row"><div class="blab">Debtor days<small>receivables outstanding</small></div><div class="track"><span class="fill bad" style="width:82%"></span></div><div class="bval">~194 days</div></div>
+      <div class="bar-row"><div class="blab">Net debt Mar-26<small>up from ~₹206 Cr</small></div><div class="track"><span class="fill spec" style="width:60%"></span></div><div class="bval">~₹376 Cr</div></div>
+      <div class="bar-row"><div class="blab">Capex programme<small>new facility</small></div><div class="track"><span class="fill gold" style="width:44%"></span></div><div class="bval">~₹250 Cr+</div></div>
+    </div>
+    <div class="legend"><span>Rapid revenue growth sits right next to ~194-day receivables, rising net debt and a heavy capex bill. Every rupee of new order is a rupee of inventory and receivables to fund months before the customer pays — the defining balance-sheet risk of this business.</span></div>
+  </div>
+
+  <p>The mechanism is simple and unforgiving. Apollo designs, builds and delivers subsystems long before a government customer pays for them; meanwhile it must buy materials, carry inventory, and fund the factory expansion. Debtor days near 194 mean revenue is recognised roughly two-thirds of a year before cash lands. Layer heavy capex on top and the business can grow its order book, its revenue and its <em>debt</em> all at once — which is exactly what FY26's rising net debt shows.</p>
+
+  <div class="plain">
+    <div class="ptag">The tension that defines the investment</div>
+    <p>This is the crux a first-time reader must hold: Apollo's opportunity (a swelling, sticky, own-products order book) and Apollo's risk (a cash-cycle that lengthens as it grows) come from the <em>same</em> activity. The faster it wins and delivers, the more working capital it ties up and the more it must borrow or raise. A defence-electronics firm can look wonderful on the income statement and still be starved on the cash-flow statement. So the reassuring numbers — revenue up 61%, PAT doubled — must always be read against the harder ones: are receivables being collected, is net debt stabilising, is operating cash flow catching up to reported profit? Growth that outruns cash collection is the classic way a promising defence supplier stumbles.</p>
+  </div>
+
+  <div class="note"><b>What to watch, concretely:</b> operating cash flow versus reported PAT, debtor days trending down rather than up, net-debt-to-EBITDA staying contained through the capex build, and any further equity dilution to fund the expansion. These are not footnotes for Apollo — they are the scoreboard.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A crowded, fast-growing field of listed defence names — each in a slightly different lane.</p>
+
+  <p class="lead">India's private defence-electronics space has become one of the market's hottest corners, and it is easy to lump the names together. They are not the same. Apollo's distinctive lane is the <strong>electro-mechanical and embedded guidance/control spine of weapons</strong> — which is different from RF/microwave, from radars/electronic-warfare systems, from optics, and from anti-drone systems. Knowing who does what is half of understanding Apollo.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Its lane</th><th>Vs Apollo Micro Systems</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Apollo Micro Systems</td><td>Embedded onboard computers, control/actuation, power, fuzes, seeker electronics + system integration; now energetics via IDL</td><td><em>This company.</em> The guidance-and-control "brain &amp; muscles" inside missiles/torpedoes; climbing toward own products and complete systems.</td></tr>
+      <tr><td class="t-strong">Astra Microwave</td><td>RF, microwave &amp; sub-systems — radar/seeker front-ends, transmit-receive modules</td><td>Adjacent, not overlapping: Astra owns the RF "eye"; Apollo owns the computing/control spine. They can sit in the same weapon.</td></tr>
+      <tr><td class="t-strong">Data Patterns</td><td>Vertically integrated defence electronics — radar, avionics, electronic warfare, higher margins</td><td>A broader, higher-margin electronics house and a benchmark investors compare Apollo against on profitability and cash quality.</td></tr>
+      <tr><td class="t-strong">Paras Defence</td><td>Optics, opto-electronics, defence engineering &amp; niche systems</td><td>Different technology base (optics/EM engineering); another premium-rated small-cap riding the same indigenisation wave.</td></tr>
+      <tr><td class="t-strong">Zen Technologies</td><td>Training/simulators and anti-drone systems</td><td>Different product world (training &amp; counter-UAS) but a peer in the "defence-boom small-cap" basket investors rotate within.</td></tr>
+      <tr><td class="t-strong">BEL &amp; BDL (PSUs)</td><td>The state primes — finished weapons, radars, avionics, missiles</td><td>Customers <em>and</em> the big incumbents. Apollo feeds them subsystems; they can also in-source or pick other private vendors.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two things stand out. First, much of the "competition" is complementary — Astra's RF, Apollo's control electronics and a PSU's integration can all live inside one missile, so a growing weapons programme can lift several of these names at once rather than pitting them against each other. Second, the sharper contest is on <strong>quality of business</strong>, not just orders: Data Patterns sets a bar on margin and cash generation that the market implicitly holds Apollo to. Apollo's answer has to be the value-ladder climb — if its own-product mix and cash conversion improve toward the best-in-class peers, the premium is earned; if it stays a lower-margin, receivables-heavy contractor, the peer comparison becomes the bear case.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A genuine growth surge — carried at a full defence-boom premium.</p>
+
+  <p class="lead">FY26 was a breakout year: revenue up 61%, profit roughly doubled, order book and licences expanding. The market has responded by pricing Apollo as a structural indigenisation winner — on a multiple that only makes sense if the growth <em>and</em> the mix-shift both keep going for years. The debate is whether the business quality catches up to the price.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore) — the FY26 step-up</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24<small>approx.</small></div><div class="track"><span class="fill ink" style="width:41%"></span></div><div class="bval">~372</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill wtg" style="width:62%"></span></div><div class="bval">~562</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~904</div></div>
+    </div>
+    <div class="legend"><span>Revenue rose ~61% in FY26 to ~₹904 Cr, on top of ~51% the year before — a genuine acceleration, boosted by the energetics/IDL expansion and a broadening order flow. The FY24 base is approximate.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit &amp; margin (FY26)</div>
+    <div class="c-sub">₹ Crore — profit roughly doubled on operating leverage</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~904</div></div>
+      <div class="bar-row"><div class="blab">EBITDA<small>~24% margin</small></div><div class="track"><span class="fill wtg" style="width:24%"></span></div><div class="bval">~218</div></div>
+      <div class="bar-row"><div class="blab">PAT<small>+100% YoY</small></div><div class="track"><span class="fill spec" style="width:12.5%"></span></div><div class="bval">~113</div></div>
+    </div>
+    <div class="legend"><span>EBITDA of ~₹218 Cr (up ~69%) held a ~24% margin, and reported PAT of ~₹113 Cr roughly doubled — strong operating leverage as revenue scaled. The question the market asks is whether margin holds as the mix and capex evolve.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~24%</div><div class="msl">FY26 EBITDA margin — watch whether own-products lift it or capex/mix dilute it</div></div>
+    <div class="ms red"><div class="msv">~194 days</div><div class="msl">Debtor days — the cash-conversion reality check behind the growth</div></div>
+    <div class="ms red"><div class="msv">&gt;100×</div><div class="msl">Trailing P/E on ~₹15,000 Cr market cap — a full defence-euphoria multiple</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The metric that settles the thesis: own-product mix, read against cash conversion</div>
+    <p>At a triple-digit trailing multiple and ~₹15,000 Cr of market value, Apollo is not priced as a cyclical contractor; it is priced as a firm that <em>will</em> re-rate its own business toward higher-value systems. So the number that proves or breaks the case is the <strong>share of revenue coming from own-designed products and complete systems</strong> — the re-rating lever — and it must be read <em>alongside</em> the reality check of <strong>cash conversion</strong>: are debtor days falling and is operating cash flow catching reported profit? Add <strong>order book and book-to-bill</strong> (is demand replenishing faster than delivery?) and <strong>EBITDA margin</strong> (is the climb up the ladder actually lifting profitability?). If own-product mix rises while cash conversion improves and margin holds, the premium is defensible. If revenue keeps growing but the mix stays build-to-print and receivables keep swelling, the multiple has nothing to stand on. One quarter proves nothing here; the trend across these four numbers is the entire verdict.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results and third-party data and cross-checked across sources; several (FY24 revenue, exact promoter/pledge levels, and the precise P/E, which moves with the share price) are <b>approximate</b> and should be verified against the company's filings and a live quote before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A design-embedded supplier climbing the value chain — asked to prove it can do so with the cash to match.</p>
+
+  <p class="lead">Apollo Micro Systems enters FY27 with the strongest hand of its listed life: embedded across India's missile and weapon programmes, a lifetime arms licence, a growing own-products ambition, a new energetics arm, and a ~₹1,432 Cr book behind it. The real debate is not whether the demand exists — it plainly does — but whether a fast-scaling, receivables-heavy, capex-hungry small-cap can convert that demand into cash and margin fast enough to justify a defence-boom valuation.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Designed-in, hard to replace</strong> — own-designed electronics qualified into weapon programmes are re-qualification-locked, giving recurring, sticky positions inside India's fleet.</li>
+        <li><strong>Indigenisation tailwind</strong> — a multi-year wave of home-built missiles, torpedoes, mines and munitions, with the DAC clearing large programmes Apollo feeds.</li>
+        <li><strong>Value-ladder climb</strong> — the shift toward own products and complete systems raises margin and stickiness per rupee of sales.</li>
+        <li><strong>Vertical breadth</strong> — from guidance/control electronics to fuzes and now warhead energetics (IDL), Apollo can supply more of a complete weapon.</li>
+        <li><strong>Real financial momentum</strong> — FY26 revenue +61%, PAT roughly doubled, ~24% EBITDA margin — evidence the model scales when orders flow.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Working-capital &amp; cash-flow risk</strong> — ~194-day debtors, rising net debt and a ₹250 Cr+ capex bill mean growth ties up cash and can outrun collections.</li>
+        <li><strong>Rich valuation</strong> — a triple-digit P/E prices in a flawless mix-shift; any margin or cash-conversion disappointment can de-rate the stock sharply.</li>
+        <li><strong>Customer &amp; programme concentration</strong> — dependence on DRDO/DPSUs/MoD means budget cycles and programme slippage hit hard and unpredictably.</li>
+        <li><strong>Execution on own-products/capex</strong> — the climb to complete systems and the explosives foray are unproven at scale and add regulatory/safety complexity.</li>
+        <li><strong>Peers &amp; promoter items</strong> — higher-quality peers (Data Patterns) set a margin/cash bar; promoter pledge and periodic dilution warrant watching.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Apollo Micro Systems has quietly become embedded in the most sensitive place a supplier can sit — inside the guidance and control of India's guided weapons — and it is using the indigenisation wave to reach for more of each system, from the flight computer all the way to the explosive in the warhead. That is a genuinely powerful position, and FY26's numbers show the model works when the orders flow. What is unproven is the plumbing beneath the growth: whether a small company can fund a lengthening cash cycle and a heavy capex build while lifting its own-product mix, all at a valuation that assumes it will. The next few years turn on a single, checkable trend — <strong>own-designed-system revenue rising while debtor days fall and operating cash flow closes the gap to reported profit</strong>. Watch those together each result; they will tell you whether Apollo is compounding into a systems company or simply growing into a heavier one.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Apollo Micro Systems Ltd — FY26 results press release: "FY26 revenue ₹904 Cr (+61% YoY), Q4FY26 revenue +81% YoY" (ThePrint / Business Standard / Business Upturn ANI, May 2026).</li>
+    <li>Whalesbook — "Apollo Micro Systems FY26 PAT ₹107–113 Cr; IDL buyout drives 61% revenue jump."</li>
+    <li>Yahoo Finance — "Apollo Micro Systems Ltd (BOM:540879) Q3 2026 earnings-call highlights: record revenue growth."</li>
+    <li>ThePrint / Republic World (ANI) — "Apollo Micro Systems in focus as DAC clears ₹52,000 Cr defence deals; MIGM, MPATGM approvals seen boosting order pipeline" (Jul 2026).</li>
+    <li>Indian Defence News — "DRDO partners with Apollo Micro Systems on anti-ship missile technology" (Sep 2025); "Apollo bags ₹73 Cr defence orders from DRDO, DPSUs" (Mar 2026).</li>
+    <li>Business Upturn / Machine Maker — "Apollo Micro Systems completes 100% acquisition of IDL Explosives" (via Apollo Defence Industries, Nov 2025).</li>
+    <li>TipRanks / Globe and Mail — "Apollo subsidiary IDL Explosives secures 15-year licence to manufacture HMX and TNT."</li>
+    <li>Blog.sid.business / Multibagg — Apollo Micro Systems business updates: ALWT/EHWT torpedoes, MIGM, ₹250 Cr+ capex / 8× capacity, Unit 3.</li>
+    <li>BSE India — Apollo Micro Systems Ltd stock page, scrip code 540879 (bseindia.com/stock-share-price/apollo-micro-systems-limited/apollo/540879).</li>
+    <li>Screener.in / Tickertape / Groww — Apollo Micro Systems consolidated financials, order book, promoter holding, net debt, debtor days, market cap and P/E.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated. Valuation multiples move with the share price; order-book and pipeline figures are subject to programme timing. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "APOLLO";
+  const COMPANY_SLUG = "apollo-micro-systems";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
