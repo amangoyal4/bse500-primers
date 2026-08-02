@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nazara Technologies — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F2F7;
+    --paper-2:#FAFAFC;
+    --card:#FFFFFF;
+    --ink:#1A1526;
+    --ink-soft:#565068;
+    --ink-faint:#8B84A0;
+    --brand:#6E3E9E;          /* Nazara violet */
+    --brand-bright:#8A54C4;   /* lighter violet */
+    --gold:#C9912C;           /* amber callout / accent */
+    --game:#6E3E9E;           /* core gaming — violet */
+    --learn:#D98324;          /* Kiddopia — amber-orange */
+    --esport:#C2426A;         /* Nodwin esports — magenta */
+    --adtech:#1C7FC4;         /* Datawrkz adtech — blue */
+    --media:#3F8F5E;          /* Sportskeeda media — green */
+    --line:#E1DEE8;
+    --line-soft:#ECEAF1;
+    --good:#2A8359;
+    --bad:#C0432F;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F0E7FB;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#F6EFFA;border:1px solid #E3D2F0;border-left:3px solid var(--brand);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#6E3E9E;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#3B2A4E;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F6FB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:160px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#ECE8F1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#5A2E86,#8A54C4);}
+  .fill.game{background:linear-gradient(90deg,#5A2E86,#8A54C4);}
+  .fill.learn{background:linear-gradient(90deg,#C0740F,#E4A24A);}
+  .fill.esport{background:linear-gradient(90deg,#A82F57,#D2597F);}
+  .fill.adtech{background:linear-gradient(90deg,#1668A8,#3D97D6);}
+  .fill.media{background:linear-gradient(90deg,#2F7A4C,#4FA870);}
+  .fill.gold{background:linear-gradient(90deg,#C9912C,#E0AB4E);}
+  .fill.ink{background:linear-gradient(90deg,#39414f,#515B6B);}
+  .fill.bad{background:linear-gradient(90deg,#C0432F,#D45C44);}
+  @media(max-width:560px){.bar-row{grid-template-columns:104px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.game{background:var(--game);}
+  .node.learn{background:var(--learn);}
+  .node.esport{background:var(--esport);}
+  .node.adtech{background:var(--adtech);}
+  .node.media{background:var(--media);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEA;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF3E1;color:#4a3712;}
+  .note.gold b{color:#946514;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#946514;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F0E7FB;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> A portfolio, not a game</a></li>
+    <li><a href="#p2"><span class="n">02</span> The whole basket on one map</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; who owns it</a></li>
+    <li><a href="#p4"><span class="n">04</span> Five ways it makes money</a></li>
+    <li><a href="#p5"><span class="n">05</span> Growth by acquisition</a></li>
+    <li><a href="#p6"><span class="n">06</span> The FY26 pivot</a></li>
+    <li><a href="#p7"><span class="n">07</span> Regulation: GST &amp; the RMG ban</a></li>
+    <li><a href="#p8"><span class="n">08</span> The margin puzzle</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; segment mix</a></li>
+    <li><a href="#p10"><span class="n">10</span> Valuation &amp; the tell</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: NAZARA · BSE: 543280</span>
+    <span class="tag gold">Built for a non-specialist reader</span>
+  </div>
+  <h1>Nazara Technologies, <em>a listed basket of gaming bets</em></h1>
+  <p class="dek">India's only listed pure-play gaming company is not one product but a diversified portfolio assembled by acquisition — freemium mobile games, premium PC/console titles, gamified early-learning, ad-tech and esports. This primer walks through how each part makes money, how to judge a company that grows by buying other companies, where the 2025 real-money-gaming ban actually touches it, and the one number that settles the thesis.</p>
+
+  <div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,829 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹255 <small>Cr</small></div><div class="l">EBITDA (FY26)</div></div>
+    <div class="cell"><div class="v">~₹82 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹12,500 <small>Cr</small></div><div class="l">Market cap (FY26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">02 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹1,829 Cr (+12.6%), EBITDA ₹255 Cr (+66%), PAT ₹82 Cr (+61%); gaming now ~90% of segment EBITDA; Nodwin (esports) deconsolidated; regulatory section updated for the 2025 Online Gaming Act.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're actually looking at, before we go deep.</p>
+
+  <p class="lead">Nazara Technologies is <strong>India's only listed pure-play gaming company</strong> — but that description hides the important truth. It is not one game or one studio; it is a <strong>holding company that owns majority (or large minority) stakes in a spread of gaming and interactive-entertainment businesses</strong>, each with its own product, audience and economics. Freemium mobile games (Fusebox, Animal Jam, Kiddopia), premium PC/console titles (Curve Games), ad-tech for gaming (Datawrkz), and — historically — esports and sports media (Nodwin, Sportskeeda). Founded in 1999 and listed in 2021, it was famously backed by the late ace investor <strong>Rakesh Jhunjhunwala</strong>, whose family estate still holds a stake.</p>
+
+  <p>Three facts frame everything that follows:</p>
+  <ul class="clean">
+    <li><strong>Record FY26 on profitability, not just revenue.</strong> Consolidated revenue rose ~12.6% to <strong>~₹1,829 Cr</strong>, but the eye-catching move was EBITDA jumping <strong>66% to ~₹255 Cr</strong> — the highest in the company's history — and PAT up ~61% to <strong>~₹82 Cr</strong>. The company earned more, and earned it at a better margin.</li>
+    <li><strong>The profit mix flipped hard toward core gaming.</strong> Gaming's share of segment EBITDA leapt from <strong>~56% in FY25 to ~90% in FY26</strong>. Nazara spent the year deliberately narrowing from a sprawling holdco toward a <em>focused global gaming platform</em> — even deconsolidating its esports arm, Nodwin.</li>
+    <li><strong>It sits inside a fast-moving regulatory storm — but mostly on the safe side of it.</strong> India banned online <em>real-money</em> games in 2025, on top of a 28% GST imposed in 2023. Nazara is <strong>largely not a real-money-gaming company</strong>; its direct exposure runs through a minority stake in one associate (PokerBaazi's parent), not its core.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Nazara is best read as <strong>a listed venture portfolio of gaming companies</strong>, not as a single studio you can rate hit-by-hit. Its founders spotted early that Indian public markets had no way to own "gaming," so they built one — buying majority stakes in promising game studios, learning apps, esports leagues and ad-tech, and stitching them into one balance sheet they call the "friends of Nazara" network. That means you don't judge it the way you'd judge a maker of a single blockbuster game. You judge it the way you'd judge a <em>capital allocator</em>: are the businesses it buys actually growing and turning profitable, or is it just buying revenue? FY26 gave the first genuinely encouraging answer to that question — profit rose far faster than revenue — which is exactly why the year matters.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>A portfolio, not a game: how to read Nazara</h2></div>
+  <p class="part-sub">No gaming knowledge required — just one idea that governs the whole company.</p>
+
+  <p class="lead">Most game companies live or die on a hit. That makes them terrifying to own: a single title can carry the whole business, and when it fades there may be nothing behind it. Nazara was built to <em>escape</em> that fate. Instead of betting everything on one game, it spreads across many — different genres, different revenue models, different geographies — so no single flop sinks the ship, and the winners can pay for the experiments. That is the entire logic of the company, and everything else is detail.</p>
+
+  <div class="plain">
+    <div class="ptag">The "friends of Nazara" model, decoded</div>
+    <p>Nazara doesn't usually build games from a blank page. It <strong>acquires controlling or large stakes in existing gaming businesses</strong> that already have a product and an audience, then supports them with capital, shared technology, data, ad-monetisation and cross-promotion — a network it brands the "friends of Nazara." A hit early-learning app (Kiddopia), a TV-IP mobile-games studio (Fusebox), a British PC/console publisher (Curve Games), an esports league (Nodwin), a sports-content site (Sportskeeda) and a gaming ad-tech firm (Datawrkz) have almost nothing in common as products — but as a <em>portfolio</em>, they diversify each other's risk. The trade-off: you inherit whatever you buy, including its integration headaches and the price you paid for it.</p>
+  </div>
+
+  <h3>Why one yardstick can't measure Nazara</h3>
+  <p>Because the pieces earn money in genuinely different ways, you cannot price the whole thing on a single number. A subscription learning app, a one-time premium game sale and a low-margin ad-reselling business each deserve a different multiple. The professional approach is to think in <strong>parts</strong> — value each business on its own terms, then judge the group on how well capital is being moved between them.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Different pieces, different economics — why Nazara needs several yardsticks</caption>
+    <thead><tr><th>Business</th><th>What it really is</th><th>How you'd judge it</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Mobile gaming</td><td>Freemium games (Fusebox, Animal Jam) + a paid learning app (Kiddopia)</td><td>Downloads, retention, in-app spend, subscriber churn</td></tr>
+      <tr><td class="t-strong">PC &amp; console publishing</td><td>Premium one-time-purchase titles (Curve Games, incl. Human Fall Flat)</td><td>Lifetime unit sales, catalogue depth, new releases</td></tr>
+      <tr><td class="t-strong">Ad-tech (Datawrkz)</td><td>A media/ad-buying business — sells &amp; optimises digital advertising</td><td>Revenue scale, but on a very thin margin</td></tr>
+      <tr><td class="t-strong">Esports &amp; media</td><td>Tournaments, leagues, youth media (Nodwin), sports content (Sportskeeda)</td><td>Sponsorship, viewership, events — now partly deconsolidated</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Hold that table in mind. Half the confusion around Nazara comes from treating it as a single "gaming stock." It is really a <strong>fund of gaming businesses</strong>, and the questions that matter — Which pieces are growing? Which earn real profit? Was the price paid for each one worth it? — are portfolio questions, not product questions.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The whole basket on one map</h2></div>
+  <p class="part-sub">Read this once and the group structure clicks into place.</p>
+
+  <p class="lead">Below is Nazara on a single map — the five interactive-entertainment verticals it operates across, and how a shared spine of technology, data and ad-monetisation runs beneath them. The point to see: the businesses look unrelated on the surface, but Nazara's thesis is that they share <strong>plumbing</strong> — user data, live-operations know-how, advertising infrastructure and capital — that makes the whole worth more than the scattered parts.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The Nazara portfolio — five verticals over one shared spine of tech, data &amp; ad-monetisation</div>
+    <div class="flow-row">
+      <div class="node game"><div class="ntag">Vertical</div><div class="nname">Mobile gaming</div><div class="nwho">Fusebox, Animal Jam — freemium. ~₹713 Cr FY26.</div></div>
+      <div class="arrow">→</div>
+      <div class="node game"><div class="ntag">Vertical</div><div class="nname">PC &amp; console</div><div class="nwho">Curve Games — premium titles. ~₹261 Cr FY26.</div></div>
+      <div class="arrow">→</div>
+      <div class="node learn"><div class="ntag">Vertical</div><div class="nname">Gamified learning</div><div class="nwho">Kiddopia — subscription. Improving unit economics.</div></div>
+      <div class="arrow">→</div>
+      <div class="node adtech"><div class="ntag">Vertical</div><div class="nname">Ad-tech</div><div class="nwho">Datawrkz — ~₹454 Cr FY26, thin margin.</div></div>
+      <div class="arrow">→</div>
+      <div class="node esport"><div class="ntag">Vertical</div><div class="nname">Esports &amp; media</div><div class="nwho">Nodwin, Sportskeeda — deconsolidated Aug '25.</div></div>
+    </div>
+    <div class="flow-note">The verticals don't share customers so much as <em>infrastructure</em> — live-ops, analytics, advertising and, above all, capital allocated from the centre. That shared spine is the whole reason to own them together rather than separately.</div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">FY26 revenue by vertical (₹ Crore, approx.)</div>
+    <div class="c-sub">Core gaming (mobile + PC/console) now dwarfs everything else; ad-tech scale is large but low-margin</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Mobile gaming<small>Fusebox, Kiddopia, Animal Jam</small></div><div class="track"><span class="fill game" style="width:100%"></span></div><div class="bval">~713</div></div>
+      <div class="bar-row"><div class="blab">Ad-tech<small>Datawrkz</small></div><div class="track"><span class="fill adtech" style="width:64%"></span></div><div class="bval">~454</div></div>
+      <div class="bar-row"><div class="blab">Esports &amp; media<small>part-year, then deconsolidated</small></div><div class="track"><span class="fill esport" style="width:49%"></span></div><div class="bval">~348</div></div>
+      <div class="bar-row"><div class="blab">PC &amp; console<small>Curve Games</small></div><div class="track"><span class="fill game" style="width:37%"></span></div><div class="bval">~261</div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--game)"></i>Core gaming<i style="background:var(--adtech)"></i>Ad-tech<i style="background:var(--esport)"></i>Esports &amp; media. Combined gaming (mobile + PC/console ≈ ₹1,027 Cr) is comfortably the largest slice; the esports figure is a part-year number before Nodwin was deconsolidated in Aug 2025.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one distinction that unlocks the whole picture</div>
+    <p>Notice that the biggest revenue lines and the biggest <em>profit</em> lines are not the same. Ad-tech pours in roughly ₹454 Cr of revenue but almost no margin — it is a pass-through media business. Core gaming brings in about ₹1,027 Cr but at a genuinely profitable margin, so it supplies the overwhelming majority of the group's earnings. Once you separate "revenue that flatters the top line" from "revenue that actually pays," Nazara stops looking like a jumble and starts looking like what it is: <strong>a gaming-profit engine with a large, low-margin ad-tech attachment and a media tail it is now trimming.</strong></p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and who owns it</h2></div>
+  <p class="part-sub">A quarter-century-old gaming pioneer, a legendary backer, and a founder-family at the helm.</p>
+
+  <p class="lead">Nazara was founded in <strong>1999 by Vikash Mittersain</strong> — long before "gaming" was an investable Indian theme — and grew up through the era of telco value-added services and early mobile games. His son <strong>Nitish Mittersain</strong> (Joint MD / CEO) drove the transformation into a diversified, acquisition-led gaming platform. In 2021 it became <strong>India's first, and still only, listed pure-play gaming company</strong>, in an IPO that was heavily oversubscribed.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1999</div><div class="ev"><strong>Vikash Mittersain founds Nazara</strong> — an early mover in Indian mobile entertainment and telco value-added gaming services.</div></li>
+    <li class="major"><div class="yr">2007</div><div class="ev">Ace investor <strong>Rakesh Jhunjhunwala</strong> backs the company — a marquee endorsement that shaped its long-term, portfolio-building ambition.</div></li>
+    <li><div class="yr">2017–20</div><div class="ev">Builds the "friends of Nazara" network — stakes in <strong>Nodwin</strong> (esports), <strong>Kiddopia / Paper Boat Apps</strong> (learning), <strong>Sportskeeda</strong> (sports media) and more.</div></li>
+    <li class="major"><div class="yr">Mar 2021</div><div class="ev"><strong>IPO on NSE &amp; BSE</strong> — India's first listed gaming company; the issue is heavily oversubscribed.</div></li>
+    <li><div class="yr">2024</div><div class="ev">Acquisition spree accelerates — <strong>Fusebox Games</strong> (TV-IP mobile games, ~₹235 Cr) and a large associate stake in <strong>Moonshine Technology</strong> (PokerBaazi's parent, ~₹820 Cr).</div></li>
+    <li><div class="yr">2025</div><div class="ev">Buys UK publisher <strong>Curve Games</strong> (~₹247 Cr); India passes the <strong>Online Gaming Act</strong> banning real-money games; Nazara <strong>deconsolidates Nodwin</strong> (esports) while staying its largest shareholder.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record EBITDA (~₹255 Cr, +66%); gaming reaches ~90% of segment EBITDA; a ~₹486 Cr block deal sees <strong>Nikhil Kamath</strong> (Zerodha) add to the register alongside the Jhunjhunwala estate.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; who's on the register</h3>
+  <ul class="clean">
+    <li><strong>Promoter group ~34%.</strong> The <strong>Mittersain family</strong> (Vikash and Nitish, with associates) forms the promoter core. It is a relatively low promoter holding by Indian standards — a legacy of the many equity issuances used to fund acquisitions — which makes the outside investor register unusually influential.</li>
+    <li><strong>The Jhunjhunwala estate.</strong> Following Rakesh Jhunjhunwala's death in 2022, <strong>Rekha Jhunjhunwala</strong> continues to hold a meaningful stake (around 7% as of early 2025) — a long-standing anchor investor whose presence has long been part of the Nazara story.</li>
+    <li><strong>New marquee names.</strong> FY26's large block deal brought in Zerodha co-founder <strong>Nikhil Kamath</strong> and saw institutional holder <strong>Axana Estates</strong> add to a ~5%+ position — a sign that sophisticated capital is treating the post-pivot Nazara as an investable gaming proxy.</li>
+    <li><strong>Institutions &amp; funds.</strong> A rotating cast of mutual funds and FIIs hold the balance; with a modest promoter stake, Nazara trades more like a widely-held platform than a founder-locked company.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the ownership shape matters</div>
+    <p>Two things stand out. First, a <strong>~34% promoter holding is low</strong> — Nazara has repeatedly issued equity to fund deals, so ownership is diffuse and the company answers to a broad base of institutions and marquee investors rather than a controlling family alone. Second, the <strong>calibre of the outside register</strong> — the Jhunjhunwala estate, Nikhil Kamath, large domestic funds — is itself a signal: these are patient, portfolio-minded investors who understand they are backing a capital allocator in a young industry, not a single-product bet. That patience is an asset when the payoff from acquisitions takes years to show.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Five ways Nazara makes money</h2></div>
+  <p class="part-sub">The mechanics — because "gaming revenue" hides five very different machines.</p>
+
+  <p class="lead">To understand Nazara you have to understand that "a gaming company" can earn money in completely different ways, and Nazara does <em>most of them at once</em>. Each model has its own rhythm, its own margin and its own risk. Here is how each one actually works.</p>
+
+  <h4>1 · Freemium mobile games — the volume engine</h4>
+  <p>Games like <strong>Fusebox</strong>'s interactive-story titles (built on TV franchises such as <em>Love Island</em> and <em>Big Brother</em>) and <strong>Animal Jam</strong> are free to download. The money comes from a small slice of players who buy in-game items, currency or premium content, plus advertising shown to the rest. It is a <strong>volume game</strong>: you need huge downloads and strong retention because only a few percent of players ever pay — but the payers can be very valuable, and "live-operations" (constant events and updates) is the craft that keeps them spending. Mobile gaming was Nazara's largest revenue vertical in FY26 at roughly <strong>₹713 Cr</strong>.</p>
+
+  <h4>2 · Gamified learning by subscription — the steady one</h4>
+  <p><strong>Kiddopia</strong> is an early-learning app for young children, sold on a <strong>recurring subscription</strong> — parents pay a monthly or annual fee. This is the most predictable model in the portfolio: revenue recurs, and the key metric is whether the cost of acquiring a subscriber is paid back before they churn. FY26 saw Kiddopia's <em>unit economics improve</em> — a quietly important swing, because a subscription business only compounds once each new customer is profitable.</p>
+
+  <h4>3 · Premium PC &amp; console publishing — the catalogue</h4>
+  <p><strong>Curve Games</strong>, a UK publisher Nazara bought in 2025, sells <strong>premium one-time-purchase titles</strong> on Steam, PlayStation and Xbox — most famously the physics-comedy hit <em>Human Fall Flat</em>, which has passed <strong>58 million lifetime unit sales</strong>. This model is the opposite of freemium: fewer, higher-value transactions, and a <em>back-catalogue</em> that keeps selling for years. PC/console added roughly <strong>₹261 Cr</strong> in FY26.</p>
+
+  <h4>4 · Ad-tech — big revenue, thin margin</h4>
+  <p><strong>Datawrkz</strong> is a digital-advertising business: it buys, sells and optimises online ads (increasingly gaming-related). It is genuinely large — about <strong>₹454 Cr</strong> of FY26 revenue — but it is a <strong>media pass-through</strong>, so most of that revenue is cost. It flatters the top line far more than the bottom line, which is exactly why revenue is a poor guide to Nazara (see §08).</p>
+
+  <h4>5 · Esports &amp; sports media — the audience business</h4>
+  <p><strong>Nodwin</strong> runs esports tournaments and youth-focused media; <strong>Sportskeeda</strong> is a large sports-content site. These monetise <strong>audience and sponsorship</strong> rather than gameplay. Crucially, in FY26 Nazara <strong>deconsolidated Nodwin</strong> (it stepped back from majority control while remaining the largest shareholder) — so esports now sits partly outside the reported accounts (see §06).</p>
+
+  <div class="plain">
+    <div class="ptag">Why running all five at once is the strategy — and the burden</div>
+    <p>Owning five models means one weak year in freemium can be offset by a strong catalogue year in PC/console, or by a steadier subscription line. That diversification is the whole appeal. But it is also a management burden: each model needs different talent, different metrics and different capital, and a company that does all five well is doing something genuinely hard. FY26's message was that Nazara is finally <em>choosing</em> — leaning into the profitable gaming models and stepping back from the ones (esports, and possibly ad-tech) that dilute margin.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Growth by acquisition — the engine, and how to judge it</h2></div>
+  <p class="part-sub">The single most important thing to get right about this company.</p>
+
+  <p class="lead">Nazara grows mainly by <strong>buying other gaming companies</strong>. That is a legitimate strategy — but it is also the strategy that most often destroys value, because it is easy to <em>buy revenue</em> and hard to <em>buy profitable growth</em>. So the central question for any Nazara investor is blunt: <strong>are the acquired businesses actually growing and earning, or is the company simply purchasing a bigger top line and paying for it with new shares?</strong></p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Recent acquisitions — the deals that built today's Nazara</caption>
+    <thead><tr><th>Deal</th><th>What it brought</th><th class="num">Approx. price</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Fusebox Games (2024)</td><td>TV-IP interactive-story mobile games (Love Island, Big Brother)</td><td class="num">~₹235 Cr</td></tr>
+      <tr><td class="t-strong">Moonshine Technology (2024)</td><td>Large associate stake in PokerBaazi's parent — skill-based RMG</td><td class="num">~₹820 Cr</td></tr>
+      <tr><td class="t-strong">Curve Games (2025)</td><td>UK premium PC/console publisher (Human Fall Flat)</td><td class="num">~₹247 Cr</td></tr>
+      <tr><td class="t-strong">Bluetile / BestPlay (FY26)</td><td>Described as Nazara's largest M&amp;A transaction to date</td><td class="num">held*</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The three tests that separate good deals from expensive ones</div>
+    <p>When a company grows by acquisition, watch three things. <strong>(1) Does revenue growth come with margin?</strong> Buying a low-margin business (like ad-tech) inflates revenue but not profit — impressive-looking, value-neutral. <strong>(2) Are the acquired businesses still growing after purchase, or did they peak on the way in?</strong> A studio bought at the top of a hit's popularity can shrink the moment it joins. <strong>(3) Is the group generating cash, not just accounting profit?</strong> Acquisition-led companies can look profitable while quietly consuming cash. FY26 scored surprisingly well on all three: EBITDA rose far faster than revenue, gaming momentum continued after the deals, and pre-tax operating cash flow jumped ~81% to <strong>~₹213 Cr</strong> — an ~84% conversion from EBITDA to cash.</p>
+  </div>
+
+  <h3>The goodwill question</h3>
+  <p>Every acquisition above the target's book value creates <strong>goodwill</strong> on Nazara's balance sheet — an accounting entry that says "we paid a premium for future potential." That is fine as long as the potential shows up. The danger is a <em>write-down</em>: if an acquired studio underperforms, Nazara must mark that goodwill down, taking a one-off hit to profit and admitting it overpaid. For an acquisition machine, goodwill is the running scorecard of past capital allocation — a growing pile that never gets written down is a sign the deals are working; a big impairment is the market's proof that one didn't.</p>
+
+  <div class="note gold"><b>How to judge Nazara's dealmaking each year:</b> not "did revenue grow?" (buying it is easy) but "did <em>margin and cash</em> grow, did the acquired businesses keep compounding, and did goodwill hold without impairment?" On that harder test, FY26 was the best year Nazara has shown.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The FY26 pivot: from sprawling holdco to focused gaming platform</h2></div>
+  <p class="part-sub">The strategic story of the year — and why deconsolidating Nodwin was a statement.</p>
+
+  <p class="lead">For years the knock on Nazara was that it was <em>too diffuse</em> — a little of everything, master of nothing, hard to value. FY26 was the year management answered that criticism head-on: it began <strong>narrowing the portfolio toward core gaming</strong>, stepping back from businesses that added revenue but diluted focus and margin. The clearest signal was the treatment of its own esports arm.</p>
+
+  <div class="chart">
+    <div class="c-title">Gaming's share of segment EBITDA — the pivot in one picture</div>
+    <div class="c-sub">Core gaming went from just over half of profit to the overwhelming majority in a single year</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY25<small>diversified holdco</small></div><div class="track"><span class="fill ink" style="width:56%"></span></div><div class="bval">~56%</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>gaming-led platform</small></div><div class="track"><span class="fill game" style="width:90%"></span></div><div class="bval">~90%</div></div>
+    </div>
+    <div class="legend"><span>Share of segment EBITDA contributed by core gaming. The 34-point jump in one year is the numeric fingerprint of the strategic pivot.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">What "deconsolidating Nodwin" actually means — and why it's a signal</div>
+    <p>In August 2025 Nazara <strong>gave up majority control of Nodwin</strong> (its esports and youth-media business) while remaining its largest shareholder (~47.66%). In accounting terms, once you no longer control a subsidiary you stop "consolidating" it — its revenue and costs drop out of your headline accounts, and you instead carry it as an investment. That is why reported esports revenue collapsed (down ~85% in Q4 FY26 versus the prior year): the business didn't vanish, it left the consolidation. The <em>strategic</em> message is bigger than the accounting: Nazara is signalling that esports — capital-hungry and structurally lower-margin — is better run at arm's length (Nodwin is even mooted for its own IPO), while Nazara concentrates its own balance sheet on the higher-margin gaming it actually wants to own.</p>
+  </div>
+
+  <p>Management has also signalled it may <strong>divest or separate the ad-tech (Datawrkz) and remaining esports assets</strong> as it sharpens into a global gaming platform. If that happens, Nazara's reported revenue could <em>fall</em> even as its margin and quality rise — a counter-intuitive but healthy outcome, and one more reason to watch profit and cash rather than the top line.</p>
+
+  <div class="note gold"><b>The surprise most people miss:</b> Nazara's single best-selling title is not an Indian game at all — it's <em>Human Fall Flat</em>, a quirky British physics-comedy game (58m+ lifetime units) that came in with the UK Curve Games acquisition. India's only listed "gaming" champion is, at its most profitable, a publisher of global catalogue hits made elsewhere.</p></div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Regulation: 28% GST, the 2025 real-money-gaming ban, and Nazara's real exposure</h2></div>
+  <p class="part-sub">The scariest headline for "Indian gaming" — and why it mostly isn't Nazara's headline.</p>
+
+  <p class="lead">If you have read anything alarming about "Indian online gaming," it was almost certainly about <strong>real-money gaming (RMG)</strong> — fantasy sports, online poker, rummy for stakes. That corner of the industry took two heavy blows: a <strong>28% GST</strong> on the full face value of player deposits (effective October 2023) and then, in August 2025, the <strong>Promotion and Regulation of Online Gaming Act</strong>, which <em>banned</em> online real-money games outright — games of skill, chance, or any mix — along with their advertising and facilitation. Entire RMG companies faced closure. The crucial question for this primer: <strong>how much of that is actually Nazara's problem?</strong></p>
+
+  <div class="plain">
+    <div class="ptag">The distinction that changes the whole risk picture</div>
+    <p>Nazara's <strong>core is not real-money gaming</strong>. Freemium mobile games, a children's learning subscription, premium PC/console titles, ad-tech and esports do not involve players staking money for a monetary return — so the 2025 ban does not hit the businesses that generate the vast majority of Nazara's profit. Nazara's <em>direct</em> RMG exposure runs almost entirely through a <strong>minority associate stake in Moonshine Technology</strong> (the parent of PokerBaazi), a skill-based RMG operator — a stake carried as an investment, not a consolidated business. When the ban was introduced, Nazara's share price did fall sharply on the day, but that was largely <strong>sentiment</strong> — the market reflexively selling anything labelled "gaming" — rather than a hit to its operating engine.</p>
+  </div>
+
+  <h3>The overhang that remains — and the twist that helps</h3>
+  <ul class="clean">
+    <li><strong>The associate takes the real damage.</strong> A ban on RMG directly impairs the value of the PokerBaazi/Moonshine stake — the one place Nazara genuinely owned RMG economics. Expect that investment's contribution and carrying value to be questioned; it is the concrete, quantifiable exposure.</li>
+    <li><strong>Sentiment is a recurring tax.</strong> Because Nazara is the <em>only</em> listed gaming pure-play, it is the market's default proxy for every gaming headline — good and bad. Regulatory noise around RMG will keep moving the stock even when it doesn't move the business. That mismatch is a feature of being the only ticker in the sector.</li>
+    <li><strong>The twist: esports is <em>promoted</em>, not banned.</strong> The same 2025 Act that outlawed RMG explicitly <strong>encourages esports and social/educational games</strong> as legitimate, government-backed categories. Nazara's Nodwin (esports) and its casual/learning titles sit on the <em>favoured</em> side of the very law that spooked the sector — a genuinely under-appreciated silver lining.</li>
+  </ul>
+
+  <div class="note"><b>The sober read:</b> the regulatory storm is real and it does touch Nazara — through one associate stake and through relentless sentiment volatility — but it does <em>not</em> threaten the core gaming-profit engine, and parts of the new regime (esports promotion) actively help. The risk is a re-rating from headlines, not a collapse of the operating business.</div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The margin puzzle: why a ₹1,829 Cr company earns only ₹255 Cr of EBITDA</h2></div>
+  <p class="part-sub">The one analytical trap that catches every first-time reader of Nazara.</p>
+
+  <p class="lead">On the surface Nazara looks like a low-margin business: ~₹1,829 Cr of revenue turned into ~₹255 Cr of EBITDA — a blended margin of only about <strong>14%</strong>. For a "tech" or "gaming" company that sounds thin. But the blended number is <em>misleading</em>, and understanding why is the single most useful thing you can learn about this company.</p>
+
+  <div class="chart">
+    <div class="c-title">The margin gap — blended vs. the core</div>
+    <div class="c-sub">EBITDA margin (%). The blended figure is dragged down by low-margin ad-tech; the core gaming business earns roughly double</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Blended FY25<small>whole company</small></div><div class="track"><span class="fill ink" style="width:47%"></span></div><div class="bval">~9.4%</div></div>
+      <div class="bar-row"><div class="blab">Blended FY26<small>whole company</small></div><div class="track"><span class="fill gold" style="width:70%"></span></div><div class="bval">~14%</div></div>
+      <div class="bar-row"><div class="blab">Core gaming FY26<small>gaming vertical only</small></div><div class="track"><span class="fill game" style="width:100%"></span></div><div class="bval">~20%</div></div>
+    </div>
+    <div class="legend"><span>The core gaming business runs around a ~20% EBITDA margin (FY25 core gaming ~19.9%); the blended company margin is far lower because low-margin ad-tech revenue sits in the denominator.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The non-transferable tell: profit mix moves far more than the revenue line</div>
+    <p>Here is the fact that could only be written about Nazara. In FY26 revenue rose only ~13%, yet gaming's share of EBITDA leapt from ~56% to ~90% and blended margin jumped from ~9% to ~14% — because a low-margin ad-tech business can add <strong>₹450 Cr of revenue at almost no profit</strong> while a single premium catalogue title (Human Fall Flat) or a maturing subscription (Kiddopia) quietly carries the earnings. <strong>Revenue is a decoy at Nazara; segment EBITDA is the tell.</strong> A year where reported revenue <em>falls</em> because ad-tech is trimmed, while margin and cash rise, would be a <em>good</em> year — the exact opposite of how most companies read. Miss this, and you will misjudge every Nazara result you ever look at.</p>
+  </div>
+
+  <p>This is also why the FY26 pivot (§06) matters financially, not just strategically. Every rupee of low-margin ad-tech revenue Nazara sheds <em>raises</em> the blended margin even if it lowers the top line. The company is deliberately trading revenue optics for profit quality — and the margin chart above is the scoreboard.</p>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; segment mix</h2></div>
+  <p class="part-sub">A fast-growing top line, a lumpy but now-improving bottom line.</p>
+
+  <p class="lead">Nazara's revenue has more than tripled since FY22, powered by acquisitions and organic gaming growth. Profit has been <strong>lumpier</strong> — rising, dipping, then recovering — which is exactly what you'd expect from a business absorbing deals, integration costs and one-off items. FY26's combination of steady revenue growth <em>and</em> a sharp profit recovery is the healthiest shape the numbers have shown.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue from operations (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill ink" style="width:34%"></span></div><div class="bval">~622</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:60%"></span></div><div class="bval">~1,091</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:62%"></span></div><div class="bval">~1,138</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:89%"></span></div><div class="bval">~1,624</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill game" style="width:100%"></span></div><div class="bval">~1,829</div></div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Net profit (PAT) trajectory</div>
+    <div class="c-sub">Profit after tax (₹ Crore) — note the lumpiness, then the FY26 recovery</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill ink" style="width:57%"></span></div><div class="bval">~50.7</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:69%"></span></div><div class="bval">~61.4</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~89.5</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill bad" style="width:70%"></span></div><div class="bval">~62.5</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill game" style="width:92%"></span></div><div class="bval">~82</div></div>
+    </div>
+    <div class="legend"><span>PAT peaked in FY24, dipped in FY25 (acquisition &amp; integration costs, deconsolidation effects), and recovered strongly in FY26 — a reminder that for an acquisition-led company, EBITDA and cash are steadier guides than headline PAT.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>FY26 at a glance (approx., ₹ Crore)</caption>
+    <thead><tr><th>Metric</th><th class="num">FY25</th><th class="num">FY26</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Revenue</td><td class="num">~1,624</td><td class="num">~1,829</td><td>+12.6% YoY</td></tr>
+      <tr><td class="t-strong">EBITDA</td><td class="num">~153.5</td><td class="num">~255</td><td>+66% — highest ever</td></tr>
+      <tr><td class="t-strong">EBITDA margin</td><td class="num">~9.4%</td><td class="num">~14%</td><td>Lifted by gaming mix</td></tr>
+      <tr><td class="t-strong">PAT</td><td class="num">~62.5</td><td class="num">~82</td><td>+61% YoY</td></tr>
+      <tr><td class="t-strong">Pre-tax operating cash flow</td><td class="num">~118</td><td class="num">~213</td><td>+81%; ~84% of EBITDA</td></tr>
+      <tr><td class="t-strong">Gaming share of segment EBITDA</td><td class="num">~56%</td><td class="num">~90%</td><td>The pivot, quantified</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">What the numbers are really saying</div>
+    <p>Strip away the noise and FY26 tells a clean story: Nazara grew revenue modestly, but grew <strong>profit and cash dramatically</strong>, because the mix shifted toward its high-margin gaming businesses and away from low-margin, capital-hungry ones. The ~84% conversion of EBITDA into operating cash is the reassuring detail — it says the profit is real, not an accounting mirage. The lumpy PAT line is the honest caveat: with acquisitions, deconsolidations and one-offs constantly moving through the accounts, a single year's headline profit can mislead. Track the <strong>EBITDA trend and cash conversion</strong>, and the picture steadies.</p>
+  </div>
+  <p style="font-size:12px;color:var(--ink-faint);">Segment and margin figures are approximate, drawn from FY25/FY26 results and third-party summaries; Nazara reports across evolving segment definitions (with Nodwin deconsolidated mid-FY26), so exact splits vary by source. Verify against company disclosures.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Valuation &amp; the metric that settles the thesis</h2></div>
+  <p class="part-sub">A young industry, the only listed proxy, and one number that decides the case.</p>
+
+  <p class="lead">Nazara is genuinely hard to value, for a reason that is itself a fact worth knowing: <strong>it has no clean listed peer in India</strong>. It is the <em>only</em> listed pure-play gaming company, so the market cannot simply "compare it to the sector" — there is no sector on the exchange. That scarcity cuts both ways: it earns Nazara a premium as the sole way to own the theme, and it makes the stock a lightning rod for every gaming headline, sober or not.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~₹12,500 Cr</div><div class="msl">Market cap (FY26) — vs ~₹255 Cr EBITDA, a rich multiple that prices future growth</div></div>
+    <div class="ms gold"><div class="msv">~14%</div><div class="msl">Blended EBITDA margin FY26 — the number that must keep climbing</div></div>
+    <div class="ms green"><div class="msv">~90%</div><div class="msl">Gaming's share of segment EBITDA — proof the mix is shifting the right way</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the case</div>
+    <p>For Nazara the thesis-settling metric is <strong>core gaming-segment revenue growth read together with consolidated EBITDA margin</strong> — because that pair captures the two things that actually matter: is the profitable part of the portfolio still compounding, and is the whole company converting its scale into real margin? A rising gaming top line paired with a climbing blended margin (say, toward the high teens) would prove the pivot is working and the acquisitions are paying back. Flat gaming growth with stalled margin would say Nazara is a collection of purchased revenue that never became a profitable platform. Everything else — the RMG headlines, the block deals, the quarterly PAT swings — is weather; <em>this</em> is the climate.</p>
+  </div>
+
+  <p>The valuation debate, then, isn't "is gaming a big market?" (it plainly is, and growing) but "<strong>has this particular basket earned the right to a premium?</strong>" FY26's answer was the most affirmative yet — EBITDA up 66%, margin up, cash conversion strong, mix improving. A market cap many times EBITDA is pricing several more years like that. The reader's job is to check, each result, whether the gaming line keeps growing and the margin keeps rising — because those two lines moving together are what justify the price, and either one stalling is what would undo it.</p>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A maturing capital allocator in a young industry — priced for the pivot to keep paying off.</p>
+
+  <p class="lead">Nazara is at the most interesting moment of its life: it has spent a decade assembling a portfolio, and FY26 was the first year that portfolio behaved like a real profit engine rather than a costly experiment. The question ahead is whether the discipline holds — whether it keeps concentrating on what earns and pruning what doesn't, and whether the studios it bought keep compounding after their purchase prices.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>The pivot is working</strong> — FY26 EBITDA +66%, margin up, gaming now ~90% of segment profit, and ~84% EBITDA-to-cash conversion.</li>
+        <li><strong>Only listed gaming proxy</strong> — scarcity value in a large, structurally growing Indian and global gaming market.</li>
+        <li><strong>Diversified, hit-resilient portfolio</strong> — five models and a global catalogue (Human Fall Flat, Fusebox, Kiddopia) reduce single-title risk.</li>
+        <li><strong>On the favoured side of regulation</strong> — core isn't RMG; esports and casual/learning are explicitly promoted by the 2025 Act.</li>
+        <li><strong>Patient, high-calibre register</strong> — the Jhunjhunwala estate, Nikhil Kamath and large funds back a capital allocator for the long game.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Hit-and-content risk</strong> — gaming profit still leans on a handful of titles; a fading catalogue or a missed release hurts fast.</li>
+        <li><strong>Acquisition &amp; goodwill risk</strong> — growth by buying companies can mask weak organic growth; an impairment would expose an overpaid deal.</li>
+        <li><strong>Thin blended margin</strong> — ~14% leaves little cushion; low-margin ad-tech and integration costs can drag results.</li>
+        <li><strong>Regulatory &amp; sentiment overhang</strong> — the RMG associate is impaired by the ban, and the stock swings on every gaming headline.</li>
+        <li><strong>Capital-allocation dependence &amp; rich valuation</strong> — the case rests on management deploying capital well, at a market cap that already prices years of success.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Nazara is a <strong>maturing capital allocator in a young, volatile industry</strong> — a listed basket of gaming bets that, in FY26, finally showed it can turn scale into rising margin and real cash. The core engine is insulated from the regulation that scares the sector, and the strategic direction — concentrate on profitable gaming, hive off the rest — is the right one. The case is not about whether gaming grows; it is about whether <em>this basket</em> keeps earning its premium. The next chapters will be written in three concrete developments: whether <strong>Nodwin's mooted IPO and any ad-tech separation</strong> lift group margin as promised, whether the acquired studios — Curve, Fusebox, Kiddopia — <strong>keep compounding past the prices Nazara paid</strong>, and whether consolidated EBITDA margin climbs into the high teens. If those land, a scattered holdco has become a genuine gaming platform; if the studios stall or a goodwill impairment lands, the market will re-mark a premium it granted on faith.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Nazara Technologies — FY26 / Q4 FY26 results &amp; earnings-call highlights (year ended Mar 2026); revenue ₹1,829 Cr, EBITDA ₹255 Cr (+66%), PAT ₹82 Cr, pre-tax OCF ₹213 Cr.</li>
+    <li>Indian Startup News — "Nazara Technologies FY26 revenue rises to Rs 1,829 crore as gaming business scales globally."</li>
+    <li>EquityBulls / Business Upturn / MediaNews4U — "Nazara reports highest-ever EBITDA in FY26"; gaming share of EBITDA 56% (FY25) → 90% (FY26).</li>
+    <li>Adgully / BestMediaInfo / ConstructionWorld — FY25: revenue ₹1,624 Cr, EBITDA ₹153.5 Cr (9.4%; core gaming 19.9%), PAT ₹62.5 Cr, OCF ₹118.3 Cr.</li>
+    <li>IndianWeb2 / Outlook Respawn — FY26 segment detail: gaming ₹1,027 Cr (vs ₹518 Cr), mobile ₹713 Cr, PC/console ₹261 Cr; ad-tech ₹454 Cr (+32%).</li>
+    <li>Startuppedia — "Nazara reports Rs 398 Cr revenue and Rs 55.7 Cr profit in Q4 FY26."</li>
+    <li>Storyboard18 / MediaNama — Nazara plans divestments of ad-tech &amp; esports; Nodwin eyes IPO; deconsolidation of Nodwin (Aug 2025, ~47.66% retained).</li>
+    <li>Wikipedia — "Nazara Technologies" (founded 1999; India's only listed gaming company; BSE 543280; ISIN INE418L01047; brands incl. Kiddopia, Animal Jam, Fusebox, Curve, Sportskeeda, WCC).</li>
+    <li>BSE India — Nazara Technologies Ltd, scrip code 543280 (annual report filings, bseindia.com/…/AnnualReport/543280/…).</li>
+    <li>Inc42 / Business Standard — acquisitions: Fusebox (~₹235 Cr), Curve Games (~₹247 Cr); Angel One — Moonshine Technology / PokerBaazi associate stake (~₹820 Cr).</li>
+    <li>Lexology / Trilegal / PIB / Wikipedia — Promotion and Regulation of Online Gaming Act, 2025 (RMG ban; esports &amp; social games promoted); 28% GST on online money gaming (Oct 2023).</li>
+    <li>TradeBrains / Storyboard18 — ~₹486 Cr block deal (Nikhil Kamath, Axana Estates); Business Standard — Rekha Jhunjhunwala holding (~7%, Mar 2025); market cap ~₹12,559 Cr (FY26).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports around FY26 (year ended March 2026), and may contain errors or become outdated; verify all numbers against primary sources before relying on them. Segment splits are approximate and shift with Nazara's evolving reporting (notably the mid-FY26 deconsolidation of Nodwin). The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "NAZARA";
+  const COMPANY_SLUG = "nazara-technologies";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
