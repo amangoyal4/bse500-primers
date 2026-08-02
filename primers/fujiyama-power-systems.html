@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fujiyama Power Systems — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EE;
+    --paper-2:#FCFBF6;
+    --card:#FFFFFF;
+    --ink:#211B10;
+    --ink-soft:#615B4C;
+    --ink-faint:#928A76;
+    --brand:#C8992E;          /* solar gold */
+    --brand-bright:#A8791C;   /* deeper amber - readable accent */
+    --gold:#B8791F;           /* warm bronze - secondary accent */
+    --wtg:#C8992E;            /* solar panels */
+    --epc:#B07A16;            /* inverters / PCU */
+    --om:#7A5310;            /* batteries */
+    --spec:#4E7C3F;          /* solar-green cross accent */
+    --line:#E2DCCB;
+    --line-soft:#EDE8DA;
+    --good:#3E7D4F;
+    --bad:#BC5230;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#33260a;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#2c1e05;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F5EC;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EDE7D8;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#B8791F,#E0B24A);}
+  .fill.gold{background:linear-gradient(90deg,#C8992E,#E7C063);}
+  .fill.wtg{background:linear-gradient(90deg,#C8992E,#E0B24A);}
+  .fill.om{background:linear-gradient(90deg,#7A5310,#A8791C);}
+  .fill.spec{background:linear-gradient(90deg,#4E7C3F,#6FA85B);}
+  .fill.bad{background:linear-gradient(90deg,#BC5230,#D26B48);}
+  .fill.ink{background:linear-gradient(90deg,#5a5140,#79705c);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--spec);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEE7;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3320;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#33260a;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);color:#fff;}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Solar &amp; backup 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What Fujiyama sells</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The distribution machine</a></li>
+    <li><a href="#p5"><span class="n">05</span> A brand, not a cell fab</a></li>
+    <li><a href="#p6"><span class="n">06</span> PM Surya Ghar &amp; the tailwind</a></li>
+    <li><a href="#p7"><span class="n">07</span> Ratlam &amp; backward integration</a></li>
+    <li><a href="#p8"><span class="n">08</span> Input costs &amp; imports</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: UTLSOLAR · BSE: 544613</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Fujiyama Power Systems, <em>India's solar-and-backup shopkeeper</em></h1>
+  <p class="dek">A complete walk through the company behind the <strong>UTL Solar</strong> and <strong>Fujiyama Solar</strong> brands — how it makes money selling rooftop solar panels, home inverters and batteries through a small army of dealers rather than owning a giant chip-like cell factory, why half of what it sells is really <em>backup power</em> for a country that still loses electricity, and what a recent 2025 IPO has to prove now that the easy growth is behind it.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,541 <small>Cr</small></div><div class="l">Revenue (FY25)</div></div>
+    <div class="cell"><div class="v">~₹156 <small>Cr</small></div><div class="l">Net profit (FY25)</div></div>
+    <div class="cell"><div class="v">~16% <small>EBITDA</small></div><div class="l">Operating margin (FY25)</div></div>
+    <div class="cell"><div class="v">~₹11,700 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">31 Jul 2026</b> · source: FY25 results + Nov-2025 IPO + Ratlam commissioning</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY25 audited results incorporated — revenue ~₹1,541 Cr, PAT ~₹156 Cr (+245%), EBITDA margin ~16%; added the Nov-2025 ₹828 Cr IPO, the May-2026 commissioning of the 2 GW Ratlam solar-panel line (total panel capacity ~3,568 MW), and the FY25 revenue mix (panels ~43%, inverters/UPS ~30%, batteries ~21%).</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Fujiyama Power Systems makes and sells the hardware that Indian homes and small businesses use to <strong>make their own electricity and to keep the lights on when the grid fails</strong>: rooftop <strong>solar panels</strong>, <strong>solar inverters / power-conditioning units</strong>, home <strong>inverters and UPS</strong>, and the <strong>batteries</strong> that store the power. It sells almost all of it under two consumer brands — <strong>UTL Solar</strong> (a name with a roughly three-decade history in the inverter-and-battery trade) and <strong>Fujiyama Solar</strong> — through a very wide dealer and distributor network rather than to a handful of giant utilities. It is a recent listing: it came to market in <strong>November 2025</strong>.</p>
+
+  <p>Three facts frame everything that follows:</p>
+  <ul class="clean">
+    <li><strong>It is a brand-and-distribution business, not a cell foundry.</strong> Fujiyama designs, assembles and — increasingly — manufactures its products, but its real asset is <em>reach</em>: over <strong>725 distributors, ~5,546 dealers and ~1,100 exclusive "UTL Solar Shoppe" franchise stores</strong> pushing more than <strong>520 products (SKUs)</strong> into small towns and rural India. Money is made the way a consumer-durables company makes it — a trusted brand, a deep channel, and steady replacement demand — not the way a semiconductor-style solar-cell factory does.</li>
+    <li><strong>Half the revenue is backup power, not solar.</strong> The obvious story is "rooftop solar." But in FY25 <strong>solar panels were only ~43% of sales</strong>; <strong>inverters and UPS were ~30% and batteries ~21%</strong> — so roughly half the business is old-fashioned <em>power-cut insurance</em> for a grid that still stumbles. Fujiyama sells two anxieties at once: the wish to stop paying the electricity bill, and the fear of the power going out.</li>
+    <li><strong>It has grown fast and is now priced for more.</strong> Revenue roughly <strong>2.3×'d in two years</strong> — from ~₹664 Cr (FY23) to ~₹1,541 Cr (FY25) — while EBITDA margin doubled from ~8% to ~16% and net profit jumped ~245% in FY25 to ~₹156 Cr. The reward is a share that trades near <strong>38× earnings</strong> at a ~₹11,700 Cr market value. The market is paying up for a channel-led compounder; the company now has to keep the margin while it scales its own factories.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Fujiyama is the electrical-goods brand your local solar-and-inverter shop stocks. Walk into a UTL Solar Shoppe in a Tier-3 town and you can buy the panel for the roof, the inverter for the wall, and the battery for the corner — three purchases, one brand, one dealer. The company's edge is not a secret technology; it is that it has spent years building the shelf space and the dealer relationships to be the default choice for a first-time solar or backup buyer. The debate for an investor is whether that channel, plus a fresh push into its own manufacturing at Ratlam, can keep the recent margins intact now that the numbers are large and the stock has already re-rated.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Solar &amp; backup 101: the two demand pools</h2></div>
+  <p class="part-sub">No engineering degree needed — just the handful of terms that drive the whole business.</p>
+
+  <p class="lead">Fujiyama sits at the meeting point of <strong>two very different customer needs</strong> that happen to use overlapping hardware. The first is <strong>self-generation</strong> — a household or shop putting solar panels on the roof to cut its power bill (and, increasingly, to earn a government subsidy for doing so). The second is <strong>backup</strong> — keeping fans, lights and machines running through the outages that are still routine across much of India. Panels serve the first; inverters and batteries serve the second; and a "solar inverter" or hybrid system serves both at once. To follow the company you need only six terms.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Solar module / panel</td><td>The glass-and-silicon sheet on the roof that turns sunlight into DC electricity. Fujiyama <em>assembles</em> these from imported and locally-sourced solar cells — it is a module maker, not a cell maker (the distinction in §5 is central).</td></tr>
+      <tr><td class="t-strong">Cell</td><td>The actual light-to-electricity semiconductor wafer <em>inside</em> a panel. India makes very few of these; most are imported (largely from China). A module maker's cost and margin swing with the cell price.</td></tr>
+      <tr><td class="t-strong">Inverter / PCU</td><td>The box that converts electricity between DC and AC and manages the flow. A plain <em>home inverter</em> runs appliances off a battery during an outage; a <em>solar inverter / PCU</em> (power-conditioning unit) also takes power from panels and can charge a battery. This is Fujiyama's engineering heartland.</td></tr>
+      <tr><td class="t-strong">Battery</td><td>Where the energy is stored for later — a home backup battery (traditionally <strong>lead-acid</strong>, increasingly <strong>lithium-ion</strong>) or a solar battery. A consumable that wears out and is replaced every few years — the source of recurring, sticky demand.</td></tr>
+      <tr><td class="t-strong">On-grid / off-grid / hybrid</td><td>Three system types. <em>On-grid</em>: panels feed the house and export surplus to the grid, no battery needed (cheapest; best where the grid is reliable). <em>Off-grid</em>: panels + battery, no grid dependence (rural, remote). <em>Hybrid</em>: both — solar, battery <em>and</em> grid — the most flexible, and where a lot of Indian demand is heading.</td></tr>
+      <tr><td class="t-strong">kW / kWh</td><td><em>kW</em> = the size (power) of a panel array or inverter; <em>kWh</em> = the storage (energy) of a battery. A typical home rooftop system under the national scheme is ~1–3 kW. These are the units every quote to a customer is written in.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why one company can serve both pools</div>
+    <p>The reason a single firm sells you a panel <em>and</em> an inverter <em>and</em> a battery is that they are electrically the same conversation. A rooftop solar system is, physically, a set of panels wired through an inverter into a battery and the grid — exactly the kit an inverter-and-battery company already builds and already sells through its dealers. So a business that spent decades selling backup power to Indian homes did not have to reinvent itself to sell rooftop solar; it added panels to a channel that was already trusted for inverters and batteries. That continuity — same dealer, same customer, adjacent product — is the quiet logic behind Fujiyama's whole model, and the reason the "solar" and "backup" halves of the P&amp;L reinforce rather than compete with each other.</p>
+  </div>
+
+  <h3>Who actually buys</h3>
+  <ul class="clean">
+    <li><strong>Homes &amp; residential rooftops</strong> — the core. First-time solar buyers and inverter/battery replacers, heavily in smaller towns and semi-urban India, increasingly nudged by the rooftop subsidy scheme (§6).</li>
+    <li><strong>Small commercial &amp; institutional users</strong> — shops, clinics, schools, petrol pumps, small factories, telecom sites and farms that need reliable power and lower bills.</li>
+    <li><strong>Rural &amp; off-grid users</strong> — homes and facilities where the grid is weak or absent, buying off-grid solar + battery systems, solar street lights, pumps and home lighting.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What Fujiyama actually sells: one brand, four product lines</h2></div>
+  <p class="part-sub">The revenue mix — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">Fujiyama's catalogue runs to more than <strong>520 SKUs</strong>, but the money lands in four buckets. The single most useful thing to internalise is the <em>shape</em> of that mix, because it tells you what kind of company this really is: not a pure solar play, but a diversified power-products brand where solar and backup carry roughly equal weight.</p>
+
+  <div class="chart">
+    <div class="c-title">FY25 revenue mix — where the ~₹1,541 Cr comes from</div>
+    <div class="c-sub">Share of revenue from operations, FY25 (year ended March 2025)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Solar panels / modules<small>rooftop &amp; off-grid</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~43%</div></div>
+      <div class="bar-row"><div class="blab">Inverters &amp; UPS<small>solar PCU, home inverters, online/offline UPS</small></div><div class="track"><span class="fill epc" style="width:69%"></span></div><div class="bval">~30%</div></div>
+      <div class="bar-row"><div class="blab">Batteries<small>lead-acid &amp; lithium-ion</small></div><div class="track"><span class="fill om" style="width:48%"></span></div><div class="bval">~21%</div></div>
+      <div class="bar-row"><div class="blab">Services &amp; other<small>installation, other operating income</small></div><div class="track"><span class="fill spec" style="width:15%"></span></div><div class="bval">~7%</div></div>
+    </div>
+    <div class="legend"><span>Panels are the largest single line, but inverters+UPS (~30%) and batteries (~21%) together — the <strong>backup-power</strong> half — add up to slightly <em>more</em> than solar. That balance is the point: Fujiyama is a two-engine business, not a single-product solar bet.</span></div>
+  </div>
+
+  <h3>The four lines, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Solar panels / modules</span></strong> — the growth engine and the reason it IPO'd as a "solar" company. Fujiyama assembles crystalline-silicon modules that go onto rooftops and into off-grid systems. This is the line most exposed to policy tailwinds (the rooftop subsidy) and to input-cost swings (the price of imported cells).</li>
+    <li><strong><span class="chain-epc">Inverters, PCUs &amp; UPS</span></strong> — the engineering heart of the company and its oldest competence. It spans home inverters, solar power-conditioning units, PWM chargers and charge controllers, and online/offline UPS for computers and equipment. Higher-value, more design-intensive, and where the brand's reputation was originally built.</li>
+    <li><strong><span class="chain-om">Batteries</span></strong> — the recurring, consumable line. Lead-acid batteries are the traditional backup workhorse; lithium-ion is the growing, higher-value future. A battery wears out and gets replaced every few years, so a large installed base of Fujiyama inverters pulls a steady stream of battery re-orders behind it.</li>
+    <li><strong>Solutions &amp; services</strong> — installation, system design and after-sales that wrap the hardware into a working rooftop or backup system, plus other operating income. Small today, but the glue that turns a box-seller into a solution provider.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The cross-sell that makes the model tick</div>
+    <p>Here is the mechanism a spreadsheet misses. A family that buys a UTL inverter and battery during a bad summer of outages is not just a one-time sale — it is a <em>pre-qualified rooftop-solar lead</em>. They already trust the brand, they already know the dealer, and they are already thinking about their electricity. When the rooftop subsidy makes solar attractive, that same dealer walks them from a ₹15,000 battery replacement to a ₹1.5-lakh rooftop system. Fujiyama's four product lines are not four separate businesses fighting for the same wallet; they are a <strong>ladder up which the dealer walks the same household</strong> — from backup, to solar-plus-backup, to a full hybrid home. That is why the mix matters more than any single line.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the brands, and who owns it</h2></div>
+  <p class="part-sub">A long-standing inverter brand, a young listed company, a founder-controlled cap table.</p>
+
+  <p class="lead">The confusing thing about Fujiyama is that the <em>brand</em> is much older than the <em>company</em>. <strong>UTL Solar</strong> traces its roots back roughly three decades in the Indian inverter-and-battery trade; <strong>Fujiyama Power Systems Limited</strong>, the legal entity that owns it today, is a more recent creation (incorporated in its current form in 2017) that consolidated and scaled that heritage brand — and then added a distinctly solar-branded line, Fujiyama Solar, on top. It is run out of Delhi and controlled tightly by its founding promoter family.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">~1996</div><div class="ev">The <strong>UTL</strong> brand takes shape in the home-inverter and battery business — the roughly three-decade "legacy" the company markets today. Power-cuts, not panels, are the original business.</div></li>
+    <li><div class="yr">2017</div><div class="ev"><strong>Fujiyama Power Systems Limited</strong> is established in its current form, consolidating the UTL brand and building out solar (panels, solar inverters/PCUs) as India's rooftop story begins.</div></li>
+    <li><div class="yr">FY23–FY25</div><div class="ev">The rapid scale-up: revenue climbs from ~₹664 Cr to ~₹1,541 Cr as solar is added to a proven inverter-and-battery channel; EBITDA margin roughly doubles from ~8% to ~16%.</div></li>
+    <li class="major"><div class="yr">Nov 2025</div><div class="ev"><strong>IPO</strong> — a ₹828 Cr issue (₹600 Cr fresh + ₹228 Cr offer-for-sale) at ₹216–228/share; lists on NSE (UTLSOLAR) &amp; BSE (544613) on 20 Nov, opening at a modest discount.</div></li>
+    <li class="major"><div class="yr">May 2026</div><div class="ev">The new <strong>Ratlam (Madhya Pradesh)</strong> plant commissions its first <strong>2,000 MW solar-panel line</strong>, lifting total module capacity to ~3,568 MW; inverter and battery lines are slated to follow in FY27.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the founding promoter group behind the UTL/Fujiyama brands retains a <strong>controlling ~86.8% stake</strong> after the IPO — a very tightly held company, with only a small free float in public hands. (Specific individual promoter names and holdings should be read directly from the offer document and shareholding filings; treat any single attribution as <em>held</em> until checked.)</li>
+    <li><strong>Two brands, one company:</strong> <strong>UTL Solar</strong> and <strong>Fujiyama Solar</strong> are marketing brands of the same listed entity, not separate listed companies. Do not confuse Fujiyama Power Systems with the unrelated Japanese <em>Fuji Electric</em> or any similarly-named firm — the "Fujiyama" name here is an Indian consumer brand, not a foreign parent.</li>
+    <li><strong>Balance sheet:</strong> the company carried meaningful debt into the IPO (borrowings of ~₹688 Cr as of Sept-2025), and a chunk of the fresh proceeds — about <strong>₹275 Cr</strong> — is earmarked to pay it down, with ~<strong>₹180 Cr</strong> funding the Ratlam plant and the balance for general corporate purposes. Post-issue, leverage should ease materially.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the ownership structure matters:</b> an ~86.8% promoter holding means public shareholders are, for now, minority passengers in a founder-run company — with the upside (aligned, committed owners) and the caveats (limited float, governance and related-party diligence rest heavily on the promoter) that come with that. Over time, regulations will require the promoter stake to come down toward 75%, so future supply of stock from promoter dilution is something to keep on the radar.</div>
+</section>
+
+<!-- 04 — BESPOKE: the distribution moat -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The distribution machine: the real asset</h2></div>
+  <p class="part-sub">The single most important idea in the business — and the hardest thing for a rival to copy.</p>
+
+  <p class="lead">If you remember one thing about Fujiyama, make it this: <strong>the factory is replaceable; the channel is not</strong>. Anyone with capital can build a module-assembly line. What takes years and cannot be bought overnight is a nationwide web of dealers and shopfronts who already stock your brand, trust your service, and reach the small-town customer that a solar company selling to utilities never touches. That web is Fujiyama's moat.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~725</div><div class="msl">Distributors — the wholesale layer feeding the dealer network</div></div>
+    <div class="ms gold"><div class="msv">~5,546</div><div class="msl">Dealers across India — the retail salesforce</div></div>
+    <div class="ms green"><div class="msv">~1,100</div><div class="msl">Exclusive "UTL Solar Shoppe" franchise stores — brand-only shopfronts</div></div>
+  </div>
+
+  <p>Read those three numbers as a pyramid. At the top, ~725 <strong>distributors</strong> hold stock and finance the channel regionally. Below them, ~5,546 <strong>dealers</strong> are the feet on the ground — the electrical shops and solar installers who actually meet the customer. And ~1,100 <strong>exclusive UTL Solar Shoppes</strong> are dedicated, brand-only storefronts — the equivalent of a company showroom, but franchised, so the shopkeeper carries the cost and the risk while flying the UTL flag. Layer on more than <strong>520 SKUs</strong>, and a single dealer can outfit an entire home's power needs — panel, inverter, battery, charger, light — without the customer ever leaving the brand.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits this company: the shop is the moat, not the module</div>
+    <p>A solar-<em>cell</em> maker competes on cost per watt in a brutal global commodity fight. Fujiyama competes on something almost the opposite: <strong>presence at the point of a small, emotional, first-time purchase</strong>. When a family in a Tier-3 town finally decides to put solar on the roof or replace a dying inverter, they do not run an auction — they go to the shop they know, and they buy the brand the shopkeeper recommends and can service. Every one of those ~5,546 dealers and ~1,100 exclusive shoppes is a piece of shelf space and a trusted relationship that a new entrant would need years and a fortune to replicate. The product on the shelf can be matched; the shelf itself — and the dealer standing next to it — is the durable asset. That is why this is best understood as a <em>consumer-brand distribution business that happens to sell solar</em>, not a manufacturing business that happens to have dealers.</p>
+  </div>
+
+  <div class="note gold"><b>A genuine surprise:</b> for a company the market files under "solar manufacturing," the thing you would most struggle to rebuild from scratch is not any factory — it is a phone book of ~6,000 dealers and distributors and ~1,100 branded shops built up over years of the inverter-and-battery trade. Fujiyama's solar business was, in effect, <em>pre-distributed</em> the day it launched, because the channel already existed. That head start is the whole reason a young company scaled to ~₹1,541 Cr so fast.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>A brand and an assembler — not a cell fab</h2></div>
+  <p class="part-sub">The distinction that decides how you value the company.</p>
+
+  <p class="lead">One of the most common mistakes a new reader makes is to lump every "solar" company together. There is a world of difference between a firm that makes solar <strong>cells</strong>, one that assembles <strong>modules</strong>, and one that <strong>brands and distributes</strong> the finished kit. Fujiyama lives mostly at the second and third stages — and understanding why is essential to judging both its opportunity and its risk.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The solar-products value chain — where Fujiyama plays</div>
+    <div class="flow-row">
+      <div class="node spec"><div class="ntag">Upstream · Imported</div><div class="nname">Solar cells &amp; wafers</div><div class="nwho">The semiconductor heart of a panel. India makes few; mostly imported. <em>Fujiyama buys these in.</em></div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Stage · Fujiyama</div><div class="nname">Assemble modules + build inverters &amp; batteries</div><div class="nwho">Cells → panels; plus in-house inverter/PCU &amp; battery manufacturing. Ratlam is expanding this.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Stage · Fujiyama</div><div class="nname">Brand it (UTL / Fujiyama)</div><div class="nwho">Warranty, service, name recognition — the value a consumer actually pays for.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Stage · Fujiyama</div><div class="nname">Distribute &amp; sell</div><div class="nwho">Distributors → dealers → shoppes → the home. The reach that compounds.</div></div>
+    </div>
+    <div class="flow-note">Fujiyama owns the branding, distribution and much of the assembly/manufacturing — but sits <em>downstream</em> of the imported solar cell, the one part of the chain it does not make.</div>
+  </div>
+
+  <p>What does Fujiyama genuinely manufacture? Increasingly, a lot. It builds its own <strong>inverters, PCUs and UPS</strong> (its original competence), assembles <strong>solar modules</strong> from cells, and makes <strong>batteries</strong>. What it does <em>not</em> do — and this is the crucial gap — is fabricate the <strong>solar cell</strong> itself, the wafer-level semiconductor that turns photons into electrons. That is a separate, far more capital-intensive, technology-heavy business (the domain of firms like Premier Energies or the larger integrated players). Fujiyama buys cells and turns them into branded panels.</p>
+
+  <div class="plain">
+    <div class="ptag">Why "brand + assembler" is the accurate label</div>
+    <p>This matters for two opposite reasons. On the upside, staying out of cell fabrication keeps Fujiyama <em>asset-lighter</em> and closer to the customer, where brand and service earn premium margins and where a company can pivot its product mix without betting the balance sheet on one technology. On the downside, it means the most valuable, most differentiated slice of a solar panel — the cell — is bought, not made, so Fujiyama's panel margins are exposed to the price and availability of imported cells and to whatever import duties and local-content rules the government sets. The value it adds is real — engineering the inverter, guaranteeing the product, and putting it within a customer's reach — but it is <em>downstream</em> value, and it should be valued as a branded-products company, not as a chip-like technology manufacturer.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>PM Surya Ghar and the rooftop tailwind</h2></div>
+  <p class="part-sub">The policy engine behind the solar half of the story.</p>
+
+  <p class="lead">The reason a decades-old inverter brand suddenly looks like a growth stock is a shift in policy. India has thrown its weight behind <strong>rooftop solar for ordinary households</strong>, most visibly through the <strong>PM Surya Ghar: Muft Bijli Yojana</strong> — a national scheme that pays a direct subsidy to homeowners who install rooftop solar. For a company whose customer <em>is</em> the ordinary household, that is close to a purpose-built tailwind.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What's driving the rooftop-solar demand</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Why it helps Fujiyama</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">PM Surya Ghar subsidy</td><td>A central-government scheme giving households a direct capital subsidy on residential rooftop solar, targeting crores of homes.</td><td>Puts money in the pocket of Fujiyama's exact customer — the small-town homeowner — and shortens the payback on a rooftop system, converting interest into purchase.</td></tr>
+      <tr><td class="t-strong">Rising, unreliable power</td><td>Grid electricity is getting pricier while outages persist across large parts of the country.</td><td>Pulls demand for <em>both</em> halves at once — solar to cut the bill, inverters and batteries to survive the cut. Fujiyama sells the whole answer.</td></tr>
+      <tr><td class="t-strong">Rural electrification &amp; off-grid</td><td>Continued push to power remote homes, farms and facilities where the grid is weak or absent.</td><td>Off-grid solar + battery systems, solar pumps and street lights — a natural fit for a brand already strong in semi-urban and rural channels.</td></tr>
+      <tr><td class="t-strong">Lithium &amp; storage shift</td><td>Batteries moving from lead-acid toward higher-value lithium-ion for both backup and solar.</td><td>Lets Fujiyama sell a higher-value, longer-life battery into its installed base — a mix-and-margin upgrade, not just a volume story.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The insight that separates this from a pure subsidy bet</div>
+    <p>Subsidy-driven demand carries a well-known danger: it can switch off as fast as it switched on if a scheme's budget runs dry or its rules change. What makes Fujiyama less fragile than a pure subsidy play is the <strong>backup half of its business</strong>. Even if the rooftop-solar incentive slowed tomorrow, Indian homes would still lose power, still need inverters, and still replace batteries every few years — a demand pool rooted in the physical unreliability of the grid rather than in any policy line item. So the company rides the rooftop-solar wave for growth, but it stands on the more durable ground of power-cut demand. That combination is what lets it treat PM Surya Ghar as an accelerant rather than as the whole engine.</p>
+  </div>
+
+  <p>None of this makes the tailwind risk-free. Subsidy schemes can be delayed, capped, or bogged down in the paperwork of net-metering approvals and discom sign-offs; installation quality and after-sales service can make or break the customer experience; and a rush of competitors chasing the same subsidised rupee can compress margins. But the <em>direction</em> — millions of Indian homes moving toward self-generation and reliable backup — is a structural shift, and Fujiyama is positioned in the channel where that shift is actually bought.</p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Ratlam and the backward-integration bet</h2></div>
+  <p class="part-sub">The capacity story — and the margin wager riding on it.</p>
+
+  <p class="lead">A big part of the IPO pitch, and a chunk of where the fresh money is going, is <strong>Fujiyama's push to make more of what it sells in-house</strong> — anchored by a new manufacturing complex at <strong>Ratlam, Madhya Pradesh</strong>. The logic is straightforward: the more of the product a brand builds itself, the more of the margin it keeps and the less it depends on outside suppliers. The execution, as ever, is the hard part.</p>
+
+  <div class="chart">
+    <div class="c-title">The Ratlam capacity build-out</div>
+    <div class="c-sub">Installed / planned manufacturing capacity, MW-equivalent — panels commissioned, inverters &amp; batteries to follow</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Total solar modules<small>group, after Ratlam line 1</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~3,568 MW</div></div>
+      <div class="bar-row"><div class="blab">Ratlam solar line<small>commissioned May 2026</small></div><div class="track"><span class="fill gold" style="width:56%"></span></div><div class="bval">~2,000 MW</div></div>
+      <div class="bar-row"><div class="blab">Ratlam inverter line<small>planned Q1 FY27</small></div><div class="track"><span class="fill epc" style="width:56%"></span></div><div class="bval">~2,000 (plan)</div></div>
+      <div class="bar-row"><div class="blab">Ratlam battery line<small>planned Q2 FY27</small></div><div class="track"><span class="fill om" style="width:56%"></span></div><div class="bval">~2,000 (plan)</div></div>
+    </div>
+    <div class="legend"><span>The 2 GW solar-panel line at Ratlam commissioned in May 2026, taking total module capacity to ~3,568 MW. Matching inverter and battery lines (~2 GW-equivalent each) are slated for FY27. The panel line is expected to run single-shift (~1,000 MW) at first and ramp to full utilisation by ~Q4 FY27.</span></div>
+  </div>
+
+  <p>Two things are worth flagging about this build. First, it is <strong>phased and utilisation-dependent</strong>: a factory only earns its return when it runs full. The panel line starts on a single shift at roughly half its nameplate and is expected to climb toward full capacity by around Q4 FY27 — so the payoff is a FY27 story, not an immediate one. Second, it is <strong>deliberately three-in-one</strong>: panels, inverters <em>and</em> batteries under one roof, mirroring the three-product ladder the dealers already sell. That is coherent, but it also concentrates execution risk in a single site and a single capex programme.</p>
+
+  <div class="plain">
+    <div class="ptag">Why in-sourcing is the margin lever — and the risk</div>
+    <p>When Fujiyama buys finished panels or components and re-brands them, a supplier keeps a slice of the margin. When it builds them itself at Ratlam, that slice can come home — the arithmetic behind the hoped-for margin durability as the company scales. But backward integration cuts both ways. A captive factory turns a flexible cost (buy only what you can sell) into a fixed one (a plant that must run whether demand is there or not). If rooftop demand stays strong and the lines fill up, in-sourcing is a margin machine. If demand wobbles or the ramp slips, an under-utilised Ratlam becomes a drag on the very margins it was meant to protect. The bet is sound; the schedule and the utilisation are what to watch.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Input costs and import dependence</h2></div>
+  <p class="part-sub">The margin's exposure to things Fujiyama doesn't control.</p>
+
+  <p class="lead">For a company whose value-add is downstream of the cell and the raw metal, the biggest swing factor on margin sits in its <strong>input basket</strong> — and much of that basket is imported and priced globally. This is the counterweight to the bull case: the same asset-light positioning that keeps Fujiyama close to the customer also leaves its costs exposed to forces it cannot set.</p>
+
+  <ul class="clean">
+    <li><strong>Solar cells (imported).</strong> The most important input for the panel line. India makes only a small share of the world's solar cells, so module makers lean heavily on imports, largely from China. Cell prices are volatile and can move on global oversupply, Chinese policy, or trade actions. Cheap cells fatten Fujiyama's panel margin; a spike squeezes it — and the company cannot fully pass a sudden jump on to a subsidy-sensitive homeowner.</li>
+    <li><strong>Battery raw materials — lead and lithium.</strong> Lead-acid batteries ride the lead price; lithium-ion rides lithium and cell costs, both globally traded and historically swingy. As the mix shifts toward lithium, exposure to that specific commodity chain rises.</li>
+    <li><strong>Duties, ALMM and local-content rules.</strong> Government policy on import duty (BCD) on cells and modules, the Approved List of Models &amp; Manufacturers (ALMM), and domestic-content requirements for subsidised projects all shape both Fujiyama's costs and its competitive position. These can help (protecting local assemblers) or hurt (raising input costs), and they change.</li>
+    <li><strong>Currency.</strong> Because cells and some components are imported, a weaker rupee raises input costs in rupee terms — a quiet, persistent pressure on margin that has nothing to do with how well the business is run.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The uncomfortable truth about the margin doubling</div>
+    <p>Fujiyama's EBITDA margin roughly doubled from ~8% (FY23) to ~16% (FY25) — a genuinely impressive move that scale, mix and better pricing all helped drive. But part of any module maker's margin in a given year is simply <em>where the cell price happened to sit</em>. A benign patch of cheap imported cells flatters everyone in the business; a tight one punishes them. So the honest question for the next few years is not just "can Fujiyama grow?" but "how much of the recent margin is structural — brand, mix, in-sourcing — versus a favourable input cycle that could turn?" Backward integration at Ratlam is precisely the attempt to make more of that margin its own and less of it borrowed from the cell market. Whether that works is the crux of the investment case (§10).</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A crowded field where Fujiyama competes on channel, not on cost-per-watt.</p>
+
+  <p class="lead">Fujiyama does not have one neat set of competitors, because it straddles two markets. In solar modules it brushes up against far larger manufacturers; in inverters and batteries it faces entrenched consumer brands. Its defence in both is the same: it doesn't try to win the cheapest-watt or the biggest-plant race — it wins at the dealer counter, selling an integrated home-power package to a customer who values a trusted local brand over a spec sheet.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player / group</th><th>Where they sit</th><th>Vs Fujiyama</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand-bright)">Fujiyama (UTL/Fujiyama Solar)</td><td>Integrated home solar-and-backup brand; panels + inverters + batteries via a deep dealer channel</td><td><em>This company.</em> Competes on brand, breadth and reach into small-town India rather than lowest cost or largest scale.</td></tr>
+      <tr><td class="t-strong">Waaree, Premier Energies, Adani Solar</td><td>Large solar cell/module manufacturers — utility-scale, export, and increasingly cells</td><td>Far bigger in pure module/cell manufacturing and cost-per-watt; but built for utility &amp; large-project sales, not the retail home channel Fujiyama owns.</td></tr>
+      <tr><td class="t-strong">Luminous, Microtek, Su-Kam, V-Guard</td><td>Established home inverter, UPS &amp; battery consumer brands</td><td>Direct rivals in the backup half; strong brands and channels of their own. Fujiyama's differentiator is bundling solar <em>and</em> backup under one roof and one dealer.</td></tr>
+      <tr><td class="t-strong">Exide, Amara Raja, Livguard</td><td>Battery majors (lead-acid &amp; growing lithium)</td><td>Scale and brand in batteries specifically; Fujiyama makes its own batteries but competes with these giants on the shelf.</td></tr>
+      <tr><td class="t-strong">Unbranded / Chinese imports</td><td>The cheap end — commodity panels, inverters and batteries</td><td>Compete on price at the bottom; Fujiyama defends with brand, warranty, service and financing through its channel — the reasons a first-time buyer pays up for a known name.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two truths sit side by side. First, Fujiyama is <em>small</em> next to the solar-manufacturing giants and next to the battery majors — it will not out-scale Waaree in modules or out-brand Exide in batteries on their own turf. Second, it doesn't need to, because it competes on a different axis: being the one brand that a small-town dealer can use to sell a customer their <strong>whole</strong> power setup — roof, wall and corner — and then service it. The risk is that this crowded, fragmented market is exactly the kind where a rush of subsidy-chasing entrants can erode pricing. The defence is the channel: shelf space and dealer trust are slow to build and slow to lose, which is why Fujiyama's ~6,000-strong network is its most important competitive fact, not its factory.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A real, fast growth record — priced richly for it to continue.</p>
+
+  <p class="lead">The numbers behind the story are genuinely strong: rapid revenue growth, a doubling of margin, and returns on capital in the mid-to-high thirties. The question the market is really pricing is whether a young, recently-listed company can sustain that trajectory as the base gets large and the easy channel-plus-mix gains give way to harder factory-execution gains.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Revenue from operations (₹ Crore), FY23–FY25</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:43%"></span></div><div class="bval">~664</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill gold" style="width:60%"></span></div><div class="bval">~925</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~1,541</div></div>
+    </div>
+    <div class="legend"><span>Revenue rose ~2.3× in two years — roughly a ~52% annual growth rate — as solar was layered onto the existing inverter-and-battery channel.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Net profit — the operating-leverage kick</div>
+    <div class="c-sub">Profit after tax (₹ Crore), FY23–FY25</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:15%"></span></div><div class="bval">~24</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill gold" style="width:29%"></span></div><div class="bval">~45</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~156</div></div>
+    </div>
+    <div class="legend"><span>PAT jumped ~245% in FY25 — profit growing far faster than revenue as fixed costs spread over a bigger base and margin expanded. This operating leverage is the heart of the bull case; it is also what a rich multiple assumes will continue.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">EBITDA margin — doubled in two years</div>
+    <div class="c-sub">Approximate EBITDA margin, FY23–FY25</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:48%"></span></div><div class="bval">~7.8%</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill gold" style="width:68%"></span></div><div class="bval">~11%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~16.1%</div></div>
+    </div>
+    <div class="legend"><span>Margin roughly doubled on scale, a richer product mix, and better pricing. The durability of <em>this</em> line — read against the imported-cell cost cycle — is the number that settles the whole thesis.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~36–41%</div><div class="msl">ROE / ROCE (FY25) — high returns on capital for the sector</div></div>
+    <div class="ms"><div class="msv">~₹688 Cr</div><div class="msl">Borrowings (Sept-2025); ~₹275 Cr of IPO proceeds earmarked to repay debt</div></div>
+    <div class="ms red"><div class="msv">~38×</div><div class="msl">P/E on ~₹11,700 Cr market cap — a growth-priced multiple for a recent IPO</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: EBITDA margin held near the mid-teens as it scales</div>
+    <p>At ~38× earnings, Fujiyama is not priced as a sleepy consumer-durables maker; it is priced as a company that will keep compounding at high returns. So the metric that proves or breaks the case is <strong>whether EBITDA margin holds around the mid-teens as revenue climbs</strong> — specifically the <em>solar-panel segment's margin</em>, read against two forces pulling in opposite directions: rising <strong>imported-cell costs</strong> (which squeeze it) and Ratlam's <strong>backward integration plus channel pricing power</strong> (which defend it). Alongside that, watch <strong>Ratlam utilisation</strong> (is the new capacity filling toward full by Q4 FY27?), <strong>working-capital intensity</strong> (a dealer-financed, inventory-heavy model can swallow cash as it grows), and the <strong>lithium-battery mix</strong> (a genuine margin upgrade if it lands). If the margin holds while revenue grows and the factories fill, the multiple is defensible. If margin slips back toward its old single-digits as cell prices turn or the ramp lags, a 38× stock has a long way to reset. The scoreboard is the margin line, quarter after quarter.</p>
+  </div>
+
+  <div class="note">The FY23–FY25 figures here are drawn from the company's IPO disclosures and results and cross-checked across data providers; margins are <b>approximate</b>, the market cap and P/E are as of <b>mid-2026</b> and move with the share price, and specific promoter names and any single ratio should be verified against the offer document and filings before you rely on them. Several forward items (Ratlam ramp timing, FY27 line commissioning) are company plans, not results.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A fast-growing channel brand, freshly public, asked to prove the margin is real.</p>
+
+  <p class="lead">Fujiyama enters its life as a listed company with a rare combination for a small-cap: a proven brand, a deep distribution network, a genuine policy tailwind, and a two-year record of fast, profitable growth. What it has not yet proven — because it has barely been public a year — is that the recent margins survive scale, competition, and a full turn of the input-cost cycle. That is the debate.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Distribution moat</strong> — ~725 distributors, ~5,546 dealers and ~1,100 exclusive shoppes reach the small-town first-time buyer that manufacturers-to-utilities never touch; slow to build, slow to lose.</li>
+        <li><strong>Two engines, not one</strong> — solar for growth (PM Surya Ghar) plus a durable backup-power base (inverters + batteries) that demand persists for regardless of subsidy.</li>
+        <li><strong>The cross-sell ladder</strong> — the same dealer walks a household from a battery, to solar-plus-backup, to a full hybrid home, lifting revenue per customer.</li>
+        <li><strong>Backward integration</strong> — Ratlam's panel, inverter and battery lines aim to bring supplier margin in-house and defend profitability.</li>
+        <li><strong>Financial quality</strong> — ~52% revenue CAGR, margin doubled to ~16%, ROE/ROCE in the high-30s%, debt being paid down with IPO proceeds.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Input-cost &amp; import exposure</strong> — panel margin rides the price of imported solar cells; lithium/lead and the rupee add more uncontrollable swing. Part of the recent margin may be a favourable cell cycle.</li>
+        <li><strong>Rich valuation, short track record</strong> — ~38× earnings for a company barely a year public prices in flawless continuation; any margin or growth miss can de-rate sharply.</li>
+        <li><strong>Subsidy &amp; policy dependence</strong> — the solar half leans on PM Surya Ghar, net-metering approvals and duty/ALMM rules that can slow, cap or change.</li>
+        <li><strong>Crowded, fragmented market</strong> — solar giants above, entrenched inverter/battery brands beside, cheap imports below; subsidy-chasing entrants can erode pricing.</li>
+        <li><strong>Execution &amp; governance</strong> — a phased Ratlam ramp with utilisation risk, a working-capital-hungry channel model, and an ~86.8% promoter holding that leaves minorities reliant on the founder and facing eventual dilution.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Fujiyama is a decades-old backup-power brand that reinvented itself as a rooftop-solar company by pointing an existing dealer army at a new government tailwind — and did it fast enough, and profitably enough, to earn a growth multiple in its first year public. The strengths are real and hard to copy: the channel, the two-engine mix, the cross-sell up the product ladder. The doubts are equally real and mostly sit in one place — the margin. Because the most valuable part of a solar panel is a cell it imports rather than makes, a chunk of Fujiyama's profitability is on loan from a volatile input market, and Ratlam is the bet to make more of it its own. The next few quarters answer it in one checkable place: <strong>whether EBITDA margin holds near the mid-teens as the Ratlam lines fill through FY27 and cell prices move</strong>. Watch that margin line and the factory utilisation each quarter; together they tell you whether the recent numbers were a durable model or a good cycle.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Fujiyama Power Systems Ltd — Red Herring Prospectus / IPO disclosures (Nov 2025), via Chittorgarh and InvestorGain IPO pages.</li>
+    <li>Screener.in — Fujiyama Power Systems (UTLSOLAR) financials, ratios, market cap, P/E and shareholding (BSE 544613 / NSE UTLSOLAR).</li>
+    <li>SMIFS &amp; GEPL Capital — Fujiyama Power Systems IPO notes (Nov 2025).</li>
+    <li>HDFC Sky / Upstox / 5paisa — Fujiyama Power Systems IPO details and listing coverage (₹828 Cr issue; listed 20 Nov 2025).</li>
+    <li>SolarQuarter / Mercom India / Machine Maker — "Fujiyama commissions 2 GW solar-panel line at Ratlam; capacity to ~3,568 MW" (May 2026).</li>
+    <li>Value Research / indmoney / Kotak Neo — UTLSOLAR share price, 52-week range and market-cap data (mid-2026).</li>
+    <li>Trendlyne — Fujiyama Power Systems quarterly &amp; annual financials (UTLSOLAR).</li>
+    <li>UTL Solar / Fujiyama Solar — company and dealership pages (brand, product range, channel and UTL Solar Shoppe network).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from IPO disclosures, company results and third-party reports (FY25 = year ended March 2025), and may contain errors or become outdated; market cap, P/E and share price are as of mid-2026 and change continuously, and several items are company plans rather than results. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "UTLSOLAR";
+  const COMPANY_SLUG = "fujiyama-power-systems";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
