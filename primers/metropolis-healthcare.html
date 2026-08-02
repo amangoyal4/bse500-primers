@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metropolis Healthcare — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F1F2;
+    --paper-2:#FCFAFB;
+    --card:#FFFFFF;
+    --ink:#221319;
+    --ink-soft:#5E4B51;
+    --ink-faint:#94858A;
+    --brand:#9E4E5E;          /* rose - the Metropolis accent */
+    --brand-bright:#B25E70;   /* brighter rose */
+    --gold:#BE7B8B;           /* rose-gold - warmth / accent */
+    --b2b:#3D7A8A;            /* teal - B2B / hospital channel */
+    --spec:#6E3457;           /* plum - specialty / esoteric */
+    --om:#3F7A55;            /* green - volume / demand */
+    --mut:#9E7A84;           /* muted mauve - routine / logistics */
+    --line:#E7DDE0;
+    --line-soft:#F0E9EB;
+    --good:#2A7A4E;
+    --bad:#B0492E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F6E7EB;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a1c23;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBEFF2;border:1px solid #ECD3DA;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#93465A;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#4a2c33;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F9F3F5;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EFE6E9;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#9E4E5E,#B96A7B);}
+  .fill.gold{background:linear-gradient(90deg,#BE7B8B,#D6A2AF);}
+  .fill.wtg{background:linear-gradient(90deg,#3D7A8A,#589AAA);}
+  .fill.om{background:linear-gradient(90deg,#3F7A55,#5C9670);}
+  .fill.spec{background:linear-gradient(90deg,#6E3457,#8C4A73);}
+  .fill.bad{background:linear-gradient(90deg,#B0492E,#C9603F);}
+  .fill.ink{background:linear-gradient(90deg,#9E7A84,#B49AA2);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--b2b);}
+  .node.epc{background:var(--mut);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--b2b);font-weight:600;}
+  .chain-epc{color:var(--spec);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBEFF2;color:#4a2c33;}
+  .note.gold b{color:#93465A;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#93465A;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F6E7EB;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Diagnostics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The network moat</a></li>
+    <li><a href="#p3"><span class="n">03</span> B2C vs B2B</a></li>
+    <li><a href="#p4"><span class="n">04</span> The company &amp; owners</a></li>
+    <li><a href="#p5"><span class="n">05</span> The price war</a></li>
+    <li><a href="#p6"><span class="n">06</span> Climbing the value chain</a></li>
+    <li><a href="#p7"><span class="n">07</span> Revenue per patient</a></li>
+    <li><a href="#p8"><span class="n">08</span> The economics of a lab</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: METROPOLIS · BSE: 542650</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Metropolis Healthcare, <em>climbing above the price war</em></h1>
+  <p class="dek">A complete walk through one of India's largest diagnostics-lab chains — the network of pathology laboratories and collection centres behind the blood tests and scans millions of Indians rely on. How a lab actually earns its money, why a single phlebotomist's needle-prick can be worth ₹150 or ₹15,000, and why the whole equity story is a race to climb toward the higher number faster than venture-funded apps crush the lower one.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,646 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹191 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~24.7% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹12,000 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">2 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ~₹1,646 Cr (+24%), EBITDA ~₹406 Cr (+32%), PAT ~₹191 Cr (+31%), EBITDA margin ~24.7%; network past 5,000 patient touchpoints across ~750 towns; the four FY25–26 acquisitions (led by Core Diagnostics) added ~8% of revenue and lifted North India from ~8% to ~17% of the book.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Metropolis Healthcare Limited is a <strong>pan-India diagnostics-laboratory chain</strong> — a network of clinical pathology labs and patient-collection centres that draw your blood, run the tests, and hand you (or your doctor) a report. It is one of the country's largest listed diagnostics companies — by its own description the <strong>second-largest diagnostics chain in India and the leader across Western and Southern India</strong> — running a hub-and-spoke system of <strong>~220 laboratories</strong>, thousands of collection points, and over <strong>5,000 patient touchpoints across ~750 towns</strong>. It was built by the <strong>Shah family</strong> from a single Mumbai pathology practice founded in 1980, and is run today by <strong>Ameera Shah</strong> as promoter and executive chairperson.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>A lab earns on volume × realization, over a big fixed-cost network.</strong> Once a laboratory, its analysers and its people are paid for, the <em>next</em> test run through it costs very little — so profit is chiefly a function of how many tests flow through the network and what each one fetches. Metropolis processes tens of millions of tests a year; the art is filling the machines and steering the mix toward tests that pay more.</li>
+    <li><strong>Not all tests are equal — realization is a ladder.</strong> A routine blood-sugar or complete-blood-count test may fetch a couple of hundred rupees and can be discounted to near-nothing by an app. A specialized molecular, hormonal or oncology "esoteric" test can fetch thousands and needs a proper reference lab, pathologists and kit to run at all. Metropolis's whole strategy is to keep <strong>climbing that ladder</strong> — richer test mix, higher revenue per patient — because the top of it is where the margin and the defensibility live.</li>
+    <li><strong>FY26 was a strong, broad-based year.</strong> Revenue rose ~24% to <strong>~₹1,646 Cr</strong>, EBITDA ~32% to <strong>~₹406 Cr</strong> (margin ~24.7%), and net profit ~31% to <strong>~₹191 Cr</strong> — driven by healthy volumes, a richer specialty mix, and four acquisitions (led by Core Diagnostics) that deepened its oncology capability and its footprint in North and East India. The stock trades on a high, quality-diagnostics multiple — roughly <strong>60× earnings</strong> — which tells you the market prices Metropolis as a durable, mix-improving franchise, not a cheap cyclical.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Metropolis runs the same phlebotomist's needle-prick two very different ways. On one hand it does the ordinary, high-volume tests — the sugar, the thyroid, the blood count — where a smartphone app funded by venture money can undercut it to almost zero to grab a customer. On the other it does the hard, high-value tests — cancer panels, genetic and molecular work, specialised hormone assays — that an app cannot casually run because they need a real reference laboratory, trained pathologists and expensive instruments. The company's future rests on a single race: shifting more of its work toward the second kind faster than the market deflates the price of the first. FY26 showed the race can be won for a while. Whether it stays won is the whole question.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Diagnostics 101: how a lab actually earns</h2></div>
+  <p class="part-sub">No medical degree needed — just the sample, the network, and the two numbers that matter.</p>
+
+  <p class="lead">A diagnostics business sounds clinical but is, financially, a <strong>logistics-and-processing network with a brand on top</strong>. A patient (or a doctor on their behalf) orders a test; a sample — usually blood — is collected near the patient; it travels through a cold chain to a laboratory that runs it on automated analysers; a pathologist validates the result; and a report goes back. Metropolis earns a fee at the end of that chain. To understand the company you need only a handful of terms and one core equation.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only diagnostics terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Test / assay</td><td>A single measurement run on a sample (e.g. blood sugar, thyroid, a cancer marker). The unit of everything — Metropolis's revenue is ultimately a count of tests times the price of each.</td></tr>
+      <tr><td class="t-strong">Routine test</td><td>High-volume, standardised, commoditised work — CBC, sugar, lipid, basic thyroid. Cheap per test, easy for anyone with a small analyser to run, and the battleground of the price war (section 05).</td></tr>
+      <tr><td class="t-strong">Specialized / esoteric test</td><td>Complex, low-volume, high-skill work — molecular diagnostics, genomics, advanced oncology and hormone panels. Far higher price and margin per test; needs a reference lab, and it is where an incumbent defends itself.</td></tr>
+      <tr><td class="t-strong">Collection / patient-service centre</td><td>The "spoke" — a small local point where a sample is drawn or dropped. Cheap to run; its job is to feed volume into the labs. Metropolis has thousands, plus home-collection.</td></tr>
+      <tr><td class="t-strong">Reference / hub lab</td><td>The "hub" — a larger laboratory that runs the higher-end tests for a whole region. Expensive, high fixed cost, and the thing that makes esoteric testing possible at scale.</td></tr>
+      <tr><td class="t-strong">Revenue per patient</td><td>Average rupees earned from each patient visit — a blend of how many tests they had and how pricey those tests were. The single cleanest gauge of whether the mix is climbing the ladder (section 07).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one economic fact that shapes the whole sector: fixed cost, near-free marginal test</div>
+    <p>A laboratory is mostly fixed cost — the building, the analysers, the pathologists, the accreditation, the logistics fleet — all of which must be paid whether the machine runs ten samples a day or ten thousand. The cost of processing one <em>more</em> sample, once that base is in place, is tiny: a little reagent and a little labour. That single fact explains almost everything about diagnostics economics. It is why <strong>utilization</strong> — filling the labs with volume — is the master variable; why scale and network density are such powerful advantages; why a good year drops so much extra profit to the bottom line (operating leverage); and why price wars are so dangerous, because a rival that only needs to cover its own tiny marginal cost can price a routine test terrifyingly low to win a customer.</p>
+  </div>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">From needle to report — the diagnostics value chain</div>
+    <div class="flow-row">
+      <div class="node epc"><div class="ntag">Stage 1 · Collect</div><div class="nname">Sample drawn</div><div class="nwho">At a collection centre, a hospital, or the patient's home. The cheap, dense "spoke" layer.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Stage 2 · Move</div><div class="nname">Cold-chain logistics</div><div class="nwho">Samples routed to the right lab within hours. Reliability here is a real competitive edge.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Stage 3 · Process</div><div class="nname">Run &amp; validate</div><div class="nwho">Analysers run the assay; a pathologist signs off. Routine at local labs, esoteric at hubs.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Stage 4 · Report &amp; bill</div><div class="nname">Result + fee</div><div class="nwho">Report to patient/doctor; fee from the patient (B2C) or the hospital/lab (B2B).</div></div>
+    </div>
+    <div class="flow-note">The magic is in Stage 3: the more of a company's volume that is high-value esoteric work run at its own hubs, the more of each rupee it keeps — and the harder it is for a low-cost rival to follow.</div>
+  </div>
+
+  <blockquote>Revenue = tests run × price per test. Profit = that, minus a fixed-cost network that barely notices the next sample. Everything else is detail.</blockquote>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The moat: trust, and a hub-and-spoke network</h2></div>
+  <p class="part-sub">Why diagnostics is defensible at all — and why it takes decades to build what Metropolis has.</p>
+
+  <p class="lead">If the marginal test is nearly free to run, what stops anyone from opening a lab and competing away all the profit? Two things: <strong>trust</strong> and <strong>network density</strong>. A diagnostic result is a decision a doctor and patient act on — a wrong number can mean a wrong treatment — so a brand people believe is accurate is worth a real premium. And a network that puts a reliable collection point near the patient <em>and</em> a hub lab capable of the hard tests within reach is expensive and slow to replicate. Metropolis's moat is the compounding of those two over four decades.</p>
+
+  <h3>The hub-and-spoke architecture</h3>
+  <p>The network is deliberately shaped like a wheel. Thousands of cheap <strong>spokes</strong> — collection centres, hospital tie-ups, home-collection phlebotomists — sit close to patients and gather samples. A smaller number of expensive <strong>hub reference laboratories</strong> sit behind them, each serving a region and equipped for the complex, esoteric work that a small local lab cannot do. Samples flow inward through a cold chain; reports flow back out. This shape matters because it lets the company be <em>everywhere</em> cheaply (spokes) while concentrating the high-value, high-fixed-cost capability where it can be fully utilised (hubs).</p>
+
+  <ul class="clean">
+    <li><strong>Spokes create volume and convenience.</strong> A collection centre or home visit near the patient is what wins routine business and feeds the machines. It is low-cost to add, so networks race to blanket towns with them — Metropolis crossed <strong>5,000 patient touchpoints</strong> and roughly <strong>750 towns</strong> in FY26, up from ~300 towns a few years earlier.</li>
+    <li><strong>Hubs create value and defensibility.</strong> A regional reference lab that can run oncology, molecular and genomic panels is what lets the company earn the high-realization tests — and it is exactly what an asset-light app cannot cheaply build. The hub is the part of the moat that deepens over time.</li>
+    <li><strong>Accreditation and pathologist depth are the quiet moat.</strong> Quality certifications (NABL, CAP and the like), a bench of specialist pathologists, and a track record clinicians trust are hard-won and slow to copy. In a business where the product is a <em>believable number</em>, reputation is inventory.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why density beats a single big lab</div>
+    <p>A rival could build one enormous, ultra-efficient laboratory and undercut on cost — and some low-price players essentially do. But diagnostics is a local-convenience business as much as a processing business: patients and doctors overwhelmingly choose a nearby, trusted collection point over a distant cheaper one, and hospitals outsource to a partner who can reliably pick up, run and return samples across a region. So the winning position is not one giant lab but a <em>dense mesh</em> of spokes feeding well-placed hubs — a structure whose value rises with every additional node, and which cannot be conjured overnight. That mesh, built patiently since 1980, is Metropolis's core asset.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>Two engines: the B2C patient and the B2B hospital</h2></div>
+  <p class="part-sub">The same labs, sold to two very different customers, at two very different margins.</p>
+
+  <p class="lead">Metropolis fills its network from two demand engines, and the split between them shapes both growth and profitability. The first is <strong>B2C</strong> — the walk-in patient and their doctor, who choose the Metropolis brand and pay retail. The second is <strong>B2B</strong> — hospitals, nursing homes, other labs and corporates who outsource their testing to Metropolis in bulk. Both run through the same machines, but they behave like different businesses.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>B2C vs B2B — the two demand engines</caption>
+    <thead><tr><th>Dimension</th><th class="chain-om">B2C · direct patient</th><th class="chain-wtg">B2B · hospitals &amp; institutions</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Who pays</td><td>The patient / their doctor, at retail price</td><td>Hospitals, nursing homes, other labs, corporates — at negotiated bulk rates</td></tr>
+      <tr><td class="t-strong">Realization &amp; margin</td><td><strong>Higher</strong> per test — brand-driven, retail pricing</td><td><strong>Lower</strong> per test — volume pricing, thinner margin</td></tr>
+      <tr><td class="t-strong">Strategic role</td><td>The profit and brand engine — where trust and mix pay off</td><td>The <em>volume-filling</em> engine — keeps the fixed-cost network busy</td></tr>
+      <tr><td class="t-strong">FY26 momentum</td><td>Reported ~+20% (organic ~+14%), aided by digital &amp; hyperlocal marketing</td><td>Reported ~+28% (organic ~+13%), aided by hospital-outsourcing wins</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The tension between the two is the everyday strategic choice in diagnostics. B2C is the prize — a patient who trusts the brand pays more per test and comes back — so a lab wants its B2C share high and its brand strong. But B2C is expensive to win (marketing, convenience, reputation) and grows only as fast as the market and the brand allow. B2B is less profitable per test, but it is a fast, efficient way to <strong>load the network with volume</strong> and lift utilization, which — because the marginal test is nearly free — can still be very worthwhile even at a thin margin. The best operators run both deliberately: B2C for margin and brand, B2B to keep the expensive machines full.</p>
+
+  <div class="plain">
+    <div class="ptag">The mix nuance a first-timer should hold</div>
+    <p>Faster B2B growth can look like a win on the top line but quietly dilute the average margin, because each B2B test earns less. Faster B2C growth does the opposite — richer, but harder to sustain. So the headline "revenue grew X%" is never enough on its own; you have to ask <em>which engine</em> drove it and what that did to the blend. Metropolis's FY26 saw both engines grow strongly, with B2B posting the faster reported rate partly on acquisitions and hospital-outsourcing wins — which is why watching the <em>margin</em> and the <em>revenue-per-patient</em> alongside the growth number matters more here than in a simpler business.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The company, the family, and who controls it</h2></div>
+  <p class="part-sub">A Mumbai pathology practice from 1980, built into a listed pan-India chain by a founder's daughter.</p>
+
+  <p class="lead">Metropolis is, unusually for a company of its size, still visibly a <strong>family-founded, founder-led</strong> business. It began as a single doctor's pathology practice and was scaled — through private-equity capital, acquisitions and a 2019 IPO — into one of India's largest diagnostics chains. Understanding that arc explains both its West-and-South heartland and its more recent, deliberate push into new regions and higher-end testing.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1980</div><div class="ev">Dr Sushil Shah starts a pathology practice in Mumbai — the seed of Metropolis. For two decades it is a respected but single-city laboratory business.</div></li>
+    <li class="major"><div class="yr">2001</div><div class="ev"><strong>Ameera Shah</strong>, the founder's daughter, takes charge and begins converting a doctor-led practice into a professionally-run, expansion-minded company.</div></li>
+    <li><div class="yr">2000s–2010s</div><div class="ev">Three rounds of <strong>private-equity funding</strong> and a string of acquisitions fund a build-out across Western and Southern India — and into parts of Africa and South Asia — establishing the pan-India network.</div></li>
+    <li class="major"><div class="yr">Apr 2019</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE (BSE code 542650, NSE symbol METROPOLIS). The listing turns a family enterprise into a public company with PE and public shareholders alongside the promoter.</div></li>
+    <li><div class="yr">FY21–FY22</div><div class="ev">The <strong>COVID</strong> period brings a testing surge (a one-off boom) followed by normalisation — and, importantly, an influx of well-funded online/asset-light diagnostics disruptors chasing the newly digital patient.</div></li>
+    <li><div class="yr">FY23–FY25</div><div class="ev">The <strong>price war</strong> bites: aggressive online players and discounting pressure routine-test pricing; Metropolis's margin compresses from ~28% toward ~23% as it defends volume and invests in expansion.</div></li>
+    <li class="major"><div class="yr">Dec 2024</div><div class="ev">Acquires <strong>Core Diagnostics</strong> (~₹246 Cr) — a specialist oncology-and-genomics platform — to scale up esoteric testing and strengthen North &amp; East India. Part of a cluster of four acquisitions.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record year: revenue ~₹1,646 Cr (+24%), EBITDA ~₹406 Cr (+32%), PAT ~₹191 Cr (+31%); network past 5,000 touchpoints; North India's share of revenue roughly doubles to ~17%.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> the <strong>Shah family</strong>, led by <strong>Ameera Shah</strong> (promoter and executive chairperson), holds roughly <strong>~49%</strong> of the company. The balance is public and institutional float, including legacy private-equity and mutual-fund holders. Confirm the exact promoter percentage in the latest shareholding filing.</li>
+    <li><strong>Founder-led, professionally managed:</strong> the enduring family stewardship is part of the brand and the long-termism, but it also means minority investors are, in effect, backing the family's capital-allocation judgment — most visibly in the recent run of acquisitions.</li>
+    <li><strong>An acquirer by design:</strong> Metropolis has repeatedly bought regional labs and specialist platforms to add capability and geography rather than build every piece organically. This is a genuine growth lever <em>and</em> a genuine risk — each deal must be integrated well and bought at a sensible price (see the surprise in section 06).</li>
+  </ul>
+
+  <div class="note gold"><b>Why the ownership shape matters:</b> a founder-controlled diagnostics chain can take the patient, long-view decisions that build trust and mix — exactly the assets that matter here — but the same concentration means the acquisition strategy, the pace of network capex, and the discipline on deal pricing rest heavily on one family's judgment. For minorities, the thing to watch is not control per se but whether each acquisition actually earns its cost of capital once integrated.</div>
+</section>
+
+<!-- 05 — BESPOKE crux: the price war -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The price war: how an incumbent defends against the apps</h2></div>
+  <p class="part-sub">The defining external force of the last few years — and it is specific to diagnostics.</p>
+
+  <p class="lead">The single biggest thing that changed for Metropolis in this decade was not a rival lab — it was a wave of <strong>venture-funded, asset-light online diagnostics aggregators</strong>: names like Tata 1mg, PharmEasy, Redcliffe and Healthians. Flush with capital and chasing customer acquisition, they sold <strong>routine tests below cost</strong> — a full-body checkup for a startling price — to hook patients into their apps. For an incumbent that earns on realization, a competitor deliberately pricing the commodity end to zero is an existential-feeling threat. How Metropolis has answered it is the crux of the investment case.</p>
+
+  <div class="chart">
+    <div class="c-title">The realization ladder — why the same needle-prick is worth ₹150 or ₹15,000</div>
+    <div class="c-sub">Illustrative price per test by complexity — the spread is the whole strategic point (figures approx., for illustration)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Routine test<small>CBC, sugar — app battleground</small></div><div class="track"><span class="fill ink" style="width:2%"></span></div><div class="bval">~₹150–300</div></div>
+      <div class="bar-row"><div class="blab">Standard panel<small>thyroid, lipid profile</small></div><div class="track"><span class="fill wtg" style="width:6%"></span></div><div class="bval">~₹500–900</div></div>
+      <div class="bar-row"><div class="blab">Specialty test<small>hormone, molecular</small></div><div class="track"><span class="fill spec" style="width:34%"></span></div><div class="bval">~₹2,500–6,000</div></div>
+      <div class="bar-row"><div class="blab">Esoteric / oncology<small>genomic, cancer panel</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~₹15,000+</div></div>
+    </div>
+    <div class="legend"><span>A discounter can crush the top two rungs to near-zero to win a customer, because a small analyser can run them. It cannot casually run the bottom two — those need a reference lab, pathologists and specialised kit. Metropolis defends by shifting weight down this chart. Prices illustrative.</span></div>
+  </div>
+
+  <p>The incumbent's defence is not to win a price war it cannot win on routine tests — matching a loss-leader is a race to the bottom. It is to make the routine test <em>less</em> of the business and the esoteric test <em>more</em> of it, and to compete on the axes the apps cannot easily copy: reliability, turnaround, a trusted brand a doctor will stake a diagnosis on, and a hub network capable of the hard tests. Metropolis leans on convenience (home collection, digital reports), on clinician relationships, and above all on <strong>climbing the ladder above</strong> — the specialty and wellness tests where price competition is far gentler because supply is scarce and trust is decisive.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits a diagnostics incumbent under attack: two prices, one needle</div>
+    <p>Here is the mechanism no other primer can borrow. Metropolis performs the same physical act — a phlebotomist draws blood — and sells the result at wildly different prices depending on what is measured. A routine sugar test is a near-commodity a smartphone app can give away; a molecular oncology panel is a scarce, high-skill service that same app cannot run. The apps have driven the price of the <em>first</em> toward zero. Metropolis's entire answer is to shift its book toward the <em>second</em> — and the scoreboard for whether that answer is working is simply whether <strong>revenue per patient keeps rising even as routine prices fall</strong>. Same needle, two prices; the equity value lives in the widening gap between them.</p>
+  </div>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The pincer — and the way out</div>
+    <div class="flow-row">
+      <div class="node epc"><div class="ntag">The attack</div><div class="nname">Apps price routine to zero</div><div class="nwho">Venture-funded aggregators loss-lead on commodity tests to buy customers.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">The trap</div><div class="nname">Match &amp; bleed?</div><div class="nwho">Cutting routine prices to match hands the price war to whoever burns cash longest.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">The answer</div><div class="nname">Climb to esoteric</div><div class="nwho">Grow specialty/oncology where supply is scarce and price competition is gentle.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">The proof</div><div class="nname">Revenue/patient rises</div><div class="nwho">Mix beats price deflation → blended realization holds or climbs. FY26: +~6%.</div></div>
+    </div>
+    <div class="flow-note">The trick is to lose the routine-price war on purpose while winning the mix war — earning more per patient even as headline prices on commodity tests fall.</div>
+  </div>
+</section>
+
+<!-- 06 — genuine surprise: the acquisition-led climb north & into oncology -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Climbing the value chain: esoteric testing, bought and built</h2></div>
+  <p class="part-sub">Where the surprise lives — a Mumbai-born West/South lab buying its way North and into cancer diagnostics.</p>
+
+  <p class="lead">Metropolis's answer to the price war has a concrete, recent embodiment: a run of acquisitions — headlined by <strong>Core Diagnostics</strong> (~₹246 Cr, late 2024) — aimed squarely at moving up the realization ladder into <strong>oncology and genomics</strong>, and at plugging a historical geographic gap. This is the part of the story that surprises most first-time observers.</p>
+
+  <p>The surprise is twofold. First, Metropolis — a company whose heartland is Western and Southern India — has been growing <strong>fastest in the North</strong>, a region where it was historically weak. The FY25–26 acquisitions lifted <strong>North India's share of revenue from roughly 8% to ~17% in a single year</strong>. A born-in-Mumbai franchise is, in effect, <em>buying</em> its way into the geography where it had the least presence, rather than grinding there organically. Second, the strategic prize is a specific, high-value niche: the deals were designed to take Metropolis's share of the fast-growing Indian <strong>oncology-testing</strong> market from a low single-digit ~4% toward ~10% — a deliberate leap up the ladder into some of the highest-realization, most defensible testing there is.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~₹246 Cr</div><div class="msl">Paid for Core Diagnostics — a specialist oncology &amp; genomics platform (late 2024)</div></div>
+    <div class="ms gold"><div class="msv">8% → ~17%</div><div class="msl">North India's share of revenue, roughly doubled in a year via the acquisitions</div></div>
+    <div class="ms green"><div class="msv">~4% → ~10%</div><div class="msl">Targeted share of India's oncology-testing market — the up-market prize</div></div>
+  </div>
+
+  <p>Why esoteric testing is worth so much strategic effort comes straight from section 05's ladder. Routine tests are where the price war rages and margins are thinnest. Specialty and esoteric tests — molecular diagnostics, genomics, advanced oncology and hormone panels — sit at the top of the ladder: they command multiples of the price, they carry richer margins, and crucially they are <strong>hard to commoditise</strong> because running them needs a reference lab, specialist pathologists and validated kits that an asset-light app cannot cheaply assemble. Every point of mix that Metropolis shifts from routine to esoteric both lifts its realization and raises the wall around its business.</p>
+
+  <div class="plain">
+    <div class="ptag">The counter-intuitive truth to sit with</div>
+    <p>The instinctive read of a diagnostics chain is "more collection centres, more tests, more revenue" — a volume story. But the more important story here is a <em>value</em> story that partly runs the other way: the acquisitions Metropolis is prizing are not the ones that add the most cheap routine volume, they are the ones that add the most <em>expensive, defensible</em> tests and the clinician relationships to sell them. Core Diagnostics mattered not for sheer throughput but because it brought oncology and genomics capability and a North/East footprint. The counter-intuitive point: in a business under commodity-price attack, the smartest growth is often the kind that adds <em>fewer, dearer</em> tests, not more cheap ones.</p>
+  </div>
+
+  <div class="note gold"><b>The integration caveat:</b> buying your way up the ladder and into new regions is powerful but not free. Acquired labs must be integrated onto common systems and quality standards, their goodwill must earn its keep, and the price paid must make sense. The four FY25–26 deals contributed ~8% of group revenue and, in Core's case, were still exiting the year at only high-single-digit EBITDA margins — a reminder that the payoff from an acquisition-led climb shows up over years, not quarters, and that integration execution is a real line item in the risk stack.</div>
+</section>
+
+<!-- 07 — the one number that settles it -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Revenue per patient: the number that settles the case</h2></div>
+  <p class="part-sub">The single cleanest gauge of whether the ladder-climb is actually beating the price war.</p>
+
+  <p class="lead">If you could watch only one figure for Metropolis, it would be <strong>revenue per patient</strong> — the average rupees earned from each patient visit. It is the number where the two great forces of this business meet head-on: the <em>downward</em> pull of routine-test price deflation from the apps, and the <em>upward</em> pull of a richer specialty and wellness mix. Whichever wins shows up here first, cleanly, before it reaches the margin line.</p>
+
+  <p>Revenue per patient is a blend of two things: how many tests each patient has, and how expensive those tests are. When Metropolis reports that revenue per patient rose ~<strong>6%</strong> in FY26 even while routine prices were under pressure, it is telling you that the mix-and-value climb <em>out-ran</em> the price war that year — patients were, on average, having richer baskets of higher-value tests. That is the whole thesis in one datapoint. If instead revenue per patient were flat or falling while volumes grew, it would mean the company was simply doing more cheap tests — winning the volume war but losing the value war, and heading toward the commodity trap.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~+6%</div><div class="msl">Revenue per patient, FY26 — the mix climb beating price deflation</div></div>
+    <div class="ms"><div class="msv">~+14%</div><div class="msl">Test-volume growth in Q4 FY26 — the network filling up</div></div>
+    <div class="ms green"><div class="msv">~+16–21%</div><div class="msl">Organic growth in specialty &amp; wellness (TruHealth) lines — the up-ladder engines</div></div>
+  </div>
+
+  <p>Two related lines round out the picture. <strong>Specialty testing</strong> grew organically ~16% and the <strong>preventive-wellness ("TruHealth")</strong> line ~21% in FY26 — both faster than the routine base, both dragging the mix upward. And <strong>test and patient volumes</strong> kept rising (test volumes up ~14% in Q4), showing the network is filling, not emptying, even under price pressure. Put together, the story of FY26 is a company adding volume <em>and</em> value at once — the healthiest possible combination, and the reason profit grew faster than revenue.</p>
+
+  <div class="plain">
+    <div class="ptag">The metric that proves or breaks the thesis, in Metropolis's own terms</div>
+    <p>At ~60× earnings, Metropolis is priced as a durable compounder, so the case does not rest on it being cheap — it rests on the ladder-climb continuing. The number that will prove or break that, quarter by quarter, is <strong>revenue per patient</strong>, read next to <strong>volume growth</strong> and the <strong>specialty-mix share</strong>. If revenue per patient keeps climbing while volumes grow — mix beating price — the premium is earned and profit compounds. If revenue per patient stalls while the company leans on cheap B2B volume to hit growth targets, the specialty story is failing and the multiple has nothing to stand on. Not revenue growth, not lab count — <em>rupees per patient, rising as volumes rise.</em> That is the scoreboard.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The economics of a lab: fixed cost, utilization, operating leverage</h2></div>
+  <p class="part-sub">Why a good year drops so much extra to the bottom line — and a bad one hurts fast.</p>
+
+  <p class="lead">Because a laboratory is mostly fixed cost, diagnostics is a powerful <strong>operating-leverage</strong> business: once the network's costs are covered, extra volume and richer mix fall to profit with unusual force — and the reverse is just as true when volumes or prices sag. This is why the same company can post a 28% EBITDA margin in one year and 23% in another without anything dramatic changing in the day-to-day.</p>
+
+  <p>Walk through the mechanism. Metropolis carries a large base of fixed and semi-fixed costs — labs, analysers, logistics fleets, pathologists, accreditation, marketing, and the head-office of a listed company. Against that base it runs an ever-growing count of tests. When volumes climb and the mix shifts toward higher-priced esoteric tests, the extra revenue meets almost no extra cost, so margins expand — exactly what happened in FY26, where EBITDA grew ~32% on ~24% revenue growth, and margins widened back toward ~25%. When the price war compressed routine realization in FY23–FY25, the same leverage worked in reverse and margins slid from ~28% toward ~23%.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The operating-leverage cycle, in Metropolis's own recent history</caption>
+    <thead><tr><th>Phase</th><th>What happened</th><th>What it did to margin</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">FY22 · post-COVID peak</td><td>COVID-testing tailwind and rich mix inflate results</td><td>~28% EBITDA — a high-water mark not to be read as the base</td></tr>
+      <tr><td class="t-strong">FY23–FY24 · the squeeze</td><td>COVID unwinds; apps price routine tests down; expansion costs rise</td><td>Margin slides to ~24–26% as leverage works in reverse</td></tr>
+      <tr><td class="t-strong">FY25 · trough &amp; invest</td><td>Continued price pressure; heavy network and acquisition investment</td><td>~23% — the low point, with profit dented by integration and capex</td></tr>
+      <tr><td class="t-strong">FY26 · leverage returns</td><td>Volumes rise, specialty mix climbs, acquisitions bed in</td><td>Back toward ~25%, EBITDA +32% on +24% revenue — leverage working forward</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why utilization is the master dial management actually turns</div>
+    <p>Of all the levers in this business, the one management most directly controls is how <em>full</em> its expensive network runs. Adding a collection centre is cheap; the value comes from feeding enough samples through it and back to a hub whose fixed cost is already sunk. That is why B2B volume, home collection, and network density all matter beyond their own margins — they raise utilization, and utilization is what turns a fixed-cost network from a drag into a profit machine. The strategic elegance of the ladder-climb is that it lifts <em>both</em> terms of the profit equation at once: more tests (utilization up) and dearer tests (realization up). Get both moving together, as in FY26, and operating leverage does the rest.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms green"><div class="msv">~17.8%</div><div class="msl">Return on capital employed (approx.) — decent, reflecting an asset-heavy network</div></div>
+    <div class="ms"><div class="msv">~13.6%</div><div class="msl">Return on equity (approx.) — held back partly by acquisition goodwill on the books</div></div>
+    <div class="ms gold"><div class="msv">~24.7%</div><div class="msl">FY26 EBITDA margin — target ~27–28% over the next few years, per management</div></div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A large, under-penetrated market with a few quality incumbents and a swarm of disruptors.</p>
+
+  <p class="lead">Indian diagnostics is a big, structurally growing, and still highly <strong>fragmented</strong> market: the organised chains hold only a minority of a market otherwise served by tens of thousands of standalone local labs. Among the organised players, a handful of listed incumbents set the quality benchmark, while venture-funded online aggregators crowd the routine-testing edge. Metropolis is one of the leaders, but not the largest.</p>
+
+  <div class="chart">
+    <div class="c-title">Listed peers by market value — Metropolis sits in the middle of the quality pack</div>
+    <div class="c-sub">Approximate market capitalisation, ₹ Crore, mid-2026 — relative scale, not precise</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Dr Lal PathLabs<small>the largest listed pure-play</small></div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~26,800</div></div>
+      <div class="bar-row"><div class="blab">Metropolis Healthcare<small>this company</small></div><div class="track"><span class="fill brand" style="width:45%"></span></div><div class="bval">~12,000</div></div>
+      <div class="bar-row"><div class="blab">Thyrocare<small>low-cost, asset-light model</small></div><div class="track"><span class="fill wtg" style="width:30%"></span></div><div class="bval">~8,000</div></div>
+    </div>
+    <div class="legend"><span>Dr Lal is the larger, North-anchored quality leader; Thyrocare runs a lower-cost, centralised, price-led model; Metropolis is the West/South leader climbing into specialty and North India. Market caps approximate and move daily.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Metropolis</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Metropolis Healthcare</td><td>2nd-largest chain; leader in West &amp; South; climbing into specialty/oncology &amp; North India</td><td><em>This company.</em> The debate is whether the specialty-mix climb keeps beating routine-price deflation.</td></tr>
+      <tr><td class="t-strong">Dr Lal PathLabs</td><td>The largest listed diagnostics pure-play; anchored in North India; strong brand and franchise network</td><td>Bigger and North-strong — the benchmark quality name, and the incumbent Metropolis is chasing on its own turf.</td></tr>
+      <tr><td class="t-strong">Thyrocare</td><td>Low-cost, centralised, asset-light "test-factory"; wholesale/B2B-heavy; now PharmEasy-owned</td><td>The price-aggressive model — competes hardest at the routine, low-realization end Metropolis is climbing away from.</td></tr>
+      <tr><td class="t-strong">Agilus (SRL) &amp; regional chains</td><td>Large network (formerly SRL Diagnostics) plus strong state-level labs</td><td>A direct scaled rival; together with Metropolis and Dr Lal, the organised chains hold roughly half the organised market.</td></tr>
+      <tr><td class="t-strong">Online / asset-light disruptors</td><td>Tata 1mg, PharmEasy, Redcliffe, Healthians — app-first, venture-funded, discount-led</td><td>The price-war force of section 05 — they attack routine pricing, which is exactly why Metropolis defends by going up-market.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two features define this market. First, it is <strong>hugely under-penetrated and fragmented</strong> — the organised chains are still winning share from countless small standalone labs, which gives the whole listed group a long structural growth runway independent of who beats whom. Second, competition splits by <em>position on the ladder</em>: the disruptors and low-cost players fight at the cheap, routine bottom, while the quality incumbents — Dr Lal and Metropolis — compete on brand, reliability and the higher-value tests at the top. Metropolis's strategic bet is to plant itself firmly at the top of that ladder and in the specialty niches, where the fight is about trust and capability rather than the lowest price.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A strong recovery year on a rich multiple — the question is durability of the mix, not cheapness.</p>
+
+  <p class="lead">FY26 was a clear inflection: after two years of margin pressure, revenue, EBITDA and profit all grew strongly, with profit outpacing revenue as operating leverage and a richer mix returned. But unlike a cheap cyclical, Metropolis trades on a <strong>premium multiple</strong> — around 60× trailing earnings — the kind of rating the market reserves for what it believes are durable, mix-improving, high-return franchises. The valuation debate here is not "is it cheap?" (it is not) but "is the specialty-mix climb durable enough to justify a rich rating?"</p>
+
+  <div class="chart">
+    <div class="c-title">The five-year revenue climb — through the squeeze and out</div>
+    <div class="c-sub">Consolidated revenue, ₹ Crore, year ended March</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22<small>post-COVID peak</small></div><div class="track"><span class="fill ink" style="width:74.6%"></span></div><div class="bval">~1,228</div></div>
+      <div class="bar-row"><div class="blab">FY23<small>COVID unwind</small></div><div class="track"><span class="fill ink" style="width:69.7%"></span></div><div class="bval">~1,148</div></div>
+      <div class="bar-row"><div class="blab">FY24<small>flat, price pressure</small></div><div class="track"><span class="fill wtg" style="width:73.4%"></span></div><div class="bval">~1,208</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>recovery begins</small></div><div class="track"><span class="fill wtg" style="width:80.9%"></span></div><div class="bval">~1,331</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>+24%, acquisitions</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~1,646</div></div>
+    </div>
+    <div class="legend"><span>Note the flat FY22–FY24 stretch as the COVID surge unwound and the price war bit — then the FY25–FY26 acceleration as volumes, mix and acquisitions kicked in. The "growth" story is really a recovery-plus-mix story.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">EBITDA margin — the squeeze, and the recovery</div>
+    <div class="c-sub">Approximate operating margin, %, year ended March</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~28%</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill spec" style="width:93%"></span></div><div class="bval">~26%</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill wtg" style="width:86%"></span></div><div class="bval">~24%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill ink" style="width:82%"></span></div><div class="bval">~23%</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill om" style="width:88%"></span></div><div class="bval">~24.7%</div></div>
+    </div>
+    <div class="legend"><span>The margin fell ~5 points from the FY22 COVID-inflated peak to the FY25 trough as price pressure and investment bit, then began recovering in FY26. Management targets ~27–28% over the next few years — the recovery is the number to watch.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Five-year financial summary (₹ Crore, consolidated, approx.)</caption>
+    <thead><tr><th>Year</th><th class="num">Revenue</th><th class="num">EBITDA</th><th class="num">EBITDA %</th><th class="num">Net profit</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">FY22</td><td class="num">~1,228</td><td class="num">~348</td><td class="num">~28%</td><td class="num">~215</td></tr>
+      <tr><td class="t-strong">FY23</td><td class="num">~1,148</td><td class="num">~293</td><td class="num">~26%</td><td class="num">~143</td></tr>
+      <tr><td class="t-strong">FY24</td><td class="num">~1,208</td><td class="num">~288</td><td class="num">~24%</td><td class="num">~128</td></tr>
+      <tr><td class="t-strong">FY25</td><td class="num">~1,331</td><td class="num">~308</td><td class="num">~23%</td><td class="num">~146</td></tr>
+      <tr><td class="t-strong">FY26</td><td class="num">~1,646</td><td class="num">~406</td><td class="num">~25%</td><td class="num">~191</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~60×</div><div class="msl">Trailing P/E (mid-2026) — a premium, quality-franchise multiple, not a cyclical one</div></div>
+    <div class="ms"><div class="msv">~₹12,000 Cr</div><div class="msl">Market cap (mid-2026) — mid-sized among listed diagnostics peers</div></div>
+    <div class="ms green"><div class="msv">~14–15%</div><div class="msl">Revenue-CAGR the company guides to over the next ~3 years, at ~27–28% EBITDA margin</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: revenue per patient, read with the margin recovery</div>
+    <p>A ~60× multiple leaves the outcome resting entirely on whether the mix keeps climbing. So the figures that prove or break the case are <strong>revenue per patient</strong> (is the specialty/wellness climb still beating routine-price deflation, quarter after quarter?) read alongside the <strong>EBITDA-margin walk back toward management's ~27–28% target</strong> and the <strong>return on the acquisition capital</strong> (are Core and the other deals earning their cost?). If revenue per patient keeps rising, margins keep recovering, and the acquired oncology/genomics book scales into double-digit margins, the premium is being paid for something real. If revenue per patient stalls and margins plateau below target while goodwill sits idle, a 60× rating on a low-teens-return business is exposed. Rupees per patient, the margin walk, and the acquisition returns — those three, tracked together, are the case.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results and market data cross-checked across reports; several are <b>approximate</b> or rounded — notably EBITDA (~₹400–406 Cr / ~24–25%), the illustrative realization-ladder prices, the ~49% promoter stake, ROCE/ROE, and market cap and P/E, which move daily. The BSE scrip code <b>542650</b> (ISIN INE112L01020) was verified against BSE listing data and independent price sources; it is <em>not</em> 543212. Verify every number against the company's filings before relying on it.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A quality incumbent climbing up-market on a rich rating — asked whether the climb outlasts the price war.</p>
+
+  <p class="lead">Metropolis enters FY27 with momentum: a record year behind it, a recovering margin, a deliberately richer test mix, a fresh oncology-and-genomics platform in Core Diagnostics, and a newly-doubled North India footprint. What it cannot promise is that the specialty-mix climb keeps out-running routine-price deflation year after year, or that a ~60× multiple leaves it room if the climb stalls. That tension frames both cases.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>The mix climb is working</strong> — revenue per patient rose ~6% in FY26 while specialty (+16%) and wellness (+21%) outgrew the routine base; value is beating price.</li>
+        <li><strong>Operating leverage returning</strong> — EBITDA grew ~32% on ~24% revenue; margins recovering toward a ~27–28% target on a fixed-cost network.</li>
+        <li><strong>Up-market moat deepening</strong> — Core Diagnostics adds oncology/genomics capability the discount apps cannot cheaply replicate, targeting ~10% oncology share.</li>
+        <li><strong>Structural runway</strong> — organised chains still hold a minority of a fragmented, under-penetrated market; long share-gain runway independent of the price war.</li>
+        <li><strong>Founder-led franchise &amp; trusted brand</strong> — four decades of quality reputation in a business where a believable number is the product.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich valuation</strong> — ~60× earnings on a business earning low-teens returns; a stalling mix-climb removes the justification quickly.</li>
+        <li><strong>The price war is structural</strong> — venture-funded apps can keep loss-leading routine tests for years; realization on the commodity base stays under pressure.</li>
+        <li><strong>Acquisition &amp; integration risk</strong> — four deals to fold in; Core still at high-single-digit margins; goodwill must earn its cost, or returns dilute.</li>
+        <li><strong>Formidable competition</strong> — Dr Lal is larger and North-strong; Thyrocare and aggregators attack on price; Agilus/SRL scaled — share gains are contested.</li>
+        <li><strong>Regulation &amp; capex</strong> — pricing scrutiny, quality regulation, and a capital-heavy network that must keep expanding to stay dense and current.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Metropolis is a well-run, founder-led diagnostics chain that has chosen to lose the routine-price war on purpose and win the value war instead — shifting its book toward the esoteric, high-realization tests that a discount app cannot run, and buying its way up the ladder and into North India to do it. FY26 showed the strategy paying off on every axis at once: more volume, more value per patient, wider margins, faster profit. The rich multiple means the market already believes the climb continues. The next test is concrete and datable: <strong>whether revenue per patient keeps rising through the FY27 quarters as the margin walks back toward management's ~27–28% target and Core Diagnostics scales from high-single-digit into double-digit EBITDA margins.</strong> Keep the mix climbing and the acquisitions earning, and the premium is deserved; let revenue per patient stall while cheap volume props up the growth number, and a 60× diagnostics chain has a long way down to a low-teens-return reality.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Metropolis Healthcare Ltd — FY26 audited results &amp; press release (year ended Mar 2026), via company disclosures and ScanX / Whalesbook / Medical Buyer coverage ("Revenue up 24%, PAT rises 31%").</li>
+    <li>Metropolis Healthcare — Q2/H1 &amp; Q3/Q4 FY26 Investor Presentations and earnings-call coverage (network, B2C/B2B growth, specialty &amp; TruHealth, revenue per patient).</li>
+    <li>Medical Buyer — "Metropolis expands beyond 5,000 centers, specialized testing supports growth"; "Q2 revenue up 22.7%."</li>
+    <li>Business Today — "Metropolis sees growth from preventive and specialised diagnostics" (May 2026).</li>
+    <li>Business Standard — Core Diagnostics acquisition (100% stake, ~₹246 Cr); "adds to Metropolis's long-term growth plans"; oncology-share ambition 4%→10%.</li>
+    <li>Screener.in — Metropolis Healthcare consolidated financials: FY22–FY26 revenue/EBITDA/PAT/margins, ROCE ~17.8%, ROE ~13.6%, P/E, promoter holding ~48.9%, BSE code 542650.</li>
+    <li>Wikipedia / Ameera Shah profile &amp; Metropolis Healthcare — company history (founded 1980 by Dr Sushil Shah; Ameera Shah from 2001; April 2019 IPO).</li>
+    <li>Goldman Sachs / Metropolis Healthcare IPO prospectus (2019) — business model, network and segment background.</li>
+    <li>Smart-investing.in / Tickertape / Value Research — peer comparison with Dr Lal PathLabs and Thyrocare; market-cap scale (mid-2026).</li>
+    <li>BSE India — Metropolis Healthcare Ltd stock page, scrip code 542650 (ISIN INE112L01020); NSE symbol METROPOLIS.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several figures (notably the illustrative realization-ladder prices, EBITDA level and margin, per-patient and mix growth rates, the promoter stake, ROCE/ROE, market cap and P/E) are derived, illustrative or rounded. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "METROPOLIS";
+  const COMPANY_SLUG = "metropolis-healthcare";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
