@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RateGain Travel Technologies — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1F4F6;
+    --paper-2:#F8FAFB;
+    --card:#FFFFFF;
+    --ink:#152128;
+    --ink-soft:#4B5B65;
+    --ink-faint:#8496A0;
+    --brand:#2C5E7A;          /* deep sky-blue */
+    --brand-bright:#3E7EA0;   /* the RateGain accent */
+    --gold:#C0873C;           /* warm amber - accent / warmth */
+    --wtg:#4E88A8;            /* Distribution - steel blue */
+    --epc:#3E9C96;            /* DaaS - teal */
+    --om:#7D6BB0;            /* MarTech - violet */
+    --spec:#3E7EA0;          /* brand cross accent */
+    --line:#DCE3E7;
+    --line-soft:#E8EDF0;
+    --good:#2A7A4E;
+    --bad:#B0492E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E6F0F5;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#EDF3F6;border:1px solid #CFE0E8;border-left:3px solid var(--brand-bright);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#2C5E7A;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#1c333f;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F3F7F9;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E6ECEF;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2C5E7A,#3E7EA0);}
+  .fill.gold{background:linear-gradient(90deg,#C0873C,#D8A85C);}
+  .fill.wtg{background:linear-gradient(90deg,#4E88A8,#6AA0BC);}
+  .fill.epc{background:linear-gradient(90deg,#3E9C96,#5CB4AE);}
+  .fill.om{background:linear-gradient(90deg,#7D6BB0,#9585C2);}
+  .fill.spec{background:linear-gradient(90deg,#3E7EA0,#5A96B4);}
+  .fill.bad{background:linear-gradient(90deg,#B0492E,#C9603F);}
+  .fill.ink{background:linear-gradient(90deg,#3d4a52,#5b6a73);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF3E6;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#E6F0F5;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> The distribution problem</a></li>
+    <li><a href="#p2"><span class="n">02</span> The three engines</a></li>
+    <li><a href="#p3"><span class="n">03</span> How each engine earns</a></li>
+    <li><a href="#p4"><span class="n">04</span> The founder &amp; owners</a></li>
+    <li><a href="#p5"><span class="n">05</span> The Sojern bet</a></li>
+    <li><a href="#p6"><span class="n">06</span> A dollar business, in rupees</a></li>
+    <li><a href="#p7"><span class="n">07</span> The value equation</a></li>
+    <li><a href="#p8"><span class="n">08</span> The industry &amp; rivals</a></li>
+    <li><a href="#p9"><span class="n">09</span> The risk stack</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: RATEGAIN · BSE: 543417</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>RateGain Travel Technologies, <em>the software behind the booking</em></h1>
+  <p class="dek">A complete walk through India's largest travel-and-hospitality software company — the firm whose data and code sit invisibly between a hotel room and the dozens of websites that sell it. How a SaaS-for-travel business actually earns, why its revenue rides on both software subscriptions and the raw volume of travel happening in the world, and why a single $250-million acquisition in late 2025 reshaped what this company even is.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,824 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~18.5% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹250 <small>Cr</small></div><div class="l">Adjusted PAT (FY26)</div></div>
+    <div class="cell"><div class="v">~₹11,400 <small>Cr</small></div><div class="l">Market cap (Aug 2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">03 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — operating revenue ~₹1,824 Cr (+69% YoY, first full year including the Sojern acquisition), EBITDA ~₹337 Cr (+45%), adjusted PAT ~₹250 Cr (+20%) while reported PAT dipped to ~₹194 Cr on integration and interest costs; added the Sojern-deal section and the recurring-vs-usage revenue model.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">RateGain Travel Technologies sells <strong>software and data to the travel industry</strong> — to hotels, airlines, online travel agents (OTAs), car-rental firms, cruise lines and the big travel brands. It is, by its own description, the <strong>largest travel-and-hospitality SaaS company headquartered in India</strong>, but almost all of its customers are abroad: it serves roughly <strong>3,000-plus direct clients across 100-plus countries</strong>, and earns the overwhelming bulk of its money in US dollars, euros and pounds. Its work is the kind you never see as a traveller but rely on every time you book: making sure a hotel's rooms appear, correctly priced and available, across every website that sells them, and helping that hotel decide what to charge and how to find the guest in the first place.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It runs on three distinct engines, not one.</strong> RateGain is really three businesses stitched together: <strong>Distribution</strong> (the plumbing that pipes a hotel's rooms into hundreds of booking channels), <strong>DaaS / Rate Intelligence</strong> (selling competitors' price and demand data so a client can price smartly), and <strong>MarTech / demand generation</strong> (marketing technology that helps a travel brand actually attract and convert travellers). Each earns differently, grows at a different pace, and carries a different margin.</li>
+    <li><strong>Its revenue is part subscription, part travel-volume.</strong> Some of what RateGain earns is steady software subscription — a hotel pays whether or not it sells a room. But a large slice is <strong>usage-linked</strong>: it rises and falls with how many bookings flow through the pipes and how much travel advertising the world is buying. That is what makes it attractive (recurring, sticky, global) and vulnerable (travel is cyclical and shock-prone) at the same time.</li>
+    <li><strong>FY26 was transformed by one acquisition.</strong> Revenue jumped ~69% to <strong>~₹1,824 Cr</strong> — but that leap was powered chiefly by <strong>Sojern</strong>, a US demand-generation company RateGain bought for <strong>$250 million (~₹2,223 Cr)</strong>, completed in November 2025. The deal roughly doubled the top line, tilted the company decisively toward marketing technology, and — the detail most people miss — pushed <em>reported</em> profit slightly <em>down</em>, from ~₹209 Cr to ~₹194 Cr, as integration and interest costs bit. The stock nonetheless trades on a rich multiple (~50× earnings), which tells you the market is pricing the combined company's future, not its past.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>A modern hotel doesn't sell most of its rooms at its own front desk — it sells them through Booking.com, Expedia, MakeMyTrip, Google, dozens of others, each demanding up-to-the-second prices and availability. Keeping all those channels correct, watching what rivals charge, and finding travellers to fill the rooms is a full-time engineering and data problem no single hotel wants to build itself. RateGain builds it once and rents it to thousands of them. The business earns a little every month in subscriptions and a little more every time travel actually happens — so it compounds quietly in good years and stalls when the world stops moving. In FY26 it made its boldest move yet, spending a quarter-billion dollars to buy a US company and turn itself, in large part, into a travel-advertising firm. Whether that bet earns its keep is now the whole story.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>The distribution problem: why a hotel needs RateGain at all</h2></div>
+  <p class="part-sub">No tech background needed — just the mess that RateGain exists to tidy up.</p>
+
+  <p class="lead">Start with one hotel and one room-night to sell tonight. In the old world it sold that room at its own reception. In today's world the same room is offered simultaneously across a sprawl of digital shop windows: global OTAs like <strong>Booking.com</strong> and <strong>Expedia</strong>, regional ones like <strong>MakeMyTrip</strong> or <strong>Agoda</strong>, metasearch sites like <strong>Google Hotels</strong> and <strong>Trivago</strong>, the old airline-era <strong>GDS</strong> networks that travel agents still use, plus the hotel's own website. Each of those channels needs three things kept perfectly in sync, in real time: <strong>Availability</strong> (is the room free?), <strong>Rates</strong> (what does it cost?) and <strong>Inventory</strong> (how many are left?). The industry shorthand for the trio is <strong>ARI</strong>.</p>
+
+  <p>Now multiply. A hotel has many room types, many rate plans, and dozens of channels — and the numbers change every few minutes as bookings land. Doing this by hand means a revenue manager logging into forty different extranets to retype prices, a slow and error-strewn ritual. Get it wrong and you either oversell a room you no longer have (an angry guest, a forced walk to another hotel) or leave money on the table with stale, mispriced inventory. That coordination headache — done reliably, instantly, across thousands of hotels and hundreds of channels — is the core problem RateGain was built to solve.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only travel-tech terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">SaaS</td><td>Software as a Service — software rented over the internet for a recurring fee, rather than bought once. RateGain's core model: customers subscribe, and (crucially) tend to keep subscribing, which is why <em>retention</em> matters so much.</td></tr>
+      <tr><td class="t-strong">OTA</td><td>Online Travel Agent — Booking.com, Expedia, MakeMyTrip and the like. They are RateGain's customers' most important sales channels, RateGain's own customers in places, <em>and</em> a competitive threat when they build tech in-house. Hold that three-way relationship in mind.</td></tr>
+      <tr><td class="t-strong">ARI</td><td>Availability, Rates &amp; Inventory — the live data every channel needs about every room. Keeping ARI correct across all channels at once is the job of a channel manager.</td></tr>
+      <tr><td class="t-strong">Channel manager</td><td>The software (RateGain's is <strong>UNO</strong>) that distributes ARI to every connected channel from a single source of truth — so one price change flows everywhere instantly, no manual retyping.</td></tr>
+      <tr><td class="t-strong">GDS</td><td>Global Distribution System — the older Amadeus/Sabre/Travelport networks that travel agents and corporates book through. Still a large channel, and RateGain plugs hotels into it.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The structural reason this is a good business to be in</div>
+    <p>Once a hotel wires its property-management system into RateGain's plumbing, ripping it out is painful and risky — every channel connection, every rate rule, every integration would have to be rebuilt, and a mistake means lost bookings. That <strong>switching cost</strong> is why travel-distribution software enjoys the stickiness it does: RateGain's gross revenue retention has consistently run above 90%, meaning it keeps more than nine of every ten revenue-rupees from existing customers year after year. A business that seldom loses a customer, and adds new ones on top, compounds. The catch — which the rest of this primer keeps returning to — is that a slice of that revenue doesn't just depend on <em>keeping</em> the customer; it depends on how much travelling the world is doing.</p>
+  </div>
+
+  <h3>Who buys, and what they are buying</h3>
+  <ul class="clean">
+    <li><strong>Hotels &amp; hotel groups</strong> — from independents to enterprise chains. The largest customer set, buying distribution, pricing intelligence and marketing tools.</li>
+    <li><strong>Airlines, car rentals, cruises, ferries, package providers</strong> — other travel suppliers with the same need to price against rivals and reach travellers.</li>
+    <li><strong>OTAs and metasearch companies</strong> — the big travel-selling platforms themselves buy RateGain's data (for example, competitive rates to power their own displays), which is why an OTA can be a customer and a rival at once.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The three engines: what RateGain actually sells</h2></div>
+  <p class="part-sub">Distribution, Rate Intelligence and MarTech — one company, three different machines.</p>
+
+  <p class="lead">RateGain is best understood not as a single product but as <strong>three complementary engines</strong>, each attacking a different part of a travel supplier's problem: getting the room <em>seen</em>, priced <em>right</em>, and <em>filled</em>. They were built and bought over two decades, and after the FY26 Sojern deal the third engine has become the largest of the three.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The three engines — get the room seen, priced, and filled</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Engine 1 · Get it seen</div><div class="nname">Distribution</div><div class="nwho">UNO channel manager pipes rooms into 700+ channels &amp; the GDS. Usage-and-subscription.</div></div>
+      <div class="arrow">+</div>
+      <div class="node epc"><div class="ntag">Engine 2 · Price it right</div><div class="nname">DaaS / Rate Intelligence</div><div class="nwho">Optima sells live competitor rates &amp; demand signals so clients price dynamically. Subscription.</div></div>
+      <div class="arrow">+</div>
+      <div class="node om"><div class="ntag">Engine 3 · Get it filled</div><div class="nname">MarTech / demand-gen</div><div class="nwho">Sojern, Adara, BCV, RevGain — travel-intent data &amp; advertising that find and convert guests.</div></div>
+    </div>
+    <div class="flow-note">A single hotel can buy one engine or all three — and the more it buys, the deeper it is embedded and the more each customer is worth. Cross-sell across the three engines is the growth flywheel.</div>
+  </div>
+
+  <h3>Engine 1 — Distribution (the plumbing)</h3>
+  <p>This is RateGain's connectivity backbone, marketed as the <strong>UNO</strong> channel manager. It links a hotel's inventory to <strong>700-plus demand partners</strong> — OTAs, metasearch, wholesalers — plus direct <strong>GDS</strong> connectivity that reaches over 600,000 travel agents. A single database pushes ARI to every channel at once, processing (the company says) <strong>billions of ARI updates a year</strong> at near-total uptime, and it has held Booking.com's "Premier Connectivity Partner" status for eight straight years. Distribution is the oldest, most mission-critical, and stickiest engine — but also the <em>slowest-growing</em>, and the one most exposed to the whims of a big channel partner.</p>
+
+  <h3>Engine 2 — DaaS / Rate Intelligence (the data)</h3>
+  <p>Here RateGain sells <strong>data as a service</strong>: it continuously scrapes and structures the prices, availability and demand signals of the whole travel market, then sells that back to clients so they can price dynamically. Its <strong>Optima</strong> platform gathers competitive pricing from hundreds of sources so a hotel or airline can see, live, what everyone else is charging and adjust. This is a classic subscription business with high gross margins — you build the data pipeline once and sell the same intelligence to many buyers — and it is the engine that gives RateGain a genuine, hard-to-replicate data moat.</p>
+
+  <h3>Engine 3 — MarTech / demand generation (the marketing)</h3>
+  <p>The newest and now-largest engine helps travel brands <strong>find and convert travellers</strong>. It was assembled by acquisition: <strong>BCV</strong> (2019, social-media management for hotels), <strong>Adara</strong> (2023, traveller-intent data), and then the transformational <strong>Sojern</strong> (2025, digital demand generation and advertising). Together these turn RateGain into a travel-advertising and audience-intelligence platform: it knows, from vast pools of travel-intent data, who is likely about to book a trip, and it places the marketing that captures them. RateGain has folded Adara and Sojern into a single unit under the <strong>Sojern</strong> brand, pitching it as one of the world's largest sources of travel-intent data.</p>
+
+  <div class="plain">
+    <div class="ptag">Why owning all three engines is more than the sum of the parts</div>
+    <p>Each engine is useful alone, but the real prize is the loop between them. Distribution shows RateGain <em>where</em> rooms are being sold and at what price; Rate Intelligence tells it <em>what the market</em> is charging and where demand is heading; MarTech uses travel-intent signals to <em>generate</em> the bookings that then flow back through distribution. A hotel that buys one engine is a candidate to be sold the next two — and because the underlying data feeds each other, RateGain can credibly claim to help a client across the entire journey from "unknown traveller" to "checked-in guest." That cross-engine data flywheel is the strategic argument for stapling three quite different businesses onto one platform.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>How each engine earns: subscription, usage, and the retention math</h2></div>
+  <p class="part-sub">The money model — and why "recurring" and "travel-linked" are both true at once.</p>
+
+  <p class="lead">To value RateGain you have to see how the cash actually arrives, because the three engines are paid for in different ways — and the blend of "steady subscription" versus "moves-with-travel-volume" is the single most important thing about the quality of its earnings.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>How the three engines are paid</caption>
+    <thead><tr><th>Engine</th><th>How it charges</th><th>What the revenue rides on</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--wtg)">Distribution</td><td>A subscription per property, often with a usage/transaction element (fees tied to bookings or ARI volume flowing through the pipes).</td><td>Number of hotels connected <em>and</em> how many bookings actually flow — so it is partly recurring, partly geared to travel activity and to specific big channel accounts.</td></tr>
+      <tr><td class="t-strong" style="color:var(--epc)">DaaS / Rate Intelligence</td><td>Recurring data subscriptions — you pay for continuous access to the competitive-pricing and demand feeds.</td><td>The most purely recurring, highest-margin line: build the data pipeline once, sell it to many. Grows with client count and data depth.</td></tr>
+      <tr><td class="t-strong" style="color:var(--om)">MarTech / demand-gen</td><td>A mix of SaaS subscriptions and, especially post-Sojern, <em>advertising spend</em> flowing through the platform (take a margin on media the client buys to reach travellers).</td><td>The most travel-volume-sensitive: when hotels cut marketing budgets in a downturn, this engine feels it first and hardest.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The pattern that emerges is a barbell. At one end, <strong>Rate Intelligence</strong> is beautifully recurring — data subscriptions renew, margins are high, revenue is predictable. At the other, <strong>MarTech</strong> (now the biggest engine) is the most exposed to travel-advertising budgets and therefore to the cycle. <strong>Distribution</strong> sits in between: sticky subscriptions plus a booking-linked tail. RateGain's overall revenue is thus <em>mostly</em> recurring but with a meaningful volume-sensitive component that swells the upside in boom years and stings in bad ones.</p>
+
+  <div class="chart">
+    <div class="c-title">Segment mix — where the revenue came from (FY25)</div>
+    <div class="c-sub">Share of operating revenue by engine, financial year ended March 2025 (last full year before the Sojern consolidation)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">MarTech / demand-gen<small>the largest, now Sojern-led</small></div><div class="track"><span class="fill om" style="width:100%"></span></div><div class="bval">~47.6%</div></div>
+      <div class="bar-row"><div class="blab">DaaS / Rate Intelligence<small>the recurring, high-margin core</small></div><div class="track"><span class="fill epc" style="width:63.7%"></span></div><div class="bval">~30.3%</div></div>
+      <div class="bar-row"><div class="blab">Distribution<small>the sticky plumbing</small></div><div class="track"><span class="fill wtg" style="width:46.4%"></span></div><div class="bval">~22.1%</div></div>
+    </div>
+    <div class="legend"><span>Even before Sojern, MarTech was already the biggest engine at ~48% of revenue; the FY26 deal pushes it further still. After the acquisition the mix tilts even more toward marketing technology — a deliberate strategic direction, and the reason RateGain now describes itself as a "travel-intent data" company.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The retention number to watch, and why it is the quiet engine of the whole model</div>
+    <p>A SaaS company lives or dies on whether last year's customers stay and spend more. RateGain reports <strong>gross revenue retention consistently above 90%</strong> — it rarely loses a customer outright — and its <em>net</em> revenue retention runs higher still when existing clients buy more engines or more volume. That combination, low churn plus expansion, is what lets a business grow without constantly refilling a leaking bucket. But note the asymmetry the segment mix creates: the more the revenue base tilts toward advertising-linked MarTech, the more of that "retention" quietly depends on clients keeping their marketing budgets intact — which, unlike a mission-critical distribution connection, is exactly the line item a nervous hotel trims first when travel softens.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The founder, the group, and who controls it</h2></div>
+  <p class="part-sub">A founder-led company, still run by the man who started it in 2004.</p>
+
+  <p class="lead">Unlike many listed Indian companies, RateGain is not a family conglomerate or a private-equity roll-up dressed for market — it is a <strong>founder-led technology business</strong>, still chaired and managed by <strong>Bhanu Chopra</strong>, who started it in 2004 as a rate-intelligence tool for hotels and built it, engine by engine and acquisition by acquisition, into today's platform. That founder continuity matters: the strategy of buying capabilities (BCV, Adara, Sojern) and integrating them is a single, consistent bet made by the same person over twenty years.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2004</div><div class="ev">Bhanu Chopra founds RateGain, initially selling <strong>rate intelligence</strong> — competitive pricing data — to hotels. The DaaS engine is the original business.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Expands into <strong>Distribution</strong> (channel management / connectivity) and scales a global, largely dollar-earning customer base across hotels, airlines and OTAs.</div></li>
+    <li class="major"><div class="yr">2019</div><div class="ev">Acquires <strong>BCV Social</strong>, entering <strong>MarTech</strong> — social-media and guest-experience management for hotels. The third engine is born.</div></li>
+    <li class="major"><div class="yr">Dec 2021</div><div class="ev"><strong>IPO</strong> on NSE and BSE (BSE scrip code <strong>543417</strong>), listing 17 December 2021 — one of India's first pure travel-SaaS listings.</div></li>
+    <li class="major"><div class="yr">2023</div><div class="ev">Acquires Silicon Valley-based <strong>Adara</strong> (traveller-intent data) at a low multiple, deepening the MarTech/data engine.</div></li>
+    <li><div class="yr">FY25</div><div class="ev">A record year on the standalone business — EBITDA margin reaches ~21.6%, PAT grows ~44% — setting up the balance sheet for a big move.</div></li>
+    <li class="major"><div class="yr">Oct–Nov 2025</div><div class="ev">Announces and completes the <strong>$250 million (~₹2,223 Cr) acquisition of Sojern</strong>, a US demand-generation firm — its largest deal ever — part-funded by debt and a QIP; consolidates Adara + Sojern under the Sojern brand.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue leaps ~69% to ~₹1,824 Cr on the first (partial) Sojern consolidation; adjusted PAT ~₹250 Cr, but reported PAT dips to ~₹194 Cr on integration and interest costs; net cash turns to net debt.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> founder <strong>Bhanu Chopra</strong> and the promoter group hold roughly <strong>49% (approx.)</strong> after the FY26 QIP that helped fund Sojern diluted the stake modestly (it had been in the low-50s%). Chopra remains Chairman &amp; Managing Director, and has been adding to his personal holding through open-market purchases — a signal worth noting, though not a guarantee of anything. Confirm the exact figure in the latest shareholding filing.</li>
+    <li><strong>Institutional float:</strong> the balance is held by public and institutional investors; the FY26 QIP brought fresh institutional capital in specifically to part-fund the Sojern deal.</li>
+    <li><strong>A genuinely global operation:</strong> though listed in India and run by an Indian founder, RateGain's centre of gravity is its <em>customer base and revenue</em>, which are overwhelmingly overseas. With Sojern, its US presence — offices, people and revenue — steps up markedly.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the founder-led, acquisitive structure cuts both ways:</b> a single, consistent capital allocator who has compounded the business for two decades is a real asset — the three-engine platform is his design, not a committee's. But the strategy leans heavily on <em>buying</em> growth and integrating it, and each deal (BCV, Adara, and now the far larger Sojern) is a fresh integration risk and, this time, a leveraged one. Minority investors are betting that the same founder who bought well and cheaply before has not overpaid — or over-borrowed — for his biggest prize.</div>
+</section>
+
+<!-- 05 — BESPOKE crux + genuine surprise: the Sojern bet -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The Sojern bet: a quarter-billion-dollar reinvention</h2></div>
+  <p class="part-sub">The single most important thing that happened to this company — and the fact about it that surprises everyone.</p>
+
+  <p class="lead">For most of its life RateGain was pitched as a capital-light, net-cash, high-margin Indian SaaS exporter. In late 2025 it did something that looked out of character: it spent <strong>$250 million (~₹2,223 Cr) to buy Sojern</strong>, a US demand-generation company larger, by revenue, than RateGain's entire MarTech engine — and it borrowed to do it, flipping the company from a net-cash to a net-debt position for the first time. To understand RateGain today, you have to understand this one decision.</p>
+
+  <p>Sojern, founded in 2007, is a US travel-advertising and audience-intelligence business that serves some <strong>13,000 travel and hospitality customers</strong> and turned over about <strong>$172 million in 2024</strong>. It does the "get it filled" job — using vast pools of travel-intent data to find and convert travellers — at a scale RateGain's own MarTech engine could not match organically. Buying it did three things at once: it roughly <strong>doubled RateGain's revenue base</strong>, it made <strong>MarTech/demand-generation the dominant engine</strong> of the combined company, and it gave RateGain a far deeper foothold in the Americas. Management's stated ambition for the combined group is <strong>north of $310 million in revenue and over $50 million in EBITDA</strong>.</p>
+
+  <div class="chart">
+    <div class="c-title">How the $250m was paid — and why the balance sheet changed character</div>
+    <div class="c-sub">Approximate funding split of the ~₹2,223 Cr Sojern consideration</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Debt<small>acquisition borrowing</small></div><div class="track"><span class="fill bad" style="width:99.7%"></span></div><div class="bval">~₹1,107 Cr</div></div>
+      <div class="bar-row"><div class="blab">QIP + internal cash<small>equity / own funds</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~₹1,110 Cr</div></div>
+    </div>
+    <div class="legend"><span>Roughly half the purchase was debt-funded — the reason RateGain moved from net cash to net debt. Management has said it expects to repay this down and return to a net-cash position by around FY28, and it had already retired ~20% of the acquisition debt within months. The debt is the price of the bet; deleveraging is the promise attached to it.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The genuine surprise: revenue up 69%, reported profit down</div>
+    <p>Here is the fact that trips up nearly everyone reading RateGain's FY26 numbers cold. The company grew <strong>revenue by about 69%</strong> — a headline any growth investor would kill for — and yet its <strong>reported net profit went <em>down</em></strong>, from roughly ₹209 Cr to ~₹194 Cr. That is not a contradiction; it is the visible cost of the Sojern bet. Acquiring and folding in a company of that size brings one-off integration expenses, higher interest on the new debt, and the amortisation of what was bought — all of which land on the P&amp;L before the synergies show up. Strip those out and <em>adjusted</em> PAT rose about 20% to ~₹250 Cr. So FY26 is a year with two fair readings: a company transformed and scaled, and a company whose bottom line temporarily shrank while it digested its biggest meal. Which reading proves right depends entirely on whether Sojern earns its keep from FY27 onward.</p>
+  </div>
+
+  <div class="note gold"><b>Why this reframes what RateGain even is:</b> before Sojern you could describe RateGain as a data-and-distribution SaaS firm that also did some marketing. After Sojern, more than half the revenue is marketing technology and travel advertising — a business with a different rhythm, more exposed to advertising budgets and the travel cycle, and carried on a balance sheet that now has debt on it. The bull sees a bolder, bigger, more complete platform. The bear sees a high-multiple SaaS story that used leverage to buy a lower-multiple ad business, and now has to prove the two halves are worth more together than apart. Both are watching the same thing: the integration.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>A dollar business run in rupees: the global base and FX</h2></div>
+  <p class="part-sub">Where the customers are, why that is a strength, and the currency twist that comes with it.</p>
+
+  <p class="lead">RateGain is an unusual listed-in-India company: it reports in rupees but earns almost everywhere <em>except</em> India. Its customers are concentrated in the <strong>Americas and Europe</strong> — the Americas is its single largest region, and Europe alone contributed around a third of revenue in recent years — with the balance spread across the Middle East, Africa and Asia Pacific. India is a small slice of sales. After the Sojern acquisition, the US weight increases further still.</p>
+
+  <p>This global footprint is a genuine competitive strength. Travel is a worldwide industry, and a hotel-tech vendor that can serve a chain across dozens of countries, in local channels and currencies, is far more valuable than a domestic point-solution. It also means RateGain competes for the world's best travel customers directly against the biggest global players, and wins a good share of them — a real validation of the product built out of India at a fraction of Western engineering cost.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">100+</div><div class="msl">Countries served — a genuinely global customer base, not an India-centric one</div></div>
+    <div class="ms gold"><div class="msv">~⅓</div><div class="msl">Share of revenue from Europe in recent years; the Americas is the single largest region</div></div>
+    <div class="ms green"><div class="msv">&gt;90%</div><div class="msl">Gross revenue retention — customers, once won worldwide, tend to stay</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The currency twist a first-timer should price in</div>
+    <p>Because RateGain earns in dollars, euros and pounds but reports and is valued in rupees, its results carry a <strong>foreign-exchange overlay that has nothing to do with how the business performed</strong>. A weakening rupee flatters reported revenue and margins even in a flat operating quarter; a strengthening rupee does the reverse. Over the long run this tends to be a mild tailwind — the rupee generally drifts weaker against the dollar — but in any single period it can add or subtract growth that isn't "real." When you read RateGain's rupee numbers, the cleaner signal is the <em>constant-currency</em> growth the company also discloses: it strips out the FX noise and shows how the underlying business actually moved. Judge the operating story on constant currency; let the rupee flatter or flatten the reported line as it will.</p>
+  </div>
+</section>
+
+<!-- 07 — non-transferable device -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The value equation: subscriptions × travel × cross-sell</h2></div>
+  <p class="part-sub">The one construct that captures how RateGain actually compounds — and where it is fragile.</p>
+
+  <p class="lead">Strip away the product names and RateGain's economic value can be written as a single product of three terms. It is worth memorising, because every quarter's result is really a report card on these three numbers moving:</p>
+
+  <blockquote>Value ≈ (recurring software base) × (how much travel is actually happening) × (engines sold per customer)</blockquote>
+
+  <p>Take them one at a time. The <strong>recurring software base</strong> is the sticky, subscription core — the data feeds and the mission-critical distribution connections that renew above 90% each year. This is the floor, the part that survives a bad travel year. The <strong>travel-volume multiplier</strong> is the cyclical amplifier — the booking-linked distribution fees and, above all, the advertising-linked MarTech revenue that swell when the world travels and shrink when it doesn't. And <strong>engines-per-customer</strong> is the growth flywheel — every hotel that buys distribution is a candidate for rate intelligence and demand generation too, and each additional engine both raises the revenue per customer and deepens the switching cost.</p>
+
+  <p>The floor keeps RateGain solvent and sticky through a downturn; the travel-volume amplifier decides whether a given year is spectacular or merely solid; the flywheel is what turns a one-engine customer into a three-engine one and drives the long-run compounding. All three are RateGain's to work on — but only two are truly within its control, because no software vendor can conjure travel demand out of a grounded fleet or an empty lobby.</p>
+
+  <div class="plain">
+    <div class="ptag">The construct that fits only RateGain: what would survive a name-swap, and what wouldn't</div>
+    <p>Most SaaS companies you could describe with "sticky subscriptions and cross-sell" — that half of the equation is generic. What is <em>not</em> transferable is the middle term. RateGain's revenue is uniquely bolted to the physical fact of people getting on planes and into hotel rooms: its distribution fees scale with bookings, and its now-largest engine, MarTech, scales with how much hotels and airlines choose to spend advertising those rooms and seats. A software company selling to banks or factories has no such term. That is why RateGain can post a stellar year when travel is booming and marketing budgets are fat, and a flat one when a pandemic, a recession or a shock empties the lobbies — the same product, the same customers, but the travel-volume multiplier collapses. The equation is the business: a resilient recurring floor, a cyclical travel-linked amplifier, and a cross-sell flywheel — and the whole investment debate is which of those three terms is doing the work in any given year.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A fragmented travel-tech landscape where RateGain competes engine-by-engine against very different giants.</p>
+
+  <p class="lead">Because RateGain spans three engines, it has no single competitor — it faces a different set of rivals in each. That is both a strength (few peers do all three) and a challenge (each engine is contested by specialists, some of them enormous). The competitive picture also contains an unusual tension: some of RateGain's biggest customers, the OTAs, are also the players most able to build this technology in-house.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape, engine by engine</caption>
+    <thead><tr><th>Player / group</th><th>Where they compete</th><th>Vs RateGain</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">RateGain</td><td>All three engines — distribution, rate intelligence, demand generation — on one platform</td><td><em>This company.</em> The pitch is breadth: one vendor across the whole "seen, priced, filled" journey, built cost-efficiently out of India.</td></tr>
+      <tr><td class="t-strong">SiteMinder</td><td>Distribution / channel management for hotels (Australian-listed)</td><td>The closest pure-play distribution rival — a large, focused hotel-connectivity competitor. RateGain counters with data and MarTech breadth SiteMinder lacks.</td></tr>
+      <tr><td class="t-strong">Amadeus, Sabre, Travelport</td><td>GDS and travel-infrastructure giants</td><td>Vastly larger incumbents that own the GDS pipes and offer hospitality tech. Partners as much as rivals — RateGain plugs hotels <em>into</em> the GDS — but they compete in pricing and connectivity.</td></tr>
+      <tr><td class="t-strong">IDeaS (SAS), Duetto, Cloudbeds</td><td>Revenue management &amp; hotel pricing / operations</td><td>Specialists overlapping RateGain's Rate-Intelligence engine on dynamic pricing. Deep in their niche; narrower than RateGain's full stack.</td></tr>
+      <tr><td class="t-strong">Google, Meta, Expedia Group media, Adara-style peers</td><td>Digital travel advertising &amp; demand generation (Sojern's arena)</td><td>The MarTech engine now competes for travel-ad budgets against the largest ad platforms on earth — a much bigger, tougher pond than distribution.</td></tr>
+      <tr><td class="t-strong">Booking Holdings &amp; Expedia (OTAs)</td><td>Customers, data buyers — and potential in-housers</td><td>The three-way relationship: they buy RateGain's data and connectivity, but have the scale to build alternatives. A concentrated, powerful counterparty on both sides.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind — and its hidden dependency</div>
+    <p>RateGain's defensible position is <strong>breadth built cheaply</strong>: few rivals span distribution, data and demand generation, and India-based engineering lets it undercut Western specialists on cost while serving a global base. But two vulnerabilities sit inside the picture. First, the demand-generation engine it just made its largest now competes against Google and Meta — an ocean of ad money where RateGain is a minnow, not the category leader it is in hotel connectivity. Second, and more subtle, is the <strong>OTA dependency</strong>: a handful of giant booking platforms are simultaneously RateGain's channels, customers and biggest potential competitors, and a single large OTA account winding down (as one was, dragging on distribution growth) can dent a whole segment. Breadth is the moat; concentration among a few powerful counterparties is the crack in it.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The risk stack: what can go wrong</h2></div>
+  <p class="part-sub">The honest inventory of what could break the case — worth reading before the financials.</p>
+
+  <p class="lead">RateGain is a high-quality, high-growth business, but it carries a specific and stackable set of risks that a first-time reader should hold clearly. None is fatal on its own; the danger is several arriving together.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The risk stack</caption>
+    <thead><tr><th>Risk</th><th>What it is</th><th>Why it bites</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Travel cyclicality &amp; shocks</td><td>Travel demand is cyclical and shock-prone — pandemics, recessions, wars, oil spikes.</td><td>The travel-volume multiplier collapses in a downturn, and the now-dominant MarTech engine (ad budgets) is the first thing customers cut. COVID is the living memory.</td></tr>
+      <tr><td class="t-strong">Acquisition integration</td><td>The $250m Sojern deal must be integrated — people, systems, data, culture — while delivering promised synergies.</td><td>Integration is where acquisitive strategies most often stumble; a botched merge would waste the debt taken on to fund it and the multiple paid for it.</td></tr>
+      <tr><td class="t-strong">Leverage &amp; interest</td><td>Net cash became net debt to fund Sojern; interest now sits on the P&amp;L.</td><td>Deleveraging depends on cash generation holding up; a travel downturn while carrying debt is a worse combination than either alone.</td></tr>
+      <tr><td class="t-strong">Customer / channel concentration</td><td>A few large OTAs and big accounts drive a meaningful chunk of distribution; one sunset dents a segment.</td><td>Powerful counterparties can squeeze terms or build in-house; the loss of a single large account is visible in the numbers.</td></tr>
+      <tr><td class="t-strong">Competition &amp; OTA in-housing</td><td>Giants (Google/Meta in ads; Amadeus/Sabre in infrastructure; OTAs themselves) can outspend or insource.</td><td>Especially in demand generation, RateGain is a small player in a huge, well-capitalised market.</td></tr>
+      <tr><td class="t-strong">FX &amp; valuation</td><td>Dollar earnings reported in rupees; a rich ~50× earnings multiple.</td><td>Currency swings add noise; an expensive multiple leaves little tolerance if growth or integration disappoints.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The dependency that stacks the risks together</div>
+    <p>Read the stack and one thread runs through it: <strong>the same event — a travel downturn — makes several risks fire at once.</strong> A slump doesn't just shrink the travel-volume multiplier; it prompts hotels to cut the marketing spend that feeds the newly-dominant MarTech engine, it pressures the cash flow that is supposed to repay the Sojern debt, and it does all this while the stock carries a growth multiple that assumes none of it. In a boom the three engines and the leverage all pull in RateGain's favour; in a genuine travel shock they can pull the other way together. That correlation — not any single line in the table — is the real risk to size.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A fast-compounding SaaS record, a transformative acquisition year, and an expensive price — the question is durability of margin, not richness of the multiple.</p>
+
+  <p class="lead">RateGain's five-year record is the kind that earns a premium rating: revenue has grown from ~₹367 Cr in FY22 to ~₹1,824 Cr in FY26, with operating margins climbing from single digits to the low-twenties before the Sojern deal diluted them back. The market prices it accordingly — around <strong>50× earnings</strong>, a full growth-SaaS multiple, on a market capitalisation near <strong>₹11,400 Cr</strong>. At that price the debate is not whether the business is good; it is whether the combined RateGain-plus-Sojern can rebuild its margin and keep compounding fast enough to justify the rating.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory — the compounding, and the Sojern step-up</div>
+    <div class="c-sub">Operating revenue, ₹ Crore, FY22–FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill brand" style="width:20.1%"></span></div><div class="bval">~367</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill brand" style="width:31.0%"></span></div><div class="bval">~565</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:52.5%"></span></div><div class="bval">~957</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:59.0%"></span></div><div class="bval">~1,077</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>first Sojern year</small></div><div class="track"><span class="fill spec" style="width:100%"></span></div><div class="bval">~1,824</div></div>
+    </div>
+    <div class="legend"><span>Steady organic compounding through FY25, then a ~69% leap in FY26 — most of that jump is inorganic, the first (partial) consolidation of Sojern. Reading FY26 growth as "organic" is the classic first-timer's error.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Operating margin — the climb, and the acquisition dip</div>
+    <div class="c-sub">EBITDA / operating margin, %, FY22–FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill ink" style="width:41.7%"></span></div><div class="bval">~9%</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill wtg" style="width:69.4%"></span></div><div class="bval">~15%</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill epc" style="width:92.6%"></span></div><div class="bval">~20%</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>record</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~21.6%</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>Sojern-diluted</small></div><div class="track"><span class="fill spec" style="width:84.1%"></span></div><div class="bval">~18.5%</div></div>
+    </div>
+    <div class="legend"><span>Margins tripled from FY22 to a FY25 peak, then dipped in FY26 as the lower-margin, ad-linked Sojern revenue entered the mix and integration costs landed. Whether margin climbs back toward the low-twenties is the crux of the valuation.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">FY26 scorecard — the two readings of one year</div>
+    <div class="c-sub">₹ Crore; note the gap between adjusted and reported profit</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~1,824</div></div>
+      <div class="bar-row"><div class="blab">EBITDA</div><div class="track"><span class="fill spec" style="width:18.5%"></span></div><div class="bval">~337</div></div>
+      <div class="bar-row"><div class="blab">Adjusted PAT<small>ex one-offs</small></div><div class="track"><span class="fill epc" style="width:13.7%"></span></div><div class="bval">~250</div></div>
+      <div class="bar-row"><div class="blab">Reported PAT<small>after integration/interest</small></div><div class="track"><span class="fill gold" style="width:10.6%"></span></div><div class="bval">~194</div></div>
+    </div>
+    <div class="legend"><span>The ~₹56 Cr gap between adjusted (~₹250 Cr) and reported (~₹194 Cr) profit is the visible cost of the Sojern acquisition — one-off integration expense, higher interest, amortisation. The bull watches the adjusted line; the bear insists on the reported one.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~50×</div><div class="msl">Trailing P/E (Aug 2026) — a full growth-SaaS multiple, not a value rating</div></div>
+    <div class="ms"><div class="msv">~12–14%</div><div class="msl">ROE / ROCE — solid but not spectacular; the multiple rests on growth, not returns</div></div>
+    <div class="ms red"><div class="msv">net debt</div><div class="msl">Post-Sojern balance sheet carries acquisition debt; management targets net cash by ~FY28</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: organic constant-currency growth, read with the EBITDA margin</div>
+    <p>At ~50× earnings, RateGain's price already assumes years of fast, profitable growth — so the metric that proves or breaks the case is not revenue (Sojern flatters that) and not the multiple (it can only compress). It is <strong>organic, constant-currency revenue growth — the underlying business ex-acquisitions and ex-FX — sustained in double digits, read alongside the EBITDA margin rebuilding toward the low-twenties</strong> as Sojern is integrated. Track those two together, against the &gt;90% gross retention that shows the base is intact and against the raw fact of travel volume that drives the cyclical half. If organic growth stays strong <em>and</em> margin recovers as the debt is repaid, the rich multiple is earned and earnings compound into it. If organic growth slips into single digits, or margin stays stuck in the high-teens because ad-linked revenue is structurally thinner, the price has to come to the business rather than the business growing into the price. Underlying growth times recovering margin, minus what the world's travel appetite gives or takes — that is the scoreboard.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results and market data cross-checked across reports; several are <b>approximate or "held"</b> pending the audited annual report — notably the exact reported-vs-adjusted PAT split, the segment mix (FY25 basis, pre-full-Sojern), the promoter stake (~49%), and market cap / P/E, which move daily. Constant-currency and organic-growth figures should be read from the company's own disclosures. Verify against RateGain's filings and investor presentations before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A fast-growing global travel-SaaS platform mid-way through its biggest bet — asked whether the bet pays.</p>
+
+  <p class="lead">RateGain enters FY27 as a bigger, bolder company than it was a year earlier: three engines instead of a scattered product set, a doubled revenue base, a far larger US presence, and — for the first time — debt to work off. Its founder is still at the helm, its retention is intact, and travel is, structurally, a growing global industry. What it must now prove is that the Sojern bet compounds rather than merely enlarges. That is the frame for both cases.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Complete platform</strong> — after Sojern, RateGain spans the whole "seen, priced, filled" journey; few rivals offer all three engines, and cross-sell deepens every customer.</li>
+        <li><strong>Sticky, global, recurring</strong> — &gt;90% gross retention, 100+ countries, a dollar-earning base built cheaply out of India; the recurring core is a genuine floor.</li>
+        <li><strong>Structural travel tailwind</strong> — global travel and travel-digitisation grow for years; RateGain's volume multiplier works powerfully in its favour in the good times.</li>
+        <li><strong>Synergy &amp; deleveraging</strong> — the combined group targets &gt;$310m revenue and &gt;$50m EBITDA, with debt repaid to net cash by ~FY28 if cash flow holds.</li>
+        <li><strong>Founder alignment</strong> — a founder-CMD who has compounded the business for two decades and is buying more stock personally.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Expensive, unforgiving multiple</strong> — ~50× earnings assumes years of fast, profitable growth; any stumble in growth or integration re-rates the stock hard.</li>
+        <li><strong>Cyclical, ad-heavy tilt</strong> — the now-dominant MarTech engine rides advertising budgets that hotels cut first in any downturn; earnings quality softened, not hardened, with Sojern.</li>
+        <li><strong>Integration &amp; leverage risk</strong> — a $250m acquisition to digest while carrying debt; a travel shock mid-integration is the dangerous scenario.</li>
+        <li><strong>Giants &amp; concentration</strong> — competing for ad money against Google/Meta, and reliant on a few powerful OTAs that are customers, data-buyers and potential in-housers at once.</li>
+        <li><strong>Reported profit already dipped</strong> — FY26's revenue leap came with a fall in reported PAT; the synergy has to show up before the rating is vindicated.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>RateGain is a rare thing — a genuinely global software platform built out of India, embedded in the plumbing and pricing of the world's travel industry, with a sticky recurring core and a founder who has compounded it patiently for twenty years. In FY26 that founder made his largest and boldest bet, spending a quarter-billion dollars and taking on debt to turn RateGain into a demand-generation heavyweight — a move that doubled the company and, for one year, shrank its reported profit. The recurring floor and the retention are real; the travel tailwind is real; the price assumes both keep delivering. The next test is concrete and datable: <strong>whether, through FY27 and FY28, organic constant-currency growth holds in double digits and the EBITDA margin climbs back toward the low-twenties as Sojern is absorbed and the acquisition debt is repaid</strong>. Deliver that, and a bigger, more complete RateGain grows into a rating that looks demanding today; miss it — on integration, on margin, or on a travel wobble — and FY26 will read as the year the company got larger faster than it got better.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>RateGain Travel Technologies Ltd — FY26 (Q4 &amp; full-year) results press release and investor presentation, "RateGain has a defining FY26 with highest-ever quarterly revenue of ₹716 Cr in Q4FY26," via EquityBulls and company disclosures.</li>
+    <li>RateGain — FY25 results press release, "Record Margins in FY25 with 43.7% PAT Growth," and Q1–Q4 FY25 investor presentations (segment mix, EBITDA margin).</li>
+    <li>ScanX / Whalesbook — "RateGain FY26 Revenue Surges 69.4% to ₹1,824 Cr" and "Revenue Soars 93% on Sojern Deal, Profits Suffer" (reported vs adjusted PAT).</li>
+    <li>Skift — "RateGain to Buy Sojern in $250 Million Deal," and Sojern press release, "RateGain Completes Acquisition of Sojern" (6 Nov 2025; $172.2m 2024 revenue; 13,000 customers).</li>
+    <li>PhocusWire / Business Standard — Sojern acquisition funding structure (debt ~₹1,107 Cr; QIP/internal ~₹1,110 Cr) and consolidated-debt figures.</li>
+    <li>RateGain press release — "Consolidates MarTech Capabilities Under Sojern" and Adara acquisition (2023); BCV Social acquisition (2019).</li>
+    <li>RateGain — UNO Channel Manager materials (700+ demand partners, GDS reach 600,000+ agents, Booking.com Premier Connectivity Partner); "Agentic ARI" launch (Mar 2026).</li>
+    <li>Screener.in — RateGain Travel Technologies consolidated financials (FY22–FY26 revenue, EBITDA, OPM, PAT), market cap, P/E, promoter holding, ROCE/ROE, borrowings (as of Aug 2026).</li>
+    <li>Hospitality Net — "RateGain accelerates European expansion… region contributes 31.6% of total revenue" (geography mix).</li>
+    <li>BSE India — RateGain Travel Technologies Ltd, scrip code 543417; NSE symbol RATEGAIN; listed 17 December 2021; SimplyWall.st / Business Standard company pages (BSE code cross-check).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several figures (notably the reported-vs-adjusted profit split, the segment mix, the Sojern funding split, the promoter stake, and market cap / P/E) are derived, rounded or "held" pending the audited annual report. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "RATEGAIN";
+  const COMPANY_SLUG = "rategain-travel-technologies";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
