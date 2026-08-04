@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varroc Engineering — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F4F6;
+    --paper-2:#FAFAFC;
+    --card:#FFFFFF;
+    --ink:#191922;
+    --ink-soft:#585863;
+    --ink-faint:#8A8A96;
+    --brand:#5E5E6E;          /* graphite - Varroc accent */
+    --brand-bright:#7B7B8D;   /* lighter graphite/steel */
+    --gold:#C08A3E;           /* warm bronze - accent / warmth */
+    --wtg:#4E6E82;            /* lighting - steel blue */
+    --epc:#3E7878;            /* electricals & electronics - teal */
+    --om:#3E7D5A;            /* EV components - green */
+    --spec:#8A6E9C;          /* polymer & metallic - muted violet */
+    --line:#DBDBE1;
+    --line-soft:#E8E8ED;
+    --good:#2F7D55;
+    --bad:#BC4436;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#EEEEF2;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F6F9;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAEAEE;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#5E5E6E,#7B7B8D);}
+  .fill.gold{background:linear-gradient(90deg,#C08A3E,#D6A45C);}
+  .fill.wtg{background:linear-gradient(90deg,#4E6E82,#6A8CA0);}
+  .fill.om{background:linear-gradient(90deg,#3E7D5A,#559A72);}
+  .fill.epc{background:linear-gradient(90deg,#3E7878,#569A9A);}
+  .fill.spec{background:linear-gradient(90deg,#8A6E9C,#A489B4);}
+  .fill.bad{background:linear-gradient(90deg,#BC4436,#D25C4A);}
+  .fill.ink{background:linear-gradient(90deg,#3a3a42,#56565e);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEDEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3128;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EEEEF2;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> How a parts-maker earns</a></li>
+    <li><a href="#p2"><span class="n">02</span> What Varroc makes</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The business it sold</a></li>
+    <li><a href="#p5"><span class="n">05</span> The 2W-lighting franchise</a></li>
+    <li><a href="#p6"><span class="n">06</span> The EV &amp; electronics bet</a></li>
+    <li><a href="#p7"><span class="n">07</span> The balance-sheet repair</a></li>
+    <li><a href="#p8"><span class="n">08</span> The Bajaj question</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: VARROC · BSE: 541578</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Varroc Engineering, <em>it sold its problem to buy focus</em></h1>
+  <p class="dek">A complete walk through one of India's larger auto-component makers — how a parts supplier earns its living inside a two-wheeler, why headlamps, tail-lamps and vehicle electronics are Varroc's real franchise, and why the defining act of its recent history was <em>selling</em> a top-ten global lighting business rather than buying one — shedding the loss-maker that was bleeding it, to walk out leaner, deleveraged and profitable.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹8,890 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹230 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~9% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹495 <small>Cr</small></div><div class="l">Net debt (FY26, halved)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">4 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — record revenue ~₹8,890 Cr, PAT ~₹230 Cr, net debt halved to ~₹495 Cr, credit rating upgraded to IND AA+, EV at ~13% of revenue; added the divestment and deleveraging sections. (Q1 FY27 was due 6 Aug 2026 — not yet incorporated.)</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Varroc Engineering makes the <strong>parts inside vehicles</strong> — chiefly <strong>lighting</strong> (headlamps and tail-lamps), <strong>electricals and electronics</strong> (switches, instrument clusters, control units), <strong>EV components</strong> (motors, controllers, chargers) and <strong>polymer and metallic parts</strong>. Its customers are the vehicle makers — the OEMs — and its heartland is the Indian <strong>two-wheeler</strong>: the scooters and motorcycles from Bajaj, Honda, Hero, TVS, Royal Enfield and the rest. It is one of the world's leading suppliers of <strong>two-wheeler lighting</strong>, and increasingly a supplier of the electronics and EV powertrain parts that a modern bike is starting to carry. It does not make vehicles; it makes the dozens of components a vehicle can't run without, and it gets paid for every unit an OEM builds.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It got healthier by getting smaller.</strong> Until 2022, Varroc also owned a large <em>four-wheeler</em> (passenger-car) lighting business spread across Europe and the Americas — a top-ten global player, but a chronic loss-maker that was burning cash and weighing down the whole group. Varroc <strong>sold it</strong> to France's Compagnie Plastic Omnium (now OPmobility) for a final ~€520 million, closing in October 2022. The company that remains is the leaner, India-centric, two-wheeler-and-electronics business — and it turned profitable almost immediately afterward.</li>
+    <li><strong>The bottom line swung by roughly ₹1,340 Cr.</strong> Varroc lost <strong>₹1,107 Cr in FY22</strong> and <strong>₹817 Cr in FY23</strong> — the tail of the four-wheeler-lighting drag — then flipped to profit: roughly <strong>+₹532 Cr in FY24, +₹70 Cr in FY25, and +₹230 Cr in FY26</strong>. Much of that turnaround came from subtraction — removing the loss-maker — not just from the ongoing business growing.</li>
+    <li><strong>The balance sheet is being fixed in real time.</strong> Net debt roughly <strong>halved in FY26 to ~₹495 Cr</strong> (from ~₹983 Cr a year earlier), net-debt-to-EBITDA fell to around <strong>0.6×</strong>, and the credit rating was upgraded to <strong>IND AA+</strong>. Revenue reached a record <strong>~₹8,890 Cr</strong> in FY26 on a ~9% EBITDA margin. The stock trades near <strong>40× earnings</strong> — a full multiple for a thin-margin auto-ancillary, pricing in the recovery continuing.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Varroc is a <strong>components arms-dealer to the two-wheeler industry</strong>: it doesn't care which bike wins, as long as bikes get built and it supplies the lights, switches, clusters and — increasingly — the motors and controllers inside them. The unusual part of its story is the direction of travel. Most turnarounds are about buying growth; Varroc's was about <em>amputating</em> a bigger, glamorous-looking global lighting business that had become a wound. What's left is smaller, simpler, Indian, and — for the first time in years — profitable and deleveraging. The open question is whether a ~9%-margin parts business can convert its two real tailwinds — more electronics per bike and a live EV order book — into durable double-digit margins before its single largest customer, Bajaj, ever sneezes.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>How an auto-component maker actually earns</h2></div>
+  <p class="part-sub">No engineering degree needed — just how a part gets designed-in, and why that makes the revenue sticky but concentrated.</p>
+
+  <p class="lead">A car or a motorcycle is an assembly of thousands of parts, and the vehicle maker builds almost none of them itself. It designs the vehicle, stamps the body, runs the assembly line and puts its brand on the tank — and buys the rest from a chain of <strong>component suppliers</strong>. Varroc is a <strong>Tier-1 supplier</strong>: it sells finished modules (a complete headlamp, a switch cluster, an instrument panel) straight to the OEM's line. Understanding how that relationship is won and kept explains almost everything about the business — its stickiness, its low margins, and its concentration risk all come from the same mechanism.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">How a component supplier gets paid — the program cycle</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Stage 1 · Win the program</div><div class="nname">Get designed-in</div><div class="nwho">The OEM picks a supplier for a new model years before launch. This "design-win" is everything.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Stage 2 · Tool up</div><div class="nname">Build the tooling</div><div class="nwho">Dedicated moulds, validation, quality sign-off — heavy up-front cost, largely non-recoverable elsewhere.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Stage 3 · Serial supply</div><div class="nname">Ship on every unit</div><div class="nwho">Paid per part on every vehicle the OEM builds, for the whole model life — 5 to 7 years.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Stage 4 · Re-win</div><div class="nname">Win the next model</div><div class="nwho">Incumbency plus content growth — more electronics, LED, EV parts on the next platform.</div></div>
+    </div>
+    <div class="flow-note">Winning a program is slow and expensive; keeping it, once you've tooled up and proven quality, is where the money is. That is why supplier relationships last decades — and why losing one hurts for years.</div>
+  </div>
+
+  <h3>The four things this cycle tells you</h3>
+  <ul class="clean">
+    <li><strong>Revenue is sticky.</strong> Once a supplier is designed into a model and has built the tooling, the OEM rarely switches mid-life — re-tooling and re-validating another vendor is costly and risky. A won program pays out for the entire 5–7-year life of that vehicle. That is the good news.</li>
+    <li><strong>Revenue is concentrated.</strong> The flip side of stickiness is dependence. A handful of OEMs place the big programs, so a supplier's fortunes ride on a few customers' model cycles and volumes. For Varroc, that concentration has a name — Bajaj Auto (section 08).</li>
+    <li><strong>Margins are thin and contested.</strong> OEMs are large, sophisticated buyers who squeeze suppliers on price every year ("annual price-downs") and pass through raw-material swings imperfectly. That is why a well-run auto-ancillary earns a <strong>high-single-digit to mid-teens EBITDA margin</strong>, not the fat margins of a branded consumer firm. Varroc sits at the lower end — around 9% — which is both its problem and its opportunity.</li>
+    <li><strong>Content-per-vehicle is the growth lever.</strong> A supplier grows in three ways: the OEM sells more vehicles, it wins more programs, or it sells <em>more value per vehicle</em>. The third is the durable one — and it is exactly where Varroc's story is aimed (halogen lamps becoming LED, dumb switches becoming digital clusters, ICE bikes becoming EVs).</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "content per vehicle" is the number that quietly matters</div>
+    <p>A supplier tied to Indian two-wheeler volumes is, on the surface, hostage to how many bikes India buys in a given year — a cyclical, GDP-and-monsoon-sensitive number it cannot control. But there is a second engine underneath: the <strong>rupees of Varroc parts on each bike</strong>. A basic commuter motorcycle a decade ago carried a halogen bulb, a mechanical speedometer and simple switches. A modern one can carry an LED headlamp, a digital instrument cluster, more sophisticated switchgear, and — if it's electric — a motor, controller, charger and battery-management unit. Each upgrade is more Varroc value on the same bike. So even in a flat two-wheeler market, Varroc can grow if the <em>content</em> it sells per vehicle keeps rising. That is the quiet compounding under the cyclical surface.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What Varroc makes: four families of parts, one heartland</h2></div>
+  <p class="part-sub">The portfolio today — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">After the four-wheeler-lighting divestment, Varroc's portfolio is cleaner than it used to be. It reports essentially one big <strong>automotive segment</strong> (plus a small "others"), but inside it sit four recognisable product families, each with its own economics and its own claim on the future. Together they turn out of <strong>37 manufacturing facilities</strong> and <strong>7 R&amp;D centres</strong>, with 750-plus R&amp;D engineers and 120-plus patents filed — the engineering base that lets it design a module rather than just mould a part.</p>
+
+  <div class="chart">
+    <div class="c-title">The product mix — roughly where revenue comes from</div>
+    <div class="c-sub">Approximate share of automotive revenue (FY24 basis; the company does not publish a precise current split — treat as indicative)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Electricals-electronics &amp; lighting<small>switches, clusters, lamps, controls</small></div><div class="track"><span class="fill epc" style="width:100%"></span></div><div class="bval">~38%</div></div>
+      <div class="bar-row"><div class="blab">Polymer parts<small>trims, body &amp; plastic components</small></div><div class="track"><span class="fill spec" style="width:84%"></span></div><div class="bval">~32%</div></div>
+      <div class="bar-row"><div class="blab">Metallic &amp; others<small>precision metal, castings, misc.</small></div><div class="track"><span class="fill ink" style="width:79%"></span></div><div class="bval">~30%</div></div>
+    </div>
+    <div class="legend"><span>Lighting is grouped inside electricals-electronics in this cut; a cleaner segment table is in the FY26 investor presentation. EV components — motors, controllers, chargers — are the fast-rising slice within electronics, at roughly 13% of total revenue in FY26.</span></div>
+  </div>
+
+  <h3>The four families, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Lighting</span></strong> — headlamps, tail-lamps and auxiliary lamps, mainly for two-wheelers. This is Varroc's flagship: it is a <strong>leading global supplier of two-wheeler lighting</strong>. As bikes shift from halogen bulbs to LED modules, each lamp becomes a more valuable, more electronics-rich part — lighting is where "content per vehicle" is most visibly rising.</li>
+    <li><strong><span class="chain-epc">Electricals &amp; electronics</span></strong> — the widest family: handlebar and body switches, digital instrument clusters and "HMI" cockpits, control units (CDI/ECU), regulator-rectifiers, magnetos, sensors and increasingly power electronics. This is where a bike is quietly becoming a computer, and where Varroc wants to move up the value chain into digital cockpits and connected features.</li>
+    <li><strong><span class="chain-om">EV components</span></strong> — traction motors, motor controllers, on-board chargers, DC-DC converters and battery-management systems for electric two- and three-wheelers, largely designed and made in-house with Varroc's own control software. Small today but growing fastest, and the piece with the highest content-per-vehicle uplift (an EV carries far more Varroc-type electronics than a petrol bike).</li>
+    <li><strong>Polymer &amp; metallic parts</strong> — the workhorse hardware: moulded plastic body and trim components, and precision metallic parts. Lower-tech and more commoditised than lighting or electronics, but high-volume, and the family Varroc was literally founded on (its very first division, in 1990, was polymer trims).</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the mix, not just the size, is the story</div>
+    <p>A parts business is only as good as what it makes and for whom. Polymer and metallic parts keep the factories busy and the OEM relationships warm, but they are price-fought and low-margin. The value — and the re-rating case — lives in the shift of the mix toward <strong>lighting-that-is-now-electronics</strong> and <strong>EV powertrain parts</strong>, where the technology content is higher, the competition thinner, and the price per vehicle rising. Varroc's whole strategic pitch is that it is dragging its own revenue mix up that ladder: from moulding plastic toward designing the electronic and electric guts of a two-wheeler. Every quarter, the tell is whether the electronics-and-EV slice is growing faster than the polymer slice.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the founder, and who controls it</h2></div>
+  <p class="part-sub">A Tarang-Jain-built group, tightly held, freshly simplified.</p>
+
+  <p class="lead">Varroc was built by one man over three-and-a-half decades. <strong>Tarang Jain</strong> — its Chairman &amp; Managing Director — started the business in Aurangabad around 1990 with a small polymer-components division making decorative trims for two-wheelers, and grew it, division by division and acquisition by acquisition, into a global tier-1 group before pruning it back to its profitable core. He and the promoter group hold a controlling <strong>~75%</strong> of the company, so this is very much a founder-run, closely-held business, not a widely-dispersed one.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1988–1990</div><div class="ev">Varroc Engineering incorporated; Tarang Jain establishes the business in Aurangabad, starting with a <strong>polymer division</strong> making trims for two-wheelers.</div></li>
+    <li><div class="yr">1992–1999</div><div class="ev">Diversifies into <strong>electrical and metallic</strong> components; begins exporting — the foundations of the multi-product supplier it became.</div></li>
+    <li><div class="yr">early 2010s</div><div class="ev">Acquires a global automotive-<strong>lighting</strong> business (the former Visteon lighting operations), vaulting Varroc into <em>four-wheeler</em> lighting worldwide — later branded Varroc Lighting Systems (VLS). <em>(Acquisition year cited variously as 2012/2016.)</em></div></li>
+    <li class="major"><div class="yr">Jul 2018</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE at ₹967/share (~₹1,955 Cr issue), listing as a global auto-component group at the peak of its four-wheeler-lighting ambitions.</div></li>
+    <li><div class="yr">FY22–FY23</div><div class="ev">The hard years: consolidated losses of <strong>₹1,107 Cr (FY22)</strong> and <strong>₹817 Cr (FY23)</strong>, driven by the loss-making global 4W-lighting arm amid pandemic, chip-shortage and cost inflation.</div></li>
+    <li class="major"><div class="yr">Oct 2022</div><div class="ev"><strong>Sells VLS</strong> — the entire global four-wheeler-lighting business — to Compagnie Plastic Omnium for a final ~€520 million. Varroc refocuses on its India-led 2W/3W business.</div></li>
+    <li><div class="yr">FY24–FY25</div><div class="ev">Turns profitable (+₹532 Cr, then +₹70 Cr); simplifies structure (merges subsidiaries VEL/VPL, exits a China JV); deleveraging under way.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record revenue ~₹8,890 Cr; PAT ~₹230 Cr; <strong>net debt halved to ~₹495 Cr</strong>; ₹250 Cr of debentures redeemed early; credit rating upgraded to <strong>IND AA+</strong>.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the <strong>Tarang Jain family</strong> and associated entities hold roughly <strong>75%</strong> — the statutory maximum for a listed Indian promoter — with the public owning the rest. A tightly-held register means promoter alignment is high, but also that free float is limited.</li>
+    <li><strong>The wider Varroc Group:</strong> Varroc Engineering is the listed flagship; the promoter family is part of India's broader auto-components dynasty (the Jain family's ventures sit alongside the Bajaj/Endurance industrial lineage). Do not confuse Varroc with Endurance Technologies — related family history, separate listed companies.</li>
+    <li><strong>A simpler company than it was:</strong> post-divestment and after the FY25 sub-mergers and China-JV exit, the group is deliberately less sprawling — fewer overseas loss centres, a cleaner India-centric structure, and a balance sheet being paid down rather than propped up.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the structure matters:</b> Varroc's troubles were never in India — its Indian two-wheeler business was consistently profitable. The losses lived overseas, in the capital-hungry global four-wheeler-lighting arm bolted on during the ambitious years. The 2022 divestment and subsequent simplification were, at heart, a decision to stop letting a distant, structurally-loss-making appendage drain a healthy core. The company you are analysing today is closer to the profitable business that was always underneath.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: the divestment -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The business it sold — and why that's the whole story</h2></div>
+  <p class="part-sub">The single most important event in Varroc's recent history — and it is subtraction, not addition.</p>
+
+  <p class="lead">Most company turnarounds you read about are built on something the company <em>bought</em> or <em>launched</em>. Varroc's was built on something it <strong>got rid of</strong>. To understand today's company, you have to understand the business it no longer owns — because removing it is what created the profitable, deleveraging firm the market is now pricing.</p>
+
+  <p>Through the 2010s, Varroc had assembled a genuinely global <strong>four-wheeler lighting</strong> operation — Varroc Lighting Systems (VLS) — with factories across Europe, the Americas and North Africa, supplying headlamps and tail-lamps for passenger cars. On paper it was impressive: a <strong>top-ten global automotive lighting supplier</strong>, with roughly <strong>€0.8 billion of revenue in 2021</strong> — larger, in pure revenue, than a big chunk of the Indian business Varroc kept. But it was the wrong kind of big. Passenger-car lighting is brutally capital-intensive and price-fought, and VLS was a persistent <strong>loss-maker</strong> — its red ink is precisely what dragged the whole group to consolidated losses of ₹1,107 Cr and ₹817 Cr in FY22 and FY23. It was consuming cash and management attention while the healthy Indian two-wheeler business subsidised it.</p>
+
+  <p>So in April 2022 Varroc agreed to sell VLS to France's <strong>Compagnie Plastic Omnium</strong> (now OPmobility); the deal closed that October. The headline enterprise value was ~€600 million, trimmed to a final <strong>~€520 million</strong> as auto markets weakened. The proceeds went straight at the balance sheet — repaying debt and refocusing the company on the parts of itself that actually made money.</p>
+
+  <div class="chart">
+    <div class="c-title">The bottom line, before and after the amputation</div>
+    <div class="c-sub">Consolidated net profit / (loss), ₹ Crore — bars sized by magnitude; red = loss, green = profit</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22<small>with VLS</small></div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">−1,107</div></div>
+      <div class="bar-row"><div class="blab">FY23<small>with VLS (part-year)</small></div><div class="track"><span class="fill bad" style="width:74%"></span></div><div class="bval">−817</div></div>
+      <div class="bar-row"><div class="blab">FY24<small>post-sale</small></div><div class="track"><span class="fill om" style="width:48%"></span></div><div class="bval">+532</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>exceptionals hit</small></div><div class="track"><span class="fill om" style="width:6%"></span></div><div class="bval">+70</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill om" style="width:21%"></span></div><div class="bval">+230</div></div>
+    </div>
+    <div class="legend"><span>The swing from −₹1,107 Cr to +₹230 Cr is ~₹1,340 Cr of improvement in four years. FY24's ₹532 Cr was flattered by below-the-line items; FY25's ₹70 Cr was depressed by ~₹147 Cr of one-off exceptionals (sub-mergers, China-JV exit, a customer provision). The clean signal is the direction, not any single year.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The construct that fits only Varroc: profit by subtraction</div>
+    <p>Here is the thing that makes Varroc's turnaround unlike almost any other in the auto-ancillary universe. Varroc removed one business — and its bottom line swung by roughly <strong>₹1,340 Cr</strong>, from a ₹1,107 Cr loss to a ₹230 Cr profit, while its <em>continuing</em> revenue actually grew to a record. It is the rare case of a company that became worth more by making itself smaller: it sold ~€0.8 billion of loss-making global revenue, and the India-led business it kept has since grown past ₹8,890 Cr on its own. The whole company today is roughly the size of just the healthy piece it retained — minus the losses. Value was created not by adding an engine, but by cutting out the anchor.</p>
+  </div>
+
+  <div class="note gold"><b>A genuine surprise:</b> the instinctive read of Varroc — "a leading global auto-lighting company" — is now half-wrong. It <em>sold</em> the global (four-wheeler) lighting business that earned it that description. What remains is a lighting leader in a narrower, more profitable arena — <strong>two-wheelers</strong> — plus electronics and EV parts. Anyone valuing Varroc on its old identity as a worldwide car-lighting major is analysing a company that no longer exists.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The two-wheeler-lighting franchise and the LED shift</h2></div>
+  <p class="part-sub">The core that was always profitable — and why it's quietly getting more valuable per bike.</p>
+
+  <p class="lead">Strip away the divested global arm and you are left with Varroc's real franchise: <strong>two-wheeler lighting</strong>, where it is one of the leading suppliers in the world. This is a better business than four-wheeler lighting was, for reasons worth spelling out — and it is riding a technology shift that raises the value of every lamp it sells.</p>
+
+  <p>Two-wheeler lighting suits Varroc for three structural reasons. First, <strong>India is the world's largest two-wheeler market</strong>, and Varroc sits at the centre of it with decades-old OEM relationships — a home-turf advantage the global car-lighting business never had. Second, two-wheeler lamps are <strong>less capital-intensive</strong> than the giant, complex headlamp modules of premium cars, so the business earns its keep without the crushing tooling and R&amp;D bills that sank VLS. Third, the customer base — Bajaj, Honda, Hero, TVS, Royal Enfield, Yamaha and more — is one Varroc has served for decades, which is exactly the sticky, designed-in incumbency described in section 01.</p>
+
+  <div class="plain">
+    <div class="ptag">The upgrade that turns a lamp into an electronics part</div>
+    <p>For most of the industry's history a two-wheeler headlamp was a halogen bulb in a moulded housing — cheap, simple, low-value. The move to <strong>LED lighting</strong> changes that. An LED headlamp is not just a brighter bulb; it is a small electronic assembly — LED arrays, drivers, thermal management, sometimes styling-led "signature" lighting. It costs more, carries more Varroc engineering, and commands a better price than the halogen part it replaces. As Indian two-wheelers premiumise and LED filters down from top models to mainstream ones, Varroc's <strong>revenue per lamp</strong> rises even if the number of bikes stays flat. The same bike, the same customer, more Varroc value — the content-per-vehicle engine at work, right inside its flagship product.</p>
+  </div>
+
+  <p>The same logic runs through the neighbouring electricals family. A mechanical speedometer becomes a <strong>digital instrument cluster</strong>; simple switches become integrated <strong>switchgear and HMI</strong> modules; and connected features (Bluetooth clusters, ride data, navigation prompts) add electronic content that did not exist on a commuter bike a decade ago. Varroc's explicit strategic push toward "digital cockpits" is a bet that the two-wheeler dashboard is on the same journey the car dashboard already took — from dials to screens — and that it can own more of that screen.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">#1-tier</div><div class="msl">Among the leading global suppliers of two-wheeler lighting</div></div>
+    <div class="ms gold"><div class="msv">LED</div><div class="msl">The mix-shift from halogen to LED lifts revenue per lamp on the same bike</div></div>
+    <div class="ms green"><div class="msv">Digital</div><div class="msl">Clusters &amp; HMI cockpits — the next content-per-vehicle leg</div></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The EV and electronics bet</h2></div>
+  <p class="part-sub">The fastest-growing slice — and the one that could re-rate the whole company, if it scales.</p>
+
+  <p class="lead">If lighting and electronics are the steady content-growth story, <strong>EV components</strong> are the option on a much bigger one. The electrification of Indian two- and three-wheelers is exactly the kind of shift that can transform a supplier's economics — because an electric vehicle needs <em>far more</em> of the parts Varroc is trying to specialise in.</p>
+
+  <p>The mechanism is simple and powerful. A petrol motorcycle's powertrain — engine, fuel system, exhaust — is something Varroc mostly does <em>not</em> supply. An electric two-wheeler's powertrain is <strong>electronics and electricals</strong>: a traction motor, a motor controller, an on-board charger, a DC-DC converter, a battery-management system, power electronics. That is precisely Varroc's home turf. So every ICE bike that becomes an EV doesn't just swap one powertrain for another — it converts a vehicle where Varroc sold a lamp and some switches into one where Varroc can sell the electric heart of the machine. Content-per-vehicle doesn't inch up; it can multiply.</p>
+
+  <p>Varroc builds these in-house, with its own field-oriented-control software, regenerative braking and locally designed power electronics — an attempt to be a genuine EV-powertrain-electronics supplier rather than a re-badger of imported parts. The order book is starting to show it: in November 2025 Varroc signed an <strong>eight-year contract with an EV OEM for high-voltage e-powertrain electronics</strong> — power-electronics units, inverters, on-board chargers, BMS and DC-DC converters — with a <strong>peak annual revenue of ~₹800 Cr</strong>. EV rose from under 10% of revenue in FY25 to roughly <strong>13% in FY26</strong>, and made up more than half of the group's new-business wins in FY25.</p>
+
+  <div class="plain">
+    <div class="ptag">The catch that keeps EV honest</div>
+    <p>The EV opportunity is real, but it is neither free nor certain. It is <strong>capital- and technology-intensive</strong> — developing motors and power electronics that are efficient, reliable and price-competitive against established players and Chinese imports is hard, and margins in early EV supply are often thin as everyone fights for design-wins. There is also a live supply risk: Varroc has flagged <strong>rare-earth magnet constraints</strong> — the magnets that go inside traction motors are dominated by Chinese supply, and shortages can throttle the whole Indian EV motor industry, Varroc included. The bet is sound; the execution and the input-supply chain are where it can slip. A ₹800 Cr peak-revenue contract is a headline; the question is how many more it wins, and at what margin, before EV is big enough to move the group.</p>
+  </div>
+
+  <div class="note gold"><b>Worth holding in mind:</b> EV is the part of Varroc most likely to be over- or under-estimated. Over-estimated because a few splashy contract announcements make it sound like the company is already an EV powertrain major — it is ~13% of revenue. Under-estimated because if Indian two- and three-wheeler electrification runs the way solar and other transitions did, the content-per-vehicle uplift is so large that even a modest market share could reshape Varroc's revenue mix and, crucially, its margin — this is higher-value electronics, not moulded plastic.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The balance-sheet repair</h2></div>
+  <p class="part-sub">The least glamorous, most enabling part of the turnaround — from debt-heavy to rapidly deleveraging.</p>
+
+  <p class="lead">A parts business with thin margins and heavy debt is a fragile thing: every downturn in customer volumes, every input-cost spike, every slow-paying OEM lands on a balance sheet that has no give. Varroc spent years in exactly that position, its debt swollen by the capital demands of the global lighting arm. Fixing that — using divestment proceeds and its now-profitable core to pay down borrowings — is what has turned it from fragile to sturdy.</p>
+
+  <div class="chart">
+    <div class="c-title">Deleveraging, in one ratio</div>
+    <div class="c-sub">Adjusted net leverage (net debt ÷ EBITDA), approximate — the repair over four years</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">~4.4×</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:55%"></span></div><div class="bval">~2.4×</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:36%"></span></div><div class="bval">~1.6×</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>net debt ~₹495 Cr</small></div><div class="track"><span class="fill om" style="width:14%"></span></div><div class="bval">~0.6×</div></div>
+    </div>
+    <div class="legend"><span>Net debt fell to ~₹495 Cr at March 2026, roughly half the ~₹983 Cr a year earlier. Leverage of ~0.6× net-debt-to-EBITDA is comfortable for an auto-ancillary. Varroc also redeemed ₹250 Cr of debentures early, and its rating was upgraded to IND AA+/Stable.</span></div>
+  </div>
+
+  <p>Three forces did the work. The <strong>VLS sale proceeds</strong> paid down a large slug of debt at a stroke. The <strong>now-profitable Indian core</strong> generates real operating cash rather than consuming it. And a <strong>tighter, simpler structure</strong> — fewer overseas entities, sub-mergers completed, the China JV exited — means less capital trapped in loss centres. The result is a company that can now fund its own EV and electronics capex, absorb a slow quarter, and invest through a downturn without a lender dictating terms.</p>
+
+  <div class="plain">
+    <div class="ptag">Why a fixed balance sheet is the permission slip for everything else</div>
+    <p>Deleveraging is not the exciting part of the Varroc story, but it is the enabling one. The EV push, the move up the electronics value chain, the ability to bid for large multi-year OEM programs that need up-front tooling investment — all of it requires a balance sheet that can carry investment ahead of returns. A company drowning in debt cannot make those bets; it spends its cash servicing borrowings and its energy reassuring lenders. By halving net debt and winning a rating upgrade, Varroc has bought itself the freedom to play offence — to invest in the content-per-vehicle and EV levers that are supposed to lift its margin — rather than permanently playing defence on its liabilities.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The Bajaj question: the concentration at the heart of the model</h2></div>
+  <p class="part-sub">The flip side of sticky OEM relationships — and the single risk to watch hardest.</p>
+
+  <p class="lead">The stickiness that makes Varroc's revenue durable has a shadow: <strong>customer concentration</strong>. Because big OEM programs are few and long-lived, a supplier's fortunes cluster around a handful of relationships — and Varroc's are unusually clustered around one. <strong>Bajaj Auto</strong> has historically been its largest customer by a wide margin, associated with roughly <strong>half of revenue</strong> at the time of the 2018 IPO, on a relationship stretching back nearly three decades.</p>
+
+  <p>That is a double-edged fact. On the good edge: a deep, multi-decade tie to one of India's premier two-wheeler makers — a global export champion with premium motorcycle brands — is a high-quality anchor most suppliers would envy, and it is exactly the kind of designed-in incumbency that pays out for years. On the sharp edge: it concentrates enormous dependence on one customer's model cycles, volumes, export fortunes and — critically — its willingness to keep buying from Varroc rather than dual-sourcing or in-sourcing. If Bajaj's volumes wobble, or it shifts a program to a rival, the impact on Varroc is outsized and hard to replace quickly.</p>
+
+  <div class="plain">
+    <div class="ptag">How Varroc dilutes the dependence — the real strategic subplot</div>
+    <p>The healthiest reading of Varroc's growth strategy is that much of it is, quietly, <strong>Bajaj-concentration insurance</strong>. Winning more content on other OEMs' bikes (Honda, TVS, Hero, Royal Enfield), pushing into EV powertrain electronics with newer electric-vehicle makers, and growing exports all do the same underlying job: they make each additional rupee of revenue less dependent on a single customer. Every non-Bajaj design-win is not just growth — it is <em>diversification of the risk</em>. So when you watch Varroc's order wins, the question isn't only "how big?" but "how spread?" A book that broadens across customers is de-risking the model even at flat growth; a book that stays Bajaj-heavy is growing the reward and the risk together.</p>
+  </div>
+
+  <div class="note"><b>The figure to treat with care:</b> the "~50%+ Bajaj" number is drawn from 2018 IPO-era disclosure and is almost certainly lower today after years of diversification — but Varroc does not publish a clean current customer-concentration figure, so treat the exact share as <b>indicative</b>. What is not in doubt is the <em>direction</em>: Bajaj remains the single dominant customer, and reducing that dependence is a core strategic aim.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A crowded Indian auto-ancillary field — where Varroc is a mid-sized specialist, not the biggest name.</p>
+
+  <p class="lead">Indian auto-components is a large, competitive industry full of scaled, listed players, and Varroc is one specialist among several. It does not dominate its category the way a monopoly supplier might; it competes on engineering, relationships and content for share of the two-wheeler bill of materials. The useful way to place it is against the peers investors actually compare it to.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape (indicative; peers span different product mixes and periods)</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Varroc</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Varroc</td><td>2W lighting leader; electricals-electronics, EV components, polymer &amp; metallic; India-centric post-divestment</td><td><em>This company.</em> ~₹8,890 Cr revenue, ~9% EBITDA margin; deleveraged turnaround; the debate is margin and customer spread.</td></tr>
+      <tr><td class="t-strong">Uno Minda</td><td>The broadest, most diversified 2W/4W ancillary — switches, lighting, acoustics, alloy wheels and more</td><td>Larger, richer margins and a premium multiple. The blue-chip of the space; Varroc screens cheaper on EBITDA but is the less-proven, thinner-margin peer.</td></tr>
+      <tr><td class="t-strong">Lumax Industries</td><td>Leading auto-lighting supplier (JV with Stanley, Japan); strong 4W-lighting share</td><td>The closest lighting comparison, with a similar ~9% EBITDA / low-single-digit net margin. Overlaps most directly with Varroc's flagship product.</td></tr>
+      <tr><td class="t-strong">Fiem Industries</td><td>Focused two-wheeler lighting &amp; signalling specialist</td><td>A narrower, pure-play 2W-lighting rival — a direct competitor for exactly the lamps Varroc leads on.</td></tr>
+      <tr><td class="t-strong">Endurance Technologies</td><td>Large 2W/3W components major (braking, suspension, castings, transmission)</td><td>Materially bigger and higher-margin; different product core (mechanical rather than lighting/electronics) but shares the Bajaj-heavy customer base and family lineage.</td></tr>
+      <tr><td class="t-strong">Samvardhana Motherson</td><td>Global auto-components giant across wiring, mirrors, modules</td><td>A different weight class entirely — a diversified global major; competes at the edges, not head-on in 2W lighting.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two things stand out. First, Varroc is a <strong>mid-table specialist</strong>, not a category king: peers like Uno Minda and Endurance are bigger and earn fatter margins, so Varroc's investment case rests on <em>closing that gap</em> — lifting its ~9% margin toward peers via mix (electronics, EV, LED) — rather than on it already being the best business in the room. Second, its edge is <strong>depth in two-wheeler lighting and a growing electronics/EV capability</strong>, not breadth; where a diversified giant hedges across products, Varroc is making a more concentrated bet that the two-wheeler is electrifying and digitising, and that it can own a rising share of that content. That focus is a strength if the bet pays and a vulnerability if two-wheeler demand or its EV push disappoints.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A real recovery and a clean balance sheet — priced as if the margin story is already won.</p>
+
+  <p class="lead">The financial arc is clear: a company that lost money heavily, sold the loss-maker, deleveraged, and returned to growing, profitable revenue. The market has noticed — the stock trades at a full multiple for the sector. The debate is no longer "will it survive?" but "will a ~9%-margin parts business earn the double-digit-margin future its price implies?"</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory (continuing business)</div>
+    <div class="c-sub">Consolidated revenue, ₹ Crore — a steady climb since the divestment</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill ink" style="width:66%"></span></div><div class="bval">~5,844</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill brand" style="width:78%"></span></div><div class="bval">~6,891</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:85%"></span></div><div class="bval">~7,552</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:92%"></span></div><div class="bval">~8,154</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~8,890</div></div>
+    </div>
+    <div class="legend"><span>Continuing-business revenue has compounded steadily to a record ~₹8,890 Cr in FY26 (+~9% YoY) — the India-led core growing on its own, without the divested global arm. Q4 FY26 was the highest-ever quarter at ~₹2,368 Cr.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Where Varroc sits on profitability</div>
+    <div class="c-sub">FY26 shape, ₹ Crore / % — the gap between revenue scale and profit is the whole margin debate</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~8,890</div></div>
+      <div class="bar-row"><div class="blab">EBITDA FY26<small>~9% margin</small></div><div class="track"><span class="fill epc" style="width:9%"></span></div><div class="bval">~821</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY26</div><div class="track"><span class="fill om" style="width:3%"></span></div><div class="bval">~230</div></div>
+    </div>
+    <div class="legend"><span>The visual makes the point: a ~₹8,890 Cr revenue business drops only ~₹821 Cr to EBITDA and ~₹230 Cr to net profit. That thin conversion is normal for a lower-tier auto-ancillary — and it is exactly what the mix-shift to LED, electronics and EV is meant to widen.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~9%</div><div class="msl">FY26 EBITDA margin — the number the whole thesis hangs on lifting</div></div>
+    <div class="ms green"><div class="msv">~19%</div><div class="msl">RoCE (FY25); ROE ~15% — respectable returns on the leaner base</div></div>
+    <div class="ms red"><div class="msv">~40×</div><div class="msl">P/E on a ~₹10,000 Cr market cap — a full multiple for a thin-margin ancillary</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The metric that settles the thesis: margin against mix and Bajaj</div>
+    <p>At roughly 40× earnings on a ~9% EBITDA margin, Varroc is not priced as a cheap cyclical — it is priced as a company whose margin is <em>going up</em>. So the number that will prove or break the case is <strong>EBITDA margin, read against the electronics-and-EV share of revenue and the spread of customers</strong>. The bull case is arithmetic: as LED lighting, digital clusters and EV powertrain electronics grow from ~13%-and-rising toward a larger slice, they carry more technology content and better economics, and the blended margin drifts from ~9% toward the low-to-mid teens its better peers earn — while the customer book broadens beyond Bajaj. The bear case is that the mix-shift is real but slow, EV stays low-margin as everyone fights for it, input costs and OEM price-downs keep the blended margin pinned near 9%, and a ~40× stock re-rates down to what a single-digit-margin ancillary is actually worth. Watch one line each year: is the margin climbing as the electronics/EV mix climbs? Everything else is detail.</p>
+  </div>
+
+  <div class="note">Figures here are consolidated, drawn from company results and third-party financial databases, and cross-checked; several are <b>approximate</b>. FY24 PAT (~₹526–532 Cr) was flattered by below-the-line items and FY25 PAT (~₹70 Cr) depressed by ~₹147 Cr of exceptionals — neither is a clean run-rate. Market cap is <b>held as ~₹10,000 Cr</b> (sources spanned ~₹8,300–10,500 Cr on prices of ~₹663–687 in late-July/early-August 2026). The product-mix and customer-concentration splits are indicative. Verify against primary filings before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A repaired, refocused supplier — asked to prove it can widen a thin margin.</p>
+
+  <p class="lead">Varroc enters this phase in the best shape of its listed life: profitable, deleveraged, upgraded to AA+, and pointed at two genuine content-growth levers in electronics and EVs. The fair debate is no longer about survival — the divestment settled that — but about quality: whether a lower-tier-margin parts business can climb the value chain fast enough to justify a top-tier multiple, without its Bajaj dependence tripping it up.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Clean, deleveraged base</strong> — the loss-maker is gone, net debt is halved to ~₹495 Cr, the rating is AA+; the company can invest and play offence.</li>
+        <li><strong>Content-per-vehicle compounding</strong> — halogen→LED, dials→digital clusters, and ICE→EV each raise Varroc's rupees on the same bike, even in a flat market.</li>
+        <li><strong>Real EV traction</strong> — an eight-year ~₹800 Cr-peak e-powertrain contract; EV at ~13% of revenue and over half of new-business wins, in-house designed.</li>
+        <li><strong>Two-wheeler-lighting leadership</strong> — a genuine global-tier franchise in a better arena than the four-wheeler lighting it sold, with sticky OEM incumbency.</li>
+        <li><strong>Margin upside</strong> — a ~9% margin against mid-teens peers is headroom if the mix-shift lands; the recovery is young, not finished.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Thin margins, full price</strong> — ~9% EBITDA at ~40× earnings prices in a margin expansion that hasn't happened yet; any stall invites a de-rating.</li>
+        <li><strong>Customer concentration</strong> — heavy Bajaj dependence means one customer's model cycle or sourcing decision can move Varroc disproportionately.</li>
+        <li><strong>Two-wheeler cyclicality</strong> — tied to Indian 2W demand, which is GDP-, financing- and sentiment-sensitive and can de-grow (as it did in early FY26).</li>
+        <li><strong>EV execution &amp; input risk</strong> — capital-intensive, competitive, low-margin early on, and exposed to rare-earth-magnet supply constraints.</li>
+        <li><strong>Cost pass-through</strong> — input inflation and annual OEM price-downs compress margins (Q4 FY26 margin fell ~113 bps YoY); pricing power is limited.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Varroc spent its ambitious years buying its way to global scale, and nearly sank under a loss-making four-wheeler-lighting business it should never have carried. The defining decision of its recovery was to <em>sell</em> it — to become smaller, simpler and Indian, and to let the profitable two-wheeler core it had always owned finally show through. That much has worked: the losses are gone, the debt is halved, the returns are respectable. What remains unproven is the second act — turning a ~9%-margin parts business into a higher-value electronics-and-EV supplier fast enough to earn its price. The next few years answer it in one checkable line: <strong>whether the EBITDA margin ticks up quarter by quarter as the electronics-and-EV share of revenue climbs and the customer book broadens beyond Bajaj</strong>. If that line rises, the leaner Varroc grows into a genuinely better company; if it flatlines near 9%, the market is paying blue-chip prices for a mid-table ancillary. Watch the margin against the mix — that is the whole story from here.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Varroc Engineering Ltd — Q1 FY26 press release and investor materials (varroc.com).</li>
+    <li>Varroc Engineering Ltd — FY26 / Q4 FY26 results coverage (scanx, MarketsMojo).</li>
+    <li>Screener.in — Varroc Engineering consolidated financials, market cap, ratios (screener.in/company/VARROC/consolidated).</li>
+    <li>OPmobility (Compagnie Plastic Omnium) — acquisition of Varroc Lighting Systems; Lawyer Monthly (final ~€520m consideration).</li>
+    <li>Business Standard — Varroc Q4 FY25 and FY25 net-profit coverage.</li>
+    <li>Autocar Professional — "Digital Cockpits, EV Electronics Drive Varroc's Next Growth Push"; FY25 exceptionals; Nov-2025 EV electronics order.</li>
+    <li>India Ratings &amp; Research — leverage trajectory and IND AA+/Stable rating upgrade.</li>
+    <li>Whalesbook / scanx — FY26 net-debt reduction and debenture redemption.</li>
+    <li>Chittorgarh / IPO Central — Varroc 2018 IPO (₹967/share); HDFC Securities IPO note (customer mix).</li>
+    <li>BSE India — Varroc Engineering Ltd stock page, scrip code 541578; Forbes India — Tarang Jain profile.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; product-mix, customer-concentration and market-cap figures are indicative and several profit figures include one-off items. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "VARROC";
+  const COMPANY_SLUG = "varroc-engineering";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
