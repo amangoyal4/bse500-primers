@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PC Jeweller — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F2EA;
+    --paper-2:#FBF9F2;
+    --card:#FFFFFF;
+    --ink:#1F1A10;
+    --ink-soft:#5E5640;
+    --ink-faint:#8F8768;
+    --brand:#7A5E1F;          /* deep gold */
+    --brand-bright:#B0862E;   /* the PC Jeweller accent */
+    --gold:#C29A3E;           /* bright gold - accent / warmth */
+    --wtg:#B0862E;            /* gold retail */
+    --epc:#9C7A2C;            /* debt / structure */
+    --om:#5C6B3A;            /* recovery green */
+    --spec:#8A6A24;          /* deep accent */
+    --line:#E3DCCB;
+    --line-soft:#EDE7D8;
+    --good:#2A7A4E;
+    --bad:#A93A2C;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F4EAD2;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F4EB;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EDE8DC;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#7A5E1F,#A5811C);}
+  .fill.gold{background:linear-gradient(90deg,#C29A3E,#DCB85E);}
+  .fill.wtg{background:linear-gradient(90deg,#A0782E,#C39A4A);}
+  .fill.om{background:linear-gradient(90deg,#5C6B3A,#7B8B4F);}
+  .fill.spec{background:linear-gradient(90deg,#8A6A24,#A88A48);}
+  .fill.bad{background:linear-gradient(90deg,#A93A2C,#C55A44);}
+  .fill.ink{background:linear-gradient(90deg,#4a4335,#66604f);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2a22;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F4EAD2;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> How a jeweller earns</a></li>
+    <li><a href="#p2"><span class="n">02</span> The 2018 blow-up</a></li>
+    <li><a href="#p3"><span class="n">03</span> The wreckage years</a></li>
+    <li><a href="#p4"><span class="n">04</span> Settling the debt (OTS)</a></li>
+    <li><a href="#p5"><span class="n">05</span> Recapitalised on dilution</a></li>
+    <li><a href="#p6"><span class="n">06</span> The company &amp; owners</a></li>
+    <li><a href="#p7"><span class="n">07</span> Real recovery or optical?</a></li>
+    <li><a href="#p8"><span class="n">08</span> The asset-light road back</a></li>
+    <li><a href="#p9"><span class="n">09</span> Rivals &amp; the trust moat</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: PCJEWELLER · BSE: 534809</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>PC Jeweller, <em>back from the brink</em></h1>
+  <p class="dek">A complete walk through one of India's most dramatic corporate near-death stories — a North-India jewellery chain that was worth over ₹23,000 crore in early 2018, collapsed within months on promoter, debt and governance shocks, defaulted on thousands of crore of bank loans, and has spent the years since clawing its way back through a one-time debt settlement and a torrent of new equity. This is a <strong>balance-sheet repair</strong> story, not a brand story — and the real question is whether the repair is durable.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹3,351 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹714 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹9,050 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+    <div class="cell"><div class="v">~₹1,167 <small>Cr</small></div><div class="l">Gross debt (FY26), ↓&gt;90%</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">06 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ~₹3,351 Cr (+49%), net profit ~₹714 Cr; gross debt cut &gt;90% (and &gt;96% repaid by Aug 2026) since the 30-Sep-2024 bank settlement; ~₹2,702 Cr warrant recapitalisation largely realised; company targeting debt-free status in Q2 FY27; added the debt-collapse, dilution and profit-quality sections.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">PC Jeweller Limited (PCJ) is a <strong>branded jewellery retailer</strong> — gold, diamond and silver ornaments sold through showrooms, historically concentrated in <strong>Delhi-NCR and North India</strong>, and once carrying a large export and wholesale book too. Founded in 2005 by brothers <strong>Padam Chand Gupta</strong> and <strong>Balram Garg</strong> and listed in 2012, it grew fast to become one of India's larger listed jewellers. Then, in 2018, it became something else entirely: <strong>a case study in how quickly a market darling can implode</strong>. The stock lost the vast majority of its value in months, the company defaulted on bank debt, and regulators and investigators circled. The story from 2024 onward is a <strong>turnaround built on the balance sheet</strong> — a one-time settlement of bank loans, waves of fresh equity, and a return to reported profit.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>This is a balance-sheet repair, not a brand renaissance.</strong> PCJ's recent "recovery" is overwhelmingly about <em>debt going away and equity coming in</em>, not about a jewellery brand out-competing Tanishq or Kalyan. Since the <strong>30 September 2024 settlement agreement</strong> with its 14-bank consortium, gross debt has fallen more than <strong>90%</strong> (over 96% repaid by August 2026), and management is guiding to a fully <strong>debt-free</strong> position in Q2 FY27. That deleveraging <em>is</em> the investment case.</li>
+    <li><strong>The recovery was paid for by enormous dilution.</strong> To recapitalise, PCJ raised money through a <strong>~₹2,702 Cr preferential issue of convertible warrants</strong> and successive equity conversions. The share count has ballooned to roughly <strong>975 crore shares</strong> (face value ₹1). Anyone who owned the stock through the crisis has been diluted many times over — the company was rescued, but not the original per-share value.</li>
+    <li><strong>The reported profit needs a skeptic's eye.</strong> FY26 revenue rose ~49% to <strong>~₹3,351 Cr</strong> and net profit came in around <strong>~₹714 Cr</strong> (after ~₹578 Cr in FY25). But a jeweller earning a ~20% "operating margin" — roughly double what quality peers like Titan make — is a flag that <strong>a meaningful slice of that profit is one-time settlement gains and other income, not showroom economics</strong>. The durable, normalised earning power is the number still to be proven.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>PC Jeweller today runs <em>two</em> profit-and-loss accounts at once. One is written in its showrooms, where it buys gold, adds a making charge, and sells ornaments to North-Indian families — an ordinary, working-capital-heavy jewellery business. The other, far bigger for now, was written in a <em>bank's settlement room</em>: the gains from extinguishing hundreds of crore of debt for less than it owed, funded by pouring new equity into the company. The showroom P&amp;L is recovering but small; the settlement P&amp;L is what turned the headline numbers green. The whole question for an investor is whether, once the settlement is finished and the write-backs stop, the showroom business alone can justify a ₹9,000 crore company — or whether the market is paying up for a clean-up that is nearly complete.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>How a jewellery retailer actually makes money</h2></div>
+  <p class="part-sub">No finance background needed — just the gold, the making charge, and why inventory is the whole game.</p>
+
+  <p class="lead">Before the drama, understand the ordinary business. A branded jeweller looks like it sells gold, but it does not really <em>earn</em> on the gold — the metal is largely a <strong>pass-through</strong>. The money is in two thinner things: the <strong>making charge</strong> on every ornament and the richer margin on <strong>studded (diamond) jewellery</strong>. And the defining feature of the model is that it is brutally <strong>working-capital and inventory heavy</strong> — a showroom only sells from a case full of expensive, borrowed-against gold.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only jewellery-retail terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Gold pass-through</td><td>The price of the gold in a necklace mostly flows straight from supplier to customer. When gold prices rise, revenue rises — but that is not extra profit, just a bigger number passing through. Judge a jeweller on margins and volumes, not on a revenue line inflated by the gold price.</td></tr>
+      <tr><td class="t-strong">Making charge</td><td>The fee for turning raw gold into a finished ornament — a percentage of value or a per-gram charge. This, not the metal, is a core source of a jeweller's gross margin. Brand and design let a trusted jeweller command a higher making charge.</td></tr>
+      <tr><td class="t-strong">Studded / diamond mix</td><td>Diamond-set jewellery carries far higher margins than plain gold. A higher <em>studded ratio</em> lifts blended margin. Titan's profitability, for instance, leans heavily on studded mix. For PCJ, studded was historically a big part of the (now shrunken) book.</td></tr>
+      <tr><td class="t-strong">Working capital &amp; gold loan</td><td>A jeweller must hold large gold inventory to display and sell. That inventory is funded by borrowing (often gold-metal loans) — so the balance sheet is heavy and interest-sensitive. When credit is cut off, a jeweller can seize up almost overnight. This is exactly what happened to PCJ.</td></tr>
+      <tr><td class="t-strong">Organised vs unorganised</td><td>Most of India's jewellery market is still small, family "unorganised" shops. Branded chains — Tanishq, Kalyan, Senco, PCJ — are the "organised" slice, gaining share as hallmarking (HUID), GST and trust push buyers toward certified purity.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The dependency that shapes the whole sector: trust and credit</div>
+    <p>A jeweller sells two things a customer cannot easily verify at the counter: the <strong>purity</strong> of the gold and the <strong>authenticity</strong> of the diamonds. So the entire branded model rests on <strong>trust</strong> — the reason a family pays a premium making charge at a big-name showroom instead of the corner shop. Sitting under that trust is <strong>credit</strong>: the business only functions because banks and gold-loan providers fund the inventory. Take away either — trust or credit — and a jeweller is in mortal danger. PC Jeweller's 2018 collapse is the clearest illustration in Indian markets of what happens when <em>both</em> go at once: a governance shock destroyed trust, which spooked the lenders, which cut the credit that the inventory-heavy model cannot live without.</p>
+  </div>
+
+  <h3>How the money actually flows through a bag of gold</h3>
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">Where a jeweller's profit hides — the gold is not it</div>
+    <div class="flow-row">
+      <div class="node epc"><div class="ntag">Input</div><div class="nname">Buy gold (financed)</div><div class="nwho">Metal bought and held as inventory, funded by gold-metal loans — the heavy, borrowed part.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Add value</div><div class="nname">Design + making charge</div><div class="nwho">Craft it into ornaments; the making charge is real margin the brand earns.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Mix up</div><div class="nname">Studded / diamond</div><div class="nwho">Higher-margin diamond jewellery lifts the blended spread well above plain gold.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Sell</div><div class="nname">Showroom sale</div><div class="nwho">Customer pays gold value + making charge + studded premium. Profit is the last two, not the first.</div></div>
+    </div>
+    <div class="flow-note">A jeweller's revenue balloons when gold prices rise, but the earning power lives in the making charge and the studded mix — and the whole chain is only possible because the gold in stage one is financed.</div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The 2018 blow-up: how a ₹23,000-crore company nearly vanished</h2></div>
+  <p class="part-sub">The single most important thing to understand about this stock — and it is a cautionary tale, not a growth story.</p>
+
+  <p class="lead">In January 2018, PC Jeweller was a market darling worth over <strong>₹23,000 crore</strong>. By that May, most of it was gone. What unfolded is one of the fastest destructions of shareholder value in modern Indian markets, and it was not caused by weak jewellery sales — it was caused by a <strong>cascade of governance, promoter, debt and trust shocks</strong> that fed on one another. To understand the company you are looking at now, you must understand exactly how the old one broke.</p>
+
+  <div class="chart">
+    <div class="c-title">The collapse — market value, in ₹ Crore</div>
+    <div class="c-sub">From January-2018 peak to May-2018 trough, and the partial 2026 recovery</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Jan 2018 peak<small>market darling</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~23,139</div></div>
+      <div class="bar-row"><div class="blab">May 2018 trough<small>after the shocks</small></div><div class="track"><span class="fill bad" style="width:16.5%"></span></div><div class="bval">~3,817</div></div>
+      <div class="bar-row"><div class="blab">Mid-2026<small>post-turnaround</small></div><div class="track"><span class="fill om" style="width:39.1%"></span></div><div class="bval">~9,050</div></div>
+    </div>
+    <div class="legend"><span>The market cap fell ~83% in about four months in 2018. Even after the turnaround, mid-2026 value (~₹9,050 Cr) is still ~60% below the 2018 peak — and on a <em>per-share</em> basis, after years of heavy dilution, the fall from peak is far steeper still.</span></div>
+  </div>
+
+  <h3>What actually went wrong — a chain reaction</h3>
+  <ul class="clean">
+    <li><strong>A fraud scare lit the fuse (Feb 2018).</strong> Just as the Nirav Modi / PNB "Letter of Undertaking" (LoU) diamond-fraud scandal broke, the market feared PCJ might be similarly exposed. The company had to publicly clarify it bought diamonds locally in cash, <em>not</em> via LoUs — but the suspicion had already spread to every listed jeweller.</li>
+    <li><strong>The promoter share "gift" destroyed confidence (Apr 2018).</strong> Promoter Padam Chand Gupta transferred a chunk of his shares to family members through <strong>off-market transactions</strong>. Poor disclosure around this move — at a company already under a fraud cloud — was read by the market as a red flag about governance and promoter intentions. The stock cratered.</li>
+    <li><strong>The aborted buyback (May 2018).</strong> To defend the price, the board announced a share <strong>buyback (~₹424 Cr)</strong>. Days later it was <em>withdrawn</em> — the company said it could not obtain the required <strong>No-Objection Certificate from its bankers</strong>. A rescue plan collapsing because the lenders said no was a devastating signal: it told the market the banks had lost faith too.</li>
+    <li><strong>Insider-trading findings (SEBI).</strong> SEBI investigated trading around the buyback news and found insiders — including members of the promoter family and then-MD Balram Garg — had dealt while holding unpublished price-sensitive information, imposing penalties and, later, market bans on entities involved.</li>
+    <li><strong>Debt and default.</strong> The inventory-heavy model depends on bank credit; once trust broke, credit tightened, and PCJ ultimately <strong>defaulted on bank loans of roughly ₹3,466 Cr</strong>. Lenders including SBI issued recall notices and moved to seize assets. What began as a share-price story had become a solvency story.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why one shock became a collapse</div>
+    <p>No single event here would sink a healthy company. What made PCJ so fragile is the jewellery model itself (section 01): it runs on <em>trust</em> and <em>borrowed inventory</em>. The fraud scare and the promoter/governance shocks corroded the trust; the aborted-buyback humiliation and the disclosures corroded the lenders' confidence; and the moment lenders pulled back, an inventory-heavy business with thin real margins had no cushion. Each shock made the next worse. That reflexive spiral — trust down, so credit down, so distress up, so trust down again — is why a company worth ₹23,000 crore in January was fighting for survival by summer.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The wreckage years: distress, regulators, and the courts</h2></div>
+  <p class="part-sub">The long, grinding stretch between the crash and the clean-up — where most of the danger still lives.</p>
+
+  <p class="lead">A crash is fast; a workout is slow. For years after 2018, PC Jeweller was a distressed company: shrinking sales, loans classified as non-performing, legal proceedings, asset seizures, and a promoter facing investigation. This is the period a skeptic must keep firmly in view, because it is both the reason the stock is a penny stock and the reason any recovery is worth scrutinising rather than celebrating.</p>
+
+  <ul class="timeline">
+    <li><div class="yr">2005</div><div class="ev">PC Jeweller founded by brothers <strong>Padam Chand Gupta</strong> and <strong>Balram Garg</strong>; first showroom in Karol Bagh, Delhi. Grows rapidly across North India, with a large export/wholesale book alongside retail.</div></li>
+    <li><div class="yr">2012</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE (BSE scrip 534809). Becomes one of India's larger listed jewellery chains through the mid-2010s.</div></li>
+    <li class="major"><div class="yr">Jan–May 2018</div><div class="ev"><strong>The collapse.</strong> LoU-fraud scare, promoter off-market share transfers, aborted buyback (bankers withheld NOC), SEBI insider-trading scrutiny — market cap falls ~83% from ~₹23,100 Cr to ~₹3,800 Cr.</div></li>
+    <li><div class="yr">2019–2021</div><div class="ev">Deepening distress: loans slip toward default and NPA classification; SEBI passes orders against promoter-linked entities; the export book and sales shrink sharply. The stock becomes a low-single-digit penny stock.</div></li>
+    <li class="major"><div class="yr">2022–2023</div><div class="ev"><strong>Default confirmed and enforced.</strong> Bank dues of ~₹3,466 Cr in default; SBI-led consortium issues recall notices; lenders move to seize pledged/mortgaged assets. Talk of insolvency swirls around the company.</div></li>
+    <li class="major"><div class="yr">Sep 2024</div><div class="ev"><strong>The turning point:</strong> PCJ signs a <strong>settlement agreement (OTS)</strong> with its 14-bank consortium — the legal basis for extinguishing the defaulted debt at a negotiated value and beginning the clean-up.</div></li>
+    <li class="major"><div class="yr">FY25–FY26</div><div class="ev">Recapitalisation via a ~₹2,702 Cr convertible-warrant issue and equity conversions; gross debt cut &gt;90%; return to reported profit (FY25 ~₹578 Cr, FY26 ~₹714 Cr); pivot toward an asset-light franchise showroom model.</div></li>
+  </ul>
+
+  <div class="note"><b>Read the history as risk, not backdrop.</b> The governance and legal legacy here is not ancient trivia — it is the core of the bear case. A company whose promoters faced insider-trading findings and a bank-fraud investigation, that defaulted on ₹3,466 Cr and had assets seized, carries a <b>trust discount</b> that no single good year erases. When you weigh the recovery, weigh it against this: the same names and, in large part, the same family control the company today.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>Settling the debt: the one-time settlement that saved the company</h2></div>
+  <p class="part-sub">The mechanical heart of the turnaround — understand the OTS and you understand where the "profit" came from.</p>
+
+  <p class="lead">The event that turned PC Jeweller from a likely insolvency into a going concern was not a jewellery sale — it was a <strong>one-time settlement (OTS)</strong> with its banks. On <strong>30 September 2024</strong>, PCJ signed a settlement agreement with its 14-lender consortium. In an OTS, a defaulted borrower negotiates to repay its dues at a <em>reduced, agreed amount</em> rather than the full contractual sum; the banks accept a haircut to recover something certain rather than chase everything through years of litigation. For PCJ, that agreement is the spine of everything that followed.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The turnaround engine — four steps, in order</div>
+    <div class="flow-row">
+      <div class="node bad" style="background:var(--bad)"><div class="ntag">Step 1 · The problem</div><div class="nname">₹3,466 Cr default</div><div class="nwho">Loans in default across a 14-bank consortium; assets under threat of seizure.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Step 2 · The deal</div><div class="nname">Settlement (OTS)</div><div class="nwho">30-Sep-2024 agreement to repay at a negotiated, reduced amount — the banks take a haircut.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Step 3 · The funding</div><div class="nname">Fresh equity</div><div class="nwho">~₹2,702 Cr warrant issue + conversions supply the cash to pay the settled dues.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Step 4 · The result</div><div class="nname">Deleveraged</div><div class="nwho">Gross debt down &gt;90% (&gt;96% by Aug-2026); targeting debt-free in Q2 FY27.</div></div>
+    </div>
+    <div class="flow-note">The sequence is the whole story: settle the debt below face value, raise equity to pay the settled amount, and emerge with a clean balance sheet — at the cost of a vastly larger share count.</div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Deleveraging — the debt coming off the books</div>
+    <div class="c-sub">Approximate gross/short-term borrowings, ₹ Crore, illustrating the trajectory</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">2018 default<small>dues in default</small></div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">~3,466</div></div>
+      <div class="bar-row"><div class="blab">FY25 borrowings<small>mid clean-up</small></div><div class="track"><span class="fill epc" style="width:59.5%"></span></div><div class="bval">~2,064</div></div>
+      <div class="bar-row"><div class="blab">FY26 borrowings<small>post-settlement</small></div><div class="track"><span class="fill wtg" style="width:33.7%"></span></div><div class="bval">~1,167</div></div>
+      <div class="bar-row"><div class="blab">Target Q2 FY27<small>debt-free goal</small></div><div class="track"><span class="fill om" style="width:2%"></span></div><div class="bval">~0</div></div>
+    </div>
+    <div class="legend"><span>By August 2026 the company said it had repaid over 96% of its outstanding bank debt (7 of 14 consortium lenders fully cleared) and expects to discharge the small remainder to reach debt-free status. Figures are approximate and mix default-era dues with reported borrowings; verify against filings.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits a company like this: profit written in a settlement room</div>
+    <p>Here is the counter-intuitive mechanic. When a company settles a ₹100 debt for, say, ₹60, the ₹40 it no longer has to pay does not vanish quietly — under accounting, extinguishing a liability below its carrying value produces a <strong>gain that flows through the profit-and-loss account</strong>. So a large part of what turned PCJ's headline numbers positive in FY25–FY26 was not jewellery it sold but <strong>debt it settled</strong>. That is a perfectly real, cash-relevant improvement — a lighter balance sheet is genuinely worth more. But it is <em>one-time</em>. Once the last bank is paid and the settlement is complete, that engine switches off, and the company is left with only its showrooms to earn from. The turnaround is real; the recurring earning power it leaves behind is the open question.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Recapitalised on dilution: how the equity was rebuilt</h2></div>
+  <p class="part-sub">The uncomfortable other half of the rescue — the cost fell on existing shareholders.</p>
+
+  <p class="lead">A balance sheet is repaired in two ways: shrink the debt (section 04) and grow the equity. PCJ did both — but the equity side came almost entirely from <strong>issuing vast quantities of new shares</strong>. To fund the settlement and recapitalise, the company launched a <strong>preferential issue of fully convertible warrants totalling ~₹2,702 Cr</strong> (subscribers pay 25% upfront and the balance on conversion), alongside further equity. Through FY26 and into 2026, tranche after tranche of warrants converted into shares, and the paid-up capital swelled.</p>
+
+  <div class="chart">
+    <div class="c-title">The dilution in motion — paid-up equity capital, ₹ Crore</div>
+    <div class="c-sub">Successive FY26 warrant-conversion tranches expanding the share base (face value ₹1)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Earlier FY26<small>pre-conversion base</small></div><div class="track"><span class="fill epc" style="width:75.9%"></span></div><div class="bval">~740</div></div>
+      <div class="bar-row"><div class="blab">Q4 FY26<small>after a tranche</small></div><div class="track"><span class="fill wtg" style="width:81.1%"></span></div><div class="bval">~791</div></div>
+      <div class="bar-row"><div class="blab">Mid-2026<small>after further conversions</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~975</div></div>
+    </div>
+    <div class="legend"><span>With ₹1 face value, ~₹975 Cr of paid-up capital means roughly <strong>975 crore shares</strong> outstanding — a share base expanded many times over from the pre-crisis company. Each new share is a smaller claim on the same business.</span></div>
+  </div>
+
+  <p>The scale of dilution is the point most first-time readers miss. A rescue that keeps a company alive can still be terrible for the people who owned it going in, because their slice of the pie is cut again and again to bring in the capital that saves it. PCJ's promoters participated heavily in these raises (Balram Garg and family entities took up warrants), so the family retains significant control — but the promoter group's <em>percentage</em> holding has itself been reshaped and, on some measures, diluted as the equity base expanded. The exact promoter percentage varies by classification and reporting date and should be read from the latest shareholding filing.</p>
+
+  <div class="plain">
+    <div class="ptag">The genuine surprise: the company recovered, the shareholder did not</div>
+    <p>Sit with this. PC Jeweller's market value has climbed back to roughly ₹9,050 crore — a real recovery from the ₹3,800 crore depths of 2018. Yet that is still around <strong>60% below the ₹23,100 crore peak</strong>. Now layer on the dilution: because the share count has multiplied many times over, an investor who bought at the January-2018 top has seen the value of <em>each share they held</em> fall not by 60% but by the order of <strong>~98–99%</strong> — from roughly ₹600 a share to under ₹10. The paradox is that both statements are true at once: the <em>company</em> has been rescued and is worth billions again, while the original <em>shareholders</em> were very nearly wiped out. A turnaround at the enterprise level is not the same as a round-trip for the equity holder — and here the gap between the two is the widest you will find.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~₹2,702 Cr</div><div class="msl">Convertible-warrant issue that funded the recapitalisation (~93% realised)</div></div>
+    <div class="ms gold"><div class="msv">~975 cr</div><div class="msl">Shares outstanding now (₹1 face value) — a vastly enlarged base</div></div>
+    <div class="ms red"><div class="msv">~-98%</div><div class="msl">Approx. fall in per-share value from the 2018 peak, after dilution</div></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The company, the family, and what it sells today</h2></div>
+  <p class="part-sub">Same founders, a shrunken-then-rebuilding footprint, and a brand carrying a mixed reputation.</p>
+
+  <p class="lead">Stripped of the drama, what <em>is</em> PC Jeweller in 2026? A North-India-weighted branded jewellery retailer, still controlled by its founding family, running a showroom network that shrank hard through the crisis and is now being rebuilt — deliberately in a lighter, franchise-led way. Understanding who runs it and what it actually operates matters as much as the financials, given the history.</p>
+
+  <h3>Ownership &amp; control</h3>
+  <ul class="clean">
+    <li><strong>The founding family still controls it.</strong> Brothers <strong>Padam Chand Gupta</strong> and <strong>Balram Garg</strong> founded PCJ and the family remains the promoter group. Balram Garg, long the managing director, participated in the recapitalisation warrants and retains a large individual stake. This continuity is a double-edged fact — experience and commitment on one hand, an unresolved governance legacy on the other.</li>
+    <li><strong>Promoter holding has been reshaped by the raises.</strong> Reported figures for the promoter-group percentage differ by date and classification (with individual promoter stakes rising via warrant take-up even as the overall base was diluted). Treat the exact promoter percentage as <em>held</em> — confirm it in the most recent shareholding pattern rather than relying on a single quoted number.</li>
+    <li><strong>Pledges and the overhang.</strong> A central part of the clean-up narrative is the unwinding of the promoter-pledge and default situation that helped sink the company. Verifying that promoter shares are genuinely unencumbered — no fresh re-pledging — is a specific thing a careful investor should check in current disclosures.</li>
+  </ul>
+
+  <h3>What it operates</h3>
+  <ul class="clean">
+    <li><strong>Showrooms, North-India-heavy.</strong> Historically the network centred on Delhi-NCR and North India. Through the crisis it contracted sharply; more recently the company has reported a network on the order of <strong>~55 showrooms</strong> (including franchisee stores) across roughly 15 states — a fraction of its former reach, and small next to Kalyan's 500-plus.</li>
+    <li><strong>Gold + diamond retail, export book gone.</strong> The current business is chiefly domestic retail of gold and studded jewellery. The large export/wholesale operation that once padded revenue has effectively unwound — part of why revenue is far below its old peak even after FY26's rebound.</li>
+    <li><strong>The brand's mixed equity.</strong> "PC Jeweller" still carries recognition in its home markets, but the brand's trust — the single most valuable asset a jeweller owns — took real damage in 2018. Rebuilding that with customers, not just with bankers, is the slow work underneath the financial repair.</li>
+  </ul>
+
+  <div class="note gold"><b>The structure matters because trust is the product.</b> In most sectors, "who controls it" is a governance footnote. In branded jewellery it is central to the business model itself: customers pay a premium precisely because they trust the name over the metal. A company rebuilding under substantially the same family that presided over the 2018 events must re-earn that trust on <em>both</em> sides of the counter — with lenders (largely done) and with buyers (a longer road). Watch same-store sales and studded mix, not just the settlement, for evidence the customer side is healing.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Reading the recovery: real, or optical?</h2></div>
+  <p class="part-sub">The skeptic's section — separating a rescued balance sheet from a rebuilt earning engine.</p>
+
+  <p class="lead">Given everything above, the essential analytical task with PC Jeweller is to <strong>disentangle two different kinds of "better"</strong>: the balance sheet is genuinely and durably repaired, while the profit-and-loss recovery is partly a one-time artefact of that repair. Confusing the two is the classic mistake with distressed turnarounds — and PCJ is a textbook example of why the distinction is worth labouring.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Two kinds of "recovery" — which is durable?</caption>
+    <thead><tr><th>What improved</th><th>Real &amp; durable?</th><th>Why — and what to watch</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Debt reduction / deleveraging</td><td style="color:var(--good);font-weight:600">Yes — durable</td><td>Settling and repaying &gt;90% of debt is a permanent, cash-real improvement. A near-debt-free jeweller has lower interest cost and less fragility. This is the solid core of the case.</td></tr>
+      <tr><td class="t-strong">Reported net profit (FY25–FY26)</td><td style="color:var(--bad);font-weight:600">Partly one-time</td><td>A meaningful slice reflects <em>settlement write-backs</em> and other income, not showroom margin. Watch how much profit survives once the OTS is fully complete.</td></tr>
+      <tr><td class="t-strong">~20% "operating margin"</td><td style="color:var(--bad);font-weight:600">Flag it</td><td>Roughly double what Titan earns from far larger, richer studded mix. For a sub-scale jeweller this is implausible as recurring — it points to non-operating items in the reported figure.</td></tr>
+      <tr><td class="t-strong">Revenue growth (+49% FY26)</td><td style="color:var(--gold);font-weight:600">Real but off a low base</td><td>Genuine volume recovery, but against a collapsed prior base and inflated partly by high gold prices. Judge on same-store sales and durability, not the headline percentage.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The tell is the margin. Titan — India's best jewellery operator, with enormous scale and a rich diamond mix — earns an operating margin in the low teens. It is not credible that a much smaller PC Jeweller, rebuilding its brand from a trust deficit, <em>structurally</em> earns ~20% from selling ornaments. The most likely explanation is that the reported operating figure is being lifted by items connected to the clean-up and by other income, not by superior showroom economics. That does not make the profit fake — it makes it <strong>partly non-recurring</strong>, which is a completely different thing to pay a multiple for.</p>
+
+  <div class="plain">
+    <div class="ptag">The honest way to hold this stock in your head</div>
+    <p>The durable prize from all this effort is a <em>clean, near-debt-free jewellery company</em> — and that is worth a great deal more than the near-insolvent wreck of 2022. But a clean balance sheet is a starting line, not a finish. The recurring question from here is narrow and answerable: <strong>once the settlement gains stop, what does PC Jeweller earn from jewellery alone — at what normalised margin, on what same-store sales, at what studded mix — and is that enough to justify a ~₹9,000 crore valuation?</strong> Everything to date has been about <em>surviving</em>. What has not yet been proven is <em>thriving</em>.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The asset-light road back</h2></div>
+  <p class="part-sub">How management intends to grow a rescued company without repeating its old sins.</p>
+
+  <p class="lead">PCJ's stated growth strategy is a direct response to what killed it. The old model was <strong>capital-heavy</strong>: company-owned showrooms stuffed with company-financed gold inventory, funded by exactly the bank debt that later became fatal. The new plan leans the other way — an <strong>asset-light, franchise-led expansion</strong> designed to grow the brand's footprint without re-loading the balance sheet with the inventory and debt that proved so dangerous.</p>
+
+  <ul class="clean">
+    <li><strong>Franchise-first showrooms.</strong> Management has signalled ambitions to add on the order of <strong>up to 100 large-format franchise showrooms</strong> over the following 12–18 months. In a franchise model, a partner funds much of the store and inventory, so PCJ extends reach while carrying less of the working-capital and debt burden itself.</li>
+    <li><strong>Debt-free as the platform.</strong> The whole point of reaching a debt-free position in Q2 FY27 is that it becomes the clean base from which asset-light growth can compound — no interest drag, no NOC risk, no lender veto over corporate actions like the one that humiliated the 2018 buyback.</li>
+    <li><strong>Rebuild studded mix and trust.</strong> Growing the higher-margin diamond mix and re-establishing customer trust in its home markets is the slower, quieter part of the plan — and the part that actually determines the normalised margin discussed in section 07.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why asset-light is the right instinct — with a catch</div>
+    <p>An asset-light franchise model is genuinely the sensible way to rebuild a jeweller that was destroyed by a debt-and-inventory model. It grows the brand without re-creating the fragility. The catch is that franchising also <strong>caps how much margin PCJ keeps</strong> — the franchise partner takes a share — and it puts the company's precious, damaged brand into third-party hands, where a single bad-purity or service episode can re-injure the trust it is trying to rebuild. Executed well, it is a lower-risk path to scale. Executed loosely, it trades one kind of risk (financial) for another (reputational) in a business where reputation <em>is</em> the moat. The plan is right; the delivery is unproven.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The rivals — and the trust moat PCJ has to re-earn</h2></div>
+  <p class="part-sub">A growing organised market led by names PCJ once ran alongside and now trails badly.</p>
+
+  <p class="lead">The irony of PC Jeweller's position is that it operates in a <strong>structurally attractive, growing market</strong> — and largely from the sidelines. India's jewellery market is shifting from unorganised family shops to branded "organised" chains, a tailwind worth tens of thousands of crore. But the winners of that shift are precisely the trusted names — Titan, Kalyan, Senco — whose central advantage is the one thing PCJ damaged. It is trying to rejoin a race the leaders have been widening.</p>
+
+  <div class="chart">
+    <div class="c-title">The scale gap — approximate market value, ₹ Crore</div>
+    <div class="c-sub">Where PC Jeweller sits against listed peers (mid-2026, approximate)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Titan (Tanishq)<small>the category king</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~3,00,000+</div></div>
+      <div class="bar-row"><div class="blab">Kalyan Jewellers<small>fast national #2</small></div><div class="track"><span class="fill wtg" style="width:19.7%"></span></div><div class="bval">~59,120</div></div>
+      <div class="bar-row"><div class="blab">PC Jeweller<small>the turnaround</small></div><div class="track"><span class="fill epc" style="width:3%"></span></div><div class="bval">~9,050</div></div>
+    </div>
+    <div class="legend"><span>Titan's value is <em>approximate</em> and dwarfs the field; Kalyan is confirmed (~₹59,120 Cr). PCJ, even recovered, is a small fraction of either — and a sliver of Titan. Scale in jewellery buys purchasing power, brand spend and studded depth PCJ cannot yet match.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs PC Jeweller</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">PC Jeweller</td><td>Recovering North-India chain, ~55 showrooms, rebuilding post-settlement</td><td><em>This company.</em> A balance-sheet turnaround with a damaged brand, re-entering a race it once ran in.</td></tr>
+      <tr><td class="t-strong">Titan (Tanishq)</td><td>The dominant organised jeweller; deep studded mix, huge scale, pristine trust</td><td>The benchmark and the ceiling — vastly larger, more profitable, and the trust standard PCJ is measured against.</td></tr>
+      <tr><td class="t-strong">Kalyan Jewellers</td><td>Fast-growing national #2; asset-light FOCO franchise, 500+ showrooms, Tier-2/3 focus</td><td>The model PCJ's franchise plan echoes — but Kalyan is years ahead in scale, execution and lender/investor trust.</td></tr>
+      <tr><td class="t-strong">Senco Gold</td><td>East-India leader expanding nationally; strong same-store growth</td><td>A mid-size peer that kept its trust intact and is compounding — a reminder of what steady execution looks like.</td></tr>
+      <tr><td class="t-strong">Unorganised shops</td><td>Still the majority of the market, losing share to branded chains</td><td>The pool the organised players are draining — a tailwind PCJ can share <em>if</em> it re-earns its place among the trusted.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive truth to hold onto</div>
+    <p>In branded jewellery, the moat is not price or product — gold is gold and every chain sells necklaces. The moat is <strong>trust</strong>, and trust compounds: the more a Tanishq or a Kalyan is trusted, the more footfall and studded sales it wins, the more it can spend on brand and stores, the more trusted it becomes. PC Jeweller's tragedy is that it fell out of that compounding loop at the worst possible moment — just as the organised-share tailwind was accelerating — and the leaders have spent the intervening years pulling further ahead. A repaired balance sheet lets PCJ compete again. It does not, by itself, close a trust-and-scale gap that widened for the better part of a decade.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A recapitalised company on a low-teens multiple — where the price bets on the repair being durable.</p>
+
+  <p class="lead">FY26 was, on the face of it, a strong year: revenue up ~49% to ~₹3,351 Cr, net profit around ~₹714 Cr, gross debt slashed, and the balance sheet largely cleaned. The stock trades on a modest low-teens earnings multiple and near book value — not the rating of a growth compounder, but of a recovering cyclical the market is unsure how to value. The debate is not whether heroics are priced in; it is whether FY26's profit is a base or a one-time high, and whether a debt-free but sub-scale jeweller earns enough to hold this valuation.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue — the collapse and the partial comeback</div>
+    <div class="c-sub">Standalone revenue, ₹ Crore (FY18 peak approximate)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY18 (peak)<small>pre-collapse, approx.</small></div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~9,600</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>early recovery</small></div><div class="track"><span class="fill epc" style="width:23.4%"></span></div><div class="bval">~2,250</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>+49% YoY</small></div><div class="track"><span class="fill gold" style="width:34.9%"></span></div><div class="bval">~3,351</div></div>
+    </div>
+    <div class="legend"><span>FY26 revenue is a real rebound, but still roughly a third of the FY18 peak — the lost export book and shrunken store base have not been rebuilt. The FY18 figure is <em>approximate</em>; verify against filings.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">FY26 scorecard — and why the margin invites scrutiny</div>
+    <div class="c-sub">₹ Crore; bars scaled to the top line to show how the figures relate</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~3,351</div></div>
+      <div class="bar-row"><div class="blab">Operating profit<small>~20% margin — flag it</small></div><div class="track"><span class="fill wtg" style="width:20%"></span></div><div class="bval">~671</div></div>
+      <div class="bar-row"><div class="blab">Net profit<small>incl. one-time items</small></div><div class="track"><span class="fill gold" style="width:21.3%"></span></div><div class="bval">~714</div></div>
+    </div>
+    <div class="legend"><span>Note the oddity: net profit (~₹714 Cr) sits <em>above</em> operating profit (~₹671 Cr) — a signature of large non-operating/other income and settlement-linked items boosting the bottom line. That is exactly why the reported profit should not be treated as clean recurring earnings.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~13×</div><div class="msl">Trailing P/E (mid-2026) — a modest multiple, but on partly one-time profit</div></div>
+    <div class="ms"><div class="msv">~1.0×</div><div class="msl">Price / book — the stock is priced close to its recapitalised net worth</div></div>
+    <div class="ms green"><div class="msv">~₹7,000+ Cr</div><div class="msl">Net worth after recapitalisation — the equity rebuilt by dilution (approx.)</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: normalised jewellery earnings, once the settlement washes out</div>
+    <p>At ~13× reported earnings and ~1× book, PCJ does not need a re-rating to work — it needs its <em>real, recurring</em> earning power to justify the price. So the thesis-settling metric is <strong>normalised profit from the jewellery business alone</strong> — operating margin pulled back toward a believable peer-like level (high-single to low-double digits, <em>not</em> 20%), read together with two companions: <strong>same-store sales / studded mix</strong> (is the showroom business actually growing and richening?) and <strong>confirmation of genuine debt-free status with unencumbered promoter shares</strong> (is the clean-up truly complete, with no re-pledging?). If, a few quarters past the final settlement, PCJ is compounding franchise-led sales at a normalised margin that supports a ₹9,000 crore value, the low multiple was a bargain on a genuinely healed company. If the profit deflates as the write-backs stop and same-store growth stalls, then ~13× was on an inflated number and the stock is dearer than it looks.</p>
+  </div>
+
+  <div class="note">Figures are drawn from FY26 results, Screener/exchange data and market reports cross-checked across sources; several are <b>approximate or held</b> — notably the FY18 peak revenue, the exact split of one-time vs operating profit, net worth, the current promoter-holding percentage, and Titan's market value. Market cap, P/E and P/B move daily. Verify every number against PC Jeweller's own filings and the latest shareholding pattern before relying on it.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A rescued balance sheet meeting an unproven earning engine and an unhealed reputation.</p>
+
+  <p class="lead">PC Jeweller enters FY27 in a place almost no one thought possible in 2022: close to debt-free, back in profit, and expanding again. That is a genuine achievement of financial engineering and grit. What it is not — yet — is proof that the underlying jewellery business can earn its keep once the clean-up is done. Both cases below are fair; which wins turns on the durability of the earnings, not the drama of the rescue.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>The balance sheet is genuinely fixed</strong> — debt cut &gt;90% (&gt;96% repaid by Aug 2026), a debt-free position in sight; a fragile company made durable.</li>
+        <li><strong>Cheap on the numbers</strong> — ~13× earnings and ~1× book; little optimism is embedded if the profit proves even partly recurring.</li>
+        <li><strong>Asset-light growth runway</strong> — a franchise-led expansion can rebuild the footprint without re-loading the debt-and-inventory risk that sank it.</li>
+        <li><strong>Sector tailwind</strong> — organised jewellery share is rising toward ~40% of the market; a re-trusted PCJ could ride a structural shift.</li>
+        <li><strong>Brand recall survives</strong> — the "PC Jeweller" name still means something in North India, a base to rebuild trust from rather than starting cold.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Profit quality is suspect</strong> — a ~20% "operating margin" and net profit above operating profit flag one-time settlement/other-income gains, not durable showroom earnings.</li>
+        <li><strong>The trust legacy is unhealed</strong> — insider-trading findings, a bank-fraud investigation and a default under substantially the same family; the customer-side reputation lags the financial repair.</li>
+        <li><strong>Massive past dilution</strong> — the share count has multiplied many times; per-share value from the 2018 peak is down ~98%, and further raises would dilute again.</li>
+        <li><strong>Sub-scale vs entrenched rivals</strong> — ~55 showrooms against Kalyan's 500-plus and Titan's dominance; the trust-and-scale gap widened for years.</li>
+        <li><strong>Gold-price &amp; working-capital risk</strong> — the model is still inventory-heavy and gold-price-sensitive; a demand or credit shock hits a recovering jeweller hardest.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>PC Jeweller is one of the most striking rescues on the Indian market — a company that was all but written off, brought back through a hard-nosed bank settlement and an ocean of new equity, and returned to profit and near-zero debt. Give the turnaround its due: extinguishing thousands of crore of defaulted debt and rebuilding the equity is not luck, and a clean balance sheet is worth far more than the wreck it replaced. But be equally clear-eyed about what remains unproven. The reported profit is flattered by the very clean-up that saved the company, the brand's trust took a decade-defining blow that the leaders exploited, and today's shareholders own a business rescued largely at the original shareholders' expense. The next real test is concrete and datable: <strong>the first few quarters after the final bank is paid — when the settlement gains stop and PC Jeweller must show what it earns from jewellery alone, at a believable margin, with same-store sales that are actually growing.</strong> Reach debt-free with a genuinely re-trusted, self-earning showroom business, and the low multiple will look like a gift. Discover that FY26's profit was mostly the sound of debt being written off, and the recovery will read as a balance-sheet event that the income statement never fully backed up.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>PC Jeweller Ltd — FY26 results &amp; corporate disclosures (year ended Mar 2026), via Storyboard18, Whalesbook and DSIJ ("Revenue Rises 49%, Debt Reduced Sharply").</li>
+    <li>Screener.in — PC Jeweller (PCJEWELLER) consolidated financials: revenue ~₹3,353 Cr, net profit ~₹714 Cr, borrowings ~₹1,167 Cr, net worth, P/E, ROE/ROCE, market cap.</li>
+    <li>Business Standard — "PC Jewellers turns profitable, posts Q4 net profit at Rs 94.78 cr," and archive on the 2018 buyback and crisis.</li>
+    <li>Upstox / Sahi / Multibagg — debt-repayment updates: 7 of 14 consortium banks cleared, &gt;96% of bank debt repaid, debt-free target Q2 FY27.</li>
+    <li>MarketsMojo — "PC Jeweller Q4 FY26: Revenue Surge Masks Profit Decline as Margins Contract" (profit-quality/margin scrutiny).</li>
+    <li>DSIJ / InvestyWise / Whalesbook / ScanX — warrant conversions, ~₹2,702 Cr preferential issue, promoter-holding changes, paid-up capital.</li>
+    <li>Quartz India / FashionNetwork / Finshots / EaseMyDeal — "The Rise and Fall of PC Jeweller," the 2018 ~83% crash and market-cap fall from ~₹23,139 Cr to ~₹3,817 Cr.</li>
+    <li>Moneylife / Business Standard — SEBI insider-trading order (buyback UPSI), penalties and market bans; Balram Garg / promoter proceedings.</li>
+    <li>Solitaire (GJEPC) / Indian Jeweller — SBI loan default (~₹3,466 Cr), recall notices and property seizure; the ~₹424 Cr aborted buyback.</li>
+    <li>BSE India (scrip 534809) / Wikipedia / ValueResearch — listing, ₹1 face value, ~975 crore shares; Univest — "Best Jewellery Stocks 2026" (Titan/Kalyan/Senco context; Kalyan ~₹59,120 Cr).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. PC Jeweller has a complex, distressed corporate history; figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or be outdated. Several items are explicitly derived, rounded or <em>held</em> — notably the FY18 peak revenue, the operating-vs-one-time profit split, net worth, the current promoter-holding percentage, per-share decline estimates, and peer market values. Verify all numbers against primary filings before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "PCJEWELLER";
+  const COMPANY_SLUG = "pc-jeweller";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
