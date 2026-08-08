@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ixigo (Le Travenues Technology) — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F2EE;
+    --paper-2:#FBF9F6;
+    --card:#FFFFFF;
+    --ink:#201712;
+    --ink-soft:#5F5449;
+    --ink-faint:#938578;
+    --brand:#C85E3E;          /* ixigo orange */
+    --brand-bright:#D06A48;   /* the ixigo accent */
+    --gold:#C98A3C;           /* warm amber - accent / warmth */
+    --wtg:#B8472E;            /* trains */
+    --epc:#2E7D6B;            /* bus */
+    --om:#3B6FA0;             /* flights */
+    --spec:#8A5A9E;           /* hotels */
+    --line:#E4DDD3;
+    --line-soft:#EEE8DF;
+    --good:#2A7A4E;
+    --bad:#B0492E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#FBEDE6;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBEFE6;border:1px solid #F1D6C2;border-left:3px solid var(--brand);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#a94e28;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#4a2c1c;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F4EE;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EDE7DC;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#C85E3E,#D97A56);}
+  .fill.gold{background:linear-gradient(90deg,#C98A3C,#E0B05C);}
+  .fill.wtg{background:linear-gradient(90deg,#B8472E,#CE6A4A);}
+  .fill.epc{background:linear-gradient(90deg,#2E7D6B,#4CA08B);}
+  .fill.om{background:linear-gradient(90deg,#3B6FA0,#5A8CBD);}
+  .fill.spec{background:linear-gradient(90deg,#8A5A9E,#A87ABA);}
+  .fill.bad{background:linear-gradient(90deg,#B0492E,#C9603F);}
+  .fill.ink{background:linear-gradient(90deg,#4a4033,#66594a);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#FBEDE6;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> How an OTA earns</a></li>
+    <li><a href="#p2"><span class="n">02</span> The train-first bet</a></li>
+    <li><a href="#p3"><span class="n">03</span> The three apps</a></li>
+    <li><a href="#p4"><span class="n">04</span> The company &amp; owners</a></li>
+    <li><a href="#p5"><span class="n">05</span> Transactions × take-rate</a></li>
+    <li><a href="#p6"><span class="n">06</span> The IRCTC dependency</a></li>
+    <li><a href="#p7"><span class="n">07</span> The cross-sell flywheel</a></li>
+    <li><a href="#p8"><span class="n">08</span> Profitability, at last</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: IXIGO · BSE: 544192</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>ixigo, <em>the train-first travel super-app</em></h1>
+  <p class="dek">A complete walk through Le Travenues Technology — the online travel company that skipped the fight over flights and hotels, built India's dominant train-and-bus booking funnel through ConfirmTkt and AbhiBus, and now cross-sells the next-billion-user traveller into everything else. How an aggregator that owns no planes, trains or hotel rooms actually earns; why the biggest online-travel story in India isn't air travel at all; and why a company that just turned properly profitable still trades like a hyper-growth compounder.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,228 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹18,693 <small>Cr</small></div><div class="l">Gross bookings / GTV (FY26)</div></div>
+    <div class="cell"><div class="v">~₹121 <small>Cr</small></div><div class="l">Adjusted EBITDA (FY26)</div></div>
+    <div class="cell"><div class="v">~₹8,939 <small>Cr</small></div><div class="l">Market cap (Aug 2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">8 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ~₹1,228 Cr (+34%), adjusted EBITDA ~₹121 Cr (+28%), PAT ~₹71.5 Cr (+19%), gross bookings ~₹18,693 Cr (~$2 bn); record Q4 PAT of ₹32.1 Cr (+91%), with flights overtaking trains as the largest segment by GTV in Q4; operating cash flow a record ~₹96 Cr (+60%).</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Le Travenues Technology Limited, which everyone knows by its brand <strong>ixigo</strong>, is an Indian <strong>online travel aggregator</strong> — an app and website that lets a traveller search and book <strong>train, bus, flight and hotel</strong> tickets in one place. It does not own a single train coach, bus, aircraft or hotel room. It is a <strong>booking layer</strong> that sits on top of the actual travel providers, routes a customer's booking to them, and takes a small fee for arranging the transaction plus a set of services around it. What makes ixigo unusual is <em>where</em> it chose to be strong: not the glamorous, high-value flight-and-hotel market that premium rivals fight over, but the enormous, low-ticket, price-sensitive world of <strong>Indian rail and bus travel</strong>, through its subsidiaries <strong>ConfirmTkt</strong> (trains) and <strong>AbhiBus</strong> (buses).</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It monetises volume, not luxury.</strong> A train or bus ticket is cheap — a few hundred rupees — and the fee ixigo can add is tiny in absolute terms. The premium OTAs largely ignored this market for exactly that reason. ixigo did the opposite: it built the country's leading <strong>train-booking funnel</strong>, where hundreds of millions of low-value, high-frequency transactions add up, then bolts on convenience fees, add-on services and advertising to squeeze a real business out of thin per-ticket economics.</li>
+    <li><strong>The train business is the moat; flights and hotels are the upsell.</strong> ixigo won the mass-market rail traveller with genuinely useful free tools — live train running status, PNR-confirmation prediction, seat availability — that pull huge organic traffic. Having captured that traveller cheaply, it cross-sells them into <strong>buses, flights and hotels</strong> as they trade up. In FY26 that cross-sell matured to the point where <strong>flights overtook trains as the single largest segment by gross bookings</strong> — the funnel is working.</li>
+    <li><strong>It is profitable now — and priced as though it will stay hyper-growth.</strong> FY26 revenue rose ~34% to <strong>~₹1,228 Cr</strong>, adjusted EBITDA ~28% to <strong>~₹121 Cr</strong>, and net profit ~19% to <strong>~₹71.5 Cr</strong>, on gross bookings of <strong>~₹18,693 Cr</strong> (about $2 billion). The market values it around <strong>₹8,900 Cr</strong> — well over a hundred times earnings — the multiple of a company the market expects to compound for years, not a mature one.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>ixigo is a toll booth on India's mass-market travel, not a carrier. When a small-town traveller opens the app to check whether their waitlisted train ticket will confirm, ixigo has already captured them for free; when they book, ixigo collects a small convenience fee, perhaps sells a cancellation-protection add-on, and shows an advertiser's message. Do that across hundreds of millions of low-value train and bus journeys a year and the pennies compound into a real, now-profitable company. The clever part is that the same traveller, over time, starts booking their bus, then their flight, then their hotel through the app they already trust — so ixigo's cheapest customer becomes its most valuable one without spending much to acquire them again. FY26 was the year that machine visibly clicked into profit.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>How an online travel aggregator actually earns</h2></div>
+  <p class="part-sub">No jargon — just where the money in an OTA comes from, and why the per-ticket sliver is so thin.</p>
+
+  <p class="lead">An online travel aggregator (OTA) is a marketplace, not a supplier. It does not run the train, fly the plane or clean the hotel room. It provides three things — <strong>discovery</strong> (search across many options), <strong>booking</strong> (a single checkout that talks to the provider's system), and <strong>service</strong> (help before, during and after the trip) — and it earns on the transaction it arranges. To follow ixigo you need to understand its handful of income lines and one uncomfortable number: how little it keeps per booking.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only OTA terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">GTV / gross bookings</td><td>Gross Transaction Value — the total rupee value of everything booked through the platform (the ticket prices themselves). ixigo's GTV was ~₹18,693 Cr in FY26. It is <em>not</em> revenue; it's the size of the river flowing through the toll booth.</td></tr>
+      <tr><td class="t-strong">Revenue</td><td>What ixigo actually keeps — convenience fees, commissions, add-on sales and advertising. ~₹1,228 Cr in FY26, i.e. a small fraction of GTV. This is the toll, not the river.</td></tr>
+      <tr><td class="t-strong">Take-rate</td><td>Revenue ÷ GTV — the percentage ixigo skims from each rupee booked. Roughly <strong>6–7%</strong> blended, but far thinner on a cheap train ticket than on a flight or add-on. The single most important efficiency number.</td></tr>
+      <tr><td class="t-strong">Convenience fee</td><td>A small flat charge ixigo adds at checkout for arranging the booking (e.g. on a train ticket). Low per ticket, but it scales with sheer transaction count. On trains it runs at roughly 3% of booking value.</td></tr>
+      <tr><td class="t-strong">Add-on / ancillary</td><td>Optional extras sold alongside the ticket — cancellation protection, flexible-fare guarantees, seat/meal upgrades, insurance. Higher-margin than the ticket, and the main way a thin-fee business fattens its economics.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The structural fact that shapes the whole sector: the aggregator keeps only a sliver</div>
+    <p>Because an OTA passes the ticket price straight through to the airline or railway, it keeps only its fee — a thin slice of a number it mostly hands on. On a ₹500 train ticket, a few tens of rupees of convenience fee is the <em>entire</em> gross take; the rest belongs to Indian Railways. That is why the economics of online travel are ruthlessly about <strong>scale, engagement and cross-sell</strong>: you cannot get rich on the per-ticket margin of a cheap journey, so you must either handle a colossal number of them, sell something extra on top of each, or graduate the customer to higher-value trips (flights, hotels) where the fee is bigger. ixigo's entire strategy is a direct answer to this one constraint.</p>
+  </div>
+
+  <h3>ixigo's four income lines</h3>
+  <ul class="clean">
+    <li><strong>Convenience fees &amp; commissions</strong> — the core take on each train, bus, flight or hotel booking. Trains generate a huge <em>number</em> of small fees; flights and hotels generate fewer but larger commissions. This is the bulk of revenue.</li>
+    <li><strong>Add-on / ancillary services</strong> — the margin-rich layer. Products like <strong>ixigo Assured</strong> (a full-refund cancellation cover) attach to a booking for a small extra fee; with a double-digit attach rate across hundreds of millions of transactions, they contribute meaningfully — an estimated ~₹120 Cr in FY25 alone — at far better economics than the ticket fee itself.</li>
+    <li><strong>Advertising</strong> — ixigo sells its high-intent audience (people actively booking travel) to hotels, banks and travel brands via display and sponsored placements. Advertising was roughly a sixth of revenue in FY25 (~₹118 Cr), and it is nearly pure margin because the traffic is already there.</li>
+    <li><strong>Value-added utility &amp; data</strong> — the free tools (train status, PNR prediction) aren't directly monetised, but they are the top of the funnel: they pull organic, low-cost traffic that everything else is sold against.</li>
+  </ul>
+
+  <p>Put those together and ixigo's model reads as a simple identity that the rest of this primer keeps returning to: <strong>revenue = transactions × take-rate</strong>, lifted by <strong>add-on attach</strong> and <strong>advertising</strong>, and grown over time by <strong>cross-selling</strong> a captured low-value traveller into higher-value trips. Every strategic move the company makes is an attempt to push one of those terms up.</p>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The train-first bet: going where MakeMyTrip wouldn't</h2></div>
+  <p class="part-sub">The single decision that defines the company — and the reason it exists as a separate business at all.</p>
+
+  <p class="lead">India's premium online travel companies — MakeMyTrip above all — grew up serving the flying, hotel-booking, credit-card-carrying urban traveller. That is a lucrative market, but a narrow one. The far larger reality of Indian travel is on the ground: <strong>Indian Railways carries on the order of 20-plus million passengers a day</strong>, and interstate buses move enormous numbers more. Those journeys are cheap, frequent and undertaken by a price-sensitive, often non-metro, first-time-internet user — the population the industry calls the <strong>"next billion users."</strong> The premium OTAs largely stayed away because the per-ticket economics looked hopeless. ixigo ran straight at it.</p>
+
+  <p>The logic was contrarian but coherent. Trains and buses are <em>terrible</em> businesses to monetise one ticket at a time — but they are <em>wonderful</em> funnels. A traveller checks their PNR status not once but repeatedly before a journey; they look up whether the train is running late; they hunt for a confirmed seat on a waitlisted ticket. Each of those is a reason to open ixigo's app, for free, with high frequency and genuine urgency. Own that habit for the mass-market traveller and you own the cheapest, stickiest top-of-funnel in Indian travel — one the premium players, focused on affluent flyers, never bothered to build.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The train-first funnel — capture cheap, monetise across the journey of a lifetime's travel</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Capture · free tools</div><div class="nname">Train status &amp; PNR</div><div class="nwho">High-frequency, urgent, free reasons to open the app — organic, near-zero-cost traffic.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Convert · low ticket</div><div class="nname">Train &amp; bus booking</div><div class="nwho">The mass-market transaction. Thin fee per ticket, but colossal volume.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Upsell · higher ticket</div><div class="nname">Flights</div><div class="nwho">Same trusted app; bigger commission per booking as the traveller trades up.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Extend · stay</div><div class="nname">Hotels &amp; add-ons</div><div class="nwho">The richest per-transaction economics — attached to a customer already won.</div></div>
+    </div>
+    <div class="flow-note">The premium OTAs start at the flights-and-hotels end and struggle to reach down to the mass market. ixigo starts at the train end — cheap to capture — and works up. Owning the bottom of the funnel is the whole thesis.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The device that fits only ixigo: the funnel runs the opposite direction to everyone else's</div>
+    <p>Most travel businesses are built top-down — win the valuable flyer first, then maybe reach downmarket. ixigo is built <strong>bottom-up</strong>: win the ₹400 train traveller in a tier-2 town with a free PNR tool, then ride alongside them for years as they take their first bus trip, their first flight, their first hotel stay. The bet is that today's waitlisted-sleeper passenger is tomorrow's economy flyer, and that the app which was useful when they had no money keeps the booking when they do. No premium OTA can easily copy this, because you cannot bolt a mass-market habit onto a premium brand after the fact — you have to have been there, unglamorously, from the start. ixigo was, through ConfirmTkt and AbhiBus.</p>
+  </div>
+
+  <p>This is also why ixigo is not simply "a smaller MakeMyTrip." It is a structurally different animal that happens to sell some of the same products. Its centre of gravity is rail and bus; flights and hotels are the extension, not the foundation. That distinction runs through every number in this primer — the thin blended take-rate, the huge transaction count, the advertising leverage on free traffic, and the cross-sell that is only now bearing its most valuable fruit.</p>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The three apps: ixigo, ConfirmTkt, AbhiBus</h2></div>
+  <p class="part-sub">One company, a portfolio of brands, each owning a slice of the mass-market journey.</p>
+
+  <p class="lead">ixigo is not a single app but a <strong>family of travel brands</strong> under Le Travenues Technology, assembled partly by building and partly by acquisition. Each brand owns a distinct entry point into the traveller's journey, and together they form the funnel described above. Understanding who does what is essential, because the segments have very different economics.</p>
+
+  <h3>The brands and what each one is</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">ixigo</span></strong> — the flagship super-app and the group's front door. It carries the free discovery tools (train running status, PNR prediction, fare alerts) and offers the full basket: trains, buses, flights and hotels. It is the brand that graduates a captured traveller up the value ladder into flights and stays.</li>
+    <li><strong><span class="chain-wtg">ConfirmTkt</span></strong> — acquired in <strong>February 2021</strong>, a train-discovery and ticketing platform built around one killer feature: predicting whether a <em>waitlisted</em> train ticket will actually confirm. In a country where trains are chronically overbooked, that prediction is enormously valuable, and it made ConfirmTkt a leader in online train bookings. It is the heart of ixigo's rail dominance.</li>
+    <li><strong><span class="chain-epc">AbhiBus</span></strong> — acquired in <strong>August 2021</strong>, a bus-ticketing and fleet-management platform. It gives ixigo depth in intercity buses — the other giant mass-market ground-travel category — and has been the group's <em>fastest-growing</em> vertical, expanding by onboarding State Road Transport Corporations (the government bus fleets) onto the platform.</li>
+    <li><strong>Flights &amp; hotels</strong> — offered through the ixigo brand, these are the higher-value categories the group cross-sells into. Flights, in particular, became the <strong>largest single segment by gross bookings in Q4 FY26</strong> — a milestone showing the funnel is successfully lifting travellers upmarket.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">Gross bookings by segment — the shape of the funnel</div>
+    <div class="c-sub">Approximate share of FY26 GTV; trains historically the largest, flights overtaking late in the year — illustrative, derived from disclosed segment trends</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Trains<small>ConfirmTkt + ixigo</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~45–50%</div></div>
+      <div class="bar-row"><div class="blab">Flights<small>largest by Q4 FY26</small></div><div class="track"><span class="fill om" style="width:78%"></span></div><div class="bval">~30–35%</div></div>
+      <div class="bar-row"><div class="blab">Buses<small>AbhiBus, fastest-growing</small></div><div class="track"><span class="fill epc" style="width:36%"></span></div><div class="bval">~15%</div></div>
+      <div class="bar-row"><div class="blab">Hotels &amp; other<small>the extension</small></div><div class="track"><span class="fill spec" style="width:12%"></span></div><div class="bval">~5%</div></div>
+    </div>
+    <div class="legend"><span>Trains still dominate the <em>count</em> and much of the GTV, but flights — larger per booking — surged to become the biggest segment by value in Q4 FY26. Shares are <em>approximate</em>, inferred from disclosed segment growth rates rather than a published full-year split.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why buying ConfirmTkt and AbhiBus mattered more than building</div>
+    <p>ixigo could have tried to build train and bus dominance organically. It chose instead to <strong>acquire the category leaders</strong> in 2021 — ConfirmTkt for rail, AbhiBus for bus — and the reasoning is instructive. In a funnel business, the scarce asset is the <em>habit</em>: the millions of travellers who already reflexively open ConfirmTkt to check a PNR, or AbhiBus to book a state-transport seat. That behaviour takes years and enormous marketing spend to create from scratch. Buying it outright, and then feeding those users into ixigo's broader basket, was faster and cheaper than competing with them. The acquisitions turned ixigo from one more travel app into the owner of the mass-market ground-travel funnel — which is precisely the position premium OTAs cannot cheaply attack.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The company, the founders, and who owns it</h2></div>
+  <p class="part-sub">A two-founder startup, backed by marquee venture capital, that reached the public market in 2024.</p>
+
+  <p class="lead">Le Travenues Technology has an unusually clean origin story for an Indian internet company: two engineers, one idea, seventeen years of grind, and a 2024 IPO. Understanding the ownership matters because ixigo is a <strong>professional-founder-led, institution-backed</strong> company rather than a family business — its governance texture, incentives and float all follow from that.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2007</div><div class="ev">ixigo founded by IIT Kanpur alumni <strong>Aloke Bajpai</strong> and <strong>Rajnish Kumar</strong> as a travel meta-search engine, based in Gurugram — initially helping users <em>compare</em> fares rather than book them.</div></li>
+    <li><div class="yr">2015–2019</div><div class="ev">Pivots toward the mass-market Indian traveller; builds the free utility tools (train status, PNR prediction) that turn rail into a high-frequency funnel. Raises venture capital from Elevation, Sequoia India (later Peak XV) and others.</div></li>
+    <li class="major"><div class="yr">2021</div><div class="ev">Acquires <strong>ConfirmTkt</strong> (trains, Feb) and <strong>AbhiBus</strong> (buses, Aug) — cementing leadership in mass-market ground travel and completing the funnel.</div></li>
+    <li class="major"><div class="yr">Jun 2024</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE (BSE code 544192), a roughly ₹740 Cr issue that was heavily oversubscribed and listed at a strong premium — one of the year's better-received internet listings.</div></li>
+    <li><div class="yr">FY25</div><div class="ev">First full year as a listed company; scales all four verticals, deepens add-on and advertising monetisation, and consolidates profitability.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record year: revenue ~₹1,228 Cr (+34%), adjusted EBITDA ~₹121 Cr, PAT ~₹71.5 Cr; gross bookings ~₹18,693 Cr; flights overtake trains as the largest segment by GTV; Q4 PAT an all-time-high ₹32.1 Cr (+91%).</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Founders / promoters:</strong> <strong>Aloke Bajpai</strong> (Chairman, Managing Director &amp; Group CEO) and <strong>Rajnish Kumar</strong> (Director &amp; Group Co-CEO) together held roughly <strong>17% (approx.)</strong> after IPO dilution — a modest promoter stake typical of a venture-built company, so control rests as much on their operating role as on shareholding. Confirm the exact figure in the latest shareholding filing.</li>
+    <li><strong>Institutional backers:</strong> the cap table is dominated by marquee venture and sovereign investors — <strong>Elevation Capital</strong>, <strong>Peak XV / Sequoia India</strong> and <strong>GIC</strong> among the largest — a reminder that ixigo is a widely-held, institution-anchored stock rather than a promoter-controlled one.</li>
+    <li><strong>The MakeMyTrip footnote (worth pausing on):</strong> India's premium OTA giant <strong>MakeMyTrip once held a ~10% stake in ixigo</strong> and sold out ahead of the IPO. The dominant flight-and-hotel player literally owned a slice of the train-first challenger — and let it go just before ixigo's mass-market model reached profitable scale.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the ownership shape matters:</b> a founder-led, VC-and-sovereign-backed company with a modest promoter stake tends to be run for professionalised growth and eventual institutional scrutiny, which is a governance positive. The flip side is that a large venture-and-pre-IPO investor base can create <em>supply overhang</em> — as lock-ins expire, early backers may sell into the market, a technical pressure on the share price that has nothing to do with the business. Watch the shareholding pattern alongside the results.</div>
+</section>
+
+<!-- 05 — BESPOKE crux: transactions × take-rate × cross-sell -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Transactions × take-rate × cross-sell: where the value is made</h2></div>
+  <p class="part-sub">The single most important idea in the investment case — and it is specific to a thin-fee, mass-market OTA.</p>
+
+  <p class="lead">Most people instinctively judge ixigo by its gross bookings — the ₹18,693 Cr of travel booked through it. That is the wrong headline. ixigo keeps only its fee, so the number that runs the company is not the size of the river but the width of the toll: <strong>how many transactions flow through, times the take-rate it skims from each, lifted by how successfully it cross-sells the same customer upward.</strong> The whole business can be read as those three multiplied terms.</p>
+
+  <div class="chart">
+    <div class="c-title">River vs toll — GTV against the revenue ixigo actually keeps (FY26)</div>
+    <div class="c-sub">The gap between gross bookings and revenue is the essence of an aggregator's economics — ₹ Crore</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Gross bookings (GTV)<small>the river through the toll</small></div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~18,693</div></div>
+      <div class="bar-row"><div class="blab">Revenue kept<small>~6.6% blended take-rate</small></div><div class="track"><span class="fill brand" style="width:6.6%"></span></div><div class="bval">~1,228</div></div>
+      <div class="bar-row"><div class="blab">Adjusted EBITDA<small>the operating sliver</small></div><div class="track"><span class="fill gold" style="width:0.65%"></span></div><div class="bval">~121</div></div>
+    </div>
+    <div class="legend"><span>Of ~₹18,693 Cr booked, ixigo keeps ~₹1,228 Cr as revenue (a ~6.6% take-rate) and ~₹121 Cr as adjusted EBITDA. The business is the thin bars, not the big one. Take-rate is <em>derived</em> (revenue ÷ GTV) and mixes cheap trains with richer flights.</span></div>
+  </div>
+
+  <p>Now see why each of the three terms matters. <strong>Transactions</strong> come overwhelmingly from trains and buses — cheap, frequent, and captured almost for free through the utility tools. <strong>Take-rate</strong> is thin on those cheap tickets but much fatter on flights, hotels and especially add-ons — so mix shift toward higher-value bookings lifts the blend even if volumes don't move. And <strong>cross-sell</strong> is the compounding term: a traveller won on trains who starts booking flights and hotels multiplies both their transaction value and the take-rate applied to them, at almost no new acquisition cost. FY26's most telling data point — flights overtaking trains by GTV — is precisely the cross-sell term firing.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits a train-first OTA: the cheapest customer becomes the most valuable one</div>
+    <p>In a normal retail business, you pay to acquire a customer and hope to recoup it. ixigo's trick is that its <em>most</em> valuable customers arrive as its <em>cheapest</em>. The tier-2 traveller who came for a free PNR check cost almost nothing to acquire; years later, booking a flight and a hotel through the same app, they generate many times the fee at a higher take-rate — and ixigo never had to win them twice. So the number that settles the thesis isn't GTV growth in isolation; it is <strong>the trajectory of blended take-rate</strong>, which is really a measure of how well the funnel is graduating cheap train-bookers into rich flight-and-hotel bookers. Watch take-rate climb, and you are watching the cross-sell machine work. Watch it stall, and the model is just a low-margin ticketing utility.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~₹18,693 Cr</div><div class="msl">Gross bookings (FY26) — the total value of travel routed through the platform</div></div>
+    <div class="ms gold"><div class="msv">~6.6%</div><div class="msl">Blended take-rate (derived) — revenue as a share of GTV; the toll on the river</div></div>
+    <div class="ms green"><div class="msv">~₹121 Cr</div><div class="msl">Adjusted EBITDA (FY26) — the operating profit the thin toll actually produces</div></div>
+  </div>
+
+  <p>This is why headline GTV can mislead. Gross bookings can swell simply because flight fares rose (a bigger river) even if ixigo's economics didn't improve; and GTV can look soft while margins strengthen because the <em>mix</em> and <em>attach rate</em> improved. For a thin-fee aggregator, transactions, take-rate and cross-sell tell you far more than the top line. That is the lens to hold for the rest of this primer.</p>
+</section>
+
+<!-- 06 — genuine surprise: the IRCTC dependency -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The IRCTC dependency: ixigo doesn't own the rails it runs on</h2></div>
+  <p class="part-sub">The structural quirk a first-timer never sees coming — the moat sits on someone else's permission.</p>
+
+  <p class="lead">Here is the fact that surprises almost everyone who looks at ixigo's rail dominance for the first time: <strong>ixigo cannot sell a single train ticket on its own authority.</strong> In India, all online train-ticket bookings must ultimately go through <strong>IRCTC</strong> — the Indian Railway Catering &amp; Tourism Corporation, the state-owned monopoly that operates the railway's e-ticketing system. ConfirmTkt and ixigo are <em>authorised partners</em> that plug into IRCTC's platform; they do not have their own pipe to Indian Railways. The company's single strongest asset — its train funnel — rests on a contractual relationship with a government entity it does not control.</p>
+
+  <p>The mechanism is unavoidable. When a traveller books a train through ixigo, the transaction is routed to IRCTC's system, which is where the ticket is actually issued; ixigo layers its interface, its prediction tools and its convenience fee on top. This partnership is what makes the whole train business possible — and it is therefore also the business's most concentrated point of fragility. If IRCTC were to change its terms, cap the convenience fees partners may charge, restrict third-party access, or build a better consumer experience of its own, ixigo's rail economics could be hit directly and immediately.</p>
+
+  <div class="plain">
+    <div class="ptag">The counter-intuitive truth to sit with</div>
+    <p>ixigo's most defensible-looking asset — its grip on the mass-market train traveller — is also its least self-owned. A normal consumer platform's moat is its own: its brand, its data, its network. A large part of ixigo's moat is a <strong>permission</strong> granted by a state monopoly that is itself a listed, profit-seeking company. That does not make the business fragile in practice — the partnership has held for years, IRCTC benefits from the distribution, and ixigo adds genuine consumer value IRCTC has been slow to build itself. But it does mean an investor must track a risk no ordinary internet stock carries: the regulatory and contractual weather around rail e-ticketing. Read ixigo's train segment and IRCTC's own strategy together; the second can move the first overnight.</p>
+  </div>
+
+  <div class="note gold"><b>Why this reframes the whole company:</b> ixigo's brilliance was to build an indispensable consumer layer on top of a clunky government monopoly — capturing the traveller IRCTC serves but does not delight. That is a real, durable edge as long as the partnership endures and IRCTC keeps preferring distribution to disintermediation. It is also a concentrated, policy-linked exposure that a Zomato or a Nykaa never has to think about. The train funnel is the crown and the sword hanging over it at once.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The cross-sell flywheel: from a PNR check to a hotel stay</h2></div>
+  <p class="part-sub">The one lever ixigo genuinely controls — and the reason the model gets better with age.</p>
+
+  <p class="lead">If the take-rate on a cheap train ticket is thin, the most valuable thing ixigo can do is <strong>graduate the same traveller into richer transactions</strong> — a flight instead of a train, a hotel on top of the trip, an add-on with every booking. Each step up the value ladder lifts both the transaction size and the take-rate, on a customer already won. This is ixigo's flywheel, and it is the clearest expression of the one term in its model — cross-sell — that it fully owns.</p>
+
+  <p>FY26 showed the flywheel turning at its most consequential point. <strong>Flights overtook trains as the largest segment by gross bookings</strong>, and the bus business — through AbhiBus — was the fastest-growing vertical of all, with GTV up around 50% in some quarters. Neither happened by accident: they are the mass-market traveller trading up within an app they already trust, exactly as the strategy intends. Add-on services amplify the same effect, attaching a higher-margin product — cancellation cover, fare flexibility, insurance — to a growing share of every category's bookings.</p>
+
+  <p>The flywheel has three reinforcing parts. <strong>Free utility captures</strong> the traveller cheaply and keeps them engaged between trips. <strong>Cross-sell graduates</strong> them from trains to buses to flights to hotels as their travel and income grow. And <strong>add-ons and advertising monetise</strong> every interaction along the way at margins the bare ticket could never yield. Because the customer is acquired once and monetised repeatedly and increasingly, the model's unit economics <em>improve with the age of the cohort</em> — which is exactly what a maturing FY26, with flights now the biggest segment, is starting to demonstrate.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the flywheel is worth more than any single segment's growth</div>
+    <p>You might ask why ixigo bothers with unprofitable-looking cheap train tickets at all. Because the train booking is not the product — it is the <em>acquisition channel</em>. Every rupee of thin train economics is really a marketing cost paid to capture a traveller the company will monetise for years across richer categories. Judged as a standalone line, mass-market rail looks marginal; judged as the mouth of a funnel that feeds flights, hotels and add-ons, it is the most efficient customer-acquisition engine in Indian travel. That is why ixigo keeps investing in the unglamorous bottom of the ladder even as flights and hotels become where the money increasingly is.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Profitability, at last — and what it really rests on</h2></div>
+  <p class="part-sub">The just-achieved turn to durable profit, and why it is more fragile and more real than it looks.</p>
+
+  <p class="lead">For most of its life ixigo, like nearly every Indian consumer-internet company, prioritised growth over profit. What makes the current moment notable is that it has crossed into <strong>genuine, scaling profitability</strong> — not a one-quarter accounting quirk, but rising profit across FY26, capped by a record Q4. This is the fact that turned ixigo from a story stock into an earnings stock, and it deserves careful reading.</p>
+
+  <p>The FY26 shape is unambiguous: revenue up ~34% to ~₹1,228 Cr, adjusted EBITDA up ~28% to ~₹121 Cr, net profit up ~19% to ~₹71.5 Cr, and — the tell of real quality — <strong>operating cash flow of a record ~₹96 Cr, up ~60%</strong>. Cash flow growing faster than reported profit is the signature of a business whose earnings are becoming more real, not more accrued. The Q4 exclamation mark — PAT of ₹32.1 Cr, up 91% year-on-year, an all-time quarterly high — showed the operating leverage the model has been promising: revenue scaling faster than the largely-fixed technology and team costs beneath it.</p>
+
+  <div class="chart">
+    <div class="c-title">FY26 scorecard — growth with widening profit</div>
+    <div class="c-sub">Full year ended March 2026; ₹ Crore, with year-on-year change</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue<small>+34% YoY</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~1,228</div></div>
+      <div class="bar-row"><div class="blab">Adjusted EBITDA<small>+28% YoY</small></div><div class="track"><span class="fill gold" style="width:9.9%"></span></div><div class="bval">~121</div></div>
+      <div class="bar-row"><div class="blab">Operating cash flow<small>+60% YoY</small></div><div class="track"><span class="fill om" style="width:7.8%"></span></div><div class="bval">~96</div></div>
+      <div class="bar-row"><div class="blab">PAT<small>+19% YoY</small></div><div class="track"><span class="fill spec" style="width:5.8%"></span></div><div class="bval">~71.5</div></div>
+    </div>
+    <div class="legend"><span>Revenue +34%, adjusted EBITDA +28%, operating cash flow +60%, PAT +19%. The bars are scaled to show how thin profit still is against revenue — but each line is now firmly positive and growing, and cash flow leads profit. PAT grew slower than EBITDA partly on higher tax and non-operating items.</span></div>
+  </div>
+
+  <p>Why is the turn both more real and more fragile than it appears? <strong>More real</strong>, because it is driven by the durable mechanics of this specific model — rising add-on attach, growing advertising on free traffic, and cross-sell into higher-take flights and hotels — not by a one-off. <strong>More fragile</strong>, because the absolute margins remain thin (a ~10% adjusted-EBITDA-to-revenue line), the business is discretionary and travel-cyclical, and competition for the flight-and-hotel bookings that increasingly drive profit is fierce. Profitability has arrived; proving it is <em>durable</em> through a travel downturn and against sharper competition is the next test.</p>
+
+  <div class="note gold"><b>A note on "adjusted" EBITDA:</b> like most consumer-internet firms, ixigo reports an <em>adjusted</em> EBITDA that typically excludes share-based-compensation and certain one-offs. That is a legitimate and common presentation, but it flatters the headline versus statutory profit. The honest read is to anchor on <strong>PAT and operating cash flow</strong> — both of which are now solidly positive and growing — while treating adjusted EBITDA as a directional gauge of operating momentum rather than a cash number.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A crowded travel market where ixigo competes on a different axis to the premium giants.</p>
+
+  <p class="lead">Indian online travel is a large, fast-growing and fiercely contested market, but it is not a single arena — it is several, and ixigo's position varies sharply by segment. In flights and hotels it is a challenger against entrenched leaders; in trains and buses it is itself the scaled incumbent. That split defines its competitive life.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs ixigo</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">ixigo</td><td>Train-first mass-market super-app; leader in online train &amp; a major force in bus ticketing; challenger in flights/hotels</td><td><em>This company.</em> Owns the ground-travel funnel premium rivals ignored; the debate is take-rate, cross-sell and whether it can hold its own in the richer flight-and-hotel fight.</td></tr>
+      <tr><td class="t-strong">MakeMyTrip</td><td>The dominant Indian OTA; leader in flights and hotels; premium, urban, larger and long-profitable</td><td>The benchmark and the opposite pole — top-down where ixigo is bottom-up. Bigger and richer per booking, but historically absent from the mass-market rail/bus funnel ixigo owns.</td></tr>
+      <tr><td class="t-strong">redBus (MakeMyTrip)</td><td>The dominant online bus-ticketing platform, now part of the MakeMyTrip group</td><td>ixigo's most direct competitor in buses via AbhiBus — a genuine, entrenched rival in the one ground category where ixigo is the challenger rather than the leader.</td></tr>
+      <tr><td class="t-strong">Cleartrip (Flipkart)</td><td>Flights-and-hotels OTA backed by Flipkart/Walmart, aggressive on discounting</td><td>A well-funded competitor for the flight-and-hotel bookings ixigo is cross-selling into — a reminder that the richer end of the funnel is the crowded end.</td></tr>
+      <tr><td class="t-strong">IRCTC</td><td>The state rail e-ticketing monopoly — partner <em>and</em> potential competitor</td><td>ixigo rides on IRCTC's rails (section 06). Not a market rival today, but the entity that could most directly reshape ixigo's train economics.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>ixigo does not win by out-spending MakeMyTrip on flights — it would lose that fight. It wins by <strong>starting somewhere its rivals didn't</strong>: the cheap, high-frequency train and bus traveller, captured through free utility rather than discount-fuelled acquisition. The strategic question is therefore not "can ixigo beat MakeMyTrip head-on?" but "can ixigo convert its cheaply-won ground-travel audience into enough flight, hotel and add-on business to matter — before the premium players learn to reach down into its funnel?" In buses it already meets a strong incumbent in redBus; in flights and hotels it is the insurgent. Its edge everywhere is the same: it acquired its customer for less, and it monetises engagement the others treat as an afterthought.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A newly-profitable grower on a rich internet multiple — the question is durability of growth, not richness of margin.</p>
+
+  <p class="lead">FY26 was a genuinely strong year: revenue up ~34%, adjusted EBITDA up ~28%, PAT up ~19%, cash flow up ~60%. But unlike a cheap cyclical, ixigo carries a <strong>demanding valuation</strong> — a market capitalisation around ₹8,900 Cr against ~₹71.5 Cr of net profit is well over a hundred times earnings. The debate here is not whether the margin is thin (it is, by design); it is whether growth can stay fast enough, for long enough, to justify a multiple that already prices in years of compounding.</p>
+
+  <div class="chart">
+    <div class="c-title">The revenue climb — the growth the multiple is paying for</div>
+    <div class="c-sub">Revenue from operations, ₹ Crore; earlier years approximate</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24<small>approx.</small></div><div class="track"><span class="fill ink" style="width:53%"></span></div><div class="bval">~656</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>approx.</small></div><div class="track"><span class="fill wtg" style="width:74%"></span></div><div class="bval">~914</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~1,228</div></div>
+    </div>
+    <div class="legend"><span>Roughly a doubling of revenue in two years — ~39% then ~34% growth. FY26 is the reported figure; FY24–FY25 are <em>approximate</em>, and the growth rate is the number the rich multiple is underwriting.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Revenue by stream — the monetisation mix (FY25 basis)</div>
+    <div class="c-sub">Approximate composition of how ixigo earns; illustrative, FY25 disclosure basis</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Convenience fees &amp; commissions<small>the core take</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">bulk</div></div>
+      <div class="bar-row"><div class="blab">Add-on / ancillary<small>ixigo Assured etc.</small></div><div class="track"><span class="fill gold" style="width:38%"></span></div><div class="bval">~₹120 Cr</div></div>
+      <div class="bar-row"><div class="blab">Advertising<small>high-intent audience</small></div><div class="track"><span class="fill om" style="width:36%"></span></div><div class="bval">~18%</div></div>
+    </div>
+    <div class="legend"><span>Booking fees/commissions are the backbone; add-ons (~₹120 Cr in FY25) and advertising (~18% of FY25 revenue) are the margin-rich layers that make thin ticket economics work. Figures are <em>FY25 approximations</em>, shown to illustrate the mix rather than a precise FY26 split.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~125×</div><div class="msl">Trailing P/E (derived, Aug 2026) — a rich internet-growth rating, not a value multiple</div></div>
+    <div class="ms"><div class="msv">~7×</div><div class="msl">Market cap / FY26 revenue (approx.) — priced on GTV growth and margin expansion ahead</div></div>
+    <div class="ms green"><div class="msv">~₹96 Cr</div><div class="msl">FY26 operating cash flow — the reassuring "it's real" number under the multiple</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: blended take-rate, read against GTV growth</div>
+    <p>At ~125× earnings, ixigo does not need to be cheap to work — it needs to keep <em>compounding</em>. So the metric that proves or breaks the case is the <strong>blended take-rate</strong> (the ~6.6% of GTV it keeps as revenue), tracked quarter by quarter against gross-bookings growth, and read alongside two companions: the <strong>add-on attach rate</strong> (is the margin-rich ancillary layer deepening?) and the <strong>flights-and-hotels GTV share</strong> (is cross-sell graduating travellers upward?). If GTV keeps growing at 20%+ <em>and</em> take-rate rises as mix shifts to flights, hotels and add-ons, revenue and profit compound into the multiple and the rating is defensible. If take-rate stalls while growth cools — or an IRCTC change or a travel downturn interrupts the funnel — a hundred-times multiple has a great deal of expectation to give back. Gross bookings times a rising take-rate, cross-sold ever higher up the ladder: that is the scoreboard.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results and market data cross-checked across sources; the <b>FY24–FY25 revenue</b>, the <b>segment GTV split</b>, the <b>blended take-rate</b>, <b>P/E</b> and the <b>revenue-stream mix</b> are <b>approximate</b> (derived, rounded, or FY25-basis), and market cap/P/E move daily. Verify against the company's filings and the latest shareholding pattern before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A newly-profitable funnel with a long runway — asked whether it can keep compounding into a big multiple.</p>
+
+  <p class="lead">ixigo enters FY27 in its strongest-ever shape: profitable and cash-generative, the leader in mass-market ground travel, with flights now its biggest segment and buses its fastest-growing, all feeding off a cheaply-acquired next-billion-user funnel that competitors find hard to copy. What it cannot promise is the one thing its valuation demands — that fast growth and rising take-rate continue, through a travel cycle and against sharpening competition, without the IRCTC relationship that underpins the base ever wobbling. That is the frame for both cases.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Owns an un-copyable funnel</strong> — the free-utility, train-first capture of the mass-market traveller is a low-cost acquisition engine premium OTAs cannot cheaply replicate.</li>
+        <li><strong>Cross-sell is compounding</strong> — flights overtaking trains by GTV shows the model graduating cheap customers into rich ones at rising take-rates.</li>
+        <li><strong>Profitable and cash-generative</strong> — FY26 PAT ~₹71.5 Cr and record ~₹96 Cr operating cash flow prove the economics work at scale, with operating leverage still ahead.</li>
+        <li><strong>Structural demand tailwind</strong> — Indian travel, rail and air, is growing fast, and the next-billion-user cohort ixigo owns is exactly the one urbanising and flying for the first time.</li>
+        <li><strong>Optionality in add-ons &amp; advertising</strong> — margin-rich ancillary and ad revenue on already-captured, high-intent traffic can lift the blend without new customer cost.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>IRCTC &amp; regulatory dependence</strong> — the train funnel rests on a state monopoly's permission; a terms change, fee cap or disintermediation could hit the base directly.</li>
+        <li><strong>Rich valuation, thin margin</strong> — ~125× earnings on a ~10% adjusted-EBITDA margin leaves the price heavily dependent on years of uninterrupted compounding.</li>
+        <li><strong>Fierce competition upmarket</strong> — MakeMyTrip, redBus and Cleartrip are entrenched exactly where ixigo's most profitable growth (flights, hotels, buses) has to come from.</li>
+        <li><strong>Travel cyclicality</strong> — bookings are discretionary; a demand shock, fuel/fare spike or disruption can stall GTV and expose the operating leverage in reverse.</li>
+        <li><strong>Investor overhang</strong> — a venture-heavy cap table can pressure the share technically as lock-ins expire, independent of business performance.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>ixigo is a rare thing in Indian consumer internet: a company that found a genuinely defensible position by going where the money looked too small to bother — the train and bus traveller — and then quietly turned that cheap, captured audience into a profitable, cross-selling machine. The mechanics are real and improving: flights are now the biggest segment, cash flow leads profit, and the funnel keeps graduating tier-2 travellers up the value ladder. But the price already assumes years of that continuing, and the foundation of the whole edifice is a partnership with a government monopoly the company does not control. The next test is concrete and datable: <strong>whether blended take-rate keeps rising alongside 20%-plus gross-bookings growth through FY27 — with the flights-and-hotels mix and add-on attach both climbing — while the IRCTC relationship holds steady.</strong> Keep the funnel graduating and the take-rate climbing, and a demanding multiple grows into itself; let growth cool or the rail base wobble, and the market will quickly re-price a company it currently treats as a certainty.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Le Travenues Technology Ltd (ixigo) — Q4 &amp; FY26 media release: "ixigo Reports All-Time High PAT of ₹32.1 Cr (+91% YoY) in Q4 FY26; Delivers Strong FY26 Revenue, GTV and Cash Flows" (investor relations).</li>
+    <li>ixigo — Q1 FY26 and Q2 FY26 investor media releases (rocket.ixigo.com / investors.ixigo.com), segment GTV and revenue disclosures.</li>
+    <li>Whalesbook / ScanX — "ixigo Hits Record ₹32.1 Cr Profit in Q4 FY26, FY26 Revenue Soars 34%"; "ixigo FY26 PAT rises 18.6% to ₹714.81M."</li>
+    <li>Indian Startup News — "ixigo profit jumps 91% to record ₹32 crore in Q4 FY26 as flight and bus business surge."</li>
+    <li>Medianama / getrentacar / gettransfer coverage — Q2 FY26: revenue +37% to ₹282.7 Cr, bus GTV +51%, flights +29%, trains +12%.</li>
+    <li>The Strategy Story / GrowthX / StartupTalky — ixigo business model: convenience fees, add-ons (ixigo Assured), advertising (~18% of FY25 revenue), next-billion-user strategy.</li>
+    <li>JM Financial / Anand Rathi / Capitalmind — ixigo initiation &amp; analysis: train-segment GTV salience, IRCTC dependency, take-rate and valuation context.</li>
+    <li>Inc42 — "ixigo's Shareholding Pattern Ahead Of Its IPO"; Wikipedia (Ixigo) — founders, ConfirmTkt (Feb 2021) &amp; AbhiBus (Aug 2021) acquisitions, MakeMyTrip's former ~10% stake.</li>
+    <li>BSE India — Le Travenues Technology Ltd stock page, scrip code 544192; Screener.in (IXIGO) and SimplyWall.st (bse-544192); NSE symbol IXIGO. Market cap ~₹8,939 Cr / share ₹192.99 as of 7 Aug 2026 (Tickertape).</li>
+    <li>Yahoo Finance (IXIGO.NS / IXIGO.BO) — Q4 FY26 earnings call and price/quote data.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several figures (notably the segment GTV split, the blended take-rate, FY24–FY25 revenue, the revenue-stream mix, P/E and the promoter stake) are derived, rounded, or on an FY25 basis. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "IXIGO";
+  const COMPANY_SLUG = "ixigo";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
