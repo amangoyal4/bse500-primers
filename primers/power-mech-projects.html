@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power Mech Projects — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F4;
+    --paper-2:#FAFCFA;
+    --card:#FFFFFF;
+    --ink:#1A211C;
+    --ink-soft:#565F58;
+    --ink-faint:#889089;
+    --brand:#5E6E5E;          /* industrial slate-green */
+    --brand-bright:#4F7A64;   /* saturated green accent / links */
+    --gold:#C0873C;           /* warm amber - callouts / warmth */
+    --wtg:#556E62;            /* erection / ETC-BTG */
+    --epc:#6E7F6A;            /* BoP / civil */
+    --om:#33513F;            /* O&M annuity */
+    --spec:#7E8452;          /* FGD / olive cross accent */
+    --line:#D9DED9;
+    --line-soft:#E7EAE7;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#EAF0EA;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F8F5;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAEEEA;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#5E6E5E,#7C9080);}
+  .fill.gold{background:linear-gradient(90deg,#C0873C,#D6A45E);}
+  .fill.wtg{background:linear-gradient(90deg,#556E62,#6E8B7C);}
+  .fill.om{background:linear-gradient(90deg,#33513F,#4A6E58);}
+  .fill.spec{background:linear-gradient(90deg,#7E8452,#9BA26A);}
+  .fill.epc{background:linear-gradient(90deg,#6E7F6A,#8A9B85);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a453e,#566159);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF0EA;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Power-plant services 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What Power Mech sells</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The ₹55,000 Cr order book, decoded</a></li>
+    <li><a href="#p5"><span class="n">05</span> The O&amp;M annuity</a></li>
+    <li><a href="#p6"><span class="n">06</span> FGD: the mandated retrofit</a></li>
+    <li><a href="#p7"><span class="n">07</span> The mining (MDO) pivot</a></li>
+    <li><a href="#p8"><span class="n">08</span> Beyond thermal power</a></li>
+    <li><a href="#p9"><span class="n">09</span> Why the capex cycle is back</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: POWERMECH · BSE: 539302</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Power Mech Projects, <em>erect it, run it, now mine it</em></h1>
+  <p class="dek">A complete walk through one of India's largest power-plant erection-and-maintenance specialists — the unglamorous firm whose cranes have raised tens of thousands of megawatts of the nation's thermal fleet, how it turns a one-off "build" contract into a decades-long service annuity, why its headline ₹55,000-crore order book is really three very different books stacked into one number, and how it wandered from erecting boilers into digging coal.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹6,062 <small>Cr</small></div><div class="l">Revenue (FY26, consol.)</div></div>
+    <div class="cell"><div class="v">~₹412 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹55,151 <small>Cr</small></div><div class="l">Order book (incl. 25-yr MDO)</div></div>
+    <div class="cell"><div class="v">~₹8,270 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">9 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — consolidated revenue ~₹6,062 Cr (+16%), net profit ~₹412 Cr (+18%), EBITDA ~₹750 Cr at a ~12.3% margin; order book ~₹55,151 Cr (of which a ~₹39,576 Cr, 25-year mine-operating contract), FY26 new inflows ~₹7,210 Cr; management guides ~21% revenue growth in FY27.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Power Mech Projects is a Hyderabad-based <strong>engineering, construction and services company built around power plants</strong>. Its original craft — and still its calling card — is <strong>erecting the heavy machinery at the heart of a thermal power station</strong>: the boiler, the turbine and the generator (together, "BTG"), plus all the pipes, pumps, ducts and structures around them ("balance of plant"). Over 25-plus years it has erected tens of thousands of megawatts of India's coal and gas fleet. But it does not just <em>build</em> plants — it also <strong>runs and maintains</strong> them under long-term operations-and-maintenance (O&amp;M) contracts, and it has fanned out into civil construction, pollution-control retrofits, railways, water, roads and, most surprisingly, <strong>coal mining</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is two businesses wearing one uniform.</strong> One half is <em>lumpy, project-based construction</em> — win a contract, build the thing, book a modest ~12% margin, move on. The other half is a <em>recurring service annuity</em> — once a plant is running, Power Mech is paid year after year to keep it running. The construction book is the growth engine; the O&amp;M book is the steadier ballast. Almost everything about the company makes more sense once you separate the two.</li>
+    <li><strong>The ₹55,151 Cr order book is not what it looks like.</strong> That eye-catching backlog is dominated by a single <strong>~₹39,576 Cr mine-operating contract that unwinds over 25 years</strong> — a slow annuity, not near-term construction revenue. Strip it out and the genuinely <em>executable</em> engineering-and-services book is closer to <strong>~₹15,900 Cr</strong>. Reading the headline as "nine years of revenue booked" is the single most common mistake made about this company.</li>
+    <li><strong>Growth has been about volume, not pricing.</strong> Net profit has tripled from ~₹138 Cr (FY22) to ~₹412 Cr (FY26) while the operating margin barely budged, sitting stubbornly around <strong>11–12%</strong> the whole way. Power Mech is a throughput machine that takes a thin, fixed slice of an ever-larger pile of work — and the stock, at ~₹8,270 Cr and ~21× earnings, is priced for that pile to keep growing.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Power Mech is the <strong>contractor India calls to assemble, and then babysit, a power plant</strong>. It bolts together the giant boiler-turbine-generator, wires up everything around it, and hands over a working station — then signs a contract to operate and maintain that station for years. That "build it, then run it" pairing is the spine of the business. What has changed lately is how far it has stretched the idea: it now also retrofits pollution-control kit onto old coal plants, lays railway lines, builds water systems, and — the real curveball — has taken on 25-year contracts to develop and operate entire coal mines. The investment question is whether a firm that earns a modest, fixed margin on execution can keep scaling that work fast enough to justify a growth-stock price.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Power-plant services 101: the erect-and-maintain trade</h2></div>
+  <p class="part-sub">No engineering degree needed — just the handful of terms that drive the whole business.</p>
+
+  <p class="lead">A coal or gas power station is one of the most complex machines humans build, and it does not assemble itself. Someone has to take thousands of tonnes of steel components — delivered by the equipment makers — and physically erect them on site into a working plant: raise the boiler, seat the turbine, connect the generator, run the pipework, and commission the whole thing until it feeds power to the grid. Then, for the plant's 25-to-40-year life, someone has to keep it running and repair it. Power Mech lives on <em>both</em> ends of that timeline. To follow the business, you need six terms.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only vocabulary you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">BTG</td><td>"Boiler–Turbine–Generator" — the three big machines at a power plant's core. The <em>equipment makers</em> (BHEL, GE, Toshiba, Mitsubishi) manufacture them; <em>erectors</em> like Power Mech assemble and install them on site. Erecting BTG is Power Mech's founding skill.</td></tr>
+      <tr><td class="t-strong">ETC</td><td>"Erection, Testing &amp; Commissioning" — the on-site work of putting the machinery together, testing it, and switching it on. A specialised, labour-and-crane-heavy discipline where a good erector saves the plant owner months.</td></tr>
+      <tr><td class="t-strong">BoP</td><td>"Balance of Plant" — everything <em>other</em> than the core BTG: pumps, fans, pipes, ducting, cooling towers, coal-handling, ash systems, electricals. Often a bigger scope than the BTG itself, and a natural extension for an erector.</td></tr>
+      <tr><td class="t-strong">EPC</td><td>"Engineering, Procurement &amp; Construction" — taking full turnkey responsibility for designing, sourcing and building a project. Higher value and higher risk than pure erection; Power Mech is climbing up into this tier.</td></tr>
+      <tr><td class="t-strong">O&amp;M</td><td>"Operations &amp; Maintenance" — the long-term contract to run and service a plant after it is built: keep it available, overhaul it on schedule, fix what breaks. A recurring, annuity-like fee that lasts for years.</td></tr>
+      <tr><td class="t-strong">FGD</td><td>"Flue-Gas Desulphurisation" — pollution-control equipment bolted onto a coal plant's exhaust to strip out sulphur dioxide. Newly mandated across India's coal fleet, creating a large retrofit market that an erector is well placed to win.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The economic difference that decides everything: a project vs an annuity</div>
+    <p>The single most useful distinction in this whole primer is between a <strong>project</strong> and an <strong>annuity</strong>. A project — erect a boiler, retrofit an FGD, build a road — pays you once. You mobilise labour and cranes, take execution risk (weather, delays, cost overruns), earn a margin of roughly 11–13%, and when it is done, the revenue stops. An annuity — an O&amp;M contract, a mine-operating contract — pays you a fee <em>every year</em> for the life of the deal, with far less lumpiness. Power Mech runs on both, and the quality of its earnings depends on the mix. A rupee of annuity revenue is worth more than a rupee of project revenue because it recurs, so as the O&amp;M and mining books grow, the <em>character</em> of the company quietly improves even if the headline margin does not.</p>
+  </div>
+
+  <h3>Who hires a company like Power Mech</h3>
+  <ul class="clean">
+    <li><strong>Equipment makers (OEMs)</strong> — BHEL, GE, Toshiba and others sell the boiler-turbine-generator but sub-contract the physical erection. Power Mech has long been their trusted pair of hands on site.</li>
+    <li><strong>Power utilities &amp; PSUs</strong> — NTPC, state generation companies, Singareni, Damodar Valley and their peers, who need plants built, retrofitted and maintained.</li>
+    <li><strong>Industrial &amp; private developers</strong> — steel, cement, refining and captive-power owners (Adani, SAIL, JSW-type buyers) building or servicing their own generation and infrastructure.</li>
+    <li><strong>Government infrastructure agencies</strong> — railways, water boards, road authorities and coal companies awarding the civil and mining work Power Mech has diversified into.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What Power Mech actually sells: one plant, many trades</h2></div>
+  <p class="part-sub">The service stack — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">Power Mech's edge is that it can follow a power plant across its <strong>entire life</strong> — from the day the first crane arrives to the day, decades later, it is still overhauling the turbine. It started at one point on that timeline (erection) and has steadily added the stages on either side. Today the same firm can build the plant, connect everything around it, run it, and clean up its emissions. That single, cradle-to-grave relationship is the product.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">A power plant's life — and where Power Mech earns at each stage</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Stage 1 · Erect</div><div class="nname">Assemble the BTG</div><div class="nwho">Erection, testing &amp; commissioning of boiler, turbine, generator on site.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Stage 2 · Build around it</div><div class="nname">BoP &amp; civil works</div><div class="nwho">Pipes, pumps, ducts, structures, coal &amp; ash handling — the whole plant.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Stage 3 · Clean it up</div><div class="nname">FGD retrofit</div><div class="nwho">Bolt on flue-gas desulphurisation to meet emission rules.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Stage 4 · Run it (years)</div><div class="nname">O&amp;M annuity</div><div class="nwho">Operate &amp; maintain the plant for its life — recurring service fees.</div></div>
+    </div>
+    <div class="flow-note">Stages 1–3 are lumpy, project-based, "win-and-build" revenue at a modest execution margin. Stage 4 is the quiet, recurring annuity that keeps paying long after the cranes have left — and grows every time another plant joins the serviced fleet.</div>
+  </div>
+
+  <h3>The core trades, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Erection &amp; ETC-BTG</span></strong> — the founding business. Power Mech has erected boilers, turbines and generators across a very large slice of India's installed thermal capacity — a track record of tens of thousands of megawatts. This is skilled, on-site work: cranes, welders, and precise assembly of machinery that must run at hundreds of degrees and thousands of RPM for decades. Reputation and manpower are the moat.</li>
+    <li><strong><span class="chain-epc">Balance of plant, civil &amp; EPC</span></strong> — the scope expansion. Having proven it can erect the core, Power Mech took on the surrounding balance-of-plant, then heavy civil construction, and increasingly full turnkey EPC packages. Winning the balance-of-plant EPC for a new 800 MW thermal unit is exactly this climb — from sub-contractor to main contractor, where value per project is far higher (and so is the risk).</li>
+    <li><strong><span class="chain-om">O&amp;M services</span></strong> — the recurring tail. Power Mech operates and maintains power plants across a very large installed base — running the plant, doing scheduled overhauls, guaranteeing availability. Small per plant relative to a big construction contract, but it recurs for years, is far less cyclical, and grows every time the firm adds a plant to its serviced fleet. It also feeds back leads: the team maintaining a plant is first to know when it needs a retrofit or a rebuild.</li>
+    <li><strong style="color:var(--spec)">FGD &amp; new verticals</strong> — the diversification. Pollution-control retrofits, railways, water, roads and coal mining now sit alongside the power work, widening the addressable market well beyond thermal generation. More on each of these below.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">Where the engineering work comes from</div>
+    <div class="c-sub">Approximate mix of the services order book before the mega-mining (MDO) wins — a rough guide to the trades, per rating-agency data</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FGD retrofits</div><div class="track"><span class="fill spec" style="width:100%"></span></div><div class="bval">~42%</div></div>
+      <div class="bar-row"><div class="blab">Civil works</div><div class="track"><span class="fill epc" style="width:57%"></span></div><div class="bval">~24%</div></div>
+      <div class="bar-row"><div class="blab">Mining (pre-MDO)</div><div class="track"><span class="fill gold" style="width:31%"></span></div><div class="bval">~13%</div></div>
+      <div class="bar-row"><div class="blab">O&amp;M services</div><div class="track"><span class="fill om" style="width:29%"></span></div><div class="bval">~12%</div></div>
+      <div class="bar-row"><div class="blab">Mechanical / erection</div><div class="track"><span class="fill ink" style="width:21%"></span></div><div class="bval">~9%</div></div>
+    </div>
+    <div class="legend"><span>A snapshot of the services book (as reported around end-2023, before the two 25-year mining concessions were added): FGD-led, with a broad spread across civil, mining, O&amp;M and mechanical work. Once the mega-MDO awards landed, mining came to dominate the <em>headline</em> backlog — which is exactly why the order book has to be un-blended (see §04).</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "cradle-to-grave" is worth spelling out</div>
+    <p>An owner building a power plant faces a string of hand-offs — one firm erects the boiler, another does the civil work, a third operates it, a fourth retrofits the emissions kit years later. Every hand-off is a seam where things go wrong and accountability blurs. Power Mech's pitch is that it can hold several of those stages under one roof, so the owner deals with fewer contractors and one accountable partner across the plant's life. The flip side is real: a firm spread across erection, EPC, O&amp;M, FGD, railways, water <em>and</em> mining is juggling a lot of different execution disciplines at once. Breadth wins work and smooths the cycle; it also stretches management and invites the question of whether the company is a specialist or a generalist. The answer Power Mech is betting on is that its power-plant DNA travels — that the project-management muscle built erecting boilers is what lets it run a mine or lay a railway.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the founder, and who controls it</h2></div>
+  <p class="part-sub">A founder-built, promoter-controlled engineering house out of Hyderabad.</p>
+
+  <p class="lead">Power Mech Projects was founded in <strong>1999 in Hyderabad by S. Kishore Babu</strong>, who remains chairman and managing director and the largest individual shareholder. It is very much a <strong>founder's company</strong> — built up over a quarter-century from power-plant erection contracts into a diversified engineering group, and still tightly held by the promoter family.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1999</div><div class="ev">Power Mech Projects incorporated in Hyderabad by <strong>S. Kishore Babu</strong>, starting in erection, testing &amp; commissioning of boilers, turbines and generators for thermal power plants.</div></li>
+    <li><div class="yr">2000s–early 2010s</div><div class="ev">Rides India's thermal build-out; becomes a go-to erection sub-contractor for the equipment makers, and steadily adds balance-of-plant and O&amp;M scope.</div></li>
+    <li class="major"><div class="yr">2015</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE, listing the erection-and-services business to the public.</div></li>
+    <li><div class="yr">2018</div><div class="ev">Installs <strong>India's first operational FGD</strong> (Vindhyachal, 500 MW) as an associate to GE — an early foothold in the coming emissions-retrofit market.</div></li>
+    <li><div class="yr">2021</div><div class="ev">Takes over long-term <strong>O&amp;M of the Singareni thermal plant</strong>, deepening the recurring-services book.</div></li>
+    <li><div class="yr">2022</div><div class="ev">Wins a landmark <strong>~₹6,163 Cr FGD retrofit order from the Adani group</strong> (15 coal units) — one of the largest FGD packages awarded in India.</div></li>
+    <li class="major"><div class="yr">FY24–FY25</div><div class="ev">Steps into <strong>mine developer &amp; operator (MDO)</strong> work — winning a ~₹30,438 Cr coal-mining contract from <strong>SAIL (Tasra)</strong> and a ~₹9,924 Cr contract from <strong>Central Coalfields</strong>, both running ~25 years.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ~₹6,062 Cr (+16%), net profit ~₹412 Cr (+18%); order book ~₹55,151 Cr; wins balance-of-plant EPC for a <strong>1×800 MW Singareni thermal unit</strong> from BHEL — a step up into integrated EPC.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoter control:</strong> the <strong>promoter group holds ~58.96%</strong> (as of Mar 2026), with founder S. Kishore Babu the largest individual holder (~24%). The company states there is <strong>no promoter encumbrance</strong> (no pledged shares) — worth confirming in each quarter's shareholding filing, but a healthy sign for a contractor, where pledged-promoter stress has burned investors elsewhere.</li>
+    <li><strong>Founder-run engineering culture:</strong> Power Mech is run by the man who built it, with the operating identity of a hands-on erection contractor rather than a financial-engineering holding company. That is a double-edged trait — deep execution focus and skin in the game, but also key-person dependence on the founder.</li>
+    <li><strong>Balance sheet &amp; returns:</strong> the group carries the working-capital intensity typical of a contractor (money tied up in projects awaiting payment) but has kept returns respectable — <strong>RoCE around ~21–23%</strong> and RoE in the mid-teens, with book value around ₹800/share. It is not a debt-free balance sheet, but nor is it the over-levered kind that periodically sinks Indian construction firms.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the structure matters:</b> a diversified contractor scaling this fast — power, FGD, railways, water and now 25-year mining concessions — leans heavily on one founder's judgement about which risks to take. The absence of pledged promoter shares and the steady returns suggest disciplined growth so far; the thing to watch is whether the sprawl into new verticals keeps that discipline as the balance sheet gets asked to fund longer-dated, more capital-hungry mining work.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: the order book decoded -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The ₹55,000-crore order book — three books in one number</h2></div>
+  <p class="part-sub">The single most important idea in the whole investment case — and the one most people get wrong.</p>
+
+  <p class="lead">Every contractor's headline metric is its <strong>order book</strong> — the value of work already won but not yet done. Power Mech's is huge: about <strong>₹55,151 Cr</strong>. Against ~₹6,000 Cr of annual revenue, a naïve reading is "nine years of revenue in the bag." That reading is wrong, and understanding <em>why</em> is the key to the entire company. The order book is not one homogeneous pile of construction work — it is <strong>three different books, on three different clocks</strong>, jammed into a single number.</p>
+
+  <div class="chart">
+    <div class="c-title">The order book, un-blended</div>
+    <div class="c-sub">Approximate composition of the ~₹55,151 Cr backlog (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Reported order book<small>the headline number</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~55,151</div></div>
+      <div class="bar-row"><div class="blab">25-year MDO mining<small>slow annuity, decades to unwind</small></div><div class="track"><span class="fill gold" style="width:72%"></span></div><div class="bval">~39,576</div></div>
+      <div class="bar-row"><div class="blab">Executable engineering book<small>near-term, ex-MDO</small></div><div class="track"><span class="fill wtg" style="width:29%"></span></div><div class="bval">~15,899</div></div>
+    </div>
+    <div class="legend"><span>Roughly ₹39,576 Cr of the backlog is a 25-year mine-operating annuity that trickles in over decades. The genuinely near-term, executable engineering-and-services book is closer to ~₹15,900 Cr — still healthy at ~2.5× annual revenue, but a fraction of the headline.</span></div>
+  </div>
+
+  <p>Here is the same idea in words. The <strong>25-year mining (MDO) piece</strong> — about ₹39,576 Cr — is real revenue, but it releases in thin slices over a quarter-century as coal is actually dug and delivered; it is an annuity, not a construction backlog. The <strong>executable engineering-and-services book</strong> — around ₹15,900 Cr of erection, BoP, civil, FGD and EPC work — is the part that converts into revenue over the next few years at the company's ~12% margin. And running underneath both is the <strong>O&amp;M annuity</strong>, a recurring stream that is often not even captured in the "order book" the way a fixed-scope contract is. Blend all three and you get a spectacular headline; un-blend them and you get a clear-eyed view of the business.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits Power Mech: three clocks in one order book</div>
+    <p>Most contractors you can read with a single order-book number and a rough "book-to-bill" ratio. Power Mech runs on <strong>three clocks at once</strong>, and the headline backlog is a chord of all three: a <em>fast clock</em> (erection, FGD, civil, EPC — one to three years per job), a <em>steady clock</em> (O&amp;M — running for the plant's life), and an <em>ultra-slow clock</em> (the 25-year MDO mining concessions). Value the company by adding one ₹55,151 Cr number to a revenue line and you will badly mis-time it. Value it properly and you track three things separately: how fast the ~₹15,900 Cr executable book converts at ~12% margin, how much recurring O&amp;M revenue compounds, and whether the slow mining annuity actually starts producing coal — and cash — rather than sitting as a paper backlog. The order book is a chord; you have to hear the individual notes.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~₹39,576 Cr</div><div class="msl">25-year MDO mining backlog — a slow annuity, ~72% of the headline order book</div></div>
+    <div class="ms"><div class="msv">~₹15,900 Cr</div><div class="msl">Near-term executable engineering &amp; services book (ex-MDO)</div></div>
+    <div class="ms green"><div class="msv">~₹7,210 Cr</div><div class="msl">New order inflows won in FY26 — the book-to-bill that keeps the engine fed</div></div>
+  </div>
+
+  <p>The good news in that breakdown is that even the honest, ex-MDO figure — around ₹15,900 Cr — is roughly two-and-a-half years of revenue already booked, which is a comfortable runway for a contractor. FY26's ~₹7,210 Cr of fresh inflows shows new work is arriving faster than it is being burned, so the executable book can keep growing. The subtlety, and the reason to un-blend, is that a chunk of the flashiest headline growth came from adding decades-long mining concessions whose revenue you will not see for years — so quarter-to-quarter, watch the <em>executable</em> book and the inflow, not the ₹55,000-crore banner.</p>
+
+  <div class="note gold"><b>A genuine surprise:</b> the company most people would describe as "a power-plant erector" now has its single largest order — by a wide margin — in <strong>coal mining</strong>. The ~₹39,576 Cr of MDO work dwarfs anything in its traditional erection or FGD book. A firm known for bolting turbines together will, over the next 25 years, be judged substantially on how well it digs and hauls coal — a business it had never been in until recently.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The O&amp;M annuity: the quiet, steadier half</h2></div>
+  <p class="part-sub">The recurring business that grows every time another plant joins the fleet.</p>
+
+  <p class="lead">Underneath the lumpy construction contracts runs a calmer stream: <strong>operations &amp; maintenance</strong>. Once a power plant is built, someone has to run it every day and overhaul it on schedule for decades — and Power Mech does exactly that across a very large installed base of generating capacity. It is the least glamorous part of the story and, arguably, the most valuable.</p>
+
+  <p>Here is the mechanism that makes O&amp;M worth so much more than its size suggests. An erection contract is a one-time event: you win it, execute it, book the revenue, and it is gone. But an O&amp;M contract on that same plant pays a fee <strong>every year, often for a decade or more</strong>, with predictable margins and none of the win-or-lose lumpiness of chasing new projects. So each year of strong construction activity doesn't just add a one-off sale — it can permanently thicken the recurring book, because a plant that Power Mech helped build is a natural plant for Power Mech to maintain. Over time, a large serviced fleet becomes a high-visibility earnings base that keeps paying through the cycle.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the annuity is the calmer, higher-quality value</div>
+    <p>Construction is feast-or-famine: it booms when capex flows and goes quiet when tenders dry up, and a contractor over-exposed to it swings violently with the cycle. O&amp;M does not behave that way — a plant built in a boom still needs operating and servicing through the following bust. That is the ballast in Power Mech's earnings: a slice of revenue that shows up whether or not new orders are being won this quarter, at steady margins, from a fleet that only tends to grow. For an investor, the quiet compounding of the O&amp;M book is what separates Power Mech from a pure boom-bust construction play — and it is precisely the part the headline order book <em>under</em>-states, because a rolling service contract doesn't sit in a backlog the way a fixed-scope build does.</p>
+  </div>
+
+  <div class="note gold"><b>The nuance:</b> O&amp;M is steadier, but it is also <em>lower-ticket</em> than a big EPC or mining award, so it will not drive the headline growth that excites the market. Its job in the story is different — it de-risks the earnings and improves their quality, quietly, in the background. When you weigh Power Mech, treat the O&amp;M base as the reason the company is more resilient than a typical contractor, even though it is the construction and mining books that will move the revenue line.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>FGD: the mandated retrofit market</h2></div>
+  <p class="part-sub">A wave of pollution-control work forced onto India's coal fleet — and an erector is well placed to catch it.</p>
+
+  <p class="lead">One of the most important tailwinds behind Power Mech has nothing to do with building new plants — it is about cleaning up old ones. India's coal-fired power stations have been ordered to install <strong>flue-gas desulphurisation (FGD)</strong> systems: large chemical-scrubbing units bolted onto a plant's exhaust to strip out sulphur dioxide before it reaches the air. Because this is a <em>mandate</em>, not a discretionary upgrade, it created a captive, time-bound retrofit market across a big chunk of the national coal fleet.</p>
+
+  <p>Why is this Power Mech's kind of work? An FGD retrofit is heavy on-site engineering — ducting, structures, pumps, absorbers — grafted onto a <em>live or recently operating</em> power plant, often in tight, awkward spaces without the luxury of a green field. That is exactly the erection-and-BoP discipline the company has practised for 25 years, and it had an early-mover credential: it installed <strong>India's first operational FGD at Vindhyachal (500 MW) back in 2018</strong>, as an associate to GE. When the mandate broadened, Power Mech was already on the board — and in 2022 it won a landmark <strong>~₹6,163 Cr FGD package from the Adani group</strong> covering 15 coal units.</p>
+
+  <div class="plain">
+    <div class="ptag">The honest complication with FGD</div>
+    <p>FGD looks like a clean, mandated growth market — and it is — but the reality on the ground has been stop-start. Regulatory deadlines for FGD installation have been <strong>repeatedly extended</strong>, and some of Power Mech's own FGD orders (notably parts of the large Adani package) have moved slowly, to the point where analysts have set them aside when judging the near-term executable book. So FGD is best understood as a <em>large, real, but back-ended</em> opportunity: the work exists and the rules require it, but the timing is at the mercy of policy deadlines and utility budgets that keep slipping. It is a genuine structural driver — just not a metronome you can set your revenue clock to.</p>
+  </div>
+
+  <p>The strategic prize is bigger than the retrofit fees. A plant Power Mech retrofits with FGD is a plant it now knows intimately — a natural candidate for the O&amp;M of that FGD unit afterwards, feeding the recurring services book. That is the through-line of the whole company: nearly every project it wins is also a foot in the door for the next, longer-lasting relationship with the same asset.</p>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The mining pivot: from erecting boilers to operating mines</h2></div>
+  <p class="part-sub">The biggest, strangest and longest-dated bet in the book — a 25-year coal annuity.</p>
+
+  <p class="lead">The most consequential recent development at Power Mech is also the least obvious for an erection contractor: it has become a <strong>Mine Developer &amp; Operator (MDO)</strong>. Under an MDO contract, a company takes near-total responsibility for a coal or mineral mine on behalf of the owner — developing it, running it, extracting and delivering the coal — for a very long tenure, typically <strong>25 years or more</strong>, in exchange for a per-tonne fee. It is a completely different business from bolting a turbine together, and Power Mech has moved into it at scale.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The two mega-MDO wins that reshaped the order book</caption>
+    <thead><tr><th>Contract</th><th>Awarder &amp; asset</th><th class="num">Value</th><th class="num">Tenure</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Tasra opencast</td><td>SAIL — Jharia coalfields, Dhanbad (Jharkhand)</td><td class="num">~₹30,438 Cr</td><td class="num">~25–28 yrs</td></tr>
+      <tr><td class="t-strong">Coal-mining MDO</td><td>Central Coalfields (Coal India subsidiary)</td><td class="num">~₹9,924 Cr</td><td class="num">~25 yrs</td></tr>
+      <tr><td class="t-strong">Combined MDO book</td><td>The mining annuity inside the order book</td><td class="num">~₹39,576 Cr</td><td class="num">multi-decade</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The logic Power Mech offers is that mining is, at its heart, a <strong>large-scale project-management and heavy-equipment challenge</strong> — exactly the muscle it built erecting plants and hauling steel. Develop the site, deploy the excavators and haul trucks, move enormous volumes of overburden and coal on schedule, and get paid per tonne for decades. If that skill genuinely transfers, MDO gives Power Mech something its core business never offered: a <em>very</em> long, annuity-like revenue stream that keeps paying for a quarter-century, smoothing the lumpiness of construction.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the mining bet cuts both ways</div>
+    <p>The upside is straightforward: a 25-year coal annuity worth tens of thousands of crores transforms revenue visibility and, if executed well, throws off steady cash long after any single construction cycle has turned. The risk is just as real. Mining is <strong>capital-hungry</strong> — fleets of excavators and trucks, mine development, ramp-up — which asks a lot of a contractor's balance sheet up front, before the per-tonne fees flow. It carries execution risks Power Mech has never owned before (geology, land, environmental clearances, coal evacuation), and it ties the company to <strong>coal</strong> for decades at a time when the world is trying to burn less of it. The MDO book is the reason the headline order figure looks enormous; it is also the reason to watch, closely, whether those mines actually reach steady-state production on time and at the promised economics. Paper tonnes in a backlog are not the same as coal on a conveyor.</p>
+  </div>
+
+  <div class="note gold"><b>The metric that will settle the mining question:</b> not the ₹39,576 Cr headline, but <strong>tonnes actually mined and despatched</strong> — the point at which the MDO stops being a signed contract and becomes a producing, cash-generating annuity. Until those mines ramp, the mining book is potential; once they do, it is the ballast that could re-rate the whole company.</div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Beyond thermal power: railways, water, roads and abroad</h2></div>
+  <p class="part-sub">The deliberate widening from a power-plant specialist into a broad infrastructure contractor.</p>
+
+  <p class="lead">For a company born erecting boilers, an obvious strategic worry is <strong>over-dependence on thermal power</strong> — a sector that, however durable in India, carries long-term questions as the energy mix shifts. Power Mech's answer has been to carry its core skills — heavy civil work, project management, on-site execution — into adjacent infrastructure markets, so the company grows even in years when power-plant capex is soft.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The diversification map</caption>
+    <thead><tr><th>Vertical</th><th>What Power Mech does</th><th>Why it fits</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Railways</td><td>Civil and infrastructure work — tracks, structures, associated construction.</td><td>Heavy civil execution the firm already masters, riding India's large railway-capex push.</td></tr>
+      <tr><td class="t-strong">Water &amp; desalination</td><td>Water-supply schemes, treatment and desalination-plant construction.</td><td>Government-funded, steady-demand infrastructure using the same civil and mechanical trades.</td></tr>
+      <tr><td class="t-strong">Roads &amp; buildings</td><td>Road construction and industrial building development.</td><td>Broadens the civil order book beyond power-linked work.</td></tr>
+      <tr><td class="t-strong">Transmission, petrochem, piping</td><td>T&amp;D, electrical, piping and mechanical works for industrial clients.</td><td>Extensions of the erection-and-BoP skill set into non-power industry.</td></tr>
+      <tr><td class="t-strong">International</td><td>Technical, rotary and O&amp;M services abroad — e.g. the Dangote refinery complex in Nigeria.</td><td>Exports the O&amp;M and specialist-manpower capability to overseas industrial clients.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The right way to read the diversification</div>
+    <p>Diversification can be a strength or a symptom, and it is worth being clear-eyed about which. At its best, moving into railways, water and roads lets Power Mech <strong>recycle one core competence — disciplined heavy-civil execution — across many end-markets</strong>, so a slowdown in any single one does not sink the company, and government infrastructure spending broadly keeps the order book fed. At its worst, spreading a contractor across too many unfamiliar verticals dilutes focus and invites execution slips in businesses management understands less well. The evidence so far — steady margins and returns as the mix has broadened — leans toward the benign reading. The test is forward-looking: can Power Mech keep its ~12% execution discipline as non-power work becomes a bigger share, or do the new verticals eventually cost it on margin or write-offs?</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Why the capex cycle is working in its favour</h2></div>
+  <p class="part-sub">The structural tailwinds — new thermal build, mandated retrofits, and an infrastructure super-cycle.</p>
+
+  <p class="lead">Power Mech does not create demand; it harvests it. So the case for the company rests heavily on the wave of capital spending flowing through exactly the markets it serves. Three currents are running its way at once.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What's driving the order flow</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Why it helps Power Mech</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">New thermal build</td><td>India is adding fresh coal-fired capacity again to firm up a grid leaning on intermittent solar and wind — new supercritical units are being sanctioned.</td><td>Directly revives Power Mech's founding business — BTG erection, balance of plant, and now full EPC packages on new units.</td></tr>
+      <tr><td class="t-strong">FGD retrofit mandate</td><td>A regulatory requirement to fit desulphurisation across the existing coal fleet — a large, captive retrofit programme.</td><td>Plays to the firm's on-site retrofit strength; a multi-year (if stop-start) pipeline it is already winning.</td></tr>
+      <tr><td class="t-strong">Infrastructure super-cycle</td><td>Heavy government spending on railways, water, roads and mining capacity across the country.</td><td>Feeds the diversified civil and MDO books, reducing reliance on any single sector.</td></tr>
+      <tr><td class="t-strong">Coal-security push</td><td>A national drive to raise domestic coal output, much of it via private mine operators (MDOs).</td><td>The structural reason Power Mech's mining pivot exists — long-tenure MDO awards it can win with project-management scale.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The insight that separates this cycle from a simple "coal comeback"</div>
+    <p>It would be easy to file Power Mech as a leveraged bet on coal, but that misreads the mechanics. The company gets paid to <strong>build, service and operate</strong> infrastructure regardless of who ultimately owns the megawatt or the tonne — its fee is for execution, not for the commodity. That is a subtler, more resilient position than a pure coal producer: when new plants are built, it erects them; when old plants must clean up, it retrofits them; when the running fleet needs upkeep, it maintains it; and when coal output must rise, it operates the mines. The same firm profits from coal being built, cleaned, run and dug — four different phases of the asset's life. That breadth across the life-cycle, more than any single tailwind, is what gives the order book its durability.</p>
+  </div>
+
+  <p>None of this makes the demand risk-free. Thermal capex is ultimately a policy choice; FGD deadlines have slipped repeatedly; infrastructure budgets ebb with the fiscal cycle; and the long-run energy transition is a genuine question mark over coal-linked work a decade out. But the near-to-medium-term picture — new units, mandated retrofits, an infrastructure build-out and a coal-security drive all at once — is about as supportive a backdrop as an execution contractor in these markets could ask for.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A genuine volume machine on a thin, fixed margin — priced as a compounder.</p>
+
+  <p class="lead">Power Mech's financial story is unusually clean to describe: revenue and profit have compounded steadily for years, the operating margin has sat almost flat the entire time, and the stock is priced to expect the compounding to continue. There is no margin-inflection story here and no dramatic turnaround — just a contractor doing more and more work at a consistent take.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore), FY22 → FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill ink" style="width:45%"></span></div><div class="bval">~2,710</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill wtg" style="width:59%"></span></div><div class="bval">~3,601</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill wtg" style="width:69%"></span></div><div class="bval">~4,207</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:86%"></span></div><div class="bval">~5,234</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~6,062</div></div>
+    </div>
+    <div class="legend"><span>Revenue has more than doubled in four years — a ~22% compound growth rate — driven by rising execution volumes across erection, civil, FGD and services. Management guides to ~21% further growth in FY27.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Net profit — tripled in four years</div>
+    <div class="c-sub">Consolidated net profit / PAT (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill wtg" style="width:60%"></span></div><div class="bval">~248</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:85%"></span></div><div class="bval">~348</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~412</div></div>
+    </div>
+    <div class="legend"><span>Net profit rose ~18% in FY26 to ~₹412 Cr, up from ~₹138 Cr in FY22 — a near-tripling in four years, tracking the revenue ramp rather than any margin expansion.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">The margin that never moves — the "fixed take"</div>
+    <div class="c-sub">Approximate operating (EBITDA) margin, %</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill spec" style="width:92%"></span></div><div class="bval">~12%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill spec" style="width:94%"></span></div><div class="bval">~12%</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill spec" style="width:96%"></span></div><div class="bval">~12.3%</div></div>
+    </div>
+    <div class="legend"><span>The operating margin has hovered around 11–12% for years. That stability is the whole point: Power Mech is a throughput business that earns a thin, consistent slice of a growing pile of work — not a pricing or mix-shift story.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~12%</div><div class="msl">EBITDA margin — remarkably steady; growth is volume, not price</div></div>
+    <div class="ms green"><div class="msv">~21–23%</div><div class="msl">RoCE — healthy capital returns for a contractor of this size</div></div>
+    <div class="ms"><div class="msv">~21×</div><div class="msl">P/E on ~₹8,270 Cr market cap — a compounder multiple, not a cheap cyclical</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: the executable book converting at ~12%</div>
+    <p>Because the margin is effectively fixed and the mining annuity is years from meaningful cash, the case for Power Mech reduces to a volume-and-conversion question. The metric that proves or breaks it is the <strong>near-term executable order book (~₹15,900 Cr ex-MDO) converting into revenue at the steady ~12% margin</strong> — read alongside <strong>new order inflow</strong> (is the book being refilled faster than it is burned? FY26's ~₹7,210 Cr says yes), <strong>RoCE holding in the low-20s</strong> (is the growth still capital-efficient, or is working capital and mining capex eroding returns?), and, on a longer horizon, <strong>tonnes actually mined</strong> under the MDO contracts. At ~21× earnings the stock is not priced as a cheap contractor; it is priced as a business that will keep converting a fat, growing book at a dependable margin. If it does, the multiple is defensible; if execution or working capital slips, a contractor on a compounder's multiple has room to disappoint. Everything else is commentary; conversion at margin is the scoreboard.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 consolidated results and third-party financial databases and cross-checked across sources; small differences exist between reported standalone and consolidated numbers and between data providers (e.g. FY26 consolidated revenue is variously reported at ~₹6,062 Cr and ~₹6,107 Cr). The order-book split (MDO vs executable) is <b>approx.</b>, based on rating-agency and analyst commentary rather than a single audited disclosure. Verify all figures against the company's own filings before relying on any one number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A disciplined execution machine, asked to keep scaling without a margin cushion.</p>
+
+  <p class="lead">Power Mech enters FY27 in strong shape: a diversified order book that gives years of visibility, tailwinds in nearly every market it serves, healthy returns, and a founder who has compounded the business for a quarter-century. The debate is not whether the company works — it plainly does — but whether a firm earning a thin, fixed margin on execution can keep growing volumes fast enough, and cleanly enough, to justify a growth-stock valuation while absorbing the new risks of long-dated mining.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Deep, diversified order book</strong> — even ex-MDO, ~₹15,900 Cr of executable work plus a 25-year mining annuity gives rare revenue visibility for a mid-cap contractor.</li>
+        <li><strong>Broad tailwinds</strong> — new thermal build, mandated FGD retrofits, an infrastructure super-cycle and a coal-security push all feed the same firm at once.</li>
+        <li><strong>Life-cycle model</strong> — it profits from building, cleaning, running and now mining the same assets; the O&amp;M annuity de-risks the earnings.</li>
+        <li><strong>Consistent returns</strong> — ~21–23% RoCE and steady ~12% margins through years of rapid growth, with no promoter-pledge stress.</li>
+        <li><strong>Up the value chain</strong> — moving from erection sub-contractor into full EPC and MDO raises value per contract and the strategic moat.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Thin, fixed margin</strong> — ~12% leaves little cushion; a few cost overruns or delayed projects can dent profit fast, and there's no pricing lever to fall back on.</li>
+        <li><strong>Order-book optics</strong> — the ₹55,000 Cr headline flatters near-term reality; most of it is a slow mining annuity, and FGD orders have repeatedly slipped.</li>
+        <li><strong>Working capital &amp; mining capex</strong> — contractor cash gets tied up in projects; the MDO build-out demands heavy upfront investment before per-tonne fees flow.</li>
+        <li><strong>Execution &amp; diversification risk</strong> — spread across power, FGD, railways, water and mining, the firm owns unfamiliar risks (geology, clearances, coal evacuation).</li>
+        <li><strong>Valuation &amp; coal exposure</strong> — ~21× earnings prices in continued flawless scaling, while a chunk of the future rests on coal for 25 years amid an energy transition.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Power Mech has quietly become one of the more capable execution houses in Indian infrastructure — an erector that learned to run what it builds, retrofit what it ran, and now operate the mines that feed it. The business is real, the returns are respectable, and the tailwinds are genuine. What it is <em>not</em> is a story of expanding margins or a hidden re-rating; it is a volume machine running at a dependable ~12% take, which is precisely why the valuation matters. The next few years turn on two checkable things: whether the ~₹15,900 Cr executable book keeps converting into revenue at that steady margin with the working capital under control, and whether the Tasra and Central Coalfields mines move from signed contracts to <strong>coal actually on the conveyor</strong>. Watch the executable book, the order inflow, and — the moment it starts — the mining tonnage; those prints, not the ₹55,000-crore banner, will tell you whether the compounding continues.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Power Mech Projects Ltd — Q4 &amp; FY26 results and earnings-call summary (year ended Mar 2026), via company disclosures and Quartr/TradingView.</li>
+    <li>Whalesbook — "Power Mech Projects Posts 18% PAT Growth in FY26, Rs 55,151 Cr Order Book" and Q3 order-book coverage.</li>
+    <li>InvestyWise — Power Mech Projects Q4 FY2026 earnings release (revenue, EBITDA, margin, FY27 guidance).</li>
+    <li>Screener.in — Power Mech Projects consolidated financials (FY22–FY26 sales, net profit, OPM, RoCE, market cap, P/E).</li>
+    <li>CARE Ratings — Power Mech Projects Limited press releases (order-book composition, segment mix, MDO treatment), 2024–2025.</li>
+    <li>Cholamandalam Securities — Power Mech Projects initiating-coverage report (business overview, segments).</li>
+    <li>Outlook Business / Construction Week India — "SAIL Awards Rs 30,483 Crore Mine Development Project to Power Mech" (Tasra MDO).</li>
+    <li>Business Standard — Power Mech Projects order wins, incl. Central Coalfields ~₹9,924 Cr MDO and FGD coverage.</li>
+    <li>ANI / Business Today — "Power Mech Projects bags FGD projects of Rs 6,163.20 crore from Adani Group" (2022).</li>
+    <li>BSE India / NSE India — Power Mech Projects Ltd stock pages, scrip code 539302 / symbol POWERMECH (ISIN INE211R01019).</li>
+    <li>ScanX / Simply Wall St — promoter holding (~58.96%, no encumbrance) and shareholding data.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; some figures (notably the executable-vs-MDO order-book split and FY27 growth) are estimates or management guidance rather than audited results. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "POWERMECH";
+  const COMPANY_SLUG = "power-mech-projects";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
