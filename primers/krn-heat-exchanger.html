@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KRN Heat Exchanger — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1F6F7;
+    --paper-2:#F9FCFC;
+    --card:#FFFFFF;
+    --ink:#12201F;
+    --ink-soft:#4F615F;
+    --ink-faint:#849290;
+    --brand:#0E5766;          /* deep cool cyan */
+    --brand-bright:#1391AD;   /* teal-blue accent */
+    --gold:#D98A3C;           /* warm amber - warmth / accent */
+    --wtg:#1391AD;            /* fabrication */
+    --epc:#37A6BE;           /* assembly */
+    --om:#0B4653;            /* OEM / annuity blue */
+    --spec:#0F8C86;          /* teal-green cross accent */
+    --line:#D6E0E0;
+    --line-soft:#E5ECEC;
+    --good:#218360;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4F1F4;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F9F9;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E8EEEE;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0E5766,#1391AD);}
+  .fill.gold{background:linear-gradient(90deg,#D98A3C,#E7A75C);}
+  .fill.wtg{background:linear-gradient(90deg,#1391AD,#37A6BE);}
+  .fill.om{background:linear-gradient(90deg,#0B4653,#166B7C);}
+  .fill.spec{background:linear-gradient(90deg,#0F8C86,#2CA79E);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a47,#566461);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3F0;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Heat-exchanger coils 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What KRN sells</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The customer-concentration knot</a></li>
+    <li><a href="#p5"><span class="n">05</span> Plant II: the 6× bet</a></li>
+    <li><a href="#p6"><span class="n">06</span> Metal, margins &amp; integration</a></li>
+    <li><a href="#p7"><span class="n">07</span> The cooling tailwind</a></li>
+    <li><a href="#p8"><span class="n">08</span> The industry &amp; rivals</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: KRN · BSE: 544263</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>KRN Heat Exchanger, <em>the coil behind the cooling brand</em></h1>
+  <p class="dek">A full walk through a component-maker you have never heard of but very possibly own the output of — the aluminium-and-copper fin-and-tube coils that let an air conditioner, a chiller or a cold room actually move heat. How KRN makes the part, why it is a supplier to AC brands and not an AC brand itself, why one customer buying a third of everything is both its lifeline and its sharpest risk, and whether a 6× factory can fill up fast enough to justify one of the market's steepest valuations.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹600 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹76 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~18.7% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹8,700 <small>Cr</small></div><div class="l">Market cap (Aug 2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">14 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ~₹600 Cr (+38%), EBITDA ~₹112 Cr (18.7% margin), PAT ~₹76 Cr (+45%); Plant II (KRN HVAC Products) commercial production live from May 2025; added the capacity-utilisation ramp and customer-concentration sections.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">KRN Heat Exchanger and Refrigeration makes the <strong>coils inside cooling machines</strong> — the tightly packed grids of thin metal fins and copper tubes that an air conditioner, a chiller or an industrial refrigeration unit uses to dump heat out or soak heat in. It does <strong>not</strong> make air conditioners, and you will never see its badge on a showroom floor. It is a <strong>components supplier</strong>: it sells these fin-and-tube "heat exchangers" to the brands that do assemble the finished machines — <strong>Daikin, Blue Star, Carrier, Voltas, Schneider Electric, Kirloskar Chillers</strong> and dozens of others. From two plants at Neemrana in Rajasthan, it has quietly become one of India's larger independent makers of this specific part.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is a picks-and-shovels play on India's cooling boom.</strong> KRN doesn't need to win the AC brand war; it needs Indians (and increasingly the world) to buy more cooling of any brand, because almost every machine needs a coil and KRN is happy to supply any of them. FY26 revenue rose ~38% to <strong>~₹600 Cr</strong> with net profit up ~45% to <strong>~₹76 Cr</strong> — growth riding rising AC penetration, commercial refrigeration, and a push into exports and data-centre cooling.</li>
+    <li><strong>One customer is a third of the business.</strong> <strong>Daikin alone is over ~33% of revenue</strong>, and the top ten customers are roughly <strong>72%</strong> — on relationships that are largely purchase-order-by-purchase-order, with no binding long-term contracts. That concentration is the single most important risk to understand, because KRN's biggest customers are also the firms most capable of making these coils themselves.</li>
+    <li><strong>The whole story now hinges on a new factory filling up.</strong> KRN commissioned a much larger <strong>Plant II</strong> (through subsidiary KRN HVAC Products) that lifts capacity roughly <strong>6×</strong>, live commercially since mid-2025. Management guides that plant from ~20% utilisation in FY26 to ~50% by FY27 and ~80% by FY29. The stock trades at an extraordinary multiple — well over <strong>100× earnings</strong> — which prices in that ramp going almost perfectly.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>KRN is a specialist metal-bashing business hiding inside a consumer megatrend. It occupies one narrow, unglamorous rung of the cooling supply chain — the coil — and does it at scale for the big names above it. The bet is simple to state and hard to underwrite: a country that is only starting to air-condition itself will buy vastly more cooling for decades, KRN supplies a part that every one of those machines needs, and a brand-new 6× factory is ready to catch the demand. The catches are equally clear — a dangerous reliance on a handful of buyers who could in-source the part, raw-metal prices that swing the economics, and a share price that has already discounted years of flawless execution.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Heat-exchanger coils 101: how a fin-and-tube coil moves heat</h2></div>
+  <p class="part-sub">No engineering degree needed — just the handful of ideas that drive the whole business.</p>
+
+  <p class="lead">A heat exchanger does one job: move heat from one place to another without the two things touching. In an air conditioner there are two of them. One coil (the <strong>evaporator</strong>) sits indoors and pulls heat <em>out</em> of your room; the other (the <strong>condenser</strong>) sits outside and dumps that heat into the open air. Both are built the same way — a cold or hot refrigerant runs through a maze of thin metal tubes, and hundreds of closely spaced metal <strong>fins</strong> are threaded onto those tubes to hugely expand the surface area touching the air. More surface area means more heat moved per second. That fin-and-tube sandwich <em>is</em> KRN's product.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Fin-and-tube coil</td><td>The core product: refrigerant-carrying <em>tubes</em> laced through a dense stack of metal <em>fins</em>. KRN makes the whole assembly — this is the "heat exchanger" in its name.</td></tr>
+      <tr><td class="t-strong">Condenser coil</td><td>The outdoor coil that <em>rejects</em> heat (the hot unit whirring outside a building). One of KRN's two flagship product lines.</td></tr>
+      <tr><td class="t-strong">Evaporator coil</td><td>The indoor coil that <em>absorbs</em> heat and cools the air. KRN's other flagship line.</td></tr>
+      <tr><td class="t-strong">HVAC&amp;R</td><td>"Heating, Ventilation, Air Conditioning &amp; Refrigeration" — KRN's entire end-market. Room ACs, commercial chillers, cold storage, refrigerated transport, process cooling.</td></tr>
+      <tr><td class="t-strong">Fin material</td><td>The fins are aluminium or copper; the tubes are usually copper. Which metal, and how thin, drives both performance and cost — and the industry is steadily shifting more of the job to aluminium.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The economics that decide everything: metal per unit of cooling</div>
+    <p>A coil is, at heart, a carefully shaped pile of aluminium and copper. So the two levers that matter are <strong>how much cooling you get per kilo of metal</strong> and <strong>how cheap that metal is</strong>. Thinner fins, tighter tube spacing and smarter geometry let a maker move the same heat with less material — that is real engineering value, not commodity bending. And because copper costs multiples of aluminium, every gram of the job that can shift from copper to aluminium without losing performance takes cost out. KRN's edge is being able to design and mass-produce coils across a wide range of tube diameters (from 5&nbsp;mm up to 15.88&nbsp;mm) and both metals, so an OEM can hand it a spec and get back a coil tuned for cost <em>and</em> performance.</p>
+  </div>
+
+  <h3>Who buys these coils — and who doesn't</h3>
+  <ul class="clean">
+    <li><strong>AC &amp; appliance OEMs</strong> — the brands that assemble room and commercial air conditioners (Daikin, Blue Star, Voltas, Carrier). They buy coils to slot into their machines. This is the bulk of KRN's book.</li>
+    <li><strong>Refrigeration &amp; chiller makers</strong> — firms building commercial refrigeration, process chillers and cold-chain equipment (Kirloskar Chillers, Climaveneta, Frigel). Coils here are often larger and more customised.</li>
+    <li><strong>Data-centre &amp; specialised cooling</strong> — a newer, fast-growing buyer of precision cooling coils; Schneider Electric's IT-cooling business is already a KRN customer.</li>
+    <li><strong>Not the consumer.</strong> KRN never sells to you. Its customer is the company whose name goes on the box — which is exactly why its fortunes track the <em>industry's</em> volumes, not any one brand's marketing.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What KRN actually sells: a part, not a brand</h2></div>
+  <p class="part-sub">Where KRN sits in the chain — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">The cleanest way to understand KRN is to place it precisely in the value chain that ends with a cooling machine on a wall or a chiller on a rooftop. Raw aluminium and copper come in one end; a finished, tested coil goes out the other; and the brand, the compressor, the electronics and the customer relationship all sit <em>downstream</em> of where KRN stops. KRN owns one rung — and it does that rung for many brands at once.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The cooling value chain — KRN occupies one rung, for everyone above it</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Input · Metal</div><div class="nname">Aluminium &amp; copper</div><div class="nwho">Strip, foil and tube bought as raw material; largest cost line.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">KRN · Fabricate</div><div class="nname">Fins, tubes &amp; headers</div><div class="nwho">Stamp fins, form tubes, build headers &amp; sheet-metal frames in-house.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">KRN · Assemble</div><div class="nname">Finished coil</div><div class="nwho">Condenser &amp; evaporator coils, tested &amp; shipped. KRN's revenue ends here.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Customer · OEM</div><div class="nname">AC / chiller / cold room</div><div class="nwho">Daikin, Blue Star, Kirloskar… add compressor, casing, brand, warranty.</div></div>
+    </div>
+    <div class="flow-note">KRN's revenue stops at the finished coil. The compressor, the refrigerant gas, the controls, the badge, the showroom and the consumer all belong to the customer downstream — which is both why KRN's margins are modest and why it is insulated from any single brand's success.</div>
+  </div>
+
+  <h3>The product lines, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Condenser &amp; evaporator coils</span></strong> — the core. These are the two coils inside almost every AC and refrigeration circuit. KRN makes them in aluminium-fin and copper variants, across a range of tube sizes, both as standard catalogue items and to a customer's exact drawing.</li>
+    <li><strong><span class="chain-epc">Fluid &amp; steam coils, water coils, headers, sheet-metal</span></strong> — the adjacent parts. Coils that heat or cool using water/steam rather than refrigerant, plus the headers (the manifolds that distribute flow) and sheet-metal fabrication that frame and mount a coil. This breadth lets KRN serve process-cooling and industrial customers, not just room AC.</li>
+    <li><strong><span class="chain-om">Condensing &amp; air-cooling units</span></strong> — the step-up. Rather than a bare coil, KRN also builds more complete <em>sub-assemblies</em> — a coil packaged with fans and a frame as a ready condensing or air-cooling unit. This moves it slightly up the value ladder and carries more content per sale.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "a part, not a brand" is the whole framing</div>
+    <p>Selling a component instead of a finished product cuts both ways, and grasping the trade is the key to KRN. The downside is obvious: a component-maker has thinner pricing power than a brand, is squeezed between metal costs and demanding OEM buyers, and captures only a sliver of the price a consumer eventually pays. The upside is subtler and genuine — KRN doesn't have to <em>win</em> the ferociously competitive AC market, it just has to be <em>in</em> it. Whether Daikin or Voltas or Blue Star takes the next sale barely matters if KRN can supply the coil to all of them. It is a bet on the category expanding, deliberately stripped of the risk of picking the category's winner.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the founders, and a very recent IPO</h2></div>
+  <p class="part-sub">A young, promoter-driven Rajasthan manufacturer that listed only in late 2024.</p>
+
+  <p class="lead">KRN is a first-generation, promoter-run business — not an old industrial house. It was built up around Neemrana in Rajasthan by the <strong>Yadav family</strong> (led by promoter Santosh Kumar Yadav), grew as a private supplier of coils to India's AC and refrigeration OEMs, and only came to the public market in <strong>October 2024</strong>. That listing is the hinge of the whole story: it raised the money for the 6× capacity expansion that now defines the investment case.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2017</div><div class="ev">KRN Heat Exchanger and Refrigeration incorporated at Neemrana, Rajasthan, making fin-and-tube coils for the HVAC&amp;R industry.</div></li>
+    <li><div class="yr">2017–2023</div><div class="ev">Builds its Plant I capacity and a customer roster of blue-chip OEMs — Daikin, Blue Star, Carrier, Kirloskar Chillers — several of them relationships dating to KRN's earliest years.</div></li>
+    <li class="major"><div class="yr">Oct 2024</div><div class="ev"><strong>IPO on NSE &amp; BSE</strong> at ₹220/share (band ₹209–220), a ~₹342 Cr fresh issue. The book is subscribed <strong>~213×</strong>; the stock lists near <strong>₹470–480</strong>, a ~114% first-day premium.</div></li>
+    <li class="major"><div class="yr">May 2025</div><div class="ev"><strong>Plant II</strong>, built through subsidiary <strong>KRN HVAC Products</strong> with the IPO money, starts commercial production — the ~6× capacity step-up at the centre of the story.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ~₹600 Cr (+38%), EBITDA ~₹112 Cr (18.7% margin), PAT ~₹76 Cr (+45%). New Plant II begins ramping; management guides a multi-year utilisation and export build-out.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the <strong>Yadav family</strong> retains the controlling majority after the IPO (the offer was a fresh issue rather than a promoter sell-down, so promoter skin stayed high). This is a classic founder-operator business where the promoters run the plants day to day — a strength for focus, but it also means governance, succession and related-party discipline deserve close reading in the filings.</li>
+    <li><strong>Key subsidiary:</strong> <strong>KRN HVAC Products Pvt Ltd</strong> houses the new Plant II. The bulk of the IPO proceeds went into funding this expansion, so the group's future capacity — and a large share of its future revenue — sits in this vehicle.</li>
+    <li><strong>Footprint:</strong> manufacturing is concentrated at <strong>Neemrana, Alwar district, Rajasthan</strong> — an established auto-and-appliance cluster on the Delhi–Jaipur corridor, close to component suppliers and to OEM plants in the north. Concentration in one location is efficient but is itself a single-site risk.</li>
+  </ul>
+
+  <div class="note gold"><b>The listing detail that colours everything:</b> KRN's IPO was subscribed roughly <b>213 times</b> and doubled on debut — a frenzy that set the stock's expectations sky-high from day one. A business earning ~₹76 Cr now carries a market value in the several-thousand-crore range precisely because the market chose, at listing, to price the <em>future factory</em> rather than the present profits. Every judgement about KRN has to reckon with that starting point.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: customer concentration + make-vs-buy -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The customer-concentration knot — and the make-vs-buy line</h2></div>
+  <p class="part-sub">The most important idea in the whole case, and one that is specific to a captive component-maker.</p>
+
+  <p class="lead">Most manufacturers worry about winning enough customers. KRN's defining tension is the opposite: it has <em>too few</em>, and the ones it has are uniquely dangerous. <strong>Daikin alone is more than ~33% of revenue.</strong> The top ten customers are roughly <strong>72%</strong>. And crucially, these sales run largely on rolling purchase orders, not binding multi-year contracts. Now add the twist that makes this more than a textbook concentration flag: KRN's biggest customers are the firms <em>most able to build coils themselves</em>. That is the knot the entire investment case has to untie.</p>
+
+  <div class="chart">
+    <div class="c-title">How concentrated the customer book is</div>
+    <div class="c-sub">Approximate share of revenue — the top of the book carries most of it</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Daikin<small>single largest customer</small></div><div class="track"><span class="fill bad" style="width:46%"></span></div><div class="bval">~33%</div></div>
+      <div class="bar-row"><div class="blab">Top 3 customers<small>illustrative</small></div><div class="track"><span class="fill gold" style="width:70%"></span></div><div class="bval">~50%</div></div>
+      <div class="bar-row"><div class="blab">Top 10 customers</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~72%</div></div>
+      <div class="bar-row"><div class="blab">Everyone else<small>the long tail</small></div><div class="track"><span class="fill ink" style="width:39%"></span></div><div class="bval">~28%</div></div>
+    </div>
+    <div class="legend"><span>One buyer at a third of revenue, ten buyers at nearly three-quarters, no long-term contracts — the concentration is real. The tail (~28%) and the export push are the diversification the company is trying to grow into.</span></div>
+  </div>
+
+  <p>Concentration is a familiar risk, but here it interacts with a second, sharper one that is peculiar to selling a mid-value component to industrial giants: <strong>make-versus-buy</strong>. A coil is not so exotic that a Daikin or a Blue Star <em>couldn't</em> stamp fins and form tubes in its own plant. Some already do, partially. So KRN survives on the calculus that it is <em>cheaper, faster and more flexible</em> to buy the coil from KRN than to make it in-house — its scale, its metal-buying, its variety of tube sizes and its willingness to take on customised, low-volume runs all feed that. The day that calculus flips for a major customer — because that customer builds enough scale to insource, or wants to protect its own supply — a big block of KRN's revenue can walk out the door.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits KRN: your biggest customer is also your most capable competitor</div>
+    <p>This is the sentence you cannot copy into another company's primer. KRN's single largest source of revenue, Daikin, is simultaneously one of the few firms on earth with the scale, engineering and motive to replace KRN entirely by making coils itself. So KRN is not really competing against other coil-makers for Daikin's business; it is competing against <em>Daikin's own factory floor</em> — every quarter, on cost and reliability. That is a genuinely different game from a normal supplier's. It means KRN's real moat isn't a brand or a patent; it is being permanently, demonstrably cheaper and more nimble than a customer's in-house alternative. Watch two things as tells that the moat is holding: whether the <strong>share of revenue from the single largest customer falls</strong> (diversification), and whether KRN wins <em>new</em> marquee OEMs rather than just deepening old ones.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms red"><div class="msv">~33%</div><div class="msl">Revenue from the single largest customer, Daikin — the concentration to watch</div></div>
+    <div class="ms gold"><div class="msv">~72%</div><div class="msl">Revenue from the top ten customers combined</div></div>
+    <div class="ms"><div class="msv">0</div><div class="msl">Binding long-term offtake contracts — sales run on rolling purchase orders</div></div>
+  </div>
+
+  <p>The counter-argument the bulls make is fair: these are <em>sticky</em> relationships, several running for the better part of a decade, and a qualified coil supplier is not swapped out casually — a cooling machine's performance and warranty depend on the coil, so OEMs value a proven partner. That stickiness is real. But "sticky" and "contracted" are not the same thing, and the absence of long-term agreements means the stickiness has to be re-earned on price and service with every order. That is precisely why the capacity, cost and export moves in the next sections matter so much: they are KRN's attempts to make itself harder to replace.</p>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>Plant II: the 6× bet the valuation rests on</h2></div>
+  <p class="part-sub">The single biggest swing factor — a factory built for demand that hasn't fully arrived yet.</p>
+
+  <p class="lead">The reason KRN raised money and listed was to build a much bigger factory. Through subsidiary <strong>KRN HVAC Products</strong>, it commissioned a new Neemrana plant — a roughly <strong>₹350 Cr capital outlay</strong> that lifts group capacity around <strong>6×</strong> — and started commercial production in <strong>May 2025</strong>. That single decision reshaped the company from a capacity-constrained coil supplier into a business with far more capacity than it currently uses. Everything now turns on how quickly that capacity fills.</p>
+
+  <div class="chart">
+    <div class="c-title">The utilisation ramp — the number the whole thesis rides on</div>
+    <div class="c-sub">Management-guided utilisation of the new Plant II capacity (approx.)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY26<small>ramp begins</small></div><div class="track"><span class="fill ink" style="width:25%"></span></div><div class="bval">~20%</div></div>
+      <div class="bar-row"><div class="blab">FY27<small>guided</small></div><div class="track"><span class="fill wtg" style="width:62%"></span></div><div class="bval">~50%</div></div>
+      <div class="bar-row"><div class="blab">FY29<small>guided</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~80%</div></div>
+    </div>
+    <div class="legend"><span>Capacity is built and paid for; revenue is not yet. Each step up this curve is a large slug of incremental sales at high incremental margin (the fixed factory cost is already sunk) — or, if demand disappoints, an expensive, under-used asset dragging on returns.</span></div>
+  </div>
+
+  <p>Understand why a utilisation ramp is such a powerful — and such a double-edged — driver. A new factory's cost is largely <strong>fixed and already spent</strong>: the building, the machines, the depreciation are there whether the plant runs at 20% or 80%. So each extra point of utilisation adds revenue that carries a very high incremental margin, because there is little new fixed cost to cover. Climb the curve and profits can grow far faster than revenue. But the same maths runs in reverse: a plant stuck at low utilisation is a heavy fixed cost spread over too few units, quietly eroding the returns the IPO promised. A 6× expansion is a 6× bet — magnificent if the demand shows up on schedule, punishing if it lags.</p>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles this section: capacity utilisation, quarter by quarter</div>
+    <p>Forget, for a moment, the order-of-magnitude headlines. The metric that will prove or break KRN over the next three years is a plain one — <strong>how full is Plant II?</strong> The company has told the market roughly ~20% in FY26, ~50% in FY27, ~80% by FY29. That path is now the yardstick. If reported volumes and revenue track it, the expensive factory converts into the earnings the share price already assumes, and the story works. If utilisation stalls — because a big customer's orders soften, because insourcing bites, or because the cooling cycle has a weak summer — then the fixed cost of that 6× plant turns a growth story into a returns problem overnight. Every quarterly result should be read first as an answer to one question: did the factory get fuller?</p>
+  </div>
+
+  <div class="note gold"><b>A genuine surprise:</b> the sheer speed of KRN's demanded transformation is easy to miss. This company only listed in October 2024, and by mid-2025 it had already switched on a plant roughly <b>six times</b> its prior scale. There was no long, cautious step-up — the expansion was pre-committed with IPO cash and turned on almost immediately. That compresses years of normal industrial scaling into a very short window, which is exactly why the utilisation ramp is so load-bearing: KRN has to grow into an enormous new footprint fast, with little slack for a slow patch.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Metal, margins, and the case for backward integration</h2></div>
+  <p class="part-sub">Why aluminium versus copper, raw-material pass-through, and China+1 all decide the margin.</p>
+
+  <p class="lead">Because a coil is mostly metal, KRN's profit is a story about <strong>managing aluminium and copper</strong>. Raw material is comfortably the largest cost line, so two questions dominate: can KRN pass rising metal prices on to customers, and can it take cost out by doing more of the job itself? Both are being answered in KRN's favour — which is much of why margins expanded sharply in FY26.</p>
+
+  <div class="chart">
+    <div class="c-title">Operating margin, expanding as scale and integration build</div>
+    <div class="c-sub">EBITDA margin, approximate, FY24–FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24<small>approx.</small></div><div class="track"><span class="fill ink" style="width:80%"></span></div><div class="bval">~15%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill wtg" style="width:86%"></span></div><div class="bval">~16%</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~18.7%</div></div>
+    </div>
+    <div class="legend"><span>EBITDA grew ~60% in FY26 to ~₹112 Cr while the margin pushed toward 19% — the mix of scale, a fuller product ladder, and the start of backward integration doing the work.</span></div>
+  </div>
+
+  <h3>The three margin levers</h3>
+  <ul class="clean">
+    <li><strong>Raw-material pass-through.</strong> KRN largely prices coils on a metal-plus-conversion basis, so when aluminium or copper prices rise, much of that is passed to the OEM. This protects the business from being crushed by a metal spike — but it also means a chunk of reported "revenue growth" can simply be higher metal prices flowing through, not more coils sold. Read volumes, not just revenue.</li>
+    <li><strong>Backward integration.</strong> The strategic push is to make more of the coil's inputs in-house — fin stock, tubes, headers — rather than buying them. Every step of integration captures a margin that used to belong to a supplier and tightens control over quality and delivery. Management explicitly frames the new capacity as lifting gross margins through fuller integration.</li>
+    <li><strong>The copper-to-aluminium shift.</strong> Across the industry, more of the coil's job is moving from expensive copper to cheaper aluminium (aluminium fins, and increasingly aluminium tubing) where performance allows. A maker that can engineer high-performing aluminium-heavy coils takes cost out of the bill of materials — a structural tailwind for a specialist like KRN.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why import-substitution and China+1 sit underneath all of this</div>
+    <p>India has historically imported a meaningful share of its heat-exchanger coils and components, and global OEMs are actively trying to de-risk supply chains away from a single country — the "China+1" reflex. Both point the same way for KRN: a domestic, scaled, quality coil-maker is exactly what an Indian AC plant or an exporting OEM wants as a local alternative to imports. That is the quiet structural bid under KRN's expansion — not just more Indian cooling demand, but a deliberate shift of where the coil for that cooling gets made. It is also why the export ambition (next section) is credible rather than aspirational: the same logic that makes KRN attractive at home makes it attractive to buyers abroad looking for a non-China source.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The cooling tailwind: penetration, exports, and new frontiers</h2></div>
+  <p class="part-sub">The structural demand under the whole business — and the two new markets stretching it.</p>
+
+  <p class="lead">Strip away the company specifics and KRN rides one of the most durable demand stories in India: the country is <strong>hot, getting hotter, getting richer, and barely air-conditioned</strong>. Room-AC penetration in Indian households is still low by global standards, incomes are rising, summers are lengthening, and commercial cooling — malls, offices, cold chains, data centres — is expanding fast. Every incremental machine needs coils. On top of that base, KRN is deliberately opening two newer fronts that could stretch its addressable market well beyond replacing imports at home.</p>
+
+  <div class="chart">
+    <div class="c-title">The export ambition — from a sliver to half of sales</div>
+    <div class="c-sub">Exports as a share of revenue: current level vs the multi-year target (approx.)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Exports today<small>approx.</small></div><div class="track"><span class="fill ink" style="width:32%"></span></div><div class="bval">~16%</div></div>
+      <div class="bar-row"><div class="blab">3-year target<small>guided</small></div><div class="track"><span class="fill spec" style="width:100%"></span></div><div class="bval">~50%</div></div>
+    </div>
+    <div class="legend"><span>KRN already ships to the UAE, USA, Italy, Saudi Arabia, Germany, the UK and more. The aim to lift exports from ~16% toward ~50% of sales in a few years is ambitious — and, if hit, the most powerful antidote to its domestic customer concentration.</span></div>
+  </div>
+
+  <h3>The demand stack, from most to least certain</h3>
+  <ul class="clean">
+    <li><strong>Domestic AC penetration</strong> — the anchor. A structural, decades-long rise in Indian cooling ownership. The safest part of the thesis: it doesn't depend on KRN winning share, only on the category growing, which it reliably does.</li>
+    <li><strong>Commercial refrigeration &amp; cold chain</strong> — food, pharma and logistics all need more refrigerated capacity, which needs coils that are often larger and more customised (and higher-value) than a room AC's.</li>
+    <li><strong>Exports</strong> — the China+1 opportunity, turning KRN into a supplier to global OEMs rather than only Indian ones. Higher risk (competition, quality bars, currency) but the single biggest lever on diversification.</li>
+    <li><strong>Data-centre &amp; specialised cooling, bus AC</strong> — the frontier. Precision cooling for data centres (KRN already supplies Schneider's IT-cooling arm) and a push into transport/bus air-conditioning coils open new, structurally growing verticals — small today, potentially meaningful later.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the export target is the number that would change the story</div>
+    <p>The domestic tailwind is real but shared — every coil-maker and every OEM's in-house line benefits from India buying more cooling. What would genuinely <em>re-rate</em> KRN's risk profile is the export ramp. Lifting foreign sales from a mid-teens percentage toward half of revenue would do two things at once: it would prove KRN can meet the tougher quality and cost bars of global buyers (validating the moat against insourcing), and it would dilute the Daikin-heavy domestic concentration that is the biggest single risk. Exports are the pressure valve on the customer-concentration knot from Section 04. Whether that valve actually opens — the reported export share climbing year on year — is one of the few things that could materially de-risk the equity.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A fragmented component niche whose most dangerous competitor is a customer's own factory.</p>
+
+  <p class="lead">KRN's competitive set is unusual because its rivals come in two very different shapes. There are other <strong>independent coil and component makers</strong> — some listed, many small and unlisted — competing for the same OEM orders. And there is the ever-present alternative of the <strong>OEM simply making the coil itself</strong>. A clear-eyed read of the landscape has to hold both in view.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Competitor type</th><th>What it is</th><th>Vs KRN</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">KRN</td><td>A scaled, listed independent fin-and-tube coil specialist with a fresh 6× plant</td><td><em>This company.</em> Its pitch: breadth of tube sizes and metals, customisation, scale buying, and now capacity to grow with the biggest OEMs.</td></tr>
+      <tr><td class="t-strong">OEM in-house lines</td><td>Daikin, Voltas, Blue Star et al. making some coils themselves</td><td>The most important "rival" — and also KRN's customers. The whole game is staying cheaper and nimbler than a customer's own factory (see Section 04).</td></tr>
+      <tr><td class="t-strong">Other independent coil makers</td><td>Domestic component firms (e.g. players like Anutone-type fabricators, regional coil shops) and specialist HVAC-parts suppliers</td><td>Compete on price and proximity for standard coils; KRN's scale and range are its answer, especially on complex or high-mix orders.</td></tr>
+      <tr><td class="t-strong">Imported coils</td><td>Coils and components sourced from abroad, historically including China</td><td>The thing import-substitution and China+1 are turning <em>against</em> — KRN is positioned as the local alternative buyers are shifting toward.</td></tr>
+      <tr><td class="t-strong">Adjacent HVAC-component listeds</td><td>Firms making other AC parts — cross-flow blowers, controls, motors, larger HVAC systems</td><td>Not direct rivals for coils, but the peer group the market prices KRN against — and against whom KRN's valuation looks especially rich.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two features define this market. First, the coil niche is <strong>fragmented</strong> below the OEMs — there is no single dominant independent coil champion, which is precisely the gap KRN is trying to fill by getting big enough to be the default outsourced partner for the majors. Second, the ceiling on any independent's ambition is the <strong>make-versus-buy line</strong>: an outsourced coil-maker can only grow as far as OEMs are willing to keep buying rather than building. KRN's strategy — scale, integration, a wide product range, and exports — is best understood as a sustained campaign to keep that line firmly on the "buy" side for as many customers, in as many geographies, as possible.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Genuinely strong growth and margins — attached to one of the market's most demanding multiples.</p>
+
+  <p class="lead">On the fundamentals, FY26 was excellent: revenue up ~38%, profit up ~45%, margins expanding, a new plant ramping. The problem — and it is a large one — is the price. KRN trades at a multiple that assumes not just that this growth continues, but that it accelerates through the Plant II ramp for years. The debate is entirely about whether execution can catch up to a valuation that has run far ahead of the current earnings.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore), FY24–FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24<small>approx.</small></div><div class="track"><span class="fill ink" style="width:51%"></span></div><div class="bval">~308</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill wtg" style="width:72%"></span></div><div class="bval">~435</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~600</div></div>
+    </div>
+    <div class="legend"><span>Revenue has roughly doubled in two years. Note that some of this is metal-price pass-through; the underlying volume story is strong but should be read alongside the utilisation ramp, not in place of it.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit growth</div>
+    <div class="c-sub">Net profit / PAT (₹ Crore), FY24–FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24<small>approx.</small></div><div class="track"><span class="fill ink" style="width:51%"></span></div><div class="bval">~39</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill spec" style="width:69%"></span></div><div class="bval">~53</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~76</div></div>
+    </div>
+    <div class="legend"><span>PAT rose ~45% in FY26 to ~₹76 Cr (EPS ~₹12.3), outgrowing revenue as margins expanded. A genuinely high-quality growth print — the disagreement is purely about what you should pay for it.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~18.7%</div><div class="msl">FY26 EBITDA margin, up from ~16% — scale and integration lifting profitability</div></div>
+    <div class="ms green"><div class="msv">+45%</div><div class="msl">FY26 net-profit growth; revenue +38%, EBITDA +~60%</div></div>
+    <div class="ms red"><div class="msv">&gt;100×</div><div class="msl">P/E on ~₹8,700 Cr market cap — an extreme multiple pricing the ramp to near-perfection</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The metric that settles the thesis: earnings catching the price, via a fuller factory</div>
+    <p>At a market value in the high-thousands of crore on ~₹76 Cr of profit, KRN is priced as though the 6× plant is already ~80% full and the customer concentration is already solved. Neither is true yet. So the one number that decides whether this valuation is visionary or a trap is <strong>the trajectory of earnings as Plant II utilisation climbs the guided 20%→50%→80% path</strong> — read together with two supporting reads: the <strong>share of revenue from the largest customer falling</strong> (is concentration easing?) and the <strong>export share rising</strong> (is the moat travelling?). If utilisation and profits march up that curve while the book diversifies, the extraordinary multiple slowly becomes merely expensive, then reasonable. If the factory fills slowly, or a major customer's orders wobble, the same multiple has a very long way to unwind. This is a case where the business quality is not in doubt — the price is the entire argument.</p>
+  </div>
+
+  <div class="note">Financials here are drawn from KRN's reported results and cross-checked across sources; FY24 figures and some ratios are marked <b>approx.</b>, utilisation and export figures are management guidance rather than audited results, and the market cap / P/E reflect a mid-August 2026 snapshot that moves daily. Verify every figure against the company's own filings before relying on it.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A high-quality niche manufacturer, asked to grow into an enormous factory and an enormous multiple at once.</p>
+
+  <p class="lead">KRN enters its next phase with genuine momentum: strong FY26 numbers, expanding margins, a structural cooling tailwind, an export ambition, and a factory built for far more than it currently makes. What it also carries is a rare double stretch — it must fill a 6× plant <em>and</em> justify a valuation that already assumes it will, all while leaning on a customer book where one name is a third of sales. The next few years are about closing both gaps together.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural cooling demand</strong> — low Indian AC penetration, rising incomes, hotter summers and expanding cold chain give a category-level tailwind KRN rides without picking a brand winner.</li>
+        <li><strong>The 6× factory as a coiled ramp</strong> — capacity is built and paid for; each step up the 20%→50%→80% utilisation curve adds high-incremental-margin revenue.</li>
+        <li><strong>Margin expansion is real</strong> — backward integration, scale metal-buying and the copper-to-aluminium shift lifted EBITDA margin toward 19% and can push further.</li>
+        <li><strong>Import-substitution &amp; China+1</strong> — a scaled domestic coil-maker is exactly what Indian and global OEMs want as a non-China source; the export target is credible.</li>
+        <li><strong>Sticky, blue-chip relationships</strong> — a qualified coil supplier isn't swapped casually; decade-long ties to Daikin, Blue Star and Kirloskar are hard to dislodge.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Extreme valuation</strong> — a &gt;100× multiple prices near-flawless execution; any utilisation or demand miss can trigger a severe de-rating.</li>
+        <li><strong>Customer concentration</strong> — Daikin ~33%, top-ten ~72%, no long-term contracts; losing or slowing one major customer would badly dent revenue.</li>
+        <li><strong>Make-versus-buy</strong> — KRN's biggest customers are the firms most able to insource coils; the moat is only ever "cheaper than doing it yourself."</li>
+        <li><strong>Ramp &amp; single-site risk</strong> — a 6× plant that fills slowly is a heavy fixed-cost drag; concentration at one Neemrana location adds operational risk.</li>
+        <li><strong>Metal-price &amp; cyclicality</strong> — aluminium/copper swings and a weak cooling season feed straight into volumes, working capital and margins.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>KRN is a well-run specialist doing an unglamorous job — the coil inside the cooling machine — for the biggest names in Indian HVAC&amp;R, and doing it with rising scale and improving margins into a demand story that should run for decades. The business is not the question mark; the price and the shape of the customer book are. The company has staked its future on a single, checkable proposition: that a factory six times its old size will fill on the schedule management has drawn, while exports and new customers loosen the grip of its largest buyer. Read each result against that — <strong>is Plant II getting fuller, and is the Daikin share getting smaller?</strong> Those two lines, tracked quarter by quarter, will tell you whether one of the market's most expensive small manufacturers grew into its ambitions or simply outran them.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>KRN Heat Exchanger and Refrigeration Ltd — FY26 results and investor presentation (year ended Mar 2026), company disclosures at krnheatexchanger.com.</li>
+    <li>InvestyWise / ScanX — "KRN Heat Exchanger Reports Strong FY26 Results" (revenue ~₹600 Cr, EBITDA ~₹112 Cr, PAT ~₹76 Cr, EPS ₹12.30).</li>
+    <li>EquityBulls — "KRN Heat Exchanger Q3 &amp; 9M FY26: PAT surges 65% YoY; revenue up on export strength."</li>
+    <li>Business Standard — "KRN Heat Exchanger IPO listing: shares make bumper debut at ₹470 on BSE" (Oct 2024).</li>
+    <li>Chittorgarh / Groww / 5paisa — KRN Heat Exchanger IPO details: ₹220 issue price, ~₹342 Cr fresh issue, ~213× subscription.</li>
+    <li>TradeBrains / Value Research — KRN Heat Exchanger IPO analysis: business model, customer concentration (Daikin ~33%, top-10 ~72%, 115 clients FY24).</li>
+    <li>Chola Securities — KRN Heat Exchanger IPO note: fin-and-tube heat exchanger products, tube sizes, end-markets.</li>
+    <li>Machinist.in / HDFC Sky — KRN HVAC Products begins commercial production at new Neemrana Plant II (May 2025), ~6× capacity, ~₹350 Cr capex.</li>
+    <li>Investor-presentation coverage — Plant II utilisation guidance (~20% FY26, ~50% FY27, ~80% FY29); export target ~16%→~50%.</li>
+    <li>Screener.in / StockAnalysis / Simply Wall St — KRN Heat Exchanger (NSE: KRN, BSE: 544263) financials, market cap (~₹8,700 Cr) and P/E, mid-Aug 2026.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026) and a mid-August 2026 market snapshot, and may contain errors or become outdated; several figures (notably capacity utilisation and export targets) are management guidance, not results. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "KRN";
+  const COMPANY_SLUG = "krn-heat-exchanger";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
