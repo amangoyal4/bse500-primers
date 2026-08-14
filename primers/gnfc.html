@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GNFC — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1F4F2;
+    --paper-2:#F8FBFA;
+    --card:#FFFFFF;
+    --ink:#132420;
+    --ink-soft:#4C5D57;
+    --ink-faint:#7E908A;
+    --brand:#0E5751;          /* deep industrial teal */
+    --brand-bright:#15837A;   /* the GNFC accent */
+    --gold:#B8862E;           /* warm amber - accent / warmth */
+    --wtg:#2E7D6E;            /* chemicals green-teal */
+    --epc:#5AA394;            /* light complex */
+    --om:#4E7A3F;            /* fertiliser green */
+    --spec:#15837A;          /* teal cross accent */
+    --line:#D9E2DE;
+    --line-soft:#E7EEEB;
+    --good:#2A7A4E;
+    --bad:#B0492E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4F1EE;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F4F8F6;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E6ECE9;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0E5751,#15837A);}
+  .fill.gold{background:linear-gradient(90deg,#B8862E,#D6A64E);}
+  .fill.wtg{background:linear-gradient(90deg,#2E7D6E,#4CA091);}
+  .fill.om{background:linear-gradient(90deg,#4E7A3F,#6C9B57);}
+  .fill.spec{background:linear-gradient(90deg,#15837A,#3AA79C);}
+  .fill.bad{background:linear-gradient(90deg,#B0492E,#C9603F);}
+  .fill.ink{background:linear-gradient(90deg,#3d4c47,#5a6b64);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#E4F1EE;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> A company with two engines</a></li>
+    <li><a href="#p2"><span class="n">02</span> TDI: the profit engine</a></li>
+    <li><a href="#p3"><span class="n">03</span> The rest of the chemicals shelf</a></li>
+    <li><a href="#p4"><span class="n">04</span> The fertiliser drag</a></li>
+    <li><a href="#p5"><span class="n">05</span> The company &amp; the State</a></li>
+    <li><a href="#p6"><span class="n">06</span> The cash pile nobody expects</a></li>
+    <li><a href="#p7"><span class="n">07</span> The ₹2,800 Cr rebuild</a></li>
+    <li><a href="#p8"><span class="n">08</span> The TDI cycle &amp; China</a></li>
+    <li><a href="#p9"><span class="n">09</span> Rivals &amp; the moat</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: GNFC · BSE: 500670</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>GNFC, <em>a chemicals company wearing a fertiliser name</em></h1>
+  <p class="dek">A complete walk through Gujarat Narmada Valley Fertilizers &amp; Chemicals — the Gujarat-State-promoted maker whose fertiliser division is the weaker half and whose real earnings come from industrial chemicals, above all TDI. How a subsidy-bound urea business and a merchant-priced chemicals cycle sit under one roof, why one polyurethane input decides the profit, and why a debt-free company sits on a cash pile worth a large slice of its own market value.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹7,773 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹808 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~11% <small>OPM</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹8,310 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">14 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ~₹7,773 Cr (−1.5%), operating profit ~₹879 Cr (+43%), PAT ~₹808 Cr (+35%); TDI production ~57,000 tonnes carried the year while the fertiliser segment ran at a loss; company turned debt-free; ₹21/share dividend; ~₹2,800 Cr FY27 capex programme announced. Added the TDI-spread and net-cash sections.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Gujarat Narmada Valley Fertilizers &amp; Chemicals (GNFC) is a <strong>State-promoted industrial company</strong> at Bharuch in Gujarat's chemical belt, jointly owned by the <strong>Government of Gujarat</strong> and <strong>Gujarat State Fertilizers &amp; Chemicals (GSFC)</strong>. The name says "fertilizers" first, and that is genuinely how it began — a big <strong>gas-based urea plant</strong> on the banks of the Narmada. But the name is misleading about where the money is made. Today GNFC is best understood as an <strong>industrial-chemicals maker</strong> with a fertiliser attachment: it is India's dominant producer of <strong>TDI</strong> (toluene di-isocyanate, a polyurethane raw material), the country's largest maker of <strong>acetic acid</strong> and <strong>methanol</strong>, and a producer of nitric acids, formic acid, aniline and ammonium nitrate.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>The two halves keep different clocks.</strong> The <strong>fertiliser</strong> business — mainly urea — is <em>regulated and subsidy-bound</em>: the government fixes what the farmer pays and reimburses GNFC against cost-and-energy norms, so its margin is administered, thin, and in FY26 actually <em>negative</em>. The <strong>chemicals</strong> business is <em>merchant-priced</em>: GNFC sells TDI, acetic acid and the rest into open industrial markets at prices set by global supply, demand and imports. Almost all of the profit lives on the chemicals side.</li>
+    <li><strong>One product swings the whole year.</strong> TDI is roughly a tenth of revenue but the single biggest profit lever. When the TDI price is firm — as it was through much of FY26 — GNFC prints strong numbers; when Chinese and Korean imports flood in and crush the price, the profit engine stalls. Understanding GNFC means understanding the TDI spread, not the urea bag.</li>
+    <li><strong>It is a fortress balance sheet trading below its own book value.</strong> In FY26 GNFC turned <strong>debt-free</strong>, earned <strong>~₹808 Cr of net profit</strong> (up ~35%), paid a <strong>₹21/share dividend</strong>, and parked roughly <strong>₹2,400 Cr of surplus cash</strong> in deposits with other PSUs. Yet at a ~₹8,310 Cr market cap and a book value near ₹620 a share, the stock trades at <strong>~8× earnings and below book</strong> — the classic State-ownership discount.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Two businesses share one factory fence. On one side, a regulated urea plant sells subsidised fertiliser at a price the government sets and — after a stretch of un-revised cost norms — loses money doing it. On the other side, a set of chemical plants sells TDI and acetic acid into open markets and earns nearly all the profit. The market prices GNFC as a sleepy State fertiliser company; the accounts say it is really a cash-rich commodity-chemicals maker whose fortunes rise and fall with one volatile molecule. FY26 was a good stretch for that molecule. The art of owning GNFC is knowing that the good stretches do not last, and that a large pile of cash sits behind the swings.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>A company with two engines — and only one that pulls</h2></div>
+  <p class="part-sub">Fertilisers and chemicals under one roof, running on completely different economics.</p>
+
+  <p class="lead">The single most useful thing to grasp about GNFC is that it is not one business but <strong>two very different ones bolted together</strong>, sharing a site, a gas pipeline and a balance sheet. They earn money in opposite ways, respond to opposite forces, and contribute wildly unequal amounts of profit. Get the split right and everything else falls into place.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The two engines, side by side</caption>
+    <thead><tr><th>Dimension</th><th>Fertiliser engine</th><th>Chemicals engine</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Main products</td><td>Urea, ammonium nitrate, complex &amp; neem-coated fertilisers</td><td>TDI, acetic acid, methanol, nitric acids, formic acid, aniline</td></tr>
+      <tr><td class="t-strong">How the price is set</td><td><strong>Regulated</strong> — farmer MRP fixed by government; GNFC reimbursed via subsidy against cost/energy norms</td><td><strong>Merchant</strong> — open-market prices set by global supply, demand and import competition</td></tr>
+      <tr><td class="t-strong">Margin character</td><td>Administered, thin, and in FY26 loss-making (norms un-revised)</td><td>Cyclical but can be fat when spreads are wide (esp. TDI)</td></tr>
+      <tr><td class="t-strong">Swings with</td><td>Subsidy policy, energy-norm revisions, gas cost</td><td>TDI/acetic-acid global cycle, Chinese imports, feedstock</td></tr>
+      <tr><td class="t-strong">Share of profit</td><td>Small — often a drag</td><td>The overwhelming majority</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Roughly <strong>60% of revenue is chemicals and ~40% fertilisers</strong>, but that revenue split badly understates the profit split: in a normal year the chemicals engine earns the great bulk of operating profit, and in FY26 the fertiliser segment ran at a segment-level <em>loss</em>, dragging on the group even as chemicals powered ahead. Management has said as much in its own words — its focus is on the <strong>unregulated chemical portfolio</strong>, where it can actually price for profit, rather than the regulated fertiliser business, where it cannot.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">One site, two economies — how a rupee of profit is really earned</div>
+    <div class="flow-row">
+      <div class="node om"><div class="ntag">Engine A · Fertiliser</div><div class="nname">Regulated urea</div><div class="nwho">Price fixed by the State; reimbursed on cost norms. Thin-to-negative margin.</div></div>
+      <div class="arrow">vs</div>
+      <div class="node spec"><div class="ntag">Engine B · Chemicals</div><div class="nname">Merchant TDI &amp; acids</div><div class="nwho">Open-market pricing. Cyclical, but where the profit lives.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">The result</div><div class="nname">Profit ≈ chemicals</div><div class="nwho">Fertiliser can be a drag; chemicals carry the group's earnings.</div></div>
+    </div>
+    <div class="flow-note">The reader's shortcut: revenue is split roughly 60/40 chemicals-to-fertiliser, but <em>profit</em> is far more lopsided — because the fertiliser segment was loss-making in FY26 while chemicals carried strong TDI-led margins. Track the chemicals engine to understand GNFC's earnings; track the fertiliser engine to understand its policy risk.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the two-engine framing is the key to the whole primer</div>
+    <p>Almost every confusion about GNFC dissolves once you separate the engines. Wondering why profit soared in FY26 while revenue fell? Chemicals spread, not fertiliser tonnage. Wondering why a "fertiliser" company loses money on its main fertiliser? Because urea is administered and the chemicals it also makes are not. Wondering why the market is lukewarm on a debt-free, profitable maker? Because it sees a State fertiliser stock and misses the merchant-chemicals earnings underneath. The rest of this primer works engine by engine: chemicals first (sections 02–03), because that is where the money is; fertilisers next (section 04), because that is where the policy risk is; then the balance sheet and the cycle that tie them together.</p>
+  </div>
+</section>
+
+<!-- 02 — BESPOKE crux: TDI -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>TDI: the one molecule that runs the year</h2></div>
+  <p class="part-sub">The defining product — a chemical most people have never heard of that decides GNFC's profit.</p>
+
+  <p class="lead">If you learn one thing about GNFC, learn <strong>TDI</strong>. Toluene di-isocyanate is a specialty industrial chemical — a key raw material for <strong>flexible polyurethane foam</strong>, the springy stuff in mattresses, sofa cushions, car seats and furniture. GNFC is by a distance <strong>India's largest TDI producer</strong>, and because TDI carries the fattest margin in its basket when prices are firm, this single product is the swing factor in the whole company's earnings.</p>
+
+  <p>GNFC makes TDI at two sites: an original <strong>17,000-tonne</strong> line at Bharuch (running since 1997) and a much larger <strong>50,000-tonne "TDI-II" plant at Dahej</strong>, commissioned in 2014 — together roughly <strong>67,000 tonnes a year</strong> of nameplate capacity. In FY26 it produced around <strong>57,000 tonnes</strong>, running the plant at close to an <strong>~80%</strong> utilisation that management describes as near the global benchmark for a TDI unit. That output makes GNFC the anchor of India's domestic TDI supply.</p>
+
+  <div class="chart">
+    <div class="c-title">India's TDI market — one dominant maker, one small rival, a large import gap</div>
+    <div class="c-sub">Approximate annual capacity / demand, thousand tonnes per year</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">India demand<small>total consumption</small></div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~115</div></div>
+      <div class="bar-row"><div class="blab">GNFC capacity<small>Bharuch + Dahej</small></div><div class="track"><span class="fill spec" style="width:58.3%"></span></div><div class="bval">~67</div></div>
+      <div class="bar-row"><div class="blab">BASF India<small>the only other maker</small></div><div class="track"><span class="fill wtg" style="width:6.5%"></span></div><div class="bval">~7.5</div></div>
+    </div>
+    <div class="legend"><span>India consumes ~115 kt of TDI a year; the two domestic makers together supply well under that, so a large slice is imported (from Korea, China, Japan, the EU). That import gap is exactly what makes the TDI price — and GNFC's margin — so exposed to what happens overseas. Figures approximate.</span></div>
+  </div>
+
+  <p>Here is why the import gap matters so much. India's two domestic makers cannot meet the country's ~115 kt appetite, so tens of thousands of tonnes are <strong>imported</strong> each year. That means the domestic TDI price is effectively set at the <em>landed cost of imports</em> — when global TDI is tight and freight is high, GNFC enjoys firm prices and rich margins; when China and Korea have surplus capacity and dump cheap TDI into India, the domestic price caves and GNFC's most profitable product turns ordinary. The <strong>anti-dumping duties</strong> India maintains on TDI imports from several origins are, in effect, a floor under GNFC's best business — remove them and the economics shift overnight.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that fits only GNFC: a ~10%-of-revenue product that owns the profit</div>
+    <p>Run the arithmetic that the segment tables hide. TDI is only about a tenth of GNFC's ~₹7,773 Cr of revenue — call it a few thousand crore at most. Yet the swing in its per-tonne spread, multiplied across ~57,000 tonnes, is large enough to move group operating profit by hundreds of crore in a single year. In FY26 the chemicals segment added roughly <strong>₹300 Cr of EBITDA between Q3 and Q4 alone</strong>, led by TDI, ammonium nitrate and technical-grade urea. That is the whole trick of reading GNFC: a molecule that is a rounding error on the revenue line is the difference between a ₹600 Cr year and an ₹800 Cr one on the profit line. You do not value GNFC on its urea tonnes; you value it on where the TDI spread sits in the cycle.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~67 kt</div><div class="msl">GNFC TDI capacity — India's largest, ~17 kt Bharuch + ~50 kt Dahej</div></div>
+    <div class="ms gold"><div class="msv">~57 kt</div><div class="msl">FY26 TDI production — ~80% utilisation, near global benchmark</div></div>
+    <div class="ms green"><div class="msv">~115 kt</div><div class="msl">India's annual TDI demand — the rest imported, setting the price</div></div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The rest of the chemicals shelf</h2></div>
+  <p class="part-sub">Beyond TDI — a broad basket of commodity chemicals, each with its own quirk.</p>
+
+  <p class="lead">TDI is the headline, but GNFC's chemicals engine is a whole shelf of industrial products, several of them <strong>market-leading positions in India</strong>. They matter because they diversify the earnings, absorb captive raw materials, and — crucially — because each carries its own cost quirk that can help or hurt in a given year. Here is the shelf.</p>
+
+  <div class="chart">
+    <div class="c-title">GNFC's chemicals capacities — a leader across several products</div>
+    <div class="c-sub">Approximate nameplate capacity, thousand tonnes per year</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Methanol<small>largest in India · idle</small></div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~185</div></div>
+      <div class="bar-row"><div class="blab">Acetic acid<small>largest in India</small></div><div class="track"><span class="fill spec" style="width:62.2%"></span></div><div class="bval">~115</div></div>
+      <div class="bar-row"><div class="blab">TDI<small>largest in India</small></div><div class="track"><span class="fill brand" style="width:36.2%"></span></div><div class="bval">~67</div></div>
+      <div class="bar-row"><div class="blab">Conc. nitric acid<small>available for sale</small></div><div class="track"><span class="fill wtg" style="width:35.1%"></span></div><div class="bval">~65</div></div>
+      <div class="bar-row"><div class="blab">Aniline<small>Dahej line</small></div><div class="track"><span class="fill gold" style="width:18.9%"></span></div><div class="bval">~35</div></div>
+    </div>
+    <div class="legend"><span>GNFC is India's largest producer of methanol, acetic acid and TDI. Note the catch: the methanol plant — the biggest bar — is <em>idle</em>, because domestic gas is too expensive to make methanol competitively. Nameplate capacities are approximate.</span></div>
+  </div>
+
+  <h3>The products, and why each one matters</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Acetic acid</span></strong> — GNFC is India's largest maker (~115 kt). A high-volume industrial commodity used in inks, dyes, textiles and downstream chemicals. Its margin, like TDI's, is set against imports — and in FY26 acetic acid was a soft spot even as TDI was strong, a reminder that the basket rarely fires on all cylinders at once.</li>
+    <li><strong><span class="chain-epc">Methanol</span></strong> — GNFC has the country's largest methanol capacity (~185 kt), yet the plant sits <strong>idle</strong>. The reason is stark and structural: making methanol needs cheap natural gas, and Indian gas is priced too high for GNFC's methanol to compete with imports. A big asset that earns nothing until the gas maths changes — a live example of how feedstock cost, not demand, gates this business.</li>
+    <li><strong><span class="chain-wtg">Nitric acids</span></strong> — weak and concentrated nitric acid, partly sold merchant (~65 kt of concentrated available for sale) and partly consumed captively to make ammonium nitrate and other downstream products. A steadier, less glamorous contributor.</li>
+    <li><strong>Aniline</strong> — a ~35 kt line at Dahej feeding dye, rubber-chemical and pharma intermediates; a smaller specialty position.</li>
+    <li><strong>Formic acid &amp; ammonium nitrate</strong> — formic acid for leather, rubber and pharma; ammonium nitrate (including a technical/explosives grade) that was a notable FY26 profit contributor alongside TDI.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The surprise inside the chemicals shelf: the biggest plant makes nothing</div>
+    <p>A first-time reader assumes a company's largest chemical capacity is its busiest. At GNFC the opposite is true — the methanol unit, the single biggest bar on the chart above, is switched off. It is not broken and demand is not the problem; the issue is that domestic natural gas costs too much to turn into methanol at a price that beats imports. So GNFC owns India's largest methanol capacity and runs it near zero, a standing option that only pays off if gas prices fall or policy shifts. It captures the whole logic of this company in one asset: in a gas-based commodity-chemicals business, the feedstock price decides which plants are worth running — and a mothballed plant can be worth more as latent capacity than as a going concern.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The fertiliser engine — regulated, and currently a drag</h2></div>
+  <p class="part-sub">The half that gives the company its name and, right now, subtracts from its profit.</p>
+
+  <p class="lead">The fertiliser business is where GNFC started and where its name comes from, but in the current cycle it is the <strong>weaker half</strong>. Its economics are the mirror image of the chemicals shelf: instead of merchant prices, everything is <strong>administered by the government</strong>, and when the administered numbers fall behind reality, the plant loses money — which is exactly what happened in FY26.</p>
+
+  <h3>How fertiliser pricing works here</h3>
+  <ul class="clean">
+    <li><strong>Urea</strong> — GNFC's core fertiliser product and a <em>tightly price-controlled</em> one. The farmer pays a low, fixed statutory price; the government reimburses the maker the gap between that price and an approved cost, calculated against <strong>energy and cost norms</strong>. If those norms are stale — not revised to reflect current gas and fixed costs — the maker under-recovers and books a loss. In FY26 urea suffered exactly this <strong>under-recovery</strong>, with cost-and-energy-norm revisions still pending approval.</li>
+    <li><strong>Complex &amp; neem-coated fertilisers</strong> — sold under the Nutrient-Based Subsidy framework, these earn a contribution-level profit but do not move the needle for the group.</li>
+    <li><strong>Neem-based products</strong> — GNFC pioneered neem-coated urea and a range of neem consumer products; a distinctive but small side line.</li>
+    <li><strong>Technical-grade urea (TGU)</strong> — a higher-value, unregulated grade used to make diesel-exhaust fluid (AdBlue) for BS-VI engines. GNFC roughly <em>doubled</em> TGU output in FY26 to plug a supply gap — a rare bright spot where a "fertiliser" plant earns a merchant, chemicals-like margin.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the loss is not necessarily permanent:</b> the FY26 fertiliser loss is largely a <em>policy-timing</em> problem, not a broken plant. Urea under-recovery reflects norms the government has not yet revised; if and when energy and fixed-cost norms are updated, the reimbursement rises and the loss narrows or reverses. Q4 FY26 already showed fertiliser losses <em>narrowing</em> on lower input and fixed costs. So the fertiliser engine is best read as a swing item hostage to a bureaucratic revision cycle — a drag today that can quietly turn less negative when Delhi acts.</div>
+
+  <p>The strategic implication is clear, and management has embraced it: GNFC leans into its <strong>unregulated chemicals</strong>, where it sets its own price and can earn a real margin, and treats the regulated fertiliser business as a legacy obligation to be run efficiently rather than expanded. The higher-value technical-grade urea push is the exception that proves the rule — it is the one part of the fertiliser complex that behaves like a chemical.</p>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The company, the group, and who controls it</h2></div>
+  <p class="part-sub">A Gujarat-State enterprise — with all the strengths and the discount that implies.</p>
+
+  <p class="lead">GNFC's ownership explains both its stability and its stock-market discount. It is a <strong>State-promoted company</strong>, set up in the 1970s and jointly held by the <strong>Government of Gujarat</strong> and <strong>GSFC</strong> (itself a Gujarat-State-linked chemicals major). That lineage gives it deep roots, low debt and a conservative culture — and also the governance texture that leads the market to value it cautiously.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1976</div><div class="ev">GNFC incorporated at Bharuch, jointly promoted by the <strong>Government of Gujarat</strong> and <strong>Gujarat State Fertilizers &amp; Chemicals (GSFC)</strong> — a gas-based fertiliser project on the Narmada.</div></li>
+    <li class="major"><div class="yr">1982</div><div class="ev">Commercial production begins — one of Gujarat's flagship public-sector industrial ventures, anchored by a large ammonia-urea complex.</div></li>
+    <li class="major"><div class="yr">1997</div><div class="ev">Diversifies decisively into chemicals — begins <strong>TDI production at Bharuch</strong> (~17 kt), the seed of what becomes its profit engine.</div></li>
+    <li class="major"><div class="yr">2014</div><div class="ev">Commissions the <strong>50 kt TDI-II plant at Dahej</strong>, roughly quadrupling TDI capacity and cementing GNFC as India's dominant domestic supplier.</div></li>
+    <li><div class="yr">FY18</div><div class="ev">Turns long-term-debt-free for the first time and posts a sharp profit rise — an early sign of the cash-generative, low-leverage profile that defines it today.</div></li>
+    <li><div class="yr">FY23–FY24</div><div class="ev">A softening chemicals cycle — weaker TDI and acetic-acid realisations — compresses profits; a buyback in late 2023 returns surplus cash to shareholders.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">A strong chemicals year: PAT ~₹808 Cr (+35%), operating margin up to ~11%, company turns <strong>debt-free</strong>; ₹21/share dividend; a ~₹2,800 Cr FY27 capex programme announced.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the <strong>Government of Gujarat</strong> and <strong>GSFC</strong> together hold the controlling block — a combined promoter stake of roughly <strong>41%</strong>. The balance is a wide public float of institutions and retail investors. Confirm the exact split in the latest shareholding pattern.</li>
+    <li><strong>(n)Code Solutions:</strong> GNFC historically ran an unusual digital arm — <strong>(n)Code</strong>, a licensed digital-signature-certificate (DSC) certifying authority and e-governance services business. It sits oddly beside urea and TDI, and while small, it is a reminder that a State enterprise can accumulate non-core ventures that a purer chemicals company never would.</li>
+    <li><strong>The State-ownership double edge:</strong> government backing brings a rock-solid balance sheet, priority access to Gujarat's gas and industrial infrastructure, and a conservative, low-debt ethos. It also brings the discount — investors apply a haircut for slower decision-making, the risk that surplus cash is deployed for reasons other than pure shareholder return, and the pull of policy on the fertiliser side.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the structure defines the valuation debate:</b> GNFC is, on the numbers, a cash-rich, debt-free, dividend-paying chemicals maker — the kind of profile that in private hands might command a premium. It trades instead at a discount to book value. The gap <em>is</em> the State-ownership discount: the market's price for uncertainty about whether a government-controlled company will allocate its capital as sharply as a private one would. Much of the bull case rests on that discount narrowing; much of the bear case rests on it being deserved.</div>
+</section>
+
+<!-- 06 — genuine surprise: the cash pile -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The cash pile nobody expects on a fertiliser stock</h2></div>
+  <p class="part-sub">The balance-sheet fact that reframes the whole investment case.</p>
+
+  <p class="lead">Most people picture a State fertiliser company as debt-laden and cash-starved. GNFC is the opposite, and this is the fact that most surprises a first-time reader: it is <strong>debt-free</strong>, sits on a <strong>large pile of surplus cash</strong>, and trades <strong>below its own book value</strong>. A meaningful chunk of what you would pay for the whole company is, in effect, cash and investments already sitting on its balance sheet.</p>
+
+  <p>In FY26 GNFC extinguished its remaining borrowings — down to a token ~₹6 Cr from ~₹99 Cr a year earlier — and carried reserves of roughly <strong>₹8,968 Cr</strong>. With no productive use yet for its surplus, management deployed around <strong>₹2,400 Cr in inter-corporate deposits with other public-sector undertakings</strong>, earning about <strong>7.25%</strong> while it waits to spend on capex. Set that against a market capitalisation of about <strong>₹8,310 Cr</strong>, and the scale of the cash relative to the price becomes hard to ignore.</p>
+
+  <div class="chart">
+    <div class="c-title">A fortress balance sheet against a modest market value</div>
+    <div class="c-sub">FY26, ₹ Crore — reserves and surplus cash are large relative to the whole company's price</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Reserves &amp; surplus<small>FY26</small></div><div class="track"><span class="fill spec" style="width:100%"></span></div><div class="bval">~8,968</div></div>
+      <div class="bar-row"><div class="blab">Market cap<small>mid-2026</small></div><div class="track"><span class="fill brand" style="width:92.7%"></span></div><div class="bval">~8,310</div></div>
+      <div class="bar-row"><div class="blab">Cash in PSU deposits<small>@ ~7.25%</small></div><div class="track"><span class="fill gold" style="width:26.8%"></span></div><div class="bval">~2,400</div></div>
+    </div>
+    <div class="legend"><span>Reserves alone (~₹8,968 Cr) exceed the entire market cap (~₹8,310 Cr); the disclosed ~₹2,400 Cr parked in PSU deposits is over a quarter of the company's market value. With debt down to a token ~₹6 Cr (effectively debt-free), GNFC is a rare fertiliser-chemicals maker where cash is a large part of the story. ₹ Crore, approximate.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The counter-intuitive truth to sit with</div>
+    <p>A company that puts ₹2,400 Cr into deposits with <em>other</em> state companies at 7.25% is telling you something: it generates far more cash than its core business can currently absorb, and it has not found a high-return home for the surplus. That is both the comfort and the complaint. The comfort is downside protection — a debt-free balance sheet with cash worth a large slice of the market value cushions the cyclical swings in TDI and the losses in urea. The complaint is capital allocation: cash parked at a bank-deposit yield earns far less than a well-run chemicals business should, and it is precisely the kind of idle-treasury behaviour that keeps the stock below book. The ₹21 dividend and the 2023 buyback show some willingness to return cash; whether GNFC deploys the rest into high-return capex or keeps it parked is the crux of the ownership case.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms green"><div class="msv">Debt-free</div><div class="msl">FY26 borrowings ~₹6 Cr, down from ~₹99 Cr — a fortress balance sheet</div></div>
+    <div class="ms gold"><div class="msv">~₹2,400 Cr</div><div class="msl">Surplus parked in PSU inter-corporate deposits at ~7.25%</div></div>
+    <div class="ms"><div class="msv">~0.9×</div><div class="msl">Price-to-book — the stock trades below its ~₹620 book value</div></div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The ₹2,800 Cr rebuild — putting the cash to work</h2></div>
+  <p class="part-sub">The capex programme that decides whether the surplus becomes earnings.</p>
+
+  <p class="lead">The answer to "what will GNFC do with all that cash?" is starting to arrive. The company has laid out a <strong>~₹2,800 Cr capital-expenditure programme</strong> centred on FY27, aimed squarely at <strong>debottlenecking, integration and self-sufficiency</strong> rather than a single glamour project. It is the most concrete signal yet that the idle balance sheet is being turned toward growth — and the payoff, if it lands, is a lower cost base and fresh capacity in the products that actually earn.</p>
+
+  <h3>What the programme builds</h3>
+  <ul class="clean">
+    <li><strong>A captive power plant</strong> — a coal-based combined-cycle unit targeted for commissioning around Q2–Q3 FY27, expected to save roughly <strong>₹10–12 Cr a month</strong> in energy costs. For a gas-and-power-hungry chemicals site, cheaper captive power lifts the margin on every plant it feeds — the clearest, most bankable return in the programme.</li>
+    <li><strong>New nitric-acid capacity</strong> — a <em>weak nitric acid</em> plant (with a minor delay flagged) plus a large new <strong>~203,000-tonne nitric-acid plant</strong> (contracted to thyssenkrupp Uhde) targeted for around mid-2027, deepening GNFC's nitric-acid and downstream footprint.</li>
+    <li><strong>Ammonium nitrate (AN Melt II) and ammonia</strong> — added ammonium-nitrate capacity (a strong FY26 profit contributor) and an ammonia expansion to feed the fertiliser and chemicals chains and improve raw-material self-sufficiency.</li>
+    <li><strong>TDI expansion, under discussion</strong> — GNFC is in talks with <strong>INEOS</strong> over licensing to expand its flagship TDI capacity. Since TDI is the profit engine, any firm TDI expansion would be the most strategically important — and most cyclically exposed — element of the plan.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why this capex is the bridge from cash to earnings</div>
+    <p>The bull and bear cases on GNFC both run through this programme. Idle cash at 7.25% is a drag on returns; the same cash poured into a captive power plant that saves ₹10–12 Cr a month, into nitric-acid and ammonium-nitrate capacity that sell into firm markets, and eventually into more TDI, converts a low-yielding treasury into operating earnings. That is how a below-book State chemicals company re-rates — not by a change of story, but by visibly deploying its hoard into projects that raise return on capital. The risk is the mirror image: State capex can run late (the nitric-acid delay is a small early example) and cyclical additions like TDI can commission into a soft market. The programme is the test of whether GNFC's cash is an asset or an excuse.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The TDI cycle, China, and the spread that writes the year</h2></div>
+  <p class="part-sub">Why GNFC's earnings are volatile, and what actually moves them.</p>
+
+  <p class="lead">GNFC's profit is cyclical for one overriding reason: its best product trades on a <strong>global commodity cycle it cannot control</strong>. TDI (and to a lesser extent acetic acid) is priced off world supply and demand, and the swing factor is <strong>China</strong> — the world's largest TDI producer and the source of the import pressure that periodically crushes the Indian price. Understanding this cycle is understanding GNFC's earnings volatility.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What moves GNFC's earnings — and how</caption>
+    <thead><tr><th>Force</th><th>What it is</th><th>How it hits GNFC</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">TDI global cycle &amp; China imports</td><td>World TDI supply/demand, dominated by Chinese capacity; the volume and price of imports landing in India.</td><td>Sets the domestic TDI price and thus the fattest margin in the basket. A China glut caves the price; tight global supply lifts it. The biggest single earnings swing.</td></tr>
+      <tr><td class="t-strong">Anti-dumping duties</td><td>Protective duties India levies on TDI imports from several origins.</td><td>Act as a floor under the domestic TDI price — GNFC's most profitable product. Their renewal or lapse directly moves the spread.</td></tr>
+      <tr><td class="t-strong">Natural-gas &amp; energy cost</td><td>The price of the gas that feeds ammonia, urea and (potentially) methanol, plus power cost.</td><td>Sets the cost base for both engines. High gas keeps the methanol plant idle and deepens urea under-recovery; the captive power plant is the self-help answer.</td></tr>
+      <tr><td class="t-strong">Fertiliser subsidy &amp; norms</td><td>Government urea pricing and the timing of cost/energy-norm revisions.</td><td>Decides whether the fertiliser engine loses money or breaks even — a policy-timing swing on ~40% of revenue.</td></tr>
+      <tr><td class="t-strong">Acetic acid &amp; other spreads</td><td>Merchant prices for acetic acid, nitric acids, aniline, formic acid.</td><td>Diversify the earnings, but rarely all firm at once — in FY26 acetic acid was soft while TDI was strong.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The non-transferable arithmetic: same plants, a TDI-shaped profit</div>
+    <p>Picture GNFC's asset base as fixed — the same TDI lines, the same acetic-acid and nitric-acid plants, the same urea complex, year after year. What changes is the <strong>spread</strong> between what those chemicals sell for and what their feedstocks cost, and the single widest, most volatile spread is TDI's. Because TDI runs at ~57,000 tonnes on a merchant price set by imports, a swing of even a few tens of thousands of rupees per tonne in the TDI margin re-prices the whole company's profit by hundreds of crore — with no change in tonnes, plants or people. That is why GNFC can post ~₹600 Cr in a soft chemicals year and ~₹800 Cr in a firm one on almost identical revenue: the profit lives in a spread, and the spread lives in China's export decisions, not in Bharuch. The urea plant sets the policy risk; the TDI spread sets the earnings.</p>
+  </div>
+
+  <p>This is why headline revenue tells you little about GNFC. FY26 revenue actually <em>fell</em> ~1.5% to ₹7,773 Cr — dragged by a Bharuch-complex turnaround shutdown — even as operating profit rose ~43% and PAT ~35%, because the TDI-led chemicals spread was wide. For a merchant commodity-chemicals maker, the spread and the utilisation tell the story that the top line hides.</p>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Rivals, and where the real moat sits</h2></div>
+  <p class="part-sub">A hybrid that competes in two different arenas at once.</p>
+
+  <p class="lead">GNFC is unusual because it competes in <strong>two separate markets</strong> — merchant chemicals and regulated fertilisers — against two different sets of rivals. In neither is it the classic "leader"; its edge is specific and narrow: a dominant, protected position in one high-margin chemical, sitting on a fortress balance sheet.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs GNFC</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">GNFC</td><td>India's #1 TDI, acetic acid &amp; methanol; gas-based urea; debt-free, cash-rich State enterprise</td><td><em>This company.</em> A cyclical commodity-chemicals maker with a fertiliser drag and a large cash pile — the debate is the TDI spread and capital allocation.</td></tr>
+      <tr><td class="t-strong">BASF (India TDI)</td><td>The only other domestic TDI producer (~7.5 kt)</td><td>Tiny in TDI beside GNFC's ~67 kt; GNFC is the domestic anchor, but both compete against imports for the price.</td></tr>
+      <tr><td class="t-strong">GSFC</td><td>Sister Gujarat-State fertiliser-and-chemicals major (also GNFC's co-promoter)</td><td>A close structural cousin — same State lineage, overlapping fertiliser/industrial-chemical mix; often valued through the same discounted lens.</td></tr>
+      <tr><td class="t-strong">Deepak Fertilisers, Chambal, Coromandel</td><td>Diversified fertiliser-and-industrial-chemicals players (ammonia, nitric acid, TAN, complexes)</td><td>Overlap on the fertiliser and nitrogen-chemistry side; several are more privately-run and command higher multiples for tighter capital allocation.</td></tr>
+      <tr><td class="t-strong">Global TDI majors (Covestro, Wanhua, Korean/Chinese makers)</td><td>The world's large TDI producers whose exports set the landed Indian price</td><td>Not domestic rivals but the true price-setters — GNFC's margin is a function of their capacity and export behaviour.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>GNFC's moat is real but conditional. In TDI it is India's overwhelming domestic producer, protected by anti-dumping duties and by the sheer scale of its Dahej plant — a genuinely hard position to attack from within India. But that moat is only as strong as the wall around it: the domestic price is set by imports, so the protection is a policy choice, not a structural fortress. Its second, quieter edge is the balance sheet — a debt-free, cash-rich position that lets it survive the down-cycles that hurt more leveraged peers and fund its own expansion without borrowing. What it lacks, relative to the best privately-run chemicals names, is the capital-allocation discipline and re-investment intensity that earn a premium multiple. The competition, in the end, is less about who makes the chemical and more about who turns cash into returns fastest.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A strong chemicals year on a cheap, below-book multiple — the question is durability.</p>
+
+  <p class="lead">FY26 was a good year driven by the chemicals engine: operating profit up ~43% and PAT up ~35%, even though revenue slipped ~1.5% on a plant turnaround. The stock does not price in optimism — it trades at roughly <strong>8× earnings and below book value</strong>, exactly the rating the market assigns a cyclical, State-controlled maker with idle cash. The debate is not whether the price is stretched; it is whether FY26's chemicals spread is a durable base or a cyclical high.</p>
+
+  <div class="chart">
+    <div class="c-title">FY26 results — the headline scorecard</div>
+    <div class="c-sub">₹ Crore; profit rose sharply even as revenue dipped on a turnaround shutdown</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue<small>−1.5% YoY</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~7,773</div></div>
+      <div class="bar-row"><div class="blab">Operating profit<small>+43% YoY</small></div><div class="track"><span class="fill spec" style="width:11.3%"></span></div><div class="bval">~879</div></div>
+      <div class="bar-row"><div class="blab">PBT<small>+35% YoY</small></div><div class="track"><span class="fill wtg" style="width:13.7%"></span></div><div class="bval">~1,065</div></div>
+      <div class="bar-row"><div class="blab">PAT<small>+35% YoY</small></div><div class="track"><span class="fill gold" style="width:10.4%"></span></div><div class="bval">~808</div></div>
+    </div>
+    <div class="legend"><span>The signature of the year: revenue flat-to-down, profit sharply up — because the money is in the chemicals <em>spread</em>, not the tonnage. Bars scaled to show how thin profit is against the top line. ₹ Crore, FY26.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Dividend per share — a consistent, generous payer</div>
+    <div class="c-sub">₹ per share (face value ₹10); FY26's ₹21 is among the highest in the company's history</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill spec" style="width:100%"></span></div><div class="bval">~₹30</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill wtg" style="width:55%"></span></div><div class="bval">~₹16.5</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill om" style="width:60%"></span></div><div class="bval">~₹18</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:70%"></span></div><div class="bval">~₹21</div></div>
+    </div>
+    <div class="legend"><span>A ~3.7% dividend yield at the current price, with FY26's ₹21 (210% of face value, ~39% payout) described by management as among the highest in its 50-year history. The cash generation behind the payout is real; the question is whether more of it goes to growth capex. ₹/share, approximate.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~8×</div><div class="msl">Trailing P/E (mid-2026) — a cheap, cyclical rating, not a growth multiple</div></div>
+    <div class="ms"><div class="msv">~0.9×</div><div class="msl">Price / book — below the ~₹620 book value; the State-ownership discount</div></div>
+    <div class="ms green"><div class="msv">~3.7%</div><div class="msl">Dividend yield — backed by strong cash generation and a debt-free sheet</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: the TDI spread, read through operating margin</div>
+    <p>At ~8× earnings and below book, GNFC does not need a re-rating to work — it needs the chemicals spread to hold and the cash to be deployed. So the metric that proves or breaks the case is the <strong>TDI realisation-minus-feedstock spread</strong>, visible to an outside investor as the <strong>chemicals-segment margin and group operating margin</strong> (the jump from ~8% to ~11% in FY26), tracked quarter by quarter. Read it alongside two companions: <strong>TDI capacity utilisation</strong> (is the plant near its ~80% benchmark, or backing off on weak prices?) and <strong>capital deployment</strong> (is the ~₹2,800 Cr capex converting idle cash into operating earnings, or is the surplus still sitting in 7.25% deposits?). If the spread holds near FY26 levels while the power plant and new capacity commission, the below-book multiple is a mispricing and cash-plus-earnings compound. If a China-led TDI glut caves the spread back toward the FY23–24 lows while capex slips, FY26 will read as a cyclical peak dressed as a base. Spread, utilisation, deployment — that is the scoreboard.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results and market data cross-checked across sources; the segment revenue split, per-plant capacities, TDI market sizing, EV multiples, price-to-book and the ~41% promoter stake are <b>approx.</b> (derived or rounded), and market cap / P/E move daily. Standalone and consolidated figures differ slightly (PAT is quoted ~₹797–808 Cr across sources). Verify against the company's filings and latest shareholding pattern before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A cash-rich cyclical chemicals maker, priced as a sleepy State fertiliser stock.</p>
+
+  <p class="lead">GNFC enters FY27 in unusually strong shape for a State enterprise: debt-free, cash-rich, coming off a firm TDI year, with a ~₹2,800 Cr capex programme finally aiming its hoard at growth. What no commodity-chemicals maker can promise is the one thing that decides the earnings — that the TDI spread stays wide against Chinese imports and a stale urea norm doesn't deepen the fertiliser loss. That tension frames both cases.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Cheap and cash-backed</strong> — ~8× earnings, below book, with reserves that exceed the market cap and ~₹2,400 Cr of deployable cash; downside is cushioned.</li>
+        <li><strong>Dominant, protected TDI</strong> — India's overwhelming domestic TDI maker behind anti-dumping duties, running near its ~80% benchmark; the profit engine is a hard position to attack.</li>
+        <li><strong>Self-help capex</strong> — a captive power plant (~₹10–12 Cr/month saving), new nitric-acid and ammonium-nitrate capacity, and possible TDI expansion turn idle cash into earnings.</li>
+        <li><strong>Fertiliser drag can reverse</strong> — the urea loss is a policy-timing issue; a cost/energy-norm revision narrows or flips it, adding to profit with no operational change.</li>
+        <li><strong>Consistent capital return</strong> — a ~3.7% dividend yield and a track record of payouts and a buyback, backed by real cash generation.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>TDI-cycle whipsaw</strong> — a China/Korea import glut can cave the domestic TDI price and gut the profit engine, exactly as the FY23–24 down-cycle showed.</li>
+        <li><strong>Capital-allocation drag</strong> — a large hoard parked at ~7.25% earns far below its potential; idle-treasury behaviour keeps the stock below book.</li>
+        <li><strong>Regulated-fertiliser exposure</strong> — urea under-recovery persists until Delhi revises norms; the fertiliser engine can keep subtracting from group profit.</li>
+        <li><strong>Feedstock &amp; idle assets</strong> — high gas cost keeps the large methanol plant switched off and pressures margins; the cost base is only partly in GNFC's hands.</li>
+        <li><strong>State-execution risk</strong> — government-run capex can run late (a nitric-acid delay already flagged), and cyclical additions like TDI risk commissioning into a soft market.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>GNFC is a cash-rich, debt-free commodity-chemicals maker hiding behind a fertiliser name and a State-ownership discount — earning nearly all its profit from a handful of merchant chemicals, above all a single polyurethane input, while its regulated urea plant quietly loses money. The FY26 result showed the engine at its best; the balance sheet shows a cushion few peers can match. What it has not yet proven is that it will turn its idle hoard into high-return growth rather than 7.25% deposits. The next test is concrete and datable: <strong>whether the FY27 capex — the captive power plant, the new nitric-acid and ammonium-nitrate lines, and any firm TDI expansion — commissions on time and lifts return on capital while the TDI spread holds through the cycle</strong>. Deploy the cash into earnings and the below-book price looks like a standing invitation; leave it parked while the TDI cycle turns, and the discount stays exactly where the market has put it.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Gujarat Narmada Valley Fertilizers &amp; Chemicals Ltd — FY26 audited results &amp; Q4 FY26 press release (year ended Mar 2026), via company disclosures and Business Standard coverage ("GNFC jumps after Q4 PAT jumps 87.68% YoY").</li>
+    <li>GNFC Q4 FY26 earnings-call transcript (via Investing.com / InvestyWise) — TDI volumes and utilisation, ₹2,800 Cr FY27 capex components, PSU inter-corporate deposits, dividend and segment commentary.</li>
+    <li>Screener.in — GNFC consolidated financials: revenue, operating profit/OPM, PAT, EPS, reserves, debt, promoter holding, ROCE/ROE, market cap, P/E, book value, dividend yield.</li>
+    <li>Tradebrains / Univest — GNFC Q3–Q4 FY26 results and the ₹2,800 Cr capex / ammonium-nitrate (AN Melt II) announcement.</li>
+    <li>Wikipedia — Gujarat Narmada Valley Fertilisers &amp; Chemicals: history, Government of Gujarat / GSFC promotion, product capacities (methanol, acetic acid, nitric acid, TDI, aniline).</li>
+    <li>thyssenkrupp Uhde press release — contract for GNFC's new ~203,000-tonne nitric-acid plant (mid-2027 target).</li>
+    <li>HDFC Securities / HSL — GNFC stock note: TDI capacity and market structure (GNFC vs BASF vs India demand), chemicals basket.</li>
+    <li>Urethanes Technology International / PetrochemicalsMarket — GNFC TDI capacity and expansion history; INEOS licensing discussions.</li>
+    <li>BSE India — Gujarat Narmada Valley Fertilizers &amp; Chemicals Ltd stock page, scrip code 500670; NSE symbol GNFC.</li>
+    <li>stockanalysis.com / Trendlyne — GNFC dividend history (FY23 ₹30, FY24 ₹16.5, FY25 ₹18, FY26 ₹21) and market data (mid-2026).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several figures (notably the segment revenue split, per-plant capacities, TDI market sizing, EV multiples, price-to-book and the promoter stake) are derived or rounded, and standalone vs consolidated figures differ slightly. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "GNFC";
+  const COMPANY_SLUG = "gnfc";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
