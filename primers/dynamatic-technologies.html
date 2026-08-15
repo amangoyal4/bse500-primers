@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamatic Technologies — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F5F8;
+    --paper-2:#FAFBFD;
+    --card:#FFFFFF;
+    --ink:#141B22;
+    --ink-soft:#525E68;
+    --ink-faint:#8792A0;
+    --brand:#1C3D5A;          /* deep aviation navy */
+    --brand-bright:#2E6DA4;   /* aviation blue accent */
+    --gold:#BC8A34;           /* titanium gold - warmth / accent */
+    --wtg:#2E6DA4;            /* aerospace blue */
+    --epc:#4B87B8;            /* hydraulics mid-blue */
+    --om:#12314A;            /* deep navy */
+    --spec:#5B7A8C;          /* titanium slate cross accent */
+    --line:#D7DEE4;
+    --line-soft:#E6EBEF;
+    --good:#2A7D5A;
+    --bad:#B8452E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4F1F4;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F8FA;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E8ECEF;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#1C3D5A,#2E6DA4);}
+  .fill.gold{background:linear-gradient(90deg,#BC8A34,#D6A94F);}
+  .fill.wtg{background:linear-gradient(90deg,#2E6DA4,#4B87B8);}
+  .fill.om{background:linear-gradient(90deg,#12314A,#274A63);}
+  .fill.spec{background:linear-gradient(90deg,#5B7A8C,#7C97A6);}
+  .fill.bad{background:linear-gradient(90deg,#B8452E,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4650,#59656f);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3F0;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Aerostructures 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> Three engines under one roof</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; the founder</a></li>
+    <li><a href="#p4"><span class="n">04</span> The flap-track beam &amp; the value climb</a></li>
+    <li><a href="#p5"><span class="n">05</span> The aerospace super-cycle</a></li>
+    <li><a href="#p6"><span class="n">06</span> The debt that eats the profit</a></li>
+    <li><a href="#p7"><span class="n">07</span> Hydraulics: the tractor-pump base</a></li>
+    <li><a href="#p8"><span class="n">08</span> Metallurgy &amp; the defence pivot</a></li>
+    <li><a href="#p9"><span class="n">09</span> Forex, concentration &amp; execution</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: DYNAMATECH · BSE: 505242</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Dynamatic Technologies, <em>tractor pumps to Airbus wings</em></h1>
+  <p class="dek">A plain-English walk through one of India's most unusual engineering companies — a firm that pumps the hydraulics inside most of the country's tractors and, in the same breath, is the sole source of a flight-critical part on every Airbus A320 in the sky. How it makes money across aerospace, hydraulics and metallurgy, why the whole investment case turns on a single ratio buried in the balance sheet, and what happens as a global jet-building boom collides with a heavy pile of debt.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,621 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹32 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~48<small>%</small></div><div class="l">Aerospace share of revenue</div></div>
+    <div class="cell"><div class="v">~₹7,600 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">15 Aug 2026</b> · source: FY26 results + Q1 FY27 (Jun 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results folded in — revenue ₹1,621 Cr (+15.5%), aerospace ₹776 Cr (+27.6%), PAT ₹32 Cr (−25%); plus Q1 FY27 where PAT jumped ~93% YoY to ₹20.8 Cr on a 13% EBITDA margin. Added the leverage-wedge section and the value-chain climb.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Dynamatic Technologies is a Bengaluru-based <strong>high-precision engineering company</strong> that machines, forges, casts and assembles complex metal parts to tolerances measured in microns. It runs three very different businesses under one name: <strong>aerospace</strong> (building wing, fuselage and pylon structures for Airbus, Boeing, Bell and Indian defence), <strong>hydraulics</strong> (gear pumps and systems for tractors and off-highway machines) and <strong>metallurgy</strong> (turbocharger housings and precision castings for the auto industry). What ties them together is not the end-market but the skill: making hard metal do exact things, reliably, at scale, for customers who cannot tolerate a defect.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>Aerospace is the story; the other two pay the bills.</strong> Aerospace is now the largest and fastest-growing segment — ~<strong>48% of FY26 revenue</strong> and growing ~28% a year — while hydraulics (~30%) and metallurgy (~22%) are steadier, more cyclical, cash-generating bases. The bet is a steady <em>mix-shift</em> toward higher-value aerospace work, where a single part can take years to qualify and, once qualified, sells for the life of an aircraft programme.</li>
+    <li><strong>It is climbing the value chain, not just growing.</strong> Dynamatic began as a <em>build-to-print</em> shop — you send the drawing, it makes the part. It is deliberately moving toward <em>build-to-spec</em> and full design-and-assembly work, where it owns the engineering. The clearest proof: it re-engineered the 40-year-old Airbus A320 <strong>flap-track beam</strong> from ~200 parts down to ~20, and it is the single global source of that assembly. Owning the design, not just the drawing, is where the margin lives.</li>
+    <li><strong>The balance sheet is the hinge.</strong> Revenue grew 15.5% in FY26 — yet net profit <em>fell</em> ~25% to ₹32 Cr, because roughly ₹638 Cr of borrowings and a heavy working-capital cycle sit on top of a thin-margin business. Net leverage has been stuck near <strong>3.4× net-debt-to-EBITDA for years</strong>. The stock trades near <strong>130× earnings</strong> — pricing in an aerospace ramp that lifts margins <em>and</em> a deleveraging that finally lets the profit through.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Dynamatic is a contract engineer that turns raw metal into flight-critical hardware. Picture three workshops sharing one set of hands: one builds tractor pumps by the thousand, one casts turbo housings for car engines, and one — the prized one — assembles the intricate wing and fuselage structures that Airbus and Boeing bolt onto jets rolling off the line at record rates. The prize workshop is winning more and better work every year. The catch is that the whole company carries a debt load big enough that fast top-line growth still leaves only a sliver of profit. The investment question is simple to state and hard to answer: can the aerospace mix and a lighter balance sheet arrive fast enough to turn all that revenue into real earnings?</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Aerostructures 101: what a company like this actually makes</h2></div>
+  <p class="part-sub">No engineering degree needed — just the handful of ideas that explain the money.</p>
+
+  <p class="lead">A modern airliner is not built by one company. Airbus and Boeing are really <em>integrators</em>: they design the aircraft, then buy tens of thousands of parts and sub-assemblies from a global pyramid of suppliers, and put them together. Dynamatic sits inside that pyramid, making the metal structures — called <strong>aerostructures</strong> — that carry loads and moving parts on the airframe. To follow the business, you need five ideas.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The five ideas that run this business</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Aerostructure</td><td>A load-bearing metal structure on an aircraft — a flap-track beam, a pylon, a fuselage panel, a door. Not the engine or electronics; the precision-machined "bones" that hold the aircraft together and let control surfaces move. Dynamatic's marquee product line.</td></tr>
+      <tr><td class="t-strong">Build-to-print</td><td>The customer hands you a finished drawing; you manufacture exactly to it. Lower risk, lower margin, easily re-sourced. Where Dynamatic started, and still a big share of the work.</td></tr>
+      <tr><td class="t-strong">Build-to-spec / design partner</td><td>The customer hands you a <em>requirement</em>; you engineer the part and own the design. Far stickier, higher-margin, and much harder to move to a rival. Where Dynamatic is trying to go — and partly already is.</td></tr>
+      <tr><td class="t-strong">Qualification</td><td>Before a part flies, it must pass years of testing and audits to be certified for a specific aircraft programme. Slow and expensive to earn — but once you hold it, you are effectively locked in for the programme's multi-decade life. A moat made of paperwork and trust.</td></tr>
+      <tr><td class="t-strong">Shipset</td><td>The full set of a given part needed for <em>one</em> aircraft. Revenue in aerospace is often counted in shipsets per month × the price per shipset. Ramp the rate, and revenue compounds without winning a single new programme.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The economics that decide everything: the qualification lock</div>
+    <p>An aerospace part is nothing like an auto part. A car component can be re-sourced to a cheaper vendor next quarter; a flight-critical aerostructure cannot. To put a part on an Airbus wing, a supplier spends <em>years</em> proving the material, the process and the quality system, and the airframer certifies that exact supplier on that exact programme. Switching later means re-qualifying — so airframers almost never do it. That is why a single-source position on a long-lived programme is so valuable: the price is negotiated hard, but the volume is near-guaranteed for the twenty-plus years the aircraft is built and supported. Dynamatic's whole aerospace strategy is to accumulate these locks, then push the rate on each one higher.</p>
+  </div>
+
+  <h3>Who buys from a firm like Dynamatic</h3>
+  <ul class="clean">
+    <li><strong>Global airframers &amp; Tier-1s</strong> — Airbus, Boeing, and the big first-tier suppliers (Spirit AeroSystems, Bell) that sit between the airframer and the smaller shops. Dynamatic supplies both directly and through these Tier-1s.</li>
+    <li><strong>Defence &amp; PSUs</strong> — Hindustan Aeronautics (HAL) and Indian defence programmes (Sukhoi work, the Deesa facility), plus emerging platforms where the government wants a domestic supply chain rather than imports.</li>
+    <li><strong>Off-highway &amp; auto OEMs</strong> — for the hydraulics and metallurgy arms: tractor makers, off-highway equipment firms, and passenger-vehicle engine programmes that need turbocharger housings and exhaust castings.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>Three engines under one roof</h2></div>
+  <p class="part-sub">The segment map — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">Dynamatic reports in three segments, and they could almost be three different companies. They share a metallurgy-and-machining DNA and a management, but their customers, cycles and margins diverge sharply. Understanding the <em>mix</em> — and how it is shifting — is most of the analysis.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The value ladder — Dynamatic is climbing from left to right</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Rung 1 · Make to drawing</div><div class="nname">Build-to-print parts</div><div class="nwho">Machine exactly to a customer drawing. Steady, competitive, lower margin.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Rung 2 · Assemble</div><div class="nname">Sub-assemblies &amp; kits</div><div class="nwho">Bring many parts into a fitted, tested assembly. More content, more value.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Rung 3 · Engineer</div><div class="nname">Design &amp; Tier-1 supply</div><div class="nwho">Own the design, deliver complete structures. Sticky, single-source, best margin.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Rung 4 · Own IP</div><div class="nname">Products &amp; platforms</div><div class="nwho">Proprietary systems (Dynauton drones, gimbals). Highest value, earliest days.</div></div>
+    </div>
+    <div class="flow-note">The same climb runs through every segment: the further right Dynamatic moves, the harder it is to replace and the more it keeps per part. Aerospace is furthest up the ladder; that is why the mix-shift toward it matters so much.</div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Segment mix — where FY26 revenue came from</div>
+    <div class="c-sub">Consolidated FY26 segment revenue (₹ Crore); shares of total</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Aerospace<small>~48% of revenue</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~776</div></div>
+      <div class="bar-row"><div class="blab">Hydraulics<small>~30% of revenue</small></div><div class="track"><span class="fill epc" style="width:63%"></span></div><div class="bval">~487</div></div>
+      <div class="bar-row"><div class="blab">Metallurgy<small>~22% of revenue</small></div><div class="track"><span class="fill spec" style="width:46%"></span></div><div class="bval">~358</div></div>
+    </div>
+    <div class="legend"><span>Aerospace has overtaken the two older businesses combined-on-a-per-segment basis and is pulling further ahead each year. A decade ago this was largely an auto-and-tractor components maker; today it is best read as an aerospace company with two industrial cash bases attached.</span></div>
+  </div>
+
+  <p>The growth is as lopsided as the mix. In FY26 aerospace grew <strong>~27.6%</strong>, while hydraulics (<strong>~6.4%</strong>) and metallurgy (<strong>~6.9%</strong>) grew at barely a quarter of that pace. Aerospace expanding four times faster than the other two means that every year the pattern holds, the company's average margin quality quietly rises — it is adding more of its highest-value work and only a little of its lower-value work. The mix-shift is the real engine here; the blended total-revenue figure actually understates it.</p>
+
+  <h3>The three engines, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Aerospace</span></strong> — the marquee. Complex aerostructures and assemblies for global OEMs: Airbus (A320-family flap-track beams, pylons), Boeing (aft-pylon and cabin structures), Bell, and Tier-1 Spirit AeroSystems, plus Indian defence work with HAL and Sukhoi-related programmes and the Deesa facility. Long qualification cycles, single-source positions, and the highest strategic value in the group.</li>
+    <li><strong><span class="chain-epc">Hydraulics</span></strong> — the cash base. Gear pumps and hydraulic systems for tractors and off-highway equipment, where Dynamatic is a leading supplier — with a commanding share of India's tractor-pump market and a meaningful global position, plus exports. Cyclical with the farm economy, but a dependable generator of cash and machining know-how.</li>
+    <li><strong><span class="chain-om">Metallurgy</span></strong> — the foundry arm. Precision castings and machined components — turbocharger housings, exhaust and thermal parts for the auto industry — made partly in advanced European foundries. The most cyclical, auto-tied leg, now being deliberately re-pointed toward higher-value aerospace and defence castings.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why three unlike businesses actually belong together</div>
+    <p>The instinct is to see a scattered conglomerate. The tighter reading is that all three are the <em>same</em> capability — turning metal into exact, certified, load-bearing parts — pointed at different customers. Hydraulics taught the company high-volume precision machining; metallurgy gave it foundry and casting depth in advanced materials; aerospace demands both, at the highest quality tier that exists. So the older businesses are not just cash cows; they are the training ground and the metallurgical toolkit that the aerospace arm draws on. When Dynamatic talks about redirecting foundry capacity from car turbos toward aircraft and defence castings, that is the flywheel turning: skills earned in the cyclical businesses being reinvested up the value ladder.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the founder, and the global footprint</h2></div>
+  <p class="part-sub">A founder-run engineering house with factories on two continents.</p>
+
+  <p class="lead">Dynamatic is closely identified with its founder and Chairman-Managing-Director, <strong>Dr Udayant Malhoutra</strong>, who has run the company for decades and is the architect of its push from humble hydraulics into global aerospace. It is not a sprawling promoter group; it is one operator's long bet that an Indian engineering firm could earn a seat at the top table of aircraft manufacturing.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1970s–1990s</div><div class="ev">Founded and built up as a <strong>hydraulic gear-pump</strong> maker for the Indian tractor and off-highway industry — the machining base the whole company grew from.</div></li>
+    <li><div class="yr">2000s</div><div class="ev">Diversifies into <strong>precision castings / metallurgy</strong> (turbocharger housings, auto components) and begins its first serious <strong>aerospace</strong> work — early build-to-print parts for global programmes.</div></li>
+    <li class="major"><div class="yr">2007</div><div class="ev">Acquires UK aerospace operations (the <strong>Oldland / Swindon</strong> facilities), gaining certified capability and a direct line into Airbus's supply chain and the flap-track-beam franchise.</div></li>
+    <li><div class="yr">2010s</div><div class="ev">Adds a <strong>German foundry</strong> arm; deepens aerospace with Airbus, Boeing and Bell work. Aerospace steadily climbs from a sideline toward the largest segment. Debt builds alongside the capex.</div></li>
+    <li class="major"><div class="yr">FY24–FY25</div><div class="ev">Aerospace passes ~₹600 Cr and ~half of revenue; wins next-generation work — <strong>A220 doors</strong>, <strong>Dassault Falcon 6X</strong> rear fuselage, Chinook pylon/ramp assemblies — moving up from parts to full structures.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ~₹1,621 Cr (+15.5%); aerospace ~₹776 Cr (+27.6%); PAT ~₹32 Cr (−25%) as interest and ramp costs bite. First A220 door shipset delivered ahead of schedule.</div></li>
+    <li class="major"><div class="yr">Q1 FY27</div><div class="ev">A visible profit inflection: PAT ~₹20.8 Cr, up ~93% YoY; EBITDA margin ~13% (from ~10%). The mix-shift starting to show up in the bottom line.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> the founding family, led by Dr Udayant Malhoutra, holds roughly <strong>41–42%</strong> (about 41.5% as of mid-2026). A founder-CMD with a long tenure — a strength for strategic continuity, but it also means the company's direction rides heavily on one person.</li>
+    <li><strong>Global operations:</strong> manufacturing in <strong>India</strong> (Bengaluru and other sites), the <strong>UK</strong> (Oldland Aerospace at Bristol/Swindon), and <strong>Germany</strong> (foundry). Roughly a thousand-plus engineers and scientists across dedicated R&amp;D centres — the design muscle behind the build-to-spec ambition.</li>
+    <li><strong>Balance sheet:</strong> the persistent tension in the story. Consolidated borrowings of roughly <strong>₹638 Cr</strong> (net debt around ₹530–540 Cr), a debt-to-equity near <strong>0.8×</strong>, and net leverage that has hovered near <strong>3.4× net-debt-to-EBITDA for several years</strong> — high for a business with single-digit net margins.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the global footprint cuts both ways:</b> owning UK and German aerospace and foundry operations gives Dynamatic certified capability, proximity to European airframers, and a foothold in advanced-material castings that would take years to build from scratch in India. It also imports European cost structures and currency exposure, and means the group's fortunes are tied to how efficiently those overseas plants run — not only to India's low-cost engineering advantage.</div>
+</section>
+
+<!-- 04 — BESPOKE crux #1: the value-chain climb -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The flap-track beam and the climb up the value chain</h2></div>
+  <p class="part-sub">The single most important idea about what makes Dynamatic special — and it is unique to this company.</p>
+
+  <p class="lead">If you remember one thing about Dynamatic's aerospace arm, make it this: the money is not in <em>making more parts</em>, it is in <em>owning more of the engineering</em>. The clearest illustration is the part the company is most known for — the <strong>flap-track beam</strong> on the Airbus A320 family.</p>
+
+  <p>The flap-track beam is the structure that guides an aircraft's wing flaps as they extend and retract on take-off and landing — flight-critical hardware that carries big loads and cannot fail. Dynamatic, through its UK <strong>Oldland Aerospace</strong> operation, is the <strong>single-source manufacturer</strong> of flap-track-beam assemblies for the entire Airbus single-aisle family (A318, A319, A320, A321), supplied via Tier-1 Spirit AeroSystems, and a Tier-1 supplier of the equivalent beam on the wide-body A330. It has delivered well over <strong>13,000 shipsets</strong> with a near-perfect on-time record. That single-source lock on the world's best-selling jet family is the anchor of the whole aerospace business.</p>
+
+  <div class="chart">
+    <div class="c-title">The re-engineering that changed the economics</div>
+    <div class="c-sub">Airbus A320 flap-track beam — parts count in the assembly, before and after Dynamatic's redesign</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Legacy design<small>the 40-year-old drawing</small></div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~200 parts</div></div>
+      <div class="bar-row"><div class="blab">Dynamatic redesign<small>monolithic structure</small></div><div class="track"><span class="fill gold" style="width:10%"></span></div><div class="bval">~20 parts</div></div>
+    </div>
+    <div class="legend"><span>Dynamatic re-engineered a four-decade-old assembly from roughly 200 parts to about 20, using a more monolithic structure — fewer joints, fewer fasteners, less weight, less assembly labour. Crucially, doing that redesign moved the company from <em>making Airbus's drawing</em> to <em>owning the design</em> — the leap from build-to-print to design partner.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits Dynamatic: the same beam, worth more each rung it climbs</div>
+    <p>Watch one part travel up the value ladder and you have the entire thesis. As a build-to-print flap-track beam, Dynamatic simply executed Airbus's decades-old drawing — replaceable in principle, priced like a machine shop. By <em>re-engineering</em> that same beam from ~200 parts to ~20, it became the design authority on a flight-critical structure for the best-selling aircraft family on earth: single-source, near-impossible to switch, and paid for the engineering, not just the metal. Nothing about the aircraft changed. What changed is <em>who owns the intelligence in the part</em> — and that is the difference between a contract machinist's margin and an aerospace design house's margin. Every new programme win (A220 doors, Falcon 6X fuselage, Chinook pylon) is an attempt to repeat that climb on another part.</p>
+  </div>
+
+  <h3>The pipeline of climbs</h3>
+  <ul class="clean">
+    <li><strong>A220 doors</strong> — Dynamatic delivered its first complete shipset of Airbus A220 doors ahead of schedule, at roughly USD 0.5 million per shipset, with the rate targeted to scale from a couple a month toward ~10 a month over a few years — a full <em>assembly</em>, not a part.</li>
+    <li><strong>Dassault Falcon 6X rear fuselage</strong> — a complete rear-fuselage assembly for the business jet, at a run-rate for tens of aircraft a year: exactly the "own the whole structure" work the company is chasing.</li>
+    <li><strong>Boeing &amp; Bell</strong> — aft-pylon and cabin/cabinet structures for Boeing, and rotorcraft work for Bell, plus the <strong>Chinook CH-47</strong> aft-pylon and cargo-ramp assemblies — broadening beyond Airbus so no single OEM defines the book.</li>
+    <li><strong>Dynauton &amp; defence IP</strong> — the earliest, most speculative rung: proprietary unmanned-systems work (gimbals, autopilots, radars, a tethered drone), and consortium ambitions on Indian defence platforms. Small today, but the top of the ladder where the company would own the product, not just the structure.</li>
+  </ul>
+
+  <div class="note gold"><b>A genuine surprise:</b> the humble tractor-pump maker from Bengaluru holds a <em>single-source</em> position on a flight-critical part fitted to every Airbus A318/A319/A320/A321 ever built — over 13,000 shipsets delivered. The same company that supplies the hydraulics inside a large share of India's tractors is a chokepoint in the supply chain of the best-selling airliner family in aviation history. Those two facts living inside one mid-cap is the least intuitive thing about Dynamatic.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The aerospace super-cycle it is riding</h2></div>
+  <p class="part-sub">The structural tailwind — a global jet-building boom with a decade-long order backlog.</p>
+
+  <p class="lead">Dynamatic's aerospace ramp is not happening in a vacuum. The global commercial-aircraft industry is in one of the strongest up-cycles in its history: after the pandemic gutted air travel, passenger demand has come roaring back, airlines are re-fleeting with fuel-efficient narrow-bodies, and Airbus and Boeing are sitting on <strong>order backlogs stretching well past a decade</strong>. Both are straining to lift production rates on their best-sellers — the A320neo family and the 737 MAX. Every rate increase pulls more shipsets through the entire supply chain beneath them.</p>
+
+  <div class="chart">
+    <div class="c-title">Aerospace revenue — the climb that reshaped the company</div>
+    <div class="c-sub">Dynamatic aerospace segment revenue (₹ Crore); share of total in brackets</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24<small>~40% of revenue</small></div><div class="track"><span class="fill ink" style="width:64%"></span></div><div class="bval">~500</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>~44% of revenue</small></div><div class="track"><span class="fill wtg" style="width:78%"></span></div><div class="bval">~608</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>~48% of revenue</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~776</div></div>
+    </div>
+    <div class="legend"><span>Aerospace has grown from a large minority to nearly half of revenue in three years, compounding at roughly a quarter a year. Treat the FY24 figure as approximate; the direction — a relentless climb in both the rupees and the share — is the point.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What's driving the aerospace tailwind</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Why it helps Dynamatic</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Narrow-body ramp</td><td>Airbus and Boeing pushing A320neo and 737 MAX build rates toward record highs to work through a decade-plus backlog.</td><td>Dynamatic's single-source A320 flap-track beam is a per-shipset business — every rate hike lifts its volume with no new contract needed.</td></tr>
+      <tr><td class="t-strong">Supply-chain de-risking</td><td>Western airframers spreading work to reliable, lower-cost, certified suppliers outside the traditional US/EU base.</td><td>India — with proven quality and English-language engineering — is a prime beneficiary; Dynamatic is an established, qualified name.</td></tr>
+      <tr><td class="t-strong">"Make in India" defence</td><td>Government push for domestic manufacture of aircraft and defence hardware, plus offset obligations on imports.</td><td>Opens HAL, Sukhoi-related and new-platform work, and a policy tailwind for a home-grown aerostructures supplier.</td></tr>
+      <tr><td class="t-strong">Move to full assemblies</td><td>Airframers outsourcing larger, integrated structures (doors, fuselage sections) rather than loose parts.</td><td>Plays exactly to Dynamatic's build-to-spec climb — A220 doors and Falcon 6X fuselage are this trend in action.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The insight that separates aerospace from a normal order book</div>
+    <p>A construction or capital-goods order book can vanish if a customer cancels or a cycle turns. An aerospace single-source position works differently: once you are qualified on a programme, your revenue rises and falls with the <em>aircraft's production rate</em>, set years ahead by an airframer with a decade of orders in hand. That converts a supplier's revenue into something closer to a rate-linked annuity than a project pipeline — highly visible, slow to move, and very hard to lose. Dynamatic's aerospace growth is therefore less about winning a fresh deal each quarter and more about the industry's build rates climbing and its own shipset rates ramping on programmes it already holds.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE crux #2: the leverage wedge -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The debt that eats the profit</h2></div>
+  <p class="part-sub">Why revenue grew 15% while profit fell 25% — the number that settles the whole case.</p>
+
+  <p class="lead">Here is the fact that stops a first-time reader cold: in FY26, Dynamatic's revenue rose 15.5% — and its net profit <em>fell</em> about 25%, to ₹32 Cr. A growing company earning less money is not a paradox once you see where the profit goes. Between the operating line and the bottom line sit two heavy costs: <strong>interest on a large debt load</strong>, and the front-loaded expense of ramping new aerospace programmes. The debt is the wedge that keeps a decent EBITDA from reaching the shareholder.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue climbs, profit slips — the wedge in one picture</div>
+    <div class="c-sub">FY26 year-on-year change (%); PAT falls even as sales and EBITDA rise</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue</div><div class="track"><span class="fill brand" style="width:63%"></span></div><div class="bval">+15.5%</div></div>
+      <div class="bar-row"><div class="blab">EBITDA</div><div class="track"><span class="fill wtg" style="width:62%"></span></div><div class="bval">+15.4%</div></div>
+      <div class="bar-row"><div class="blab">Net profit (PAT)</div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">−24.7%</div></div>
+    </div>
+    <div class="legend"><span>Sales and operating profit grew in lockstep at ~15%. But net profit went the other way — a ~25% fall — as interest cost and ramp expenses swallowed the gain. The gap between the blue bars and the red one <em>is</em> the balance-sheet problem, in a single frame.</span></div>
+  </div>
+
+  <p>Why is the debt there at all? Because building an aerospace franchise is brutally capital-hungry. You buy expensive machine tools, fund years of unpaid qualification work, carry big inventories and long receivables, and run overseas plants — all <em>before</em> a new programme pays back. Dynamatic financed that climb with borrowings, and the result is a business whose operating engine is respectable but whose <strong>net leverage has been stuck near 3.4× net-debt-to-EBITDA for several years running</strong> — high for a company with single-digit net margins.</p>
+
+  <div class="chart">
+    <div class="c-title">Net leverage — stubbornly flat, which is the whole worry</div>
+    <div class="c-sub">Net debt (incl. leases) ÷ EBITDA, by year (×) — lower is safer</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~3.4×</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~3.4×</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>EBITDA growth helping</small></div><div class="track"><span class="fill spec" style="width:97%"></span></div><div class="bval">~3.3×</div></div>
+    </div>
+    <div class="legend"><span>The unvarnished read: leverage has barely moved. EBITDA is growing, but so is the working capital an aerospace ramp demands, so net debt has not fallen much. The deleveraging thesis is a <em>hope</em> the numbers have not yet confirmed — which is exactly why the ratio, not the revenue, is the metric to watch.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the balance sheet, not the order book, is the scoreboard</div>
+    <p>Most growth stories ask you to watch the top line. Dynamatic asks the opposite: the top line is already growing nicely and the market knows it. What is unresolved is whether that growth ever reaches the owner. At ~3.4× net-debt-to-EBITDA, a large slice of every year's operating profit is pre-committed to lenders, and the aerospace ramp keeps demanding fresh working capital, so the debt refuses to shrink. Two things can break the logjam: aerospace margins rising as the mix improves (lifting EBITDA faster than debt), and the working-capital cycle finally easing as new programmes mature. Q1 FY27 — EBITDA margin up to ~13% and PAT nearly doubling — is the first hint both might be starting. But one quarter is a hint, not a trend. The ratio is the truth-teller here.</p>
+  </div>
+
+  <div class="note"><b>The uncomfortable arithmetic:</b> a ₹32 Cr net profit against roughly ₹638 Cr of borrowings means interest is a first-order claim on earnings, not a footnote. If aerospace margins expand and leverage falls toward ~2×, profit can inflect sharply off a low base. If they don't, the company keeps running hard just to stand still on the bottom line — growing revenue, delivering aircraft parts, and handing much of the reward to its lenders.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Hydraulics: the tractor-pump base</h2></div>
+  <p class="part-sub">The steady, cash-generating leg that funds the aerospace ambition.</p>
+
+  <p class="lead">Long before it touched an aircraft, Dynamatic made <strong>hydraulic gear pumps</strong> — the compact, high-precision pumps that power a tractor's hydraulics: raising and lowering implements, steering, lifting loads. It is the business the company was born in, and it remains a quiet powerhouse: Dynamatic is a leading supplier to India's farm-equipment industry, with a commanding share of the domestic tractor-pump market and a meaningful global footprint, exports included.</p>
+
+  <div class="chart">
+    <div class="c-title">A dominant niche most investors never notice</div>
+    <div class="c-sub">Approximate Dynamatic share of the tractor gear-pump market</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Indian OEM tractor pumps</div><div class="track"><span class="fill epc" style="width:100%"></span></div><div class="bval">~80%</div></div>
+      <div class="bar-row"><div class="blab">Global tractor market</div><div class="track"><span class="fill spec" style="width:48%"></span></div><div class="bval">~38%</div></div>
+    </div>
+    <div class="legend"><span>These are supplier-position estimates, not audited figures, but they capture the point: in a narrow, unglamorous product, Dynamatic is a near-monopoly at home and a global leader. That share is what makes hydraulics a reliable cash generator even as the exciting money moves to aerospace.</span></div>
+  </div>
+
+  <p>Why does a near-monopoly niche business matter to the story? Because it does two jobs. First, it <strong>generates cash</strong> — steady volumes, entrenched OEM relationships, and pricing power in a product customers cannot easily re-source — which helps fund the capital-hungry aerospace climb. Second, it is the <strong>machining school</strong>: high-volume, high-precision pump manufacturing is where the company honed the tolerances and process discipline that aerospace later demanded. The tractor pump is humble; the discipline it instilled is not.</p>
+
+  <div class="plain">
+    <div class="ptag">The catch with a farm-linked cash cow</div>
+    <p>Hydraulics is dependable, but it is not immune to the cycle it serves. Tractor demand rises and falls with the rural economy — the monsoon, crop prices, farm incomes, credit availability — so a weak agricultural year drags this segment down regardless of how well aerospace is doing. That is fine as long as you read hydraulics for what it is: a mature, cash-throwing base with a cyclical top line, not a growth engine. Its job in the group is to be steady and to bankroll the climb up the value ladder — and, increasingly, to lend its precision-machining muscle to aerospace sub-assemblies where the two skills overlap.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Metallurgy and the defence pivot</h2></div>
+  <p class="part-sub">The foundry arm — most cyclical today, most repurposable tomorrow.</p>
+
+  <p class="lead">The third leg is <strong>metallurgy</strong>: precision castings and machined components made partly in advanced European foundries. Historically its bread and butter has been the auto industry — <strong>turbocharger housings</strong>, exhaust manifolds and thermal components that must survive extreme heat and pressure inside a car's engine bay. It is skilled work in tough alloys, but it is also the group's most cyclical and lowest-margin segment, tied to global automotive volumes.</p>
+
+  <p>What makes metallurgy interesting is not its present but its <strong>option value</strong>. The same foundries that pour turbo housings can, with the right qualifications, pour high-value <strong>aerospace and defence castings</strong> — structural parts in specialised alloys where far fewer suppliers can compete and margins are richer. Management has signalled a deliberate re-pointing of this capability toward aircraft and defence work, including exploring defence-related castings such as artillery components. In effect, the plan is to take the group's most commodity-like leg and drag it up the same value ladder aerospace has climbed.</p>
+
+  <div class="plain">
+    <div class="ptag">Why owning European foundries is the quiet strategic asset</div>
+    <p>Advanced-material casting is not something you spin up quickly; it takes qualified foundries, metallurgical know-how, and a track record customers trust. Dynamatic already owns that in Europe — capacity that would cost years and heavy capital to replicate. The metallurgy segment's auto exposure makes it look like a cyclical drag on a spreadsheet, but the underlying <em>asset</em> is a certified foundry base that can be aimed at aerospace and defence. If that redirection works, a low-margin auto-castings line quietly becomes a second aerospace-adjacent business. If it doesn't, metallurgy stays what it is today — a cyclical, capital-consuming leg whose main virtue is the skills it feeds into the rest of the group.</p>
+  </div>
+
+  <div class="note gold"><b>Read this segment as a call on execution, not a number:</b> the reported metallurgy revenue tells you about last year's car market. The thing worth tracking is qualification progress — how much of that foundry capacity gets certified for aircraft and defence castings, and how fast. That conversion, not the current auto-tied top line, is where any re-rating of this segment would come from.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Forex, customer concentration and the execution test</h2></div>
+  <p class="part-sub">The risks that sit underneath a good story — worth naming plainly.</p>
+
+  <p class="lead">Dynamatic is a genuinely global engineering business, and that brings exposures a purely domestic company would not carry. Three deserve special attention: currency, customer concentration, and the plain difficulty of executing a fast aerospace ramp while carrying heavy debt.</p>
+
+  <h3>Forex: a two-edged export exposure</h3>
+  <p>A large share of aerospace revenue is earned in foreign currency — euros and dollars from Airbus, Boeing, Spirit and European customers — while much of the cost base (Indian labour, some inputs) is in rupees. A weaker rupee generally <em>helps</em> reported revenue and can lift margins; a stronger rupee does the reverse. But because Dynamatic also runs UK and German plants with euro/sterling <em>costs</em>, the net currency picture is not a simple one-way bet — it is a web of exposures across three currencies that management has to hedge and manage actively. Currency swings can move a given quarter's numbers as much as operations do.</p>
+
+  <h3>Customer concentration: the price of single-source strength</h3>
+  <p>The very thing that makes the aerospace business valuable — deep single-source positions with a handful of giant customers — is also a concentration risk. A large slice of aerospace revenue leans on Airbus programmes (directly and via Spirit AeroSystems). That is a durable, sticky relationship, but it means a production-rate cut, a programme delay, or a dispute at one big customer would land hard. Diversifying across Boeing, Bell, Dassault and Indian defence is partly an answer to exactly this — spreading the book so no single airframer's decisions define the year.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~48%</div><div class="msl">Aerospace share of revenue — the mix-shift, and the concentration</div></div>
+    <div class="ms"><div class="msv">3 currencies</div><div class="msl">Rupee, euro and sterling exposures across India/UK/Germany</div></div>
+    <div class="ms red"><div class="msv">~3.4×</div><div class="msl">Net leverage that magnifies any execution stumble</div></div>
+  </div>
+
+  <h3>Execution: the ramp is the risk</h3>
+  <p>Ramping a new aerospace programme — taking A220 doors from a couple a month toward ten, standing up Falcon 6X fuselage production, qualifying foundry capacity for defence — is operationally hard and cash-intensive. Slip a delivery schedule, mis-price a fixed contract, or let working capital balloon, and a leveraged balance sheet turns a normal operational hiccup into a financial one. This is the everyday risk that does not make headlines: not a lost contract, but simply the grind of delivering a fast ramp cleanly, on time, quarter after quarter, with limited financial slack to absorb mistakes.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A real growth business with a thin bottom line — priced as if the inflection is a certainty.</p>
+
+  <p class="lead">FY26 was a year of strong revenue growth, a rising aerospace mix, and a squeezed bottom line as interest and ramp costs bit. Q1 FY27 hinted at the profit inflection the bulls are waiting for. The market has already paid up for that inflection in full — which makes the gap between operating progress and the share price the central tension.</p>
+
+  <p>Revenue has compounded steadily in the low-to-mid teens for years — roughly ₹1,250 Cr in FY24, ~₹1,404 Cr in FY25 and ~₹1,621 Cr in FY26 — led all the way by aerospace. The debate has never been about the top line. It is about what happens below it.</p>
+
+  <div class="chart">
+    <div class="c-title">The bottom line and the inflection</div>
+    <div class="c-sub">Net profit (₹ Crore); Q1 FY27 shown as a quarter, not a year</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">PAT FY25</div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~43</div></div>
+      <div class="bar-row"><div class="blab">PAT FY26</div><div class="track"><span class="fill bad" style="width:74%"></span></div><div class="bval">~32</div></div>
+      <div class="bar-row"><div class="blab">PAT Q1 FY27<small>+93% YoY</small></div><div class="track"><span class="fill gold" style="width:48%"></span></div><div class="bval">~21</div></div>
+    </div>
+    <div class="legend"><span>Full-year profit fell in FY26 as the wedge widened — but a single quarter of FY27 already delivered ~₹21 Cr, up ~93% year-on-year, with the EBITDA margin lifting from ~10% to ~13%. That is the first hard evidence the mix-shift is reaching the bottom line. The question is whether it compounds or fades.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~11%</div><div class="msl">FY26 EBITDA margin; ~13% already in Q1 FY27 as mix improves</div></div>
+    <div class="ms red"><div class="msv">~3.4×</div><div class="msl">Net-debt-to-EBITDA — the ratio the whole case hangs on</div></div>
+    <div class="ms red"><div class="msv">~130×</div><div class="msl">Trailing P/E on ~₹7,600 Cr market cap — a demanding multiple on a thin base</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: net-debt-to-EBITDA, not revenue</div>
+    <p>At ~130× trailing earnings, Dynamatic is not priced as a cyclical engineering firm; it is priced as a company whose profit is about to inflect several-fold. For that to be justified, one number has to move: <strong>net-debt-to-EBITDA has to fall</strong> — from ~3.4× toward ~2× and below — because that is what proves the aerospace mix is lifting EBITDA faster than the ramp is consuming cash. Read it alongside three supporting gauges: the <strong>aerospace EBIT margin</strong> (is the build-to-spec climb actually earning more?), the <strong>working-capital cycle in days</strong> (is the balance sheet releasing cash as programmes mature?), and the <strong>aerospace shipset run-rates</strong> on A220 doors and Falcon 6X (is the ramp on schedule?). If leverage falls while aerospace margins rise, the low profit base inflects and the multiple has something to grow into. If leverage stays glued near 3.4×, the P/E is discounting an event that keeps not arriving. Revenue is the easy part; the deleveraging is the exam.</p>
+  </div>
+
+  <div class="note">FY24 revenue and the aerospace-by-year figures here are <b>approximate</b>, assembled from company presentations and third-party summaries; segment splits and leverage ratios are drawn from reported results and credit commentary and may be revised. Treat every figure as a directional guide and verify against Dynamatic's own filings and investor presentations before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A rare Indian aerospace franchise — asked to prove its profits can escape its balance sheet.</p>
+
+  <p class="lead">Dynamatic is one of very few Indian companies with a genuine, qualified seat in the global aircraft supply chain, riding a super-cycle at exactly the right moment, while deliberately climbing from making parts to owning designs. The honest debate is not whether the business is real — it plainly is — but whether the earnings can outrun the interest bill fast enough to justify the price the market has already paid.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural aerospace super-cycle</strong> — a decade-plus Airbus/Boeing backlog and rising narrow-body build rates pull Dynamatic's shipset volumes higher for years, largely regardless of the economy.</li>
+        <li><strong>Single-source moats</strong> — the A320 flap-track-beam lock (13,000+ shipsets) plus A220 doors, Falcon 6X fuselage and Chinook work are sticky, multi-decade, hard-to-replace positions.</li>
+        <li><strong>Mix-shift compounding</strong> — aerospace growing ~4× faster than the other legs steadily lifts group margin quality; Q1 FY27's jump to a ~13% EBITDA margin is early proof.</li>
+        <li><strong>Value-chain climb</strong> — moving from build-to-print to design partner (the 200-to-20-part redesign) captures engineering margin, not just machining margin.</li>
+        <li><strong>Deleveraging optionality</strong> — if EBITDA rises and working capital eases, a thin profit base can inflect sharply as the interest wedge narrows.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>The debt wedge</strong> — ~3.4× net leverage stuck for years; interest and ramp costs already turned 15% revenue growth into a 25% profit fall in FY26.</li>
+        <li><strong>Priced for the inflection</strong> — a ~130× P/E on a ₹32 Cr profit assumes the deleveraging and margin lift are near-certain; any delay leaves the multiple badly exposed.</li>
+        <li><strong>Customer &amp; programme concentration</strong> — heavy reliance on Airbus (directly and via Spirit); one rate cut or programme slip lands hard on a leveraged book.</li>
+        <li><strong>Ramp-execution risk</strong> — scaling A220 doors and Falcon 6X cleanly, on fixed-price terms, with limited financial slack, is operationally unforgiving.</li>
+        <li><strong>Cyclical drag &amp; forex</strong> — hydraulics rides the monsoon-and-rural cycle, metallurgy the auto cycle, and three-currency exposure can swing quarters on its own.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Dynamatic has done the hard, decade-long work of turning a tractor-pump maker into a qualified global aerostructures supplier with single-source locks on the world's best-selling jets — and it is climbing from making parts to owning designs just as a historic aircraft-building boom lifts every rate beneath it. What it has not yet done is get that success past its own lenders: a heavy debt load has kept the bottom line thin even as revenue and operating profit climb. The next several quarters answer the only question that matters here in one checkable figure — <strong>whether net-debt-to-EBITDA finally breaks below ~3× while the aerospace margin keeps rising</strong>. Watch the A220-door and Falcon-6X ramp rates for the operational signal, and watch that leverage ratio for the financial verdict; the flap-track beam already proved the company can build anything Airbus needs — the balance sheet is what has yet to prove it can keep the reward.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Dynamatic Technologies Ltd — Q4 &amp; Full-Year FY2026 earnings presentation and results (year ended Mar 2026), via company disclosures on dynamatics.com and BSE/NSE filings.</li>
+    <li>InvestyWise — "Dynamatic Technologies FY2026 Revenue Surges 15.5% on Aerospace Growth" (segment revenue and EBITDA detail).</li>
+    <li>Business Standard / Capital Market — "Dynamatic Technologies clocks 93% YoY rise in Q1 PAT" (Q1 FY27 results, Aug 2026).</li>
+    <li>Sahi.com — "Dynamatic Tech Q1 Net Profit Rises to ₹20.8 Crore with 12.97% EBITDA Margin" (Q1 FY27 segment split).</li>
+    <li>Trade Brains — "Dynamatic Tech Revenue Segmentation" and "Aerospace Stock That Supplies to Airbus, Boeing and HAL" (segment mix, customers).</li>
+    <li>LearningLifelong (Pankaj Garg) — "Revisiting Dynamatic Technologies" (business deep-dive: flap-track beam, A220 doors, Falcon 6X, Dynauton, foundries).</li>
+    <li>India Ratings / credit-rating rationale (Oct 2025) — net leverage (~3.4× net-debt-to-EBITDA) and Oldland/Spirit flap-track-beam single-source detail.</li>
+    <li>Wikipedia — "Dynamatic Technologies" (history, UK/Germany operations, founder Dr Udayant Malhoutra).</li>
+    <li>BSE India — Dynamatic Technologies Limited stock page and corporate filings, scrip code 505242.</li>
+    <li>Screener.in — Dynamatic Technologies (DYNAMATECH) consolidated financials, market cap, P/E, borrowings and promoter holding.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026) and Q1 FY27, and may contain errors or become outdated; some segment and year-by-year figures are estimates from presentations rather than audited splits. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "DYNAMATECH";
+  const COMPANY_SLUG = "dynamatic-technologies";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
