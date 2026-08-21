@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AXISCADES Technologies — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F5FA;
+    --paper-2:#FAFBFE;
+    --card:#FFFFFF;
+    --ink:#151A2B;
+    --ink-soft:#565E76;
+    --ink-faint:#8A90A6;
+    --brand:#22337A;          /* deep aerospace indigo */
+    --brand-bright:#3B54C4;   /* bright technical indigo */
+    --gold:#C6892F;           /* strategic amber - defence / warmth */
+    --wtg:#3F72D9;            /* aerospace blue */
+    --epc:#5B86E0;            /* engineering / product */
+    --om:#0E7C86;            /* ESAI teal - electronics/semi/AI */
+    --spec:#1B2C63;          /* deep steel-indigo */
+    --line:#D9DEEB;
+    --line-soft:#E7EBF3;
+    --good:#2A7A57;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4E9FA;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F7FC;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E9ECF5;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#22337A,#3B54C4);}
+  .fill.gold{background:linear-gradient(90deg,#C6892F,#E0A85C);}
+  .fill.wtg{background:linear-gradient(90deg,#3F72D9,#5B95EE);}
+  .fill.om{background:linear-gradient(90deg,#0E7C86,#199BA6);}
+  .fill.spec{background:linear-gradient(90deg,#1B2C63,#33478F);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4257,#565f78);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAEFFA;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> The ER&amp;D outsourcing engine</a></li>
+    <li><a href="#p2"><span class="n">02</span> The three-pillar business</a></li>
+    <li><a href="#p3"><span class="n">03</span> Company, owners &amp; the Mistral bet</a></li>
+    <li><a href="#p4"><span class="n">04</span> Selling its own namesake</a></li>
+    <li><a href="#p5"><span class="n">05</span> The defence &amp; strategic-electronics engine</a></li>
+    <li><a href="#p6"><span class="n">06</span> The aerospace vertical &amp; its cycle</a></li>
+    <li><a href="#p7"><span class="n">07</span> ESAI: chips, AI &amp; new space</a></li>
+    <li><a href="#p8"><span class="n">08</span> How it differs from LTTS &amp; Cyient</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: AXISCADES · BSE: 532395</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>AXISCADES, <em>from engineering hours to defence hardware</em></h1>
+  <p class="dek">A full walk through a Bengaluru engineering-services firm that is deliberately re-inventing itself — how it grew up designing aircraft parts for Airbus and Boeing, why it is now <em>selling</em> that founding business to a Swiss buyer, and how it is betting its future on building defence electronics, missile systems and satellites for the Indian armed forces. The story of a services company trying to become a products company before its old model runs out of road.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,031 <small>Cr</small></div><div class="l">Revenue (FY25, consolidated)</div></div>
+    <div class="cell"><div class="v">~₹75 <small>Cr</small></div><div class="l">Net profit / PAT (FY25)</div></div>
+    <div class="cell"><div class="v">~15%<small> adj.</small></div><div class="l">EBITDA margin (FY25)</div></div>
+    <div class="cell"><div class="v">~₹6,800 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">21 Aug 2026</b> · source: FY25 results + 9M FY26 disclosures</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY25 crossed the ₹1,000 Cr revenue milestone (₹1,031 Cr) with PAT roughly doubling to ~₹75 Cr; the Akkodis divestment of the aerospace engineering-services arm was announced, and the defence book kept building (Su-30MKI, Tejas Mk1A, LLTR Ashwini). Added the services-to-products pivot as the central section.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">AXISCADES is a <strong>Bengaluru engineering company</strong> that, for two decades, made its living the way India's IT giants made theirs — by renting out brains. Where Infosys rents software engineers, AXISCADES rented <strong>mechanical, aerospace and electronics engineers</strong>: teams that sit in India and design aircraft structures, wiring, brackets and test rigs for global manufacturers like <strong>Airbus and Boeing</strong>. That business is called <strong>engineering R&amp;D (ER&amp;D) services</strong>, or "outsourced engineering," and it made AXISCADES a small player in the same industry as the far larger L&amp;T Technology Services, Cyient and Tata Elxsi. What makes AXISCADES worth understanding is that it has decided <em>not</em> to be that company any more.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is pivoting from selling hours to selling hardware.</strong> AXISCADES has re-organised itself around four things it can <em>build and own</em> — <strong>aerospace manufacturing, defence products &amp; strategic electronics (through its subsidiary Mistral Solutions), electronics-semiconductors-AI ("ESAI"), and a new satellite/space division</strong> — and is walking away from the low-margin, headcount-driven services model. In FY25 it crossed <strong>₹1,000 Cr of revenue</strong> for the first time, with profit roughly doubling to ~₹75 Cr.</li>
+    <li><strong>Defence is the growth engine — and it is lumpy.</strong> The defence and strategic-electronics business, anchored by the 2022 acquisition of <strong>Mistral Solutions</strong>, supplies mission computers, signal-processing units and avionics for programmes like the <strong>LCA Tejas Mk1A, Su-30MKI upgrades, the Netra AEW&amp;C and the LLTR "Ashwini" radar</strong>. It grows fast (defence revenue up ~50% year-on-year in recent quarters) and earns far fatter margins than services — but it lives on a small number of large, government-timed orders that arrive in fits and starts.</li>
+    <li><strong>The valuation prices the transformation, not today's numbers.</strong> The stock carries a market value of roughly <strong>₹6,800 Cr</strong> on FY25 profit of ~₹75 Cr — a very rich multiple (well north of 80× and, on suppressed trailing earnings, optically far higher). Investors are paying for the company AXISCADES <em>wants to become</em> by 2030, not the one it is today.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>AXISCADES has spent 20 years as a hired drawing office for the aerospace world — paid by the engineer-hour to design parts other companies then own, manufacture and sell. That is a respectable but capped business: your revenue is your headcount times a billing rate, and your customer keeps the intellectual property. The pivot underway is an attempt to escape that ceiling — to stop being the draughtsman and start being the manufacturer, especially in <strong>defence</strong>, where an Indian company that can actually <em>build</em> the electronics inside a fighter jet earns 25–40% margins instead of a services firm's 12–15%. The bet is bold and the direction is clear; the open question is whether a mid-cap can execute a hardware, IP and manufacturing pivot faster than its old services cash cow fades.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>The ER&amp;D outsourcing engine: how "renting engineers" became an industry</h2></div>
+  <p class="part-sub">The structural story AXISCADES was born into — and is now trying to grow out of.</p>
+
+  <p class="lead">To understand AXISCADES you first need the industry it came from. When a company like <strong>Airbus</strong> designs an aircraft, only a fraction of the work is the glamorous stuff — the wing shape, the flight software. Vast amounts of it are <strong>grinding, detailed engineering</strong>: drawing thousands of brackets and panels, running stress simulations, updating certification documents, converting legacy paper drawings into 3D models. This work is essential, repetitive, and expensive to do in Germany, France or the United States. So the world's manufacturers began <strong>offshoring it to India</strong>, where a qualified mechanical or aerospace engineer costs a fraction of a Western one. That is the ER&amp;D services industry — and it is a real, structural, multi-decade wave.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The vocabulary that runs the business</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">ER&amp;D services</td><td>"Engineering, Research &amp; Development" services — outsourced product engineering. A client hands over design, analysis, testing or documentation work; the vendor does it with Indian-based teams. AXISCADES' founding business.</td></tr>
+      <tr><td class="t-strong">OEM</td><td>"Original Equipment Manufacturer" — the company whose name is on the final product (Airbus, Boeing, Honeywell). ER&amp;D firms are their suppliers. A handful of OEMs make up most of AXISCADES' revenue.</td></tr>
+      <tr><td class="t-strong">T&amp;M vs fixed-price</td><td>Two ways to bill. <em>Time-&amp;-material</em> = paid per engineer-hour (revenue ≈ headcount). <em>Fixed-price / product</em> = paid for an outcome, so profit rises if you do it efficiently. The pivot is a march from the first toward the second.</td></tr>
+      <tr><td class="t-strong">Utilisation</td><td>The share of your engineers who are billable at any moment. In a services firm this <em>is</em> the profit lever — an idle engineer on the bench is pure cost. Small utilisation swings move the whole margin.</td></tr>
+      <tr><td class="t-strong">Indigenisation</td><td>India's policy push to build defence equipment domestically rather than import it. For AXISCADES' defence arm, it converts a national-security priority into a purchase order.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The ceiling that explains the whole strategy</div>
+    <p>A pure ER&amp;D services firm has a hard mathematical limit: its revenue is roughly <strong>the number of engineers it employs multiplied by the rate it can bill them</strong>. To grow, it must keep hiring — so growth eats cash, margins sit in the low teens, and the client keeps every patent the engineers produce. This is why every serious Indian ER&amp;D company is racing to add <strong>fixed-price projects, its own IP, and physical products</strong> on top of the hours. AXISCADES is doing the most aggressive version of that trade in the listed space: rather than layering products <em>on top</em> of a big services base, it is <em>divesting</em> the services base outright to concentrate capital and management attention on products. That is the single decision the entire investment case turns on.</p>
+  </div>
+
+  <h3>Why aerospace &amp; defence is the sharp end of ER&amp;D</h3>
+  <ul class="clean">
+    <li><strong>The barriers are real.</strong> You cannot design a part that flies without certifications, security clearances and years of trust from the OEM. Once embedded, a vendor is hard to dislodge — AXISCADES holds "authorised signatory" status with Airbus and has won <strong>five consecutive Diamond Supplier awards from Bombardier</strong>, the kind of standing that takes a decade to earn.</li>
+    <li><strong>Defence adds a second moat: the government.</strong> Sensitive defence electronics must, by policy, be built by trusted domestic firms. That deliberately shrinks the competitive set to a few cleared Indian players — a structural advantage a commercial-IT vendor never enjoys.</li>
+    <li><strong>The cycles are long but sticky.</strong> Aircraft programmes and defence platforms run for decades. Win content on the Tejas or an Airbus family and the work recurs across years of production — but the flip side is that when OEM build-rates dip or a defence order slips, the revenue moves in large, visible steps rather than smoothly.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The three-pillar business: what AXISCADES actually does</h2></div>
+  <p class="part-sub">Aerospace, Defence, and ESAI — plus a legacy tail it is shedding.</p>
+
+  <p class="lead">Management has redrawn the company around <strong>three core verticals it wants to be famous for — Aerospace, Defence and ESAI (Electronics, Semiconductors &amp; AI)</strong> — and a fourth bucket of <strong>legacy industrial work it is actively exiting</strong>. Reading the company through these four buckets, and noticing which are growing and which are shrinking, is the fastest way to see where it is heading.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The strategic march — up the value chain, from renting hours to owning product</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Yesterday</div><div class="nname">Engineering services</div><div class="nwho">Design &amp; analysis for OEMs, billed per engineer-hour. Client owns the IP.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Transition</div><div class="nname">Fixed-price &amp; build-to-spec</div><div class="nwho">Outcome-based projects, aero-structures manufacturing, supply-chain work.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Today</div><div class="nname">Defence products &amp; electronics</div><div class="nwho">Mistral / ACAT: mission computers, avionics, strategic systems. Own IP, fat margins.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Tomorrow</div><div class="nname">Chips, AI &amp; satellites</div><div class="nwho">XiDA semiconductors, AI-hardware, a New Space satellite-bus division.</div></div>
+    </div>
+    <div class="flow-note">Each step to the right raises margin and defensibility — and raises execution risk. The whole equity story is the speed at which revenue shifts from the left of this diagram to the right.</div>
+  </div>
+
+  <h3>The four buckets, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Aerospace</span></strong> — the founding vertical: engineering and increasingly <em>manufacturing</em> for civil-aircraft OEMs (Airbus, Bombardier), aero-structures, cabin-interiors work, and a fledgling <strong>MRO (maintenance, repair &amp; overhaul)</strong> tie-up with Portugal's OGMA. Note the split personality — the pure <em>engineering-services</em> slice of aerospace is exactly what is being sold; the <em>manufacturing and supply-chain</em> slice is being kept and grown.</li>
+    <li><strong><span class="chain-om">Defence</span></strong> — the growth engine, run through <strong>Mistral Solutions</strong> (defence electronics manufacturing) and <strong>ACAT</strong> (avionics and systems engineering). It builds the electronic "brains and senses" of Indian military platforms and rides the make-in-India indigenisation wave. Highest margin, lumpiest revenue.</li>
+    <li><strong><span class="chain-epc">ESAI (Electronics, Semiconductors &amp; AI)</span></strong> — the newest bet: embedded computing, chip-to-product design (housed in a unit branded <strong>XiDA</strong>), and thermal-management hardware for AI data centres (via the acquired ADD Solutions). Small today, but the option on India's semiconductor and AI-infrastructure build-out.</li>
+    <li><strong>Legacy industrial / automotive / energy</strong> — older ER&amp;D work in heavy engineering, autos and energy that no longer fits the A&amp;D-and-electronics identity. This bucket is <em>shrinking by design</em> (down high-single-digits year-on-year) as management restructures or divests it. A falling number here is a feature, not a bug.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the segment tags actually matter</div>
+    <p>Most companies want every segment to grow. AXISCADES deliberately wants <em>two of its buckets to fall</em> — legacy industrial work and, now, pure aerospace engineering services — even as the reported top line barely moves in the near term. That makes the headline revenue number almost useless for judging progress. What matters is the <strong>internal mix</strong>: is defence-plus-ESAI-plus-manufacturing growing fast enough to more than replace the services and legacy revenue walking out the door? A quarter where total revenue is flat but defence is up 50% and legacy is down 9% is, for this company, a <em>good</em> quarter — the mix is curing even while the total idles.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, its owners, and the Mistral bet</h2></div>
+  <p class="part-sub">A Jupiter Capital-controlled firm that bought its way into defence.</p>
+
+  <p class="lead">AXISCADES traces back to an engineering-services company that reverse-merged into a listed shell in the mid-2010s. Its controlling shareholder is <strong>Jupiter Capital</strong>, the investment house associated with entrepreneur-politician Rajeev Chandrasekhar, which holds a majority stake. The most consequential thing this ownership did was to make a multi-year, deliberate push into <strong>defence electronics</strong> — culminating in the acquisition of Mistral Solutions, the deal that reshaped the company.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2007–2015</div><div class="ev">Roots as an aerospace &amp; industrial engineering-services provider ("CADES" — computer-aided design engineering services); the "AXIS" and "CADES" businesses combine and reach the listed market.</div></li>
+    <li class="major"><div class="yr">2017</div><div class="ev">Jupiter Capital-linked control consolidates; the company begins a phased move into <strong>defence and strategic electronics</strong>, initiating the Mistral Solutions acquisition.</div></li>
+    <li class="major"><div class="yr">2022</div><div class="ev"><strong>Mistral Solutions acquisition completed</strong> — built over four phases for an aggregate ~₹296 Cr — giving AXISCADES a genuine defence-electronics manufacturing arm and its highest-margin business.</div></li>
+    <li><div class="yr">2024</div><div class="ev">Acquires <strong>ADD Solutions</strong> (thermal management for AI/data-centre hardware), seeding the ESAI/electronics thrust; the "three-pillar" identity takes shape.</div></li>
+    <li class="major"><div class="yr">FY25</div><div class="ev">Revenue crosses <strong>₹1,000 Cr</strong> (~₹1,031 Cr) for the first time; PAT roughly doubles to ~₹75 Cr; core Aero/Defence/ESAI revenue up ~12%, EBITDA up ~15%. Defence subsidiaries restructured (Mistral / ACAT / XiDA reorganised).</div></li>
+    <li class="major"><div class="yr">FY26–FY27</div><div class="ev">Announces the <strong>divestment of the aerospace engineering-services business to Akkodis</strong> (51% then the balance), funding a "Power 930" plan targeting ~₹9,000 Cr revenue and ~₹960 Cr profit by FY30; defence order wins accelerate (Su-30MKI, Tejas Mk1A, LLTR Ashwini).</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> <strong>Jupiter Capital</strong> holds the controlling majority — roughly <strong>~56% (mid-2026)</strong>, trimmed modestly from ~58% via a bulk-deal sale. Some promoter shares have historically been pledged, with pledges being progressively released; investors should read the pledge line directly in each shareholding filing.</li>
+    <li><strong>The subsidiary map (worth keeping straight):</strong> <strong>Mistral Solutions</strong> is the defence-electronics manufacturing arm (the strategically most important piece); <strong>ACAT</strong> (AXISCADES Aerospace &amp; Technologies) is the dedicated defence/aerospace-systems company; <strong>XiDA</strong> houses the semiconductor/AI-electronics ambition; and a <strong>New Space</strong> division targets satellite-bus manufacturing. The parent (ACTL) sits on top of all of them.</li>
+    <li><strong>Balance sheet:</strong> modest and mid-cap-sized — net worth of roughly <strong>~₹700 Cr</strong> with a small net-debt position (~₹50 Cr) around FY26. This matters: a products-and-manufacturing pivot is capital-hungry, which is precisely why the company is <em>selling</em> a business to fund it rather than borrowing heavily against a slim balance sheet.</li>
+  </ul>
+
+  <div class="note gold"><b>Why Mistral is the fulcrum of the whole story:</b> before Mistral, AXISCADES was a services firm with a defence label. After Mistral, it owned a factory that actually builds signal-processing units, mission computers and airborne systems for the Indian forces — products with 25–40% margins and long programme lives. Almost every good thing in the current narrative (fat defence margins, indigenisation orders, the credibility to talk about "products and IP") flows from that one ~₹296 Cr acquisition. It is the hinge on which the company swung from draughtsman to manufacturer.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: selling the namesake -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The pivot in one act: selling its own namesake</h2></div>
+  <p class="part-sub">The single most revealing decision the company has ever made — and it is unique to AXISCADES.</p>
+
+  <p class="lead">Here is the fact that should stop a generalist in their tracks. The "CADES" in AXISCADES stands for <strong>computer-aided design engineering services</strong> — the aerospace engineering-services business <em>is the company's namesake and its founding identity</em>. And AXISCADES is <strong>selling it</strong>. In a deal announced for staged completion through FY27, it is divesting the aerospace engineering-services arm to <strong>Akkodis</strong>, a Swiss digital-engineering group — 51% first, the remaining 49% within roughly two years. A company is voluntarily handing away the very business it was named after.</p>
+
+  <div class="chart">
+    <div class="c-title">The margin gap that justifies the whole pivot</div>
+    <div class="c-sub">Illustrative operating margin by activity — why AXISCADES is trading services for products</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Defence production<small>own IP / hardware</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">25–40%</div></div>
+      <div class="bar-row"><div class="blab">Engineering services<small>billed per hour</small></div><div class="track"><span class="fill ink" style="width:38%"></span></div><div class="bval">12–15%</div></div>
+    </div>
+    <div class="legend"><span>A defence-production rupee can earn two-to-three times the margin of a services rupee — and it comes with its own intellectual property. That single spread is the entire economic rationale for divesting a perfectly functional services business to double down on products.</span></div>
+  </div>
+
+  <p>Read coldly, the logic is hard to argue with. The engineering-services business is a decent cash generator but a <strong>low-margin, headcount-bound, IP-poor</strong> operation whose ceiling is fixed by the maths of §01. Every rupee and every senior engineer tied up defending it is a rupee and an engineer <em>not</em> deployed building defence products at two-to-three times the margin. Selling it does three things at once: it <strong>raises cash</strong> to fund the products push, it <strong>frees management bandwidth</strong> to focus on the hard pivot, and it hands the services business to a global specialist (Akkodis) far better placed to scale it than a distracted mid-cap. The proceeds are explicitly earmarked for the <strong>"Power 930"</strong> ambition — a target of roughly <strong>₹9,000 Cr of revenue and ₹960 Cr of profit by FY30</strong>, with products and solutions rising from about half the mix today toward 80%-plus.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that fits no other primer: a company subtracting its way to growth</div>
+    <p>Almost every growth story you will read is additive — new plants, new products, new geographies stacked on top of the old. AXISCADES is attempting the rarer, riskier <strong>subtractive</strong> version: it is trying to grow the <em>quality</em> of its earnings by <em>removing</em> revenue — first the legacy industrial work, now its founding aerospace-services business. If it works, a smaller, defence-and-electronics AXISCADES earns far more per rupee of sales than the sprawling services firm ever could, and the market re-rates the earnings quality, not just the earnings. If it stumbles, the company will have sold a real, cash-generating business and be left mid-pivot — carrying the ambition of a products company with the revenue base of a shrunken one. There is no other listed Indian engineering firm making this exact trade in this exact way, which is why the usual peer comparisons only get you so far.</p>
+  </div>
+
+  <div class="note gold"><b>A genuine surprise:</b> the buyer, Akkodis, is a heavyweight of the <em>same</em> ER&amp;D services industry that AXISCADES' large-cap peers (LTTS, Cyient) are busy expanding into. So AXISCADES is exiting — at the very moment its rivals are doubling down on — the outsourced-engineering model, and selling it to one of that model's global champions. It is a deliberate bet that for a sub-scale Indian mid-cap, the future is defence hardware and IP, not competing hour-for-hour against far bigger services machines.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The defence &amp; strategic-electronics engine</h2></div>
+  <p class="part-sub">The highest-margin business, the make-in-India tailwind, and the lumpiness that comes with it.</p>
+
+  <p class="lead">If the pivot is the strategy, <strong>defence is the destination</strong>. Through Mistral Solutions and ACAT, AXISCADES builds the electronics that go inside Indian military platforms — the mission computers, signal- and data-processing units, avionics and airborne systems that turn a piece of airframe into a fighting machine. This is where the margins are fat, the moat (a trusted, cleared domestic supplier) is real, and the growth is fastest — recent quarters have seen defence revenue climb around <strong>50% year-on-year</strong>. It is also where the revenue is most unpredictable.</p>
+
+  <div class="chart">
+    <div class="c-title">Segment momentum — the mix is curing</div>
+    <div class="c-sub">Approximate year-on-year revenue growth by vertical, recent quarter</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Defence</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~+50%</div></div>
+      <div class="bar-row"><div class="blab">Aerospace</div><div class="track"><span class="fill wtg" style="width:56%"></span></div><div class="bval">~+28%</div></div>
+      <div class="bar-row"><div class="blab">ESAI</div><div class="track"><span class="fill om" style="width:36%"></span></div><div class="bval">~+18%</div></div>
+      <div class="bar-row"><div class="blab">Legacy industrial<small>shrinking by design</small></div><div class="track"><span class="fill bad" style="width:17%"></span></div><div class="bval">~−9%</div></div>
+    </div>
+    <div class="legend"><span>Defence and aerospace are pulling the company forward while the legacy tail is deliberately allowed to fade. This is the "subtractive growth" of §04 rendered as four bars.</span></div>
+  </div>
+
+  <p>The programmes AXISCADES supplies read like a roster of India's flagship defence projects, which is exactly the point of an indigenisation play:</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Selected defence programmes &amp; recent wins</caption>
+    <thead><tr><th>Programme / win</th><th>What AXISCADES supplies</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">LCA Tejas Mk1A</td><td>Avionics / electronics content per aircraft</td><td>India's indigenous fighter; with ~180 aircraft planned at meaningful content each, a multi-hundred-crore, multi-year opportunity.</td></tr>
+      <tr><td class="t-strong">Su-30MKI upgrade</td><td>Airborne systems &amp; processing (via a DRDO order)</td><td>The upgrade of 100-plus front-line fighters — a very large, long-dated indigenisation programme.</td></tr>
+      <tr><td class="t-strong">LLTR "Ashwini" radar</td><td>Signal &amp; Data Processing Units (SDPUs) + spares</td><td>A ~₹100 Cr contract (via Mistral) for a low-level transportable radar — concrete, booked revenue over ~2 years.</td></tr>
+      <tr><td class="t-strong">Mission computer order</td><td>Airborne mission-computer systems</td><td>An ~₹80 Cr win (early 2026) — the kind of high-value electronics that carries product-level margins.</td></tr>
+      <tr><td class="t-strong">Netra AEW&amp;C · MBDA missiles</td><td>Electronics/sub-systems; a decade-long MBDA relationship</td><td>Early-warning and missile-systems content — sticky, security-cleared work that recurs across a platform's life.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "lumpy" is the word to internalise for defence</div>
+    <p>Defence revenue does not accrue like a subscription; it arrives in <strong>large, discrete, government-timed lumps</strong>. A single order like the ₹100 Cr Ashwini contract or the ₹80 Cr mission-computer win can move a quarter — and the <em>gap</em> before the next one can flatten the following quarter just as sharply. Orders depend on defence-ministry budget cycles, trial timelines, and political priorities that no company controls. So the right way to read this segment is not quarter-to-quarter (which will zig-zag) but through the <strong>order book and win cadence</strong> over a year or two: is the pipeline of programmes AXISCADES is designed into getting deeper? On the evidence — Tejas, Su-30MKI, Ashwini, mission computers, all landing inside a couple of years — it is. But an investor who panics at a soft defence quarter has misunderstood the business.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">25–40%</div><div class="msl">Margin on defence production — the reason the whole pivot points here</div></div>
+    <div class="ms"><div class="msv">~₹296 Cr</div><div class="msl">Total paid for Mistral across four phases — the deal that built the engine</div></div>
+    <div class="ms green"><div class="msv">~+50%</div><div class="msl">Recent defence revenue growth YoY — fastest of the four buckets</div></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The aerospace vertical and its build-rate cycle</h2></div>
+  <p class="part-sub">The heritage business — half being sold, half being scaled — and why it moves with Airbus and Boeing.</p>
+
+  <p class="lead">Aerospace is where AXISCADES grew up, and even after the services divestment it remains central — because the company is keeping and expanding the <strong>manufacturing and supply-chain</strong> side of aerospace while selling the <strong>engineering-services</strong> side. The distinction is easy to miss but vital: designing a bracket for Airbus (services, being sold) is a different business from <em>making and shipping</em> aero-structures and components (manufacturing, being kept). The keep-half is a move <em>up</em> the aerospace value chain, from drawing the part to building it.</p>
+
+  <p>The defining feature of any aerospace supplier is that its fortunes are chained to <strong>OEM build-rates</strong> — how many aircraft Airbus and Boeing actually decide to produce each month. When the majors raise production of the A320 or 737 families to work through their vast order backlogs, content flows down to suppliers like AXISCADES. When a build-rate is cut — a supply-chain snarl, a certification pause, a demand wobble — that same content dries up, and a supplier feels it with a lag. This is the cyclicality baked into the vertical: AXISCADES does not control the tempo; the OEMs do.</p>
+
+  <div class="plain">
+    <div class="ptag">The relationships that are the real asset</div>
+    <p>What makes aerospace supply defensible is not any single part — it is <em>trust earned over years</em>. AXISCADES holds <strong>authorised-signatory status with Airbus</strong> (meaning its sign-off is accepted as the OEM's own on certain work) and has collected <strong>five consecutive Diamond Supplier awards from Bombardier</strong>. It is pushing into higher-value niches: <strong>cabin-interiors</strong> work (won on small pilot orders that can scale), and an <strong>MRO tie-up with OGMA in Portugal</strong> to service engines and components. None of these are enormous today, but each is a foothold that, once certified and trusted, is extremely sticky — the aerospace world does not switch a qualified supplier casually.</p>
+  </div>
+
+  <div class="note gold"><b>The nuance to hold:</b> because the low-margin services slice of aerospace is leaving via the Akkodis deal, the aerospace revenue AXISCADES <em>reports</em> will look smaller but should be <em>richer</em> — weighted toward manufacturing and higher-value content. As with the company overall, judge the aerospace vertical by the quality of what remains, not the quantity that departs.</p></div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>ESAI: the chips, AI-hardware and new-space option</h2></div>
+  <p class="part-sub">The smallest, newest pillar — and the one carrying the most optionality.</p>
+
+  <p class="lead">The third pillar, <strong>ESAI — Electronics, Semiconductors &amp; AI</strong>, is where AXISCADES is planting seeds for a future well beyond aircraft. It bundles three ideas: <strong>embedded electronics and "chip-to-product" design</strong> (housed in a unit branded XiDA), <strong>thermal-management hardware for AI data centres</strong> (via the acquired ADD Solutions), and a nascent <strong>New Space</strong> division aimed at building satellite buses. It is small today — but it is the part of the company most leveraged to two of the largest technology waves of the decade: the build-out of AI computing infrastructure and India's semiconductor ambitions.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue-mix ambition — services out, products in</div>
+    <div class="c-sub">Approximate products &amp; solutions share of revenue — the target, not a promise</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Mix today<small>~50/50</small></div><div class="track"><span class="fill ink" style="width:50%"></span></div><div class="bval">~50%</div></div>
+      <div class="bar-row"><div class="blab">FY28 target<small>products &amp; IP led</small></div><div class="track"><span class="fill brand" style="width:80%"></span></div><div class="bval">80%+</div></div>
+      <div class="bar-row"><div class="blab">"Power 930" FY30<small>revenue ambition</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~₹9,000 Cr</div></div>
+    </div>
+    <div class="legend"><span>The company's own north star: swing the mix decisively toward products and IP by FY28, on the way to a roughly nine-fold-larger revenue base by FY30. Treat all three as <em>targets</em> — direction, not guarantee.</span></div>
+  </div>
+
+  <p>The AI-hardware angle is the most eye-catching. As data centres pack in ever-denser AI chips, getting the heat out becomes a first-order engineering problem — and thermal management is exactly what ADD Solutions does. AXISCADES has spoken of early pilot contracts with hyperscale customers that, if they convert to production, could scale by large multiples. That is classic option-value: tiny revenue now, potentially transformational later, but entirely unproven at scale. The semiconductor and new-space pieces sit in the same bucket — real capabilities, national tailwinds, but years from being needle-movers.</p>
+
+  <div class="plain">
+    <div class="ptag">How to weigh a pillar that barely shows up in the numbers</div>
+    <p>ESAI is the part of AXISCADES most likely to be either dramatically under- or over-valued, because almost none of its potential is in today's financials. The disciplined way to hold it: give the company credit for having <em>built the capability</em> — chip design, AI-thermal hardware, satellite work are hard to assemble — but demand <strong>evidence of conversion</strong> before paying for the dream. A single hyperscaler pilot that scales, or a semiconductor programme that lands, would change the ESAI conversation overnight. Until one does, treat ESAI as a well-placed lottery ticket the company happens to own, not as a line you can underwrite.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>How AXISCADES differs from LTTS, Cyient &amp; Tata Elxsi</h2></div>
+  <p class="part-sub">Same industry, very different animal — smaller, and tilted hard toward aerospace &amp; defence.</p>
+
+  <p class="lead">AXISCADES is routinely filed under "Indian ER&amp;D" alongside <strong>L&amp;T Technology Services (LTTS), Cyient, Tata Elxsi and KPIT</strong> — but the comparison flatters and misleads in equal measure. It is a fraction of their size, it is <em>narrower</em> by design, and it is running <em>away</em> from the very services model that defines them. Understanding the contrast is the fastest way to place AXISCADES correctly.</p>
+
+  <div class="chart">
+    <div class="c-title">A minnow among the majors</div>
+    <div class="c-sub">Approximate annual revenue scale, ₹ Crore — illustrative, to show the order-of-magnitude gap</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">LTTS</div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~11,000+</div></div>
+      <div class="bar-row"><div class="blab">Cyient</div><div class="track"><span class="fill ink" style="width:65%"></span></div><div class="bval">~7,000</div></div>
+      <div class="bar-row"><div class="blab">Tata Elxsi</div><div class="track"><span class="fill ink" style="width:35%"></span></div><div class="bval">~3,700</div></div>
+      <div class="bar-row"><div class="blab">AXISCADES</div><div class="track"><span class="fill brand" style="width:9%"></span></div><div class="bval">~1,031</div></div>
+    </div>
+    <div class="legend"><span>AXISCADES is an order of magnitude smaller than the sector leaders. Its edge cannot be scale — it has to be focus and margin, which is precisely why it is betting on defence products rather than trying to out-hire giants at services.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Where AXISCADES sits versus the peer set</caption>
+    <thead><tr><th>Player</th><th>Tilt</th><th>Vs AXISCADES</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">AXISCADES</td><td>Aerospace + <strong>defence products</strong> + ESAI; smallest of the group</td><td><em>This company.</em> The A&amp;D-and-defence-hardware specialist; the only one actively divesting services to become a products/IP firm.</td></tr>
+      <tr><td class="t-strong">L&amp;T Technology Services</td><td>Broad ER&amp;D across transport, industrial, telecom, plant engineering</td><td>The scale leader — diversified, deep client roster, still very much a services machine. Plays breadth; AXISCADES plays a defence-tilted niche.</td></tr>
+      <tr><td class="t-strong">Cyient</td><td>Aerospace, geospatial, communications; also building a semiconductor/DLM arm</td><td>The closest large-cap analogue on aerospace heritage — but far bigger and pursuing electronics <em>alongside</em>, not <em>instead of</em>, services.</td></tr>
+      <tr><td class="t-strong">Tata Elxsi</td><td>Design-led ER&amp;D in automotive, media &amp; healthcare; premium margins</td><td>The margin aristocrat of the group, but almost no defence exposure — a different end-market entirely.</td></tr>
+      <tr><td class="t-strong">KPIT Technologies</td><td>Pure-play automotive software &amp; mobility</td><td>Focused like AXISCADES, but on cars and software, not aircraft and defence hardware. Shows that "focus" can command a premium — a template AXISCADES hopes to echo in A&amp;D.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>AXISCADES cannot win the ER&amp;D game on scale — the majors will always out-hire and out-spend it. Its only viable path is to be <strong>the specialist</strong>: the Indian mid-cap you call for aerospace-and-defence electronics and manufacturing, in a corner of the market where a security-cleared, indigenised, product-owning supplier is worth more than a bigger generalist. KPIT's success as a focused automotive pure-play is the encouraging precedent — the market <em>will</em> pay a premium for sharp focus and rising margins. The risk is the mirror image: a sub-scale firm can also get squeezed between giants above it and nimble start-ups below, never quite reaching the scale where its focus pays off. Which of those two outcomes lands is the whole question the valuation is wrestling with.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A real profit inflection and a genuine mix-cure — priced for a transformation that is far from finished.</p>
+
+  <p class="lead">FY25 was the year the numbers began to reflect the strategy: revenue crossed ₹1,000 Cr, profit roughly doubled, and margins improved as the mix tilted toward defence and products. But the near term is deliberately messy — divestments, restructuring and lumpy defence timing mean the reported line can wobble or even dip while the underlying quality improves. The valuation, meanwhile, has run well ahead of the current profit, pricing the destination rather than the starting point.</p>
+
+  <div class="chart">
+    <div class="c-title">Crossing the ₹1,000 Cr line</div>
+    <div class="c-sub">Consolidated revenue, ₹ Crore; FY26 shown as an approximate run-rate range</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill spec" style="width:72%"></span></div><div class="bval">~925</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:80%"></span></div><div class="bval">~1,031</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>approx. run-rate</small></div><div class="track"><span class="fill wtg" style="width:98%"></span></div><div class="bval">~1,200–1,300</div></div>
+    </div>
+    <div class="legend"><span>Steady progress to the ₹1,000 Cr milestone, with an FY26 run-rate above it — though the picture is muddied by divestitures that will subtract services revenue even as defence and products grow. Treat FY26 as <em>approx.</em></span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">The profit inflection (FY25)</div>
+    <div class="c-sub">₹ Crore — the doubling that made the market pay attention</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Adj. EBITDA</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~156</div></div>
+      <div class="bar-row"><div class="blab">PAT FY25</div><div class="track"><span class="fill gold" style="width:48%"></span></div><div class="bval">~75</div></div>
+      <div class="bar-row"><div class="blab">PAT FY24<small>prior year</small></div><div class="track"><span class="fill ink" style="width:24%"></span></div><div class="bval">~37</div></div>
+    </div>
+    <div class="legend"><span>Adjusted EBITDA of ~₹156 Cr (~15% margin) and a near-doubling of PAT to ~₹75 Cr (a ~7% net margin) is the inflection that re-rated the stock — driven by the higher-margin defence and product mix, not by revenue scale alone.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~15%</div><div class="msl">FY25 adjusted EBITDA margin; core enterprise margins run nearer ~18%</div></div>
+    <div class="ms green"><div class="msv">~2×</div><div class="msl">FY25 PAT growth — the doubling that anchors the re-rating</div></div>
+    <div class="ms red"><div class="msv">80×+</div><div class="msl">P/E on FY25 profit; far higher on suppressed trailing earnings — a steep multiple</div></div>
+  </div>
+
+  <p>The tension is stark. On the one hand, the strategic logic is coherent and the margin trajectory is genuinely improving. On the other, the stock's ~₹6,800 Cr market value against ~₹75 Cr of FY25 profit is a multiple that only makes sense if the "Power 930" ambition — a near nine-fold revenue leap and a ten-fold profit leap by FY30 — is substantially delivered. Near-term earnings can also be <em>optically ugly</em>: restructuring costs, divestment timing and a soft defence quarter produced a loss in an early-FY27 period, the kind of noise a transformation throws off. The market is looking straight through that to FY30.</p>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: the products-and-IP share of revenue</div>
+    <p>For a hospital it's occupancy; for a refiner it's mid-cycle GRM. For AXISCADES the thesis-settling metric is the <strong>share of revenue coming from products, defence hardware and owned IP — versus billed-hours services</strong>. Management's own goalpost is roughly 50% today rising above 80% by FY28, and that ratio is the truest scoreboard for the entire pivot. If the products-and-IP share climbs quarter after quarter <em>while blended margins rise with it</em>, then the divestment worked, the margin gap of §04 is being captured, and a premium multiple is defensible on a genuinely different, higher-quality company. If that share stalls — if defence orders lump unfavourably, ESAI pilots don't convert, and the company ends up smaller-but-not-richer after selling its services base — then a stock priced for FY30 is left holding an FY26 reality. Watch the mix percentage and the blended margin together; read alongside them the <strong>defence order-win cadence</strong> and whether the Akkodis proceeds actually fund visible product capacity. Everything else — a single quarter's revenue, a one-off loss — is transition noise.</p>
+  </div>
+
+  <div class="note">The financial figures here are drawn from company results, investor presentations and third-party summaries and cross-checked where possible; several — notably the FY23/FY24 revenue and PAT split, the FY26 run-rate, segment growth rates and peer revenue scales — are <b>approximate</b> or illustrative rather than audited, and consolidated-versus-standalone framing varies by source. Verify every figure against AXISCADES' own filings before relying on it.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A coherent, brave pivot — asked to prove it can out-run the business it is dismantling.</p>
+
+  <p class="lead">AXISCADES has made its choice: it will be a focused aerospace-and-defence products company, not a sub-scale ER&amp;D services shop. The strategy is internally consistent and rides two powerful tailwinds — India's defence indigenisation and the global re-shoring of hardware supply. The debate is not about the direction but the <strong>execution and the timing</strong>: can a small firm build a products-and-IP business fast enough to justify a valuation that already assumes it succeeds?</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural defence tailwind</strong> — indigenisation turns national-security policy into orders, and a security-cleared domestic electronics maker faces a deliberately narrow competitive field.</li>
+        <li><strong>Margin-accretive pivot</strong> — defence production at 25–40% versus services at 12–15%; every point of mix-shift lifts blended margins and earnings quality.</li>
+        <li><strong>Focus &amp; funding</strong> — selling the services arm frees cash and management bandwidth; the KPIT precedent shows the market rewards a sharp, focused specialist.</li>
+        <li><strong>Deepening programme footprint</strong> — designed into Tejas Mk1A, Su-30MKI, Ashwini, Netra and MBDA work; a widening base of long-lived, sticky content.</li>
+        <li><strong>ESAI optionality</strong> — AI-thermal, semiconductor and new-space capabilities offer real upside that today's numbers give almost no credit for.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Execution risk on a hard pivot</strong> — building a products/IP/manufacturing company is far harder than running a services desk; the transition can stall mid-stream.</li>
+        <li><strong>Very rich valuation</strong> — ~₹6,800 Cr on ~₹75 Cr of profit prices near-complete success; any slip in the mix-shift can trigger a sharp de-rating.</li>
+        <li><strong>Lumpy, policy-dependent defence orders</strong> — revenue hostage to ministry budget cycles and trial timelines; quarters will zig-zag and can disappoint.</li>
+        <li><strong>Customer concentration</strong> — top customers make up roughly three-quarters of revenue; the loss or delay of one program bites hard at this size.</li>
+        <li><strong>Sub-scale squeeze</strong> — an order of magnitude smaller than LTTS/Cyient; risk of being caught between giants and start-ups before focus pays off.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>AXISCADES is one of the more intellectually honest transformations in the Indian mid-cap market: it has looked at the low ceiling of the ER&amp;D-services model and decided to climb out of it deliberately, even at the cost of selling the business it was named after. The defence engine it bought in Mistral is real, the margins are genuinely fatter, and the indigenisation tailwind is not a fad. What is unproven is whether a company this small can convert capability into <em>scaled, repeatable product revenue</em> before the market's patience — and its rich multiple — runs out. The next two years answer it in a single, checkable trend: <strong>the products-and-IP share of revenue climbing past the halfway mark toward 80%, with blended margins rising alongside it</strong>. If that line bends the right way while the defence order-wins keep landing, the Power 930 ambition stops looking like a slogan. If it flattens, a stock priced for 2030 will be re-introduced, painfully, to the present.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>AXISCADES Technologies Ltd — Q4 &amp; FY25 earnings release / results (year ended Mar 2025) and investor presentations, via company disclosures.</li>
+    <li>AXISCADES Technologies — Q1–Q3 FY26 investor presentations &amp; quarterly reports (axiscades.com investor relations).</li>
+    <li>PR Newswire — "AXISCADES Announces Strategic Engineering Services Divestment Program for Aerospace Engineering Services Business" (Akkodis transaction).</li>
+    <li>PR Newswire — "AXISCADES registers highest-ever quarterly revenue and completes acquisition of Mistral Solutions" (2022).</li>
+    <li>Indian Defence Research Wing (idrw.org) — "Mistral Solutions secures major DRDO order for Su-30MKI airborne systems."</li>
+    <li>BW Businessworld — "AXISCADES subsidiary Mistral Solutions bags Rs 100 Cr defence order" (LLTR Ashwini programme).</li>
+    <li>The Machine Maker / Aviation &amp; Defence Universe — AXISCADES restructuring of defence subsidiaries (Mistral / ACAT / XiDA).</li>
+    <li>Investorsstack (Substack) — "AXISCADES: India's bet on defence, aerospace and AI hardware" segment &amp; order-book analysis.</li>
+    <li>BSE India — AXISCADES Technologies Ltd stock page, scrip code 532395.</li>
+    <li>Screener.in — AXISCADES Technologies consolidated financials, market cap &amp; ratios; Inshorts / Whalesbook — Jupiter Capital shareholding disclosures.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports around FY25 (year ended March 2025) and interim FY26/FY27 updates, and may contain errors or become outdated; several forward figures (notably the "Power 930" FY30 targets and FY26 run-rate) are management ambition or estimates, not results, and consolidated-versus-standalone framing varies by source. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "AXISCADES";
+  const COMPANY_SLUG = "axiscades-technologies";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
