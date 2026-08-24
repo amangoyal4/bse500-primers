@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DCB Bank — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F5F5;
+    --paper-2:#FAFCFC;
+    --card:#FFFFFF;
+    --ink:#141C1B;
+    --ink-soft:#4E5C5A;
+    --ink-faint:#84938F;
+    --brand:#0C4A44;          /* DCB deep teal */
+    --brand-bright:#178C7D;   /* teal */
+    --gold:#B4772A;           /* copper accent */
+    --red:#BF3D2E;            /* alert red */
+    --dep:#178C7D;           /* deposits teal */
+    --loan:#3F7D4E;          /* loans green */
+    --nim:#B4772A;           /* margin copper */
+    --casa:#5A78A8;          /* CASA slate-blue */
+    --line:#D9E0DE;
+    --line-soft:#E6ECEA;
+    --good:#2A8359;
+    --bad:#BF3D2E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E2F0ED;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:14px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF2E3;border:1px solid #EFDCB8;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"₹";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F4F8F7;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E7ECEA;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0C4A44,#178C7D);}
+  .fill.gold{background:linear-gradient(90deg,#B4772A,#D29B4E);}
+  .fill.dep{background:linear-gradient(90deg,#178C7D,#43AB9C);}
+  .fill.loan{background:linear-gradient(90deg,#3F7D4E,#5CA06D);}
+  .fill.casa{background:linear-gradient(90deg,#5A78A8,#809ABF);}
+  .fill.red{background:linear-gradient(90deg,#BF3D2E,#D85F50);}
+  .fill.ink{background:linear-gradient(90deg,#33413F,#4E5C5A);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* money-flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.dep{background:var(--dep);}
+  .node.casa{background:var(--casa);}
+  .node.loan{background:var(--loan);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-dep{color:var(--dep);font-weight:600;}
+  .chain-loan{color:var(--loan);font-weight:600;}
+  .chain-casa{color:var(--casa);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEDEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2c22;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF2E3;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#E2F0ED;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Small-bank economics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> How the money flows</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; the Aga Khan link</a></li>
+    <li><a href="#p4"><span class="n">04</span> The mortgage-to-the-self-employed engine</a></li>
+    <li><a href="#p5"><span class="n">05</span> The cost-of-funds problem</a></li>
+    <li><a href="#p6"><span class="n">06</span> The cost-to-income millstone</a></li>
+    <li><a href="#p7"><span class="n">07</span> Asset quality through the cycle</a></li>
+    <li><a href="#p8"><span class="n">08</span> Co-lending &amp; the partnership pivot</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: DCBBANK · BSE: 532772</span>
+    <span class="tag gold">Built for a non-banker</span>
+  </div>
+  <h1>DCB Bank, <em>banking India's self-employed</em></h1>
+  <p class="dek">A full walk through one of India's smallest listed private banks — how a lender to shopkeepers, farmers and small-business owners actually earns money, why its signature loan-against-property book is both its edge and its identity, and why the whole equity story hinges on two stubborn numbers: a low CASA ratio and a cost-to-income ratio it has spent a decade trying to grind down.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">₹732 <small>Cr</small></div><div class="l">Net profit (FY26) · +19% YoY</div></div>
+    <div class="cell"><div class="v">₹60,022 <small>Cr</small></div><div class="l">Gross advances (Mar '26) · +18%</div></div>
+    <div class="cell"><div class="v">~3.2% <small>NIM</small></div><div class="l">Net interest margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹6,300 <small>Cr</small></div><div class="l">Market cap (Aug '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">24 Aug 2026</b> · source: Q4 &amp; FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results in: PAT ₹732 Cr (+19%), advances ₹60,022 Cr (+18%), deposits ₹72,583 Cr (+21%); GNPA 2.45% and NNPA 0.89% both at seven-year lows; ROE 12.77% (an eleven-year high); cost-to-income 60.87%. Q1 FY27 PAT jumped 35% to ₹213 Cr; AKFED lifting its promoter stake.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">DCB Bank is a <strong>small, old-generation private-sector bank</strong> — a full-service commercial bank with just <strong>480 branches</strong> and a ₹88,000-crore balance sheet, roughly one-fiftieth the size of HDFC Bank. Its speciality is not glamorous corporate lending or shiny digital consumer credit; it is <strong>secured mortgages — mostly loan-against-property (LAP) — to self-employed and small-business borrowers</strong> in semi-urban and small-town India, alongside agri, gold and SME lending. Its largest shareholder is an unusual one: the <strong>Aga Khan Fund for Economic Development (AKFED)</strong>, the development-finance arm of a global non-profit network.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>A granular, secured lender to the missing middle.</strong> DCB's book is built from small-ticket, property-backed loans to people the big banks find hard to underwrite — the kirana owner, the trader, the workshop, the small builder. Advances reached <strong>₹60,022 Cr in FY26 (+18%)</strong> and deposits <strong>₹72,583 Cr (+21%)</strong>. It is deliberately spread across thousands of small exposures rather than a few large ones.</li>
+    <li><strong>Two structural weights hold returns down.</strong> As a small bank, DCB struggles to gather cheap current- and savings-account money — its <strong>CASA ratio is just ~22%</strong>, half that of a top private bank — so it funds itself with pricier fixed deposits. And it runs a <strong>cost-to-income ratio near 61%</strong>, high because a small branch network carries big-bank-style compliance and technology costs. Together these cap its return on assets at <strong>~0.97%</strong> — respectable for its class, but a fraction of HDFC's ~1.9%.</li>
+    <li><strong>The story right now is quiet self-improvement.</strong> FY26 was DCB's best year in over a decade: profit up 19%, return on equity at <strong>12.77%</strong> (an eleven-year high), and bad loans (GNPA 2.45%, NNPA 0.89%) at <strong>seven-year lows</strong>. The question is not survival — it is whether DCB can lift its returns enough, fast enough, to earn a re-rating from a perennially cheap valuation.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>DCB Bank lends money mainly against property to people who own small businesses and don't have tidy salary slips — a shopkeeper who pledges his shop, a trader who mortgages a warehouse. Because the loans are backed by real estate worth more than the loan, losses are usually low even when a borrower stumbles. The catch is on the <em>other</em> side of the bank: DCB is too small to attract lots of near-free current-account money the way a giant bank does, so it pays up for deposits, and its modest branch network still has to carry a full bank's fixed costs. That combination — decent lending margins eaten into by expensive funding and heavy overheads — is why DCB earns steady but thin profits, and why the whole investment debate is about whether those two costs can be squeezed down.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Small-bank economics 101: the five numbers that decide everything</h2></div>
+  <p class="part-sub">No finance degree required — and for a small bank, two of these five carry outsized weight.</p>
+
+  <p class="lead">Every bank is a <strong>spread business</strong>: it borrows money cheaply (mostly from depositors) and lends it out dearer. The gap, scaled to its assets, is the engine. But for a <em>small</em> bank like DCB, the same five terms tell the story with a twist — the funding side and the cost side matter far more than they do for a giant, because a small bank has neither cheap deposits nor scale to lean on.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The five banking units — and DCB's number</caption>
+    <thead><tr><th>Term</th><th>What it means (and where DCB sits)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">NIM</td><td><strong>Net Interest Margin</strong> — interest earned on loans minus interest paid on funding, as a % of assets. The core spread. DCB: <strong>~3.2%</strong> in FY26 — decent, helped by higher-yielding LAP, but held back by expensive deposits.</td></tr>
+      <tr><td class="t-strong">CASA</td><td><strong>Current + Savings Account</strong> deposits — everyday money that pays little or no interest. The cheaper your funding mix, the fatter your margin. DCB: <strong>~22.4%</strong> — a structural weak spot for a small bank with limited brand pull.</td></tr>
+      <tr><td class="t-strong">Cost / income</td><td><strong>Cost-to-income ratio</strong> — operating expenses as a share of total income. Lower is leaner. DCB: <strong>~60.9%</strong> — high; a small network still pays for full-bank technology, audit and staff.</td></tr>
+      <tr><td class="t-strong">GNPA / NNPA</td><td><strong>Gross / Net Non-Performing Assets</strong> — the % of loans gone bad. The gauge of lending discipline. DCB: <strong>2.45% / 0.89%</strong> — at seven-year lows, and mostly secured against property.</td></tr>
+      <tr><td class="t-strong">ROA / ROE</td><td><strong>Return on Assets / Equity</strong> — profit per rupee of balance sheet and of shareholder capital. DCB: <strong>~0.97% / 12.77%</strong> — modest on assets by design, but ROE has climbed to an eleven-year high.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The simple profit equation — and where a small bank leaks</div>
+    <p>Roughly: <strong>Profit ≈ (interest earned − interest paid) − operating costs − loan losses + fee income</strong>. A big bank wins on the first bracket because it funds itself with a mountain of near-free CASA, and on operating costs because scale spreads its overheads over a huge book. DCB is squeezed on both: it <em>pays more</em> for its deposits (weak CASA) and <em>spends more</em> per rupee of income (sub-scale costs). Its answer is to earn a higher <em>loan yield</em> — by lending to self-employed borrowers against property, a segment the giants underweight — so that even after costly funding and heavy overheads, a workable spread survives. That single trade-off, high-yield secured lending versus high-cost funding and overheads, is DCB in one sentence.</p>
+  </div>
+
+  <h3>Why the funding side is the whole battle for a small bank</h3>
+  <ul class="clean">
+    <li><strong>CASA is the prize a small bank can't easily win.</strong> A current account pays 0% and a savings account ~3%; a fixed deposit costs 7%+. Giants pull in salary accounts and corporate current accounts by the million; a 480-branch bank in small towns must largely buy its deposits at fixed-deposit rates. That is why DCB's cost of funds sits structurally above the big private banks'.</li>
+    <li><strong>Yield has to make up for it.</strong> Because funding is dear, DCB cannot compete for prime home loans at the finest rates — it would earn nothing. Instead it lends where pricing is richer and competition thinner: LAP to the self-employed, agri and inclusive banking, gold loans. Higher yield offsets higher funding cost.</li>
+    <li><strong>Fee income is the thin cushion.</strong> Beyond interest, DCB earns processing fees, cross-sell commissions on insurance and third-party products, and transaction charges. It is a smaller cushion than a giant's card-and-wealth machine, but it helps keep the ratios afloat while the funding cost stays high.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>How the money flows: deposits → property loans → margin</h2></div>
+  <p class="part-sub">Read this once and both DCB's edge and its handicap click into place.</p>
+
+  <p class="lead">A bank is a <strong>conveyor belt for money</strong>: deposits come in one end, loans go out the other, and the spread between the two is harvested as net interest income. What makes DCB distinctive is what sits at each end of its belt — <strong>relatively expensive deposits</strong> feeding a book of <strong>relatively high-yielding, property-secured small-business loans</strong>. The margin that drips out depends on keeping the loan yield comfortably above a funding cost that will never be as low as a giant's.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">DCB's money conveyor — pricier deposits in, secured high-yield loans out, a working spread harvested</div>
+    <div class="flow-row">
+      <div class="node casa"><div class="ntag">Stage 1 · Funding</div><div class="nname">CASA deposits</div><div class="nwho">Current &amp; savings, ~0–3% cost — but only ~22% of the base.</div></div>
+      <div class="arrow">→</div>
+      <div class="node dep"><div class="ntag">Stage 2 · Funding</div><div class="nname">Term deposits</div><div class="nwho">Fixed deposits at 7%+ — the bulk of the fuel, the pricey part.</div></div>
+      <div class="arrow">→</div>
+      <div class="node loan"><div class="ntag">Stage 3 · Assets</div><div class="nname">LAP &amp; secured loans</div><div class="nwho">Mortgages to the self-employed, agri, gold, co-lending. Yield 10–13%.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Stage 4 · Profit</div><div class="nname">Net interest margin</div><div class="nwho">Loan yield minus funding cost = ~3.2% NIM.</div></div>
+    </div>
+    <div class="flow-note">DCB's belt is the mirror image of a giant's: it accepts a higher funding cost at Stages 1–2 because it earns a higher yield at Stage 3. The whole art is keeping that gap intact when deposit competition or rate cuts squeeze it.</div>
+  </div>
+
+  <h3>Deposits are outrunning loans — and that is deliberate</h3>
+  <p>In FY26 DCB grew deposits (+21%) faster than advances (+18%). For a bank still trying to lift its low CASA and keep its loan-to-deposit ratio sensible, gathering deposits ahead of loans is a healthy sign: it means the bank is funding future lending rather than stretching its balance sheet to chase growth. The chart below shows the FY26 growth rates side by side.</p>
+
+  <div class="chart">
+    <div class="c-title">Deposits outran advances in FY26</div>
+    <div class="c-sub">Year-on-year growth, end-of-period balances (Mar 2026)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Deposits<small>₹72,583 Cr</small></div><div class="track"><span class="fill dep" style="width:100%"></span></div><div class="bval">+20.9%</div></div>
+      <div class="bar-row"><div class="blab">Gross advances<small>₹60,022 Cr</small></div><div class="track"><span class="fill loan" style="width:84%"></span></div><div class="bval">+17.6%</div></div>
+    </div>
+    <div class="legend"><span>Deposits growing ahead of loans funds the next leg of lending, and keeps the loan-to-deposit ratio comfortable — though the low-cost CASA slice grew slower than the total, so the funding <em>mix</em> is not yet improving. That is DCB's core unfinished job.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the loan-to-deposit ratio is comfortable here</div>
+    <p>With advances of ₹60,022 Cr against deposits of ₹72,583 Cr, DCB's loan-to-deposit ratio is around <strong>83%</strong> — comfortably below the ~90% level regulators watch. Unlike some banks that have lent out nearly everything they take in, DCB has headroom to grow loans without straining for funding. The bind is not <em>whether</em> it can fund growth, but <em>how cheaply</em>: as long as most of that funding is fixed deposits rather than CASA, the cost of every new loan rupee stays elevated, and the margin stays capped. The deposit machine works; it just runs on expensive fuel.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and the Aga Khan connection</h2></div>
+  <p class="part-sub">From community co-operative banks to a listed private bank — with a development-finance body as its anchor owner.</p>
+
+  <p class="lead">DCB Bank's history is one of the more unusual in Indian banking. It traces its roots to two community <strong>co-operative banks</strong> — the Diamond Jubilee and Ismailia co-operative banks — that served the Ismaili Muslim community. In <strong>1995</strong>, in the liberalisation era, they were merged and converted into <strong>Development Credit Bank</strong>, a scheduled commercial bank; it listed on the exchanges in <strong>2006</strong> and rebranded to the crisp "DCB Bank" in 2014. Its promoter throughout has been the <strong>Aga Khan Fund for Economic Development (AKFED)</strong>.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1995</div><div class="ev"><strong>Development Credit Bank formed</strong> from the merger of community co-operative banks, converting into a full scheduled commercial bank under AKFED's sponsorship.</div></li>
+    <li><div class="yr">2006</div><div class="ev"><strong>IPO and listing</strong> on the BSE and NSE — DCB becomes a publicly traded private bank.</div></li>
+    <li class="major"><div class="yr">2009</div><div class="ev"><strong>Murali M. Natrajan takes over as MD &amp; CEO</strong> in the aftermath of the global financial crisis, when the bank was loss-making. He spends the next fifteen years rebuilding it into a granular, secured, retail-and-SME lender.</div></li>
+    <li><div class="yr">2014</div><div class="ev">Rebrands to <strong>"DCB Bank"</strong> and accelerates a branch-expansion drive to widen its deposit and lending reach into semi-urban India.</div></li>
+    <li><div class="yr">2020–22</div><div class="ev">The <strong>COVID shock</strong> — DCB's self-employed borrowers are hit hard; the bank builds a large restructured book and stress ratios spike, the toughest stretch in a decade.</div></li>
+    <li class="major"><div class="yr">Apr 2024</div><div class="ev"><strong>Praveen Kutty becomes MD &amp; CEO</strong>, a smooth internal succession; the strategy tilts further toward mortgages, co-lending and productivity.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Best year in over a decade: PAT <strong>₹732 Cr (+19%)</strong>, ROE <strong>12.77%</strong> (an eleven-year high), GNPA/NNPA at seven-year lows; AKFED lifts its promoter stake via a preferential allotment. Q1 FY27 PAT then jumps <strong>35%</strong> to ₹213 Cr.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>AKFED is the anchor, not a typical promoter.</strong> The Aga Khan Fund for Economic Development is the economic-development agency of the Aga Khan Development Network — a global, non-profit institution. Through AKFED and an affiliate, the promoter group holds roughly <strong>15%</strong> of DCB, a stake it has been <em>raising</em> (an RBI-approved acquisition of additional shares and a FY26 preferential allotment lifted it toward ~16%). A promoter that is buying more is a quiet vote of confidence.</li>
+    <li><strong>Otherwise widely held.</strong> Domestic institutions (mutual funds, insurers) hold a large slice (~30%+), foreign investors around ~10%, and the public the rest. There is no dominant family owner beyond AKFED's development-body stake.</li>
+    <li><strong>A professional, long-tenure culture.</strong> Murali Natrajan's fifteen-year rebuild (2009–2024) instilled a conservative, secured-lending discipline; <strong>Praveen Kutty</strong> — a long-serving insider — now runs the bank, with <strong>Pushan Mahapatra</strong> appointed Non-Executive Part-Time Chairman in 2026. Continuity, not upheaval, is the theme.</li>
+  </ul>
+
+  <div class="note gold"><b>The surprise most generalists miss:</b> DCB is one of the few listed Indian banks whose largest shareholder is a <em>non-profit development network</em>, not a family, a corporate house or the government. AKFED's mandate is patient, long-horizon economic development — which fits oddly well with a bank that lends to under-served small businesses rather than chasing the fastest, riskiest growth.</div>
+</section>
+
+<!-- 04 — BESPOKE: the defining engine -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The mortgage-to-the-self-employed engine</h2></div>
+  <p class="part-sub">DCB's signature product — and the reason its book behaves the way it does through every cycle.</p>
+
+  <p class="lead">Strip DCB down to one idea and it is this: <strong>lending against property to people who don't fit the standard credit box</strong>. Its biggest single product is <strong>loan-against-property (LAP)</strong> — a self-employed borrower pledges a shop, house or commercial premises worth well more than the loan, and DCB advances funds for business needs. Around this core sit home loans, agri and inclusive banking, gold loans, construction finance and SME/MSME lending. The unifying thread is <strong>secured, small-ticket, granular</strong>.</p>
+
+  <div class="chart">
+    <div class="c-title">Where DCB grew in FY26 — the secured, granular engines</div>
+    <div class="c-sub">Year-on-year advances growth by segment (FY26)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Co-lending<small>partner-originated loans</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">+25%</div></div>
+      <div class="bar-row"><div class="blab">Agri &amp; inclusive<small>rural, priority-sector</small></div><div class="track"><span class="fill loan" style="width:76%"></span></div><div class="bval">+19%</div></div>
+      <div class="bar-row"><div class="blab">Construction finance<small>small developers</small></div><div class="track"><span class="fill dep" style="width:56%"></span></div><div class="bval">+14%</div></div>
+      <div class="bar-row"><div class="blab">Mortgages / LAP<small>the core book</small></div><div class="track"><span class="fill gold" style="width:32%"></span></div><div class="bval">+8%</div></div>
+    </div>
+    <div class="legend"><span>The mortgage core is the biggest slice of the book but grew slowest — a mature, competitive segment. Growth now comes disproportionately from co-lending and agri/inclusive, a meaningful shift in where the bank finds its next loan rupee.</span></div>
+  </div>
+
+  <h3>Why lend to the self-employed against property?</h3>
+  <ul class="clean">
+    <li><strong>The big banks underweight it, so pricing is richer.</strong> A salaried borrower with clean documents gets a home loan at the finest rates from any giant. A self-employed trader with lumpy, cash-heavy income is harder to assess — so fewer lenders compete, and those who do (like DCB) earn a higher yield for the extra underwriting effort.</li>
+    <li><strong>The collateral is the safety net.</strong> Because LAP is backed by property typically worth far more than the loan, even when a borrower falls behind, DCB can usually recover its money. That is why its <em>net</em> NPA — bad loans after accounting for expected recovery — stays low even when gross slippage rises in a bad year.</li>
+    <li><strong>Granularity spreads the risk.</strong> The book is thousands of small loans, not a handful of large corporate exposures. No single default can dent the bank; the law of averages does the work. This is the opposite of the concentrated corporate lending that has sunk weaker banks.</li>
+    <li><strong>It fits the branch network.</strong> DCB's semi-urban and small-town branches are exactly where self-employed India lives and borrows — the local trader, the transporter, the small manufacturer — so the distribution and the product reinforce each other.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The trade-off buried inside the LAP model</div>
+    <p>LAP is a double-edged product. Its strength — property collateral — is also the source of its slowest-burning risk: when a self-employed borrower's business turns down, recovery means <em>enforcing on the property</em>, which in India can be slow and legally contested. So LAP rarely produces sudden catastrophic losses (the collateral protects the principal), but it can produce <em>drawn-out</em> stress in a downturn, with money locked up while recovery grinds through. DCB's whole underwriting craft is judging the borrower's cash flow and the property's real, saleable value — not just its paper valuation. Fifteen years of doing exactly this is the bank's accumulated moat, such as it is.</p>
+  </div>
+
+  <div class="note gold"><b>Why this is the section that matters:</b> almost every other number in the bank — the higher-than-prime loan yield that supports the NIM, the low net NPA despite a riskier borrower, the granular resilience through COVID — flows from this one strategic choice to be the secured lender to self-employed India. It is also the natural limiter: this is a segment you grow <em>carefully</em>, not explosively, which is precisely why DCB compounds steadily rather than spectacularly.</div>
+</section>
+
+<!-- 05 — BESPOKE: the cost-of-funds problem -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The cost-of-funds problem</h2></div>
+  <p class="part-sub">The single structural handicap of being a small bank — and the ceiling on DCB's margin.</p>
+
+  <p class="lead">Here is the uncomfortable truth every small Indian bank lives with: it cannot gather cheap deposits the way a giant can. Low-cost <strong>current- and savings-account (CASA) money</strong> flows to banks with the biggest branch footprints, the strongest brands, and the corporate and salary relationships that come with scale. DCB, with 480 branches and a niche profile, wins far less of it — its <strong>CASA ratio is only ~22%</strong> — so it must fund most of its book with <strong>fixed deposits at 7%-plus</strong>. That elevated cost of funds is the hard ceiling on its margin.</p>
+
+  <div class="chart">
+    <div class="c-title">The CASA gap — DCB's structural funding handicap</div>
+    <div class="c-sub">Approximate CASA as a share of total deposits (illustrative peer comparison)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">HDFC Bank<small>large private</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~34%</div></div>
+      <div class="bar-row"><div class="blab">Federal Bank<small>mid old-private</small></div><div class="track"><span class="fill dep" style="width:88%"></span></div><div class="bval">~30%</div></div>
+      <div class="bar-row"><div class="blab">DCB Bank<small>small old-private</small></div><div class="track"><span class="fill casa" style="width:66%"></span></div><div class="bval">~22%</div></div>
+    </div>
+    <div class="legend"><span>Every point of CASA a bank lacks is roughly a point of deposits it must instead raise at fixed-deposit rates. DCB's ~12-point CASA gap versus a giant translates directly into a higher cost of funds — and a thinner margin on the same loan.</span></div>
+  </div>
+
+  <h3>Why cheap deposits are so hard for DCB to win</h3>
+  <ul class="clean">
+    <li><strong>Salary and corporate accounts go to the giants.</strong> Companies run payroll and treasury through the largest banks; those relationships bring millions of near-free salary and current accounts. A small bank rarely gets that anchor, so its current-account base stays thin.</li>
+    <li><strong>Savers chase safety and convenience.</strong> In a deposit market built on trust, nervous households gravitate to the biggest, best-known names for their savings accounts. DCB has to <em>pay</em> — via higher rates on savings and fixed deposits — for balances that flow freely to a giant.</li>
+    <li><strong>The nationwide shift away from bank deposits hits small banks hardest.</strong> As Indian households move savings into mutual funds and equities, the deposit pool tightens for everyone — and small banks, last in line for cheap money, feel the squeeze first and most.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why this decides how much DCB can ever earn</div>
+    <p>The cost of funds sets the floor under everything. If DCB pays, say, 6.5% for its deposits and lends at 10%, its raw spread is 3.5% before costs and losses. A giant paying 4.5% for the same lending would keep 5.5%. That two-point funding disadvantage is <em>permanent</em> until the CASA mix improves — and improving CASA at a small bank is a slow, grinding, branch-by-branch effort measured in years, not quarters. This is why DCB's management talks about CASA and cost of funds on every earnings call: it is not a detail, it is the governor on the whole engine. Watch the CASA ratio each quarter — if it climbs off ~22% toward the high-20s, the margin story genuinely improves; if it stays stuck, the margin stays capped no matter how well the lending side performs.</p>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE: the cost-to-income millstone -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The cost-to-income millstone</h2></div>
+  <p class="part-sub">The second structural weight — and the number management has spent a decade trying to grind down.</p>
+
+  <p class="lead">A small bank carries a cruel arithmetic on its cost side: it still needs a <strong>full bank's machinery</strong> — core-banking technology, compliance and audit teams, risk systems, a treasury, senior management — but has only a small book to spread those fixed costs over. The result is a <strong>high cost-to-income ratio</strong>: DCB spent roughly <strong>61 paise of every rupee of income on operating costs in FY26</strong>, against ~40 for a scaled giant. Bringing that ratio down is the most reliable lever DCB has to lift its returns — and it is doing it slowly.</p>
+
+  <div class="chart">
+    <div class="c-title">The cost-to-income ratio, grinding down</div>
+    <div class="c-sub">Operating expenses as a % of total income (lower is leaner)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill red" style="width:100%"></span></div><div class="bval">~64%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill gold" style="width:97%"></span></div><div class="bval">~62%</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill loan" style="width:95%"></span></div><div class="bval">~60.9%</div></div>
+    </div>
+    <div class="legend"><span>The trend is the point: a point or so a year, unglamorous but real. Management's medium-term goal is to push the ratio toward the mid-50s as the book grows faster than costs and newer branches mature.</span></div>
+  </div>
+
+  <h3>The branch-vintage machine behind the ratio</h3>
+  <p>Here is the mechanism that makes DCB's cost ratio move — and it is specific to this bank. A new DCB branch opens loss-making: it carries rent, staff and setup costs from day one but takes <strong>roughly four to five years to build enough deposits and loans to break even</strong>. So the bank's profitability is, in effect, a <em>weighted average of its branches' ages</em>. Open a lot of new branches and the cost ratio worsens (young branches drag); pause openings and let the existing network season, and profits jump as more branches cross break-even. DCB has literally pulled this lever before: after an aggressive expansion drive, it deliberately <strong>slowed branch openings to let the network mature and lift returns</strong> — trading top-line growth for profitability. FY26's improving cost ratio and eleven-year-high ROE are, in large part, that seasoning finally paying off.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~60.9%</div><div class="msl">FY26 cost-to-income — high, but on a multi-year downtrend</div></div>
+    <div class="ms"><div class="msv">480</div><div class="msl">Branches (261 retail + 219 agri &amp; inclusive), 445 ATMs</div></div>
+    <div class="ms green"><div class="msv">~4–5 yrs</div><div class="msl">Time a new branch takes to reach break-even</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The productivity dividend that hasn't fully arrived</div>
+    <p>The optimistic reading of DCB's cost ratio is that it is a <em>coiled spring</em>. As the loan book compounds mid-to-high teens and costs grow more slowly, income outpaces expenses and the ratio falls mechanically — no heroics required, just time and discipline. Digital origination, co-lending (where a partner shares the acquisition cost) and maturing branches all push the same way. The pessimistic reading is that DCB has been promising this operating leverage for years and the ratio still sits near 61%; a small bank simply cannot escape sub-scale economics, and each new compliance or technology mandate resets the cost base higher. FY26's improvement tilts the argument toward the optimists — but only just, and the proof is in whether the ratio keeps falling.</p>
+  </div>
+</section>
+
+<!-- 07 — BESPOKE -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Asset quality through the cycle</h2></div>
+  <p class="part-sub">The test a lender to the self-employed has to pass — and how DCB has come through its worst stretch.</p>
+
+  <p class="lead">A bank that lends to small businesses is more exposed to economic cycles than one lending to blue-chip corporates or salaried households — its borrowers feel every slowdown first. So the real question for DCB is not "are bad loans low today?" but "how does the book behave when the cycle turns?" The evidence: DCB was hit hard by COVID, built a large restructured book, and has since <strong>worked that stress down to seven-year lows</strong> — GNPA <strong>2.45%</strong> and NNPA just <strong>0.89%</strong> at March 2026.</p>
+
+  <div class="chart">
+    <div class="c-title">Safety ratios at March 2026 — repaired and well-capitalised</div>
+    <div class="c-sub">Lower NPA = better; higher capital = safer (provision coverage a further ~78%)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Capital adequacy (CAR)<small>Basel III buffer</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">16.55%</div></div>
+      <div class="bar-row"><div class="blab">Gross NPA<small>bad loans / total</small></div><div class="track"><span class="fill red" style="width:15%"></span></div><div class="bval">2.45%</div></div>
+      <div class="bar-row"><div class="blab">Net NPA<small>after provisioning</small></div><div class="track"><span class="fill red" style="width:6%"></span></div><div class="bval">0.89%</div></div>
+    </div>
+    <div class="legend"><span>A 16.55% capital ratio (Tier-1 ~14.3%) against a 0.89% net NPA is a solidly repaired balance sheet. The wide gap between gross (2.45%) and net (0.89%) NPA reflects both heavy provisioning and the property collateral behind the loans.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">What the COVID scar taught — and why the recovery is credible</div>
+    <p>During the pandemic, DCB's self-employed borrowers — traders, transporters, small manufacturers — were among the worst affected, and the bank's restructured and stressed book ballooned to uncomfortable levels; for a stretch, DCB looked like one of the more COVID-exposed small banks. What happened next is the reassuring part: because the loans were <em>secured against property</em>, the bank largely <strong>recovered its money</strong> as the economy reopened — restructured accounts either resumed paying or were resolved against collateral, and slippages steadily normalised. The seven-year-low NPAs of FY26 are not a fluke of a benign year; they are the far side of a genuine stress test the book passed. That is the strongest single piece of evidence for the "secured lending protects the principal" thesis.</p>
+  </div>
+
+  <h3>Why the record is durable, with one real caveat</h3>
+  <ul class="clean">
+    <li><strong>Granular and secured.</strong> Thousands of small, property-backed loans diversify risk and cap loss-given-default — the structural reason net NPA stays low even when gross slippage rises.</li>
+    <li><strong>Conservative provisioning.</strong> A ~78% provision coverage ratio means most recognised bad loans are already charged against profit, so fresh recognition rarely springs a nasty surprise on earnings.</li>
+    <li><strong>The caveat:</strong> a lender to the self-employed is inherently cyclical. A sharp SME downturn, a property-price fall that erodes collateral values, or a spike in a specific segment (unsecured, gold-price-linked, or a stressed local economy) can still push slippages up faster than at a prime-salaried lender. The book is resilient, not bulletproof.</li>
+  </ul>
+</section>
+
+<!-- 08 — BESPOKE -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Co-lending and the partnership pivot</h2></div>
+  <p class="part-sub">How a small bank grows faster than its balance sheet and branch network should allow.</p>
+
+  <p class="lead">A small bank faces a growth trap: it wants to lend more, but its expensive funding and limited branch reach cap how fast it can originate loans profitably on its own. DCB's answer — and one of the more important shifts in its recent strategy — is <strong>co-lending and partnerships</strong>. In co-lending, DCB teams up with a non-bank finance company (NBFC) or fintech that originates loans on the ground; DCB funds a share of each loan and books it on its balance sheet, while the partner handles sourcing and often the last-mile servicing. It was DCB's <strong>fastest-growing segment in FY26 at +25%</strong>.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>Why co-lending suits a small bank like DCB</caption>
+    <thead><tr><th>What the partner brings</th><th>What DCB brings</th><th>Why it works for DCB</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Origination reach</td><td>Low-cost bank funding &amp; balance sheet</td><td>DCB accesses borrowers far beyond its 480-branch footprint without building the branches itself.</td></tr>
+      <tr><td class="t-strong">Local underwriting &amp; servicing</td><td>Regulatory standing &amp; priority-sector eligibility</td><td>Many co-lent loans qualify as priority-sector lending, which banks are mandated to do anyway — killing two birds.</td></tr>
+      <tr><td class="t-strong">Faster, digital sourcing</td><td>Risk oversight &amp; provisioning discipline</td><td>DCB grows its book faster and cheaper than organic branch lending, while keeping credit standards in its own hands.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The opportunity and the discipline it demands</div>
+    <p>Co-lending is genuinely clever for a bank DCB's size: it converts the bank's cheapest asset — its banking licence and access to deposit funding — into growth without the fixed cost of building branches or a large field force. It also helps meet priority-sector lending targets with loans that actually earn a return. The discipline it demands is equally real: DCB is relying, in part, on a <em>partner's</em> origination and collection quality, so the credit risk has to be watched carefully and the partners chosen well — an over-eager co-lending push is exactly how some lenders have imported someone else's bad loans. Managed conservatively, it is a capital-light growth engine; managed loosely, it is a way to grow the book faster than the bank can control its quality. So far DCB has kept it measured.</p>
+  </div>
+
+  <blockquote>Co-lending lets DCB rent reach it cannot afford to build — turning a banking licence and deposit access into growth beyond its branch map.</blockquote>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">Where a small full-service private bank sits between the giants, the small-finance banks, and its old-private peers.</p>
+
+  <p class="lead">DCB competes in a crowded field, and understanding it means placing DCB against <em>three different kinds</em> of rival. It is <strong>not</strong> a giant private bank (HDFC, ICICI), <strong>not</strong> a small-finance bank (SFB), and <strong>not</strong> quite its larger old-private cousins (Federal, Karur Vysya, City Union, CSB). It is a small, full-service private bank with a secured-mortgage and SME tilt — a specific niche with specific competitors on every side.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape around DCB</caption>
+    <thead><tr><th>Player type</th><th>Who</th><th>Vs DCB Bank</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">DCB Bank</td><td><em>This company</em></td><td>Small full-service private bank; LAP/self-employed tilt; low CASA, high cost-to-income, ~1% ROA. Steady, secured, granular.</td></tr>
+      <tr><td class="t-strong">Large private banks</td><td>HDFC, ICICI, Axis, Kotak</td><td>Vastly bigger, far cheaper funding (~34% CASA), ~1.9–2.3% ROA. DCB can't compete on prime lending — it competes below them, in the self-employed niche they underweight.</td></tr>
+      <tr><td class="t-strong">Small-finance banks</td><td>AU, Equitas, Ujjivan, Jana</td><td>SFBs grew from microfinance/vehicle roots with higher yields <em>and</em> higher risk; DCB is an older, full-service bank with a more secured, property-backed book and lower (but steadier) yields.</td></tr>
+      <tr><td class="t-strong">Old-private peers</td><td>Federal, Karur Vysya, City Union, CSB</td><td>The closest comparison — regional, secured, SME-focused private banks. Several are larger and run better cost ratios; DCB is at the smaller, cheaper-valued end of this pack.</td></tr>
+      <tr><td class="t-strong">NBFCs &amp; fintechs</td><td>LAP-focused NBFCs, HFCs, digital lenders</td><td>Direct rivals in LAP and SME — nimbler and higher-yielding, but lacking a bank's cheap deposit base. DCB increasingly <em>partners</em> them via co-lending rather than only competing.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive position, honestly stated</div>
+    <p>DCB's niche is real but not a fortress. Its edge is a fifteen-year underwriting record in secured lending to the self-employed and a bank's access to deposit funding — advantages an NBFC lacks. Its vulnerability is that it is <em>sub-scale on every axis that matters</em>: smaller than the giants, so it pays more for funding; smaller than the better old-private peers, so it runs a worse cost ratio; and lower-yielding than the SFBs and LAP-NBFCs that hunt the same borrowers more aggressively. DCB survives and grows by being the <em>secured, disciplined, patient</em> option in its niche — a genuine position, but one that produces steady mid-teens returns rather than the explosive growth or fat margins of flashier lenders. The whole peer story is: can DCB close the cost and CASA gap to its better old-private cousins, or is it structurally stuck at the bottom of the pack?</p>
+  </div>
+
+  <div class="note gold"><b>The regulatory backdrop:</b> DCB operates under the RBI's tight prudential regime — capital rules (Basel III), cash-reserve (CRR) and statutory-liquidity (SLR) requirements, and priority-sector lending quotas that push banks toward agri and small-business lending (a mandate that happens to suit DCB's book). RBI's approvals also govern shareholding: AKFED's stake increases require regulatory clearance. And the central bank's stance on deposit competition, co-lending norms and small-bank consolidation all shape DCB's room to manoeuvre.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Steady, improving profitability — at a persistently cheap price, for reasons the numbers explain.</p>
+
+  <p class="lead">DCB's financials read like a small bank finally hitting its stride: profit compounding, returns at multi-year highs, asset quality repaired — yet the stock trades below its book value, a valuation that reflects the structural return handicap as much as any doubt about the franchise. FY26 net profit rose <strong>19% to ₹732 Cr</strong> on net interest income of roughly <strong>₹2,400 Cr</strong>, and the bank followed up with a <strong>35% jump in Q1 FY27 profit to ₹213 Cr</strong>.</p>
+
+  <div class="chart">
+    <div class="c-title">Net profit trajectory — the multi-year climb</div>
+    <div class="c-sub">Profit after tax (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:64%"></span></div><div class="bval">~466</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:73%"></span></div><div class="bval">~536</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:84%"></span></div><div class="bval">615</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">732</div></div>
+    </div>
+    <div class="legend"><span>A clean, steady climb — roughly 16% annualised profit growth from FY23 to FY26, accelerating in FY26 as cost and asset-quality improvements compounded. Not spectacular, but consistent and derisked.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">12.77%</div><div class="msl">Return on equity, FY26 — an eleven-year high</div></div>
+    <div class="ms"><div class="msv">~0.97%</div><div class="msl">Return on assets — modest by design, the number to lift</div></div>
+    <div class="ms green"><div class="msv">₹1.45</div><div class="msl">FY26 dividend per share</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the valuation — and the number that settles it</div>
+    <p>DCB trades around a <strong>₹6,300 Cr market cap on ~₹730 Cr of earnings</strong> — a single-digit price-to-earnings multiple and, tellingly, <strong>below its book value</strong> (under ~1× book). For a bank, the multiple that matters is <strong>price-to-book measured against return on equity</strong>: a bank earning a high ROE deserves a premium to book; a bank earning a low ROE trades at or below it. DCB's sub-book valuation is the market's verdict that a ~13% ROE and ~1% ROA — respectable but structurally capped by low CASA and high costs — do not warrant a premium. That reframes the entire investment case around <strong>one number: return on assets</strong>. DCB earns ~0.97% today; management's ambition is to push toward ~1.2–1.25%. Every basis point of that walk comes from the same two levers this primer keeps returning to — a lower cost-to-income ratio and a better CASA mix. If ROA climbs decisively above 1%, the ROE follows, and a sub-book bank re-rates toward book value and beyond; if ROA stalls near 1%, the cheap multiple is simply correct. The lending side is already working — the thesis lives or dies on the funding-and-cost side.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A derisked, improving small bank — the debate is whether it can escape its structural ceiling.</p>
+
+  <p class="lead">DCB Bank enters FY27 in its healthiest shape in over a decade: profit compounding, ROE at an eleven-year high, bad loans at seven-year lows, a supportive anchor shareholder adding to its stake, and a fast start to the new year. The business risk is genuinely low. The open question is narrower and more interesting — whether a structurally sub-scale bank can lift its returns enough to shed its perennial discount, or whether low CASA and high costs keep it capped at the bottom of the private-bank pack.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Returns at multi-year highs</strong> — ROE 12.77% and rising, profit +19% in FY26 and +35% in Q1 FY27; the operating leverage is finally showing.</li>
+        <li><strong>Secured, granular book, repaired</strong> — GNPA/NNPA at seven-year lows after passing a real COVID stress test; property collateral protects the principal.</li>
+        <li><strong>Two clear self-help levers</strong> — a falling cost-to-income ratio and a slowly improving CASA mix each add directly to ROA, with room to run.</li>
+        <li><strong>Cheap valuation</strong> — below book value for a bank compounding earnings mid-teens; even a modest ROA improvement supports a re-rating toward book.</li>
+        <li><strong>Committed anchor owner</strong> — AKFED is <em>raising</em> its stake, a patient development-finance backer aligned with the long game.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Structurally sub-scale</strong> — low ~22% CASA and ~61% cost-to-income cap ROA near 1%; small banks rarely escape this gravity.</li>
+        <li><strong>Cyclical borrower base</strong> — a lender to the self-employed feels every SME slowdown first; a downturn or property-price fall would test the LAP book again.</li>
+        <li><strong>The margin ceiling</strong> — rate cuts can squeeze loan yields faster than deposit costs fall, pressuring an already-capped NIM.</li>
+        <li><strong>Co-lending risk</strong> — leaning on partners' origination imports their credit quality; an over-eager push could seed future bad loans.</li>
+        <li><strong>Perennial value trap risk</strong> — DCB has traded cheap for years; the discount may persist if returns stay structurally modest.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>DCB Bank is a small, secured, patiently-run private bank that has quietly repaired itself into the best financial shape of its listed life — and still trades below the value of its own book. It is not a growth rocket and does not pretend to be; it is a granular lender to self-employed India whose entire re-rating case rests on grinding two stubborn numbers in the right direction. The next few years turn on a single question asked every quarter: does <strong>return on assets</strong> break decisively above 1% as the cost-to-income ratio keeps falling toward the mid-50s and CASA edges up off ~22%? If those two levers keep moving — as FY26 and the strong Q1 FY27 suggest they have started to — a below-book small bank earning a rising-teens ROE is cheap for a reason that is fading. If they stall, the market's long-standing discount will have been right all along, and DCB stays exactly what it has been: safe, steady, and cheap.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>DCB Bank — Press release, financial results for the quarter and year ended 31 March 2026 (Investor Relations, dcb.bank.in).</li>
+    <li>DCB Bank — Investor Presentation for the quarter ended 30 June 2026 (Q1 FY27) and 24 April 2026 results presentation.</li>
+    <li>DCB Bank — "About DCB Bank as on March 2026" corporate profile (branches, segments, network).</li>
+    <li>Angel One — "DCB Bank Q4FY26 Results Out: Profit Jumps 16%, FY26 PAT Rises 19%."</li>
+    <li>Business Standard — "DCB Bank spurts after Q4 PAT climbs 10% YoY"; "DCB Bank gains after Q1 PAT jumps 35% YoY to Rs 213 cr"; "DCB Bank up 4% after RBI approves AKFED's acquisition."</li>
+    <li>Investywise — "DCB Bank FY26 Earnings, Dividend & Fund Raise"; "DCB Bank Q4 FY26 Financial Results."</li>
+    <li>Fintechbiznews — "DCB Bank's GNPA & NNPA At Their 7-Year End Lows."</li>
+    <li>Construction World — "DCB Bank Reports FY 2026 Profit Rise And Asset Quality Improvement."</li>
+    <li>Scanx / EquityBulls — Q4 FY26 and Q1 FY27 results detail (PAT, GNPA 2.45%, NNPA 0.89%, ROE 12.77%, CAR 16.55%, PCR 78.42%, CASA 22.38%).</li>
+    <li>Screener.in — DCB Bank (BSE: 532772 · NSE: DCBBANK) financials and shareholding.</li>
+    <li>AKDN / Aga Khan Development Network — "DCB Bank positioned for robust growth"; AKFED financial-services overview.</li>
+    <li>Wikipedia — DCB Bank (history, co-operative-bank origins, promoter and listing details).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; some historical figures and peer comparisons are illustrative and vary by source and accounting basis. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "DCBBANK";
+  const COMPANY_SLUG = "dcb-bank";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
