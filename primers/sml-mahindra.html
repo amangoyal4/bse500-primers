@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SML Mahindra — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F3F1;
+    --paper-2:#FBFAF9;
+    --card:#FFFFFF;
+    --ink:#1A1514;
+    --ink-soft:#5E5652;
+    --ink-faint:#928984;
+    --brand:#9E1C24;          /* deep Mahindra-ish red */
+    --brand-bright:#D22730;   /* bright fleet red accent */
+    --gold:#C6883A;           /* warm amber - accent / warmth */
+    --wtg:#2F6E86;            /* bus blue */
+    --epc:#5A6B72;            /* truck slate */
+    --om:#8A3B2E;             /* special-vehicle rust */
+    --spec:#9E1C24;           /* brand red cross accent */
+    --line:#E0D9D5;
+    --line-soft:#EBE5E1;
+    --good:#2A7F55;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#F6E3E4;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F8F4F1;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EDE7E3;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#9E1C24,#D22730);}
+  .fill.gold{background:linear-gradient(90deg,#C6883A,#DDA75E);}
+  .fill.wtg{background:linear-gradient(90deg,#2F6E86,#4A93AC);}
+  .fill.om{background:linear-gradient(90deg,#8A3B2E,#AC5443);}
+  .fill.spec{background:linear-gradient(90deg,#2A7F55,#3FA06E);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#5A6B72,#78888E);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#F6E3E4;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Commercial vehicles 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What SML actually makes</a></li>
+    <li><a href="#p3"><span class="n">03</span> Swaraj Mazda to SML Mahindra</a></li>
+    <li><a href="#p4"><span class="n">04</span> The Mahindra takeover</a></li>
+    <li><a href="#p5"><span class="n">05</span> The bus franchise</a></li>
+    <li><a href="#p6"><span class="n">06</span> Sub-scale economics</a></li>
+    <li><a href="#p7"><span class="n">07</span> The synergy thesis</a></li>
+    <li><a href="#p8"><span class="n">08</span> The CV cycle &amp; bus demand</a></li>
+    <li><a href="#p9"><span class="n">09</span> The EV question</a></li>
+    <li><a href="#p10"><span class="n">10</span> The industry &amp; rivals</a></li>
+    <li><a href="#p11"><span class="n">11</span> Financials &amp; valuation</a></li>
+    <li><a href="#p12"><span class="n">12</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: SMLMAH · BSE: 505192</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>SML Mahindra, <em>the bus specialist Mahindra bought</em></h1>
+  <p class="dek">A full walk through a Punjab-based commercial-vehicle maker — the buses that carry India's schoolchildren and factory shifts, the light and medium trucks it builds alongside them, and how a sub-scale, four-decade-old company formerly called SML Isuzu became the flag-carrier of Mahindra's push into big trucks and buses, re-rated overnight into one of the market's more expensive auto stocks.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹2,838 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹160 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~10<small>%</small></div><div class="l">EBITDA margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹8,000 <small>Cr</small></div><div class="l">Market cap (Aug 2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">24 Aug 2026</b> · source: FY26 results (year ended Mar 2026) &amp; MTBD deal</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>Record FY26 results incorporated — revenue ₹2,838 Cr (+18%), PAT ₹160 Cr (+31%), 16,632 units, ₹23.50 dividend; plus the July 2026 board approval to buy Mahindra's Truck &amp; Bus Division (MTBD) for ₹525 Cr on a slump-sale basis, the move that folds Mahindra's own >3.5T truck-and-bus business into this listco.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">SML Mahindra makes <strong>buses and commercial trucks</strong>. It is a mid-size, Punjab-based maker of <strong>light and medium commercial vehicles (LCV/MCV)</strong> — best known as a serious <strong>bus brand</strong> (school buses, staff and passenger buses) and, alongside them, cargo trucks, tippers, ambulances and special-application vehicles for customers like the armed forces. For four decades it was called <strong>SML Isuzu</strong> (before that, Swaraj Mazda), a niche player living in the shadow of the giants — Tata Motors, Ashok Leyland and Volvo-Eicher (VECV). In 2025 that changed: <strong>Mahindra &amp; Mahindra bought control</strong>, renamed it, and made it the vehicle through which the whole Mahindra group scales up in big trucks and buses.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is a bus specialist first.</strong> SML's real stronghold is buses — it is a market leader in the intermediate/light-bus segment with roughly a <strong>16% share</strong>, punching far above its overall size. In trucks it is a minnow. Understanding the company means understanding that a schoolyard full of yellow buses, not a highway full of long-haul trucks, is its core.</li>
+    <li><strong>The Mahindra deal is the entire story.</strong> In April 2025 M&amp;M agreed to buy <strong>58.96%</strong> from the Japanese owners Sumitomo and Isuzu at <strong>₹650/share (₹555 Cr)</strong>, completing it that August; it renamed the firm <strong>SML Mahindra</strong> in October 2025. Then in July 2026 the board approved buying <strong>Mahindra's own Truck &amp; Bus Division (MTBD) for ₹525 Cr</strong> — merging Mahindra's big-CV business <em>into</em> this listco. The stock hit the 20% upper circuit and rallied ~44% in two days.</li>
+    <li><strong>The turnaround is real but the price is rich.</strong> FY26 was a record: revenue up ~18% to <strong>₹2,838 Cr</strong>, net profit up ~31% to <strong>₹160 Cr</strong>, 16,632 vehicles sold, a ₹23.50 dividend. Yet the stock trades near <strong>50× earnings</strong> on an ~₹8,000 Cr market cap — a valuation that assumes Mahindra turns a perennial also-ran into a genuine third force in Indian commercial vehicles.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>For forty years this was the plucky underdog of Indian commercial vehicles — a company that made good buses and decent trucks but never had the scale, the balance sheet or the distribution to challenge Tata and Ashok Leyland. Its Japanese parents eventually lost interest and sold out. Mahindra, which dominates <em>small</em> commercial vehicles but is a rounding error in <em>big</em> ones, bought it precisely to fix that gap: use SML's factory, bus brand and dealer base as the launchpad, then pour in Mahindra's scale, engineering and cash. The market has already priced in the happy ending. What it hasn't yet seen is the hard part — actually integrating two organisations and taking share from two entrenched giants who will not stand still.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Commercial vehicles 101: the ladder from van to long-haul</h2></div>
+  <p class="part-sub">No jargon needed — just the weight classes that decide who competes with whom.</p>
+
+  <p class="lead">A "commercial vehicle" is any vehicle built to earn money by carrying goods or people — as opposed to a private car. The Indian CV market is sliced not by brand but by <strong>weight</strong>, measured as gross vehicle weight (GVW) in tonnes. Where a maker sits on that ladder decides everything: its rivals, its margins, its factory, and how hard it is to move up. SML has always lived in the <em>middle</em> of the ladder — and the whole Mahindra logic is about climbing it.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The weight ladder — the only classification that matters</caption>
+    <thead><tr><th>Class</th><th>Weight (GVW)</th><th>Typical vehicle &amp; who owns it</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">SCV / Pickup</td><td>&lt; 3.5 tonnes</td><td>Small vans and mini-trucks for last-mile delivery. <strong>Mahindra's kingdom</strong> — it holds a commanding ~54% share here (Bolero pickups, Jeeto).</td></tr>
+      <tr><td class="t-strong">LCV</td><td>~3.5–7.5 t</td><td>Light trucks and small buses. The bottom of SML's range and where volume is highest.</td></tr>
+      <tr><td class="t-strong">ILCV / MCV</td><td>~7.5–16 t</td><td>Intermediate and medium trucks and <strong>buses</strong> — SML's core turf and the heart of its bus leadership.</td></tr>
+      <tr><td class="t-strong">M&amp;HCV / HCV</td><td>&gt; 16 t</td><td>Heavy trucks, tractor-trailers, big buses. The high-value, high-profit top of the market — dominated by Tata and Ashok Leyland, and where SML has historically been <em>absent</em>.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the ladder is the whole plot</div>
+    <p>The economics get better as you climb. A &lt;3.5-tonne pickup is a low-margin, high-volume commodity; a 40-tonne long-haul tractor sells for many times more and carries fatter margins. That is why every CV maker wants to move <em>up</em> the ladder — and why the top rungs are so hard to reach: a heavy truck needs a proven engine, a dealer-and-service network dense enough that a broken-down truck is fixed within a day anywhere on a national highway, and financing muscle. SML sat comfortably in the LCV/MCV middle for decades precisely because it lacked the scale to attack the top. Mahindra is strong at the very bottom (&lt;3.5t) and, through MTBD, has been trying to build the top — and now wants to bolt both onto SML's middle to create one company that spans the entire ladder.</p>
+  </div>
+
+  <h3>The two things a CV maker sells that a car maker doesn't</h3>
+  <ul class="clean">
+    <li><strong>Uptime, not styling.</strong> A truck or bus is a working asset; a day off the road is lost income for its owner. So buyers care about running cost per kilometre, fuel efficiency, and — above all — how fast a breakdown gets fixed. That makes the <strong>service and spare-parts network</strong> as important as the vehicle itself, and it is exactly where a sub-scale maker like SML is most exposed against Tata's and Ashok Leyland's thousands of touchpoints.</li>
+    <li><strong>Bodies on top of chassis.</strong> Many CVs are sold as a bare <em>chassis</em> (engine, frame, cab) onto which a separate body — a bus shell, a cargo container, a tipper bucket — is built. In buses especially, the body-building ecosystem and approvals (school-bus safety norms, state transport specs) are a real moat, and one SML has spent forty years cultivating.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What SML actually makes: buses at the core, trucks around them</h2></div>
+  <p class="part-sub">One factory in Punjab, four product families — read this once and the company clicks into place.</p>
+
+  <p class="lead">Everything SML builds rolls out of a single plant at <strong>Ropar, Punjab</strong> — a ~128-acre site with capacity for roughly <strong>24,000 vehicles a year</strong>, of which it used about <strong>16,600 in FY26</strong>. From that one line come four product families, and their relative weight is the key to reading the business: buses are the profit-and-prestige core, trucks are the volume, and special vehicles are the niche premium.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">From platform to profit — how one Ropar line reaches the road</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Stage 1 · Platform</div><div class="nname">Engine &amp; chassis</div><div class="nwho">Isuzu-derived powertrains and cabs — increasingly to be replaced/augmented by Mahindra platforms.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Stage 2 · Build</div><div class="nname">Assemble at Ropar</div><div class="nwho">Chassis, cab and running gear assembled on the single Punjab line.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Stage 3 · Body</div><div class="nname">Bus / truck / variant</div><div class="nwho">Bus shells, cargo bodies, tippers, ambulances, defence builds — often via body partners.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Stage 4 · Sell &amp; serve</div><div class="nname">Dealers &amp; spares</div><div class="nwho">Sales through the dealer network, then years of parts and service revenue.</div></div>
+    </div>
+    <div class="flow-note">Stages 1–3 are the one-time vehicle sale — lumpy and cyclical. Stage 4, spares and service, is the quieter recurring tail that grows with every vehicle SML puts on the road and stays loyal to the badge.</div>
+  </div>
+
+  <h3>The four product families, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Buses — the crown jewel.</span></strong> SML's signature product. It builds <strong>school buses</strong> (a large, safety-regulated market), <strong>staff/employee buses</strong> for factories and IT parks, and <strong>passenger buses</strong> for private operators and state transport. This is where its ~16% intermediate-bus share and its brand reputation live — the reason a niche company earns outsized respect.</li>
+    <li><strong><span class="chain-epc">Cargo trucks &amp; tippers.</span></strong> Light and medium goods carriers — the volume workhorses. SML competes here but is a small player against Tata, Ashok Leyland and Eicher, historically limited by its narrow product range and its absence from the heavy end.</li>
+    <li><strong><span class="chain-om">Ambulances &amp; special-application vehicles.</span></strong> Purpose-built vehicles — ambulances, mobile clinics, and custom builds — where SML's willingness to do lower-volume, specified work is an advantage over volume-obsessed giants.</li>
+    <li><strong>Defence &amp; institutional vehicles.</strong> A quiet but long-standing line: SML (via its Swaraj/Isuzu heritage) has supplied troop carriers and specialised vehicles to the armed forces and government — sticky, relationship-driven demand that doesn't swing with the commercial freight cycle.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why "bus-heavy" is the fact that defines the company</div>
+    <p>Most people, hearing "commercial vehicle maker", picture trucks. For SML the truth is the reverse: buses are its identity, its share leadership and a good chunk of its volume, while trucks are the part where it has always been sub-scale. That matters because <em>buses and trucks are different businesses</em>. Bus demand leans on schools reopening, corporate hiring, tourism and state-transport budgets; truck demand leans on freight, construction, mining and the broader industrial cycle. A maker weighted to buses is exposed to a different set of drivers than a Tata or an Ashok Leyland weighted to trucks — a distinction that gets lost if you file the whole sector under one label.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>From Swaraj Mazda to SML Mahindra: four owners in four decades</h2></div>
+  <p class="part-sub">A company defined as much by who controlled it as by what it built.</p>
+
+  <p class="lead">Few Indian companies have changed hands and names as often as this one. Its story is a relay of foreign and domestic parents — Japanese, Punjabi, then Japanese again, and finally Mahindra — each handover reshaping the business. To read the current chapter you need the earlier ones, because the Mahindra deal is the fourth act of a long play about a good factory that kept outgrowing its owners' commitment.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1983</div><div class="ev">Incorporated as <strong>Swaraj Vehicles Ltd</strong>, a joint venture of <strong>Punjab Tractors</strong> and Japan's <strong>Sumitomo</strong>, with technical know-how from <strong>Mazda</strong> — hence the long-familiar name <em>Swaraj Mazda</em>.</div></li>
+    <li><div class="yr">1985–1990s</div><div class="ev">Builds a reputation for durable, no-nonsense light trucks and — increasingly — <strong>buses</strong>, supplying private operators, institutions and the armed forces from the Ropar plant in Punjab.</div></li>
+    <li><div class="yr">2010–2011</div><div class="ev"><strong>Sumitomo takes majority control</strong> and the company is renamed <strong>SML Isuzu</strong>, deepening its technical tie-up with <strong>Isuzu</strong> of Japan for engines and platforms.</div></li>
+    <li><div class="yr">2016–2020</div><div class="ev">A grinding stretch — BS-VI emission transitions, a truck-cycle downturn and then COVID drive volumes and margins down, with <strong>loss-making years</strong> that leave the sub-scale maker looking strategically stranded.</div></li>
+    <li class="major"><div class="yr">Apr 2025</div><div class="ev"><strong>Mahindra &amp; Mahindra agrees to buy 58.96%</strong> from Sumitomo and Isuzu at <strong>₹650/share (₹555 Cr)</strong>, and launches a mandatory open offer for up to 26% more.</div></li>
+    <li class="major"><div class="yr">Aug 2025</div><div class="ev">M&amp;M <strong>completes the acquisition</strong> (1 Aug); <strong>Vinod Sahay</strong> is installed as Executive Chairman to lead the integration.</div></li>
+    <li class="major"><div class="yr">Oct 2025</div><div class="ev">The company is <strong>renamed SML Mahindra Ltd</strong> (NSE: SMLMAH), formally ending the Isuzu era.</div></li>
+    <li class="major"><div class="yr">Jul 2026</div><div class="ev">Board approves acquiring <strong>Mahindra's Truck &amp; Bus Division (MTBD) for ₹525 Cr</strong> on a slump-sale basis, to complete in FY27 — folding Mahindra's own big-CV business into this listco.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure today</h3>
+  <ul class="clean">
+    <li><strong>Promoter:</strong> <strong>Mahindra &amp; Mahindra</strong> holds ~<strong>58.97%</strong> (as of mid-2026), acquired from the exiting Japanese promoters. Public shareholders hold ~37%, with institutions still a small slice — a register that will be watched closely as Mahindra's plans unfold and as the MTBD assets are absorbed.</li>
+    <li><strong>Leadership:</strong> Mahindra veteran <strong>Vinod Sahay</strong> chairs the company as Executive Chairman, signalling that this is run as a core Mahindra business, not a passive financial stake.</li>
+    <li><strong>The corporate manoeuvre to understand:</strong> Mahindra is not simply owning SML — it is <em>merging its own CV operations into it</em>. By selling MTBD (its heavy-truck-and-bus division) into SML for ₹525 Cr, Mahindra makes this listed company the single home of the group's &gt;3.5-tonne truck-and-bus ambitions. Public SML shareholders end up co-owning a bigger, combined CV business — but on terms Mahindra sets.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the ownership history isn't just trivia:</b> the recurring pattern — a capable factory repeatedly held by parents who couldn't or wouldn't fund its climb up the weight ladder — is exactly what kept SML sub-scale. Sumitomo and Isuzu ran it competently but never gave it the heavy-truck range or the national service network to break out. The Mahindra thesis is that, for the first time, the owner has both the intent <em>and</em> the muscle to change that.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The Mahindra takeover: how the deal is actually built</h2></div>
+  <p class="part-sub">Two transactions, not one — and the second is the one that re-rated the stock.</p>
+
+  <p class="lead">It is tempting to read "Mahindra bought SML" as a single event. It is really <strong>two moves</strong>, roughly a year apart, and they do very different things. The first put Mahindra in control; the second poured Mahindra's own business into the company. Keeping them separate is the key to understanding why the shares moved twice.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The two-step deal</caption>
+    <thead><tr><th>Move</th><th>What happened</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Step 1 · Control<br><span class="mono" style="font-size:11px;color:var(--ink-faint)">Apr–Aug 2025</span></td><td>M&amp;M buys <strong>58.96%</strong> from Sumitomo &amp; Isuzu at <strong>₹650/share (₹555 Cr)</strong>; launches a mandatory open offer for up to 26% more; renames the firm SML Mahindra.</td><td>Changes the owner. A drifting, foreign-parented also-ran becomes a Mahindra group company with a Mahindra chairman and a clear mandate to grow.</td></tr>
+      <tr><td class="t-strong">Step 2 · Combine<br><span class="mono" style="font-size:11px;color:var(--ink-faint)">Jul 2026</span></td><td>SML's board approves buying <strong>Mahindra Truck &amp; Bus Division (MTBD)</strong> from M&amp;M for <strong>₹525 Cr</strong> on a slump-sale basis, to close in FY27.</td><td>Changes the company. It bolts Mahindra's &gt;3.5T truck-and-bus business onto SML, aiming to create one unified CV maker spanning light to heavy.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The strategic logic sits in Mahindra's own share of the market. In small commercial vehicles (&lt;3.5 tonnes) Mahindra is dominant — around a <strong>54% share</strong>. But in the bigger &gt;3.5-tonne truck-and-bus segment it holds only about <strong>3%</strong>, a near-non-participant. SML gives it a bus brand, an intermediate-CV product range and a plant; MTBD gives the combination a heavy-truck reach. Management's stated ambition is to roughly <strong>double the group's &gt;3.5T share to ~6%</strong> from the combination, then push toward <strong>10–12% by FY31</strong> and <strong>20%+ by FY36</strong>.</p>
+
+  <div class="chart">
+    <div class="c-title">The share the deal is chasing — Mahindra's &gt;3.5-tonne CV ambition</div>
+    <div class="c-sub">Group market share in the &gt;3.5T truck-and-bus segment; FY31/FY36 are management aspirations, not results</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Before the deal<small>M&amp;M standalone</small></div><div class="track"><span class="fill ink" style="width:15%"></span></div><div class="bval">~3%</div></div>
+      <div class="bar-row"><div class="blab">Combined now<small>SML + MTBD</small></div><div class="track"><span class="fill brand" style="width:30%"></span></div><div class="bval">~6%</div></div>
+      <div class="bar-row"><div class="blab">Target FY31<small>aspiration</small></div><div class="track"><span class="fill gold" style="width:55%"></span></div><div class="bval">10–12%</div></div>
+      <div class="bar-row"><div class="blab">Target FY36<small>aspiration</small></div><div class="track"><span class="fill spec" style="width:100%"></span></div><div class="bval">20%+</div></div>
+    </div>
+    <div class="legend"><span>The doubling to ~6% is arithmetic — two small shares added together. Everything beyond that (the 10–12%, the 20%+) is a decade-long ambition that requires new heavy-truck products, a national service network, and share taken directly from Tata and Ashok Leyland. Treat the far bars as targets, not facts.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The device that fits only SML Mahindra: two small shares stapled together</div>
+    <p>SML's story cannot be read with a single number the way a pure-play can. It is defined by an <em>addition</em>: a ~16% share of a small pond (intermediate buses) being stapled to a ~3% share of a huge one (all &gt;3.5T CVs) to manufacture a ~6% starting position — with a promise to compound that toward 20%. The whole investment case is a bet on that arithmetic becoming organic: can the stapled-together entity actually <em>grow</em> the combined share, or does it just sum two modest positions and then stall? A company you value on a share it does not yet have is a very different animal from one you value on the profits it already earns.</p>
+  </div>
+
+  <div class="note gold"><b>A genuine surprise:</b> the market's biggest lurch came not from Mahindra <em>buying</em> SML in 2025 but from SML <em>buying Mahindra's</em> truck-and-bus division in 2026 — the shares jumped ~44% in two days and hit the 20% upper circuit on the MTBD news. Counter-intuitively, the smaller company purchasing a chunk of its own giant parent is what re-rated it, because that is the move that turns SML from a niche bus maker into the designated home of Mahindra's entire big-CV future.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The bus franchise: a minnow that leads a segment</h2></div>
+  <p class="part-sub">The single asset that made SML worth buying.</p>
+
+  <p class="lead">Strip away the deal noise and ask why Mahindra wanted this company at all, and the honest answer is: the <strong>buses</strong>. SML is a small firm overall, but in the <strong>intermediate/light-bus segment it is a leader</strong>, with roughly a <strong>16% share</strong> — a franchise built over four decades on school runs, factory shift buses and state-transport orders. That is a brand and a book of relationships you cannot buy off a shelf; you have to earn it, bus by bus, safety certification by safety certification.</p>
+
+  <div class="chart">
+    <div class="c-title">Where the bus share sits — and where the deal takes it</div>
+    <div class="c-sub">Share of the LCV/intermediate bus segment; combined figure includes Mahindra's own bus presence</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">SML standalone<small>intermediate buses</small></div><div class="track"><span class="fill wtg" style="width:76%"></span></div><div class="bval">~16%</div></div>
+      <div class="bar-row"><div class="blab">SML + Mahindra<small>combined bus share</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~21%</div></div>
+    </div>
+    <div class="legend"><span>The combined ~21% share would lift the group to roughly third place in the LCV-bus segment — a rare case where SML's niche leadership plus Mahindra's own volumes produce a genuinely meaningful national position rather than a rounding error.</span></div>
+  </div>
+
+  <p>Why is the bus business worth defending so carefully? Because it is <strong>stickier and better-regulated</strong> than trucking. School buses must meet strict safety norms (speed governors, emergency exits, seating standards); state-transport and staff-bus tenders reward proven, approved suppliers; and an operator who trusts a badge to carry children or employees does not switch lightly. That gives an incumbent like SML a defensible perch — the kind of segment where a smaller, focused player can genuinely lead, which is exactly why it survived four decades of being out-scaled on trucks.</p>
+
+  <div class="plain">
+    <div class="ptag">Why a bus is a harder thing to sell than a truck</div>
+    <p>A cargo truck is bought on cold arithmetic: cost per tonne-kilometre. A bus carries people — schoolchildren, employees, passengers — so the buyer is also buying reassurance. That shifts the basis of competition from pure price toward safety record, comfort, reliability and reputation, which favours an established name over a cheap newcomer. It also means the bus market moves to a different beat: it swings with schools reopening, corporate return-to-office hiring, tourism, and state-transport capital budgets rather than with freight rates. For an owner like Mahindra, SML's bus franchise is both a defensible cash core <em>and</em> a ready-made platform to layer electric buses onto — a point that becomes central later in this primer.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Sub-scale economics: the challenger's maths</h2></div>
+  <p class="part-sub">Why a company this competent stayed this small — and why scale is the whole prize.</p>
+
+  <p class="lead">To understand SML's margins you have to understand its <strong>scale problem</strong>. In commercial vehicles, size is not vanity — it is cost. Bigger makers spread engineering, tooling, procurement and a national service network across far more vehicles, so each one carries a smaller slice of fixed cost. SML, selling ~16,600 vehicles a year against rivals selling hundreds of thousands, has always fought uphill on exactly this maths. The chart below is the single clearest picture of the gap.</p>
+
+  <div class="chart">
+    <div class="c-title">The scale gap — annual CV revenue, SML vs the field</div>
+    <div class="c-sub">Approximate recent-year commercial-vehicle revenue (₹ Crore); Tata Motors shown for its CV business</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">SML Mahindra<small>FY26</small></div><div class="track"><span class="fill brand" style="width:4%"></span></div><div class="bval">~2,838</div></div>
+      <div class="bar-row"><div class="blab">VECV (Eicher CV)<small>approx.</small></div><div class="track"><span class="fill wtg" style="width:29%"></span></div><div class="bval">~22,000</div></div>
+      <div class="bar-row"><div class="blab">Ashok Leyland<small>approx.</small></div><div class="track"><span class="fill ink" style="width:65%"></span></div><div class="bval">~49,000</div></div>
+      <div class="bar-row"><div class="blab">Tata Motors CV<small>approx.</small></div><div class="track"><span class="fill om" style="width:100%"></span></div><div class="bval">~75,000</div></div>
+    </div>
+    <div class="legend"><span>SML's revenue is a rounding error next to the majors — roughly a twenty-fifth of Tata's CV business. That is the sub-scale reality the Mahindra combination is meant to attack. Peer figures are approximate, drawn from recent annual reporting, and cover differing CV-segment definitions; use them for orders of magnitude, not precision.</span></div>
+  </div>
+
+  <p>Now look at what SML has done <em>despite</em> that gap. Its EBITDA margin has climbed off the floor — from deeply negative in the COVID and BS-VI-transition years to a healthier band as volumes and pricing recovered. FY26's margin sat around the <strong>10% mark</strong>, with quarterly prints pushing into the low-teens — a real operational turnaround for a company that was losing money only a few years earlier.</p>
+
+  <div class="chart">
+    <div class="c-title">The margin recovery — EBITDA margin climbing off the floor</div>
+    <div class="c-sub">Approximate EBITDA margin by financial year; the loss years (FY21–FY22) are shown in prose, not on the bar</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:42%"></span></div><div class="bval">~5%</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill wtg" style="width:67%"></span></div><div class="bval">~8%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill gold" style="width:83%"></span></div><div class="bval">~10%</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:92%"></span></div><div class="bval">~10–11%</div></div>
+    </div>
+    <div class="legend"><span>Before this recovery, FY21 and FY22 were loss-making at the EBITDA level (roughly –11% and –4%), as emission-norm transitions and the pandemic hammered a sub-scale maker with little cushion. The climb to a stable ~10% is the operational foundation the equity story is built on — but it is still below the mid-teens the best-run majors earn at the top of the cycle.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The uncomfortable truth beneath the turnaround</div>
+    <p>SML's margin recovery is genuine, but it is a recovery to <em>adequate</em>, not to <em>excellent</em>. A ~10% EBITDA margin on ₹2,838 Cr of revenue produces real profit — ₹160 Cr of net income in FY26 — yet it is thinner than what a Tata or an Ashok Leyland earns at scale, and it rests on a single plant running well below its 24,000-unit capacity. The bull case is that Mahindra's scale fixes precisely this: pool procurement, share platforms and R&amp;D, fill the Ropar line, and the same revenue drops far more to the bottom line. The bear case is that CV margins are cyclical and competition is brutal, so today's ~10% could just as easily be a cyclical high as a new floor. Which of those it turns out to be is the crux the financials section returns to.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The synergy thesis: what Mahindra actually brings</h2></div>
+  <p class="part-sub">The bull case, laid out plainly — and where each strand can break.</p>
+
+  <p class="lead">The entire premium in the stock rests on a word: <strong>synergy</strong>. The claim is that Mahindra's scale, engineering, sourcing, distribution and EV capability can transform a sub-scale bus maker into a national CV force. That is plausible — Mahindra is a serious industrial group with deep auto engineering and one of India's strongest rural distribution networks. But "plausible" is not "delivered", so it is worth taking each strand in turn and asking where it helps and where it can fail.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The four synergy strands</caption>
+    <thead><tr><th>Strand</th><th>The upside Mahindra offers</th><th>Where it can break</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Sourcing &amp; scale</td><td>Pool procurement of steel, components and parts across Mahindra's vast auto volumes to cut SML's per-unit cost and lift margins.</td><td>Realising it needs deep integration of two supply chains and parts catalogues — slow, painstaking work that shows up in results only gradually.</td></tr>
+      <tr><td class="t-strong">Platforms &amp; tech</td><td>Give SML a modern product range — new engines, cabs and a path into heavy trucks — instead of an ageing Isuzu-era line-up.</td><td>New CV platforms take years to design, homologate and prove in the field; buyers are conservative and won't adopt unproven products.</td></tr>
+      <tr><td class="t-strong">Distribution &amp; service</td><td>Layer SML products onto Mahindra's enormous dealer-and-service footprint, finally giving it the national uptime coverage it lacked.</td><td>Mahindra's network is built for small vehicles and tractors; extending it to heavy-truck service is a genuinely different competence.</td></tr>
+      <tr><td class="t-strong">EV &amp; green CV</td><td>Tap Mahindra's electric-vehicle know-how to put SML ahead on electric buses, where it plans its first launch in FY27.</td><td>Electric-bus economics are still weak (high cost, long payback, thin charging infrastructure); demand is real but small for now.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The most concrete embodiment of the thesis is the <strong>MTBD combination</strong> itself. By folding Mahindra's Truck &amp; Bus Division into SML, the group is building — on paper — one company that finally spans the full weight ladder: Mahindra's small-CV dominance below 3.5 tonnes, SML's intermediate buses and trucks in the middle, and MTBD's reach into the heavy end. A CV buyer could, in theory, get their entire fleet from one group. Executed well, that breadth is a competitive weapon; executed badly, it is two integration projects running at once inside a company a fraction of its rivals' size.</p>
+
+  <div class="plain">
+    <div class="ptag">Why integration is the quiet risk nobody prices</div>
+    <p>Merging two truck-and-bus operations — different plants, dealer networks, parts systems, engineering teams and cultures — is one of the harder tasks in manufacturing, and it consumes management attention that could otherwise go to winning customers. The market has enthusiastically priced the <em>output</em> of a smooth integration (a bigger, higher-share, higher-margin CV champion) while the <em>work</em> of getting there has barely begun; the MTBD deal only clears in FY27. History across the auto industry is littered with logical CV combinations that took far longer and cost far more to knit together than the deal announcement implied. The synergy is real in prospect; the question is the pace and the price of realising it.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The cycle underneath: what really moves the volumes</h2></div>
+  <p class="part-sub">Even a perfect turnaround rides a wave the company doesn't control.</p>
+
+  <p class="lead">Commercial vehicles are a deeply <strong>cyclical</strong> business, and no amount of corporate manoeuvring changes that. Truck demand tracks the industrial economy — freight, construction, mining, infrastructure spending; bus demand tracks schools, employment, tourism and state-transport budgets. SML sits at the intersection of both, so its volumes rise and fall with forces set in Delhi and in the wider economy, not in Ropar. Understanding those drivers is essential to reading whether today's growth is durable or borrowed from a good year.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What drives SML's two demand engines</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Which SML product it moves</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Freight &amp; construction</td><td>Goods movement, road-building and infrastructure activity across the economy.</td><td>Cargo trucks and tippers — the cyclical, industrial half of the book.</td></tr>
+      <tr><td class="t-strong">Schools &amp; education</td><td>New schools, fleet renewal and tightening school-bus safety norms that retire old vehicles.</td><td>School buses — a steadier, regulation-driven replacement market.</td></tr>
+      <tr><td class="t-strong">Employment &amp; offices</td><td>Factory hiring, IT-park staffing and corporate return-to-office trends.</td><td>Staff and employee buses — geared to the jobs cycle.</td></tr>
+      <tr><td class="t-strong">Government &amp; state transport</td><td>State-transport undertakings, defence procurement and public-fleet budgets.</td><td>Passenger buses, defence and special vehicles — lumpy but sticky.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The recent backdrop has broadly helped: post-pandemic normalisation refilled school-bus and staff-bus demand, infrastructure spending supported trucks, and emission-norm-driven fleet replacement kept a floor under volumes. FY26's 16,632 units (up ~17%) reflects that tailwind. But the same cyclicality that lifts volumes in a good year can just as sharply reverse them — a freight slowdown, a weak state-transport budget cycle, or a sharp rise in vehicle prices from new norms can all stall the very growth the valuation now assumes will continue.</p>
+
+  <div class="plain">
+    <div class="ptag">The distinction that changes how you read the growth</div>
+    <p>SML's volume growth in FY26 came from two different kinds of demand welded together. Part is <strong>replacement and regulation</strong> — old school buses being retired for safety, emission norms forcing fleet renewal — which is relatively steady and predictable. Part is <strong>cyclical</strong> — freight and construction activity that can turn on a dime. When you see a big volume number, the useful question is which bucket it came from, because the replacement-driven part is worth paying up for and the cyclical part is not. A turnaround story that borrows heavily from a cyclical peak looks very different a year later when the cycle turns.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The EV question: where the Mahindra badge could matter most</h2></div>
+  <p class="part-sub">A modest opportunity today, potentially a decisive edge tomorrow.</p>
+
+  <p class="lead">Of all the reasons Mahindra makes sense as an owner, the <strong>electric transition</strong> may be the most strategically important — and it lands squarely on SML's strongest product. Buses are the most natural early market for electrification in commercial vehicles: they run fixed, predictable routes, return to a depot each night to charge, and their local, stop-start urban duty cycle is exactly where diesel is dirtiest and electric is cleanest. SML plans to launch its <strong>first electric bus in FY27</strong>, drawing on the broader Mahindra group's EV capability.</p>
+
+  <p>Why does the parent matter here specifically? Because building a credible electric CV needs battery, powertrain and software competence that a sub-scale standalone maker would struggle to fund alone. Mahindra has been investing across electric mobility for years; plugging SML's bus franchise into that capability is a genuinely faster route to a competitive e-bus than SML could have managed by itself. Management has been candid that it can "move very quickly" on buses by leaning on group technology, while electric <em>trucks</em> will wait for demand and commercial viability.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the e-bus opportunity is real but not yet a profit engine</div>
+    <p>Electric buses face three stubborn hurdles today: a high upfront price versus diesel, long payback periods, and patchy charging infrastructure. That keeps the near-term market modest, and much of it depends on government tenders and subsidies rather than free-market demand. So the e-bus story is better understood as <em>strategic positioning</em> than as an immediate earnings driver — it is about being ready, with a credible product and the group's technology behind it, when city fleets and state transporters do electrify at scale. For a company whose bus franchise is its crown jewel, being early and credible in electric buses is how it defends that jewel over the next decade; it is not how it makes its numbers next year.</p>
+  </div>
+
+  <div class="note gold"><b>The strategic point worth holding:</b> SML's greatest vulnerability as a standalone was that the electric shift could have stranded its diesel-era engineering. Under Mahindra, that same shift becomes a chance to <em>extend</em> its bus leadership rather than lose it — arguably the single clearest place where the acquisition changes SML's long-run trajectory rather than just its ownership.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A concentrated market with two giants, one strong number three, and a scattering of specialists.</p>
+
+  <p class="lead">Indian commercial vehicles is not a fragmented cottage industry — it is a scale game dominated by a handful of names, because building trucks and buses at quality, and servicing them nationally, needs enormous capital and reach. SML has always been a <strong>specialist on the edge</strong> of this market. The Mahindra combination is an explicit attempt to move it from the edge toward the middle.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs SML Mahindra</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">SML Mahindra</td><td>Niche bus &amp; LCV/MCV specialist, now Mahindra-controlled</td><td><em>This company.</em> Leader in intermediate buses (~16%); sub-scale in trucks; the whole case is Mahindra-driven scale-up.</td></tr>
+      <tr><td class="t-strong">Tata Motors (CV)</td><td>The market leader across the full CV range</td><td>The giant — many times SML's size, with the deepest product range and service network. The benchmark SML is measured against.</td></tr>
+      <tr><td class="t-strong">Ashok Leyland</td><td>The specialist CV major, strong in trucks and buses</td><td>Number two, a pure-play CV powerhouse with a formidable bus business — the most direct competitor to SML's bus ambitions.</td></tr>
+      <tr><td class="t-strong">VECV (Volvo-Eicher)</td><td>The successful mid-market challenger</td><td>The template SML aspires to — a once-mid-size player that scaled into a serious force via a global partner. Proof the climb is possible.</td></tr>
+      <tr><td class="t-strong">Mahindra (small CV)</td><td>Dominant below 3.5 tonnes</td><td>Now the parent — its ~54% small-CV strength is the base the whole combination is built on top of.</td></tr>
+      <tr><td class="t-strong">Force Motors, others</td><td>Niche specialists in vans, buses and utility vehicles</td><td>Fellow niche players competing for slices of the LCV and bus market where the giants are less focused.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two things stand out. First, VECV is the encouraging precedent: a mid-size Indian CV maker that, backed by a strong global partner (Volvo), climbed from also-ran to a genuine third force — which is precisely the arc Mahindra is trying to engineer for SML. Second, the giants will not stand still. Tata and Ashok Leyland have decades of accumulated scale, product depth and service density, and they defend the bus segment SML leads. So SML's re-rating rests on a two-sided bet: that Mahindra can replicate the VECV playbook <em>and</em> do it against incumbents who are far larger and fully awake to the threat. Being the smallest scaled player in a scale industry is a permanent headwind that a good parent narrows but does not erase.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A record year on the numbers — priced for a future that hasn't been earned yet.</p>
+
+  <p class="lead">FY26 was, on the reported figures, the best year in SML's listed life: revenue up ~18%, profit up ~31%, a healthy dividend, margins holding around 10%. It is a real, cash-generating turnaround. The tension is entirely in the valuation — at ~50× earnings, the market is not paying for FY26; it is paying for the SML that Mahindra promises to build over the next decade.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue recovery</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore), from reported results; roughly double the COVID-era trough of ~₹1,270 Cr in FY22</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill wtg" style="width:77%"></span></div><div class="bval">~2,196</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill gold" style="width:85%"></span></div><div class="bval">~2,399</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~2,838</div></div>
+    </div>
+    <div class="legend"><span>From a COVID-era trough near ₹1,270 Cr in FY22, revenue has roughly doubled — driven by recovering volumes (16,632 units in FY26) and better pricing. The clean climb is real, but the FY26 base is still a fraction of any major's, which is the entire reason scale, not just growth, is the prize.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit &amp; distribution (FY25 → FY26)</div>
+    <div class="c-sub">Net profit (₹ Crore) and the shareholder return; FY26 is a record</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Net profit FY25</div><div class="track"><span class="fill wtg" style="width:76%"></span></div><div class="bval">~122</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~160</div></div>
+    </div>
+    <div class="legend"><span>Net profit rose ~31% to ~₹160 Cr, and the board declared a ₹23.50 final dividend — a company comfortably profitable and returning cash, not a distressed turnaround. The valuation debate is about the multiple placed on those profits, not their quality.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~₹2,838 Cr</div><div class="msl">FY26 revenue, up ~18% — a record top line</div></div>
+    <div class="ms green"><div class="msv">16,632</div><div class="msl">Vehicles sold in FY26, up ~17% year on year</div></div>
+    <div class="ms red"><div class="msv">~50×</div><div class="msl">P/E on an ~₹8,000 Cr market cap — a re-rated, deal-driven multiple</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: combined &gt;3.5T market share</div>
+    <p>At ~50× earnings on ₹160 Cr of profit, SML Mahindra is emphatically <em>not</em> valued as the small, cyclical bus maker its current financials describe. It is valued as the future national CV champion Mahindra says it will become. So the metric that proves or breaks the case is the <strong>combined group's &gt;3.5-tonne market share</strong>, watched alongside <strong>Ropar capacity utilisation</strong> (is the line filling toward its 24,000-unit potential?), <strong>EBITDA margin</strong> (is scale lifting it durably above ~10%?), and the <strong>MTBD integration timeline</strong> (does it close and knit together on schedule in FY27?). If that combined share climbs credibly from ~6% toward the low-teens while margins expand, the multiple is defensible. If share stalls near where the arithmetic left it and margins stay pinned at cyclical ~10%, a 50× stock is discounting a decade of flawless execution it has not begun to demonstrate. Reported profit tells you where SML is; combined share is the scoreboard for where the valuation says it's going.</p>
+  </div>
+
+  <div class="note">The FY22–FY23 revenue figures and the peer-scale and margin numbers here are approximate, drawn from company results and third-party reporting and cross-checked across sources; segment and peer definitions differ between companies, and FY31/FY36 share figures are management aspirations, not results. Verify every number against the company's own filings before relying on it.</div>
+</section>
+
+<!-- 12 -->
+<section class="part" id="p12">
+  <div class="part-head"><span class="pno">12</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A competent niche maker handed a giant's ambitions — asked to prove it can carry them.</p>
+
+  <p class="lead">SML Mahindra enters FY27 transformed on paper: a profitable, growing bus-and-truck maker, freshly owned by one of India's strongest industrial groups, about to absorb that group's own big-CV division. The genuine debate is no longer about survival — that question is settled — but about whether a company this small can be scaled into a national CV force fast enough, and cleanly enough, to justify a valuation that has already assumed it.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Mahindra scale &amp; intent</strong> — sourcing, platforms, distribution and cash from a serious industrial parent that, for once, wants to grow the business, not just own it.</li>
+        <li><strong>Defensible bus franchise</strong> — ~16% intermediate-bus leadership, a sticky, safety-regulated core that is hard to replicate and a natural home for electric buses.</li>
+        <li><strong>Full-ladder ambition</strong> — the MTBD combination aims to span light to heavy CVs, doubling group &gt;3.5T share to ~6% with a path toward the low-teens and beyond.</li>
+        <li><strong>Operational turnaround</strong> — margins recovered from losses to ~10%, record FY26 revenue and profit, a dividend, and a plant running well below capacity with room to fill.</li>
+        <li><strong>The VECV precedent</strong> — a mid-size Indian CV maker <em>has</em> scaled into a major before with the right global partner; the playbook exists.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Rich valuation</strong> — ~50× earnings prices in a decade of flawless scale-up; any stumble in share, margins or integration can trigger a sharp de-rating.</li>
+        <li><strong>Integration risk</strong> — knitting SML and MTBD together is hard, slow work that only starts to close in FY27 and consumes management attention.</li>
+        <li><strong>Sub-scale &amp; entrenched rivals</strong> — SML remains a fraction of Tata's and Ashok Leyland's size, and both defend the bus segment fiercely and won't cede share quietly.</li>
+        <li><strong>Cyclicality</strong> — CV demand swings with freight, construction and state budgets; today's ~10% margin and record volumes could be a cyclical high.</li>
+        <li><strong>Execution unproven</strong> — the aspirational FY31/FY36 share targets require new heavy-truck products and a national service network SML does not yet have.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>SML spent four decades as India's competent commercial-vehicle underdog — a good bus brand and a decent truck line, forever held back by scale and by owners who wouldn't fund the climb. Mahindra has now supplied both the intent and the muscle that were always missing, and stapled its own big-CV business on top. The reported numbers are the best in the company's listed life. What the market has bought, though, is not FY26's ₹160 Cr of profit at a fair multiple; it is a decade-long promise to turn a ~6% combined share into a national CV franchise. The next checkable milestone is concrete and near: whether the <strong>MTBD acquisition closes in FY27 and the combined &gt;3.5-tonne share starts climbing off ~6%</strong> while the Ropar line fills and margins hold above 10%. Watch that share figure and that integration date each results season — they, not the acquisition headlines, will tell you whether the yellow-school-bus specialist really became the truck-and-bus champion its price already assumes.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>SML Mahindra Ltd (formerly SML Isuzu) — Q4 &amp; FY26 results (year ended Mar 2026): revenue ₹2,837.9 Cr, PAT ₹159.8 Cr, 16,632 units, ₹23.50 dividend, via EquityBulls and company disclosures.</li>
+    <li>Univest / ScanX — SML Mahindra Q4 FY26 results summary (PAT ₹54.2 Cr, revenue ₹897.7 Cr).</li>
+    <li>Screener.in — SML Mahindra Ltd (SMLMAH / BSE 505192) shareholding (M&amp;M ~58.97%), financials and ratios.</li>
+    <li>Mahindra &amp; Mahindra press releases — acquisition of 58.96% stake in SML Isuzu at ₹650/share (₹555 Cr), completed 1 Aug 2025; open offer for up to 26%.</li>
+    <li>Mahindra press release — "SML Mahindra Board Approves Acquisition of Mahindra Truck &amp; Bus Division" (MTBD, ₹525 Cr slump sale), July 2026.</li>
+    <li>Business Standard — "M&amp;M eyes bigger LCV-bus share, faster e-bus foray with SML Isuzu deal" (SML ~16% LCV-bus share; combined ~21%).</li>
+    <li>Business Today / Upstox — SML Mahindra shares rally ~44% / 20% upper circuit on MTBD deal approval.</li>
+    <li>Autocar Professional — "SML Mahindra to launch first EV bus in FY27; sees gradual shift in CV green tech" (Vinod Sahay comments).</li>
+    <li>Business Standard — "SML Mahindra eyes new heavy trucks after M&amp;M transfers CV business."</li>
+    <li>Wikipedia / MotorIndia / company history — Swaraj Vehicles (1983) → Swaraj Mazda → SML Isuzu (2011, Sumitomo majority) → SML Mahindra (Oct 2025); Ropar plant ~24,000-unit capacity. BSE India — scrip code 505192.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026) and around the July 2026 MTBD announcement, and may contain errors or become outdated; several figures (peer revenue, historic margins, and all FY31/FY36 market-share targets) are approximate or are management aspirations rather than results. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "SMLMAH";
+  const COMPANY_SLUG = "sml-mahindra";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
