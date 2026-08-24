@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AvenuesAI (CCAvenue) — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F3FA;
+    --paper-2:#FAFAFF;
+    --card:#FFFFFF;
+    --ink:#15152B;
+    --ink-soft:#494A66;
+    --ink-faint:#84869F;
+    --brand:#2E2A72;          /* deep indigo */
+    --brand-bright:#5B4FE0;   /* electric indigo - the AvenuesAI accent */
+    --gold:#7C5CFC;           /* violet accent / warmth */
+    --wtg:#4F46E5;            /* payments blue-indigo */
+    --epc:#8B5CF6;            /* platform violet */
+    --om:#0EA5B7;             /* international teal */
+    --spec:#5B4FE0;           /* accent cross */
+    --line:#E2E1F0;
+    --line-soft:#EDEDF7;
+    --good:#0F9D6B;
+    --bad:#DC4A3D;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#EDEBFB;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#fff;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#EEEDFB;border:1px solid #D9D6F4;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#5B4FE0;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#2C2A50;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F4FC;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EAE9F6;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2E2A72,#4F46E5);}
+  .fill.gold{background:linear-gradient(90deg,#7C5CFC,#9B7DFF);}
+  .fill.wtg{background:linear-gradient(90deg,#4F46E5,#6C63F0);}
+  .fill.epc{background:linear-gradient(90deg,#8B5CF6,#A98BF8);}
+  .fill.om{background:linear-gradient(90deg,#0EA5B7,#22C1D4);}
+  .fill.spec{background:linear-gradient(90deg,#5B4FE0,#7A6FF0);}
+  .fill.bad{background:linear-gradient(90deg,#DC4A3D,#EE6353);}
+  .fill.ink{background:linear-gradient(90deg,#3a3a55,#5a5a78);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEEEC;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#7a2f26;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#EEEDFB;color:#2C2A50;}
+  .note.gold b{color:#5B4FE0;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#6D28D9;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EDEBFB;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--gold,#7C5CFC);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Payments 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The take-rate reality</a></li>
+    <li><a href="#p3"><span class="n">03</span> The four engines</a></li>
+    <li><a href="#p4"><span class="n">04</span> Company, promoter, dilution</a></li>
+    <li><a href="#p5"><span class="n">05</span> The RBI licence moat</a></li>
+    <li><a href="#p6"><span class="n">06</span> The UPI zero-MDR problem</a></li>
+    <li><a href="#p7"><span class="n">07</span> The AI rebrand &amp; abroad</a></li>
+    <li><a href="#p8"><span class="n">08</span> The rivals</a></li>
+    <li><a href="#p9"><span class="n">09</span> TPV &amp; the flywheel</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: CCAVENUE · BSE: 539807</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>AvenuesAI, <em>a thin toll on a vast flow</em></h1>
+  <p class="dek">A complete walk through the company formerly called Infibeam Avenues — owner of <strong>CCAvenue</strong>, one of India's oldest and largest online payment gateways. How a payment aggregator actually earns its keep, why more than ₹5 lakh crore can pass through its rails while barely a few hundred crore sticks, why UPI's zero-fee rule is a quiet structural headache, and what the fresh "AI-native" rebrand is really trying to fix.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹8,116 <small>Cr</small></div><div class="l">Gross revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹332 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹5.04 <small>Lakh Cr</small></div><div class="l">Payments TPV (FY26)</div></div>
+    <div class="cell"><div class="v">~₹5,300 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">24 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — gross revenue ~₹8,116 Cr (+103%), PAT ~₹332 Cr (+58%), payments TPV ~₹5.04 lakh Cr (+55%); the January 2026 rebrand from Infibeam Avenues to AvenuesAI and the NSE ticker change from INFIBEAM to CCAVENUE (effective 3 Feb 2026); added the take-rate bridge and the UPI zero-MDR section.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">AvenuesAI Limited — the company that was <strong>Infibeam Avenues</strong> until January 2026, and <strong>Infibeam Corporation</strong> before that — is, at its core, the operator of <strong>CCAvenue</strong>, one of India's oldest and largest <strong>online payment gateways</strong>. When you buy something on an Indian website or app and a checkout screen offers you cards, UPI, netbanking and wallets, there is a decent chance CCAvenue is the plumbing quietly moving that money from your bank to the merchant's. It is a <strong>payment aggregator</strong> — infrastructure for merchants, not a consumer wallet — and around that core sit three more businesses: <strong>BillAvenue</strong> (bill-payment rails on the BBPS network), an <strong>enterprise software / e-commerce platform</strong> business, and a growing <strong>international</strong> operation across the UAE and the Gulf. In 2026 it stapled an <strong>AI</strong> ambition on top and renamed itself accordingly.</p>
+
+  <p>Three facts frame the entire company:</p>
+  <ul class="clean">
+    <li><strong>Enormous volume, wafer-thin capture.</strong> In FY26 more than <strong>₹5 lakh crore</strong> of payments flowed across CCAvenue's rails (Total Payment Volume, or TPV). Out of all that, the company reported <strong>~₹8,116 Cr of gross revenue</strong> and kept <strong>~₹332 Cr of net profit</strong>. That is the defining shape of Indian digital payments: you touch a staggering amount of money and keep a sliver of it. Roughly <strong>six to seven paise of profit per ₹100</strong> processed.</li>
+    <li><strong>The revenue line flatters the business.</strong> A payment company's "revenue" is largely <em>pass-through</em> — the bank and network fees it collects and immediately hands on. So FY26 revenue leaping 103% is real, but the number that matters is the far smaller slice it actually keeps. Operating margin sits around <strong>4%</strong> precisely because most of the top line was never the company's to begin with.</li>
+    <li><strong>A licence, a history, and a pivot.</strong> Operating as an aggregator now requires an <strong>RBI Payment Aggregator authorisation</strong> — a regulatory gate that legitimises the incumbents and slows new entrants. The company carries a colourful, acquisition-and-dilution-heavy past (a much-discussed 2018 share crash included), a promoter — founder <strong>Vishal Mehta</strong> — whose stake has drifted down to the high-twenties percent, and, as of 2026, a rebrand to <strong>AvenuesAI</strong> that reframes it as "AI-native transaction infrastructure." Whether that is substance or signage is the live debate.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Imagine a toll operator on a motorway of money. Every rupee a shopper spends online can drive through AvenuesAI's booth on its way from the shopper's bank to the shop's account, and the company clips a tiny fee as it passes. The traffic is colossal — over ₹5 lakh crore a year — but the toll per vehicle is minute, and on the fastest-growing lane (UPI) the government has set the toll to zero. So the whole business is a contest between two forces: can it keep adding lanes and traffic (more merchants, more geographies, bill payments, software, AI services that carry a real fee) faster than the free UPI lane erodes what it earns on each rupee? FY26 says it is winning that race for now. The primer is about whether it keeps winning.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Payments 101: what a gateway actually does</h2></div>
+  <p class="part-sub">No fintech background needed — just the players, the fee, and where the money goes.</p>
+
+  <p class="lead">When you tap "Pay" on an Indian website, four or five parties spring into action in under two seconds, and a payment gateway like CCAvenue is the conductor. To follow AvenuesAI you need to understand that choreography and, above all, one number: the <strong>MDR</strong> — the Merchant Discount Rate, the fee a merchant pays to accept a digital payment. That fee is the raw material of this entire industry.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only payments terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Payment gateway / aggregator</td><td>The service that lets an online merchant accept many payment methods through one integration, collects the money, and settles it to the merchant. CCAvenue is one of India's oldest and largest. An "aggregator" also <em>holds</em> funds briefly before settling — which is exactly why the RBI now licenses them.</td></tr>
+      <tr><td class="t-strong">MDR</td><td>Merchant Discount Rate — the fee (a small % or flat charge) a merchant pays per transaction, split between the gateway, the card network and the banks. This is where the industry's revenue comes from. For UPI person-to-merchant, MDR is currently <em>zero</em> by regulation — a structural fact we return to in section 06.</td></tr>
+      <tr><td class="t-strong">TPV</td><td>Total Payment Volume — the total value of money processed across the rails in a period. AvenuesAI's FY26 TPV was ~₹5.04 lakh crore. TPV is the "traffic"; revenue is a thin fraction of it. Watch both, and the ratio between them.</td></tr>
+      <tr><td class="t-strong">Take-rate</td><td>Net revenue as a percentage of TPV — the slice the company actually keeps after paying banks and networks. In Indian payments this is measured in basis points (hundredths of a percent). It is the single most important quality metric for an aggregator.</td></tr>
+      <tr><td class="t-strong">BBPS / BillAvenue</td><td>Bharat Bill Payment System — the RBI-backed network that standardises recurring bill payments (electricity, gas, loans, insurance). BillAvenue is AvenuesAI's platform on it — high transaction <em>count</em>, low value each, a different economic shape from the gateway.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">One online purchase — where the money and the fee go</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Step 1 · The shopper</div><div class="nname">Pays at checkout</div><div class="nwho">Chooses a card, UPI, netbanking or a wallet on the merchant's page.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Step 2 · CCAvenue</div><div class="nname">Routes &amp; captures</div><div class="nwho">The gateway authorises, routes to the right rail, and briefly holds the funds.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Step 3 · Banks &amp; networks</div><div class="nname">Clear the payment</div><div class="nwho">Card networks, issuing &amp; acquiring banks, or UPI move the actual money — and take most of the fee.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Step 4 · The merchant</div><div class="nname">Gets settled</div><div class="nwho">Receives the money (minus MDR) in a day or two. AvenuesAI keeps its slice of the MDR.</div></div>
+    </div>
+    <div class="flow-note">The gateway does the orchestration and carries the compliance and fraud risk — but the banks and networks take the largest share of the MDR. What CCAvenue keeps is the residue after they are paid. That residue, aggregated over ₹5 lakh crore of flow, is the business.</div>
+  </div>
+
+  <p>Two structural features make this a genuinely defensible business once you are established. First, <strong>integration inertia</strong>: a merchant who has wired CCAvenue into its checkout, reconciliation and refund flows rarely rips it out for a rival to save a few basis points — switching is a nuisance with real risk. Second, <strong>the long tail</strong>: CCAvenue crossed <strong>1.2 million merchants</strong>, most of them small, and small merchants are stickier and less able to negotiate the MDR down than a handful of giants. A base of a million-plus modest merchants is worth more, per rupee of volume, than a few whales who squeeze you.</p>
+
+  <div class="plain">
+    <div class="ptag">The one idea that governs the whole sector: volume is easy, margin is hard</div>
+    <p>In Indian digital payments, growing the <em>value processed</em> is almost the easy part — the country is digitising fast, and volumes compound on their own. The hard, unglamorous contest is over the <strong>take-rate</strong>: how many basis points of each rupee you get to keep after the banks, networks and (on UPI) the regulator have taken their cut. Every serious payments company in India — CCAvenue, Razorpay, PayU, Paytm, BillDesk, Cashfree — is really fighting the same fight: pile up volume, then defend or lift the sliver you keep on it by adding higher-fee services (bill payments, software, lending referrals, international, value-added merchant tools) that a plain UPI transaction can never carry. Hold that lens and everything AvenuesAI does starts to make sense.</p>
+  </div>
+</section>
+
+<!-- 02 — BESPOKE crux: the take-rate reality -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The take-rate reality: ₹5 lakh crore in, ₹332 crore kept</h2></div>
+  <p class="part-sub">The single most important idea in the investment case — and it is specific to a payment aggregator.</p>
+
+  <p class="lead">Most people meet AvenuesAI through a headline like "revenue up 103%." That number, while true, tells you almost nothing about the business, because a payment company's reported revenue is mostly money it never keeps. The figure that runs this company is the <strong>take-rate</strong>: what fraction of the vast flow across its rails actually turns into profit. Look at how tiny that fraction is — and then at why it is nonetheless a real, growing business.</p>
+
+  <div class="chart">
+    <div class="c-title">FY26: the flow, the top line, and what's actually kept</div>
+    <div class="c-sub">₹ Crore — note how gross revenue and profit shrink against the payments flow (bars scaled within the P&amp;L, not against TPV)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Payments TPV<small>value processed FY26</small></div><div class="track"><span class="fill ink" style="width:100%"></span></div><div class="bval">~5,03,800</div></div>
+      <div class="bar-row"><div class="blab">Gross revenue<small>most of it pass-through</small></div><div class="track"><span class="fill brand" style="width:1.6%"></span></div><div class="bval">~8,116</div></div>
+      <div class="bar-row"><div class="blab">Net profit (PAT)<small>the slice truly kept</small></div><div class="track"><span class="fill spec" style="width:0.07%"></span></div><div class="bval">~332</div></div>
+    </div>
+    <div class="legend"><span>All three bars are drawn to a single scale so the shrinkage is visible: gross revenue is ~1.6% of the money processed, and net profit is under a tenth of one percent of it. The business is that last, almost-invisible bar — earned by doing an enormous amount of low-margin work reliably.</span></div>
+  </div>
+
+  <p>Do the arithmetic and the device that defines this company falls out. On roughly <strong>₹5,03,800 crore of TPV</strong>, AvenuesAI kept about <strong>₹332 crore of profit</strong> — a net capture of roughly <strong>0.066%</strong>, or about <strong>6.6 paise of profit per ₹100</strong> that moved across its rails. Even the gross revenue, at ~₹8,116 Cr, is only ~1.6% of the flow, and the bulk of <em>that</em> is bank and network fees passed straight through. The genuinely retained margin is a rounding error on the volume — which is exactly why <strong>scale is not a vanity metric here; it is the entire survival strategy</strong>. At 6.6 paise per ₹100, the only way to a meaningful profit is to move an almost unimaginable amount of money, flawlessly, every single day.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits a payment aggregator: profit per ₹100 processed</div>
+    <p>Forget "revenue grew 103%." The number that actually describes AvenuesAI is <strong>profit ÷ TPV</strong> — about <strong>6.6 paise kept for every ₹100 that passes through</strong>. That single ratio explains every strategic move the company makes. Why chase millions of small merchants? Because the take-rate on them is higher and stickier. Why push BillAvenue, software and international? Because a bill payment, a software licence or a cross-border transaction can carry a fatter fee than a domestic UPI tap, nudging that 6.6 paise upward. Why rebrand around AI and value-added services? Because the raw payments toll is being competed and regulated toward zero, and the only way the kept-slice grows is to sell the merchant something a pure gateway can't. When you next read a triumphant revenue-growth headline, translate it back into <em>paise kept per ₹100</em> — and ask whether that number went up, held, or quietly slipped.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~₹5.04 L Cr</div><div class="msl">FY26 payments TPV — the "traffic," up ~55% year on year</div></div>
+    <div class="ms gold"><div class="msv">~6.6 paise</div><div class="msl">Net profit kept per ₹100 processed (FY26, derived) — the whole game</div></div>
+    <div class="ms green"><div class="msv">~1.2 mn</div><div class="msl">Merchants on the network — the long, sticky tail that lifts take-rate</div></div>
+  </div>
+
+  <p>This is why the top line can mislead in both directions. Gross revenue can surge when the mix shifts toward products that gross up more pass-through cost (bigger revenue, not necessarily more profit), and it can look pedestrian even as the retained take-rate improves. For an aggregator, the real scoreboard is not revenue at all — it is <strong>TPV growth × net take-rate</strong>, watched together. That pairing is the lens for the rest of this primer.</p>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The four engines: what AvenuesAI actually runs</h2></div>
+  <p class="part-sub">One dominant payments core, and three businesses bolted around it.</p>
+
+  <p class="lead">It is tempting to file AvenuesAI as "a payments company" and stop. That undersells it and also oversells it — undersells, because it runs four distinct engines; oversells, because payments so dominates the economics that the other three are, for now, supporting acts. Here is what each engine is, and why it exists.</p>
+
+  <h3>The four engines</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">CCAvenue — the online payment gateway.</span></strong> The flagship and the profit centre. Cards, UPI, netbanking, 100+ wallets, EMI options, and multi-currency international acceptance for merchants ranging from corporates to one-person shops. This is the ₹5-lakh-crore-a-year rail, and it carries the bulk of both revenue and profit. Every other engine is, in part, an attempt to sell more to the merchants CCAvenue already has.</li>
+    <li><strong><span class="chain-om">BillAvenue — bill payments on BBPS.</span></strong> A platform on the RBI's Bharat Bill Payment System that lets billers (utilities, telcos, lenders, insurers) collect, and agents facilitate, standardised recurring payments. It processed <strong>12+ crore transactions in FY25</strong>. The economics are the mirror image of the gateway: huge <em>count</em>, small value each, thin per-transaction fee — but recurring, sticky and infrastructural.</li>
+    <li><strong><span class="chain-epc">Enterprise software &amp; platforms.</span></strong> The old Infibeam DNA — e-commerce storefront software (the "BuildaBazaar"/platform lineage), GST and business software, and technology work including large government-scale platform mandates over the years. Lower-growth, but higher-margin and less pass-through-heavy than payments, so it helps the blended take-rate.</li>
+    <li><strong>International &amp; new-age (UAE/GCC + the AI push).</strong> A payments and platform presence in the United Arab Emirates and the wider Gulf, plus the fresh <strong>AI</strong> layer (see section 07). International transactions typically carry richer fees than domestic ones, and the AI/agentic-services ambition is the company's bid to sell software-like margins on top of commodity rails.</li>
+  </ul>
+
+  <div class="chart">
+    <div class="c-title">Roughly where the gross revenue comes from</div>
+    <div class="c-sub">Approximate, illustrative share of FY26 gross revenue — the company does not disclose a clean four-way split; payments dominates</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Payments (CCAvenue)<small>gateway + bill payments</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~85%+</div></div>
+      <div class="bar-row"><div class="blab">Software &amp; platforms<small>e-commerce, GST, tech</small></div><div class="track"><span class="fill epc" style="width:12%"></span></div><div class="bval">~10%±</div></div>
+      <div class="bar-row"><div class="blab">International &amp; new-age<small>UAE/GCC + AI, early</small></div><div class="track"><span class="fill om" style="width:6%"></span></div><div class="bval">~5%±</div></div>
+    </div>
+    <div class="legend"><span>Shares are <em>approximate and illustrative</em> — inferred from disclosures, not a reported segment table. The point is the shape: payments overwhelmingly dominates, and the smaller engines exist mainly to lift the blended margin on the payments base.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why bolt three engines onto one</div>
+    <p>Every one of the three satellite businesses answers the same strategic problem: the payments toll, on its own, is being squeezed toward zero on the fastest-growing rail. So the company tries to earn <em>more per merchant relationship</em>. Sell the merchant CCAvenue for checkout, then BillAvenue for recurring collections, then storefront and GST software to run the shop, then cross-border acceptance, then — the newest bet — AI tools to automate their commerce. Each add-on is a chance to charge a fee that a plain UPI transaction never could, and to bind the merchant tighter so they don't leave. It is a classic "own the merchant, then widen the wallet" playbook. Whether the newer engines get big enough to move a company this dominated by its payments core is the open question the financials keep testing.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The company, the founder, and a dilution-heavy past</h2></div>
+  <p class="part-sub">A serial-acquirer, capital-raising history that minority investors must read with clear eyes.</p>
+
+  <p class="lead">AvenuesAI is not a tidy, single-product start-up. It is the product of a founder's two-decade campaign of building, buying and merging — a history that delivered scale and a genuine franchise, but also a long record of <strong>equity dilution</strong>, related-party complexity and at least one violent share-price event. Understanding that past is essential to weighing the present.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2007</div><div class="ev"><strong>Vishal Mehta</strong> founds <strong>Infibeam</strong> in Ahmedabad as an e-commerce venture — one of India's early online retail and marketplace-software plays.</div></li>
+    <li class="major"><div class="yr">2016</div><div class="ev"><strong>IPO</strong> on BSE &amp; NSE (BSE scrip 539807) — noted at the time as the first Indian e-commerce company to list domestically.</div></li>
+    <li class="major"><div class="yr">2017–18</div><div class="ev">Merges with <strong>Avenues (India)</strong>, owner of the <strong>CCAvenue</strong> payment gateway — the deal that turns an e-commerce/software firm into a payments company. Renamed <strong>Infibeam Avenues</strong>.</div></li>
+    <li><div class="yr">Sep 2018</div><div class="ev">A single-session share crash of roughly <strong>70%</strong> after market concern over inter-corporate loans/deposits to subsidiaries and related parties — a lasting governance scar that still colours how some investors view the stock.</div></li>
+    <li><div class="yr">2019–23</div><div class="ev">A stream of acquisitions, stakes and capital raises (payments, platforms, a majority stake in <strong>Rediff.com</strong>, international units, warrants and preferential issues) — scale and reach expand; the share count expands with them.</div></li>
+    <li class="major"><div class="yr">FY24–FY25</div><div class="ev">Payments volumes scale sharply; merchant base passes <strong>1.2 million</strong>; RBI payment-aggregator authorisation and an offline-PA licence secured; <strong>Phronetic AI</strong> and the AI strategy take shape.</div></li>
+    <li class="major"><div class="yr">Jan–Feb 2026</div><div class="ev">Corporate <strong>rebrand to AvenuesAI Limited</strong> completed (30 Jan 2026); NSE ticker changes from <strong>INFIBEAM</strong> to <strong>CCAVENUE</strong> (effective 3 Feb 2026); positioned as "India's first listed AI-native transaction-infrastructure platform."</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Record year: gross revenue ~₹8,116 Cr (+103%), PAT ~₹332 Cr (+58%), payments TPV ~₹5.04 lakh Cr (+55%) — comfortably ahead of the company's own guidance.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; the dilution question</h3>
+  <ul class="clean">
+    <li><strong>Founder-led, but with a diluted stake.</strong> Promoter and founder <strong>Vishal Mehta</strong> and group hold roughly <strong>27% (approx.)</strong> — a figure that has <em>drifted down over the years</em> as the company issued equity to fund acquisitions and growth. A founder holding under a third is not fatal, but it means promoter interests and minority interests must be watched, not assumed aligned.</li>
+    <li><strong>Serial capital-raising is the pattern to price in.</strong> The history is one of frequent equity issuance — QIPs, preferential allotments, warrants, share-based acquisition currency. Each raise funded real growth, but each also spread the profit across more shares. For a business whose per-share earnings are already thin (EPS around <strong>₹0.80</strong>), dilution is not a footnote — it is a recurring headwind that a shareholder must factor into every "growth" number.</li>
+    <li><strong>A near debt-free balance sheet — the offsetting comfort.</strong> The flip side of funding growth with equity rather than debt is that the company carries little borrowing. It is not a leverage story; it is a dilution story. That is a genuinely safer failure mode, but it transfers the cost of growth from lenders to existing shareholders.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the past matters to the present:</b> the 2018 crash, the acquisition sprawl, the steady dilution and the related-party history mean AvenuesAI trades with a <em>governance discount</em> that a cleaner peer would not carry — and arguably should. The bull reading is that the franchise (CCAvenue, the licence, 1.2 mn merchants, ₹5 lakh crore of flow) is now large and real enough to outgrow that discount. The bear reading is that a serial acquirer that keeps issuing paper, with a promoter under a third and a memory of a 70% day, has to <em>earn</em> trust every year. Read the shareholding pattern and the share count with each result, not just the profit.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The RBI licence: the moat you can't see</h2></div>
+  <p class="part-sub">A regulatory gate that quietly separates the incumbents from everyone else.</p>
+
+  <p class="lead">The most underrated asset on AvenuesAI's books is not a plant or a patent — it is a <strong>permission</strong>. Since the RBI tightened its rules, running a payment aggregator in India requires a formal <strong>Payment Aggregator (PA) authorisation</strong>. It sounds like paperwork. In practice it is a moat, and understanding why is central to the investment case.</p>
+
+  <p>Because an aggregator briefly <em>holds</em> customer money between the shopper's bank and the merchant's account, the RBI treats it as systemically sensitive. To be licensed, a firm must meet minimum <strong>net-worth</strong> thresholds, keep customer funds in a segregated <strong>escrow</strong> account handled by a scheduled bank, and satisfy detailed <strong>KYC, data-localisation, security and governance</strong> standards. New entrants have to clear that bar before they can even compete; several aspirants were denied or stalled in the RBI's authorisation rounds. An incumbent like CCAvenue, already authorised and already integrated into a million-plus merchants, sits on the right side of that gate.</p>
+
+  <div class="plain">
+    <div class="ptag">Why a licence is worth more than it looks</div>
+    <p>Regulation is usually filed under "risk." Here, a chunk of it is actually "moat." The PA authorisation does three quietly valuable things for an established holder. It <strong>caps the field</strong> — you cannot spin up a rival gateway in a garage; you must be capitalised, audited and approved. It <strong>legitimises the incumbent</strong> — a licensed, escrow-backed aggregator is a safer choice for a nervous merchant, which reinforces the stickiness from section 01. And it <strong>raises the cost of the price war</strong> — competitors must carry the same compliance overhead, so no one can undercut on fees by simply skipping the rules. The same regulator that can compress margins with an MDR decision (section 06) also, through licensing, keeps the number of hands reaching for that MDR small. AvenuesAI lives on both sides of the RBI's pen.</p>
+  </div>
+
+  <p>The company has also pushed beyond the standard online licence toward <strong>offline payment aggregation</strong> — POS-style, in-person acceptance — of a piece with products like its <strong>CCAvenue SmartSoundbox</strong>, the small QR-and-audio-confirmation device that has been finding adoption in Tier-2 and Tier-3 towns. Extending from online-only into offline widens the addressable flow and, again, leans on the licence as the entry ticket few can buy.</p>
+</section>
+
+<!-- 06 — genuine surprise: the UPI zero-MDR structural problem -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The UPI paradox: the winning rail pays nothing</h2></div>
+  <p class="part-sub">The structural quirk that surprises almost everyone who looks at Indian payments for the first time.</p>
+
+  <p class="lead">Here is the fact that stops newcomers cold: <strong>UPI — the payment method that is eating India — earns the aggregator essentially nothing.</strong> The rail that carries the most transactions in the country by a wide margin, the one whose adoption is celebrated worldwide, is one on which the merchant fee (MDR) is set to <strong>zero</strong> by regulation for person-to-merchant payments. The most successful digital-payment story on Earth is, for a company like AvenuesAI, the least directly monetisable part of its own network.</p>
+
+  <p>The logic is public policy, not economics. To drive digital adoption, the government made low-value UPI merchant payments free for merchants — so there is no MDR to split, and therefore little for a gateway to keep on that leg. Cards and netbanking still carry an MDR that can be shared; UPI, on its dominant use-case, does not. As UPI's share of the payment mix keeps climbing, a rising portion of the volume flowing across the rails is, in fee terms, close to <em>free freight</em>.</p>
+
+  <div class="chart">
+    <div class="c-title">The fee on each rail — why the mix matters more than the volume</div>
+    <div class="c-sub">Illustrative merchant-fee (MDR) ranges by payment method — not AvenuesAI's own rates; the shape is the point</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Credit card<small>fee-rich, shrinking share</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~1.8%</div></div>
+      <div class="bar-row"><div class="blab">Netbanking<small>flat-ish fee</small></div><div class="track"><span class="fill wtg" style="width:50%"></span></div><div class="bval">~0.9%</div></div>
+      <div class="bar-row"><div class="blab">Debit card<small>capped by regulation</small></div><div class="track"><span class="fill spec" style="width:45%"></span></div><div class="bval">~0.7%</div></div>
+      <div class="bar-row"><div class="blab">UPI (P2M)<small>the dominant, fastest rail</small></div><div class="track"><span class="fill om" style="width:0.5%"></span></div><div class="bval">~0%</div></div>
+    </div>
+    <div class="legend"><span>Ranges are illustrative of the market, not company-specific. The uncomfortable trend: volume is migrating toward the bottom bar (UPI, ~zero fee) and away from the top (credit cards). More traffic on a free lane means the take-rate can fall even as TPV soars.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The counter-intuitive truth to sit with</div>
+    <p>A payments company in India can grow its processed volume enormously and see its <em>economics per rupee erode at the same time</em> — and both facts are real. The reason is the mix: the rail winning the volume war is the one that pays the least. So "TPV up 55%" is a genuine achievement and, on its own, not proof the business is getting richer. That is why the aggregator's survival depends on the moves in sections 03 and 07 — bill payments, software, international, AI, value-added merchant services — each of which is an attempt to earn a fee that UPI's free rail structurally denies it. The whole strategy of AvenuesAI can be read as a hedge against a payment method the country loves and the company can barely charge for.</p>
+  </div>
+
+  <div class="note gold"><b>The double-edged regulator, again:</b> the government <em>could</em> one day introduce a modest UPI MDR (the industry lobbies for it, arguing zero-MDR is unsustainable for the ecosystem); if it did, it would be a windfall for every aggregator, AvenuesAI included. It could equally keep UPI free indefinitely. So the single biggest swing factor in this company's long-run take-rate is a policy decision it does not control — the payments-sector echo of the fertiliser-maker's subsidy or the miner's royalty. Watch the MDR debate as closely as you watch the results.</p></div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The AI rebrand and the road abroad</h2></div>
+  <p class="part-sub">A name change with a thesis attached — and the question of whether it's real.</p>
+
+  <p class="lead">In January 2026 the company did something conspicuous: it dropped the storied "Infibeam" name and became <strong>AvenuesAI</strong>, restyling itself as an "AI-native transaction-infrastructure platform." A rebrand is cheap; the strategy behind it is not necessarily so. The clear-eyed way to read it is as a direct answer to the take-rate problem — an attempt to graft software-like margins onto commodity payment rails.</p>
+
+  <h3>What the AI push actually is</h3>
+  <ul class="clean">
+    <li><strong>Phronetic AI</strong> — an AI research-and-development effort (backed by the company) building context-aware, "agentic" systems: software that can act, not just answer. The pitch is that a merchant's payments, billing, reconciliation, fraud checks and commerce operations can be increasingly automated by AI agents sitting on top of AvenuesAI's rails.</li>
+    <li><strong>The commercial logic</strong> — AI-driven merchant tools, analytics and automation are things you can <em>charge a real fee for</em>, unlike a zero-MDR UPI tap. If even a fraction of 1.2 million merchants pay for AI-enabled services, that revenue arrives at software margins, lifting the blended take-rate the payments core cannot.</li>
+    <li><strong>The scepticism to hold</strong> — "AI-native" is 2026's most fashionable label, and a rebrand is not a product. The test is not the name; it is whether AI-linked services show up as a growing, higher-margin revenue line in the segment disclosures over the next few years. Until then, treat the AI framing as an ambition with early evidence, not an achieved fact.</li>
+  </ul>
+
+  <h3>The international leg</h3>
+  <p>Alongside AI, AvenuesAI has been extending its payments and platform footprint into the <strong>United Arab Emirates and the wider Gulf</strong>, with ambitions in other geographies. The appeal is straightforward: cross-border and foreign-market transactions typically carry <strong>richer fees</strong> than domestic Indian ones, and the Gulf's merchant base and remittance-heavy corridors are a natural adjacency for an Indian payments firm. International is still a small slice, but it pulls in the right direction — toward higher take-rate volume — and it diversifies away from a single regulator's MDR decisions.</p>
+
+  <div class="plain">
+    <div class="ptag">How to judge the rebrand without cynicism or hype</div>
+    <p>The fair question is not "is AI real?" but "does AvenuesAI's AI earn a fee?" A payments company under structural take-rate pressure has exactly two honourable escapes: process so much more volume that even a shrinking slice grows, or sell the merchant higher-margin things the rails alone can't. The AI-and-international strategy is a bet on the second escape. It should be judged the way you'd judge any margin-mix claim: not by the logo, but by whether the software-and-services share of revenue rises, whether the blended take-rate stops slipping, and whether international volume becomes material. Those are datable, disclosable facts. Give the company two or three years of results to prove them — and mark the thesis to those facts, not to the press release.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The rivals: a crowded, well-funded field</h2></div>
+  <p class="part-sub">CCAvenue is an incumbent, not a monopoly — and several rivals are larger or better-capitalised.</p>
+
+  <p class="lead">India's payment-gateway market is one of the most competitive corners of its fintech landscape, contested by venture-funded challengers, a listed super-app, and banks' own offerings. CCAvenue's edge is longevity, a licence, and a huge merchant tail; its challenge is that some rivals are bigger, richer, or narrower-and-sharper. Know the field.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs AvenuesAI / CCAvenue</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">AvenuesAI (CCAvenue)</td><td>One of India's oldest, licensed payment aggregators; ~1.2 mn merchants; ~₹5 lakh Cr TPV; profitable; software + BBPS + international + AI around the core</td><td><em>This company.</em> Listed and profitable — a genuine differentiator in a field full of loss-making private challengers. The debate is take-rate and the AI/mix pivot, not survival.</td></tr>
+      <tr><td class="t-strong">Razorpay</td><td>The best-known venture-backed aggregator; developer-friendly, broad product suite, banking &amp; lending adjacencies</td><td>Larger in mindshare and product breadth; privately valued richly. The benchmark challenger — strong with startups and modern merchants.</td></tr>
+      <tr><td class="t-strong">PayU (Prosus)</td><td>Global-parent-backed aggregator with deep India presence, lending and enterprise strength</td><td>Well-capitalised, enterprise-heavy; a direct rival for larger merchants and cross-sell into credit.</td></tr>
+      <tr><td class="t-strong">Paytm</td><td>Listed consumer super-app with a large merchant business and QR/soundbox estate</td><td>A different animal — consumer-facing brand plus merchant payments; far bigger and more scrutinised. Overlaps on merchant acceptance, not on being pure B2B infrastructure.</td></tr>
+      <tr><td class="t-strong">BillDesk &amp; Cashfree</td><td>BillDesk: a bill-payments/gateway heavyweight; Cashfree: a fast-growing payouts-and-collections specialist</td><td>Direct competitors — BillDesk especially on bill payments and enterprise gateways, Cashfree on modern payouts. Deep, specialised rivals.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two things distinguish AvenuesAI's position. First, it is one of the few players in this space that is <strong>listed and reliably profitable</strong> — most of its sharpest rivals are private, cash-burning growth stories chasing scale ahead of profit. That is a real edge in a downturn or a funding winter, and it is why CCAvenue can fund its own growth (albeit with equity) rather than depend on the next venture round. Second, it competes less on being the flashiest product and more on being the <strong>established, licensed, sticky incumbent</strong> with an enormous long tail of small merchants. The risk is the mirror image: the venture-funded challengers can subsidise fees and out-market it for the modern, high-growth merchants, potentially leaving CCAvenue strong in a base that is loyal but slower-growing. Cost position, licence and merchant stickiness are its weapons; scale of capital and product velocity are the rivals'.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>TPV and the flywheel: reading the growth right</h2></div>
+  <p class="part-sub">Volume is compounding fast — the question every quarter is what it's worth.</p>
+
+  <p class="lead">The operational story of AvenuesAI is, first and last, about <strong>volume</strong>: more merchants, more transactions, more TPV, quarter after quarter. That flywheel is genuinely turning, and turning quickly. The discipline is to celebrate the volume while never forgetting the lesson of section 02 — that volume only becomes value at the take-rate.</p>
+
+  <div class="chart">
+    <div class="c-title">Payments TPV — the flow across the rails</div>
+    <div class="c-sub">₹ Lakh Crore processed per year; FY25 &amp; FY26 firm, earlier years approximate/derived</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23<small>approx.</small></div><div class="track"><span class="fill ink" style="width:42%"></span></div><div class="bval">~2.1</div></div>
+      <div class="bar-row"><div class="blab">FY24<small>approx.</small></div><div class="track"><span class="fill wtg" style="width:56%"></span></div><div class="bval">~2.8</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill spec" style="width:64.5%"></span></div><div class="bval">~3.25</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>+55% YoY</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~5.04</div></div>
+    </div>
+    <div class="legend"><span>FY26 TPV of ~₹5.04 lakh crore is a firm, reported figure (+55%); FY23–FY24 are approximate/derived and shown for trend. Q4 FY26 alone ran ~₹1.66 lakh crore — a run-rate that, if held, points to another step up.</span></div>
+  </div>
+
+  <p>The flywheel has three teeth that reinforce each other. <strong>More merchants</strong> — the base crossed 1.2 million, with tens of thousands added each quarter, most in Tier-2 and Tier-3 India where the SmartSoundbox and offline push land. <strong>More TPV per merchant</strong> — as those merchants grow and add rails, more value flows through each relationship. And <strong>more products per merchant</strong> — the section-03 cross-sell (bill payments, software, international, AI) deepens each account. Volume growth and account-deepening compound: the same merchant, kept and widened, is worth more every year even if no new merchant ever signs.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">+55%</div><div class="msl">FY26 TPV growth — the flow is compounding, not creeping</div></div>
+    <div class="ms gold"><div class="msv">~₹1.66 L Cr</div><div class="msl">Q4 FY26 TPV alone — the quarterly run-rate stepping up</div></div>
+    <div class="ms green"><div class="msv">+35%</div><div class="msl">FY25 merchant additions (~420k onboarded) — the tail keeps widening</div></div>
+  </div>
+
+  <p>But hold the discipline. A flywheel that spins the volume up while the fee-per-rupee spins down can leave profit growing far slower than TPV — or, in a bad mix year, barely at all. The reassuring signal in FY26 is that profit (+58%) actually outran TPV (+55%), which suggests the take-rate held or improved even as volume surged — a sign the cross-sell and mix strategy is, so far, offsetting the UPI drag. That relationship — <strong>does profit growth keep pace with, or beat, TPV growth?</strong> — is the single most important thing to check each quarter.</p>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A profitable, near-debt-free compounder on a middling multiple — with a governance discount baked in.</p>
+
+  <p class="lead">FY26 was a standout: gross revenue up ~103%, PAT up ~58%, TPV up ~55%, all ahead of the company's own guidance. Unlike a cash-burning fintech, AvenuesAI actually makes money and carries almost no debt. Yet the stock trades on a fairly ordinary multiple — a low-to-mid-teens earnings multiple around <strong>~18×</strong> and roughly <strong>1.1× book</strong> — which tells you the market is discounting something. That something is a mix of thin absolute margins, the dilution history, and the governance memory of section 04.</p>
+
+  <div class="chart">
+    <div class="c-title">FY26 vs FY25 — the growth scorecard</div>
+    <div class="c-sub">₹ Crore; gross revenue and PAT, year on year</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Gross revenue FY26<small>+103% YoY</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~8,116</div></div>
+      <div class="bar-row"><div class="blab">Gross revenue FY25</div><div class="track"><span class="fill wtg" style="width:49%"></span></div><div class="bval">~4,000</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY26<small>+58% YoY</small></div><div class="track"><span class="fill spec" style="width:4.1%"></span></div><div class="bval">~332</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY25</div><div class="track"><span class="fill epc" style="width:2.6%"></span></div><div class="bval">~210</div></div>
+    </div>
+    <div class="legend"><span>The scale gap between the revenue bars and the profit bars is the whole story: a huge, pass-through-heavy top line and a small, hard-won bottom line. Revenue doubling while profit rose ~58% is healthy — profit still grew fast, off a thin base.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~18×</div><div class="msl">Trailing P/E (mid-2026) — an ordinary multiple, discounting margin &amp; governance</div></div>
+    <div class="ms"><div class="msv">~1.1×</div><div class="msl">Price / book — barely above book value for a profitable grower</div></div>
+    <div class="ms red"><div class="msv">~4%</div><div class="msl">Operating margin — thin by design; most of "revenue" is pass-through</div></div>
+  </div>
+
+  <p>Two numbers deserve a second look. The <strong>~4% operating margin</strong> looks alarming until you remember it is a percentage of a grossed-up, pass-through-heavy revenue base — the right denominator for judging profitability is TPV and the take-rate, not this margin. And the <strong>~18× P/E on ~₹0.80 EPS</strong> is not demanding for a company compounding profit at ~50%+; the restraint in the multiple reflects the dilution risk (more shares tomorrow) and the governance discount, not a lack of growth. The return metrics — ROE around <strong>~6–7%</strong>, ROCE around <strong>~8%</strong> — are the honest brake on enthusiasm: this is a business that must run very large volumes to earn modest returns on the capital tied up in it.</p>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: the net take-rate</div>
+    <p>At ~18× earnings, the case does not hinge on a re-rating; it hinges on whether the <strong>net take-rate — profit as a fraction of TPV, that ~6.6 paise per ₹100 — can hold or rise as volume scales</strong>. That is the metric to track, quarter by quarter, and it is where the whole primer converges. If the cross-sell into bill payments, software, international and AI lifts the kept-slice even slightly while TPV keeps compounding at 40–55%, profit compounds hard and the ordinary multiple looks too cheap. If UPI's free rail drags the take-rate down faster than the higher-fee engines can offset — or if a fresh equity raise spreads the profit across yet more shares — then TPV can keep soaring while per-share earnings stall, and the modest multiple is exactly right. TPV growth is the applause; the net take-rate is the score. Read them together, and read the share count alongside both.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results and market data cross-checked across sources; several are <b>approximate or derived</b> — notably the FY23–FY24 TPV, the FY25 revenue/PAT back-calculated from growth rates, the illustrative revenue-mix and MDR ranges, the ~6.6 paise take-rate (PAT ÷ TPV), and the ~27% promoter stake. Market cap, P/E and price move daily. Reported net profit attributable to owners differs slightly from total PAT across sources. Verify every number against the company's filings and the latest shareholding pattern before relying on it.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A profitable incumbent compounding volume, asked whether it can defend the slice it keeps.</p>
+
+  <p class="lead">AvenuesAI enters FY27 with genuine momentum: a record year behind it, TPV compounding above 50%, a licensed and sticky franchise, a fresh AI-and-international strategy, and — rare in its peer group — real profits and almost no debt. What it cannot yet prove is the one thing that decides its long-run worth: that it can keep, or grow, its thin slice of an enormous flow while the country's favourite rail pays nothing. That tension frames both cases.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Profitable at scale</strong> — a licensed aggregator moving ₹5 lakh crore, actually making money and near debt-free, while private rivals still burn cash chasing scale.</li>
+        <li><strong>Volume flywheel</strong> — TPV +55%, 1.2 mn merchants and a widening Tier-2/3 tail; the same accounts deepen as bill payments, software and AI are cross-sold in.</li>
+        <li><strong>Licence &amp; stickiness moat</strong> — RBI PA authorisation caps the field and integration inertia keeps merchants from leaving over a few basis points.</li>
+        <li><strong>Mix-lift optionality</strong> — international (richer fees) and the AI/services push offer a credible route to raising the blended take-rate the payments core can't.</li>
+        <li><strong>Cheap on growth</strong> — ~18× and ~1.1× book for a business compounding profit ~50%+; a governance discount that a few clean years could unwind.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>The UPI zero-MDR drag</strong> — the fastest-growing rail earns the aggregator nothing; take-rate can erode even as TPV soars, and the fix depends on policy it can't control.</li>
+        <li><strong>Dilution habit</strong> — a serial capital-raiser with a promoter under a third; every raise spreads thin per-share earnings thinner still.</li>
+        <li><strong>Governance memory</strong> — the 2018 crash, acquisition sprawl and related-party history mean trust must be re-earned each year.</li>
+        <li><strong>Well-funded rivals</strong> — Razorpay, PayU, Paytm, BillDesk and Cashfree can subsidise fees and out-market it for the modern, high-growth merchants.</li>
+        <li><strong>Low returns</strong> — ROE ~6–7% says it takes vast volume to earn modest capital returns; the AI rebrand must convert to real margin, not just a new name.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>AvenuesAI is a rare thing in Indian fintech — an old, licensed, genuinely profitable payments incumbent — carrying an equally rare burden: a history that makes investors keep one hand on their wallet. The franchise is real, the volume flywheel is spinning fast, and the strategy (own the merchant, widen the wallet, lift the take-rate with services a free rail can't carry) is coherent. But the business earns six-odd paise per ₹100 it touches, and its most powerful rail pays it nothing, so everything rides on defending that slice. The next tests are concrete and datable: <strong>whether FY27's quarterly results show profit growth keeping pace with TPV growth, whether the software-international-AI share of revenue visibly rises, and whether the share count stays put rather than climbing again.</strong> Hold the take-rate while the volume compounds and the ordinary multiple will look like a mistake; let UPI and dilution grind it down, and a ₹5-lakh-crore river will keep flowing past a company that can't quite bottle enough of it.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>AvenuesAI Limited (formerly Infibeam Avenues Ltd) — FY26 audited results, Q4/FY26 earnings press release &amp; investor materials (year ended Mar 2026), via company disclosures and avenuesai.com.</li>
+    <li>DSIJ — "AvenuesAI Reports FY26 Results; PAT Jumps 58%, Gross Revenue Crosses Rs 8,100 Crore."</li>
+    <li>SMEStreet / ScanX — "AvenuesAI Q4 Revenue Jumps 115%, PAT Rises 90%"; FY26 revenue +103%, TPV ~₹5.04 lakh Cr (+55%), Q4 TPV ~₹1.655 trillion.</li>
+    <li>AvenuesAI — press release, 30 Jan 2026: corporate rebranding from Infibeam Avenues to AvenuesAI Limited; new NSE ticker CCAVENUE (effective 3 Feb 2026).</li>
+    <li>APN News / Bilkul Online — Infibeam Avenues FY25 full-year and quarterly results; 420k+ merchants onboarded, 1.2 mn merchant base, BillAvenue 12+ crore transactions.</li>
+    <li>EquityBulls — "AvenuesAI Reports Record Q3 FY26 with 122% Revenue Growth."</li>
+    <li>Screener.in — AvenuesAI (CCAVENUE) financials: market cap, P/E ~18×, book value, ROE ~6.6%, ROCE ~7.7%, promoter holding ~27%, EPS ~₹0.80.</li>
+    <li>Wikipedia — "AvenuesAI" and "Infibeam" corporate history: founding 2007 (Vishal Mehta), 2016 IPO, CCAvenue/Avenues merger, rebrand lineage, ~8% digital-payments share, top-3 B2B gateway.</li>
+    <li>BSE India — Infibeam Avenues / AvenuesAI Ltd stock page, scrip code 539807 (ISIN INE483S01020); NSE symbol CCAVENUE.</li>
+    <li>Reserve Bank of India — Payment Aggregator authorisation framework (net worth, escrow, KYC/data-localisation); background on offline-PA licensing and UPI zero-MDR for P2M.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several figures (notably the FY23–FY24 TPV, the FY25 revenue/PAT, the revenue-mix and MDR ranges, the derived take-rate, and the promoter stake) are derived, illustrative or rounded. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "CCAVENUE";
+  const COMPANY_SLUG = "avenuesai";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
