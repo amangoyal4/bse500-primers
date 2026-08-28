@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V-Mart Retail — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F2F0;
+    --paper-2:#FCF8F6;
+    --card:#FFFFFF;
+    --ink:#1E1512;
+    --ink-soft:#5E5049;
+    --ink-faint:#948279;
+    --brand:#A50F2D;          /* deep value-retail crimson */
+    --brand-bright:#D81E4A;   /* the V-Mart magenta-red accent */
+    --gold:#EE6C2B;           /* warm value-retail orange */
+    --wtg:#C22A55;            /* apparel rose */
+    --epc:#E0913C;            /* non-apparel amber */
+    --om:#4E7A46;            /* FMCG / grocery green */
+    --spec:#8E2C6E;          /* Unlimited / plum accent */
+    --line:#E7DCD8;
+    --line-soft:#EFE7E3;
+    --good:#2A7A4E;
+    --bad:#B0492E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#FBE7EC;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a1c06;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FCEEE4;border:1px solid #F3D3BB;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#b0501a;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#4a3115;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#FAF3F0;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#EFE4DF;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#A50F2D,#D81E4A);}
+  .fill.gold{background:linear-gradient(90deg,#EE6C2B,#F59356);}
+  .fill.wtg{background:linear-gradient(90deg,#C22A55,#DD5A82);}
+  .fill.om{background:linear-gradient(90deg,#4E7A46,#6B975F);}
+  .fill.spec{background:linear-gradient(90deg,#8E2C6E,#B0508E);}
+  .fill.bad{background:linear-gradient(90deg,#B0492E,#C9603F);}
+  .fill.ink{background:linear-gradient(90deg,#4a3f3a,#6b5e57);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FCEEE4;color:#5a3510;}
+  .note.gold b{color:#b0501a;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#b0501a;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#FBE7EC;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Value retail 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The V-Mart model</a></li>
+    <li><a href="#p3"><span class="n">03</span> What's in the basket</a></li>
+    <li><a href="#p4"><span class="n">04</span> The company &amp; owner</a></li>
+    <li><a href="#p5"><span class="n">05</span> The one-store math</a></li>
+    <li><a href="#p6"><span class="n">06</span> Unlimited: the South engine</a></li>
+    <li><a href="#p7"><span class="n">07</span> LimeRoad: the online bet</a></li>
+    <li><a href="#p8"><span class="n">08</span> SSSG &amp; the Zudio question</a></li>
+    <li><a href="#p9"><span class="n">09</span> The rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: VMART · BSE: 534976</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>V-Mart Retail, <em>stitched for small-town India</em></h1>
+  <p class="dek">A complete walk through India's deep-Tier-3-and-4 value-fashion chain — the affordable apparel-and-general-merchandise stores that reach towns the big-city brands drive past. How a small-format value store actually earns its keep, why the whole company is really one store's economics repeated a few hundred times, and how two bolt-on bets — a South Indian chain called Unlimited and a loss-making website called LimeRoad — reshaped the story.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹3,804 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹124 <small>Cr</small></div><div class="l">Net profit (FY26) · thin, volatile</div></div>
+    <div class="cell"><div class="v">~600 <small>stores</small></div><div class="l">Network · 338+ cities</div></div>
+    <div class="cell"><div class="v">~₹4,800 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">28 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ~₹3,804 Cr (+16%), EBITDA ~₹513 Cr (+36%), net profit ~₹124 Cr (+171% off a low base), first dividend in years (~₹1/share); Unlimited outgrowing the core, LimeRoad losses shrinking, network past 600 stores across 338+ cities.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">V-Mart Retail runs a chain of roughly <strong>600 no-frills department stores</strong> — averaging about <strong>8,000 square feet</strong> each — selling <strong>affordable apparel, footwear, accessories, kitchenware and everyday FMCG</strong> to lower- and middle-income families in <strong>Tier-3 and Tier-4 towns</strong>, mostly across North, East and Central India. It is a <strong>value-fashion retailer</strong>: most of what it sells is priced at low, aspirational price points, and a big slice of its clothing is its own <strong>private label</strong>. Founded and still run by <strong>Lalit Agarwal</strong>, it listed in 2013 and has spent the last few years bolting on two very different acquisitions — the South Indian value chain <strong>Unlimited</strong> and the online fashion marketplace <strong>LimeRoad</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It is a small-town specialist, not a metro brand.</strong> V-Mart deliberately opens where organised retail barely exists — district towns of 50,000 to a few lakh people, where its store is often the first air-conditioned, fixed-price, modern shop for miles. That positioning is the whole moat: in most of its towns the real competition is the <em>unorganised local bazaar</em>, not another chain. It is a different animal from the metro-focused Zudio or Reliance Trends — and an entirely different company from the near-namesake <strong>V2 Retail</strong>, with which it is frequently confused.</li>
+    <li><strong>The company is one store's economics, repeated.</strong> V-Mart doesn't have a complicated business. It has a store model — a fixed footprint, a fixed rough cost to fit out, a target sales-per-square-foot, a target payback — and its growth is that model stamped out town by town in tight geographic <strong>clusters</strong>. Read one store's unit economics and its maturation curve, and you have read the company (see section 05).</li>
+    <li><strong>FY26 was a real recovery, but off a bruised base.</strong> After a genuinely bad FY24 — a <strong>net loss of ~₹97 Cr</strong>, weighed down by cotton-price inflation, weak small-town demand and the drag of its two acquisitions — the business turned. FY26 revenue rose ~16% to <strong>~₹3,804 Cr</strong>, EBITDA ~36% to <strong>~₹513 Cr</strong>, and net profit tripled to <strong>~₹124 Cr</strong>, enough for its first dividend in years. But that ₹124 Cr is a razor-thin ~3% of sales — this is a low-margin, high-volume model where profit swings violently on small moves in cost and same-store growth.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>V-Mart sells the aspirational stuff a small-town family buys for a wedding, a festival or the new school year — a shirt, a saree, a pair of shoes, a set of steel vessels — at prices they can actually afford, in a clean modern store that their town probably didn't have a decade ago. It makes very little on each item; the model only works because it buys cheaply, keeps stores small and cheap to run, and sells a lot of low-ticket volume. The genius and the fragility are the same thing: margins are so thin that a bad monsoon, a spike in cotton, or one aggressive new rival in a big town can flip a good year into a poor one. FY26 was a good year. The question this primer keeps returning to is how repeatable that is.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Value retail 101: the small-town opportunity</h2></div>
+  <p class="part-sub">Who shops here, what "value fashion" means, and why the ground is still mostly unorganised.</p>
+
+  <p class="lead">To understand V-Mart you first have to understand the market it chose — and deliberately did <em>not</em> choose. Indian apparel retail splits, crudely, into two worlds. There is the metro-and-mall world of branded fashion, where Zara, Westside, Lifestyle and dozens of labels fight over affluent city shoppers. And there is everywhere else: the thousands of district towns and semi-urban belts where most Indians actually live, where clothing is still bought overwhelmingly from small independent shops, weekly markets and unbranded stockists. V-Mart planted itself firmly in the second world.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only value-retail terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Value fashion</td><td>Clothing sold at deliberately low <em>price points</em> — a shirt at a few hundred rupees, not a few thousand — aimed at price-sensitive, aspirational shoppers. The design follows trends loosely; the promise is "on-trend enough, at a price I can pay." V-Mart's core.</td></tr>
+      <tr><td class="t-strong">Tier-3 / Tier-4 town</td><td>India's smaller towns and district headquarters (roughly populations of tens of thousands up to a few lakh). Under-served by organised retail, lower rents, less competition — and V-Mart's chosen hunting ground, deeper than most rivals go.</td></tr>
+      <tr><td class="t-strong">Unorganised → organised</td><td>The structural shift from independent local shops toward branded chains. In apparel this shift is still early in small-town India, which is the long runway value chains are betting on.</td></tr>
+      <tr><td class="t-strong">Private label</td><td>Merchandise the retailer designs and brands itself (rather than reselling others' brands). Cheaper to source, better margin, and controllable — roughly half of V-Mart's apparel. The lever it most controls.</td></tr>
+      <tr><td class="t-strong">SSSG</td><td>Same-store sales growth — how much sales at stores open at least a year grow year-on-year. Strips out the effect of simply opening new stores. For a chain, it is the single truest read on health (section 08).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one fact that shapes the whole opportunity: small-town apparel is barely organised</div>
+    <p>In the big cities, organised apparel retail is mature and fiercely fought over. Go down to a Tier-3 or Tier-4 town and the picture inverts: the overwhelming majority of clothing is still sold by unbranded local shops with no fixed prices, no air-conditioning and no fitting rooms. That gap is the entire thesis of small-town value retail. A chain like V-Mart isn't mainly trying to steal share from another chain — in most of its towns there <em>is</em> no other chain. It is converting a shopper from the bazaar to the branded store for the first time. That is why the runway can be long and why the economics can work at low prices: the competition it displaces has no scale advantage over it, and often a worse one.</p>
+  </div>
+
+  <h3>Who actually shops here</h3>
+  <ul class="clean">
+    <li><strong>The aspirational value shopper</strong> — a lower- or middle-income small-town family that wants to look current and dress well for festivals, weddings and school, but on a tight budget. Demand is intensely seasonal, spiking around the festive and wedding calendar (roughly the second half of the year) and the change of seasons.</li>
+    <li><strong>The whole family in one trip</strong> — V-Mart is built as a family department store, not a single-category boutique. Menswear, womenswear, kidswear, footwear, accessories and a general-merchandise/FMCG corner sit under one roof, so a family fills a basket in a single visit. Higher basket size per trip is central to making low prices pay.</li>
+    <li><strong>The first-time modern-retail customer</strong> — for many shoppers a V-Mart is their introduction to a fixed-price, self-service store. Winning and keeping that customer, before a rival reaches the town, is the land-grab that value chains are all racing to complete.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The V-Mart model: clusters, private label, and a cheap store</h2></div>
+  <p class="part-sub">How the chain is actually built — and why the boring operational choices are the strategy.</p>
+
+  <p class="lead">There is no glamour in how V-Mart grows, and that is the point. The model is a set of unromantic disciplines — small stores, tight clusters, own-brand product, a lean supply chain — each chosen to make a low-price business earn a return. Miss any one of them and the maths of selling cheap clothing stops working.</p>
+
+  <h3>The four disciplines</h3>
+  <ul class="clean">
+    <li><strong>Cluster-based expansion.</strong> V-Mart does not scatter stores across the map. It saturates a region — a belt of nearby districts — before jumping to a new one. Clustering lets one warehouse and one distribution run serve many stores cheaply, builds brand familiarity across a contiguous area, and spreads regional marketing over more outlets. It is also why the chain is concentrated in North, East and Central India rather than spread thin nationally.</li>
+    <li><strong>Small, cheap store formats.</strong> The typical store is around <strong>8,000 sq ft</strong> — big enough for a full family assortment, small enough to keep rent, fit-out and staffing low. In small towns those costs are a fraction of metro levels, which is precisely what lets the store break even on low-ticket sales.</li>
+    <li><strong>Private label at the core.</strong> Roughly half of V-Mart's apparel is its own brand, designed and sourced in-house. Own-label product carries a better margin than reselling others' brands and gives V-Mart control over price points, design and inventory — the one profit lever that doesn't depend on the weather or a landlord.</li>
+    <li><strong>A lean, fashion-aware supply chain.</strong> Value fashion is unforgiving: buy the wrong styles or too much of them, and you are left discounting stale stock, which destroys the thin margin. So the chain lives on tight buying, quick replenishment from regional warehouses, and hard discipline on markdowns and inventory. Working capital is mostly tied up in stock, so inventory management <em>is</em> the balance sheet.</li>
+  </ul>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">How a rupee moves through V-Mart — from vendor to small-town basket</div>
+    <div class="flow-row">
+      <div class="node epc"><div class="ntag">Stage 1 · Source</div><div class="nname">Private label + brands</div><div class="nwho">Own designs and vendor buys, sourced cheaply for low price points.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Stage 2 · Distribute</div><div class="nname">Regional warehouses</div><div class="nwho">Cluster logistics feed nearby stores fast and cheaply.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Stage 3 · Sell</div><div class="nname">~8,000 sq ft store</div><div class="nwho">A whole family's needs under one roof in a Tier-3/4 town.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Stage 4 · Repeat</div><div class="nname">The aspirational shopper</div><div class="nwho">Low ticket, high frequency, festival- and season-led.</div></div>
+    </div>
+    <div class="flow-note">Every stage is tuned for one goal: to make selling a few-hundred-rupee shirt profitable. Cheap sourcing, cheap logistics and a cheap store are not cost-cutting — they are the business model.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why clustering, not scattering, is the quiet advantage</div>
+    <p>A national chain that opens one store here and one store there pays full freight for supply chain and marketing at every point and builds no local density. V-Mart's clustering flips that. By blanketing a region before moving on, it turns fixed costs — a warehouse, a delivery route, a regional ad campaign — into shared costs across dozens of nearby stores, and it makes the brand locally famous in a way a lone outlet never could. The cost of the model, and it is a real one, is geographic concentration: V-Mart's fortunes are tied heavily to the farm economy and festive spending of the northern and eastern belt it dominates, and a weak agricultural year there hits harder than it would a nationally spread chain.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>What's in the basket: apparel, then everything else</h2></div>
+  <p class="part-sub">A fashion business with a general-merchandise and grocery tail — and why the mix matters.</p>
+
+  <p class="lead">V-Mart calls itself a department store, and the label is accurate: walk in and you'll find far more than clothes. But make no mistake about where the money is. This is fundamentally an <strong>apparel</strong> business with a supporting cast of non-apparel and everyday groceries that exist mainly to pull footfall and fatten the basket.</p>
+
+  <div class="chart">
+    <div class="c-title">FY26 revenue mix — apparel carries the store</div>
+    <div class="c-sub">Approximate share of revenue by category</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Apparel<small>the core, private-label heavy</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~79%</div></div>
+      <div class="bar-row"><div class="blab">FMCG / grocery<small>the footfall magnet</small></div><div class="track"><span class="fill om" style="width:13.9%"></span></div><div class="bval">~11%</div></div>
+      <div class="bar-row"><div class="blab">Non-apparel<small>kitchenware, general merch</small></div><div class="track"><span class="fill epc" style="width:12.7%"></span></div><div class="bval">~10%</div></div>
+    </div>
+    <div class="legend"><span>Apparel is roughly four-fifths of the business and where the margin lives; non-apparel and FMCG are lower-margin but bring families through the door more often. Shares approximate, FY26.</span></div>
+  </div>
+
+  <h3>The three shelves of the store</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Apparel (~79%)</span></strong> — menswear, womenswear, kidswear and footwear, roughly half of it V-Mart's own private label. This is the profit engine: the best margins, the fashion appeal that defines the brand, and the category where getting the buying right or wrong makes or breaks the season.</li>
+    <li><strong><span class="chain-om">FMCG &amp; grocery (~11%)</span></strong> — everyday packaged foods and household staples. The margin here is slim, but that is not the point: groceries give a family a reason to visit more often than they'd buy clothes, and every extra trip is a chance to sell an apparel item too. It is a footfall subsidy, not a profit centre.</li>
+    <li><strong><span class="chain-epc">Non-apparel / general merchandise (~10%)</span></strong> — kitchenware, home and general goods, plus accessories. Higher ticket than groceries, useful for basket-building around weddings and festivals, and part of the "whole family, one trip" promise.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the low-margin groceries earn their shelf space</div>
+    <p>It looks odd for a fashion retailer to give floor space to thin-margin soap and biscuits. The logic is footfall arithmetic. A family buys clothes a handful of times a year, but buys groceries constantly — so the FMCG corner turns an occasional apparel shopper into a regular visitor. Each of those extra visits is an opportunity to sell a higher-margin garment on impulse. The grocery aisle doesn't need to make money on its own; it needs to keep the store busy between festivals so that the apparel racks catch a shopper who came in for something else. Get that traffic-and-conversion loop right and the whole basket grows; the reported number that captures whether it's working is average bill value, which V-Mart has been pushing up.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The company, the founder, and the two bolt-ons</h2></div>
+  <p class="part-sub">A founder-run business that grew organically for two decades, then bought two very different things.</p>
+
+  <p class="lead">V-Mart is a founder's company in the fullest sense. <strong>Lalit Agarwal</strong> built it store by store from the early 2000s, took it public in 2013, and still leads it — and the promoter family remains the anchor shareholder. For most of its life the story was simple and organic: open more small-town stores, do it well, compound. Then, in the early 2020s, it made two acquisitions that widened both its map and its risk profile.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2002</div><div class="ev">Lalit Agarwal opens the first V-Mart store, launching a value-fashion department-store chain aimed at India's under-served small towns.</div></li>
+    <li class="major"><div class="yr">2013</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE (BSE code 534976; ISIN INE665J01013). Over the following years V-Mart compounds organically into a leading Tier-3/4 value retailer across North, East and Central India.</div></li>
+    <li class="major"><div class="yr">2021</div><div class="ev">Acquires the <strong>"Unlimited"</strong> value-retail chain from <strong>Arvind Lifestyle Brands</strong> for ~₹150 Cr — its entry into <strong>South (and West) India</strong>, a region V-Mart had never operated in.</div></li>
+    <li class="major"><div class="yr">2022</div><div class="ev">Acquires the online value-fashion marketplace <strong>LimeRoad</strong> in a distress deal (~₹31 Cr up front, with plans to invest up to ~₹150 Cr) — a bet on an omni-channel future.</div></li>
+    <li><div class="yr">FY23–FY24</div><div class="ev">A rough stretch: cotton-price inflation, soft small-town demand and the drag of integrating two acquisitions squeeze the business. <strong>FY24 posts a net loss of ~₹97 Cr.</strong></div></li>
+    <li class="major"><div class="yr">FY25</div><div class="ev"><strong>Turnaround:</strong> revenue ~₹3,254 Cr (+17%), EBITDA up sharply, and a return to profit at <strong>~₹46 Cr</strong> as costs normalise and LimeRoad losses start shrinking.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Recovery consolidates: revenue ~₹3,804 Cr (+16%), EBITDA ~₹513 Cr (+36%), net profit ~₹124 Cr (+171%); a ~₹1/share dividend recommended — the first in years. Network crosses <strong>600 stores</strong> across 338+ cities and 29 states.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Founder-promoter:</strong> Lalit Agarwal and family remain the controlling shareholders, with a substantial promoter holding. This is a promoter-led operator, not a professionally-diffused board company — a strength (long-term, hands-on, deeply knows the small-town customer) and a watch-item (key-person dependence, and the founder's appetite for acquisitions like LimeRoad). Confirm the exact promoter percentage in the latest shareholding filing.</li>
+    <li><strong>Three moving parts under one roof:</strong> the group now spans the <strong>core V-Mart chain</strong> (North/East/Central), the acquired <strong>Unlimited</strong> chain (South/West), and the digital <strong>LimeRoad</strong> marketplace. Each has a different margin profile, growth rate and maturity — which is why headline group numbers can hide as much as they reveal (sections 06 and 07).</li>
+  </ul>
+
+  <div class="note gold"><b>Do not confuse V-Mart with V2 Retail.</b> They are two separate listed companies with similar names, similar value-fashion positioning and a shared corporate lineage, and they are routinely mixed up. <strong>V-Mart Retail (NSE: VMART, this company)</strong> is the larger, deeper Tier-3/4 chain covered here. <strong>V2 Retail</strong> is a distinct, smaller value-fashion retailer with its own listing and strategy. Any figure in this primer refers to V-Mart Retail only.</div>
+</section>
+
+<!-- 05 — BESPOKE crux: the one-store math -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The one-store math: read a single store, read the company</h2></div>
+  <p class="part-sub">The most useful lens on V-Mart — and it is specific to a low-price, small-format chain.</p>
+
+  <p class="lead">Most people value a retailer off the group revenue line. For V-Mart that is the wrong altitude. The company is not really one ₹3,800-crore business; it is <strong>one ~8,000-square-foot store, built roughly 600 times</strong>, at different ages of maturity. Learn what a single store costs to open, how much it sells, and how it ripens over three or four years, and the whole enterprise resolves into that one repeated unit. Here is the shape of it.</p>
+
+  <div class="chart">
+    <div class="c-title">The store engine — how a value-retail rupee is made</div>
+    <div class="c-sub">Approximate, illustrative of the model; a store's economics, not group totals</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue per sq ft<small>a mature store, per year</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~₹9–10k</div></div>
+      <div class="bar-row"><div class="blab">Gross margin kept<small>after cost of goods</small></div><div class="track"><span class="fill wtg" style="width:33%"></span></div><div class="bval">~30–34%</div></div>
+      <div class="bar-row"><div class="blab">Store-level margin<small>after rent, staff, power</small></div><div class="track"><span class="fill gold" style="width:14%"></span></div><div class="bval">~12–14%</div></div>
+    </div>
+    <div class="legend"><span>Roughly a third of each rupee survives cost of goods; store-level running costs take most of the rest; after head office, LimeRoad, depreciation, interest and tax, ~3% reaches the bottom line. The gap between the ~30% gross and the ~3% net is the whole operating challenge. Figures approximate/illustrative.</span></div>
+  </div>
+
+  <p>Now add the dimension that matters most: <strong>time</strong>. A brand-new V-Mart store does not open at full throttle. It takes roughly three to four years to mature — to build local awareness, to be discovered by the whole family, to lift its sales-per-square-foot toward the level of an established store. A chain expanding fast is therefore always carrying a load of young, below-potential stores that dilute the average. That is why <strong>same-store sales growth</strong> (which measures only the seasoned stores) tells you something the revenue line cannot: whether the mature base is healthy, or whether growth is just new stores papering over stale old ones.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits a small-format value chain: bill value × footfall × conversion, times a maturing store count</div>
+    <p>Forget "revenue grew 16%." The number that actually runs V-Mart is <strong>(average bill value × footfall × conversion)</strong> at the store, multiplied across a fleet of stores each sitting somewhere on a three-to-four-year maturation curve. Every one of those small levers is visible and reported: in recent quarters V-Mart pushed <strong>average bill value up ~18%</strong> and <strong>footfalls up ~39%</strong>. When those two rise together, the thin per-store margin fattens and the operating leverage — a mostly-fixed store cost spread over more sales — flows straight to profit. When festive footfall disappoints or discounting has to prop up bill value, the same leverage runs in reverse and the ~3% net margin can vanish. V-Mart's whole year is decided at the level of a single till, and then multiplied 600 times.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~8,000</div><div class="msl">Sq ft of a typical store — small, cheap, a whole-family assortment</div></div>
+    <div class="ms gold"><div class="msv">~18%</div><div class="msl">Recent rise in average bill value — the basket getting bigger per trip</div></div>
+    <div class="ms green"><div class="msv">~39%</div><div class="msl">Recent rise in footfalls — more visits, the raw fuel of the model</div></div>
+  </div>
+
+  <p>This is why the group revenue line can mislead. Open enough new stores and revenue climbs even if the mature base is stagnating; slow store openings and revenue growth cools even if every seasoned store is thriving. For a fast-expanding, low-margin chain, the reads that matter are store-level: sales density, the maturation ramp, bill value, footfall, and above all same-store growth. Hold that lens for the rest of the primer.</p>
+</section>
+
+<!-- 06 — Unlimited: the South engine -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Unlimited: the bought-in South chain that now outruns the core</h2></div>
+  <p class="part-sub">A ₹150-crore acquisition that opened a new region — and, unexpectedly, became the faster horse.</p>
+
+  <p class="lead">For nearly twenty years V-Mart was a North-East-Central India story. It had no presence in the South. In 2021 it bought one, in a single move: the <strong>"Unlimited"</strong> value-retail chain, acquired from Arvind Lifestyle Brands for roughly <strong>₹150 Cr</strong>. Overnight, V-Mart had a stable of stores and a customer base in South and West India — geographies its cluster-by-cluster organic model would have taken a decade to reach.</p>
+
+  <p>Unlimited's stores and shopper skew a little differently from the core V-Mart — a somewhat different format and regional taste — but the underlying logic is the same value-fashion play. The strategic prize was a <strong>quick, wide footprint</strong> in untapped markets, bought rather than built. The early years were messy: integrating an acquired chain, fixing its cost base and folding it into V-Mart's supply chain were part of what dragged the group through the difficult FY23–FY24 stretch.</p>
+
+  <div class="chart">
+    <div class="c-title">Unlimited vs the core — the acquired chain accelerating harder</div>
+    <div class="c-sub">Recent-quarter same-store sales growth, approximate</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Unlimited (South/West)<small>the bolt-on</small></div><div class="track"><span class="fill spec" style="width:100%"></span></div><div class="bval">~13%</div></div>
+      <div class="bar-row"><div class="blab">Core V-Mart<small>North/East/Central</small></div><div class="track"><span class="fill brand" style="width:46%"></span></div><div class="bval">~6%</div></div>
+    </div>
+    <div class="legend"><span>In recent quarters Unlimited's same-store growth has run roughly double the core's, with its revenue and store-level profit also growing faster — the acquired chain maturing into the faster-growing half of the group. Approximate, recent quarter.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The genuine surprise: the acquisition is now the faster-growing horse</div>
+    <p>Here is what a smart generalist would not expect. Acquisitions in retail usually disappoint — the bought-in chain is a drag, a culture clash, a distraction from the healthy core. For a while Unlimited looked exactly like that. But as the integration bedded in, the maths inverted: in recent quarters <strong>Unlimited has been growing its same-store sales at roughly double the pace of V-Mart's own core</strong>, with faster revenue and store-profit growth to match. The chain V-Mart rescued is now pulling the group along. Part of that is a lower base and the freshness of turnaround; part is genuine — the South offered denser, wealthier catchments and a store base that responded well to V-Mart's disciplines. Either way, the "problem acquisition" has quietly become one of the better reasons to like the story — provided the pace holds as the base normalises.</p>
+  </div>
+
+  <p>The read-through matters for how you value the group. If Unlimited keeps compounding faster than the core, the blended growth rate is better and more durable than the mature northern base alone would suggest — and V-Mart has, in effect, a second geographic engine it can push capital into. If Unlimited's outperformance was mostly a low-base rebound, the group settles back toward the core's more pedestrian small-town growth. Watching Unlimited's same-store number decouple from, or converge with, the core's is one of the more revealing things an investor can track here.</p>
+</section>
+
+<!-- 07 — LimeRoad: the online bet -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>LimeRoad: the online bet that had to be shrunk</h2></div>
+  <p class="part-sub">A cheap, ambitious digital purchase that became a loss to manage rather than a growth story.</p>
+
+  <p class="lead">In 2022 V-Mart did something out of character. A disciplined, unglamorous, store-by-store operator bought an <strong>e-commerce marketplace</strong> — <strong>LimeRoad</strong>, an online value-fashion platform — in a distress deal for a small up-front sum (~₹31 Cr), with plans to invest up to ~₹150 Cr to scale it. The idea was omni-channel: pair the physical small-town stores with a digital storefront and reach value shoppers online. The reality proved harder.</p>
+
+  <p>LimeRoad has been a <strong>loss-maker</strong>, and its losses were part of what pushed the group into the red in FY24. In the years since, management's posture has shifted from "scale it" toward "<strong>rationalise it</strong>" — cutting cash burn, narrowing focus, and treating the platform as a controlled experiment rather than a growth engine to be fed at any cost. The losses have been steadily shrinking, but breakeven has kept receding, and it remains a drag on group profit rather than a contributor.</p>
+
+  <div class="chart">
+    <div class="c-title">LimeRoad — a loss being managed down, not a business breaking even</div>
+    <div class="c-sub">Approximate quarterly loss, illustrative of the direction of travel</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Earlier quarter<small>a year ago</small></div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">~₹4.6 Cr</div></div>
+      <div class="bar-row"><div class="blab">Recent quarter<small>~39% lower</small></div><div class="track"><span class="fill epc" style="width:61%"></span></div><div class="bval">~₹2.8 Cr</div></div>
+    </div>
+    <div class="legend"><span>The quarterly loss has been cut by roughly 39% year-on-year as the platform is rationalised — real progress, but still a loss, and breakeven has repeatedly been pushed out. Figures approximate.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why a shrinking loss is the right way to read LimeRoad</div>
+    <p>It is tempting to score LimeRoad as a failed acquisition, and on its original ambition it underwhelmed. But the more useful frame is corporate discipline. V-Mart bought the platform cheaply, discovered that scaling online value-fashion profitably is brutally hard — as almost every Indian value e-tailer has — and then, crucially, <em>chose to contain the bleeding rather than double down</em>. Each quarter the loss narrows is a quarter that stops being a headwind to group profit; the day it reaches zero, an entire drag on earnings simply disappears. So the number to watch is not LimeRoad's revenue, which barely matters to the group — it is the size and trajectory of its loss. A management team that keeps shrinking that line is protecting the core; one that reopens the spending taps to chase online growth would be re-introducing exactly the risk that hurt FY24.</p>
+  </div>
+
+  <div class="note gold"><b>The honest read:</b> LimeRoad is best understood today as a contained liability rather than an asset — a small, still-loss-making platform whose value to shareholders lies mainly in how quickly and cleanly its losses are extinguished, not in any digital growth it might unlock. If it can be brought to breakeven or quietly wound down, the group's earnings quality improves at a stroke; if it starts consuming capital again, it becomes the clearest sign that acquisition discipline has slipped.</div>
+</section>
+
+<!-- 08 — SSSG & the Zudio question -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>Same-store growth and the Zudio question</h2></div>
+  <p class="part-sub">The one number that runs a retailer — and the competitor everyone worries about.</p>
+
+  <p class="lead">If you could track only one figure on V-Mart, it would be <strong>same-store sales growth</strong>. It filters out the flattering effect of simply opening stores and asks the hard question: are the shops V-Mart already runs selling more this year than last? Through the tough patch, core SSSG sagged; through the FY25–FY26 recovery it turned positive again, running in the mid-to-high single digits in the core with Unlimited stronger still. The direction of that number, quarter by quarter, is the truest scoreboard the company has.</p>
+
+  <p>Hanging over that number is a name: <strong>Zudio</strong>, the fast-fashion format of Tata's Trent, which has rolled out at ferocious speed and redefined value-fashion pricing with its sharp sub-₹1,000 wardrobe. Zudio is the competitor V-Mart is most often asked about — and the real answer is more nuanced than the headlines suggest.</p>
+
+  <div class="plain">
+    <div class="ptag">The counter-intuitive competitive truth about Zudio and V-Mart</div>
+    <p>The instinct is that Zudio simply eats V-Mart. Look closer and the overlap is partial. Zudio's expansion has concentrated on metros, cities and larger Tier-2 towns — high-footfall catchments that justify its store economics. V-Mart's heartland is <em>deeper</em>: the Tier-3 and Tier-4 towns where Zudio, for now, largely does not go, and where V-Mart's true competition remains the unorganised local bazaar. So across most of V-Mart's estate, the pressing rival is not Zudio at all. But where the two <em>do</em> collide — in the bigger towns V-Mart also wants to grow into — Zudio's scale, buying power and brand pull genuinely hurt, capping V-Mart's pricing and pace. The competitive question, then, isn't "does Zudio beat V-Mart?" It is "how far up into V-Mart's larger-town ambitions does Zudio reach before V-Mart's small-town moat runs out?" That boundary is where the two stories actually meet.</p>
+  </div>
+
+  <p>The wider backdrop is demand. Small-town discretionary spending has been patchy through this period — squeezed by food inflation and uneven rural incomes — which pressured value-fashion volumes industry-wide, not just at V-Mart. A genuinely strong festive-and-wedding season lifts everyone; a weak one leaves stock stranded and forces the discounting that eats the thin margin. Competition sets the ceiling on what V-Mart can charge and how fast it can grow in contested towns; demand sets the floor on whether its stores are busy at all. Same-store growth is where both forces show up first.</p>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The rivals: who else wants the value shopper</h2></div>
+  <p class="part-sub">A crowded, well-funded field — but thinner the deeper into small-town India you go.</p>
+
+  <p class="lead">Value retail in India has drawn deep-pocketed players, because the prize — bringing hundreds of millions of aspirational shoppers into organised retail — is enormous. V-Mart competes against far larger and better-capitalised rivals in the contested towns, and against a fragmented long tail of regional and unorganised sellers in its heartland. Its defence is depth, not scale.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs V-Mart Retail</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">V-Mart Retail</td><td>Deep Tier-3/4 value-fashion department stores; North/East/Central core plus Unlimited in South/West; private-label heavy</td><td><em>This company.</em> The specialist in the smallest towns, where its store is often the first organised option — competing more with the bazaar than with a chain.</td></tr>
+      <tr><td class="t-strong">Trent — Zudio (Tata)</td><td>The fast-fashion disruptor; explosive rollout, sharp sub-₹1,000 pricing, deep pockets, premium market valuation</td><td>The most-watched threat. Concentrated in metros and larger towns; genuinely pressures V-Mart where they overlap, but largely absent from V-Mart's deepest catchments — for now.</td></tr>
+      <tr><td class="t-strong">Reliance Trends / Reliance Retail</td><td>Reliance's apparel formats within India's largest retail empire; vast reach and buying power</td><td>A scale competitor spreading into smaller towns; can out-source and out-spend V-Mart, but does not match its Tier-3/4 store density.</td></tr>
+      <tr><td class="t-strong">Style Union, Vishal Mega Mart, City Kart &amp; regional chains</td><td>Value department-store and apparel formats, several strong in specific regions</td><td>Direct overlap in parts of V-Mart's belt; the fragmented middle of the market where local knowledge and cost decide who wins a town.</td></tr>
+      <tr><td class="t-strong">The unorganised bazaar</td><td>Independent local shops, weekly markets and unbranded stockists — still the majority of small-town apparel</td><td>V-Mart's <em>real</em> competition across most of its estate. Beating it isn't about price wars — it's about offering fixed prices, choice and a modern store the bazaar can't.</td></tr>
+      <tr><td class="t-strong">V2 Retail</td><td>A separate, smaller listed value-fashion retailer — frequently confused with V-Mart</td><td>Not the same company. A distinct competitor in the value space, noted here only to keep the two apart.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two things define this contest. First, V-Mart is fighting on two fronts at once: against giants like Zudio and Reliance in the bigger, contested towns, and against the unorganised bazaar in its small-town core. It cannot out-scale the giants, so its edge has to be depth — reaching towns they find too small, and owning the customer there first. Second, in value retail the winner is usually the lowest-cost, best-buying operator, because everyone is selling similar product at similar low prices. That is why V-Mart's private-label mix, its cheap store format and its cluster logistics matter so much: in a price-flat market, cost position <em>is</em> competitive advantage. The danger is the day a Zudio or a Reliance decides V-Mart's deeper towns are worth the trip too.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A real recovery on a demanding multiple — the debate is durability of same-store growth, not cheapness.</p>
+
+  <p class="lead">FY26 confirmed the turnaround: revenue up ~16%, EBITDA up ~36%, and net profit tripling to ~₹124 Cr, capped by the first dividend in years. But V-Mart does not trade like a recovered value stock — it trades on a rich, growth-style earnings multiple, because the market is paying for the long small-town runway and the operating leverage a low-margin chain throws off when same-store growth is good. The question its price poses is not whether the shares are cheap; it is whether same-store growth can stay strong enough, for long enough, to justify the rating.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue — the recovery in the top line</div>
+    <div class="c-sub">Revenue from operations, ₹ Crore</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:73.2%"></span></div><div class="bval">~2,786</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>+17%</small></div><div class="track"><span class="fill wtg" style="width:85.5%"></span></div><div class="bval">~3,254</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>+16%</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~3,804</div></div>
+    </div>
+    <div class="legend"><span>Two years of mid-teens growth, driven by both new stores and recovering same-store sales. But revenue alone flatters a fast-expanding chain — read it with the same-store number and the maturing store base.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Net profit — a tripling off a loss-making base</div>
+    <div class="c-sub">Net profit / (loss), ₹ Crore — note the swing from red</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24<small>net loss</small></div><div class="track"><span class="fill bad" style="width:78%"></span></div><div class="bval">~(97)</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>back to profit</small></div><div class="track"><span class="fill gold" style="width:37%"></span></div><div class="bval">~46</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>+171%</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~124</div></div>
+    </div>
+    <div class="legend"><span>The bottom line swung from a ~₹97 Cr loss to a ~₹124 Cr profit in two years — the vivid illustration of how violently a thin-margin retailer's profit moves on small changes in cost and same-store growth. Bars scaled by magnitude; FY24 is a loss.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">EBITDA margin — operating leverage doing its work</div>
+    <div class="c-sub">Reported EBITDA margin, %; note the Ind AS 116 lease effect below</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:56.6%"></span></div><div class="bval">~7.7%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill epc" style="width:85.3%"></span></div><div class="bval">~11.6%</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~13.6%</div></div>
+    </div>
+    <div class="legend"><span>Margin nearly doubled off the FY24 low as sales recovered over a mostly-fixed store cost base. Reported EBITDA margin is flattered by lease accounting (Ind AS 116, which moves store rent out of operating cost); the true, pre-lease margin is meaningfully lower. Read the trend, not the absolute level.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~38×</div><div class="msl">Trailing P/E (mid-2026) — a growth-style multiple on a thin, recovering profit, not a value rating</div></div>
+    <div class="ms"><div class="msv">~3%</div><div class="msl">Net margin — razor-thin by design; every point of same-store growth matters</div></div>
+    <div class="ms green"><div class="msv">~₹1/sh</div><div class="msl">FY26 dividend — the first in years, a signal the recovery is real</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: same-store sales growth, read with store maturation</div>
+    <p>At ~38× earnings on a ~3% net margin, V-Mart is priced for the recovery to keep compounding — so the metric that proves or breaks the case is <strong>same-store sales growth</strong>, tracked quarter by quarter for the core and for Unlimited, and read alongside two companions: <strong>store maturation</strong> (are the young stores ramping toward the mature base, or stalling?) and the <strong>LimeRoad loss line</strong> (is the last drag on earnings disappearing?). Because the margin is so thin, same-store growth is not one input among many — it is the lever that decides whether operating leverage flows to profit or drains away. If core SSSG holds mid-single-digits or better while Unlimited stays hot and LimeRoad reaches breakeven, the thin margin fattens and the multiple is defensible. If small-town demand softens or Zudio pushes deeper and same-store growth stalls, that ~3% margin can evaporate and a 38× multiple compresses toward what a thin retailer earns. Bill value times footfall times conversion, across a maturing fleet — that is the scoreboard.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results and market data cross-checked across broker notes and databases; the <b>per-store economics, category mix, SSSG, Unlimited/LimeRoad splits, EBITDA margin and net margin</b> are <b>approximate</b> (derived, rounded, or lease-accounting-affected), and market cap/P/E move daily. FY26 revenue is reported at ~₹3,804 Cr (some broker notes cite ~₹3,789 Cr). Verify against the company's filings and the latest shareholding pattern before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A recovered small-town specialist on a big multiple — asked whether same-store growth can keep it there.</p>
+
+  <p class="lead">V-Mart enters FY27 in its best shape in years: a network past 600 stores, a recovered core, an Unlimited chain growing faster than expected, LimeRoad losses shrinking, and a dividend back on the table. What no value retailer can promise is the two things that decide everything — that small-town discretionary demand stays firm, and that the larger, richer rivals do not push down into its deeper towns faster than it can lock in the customer. That is the frame for both cases.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>A long, under-organised runway</strong> — small-town apparel is still mostly unorganised; V-Mart is the deepest-reaching value chain, converting bazaar shoppers with little chain competition in its core.</li>
+        <li><strong>Operating leverage on the way up</strong> — with a mostly-fixed store cost base, recovering same-store growth flows powerfully to profit, as FY26's tripling showed.</li>
+        <li><strong>Two engines now, not one</strong> — Unlimited's faster growth gives V-Mart a second geographic engine in the South/West, and capital to feed it.</li>
+        <li><strong>Self-help levers it controls</strong> — a rising private-label mix, higher average bill value, and shrinking LimeRoad losses each lift earnings quality without waiting on the weather.</li>
+        <li><strong>Founder-led focus</strong> — a hands-on promoter who knows the small-town customer intimately and has re-imposed discipline after the FY24 stumble.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Priced for durable growth</strong> — ~38× earnings on a ~3% net margin leaves the multiple leaning entirely on same-store growth staying strong.</li>
+        <li><strong>Zudio &amp; deep-pocketed rivals</strong> — where Trent's Zudio and Reliance overlap V-Mart's larger-town ambitions, they cap pricing and pace; a push into its deeper towns would hurt.</li>
+        <li><strong>Thin-margin fragility</strong> — cotton/input inflation, a weak festive season, or forced discounting can flip the ~3% margin negative fast, as FY24 proved.</li>
+        <li><strong>Demand &amp; geographic concentration</strong> — heavy exposure to North/East/Central farm-economy spending makes a weak rural year bite harder than for a national chain.</li>
+        <li><strong>Acquisition &amp; execution risk</strong> — LimeRoad is still a loss; a relapse into online spending, or Unlimited's outperformance fading to a low-base blip, would dent the story.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>V-Mart Retail is a disciplined small-town value-fashion operator that stumbled hard in FY24, has recovered convincingly, and is now priced as if the recovery is the new normal. The self-help is real — a richer private-label mix, a bigger basket, a faster-growing South, a fading online loss — and each strand genuinely improves the earnings it lives on. But the model's defining feature is its thinness: roughly three paise of every rupee reaches the bottom line, so the whole enterprise turns on whether a few hundred maturing stores can keep selling a little more each year to a small-town shopper whose wallet the company does not control. The next test is concrete and datable: <strong>whether core same-store sales growth holds through the FY27 festive and wedding season while Unlimited stays ahead and LimeRoad's loss reaches zero.</strong> Clear that bar and the operating leverage justifies the rating; miss it, and a 38× multiple on a 3% margin re-rates quickly toward what a thin, cyclical small-town retailer usually earns.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>V-Mart Retail Ltd — FY26 audited results &amp; investor communication (year ended Mar 2026), via BSE/NSE disclosures and company filings.</li>
+    <li>BSE India — V-Mart Retail Ltd stock page, scrip code <strong>534976</strong> (ISIN INE665J01013); NSE symbol VMART.</li>
+    <li>Screener.in / Simply Wall St / Trendlyne — V-Mart Retail financials, market cap (~₹4,800 Cr), P/E, revenue and margin history.</li>
+    <li>Multibagg / ScanX — "V-Mart Retail FY26: Revenue ₹3,804 Cr, net profit ~₹124 Cr, 10% dividend" and Q4 FY26 coverage.</li>
+    <li>Motilal Oswal &amp; Axis Direct — V-Mart Retail Q4 FY25, Q3/Q4 FY26 and Q1 FY27 result updates (SSSG, bill value, footfall, EBITDA, store adds).</li>
+    <li>Business Standard — "V-Mart Retail gains after Q1 PAT climbs 177% YoY"; Arvind Fashions to sell Unlimited to V-Mart.</li>
+    <li>Indian Retailer / Inc42 — V-Mart's acquisition of Arvind's "Unlimited" (South India entry) and the LimeRoad distress acquisition.</li>
+    <li>Images BoF / FashionNetwork India — "Lalit Agarwal's math with 600 V-Mart stores"; Tier-3/4 growth and store economics.</li>
+    <li>ScanX / Indian Retailer — V-Mart opens 600th store, expanding to 338+ cities across 29 states/UTs.</li>
+    <li>Company filings &amp; annual report — private-label share, category mix (apparel/non-apparel/FMCG), average store size (~8,000 sq ft), promoter holding.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several figures (notably per-store economics, category mix, SSSG, the Unlimited and LimeRoad splits, EBITDA/net margin and valuation multiples) are derived, rounded, or affected by lease accounting. This company (V-Mart Retail, NSE: VMART) is distinct from the separately-listed V2 Retail. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "VMART";
+  const COMPANY_SLUG = "v-mart-retail";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
