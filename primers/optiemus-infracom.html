@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optiemus Infracom — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F5F3;
+    --paper-2:#FAFCFB;
+    --card:#FFFFFF;
+    --ink:#151E1A;
+    --ink-soft:#556059;
+    --ink-faint:#87938C;
+    --brand:#155E44;          /* circuit-board green */
+    --brand-bright:#1FA06B;   /* bright PCB green */
+    --gold:#D98A2B;           /* warm amber - accent / warmth */
+    --wtg:#2B77C7;            /* tech-blue */
+    --epc:#4E9BE0;            /* light tech-blue */
+    --om:#23424F;            /* defence slate */
+    --spec:#2C9E77;          /* mid circuit-green */
+    --line:#D8DEDA;
+    --line-soft:#E6EAE7;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4F1EB;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F9F7;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E9EEEB;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#155E44,#1FA06B);}
+  .fill.gold{background:linear-gradient(90deg,#D98A2B,#E7A75C);}
+  .fill.wtg{background:linear-gradient(90deg,#2B77C7,#4E9BE0);}
+  .fill.om{background:linear-gradient(90deg,#23424F,#3A6070);}
+  .fill.spec{background:linear-gradient(90deg,#2C9E77,#46C093);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4a45,#56645e);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF3EE;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Contract electronics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> From phone shop to phone factory</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company, the JV &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The anchor-customer flywheel</a></li>
+    <li><a href="#p5"><span class="n">05</span> The margin ladder</a></li>
+    <li><a href="#p6"><span class="n">06</span> Defence &amp; strategic electronics</a></li>
+    <li><a href="#p7"><span class="n">07</span> PLI, Make in India &amp; China+1</a></li>
+    <li><a href="#p8"><span class="n">08</span> The working-capital reality</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: OPTIEMUS · BSE: 530135</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Optiemus Infracom, <em>the contract maker climbing the value ladder</em></h1>
+  <p class="dek">A ground-up walk through a Noida electronics-manufacturing-services company — how a firm that spent 25 years <em>selling</em> phones reinvented itself into one that <em>builds</em> them for other brands, why the whole investment case turns on whether it can earn more than a wafer-thin assembler's margin, and how India's Make-in-India push is handing a small player a shot at a business that dwarfs it.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹1,769 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹66 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹5,300 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+    <div class="cell"><div class="v">~6% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">28 Aug 2026</b> · source: FY26 results + Q1 FY27 (quarter ended Jun 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ~₹1,769 Cr (−6.4%), PAT ~₹66 Cr, EBITDA margin ~6%; Q1 FY27 revenue doubled to ~₹883 Cr on the AI+ smartphone order, but EBITDA margin fell ~210 bps to ~4.7% — the value-migration debate added throughout.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Optiemus Infracom is an <strong>electronics manufacturing services (EMS)</strong> company — a contract manufacturer that builds hardware <em>for other people's brands</em>. Through its principal operating subsidiary, <strong>Optiemus Electronics Ltd (OEL)</strong>, it assembles and increasingly designs smartphones, telecom and networking gear, true-wireless earbuds and smartwatches, IoT modules, and defence and strategic electronics — out of factories in Noida and elsewhere in Uttar Pradesh. It does not put its own logo on the box; it makes the box for the company that does. That is a fundamentally different business from a branded phone-maker, and it comes with a fundamentally different problem: EMS margins are thin, and the entire question is whether Optiemus can widen them.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It grew up as a distributor, not a manufacturer.</strong> For roughly 25 years Optiemus's core business was <em>distributing</em> mobile phones — Nokia, then Samsung, BlackBerry and others — across a sprawling network of branches, distributors and thousands of retail counters. The manufacturing arm is the second act: a 2016 joint venture with Taiwan's <strong>Wistron</strong> that turned a trading house into a factory owner. The same company that once sold you a Nokia now solders the board inside someone else's smartphone.</li>
+    <li><strong>Revenue is large but the profit is a sliver.</strong> FY26 revenue was ~<strong>₹1,769 Cr</strong>, yet net profit was only ~<strong>₹66 Cr</strong> and the EBITDA margin sat around <strong>6%</strong>. That is the EMS reality in one line: you handle a lot of value, you keep very little of it. Assembling a phone from parts someone else designed earns a few percent — the money in electronics lives in the brand, the chip, and the design, not the screwdriver.</li>
+    <li><strong>The bet is a step-change in scale and mix.</strong> A wave of new mandates — building <strong>AI+ smartphones</strong>, an export-focused JV with <strong>Nothing/CMF</strong>, IoT modules with <strong>Quectel</strong>, plus telecom and defence work — has revenue lurching upward. Q1 FY27 revenue more than <strong>doubled to ~₹883 Cr</strong>. Management guides to ~₹3,600 Cr in FY27 and ~₹6,000 Cr by FY29. The stock, near <strong>70×+ earnings</strong>, already prices that ramp — and its own results warn that doubling revenue can <em>shrink</em> the margin if it is only more low-value assembly.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Optiemus is a <strong>rented factory for the electronics industry</strong>. A brand — a phone company, a telecom-gear firm, a defence buyer — hands over a design and a purchase order, and Optiemus buys the parts, runs them down an assembly line, tests them, and ships finished units back under the customer's name. The work is real and the volumes are big, but the pay for pure assembly is small: a few rupees of profit on every hundred rupees of goods. The whole strategy is to stop being <em>only</em> the screwdriver — to make more of the components itself (glass, circuit boards), to design as well as build (ODM), and to win higher-value defence and networking work. If it succeeds, the same revenue earns much more. If it doesn't, it stays a high-volume, low-margin job that a bigger rival can undercut.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Contract electronics 101: where the money hides</h2></div>
+  <p class="part-sub">No engineering background needed — just the handful of terms that decide who keeps the profit.</p>
+
+  <p class="lead">Almost no consumer-electronics brand builds its own products anymore. Designing a phone and manufacturing it are two different skills, and the economics of factories — huge fixed cost, razor margins, relentless volume — sit uneasily inside a brand that wants to spend on marketing and R&amp;D. So brands <em>outsource the building</em>. The firms that take that work are EMS companies: they own the lines, the labour, the test rigs and the supply relationships, and they run them for a fee. To follow Optiemus, you need five ideas.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">EMS</td><td>"Electronics Manufacturing Services" — a contractor that builds electronic products for a brand that owns the design and the name. Optiemus's core business. The customer keeps the brand and most of the margin; the EMS firm keeps a slice for the manufacturing.</td></tr>
+      <tr><td class="t-strong">OEM vs ODM</td><td>An <strong>OEM</strong> job is "build to my design" — the brand hands over blueprints and Optiemus assembles. An <strong>ODM</strong> job is "design <em>and</em> build it for me" — Optiemus does the engineering too. ODM earns a materially higher margin because design is scarcer than assembly. Climbing from OEM toward ODM is the whole plan.</td></tr>
+      <tr><td class="t-strong">PCBA / SMT</td><td>The <strong>printed circuit board assembly</strong> — populating a bare board with chips and components on a <strong>surface-mount</strong> line. This is the technical heart of a device and a step up in value from final "box-build" assembly. Who does the PCBA captures more of the price.</td></tr>
+      <tr><td class="t-strong">BoM &amp; value-add</td><td>The <strong>bill of materials</strong> is what the parts cost. An EMS firm's real earnings are its <em>value-add</em> — revenue minus the pass-through cost of components. Because chips and displays are expensive and bought-in, reported revenue looks huge while the value Optiemus actually keeps is small.</td></tr>
+      <tr><td class="t-strong">PLI</td><td>The government's <strong>Production-Linked Incentive</strong> — a cash subsidy paid on incremental manufacturing, designed to pull electronics production into India. Optiemus won a mobile-phone PLI approval; the scheme is a direct tailwind to margins and to the case for building here at all.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The economics that decide everything: value-add, not revenue</div>
+    <p>Read an EMS company by its <strong>gross value-add and EBITDA margin</strong>, never by its top line. A phone might sell to the brand for ₹10,000, but ₹9,000-plus of that is chips, display, battery and casing that the EMS firm simply buys and passes through. Its own take might be a few hundred rupees. That is why an assembler doing ₹1,769 Cr of revenue nets only ~₹66 Cr: the revenue is mostly other people's components flowing through the books. It also means the lever that matters is <em>mix</em> — every job where Optiemus also makes the board, the glass, or the design keeps a bigger share of that ₹10,000. Volume alone just moves more parts through the same thin filter.</p>
+  </div>
+
+  <h3>Who buys EMS capacity</h3>
+  <ul class="clean">
+    <li><strong>Consumer brands</strong> — phone-makers, hearables and wearables names, appliance and gadget companies that want products built in India without owning a factory. Optiemus builds smartphones and earbuds for exactly these.</li>
+    <li><strong>Telecom &amp; networking firms</strong> — makers of routers, modules and communications gear needing localised, higher-reliability manufacturing.</li>
+    <li><strong>Defence, aerospace &amp; strategic buyers</strong> — where "made in India", security clearance and quality certification matter more than the lowest price. This is the highest-value, stickiest customer class, and a deliberate Optiemus target.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>From phone shop to phone factory: what Optiemus actually does</h2></div>
+  <p class="part-sub">Two businesses under one roof — a legacy distribution arm and the manufacturing engine that is now the story.</p>
+
+  <p class="lead">Optiemus is really two companies bolted together. The <strong>original</strong> one is a mobile-and-telecom <em>distribution and services</em> business — decades of moving handsets and accessories through the trade. The <strong>newer</strong> one, housed in Optiemus Electronics Ltd, is the <em>manufacturer</em>. The market cares almost entirely about the second, but the first is where the relationships, the working-capital muscle and the industry knowledge came from.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The EMS value chain — and where Optiemus is trying to reach</div>
+    <div class="flow-row">
+      <div class="node om"><div class="ntag">Stage 1 · Source</div><div class="nname">Buy the components</div><div class="nwho">Chips, displays, batteries, casings. Mostly pass-through cost — little margin here.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Stage 2 · PCBA</div><div class="nname">Build the board (SMT)</div><div class="nwho">Populate the circuit board. A real step up in value and skill.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Stage 3 · Assemble</div><div class="nname">Box-build &amp; test</div><div class="nwho">Assemble the finished device, run quality tests, pack. The volume job.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Stage 4 · Design/ODM</div><div class="nname">Design it too</div><div class="nwho">Own the engineering, not just the build — the highest-margin rung.</div></div>
+    </div>
+    <div class="flow-note">Pure box-build (Stage 3) is where most EMS revenue sits and where margins are thinnest. Optiemus's strategy is to push work leftward into components and PCBA and rightward into ODM design — both keep more of the device's price.</div>
+  </div>
+
+  <h3>The manufacturing menu, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Smartphones &amp; mobile devices</span></strong> — the volume backbone. Optiemus assembles handsets for brands under OEM contracts; recent wins include building <strong>AI+</strong> smartphones (Nxtquantum's brand) at Noida and the export-focused <strong>Nothing/CMF</strong> JV. High revenue, low margin unless the mix moves toward design and components.</li>
+    <li><strong><span class="chain-om">Hearables &amp; wearables</span></strong> — true-wireless earbuds (TWS) and smartwatches, an area where Optiemus became an early domestic manufacturing partner for brands such as Noise as India's earbud market exploded. Smaller-ticket devices, but faster-turning and a category where India localised early.</li>
+    <li><strong><span class="chain-epc">Telecom, networking &amp; IoT</span></strong> — routers, communications equipment and wireless modules (a partnership with <strong>Quectel</strong> to make IoT modules locally). Higher-value, reliability-driven work that leans on engineering more than cheap assembly.</li>
+    <li><strong><span class="chain-wtg">Components &amp; backward integration</span></strong> — most notably a tempered-glass and cover-glass line built with <strong>Corning</strong>, plus PCBA capability. Making the parts, not just fitting them, is how an assembler earns more per device.</li>
+    <li><strong>Defence &amp; strategic electronics</strong> — a deliberate push into products and sub-systems for defence, aerospace and strategic buyers, where "made in India" and certification command a premium and displace imports.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the distribution past still matters</div>
+    <p>It is tempting to treat the old trading business as dead weight, but it seeded three things the factory needs. <strong>Relationships</strong> — Optiemus already knew the brands, the component vendors and the channel from decades of selling phones. <strong>Working-capital experience</strong> — distribution is a low-margin, high-turnover game that teaches a company to manage inventory and receivables, exactly the discipline EMS demands. And <strong>credibility</strong> — a brand outsourcing its product wants a partner that understands the market, not just a shed with machines. The pivot from selling other firms' phones to building them is unusual, and that lineage is why it was even possible.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the JV, and who controls it</h2></div>
+  <p class="part-sub">A promoter-controlled group whose manufacturing lives in a partly-owned subsidiary.</p>
+
+  <p class="lead">Optiemus Infracom is a <strong>promoter-controlled</strong> company — the founding group holds roughly <strong>71%</strong>. But the piece investors are buying is largely the manufacturing subsidiary, <strong>Optiemus Electronics Ltd (OEL)</strong>, born in 2016 as a joint venture with Taiwan's <strong>Wistron Corporation</strong> — one of the world's large contract electronics manufacturers. Understanding that structure is half of understanding the stock.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1990s</div><div class="ev">Optiemus builds a mobile <strong>distribution</strong> business, becoming a major channel partner for Nokia and later Samsung, BlackBerry and others across India.</div></li>
+    <li class="major"><div class="yr">2016</div><div class="ev"><strong>Optiemus Electronics Ltd (OEL)</strong> is formed as a manufacturing joint venture with <strong>Wistron</strong> — the pivot from trading phones to building them begins.</div></li>
+    <li><div class="yr">2020</div><div class="ev">OEL is <strong>approved under the mobile-phone PLI scheme</strong>; scales true-wireless earbuds and wearables manufacturing as India's TWS market booms.</div></li>
+    <li><div class="yr">2022–2023</div><div class="ev">Tempered- and cover-glass line set up with <strong>Corning</strong> ("Engineered by Corning") in Noida — a first-of-its-kind facility in India and a move into components.</div></li>
+    <li class="major"><div class="yr">FY24–FY25</div><div class="ev">Revenue climbs from ~₹1,528 Cr to ~₹1,890 Cr; expands into telecom, networking, IoT and defence/aerospace work; positions as a broad EMS player.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue dips ~6% to ~₹1,769 Cr but PAT edges up to ~₹66 Cr; signs a run of new mandates — <strong>AI+</strong> smartphones, a <strong>Nothing/CMF</strong> export JV, <strong>Quectel</strong> IoT modules.</div></li>
+    <li class="major"><div class="yr">Q1 FY27</div><div class="ev">Revenue more than <strong>doubles to ~₹883 Cr</strong> as the AI+ order ramps; a warrant conversion adds ~₹38 Cr of equity. Margin, though, slips — the value-migration test is on.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the founding group holds roughly <strong>71%</strong> (about 71.4% at Aug 2026) — a tightly-held company with limited free float, which amplifies price moves in both directions. Investors should track any promoter pledging directly in the shareholding filings.</li>
+    <li><strong>The Wistron JV (OEL):</strong> the manufacturing is done inside <strong>Optiemus Electronics Ltd</strong>, the JV with Wistron. This matters because the value an investor in the <em>parent</em> captures depends on how much of OEL the parent owns and how profits are shared — the factory and the listed shell are not one and the same pocket. Read the group's economic interest in OEL, not just headline consolidated revenue.</li>
+    <li><strong>Capital:</strong> book value near <strong>₹87.6</strong> per share and a recent <strong>warrant conversion</strong> (~₹38.5 Cr raised in mid-2026) modestly strengthened equity to fund the ramp. The company has also revised/withdrawn an earlier subsidiary-investment plan under SEBI rules — a reminder that capital allocation here is still being actively reshaped.</li>
+  </ul>
+
+  <div class="note gold"><b>The structure matters because the profit-sharing is not the whole company:</b> Optiemus Infracom is the listed holding entity, but the engine — the JV with Wistron — sits one level down in OEL. When you value the parent, be explicit about how much of OEL's earnings flow up to it versus stay with the JV partner. A booming factory only helps the parent's shareholders in proportion to what the parent actually owns of it.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The anchor-customer flywheel</h2></div>
+  <p class="part-sub">In EMS, the order book <em>is</em> the customer list — and Optiemus just added several.</p>
+
+  <p class="lead">A contract manufacturer with no customers is an empty shed. Its entire value is the set of brands that have chosen to build with it, because winning an anchor customer means committed volume, learning-curve gains, and a reference that wins the next one. Optiemus's recent story is a string of exactly these wins — and it is why revenue is suddenly lurching, even as margins wobble.</p>
+
+  <p>The effect on a small firm is dramatic. Consolidated revenue more than <strong>doubled year-on-year in Q1 FY27 to ~₹883 Cr</strong> (from ~₹435 Cr), with the AI+ smartphone programme alone reportedly contributing ~₹500 Cr-plus in the quarter. That is the upside of anchor wins in one number — and a warning about lumpiness, since a single programme can swing the whole company either way.</p>
+
+  <h3>The customers doing the lifting</h3>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Recent anchor mandates</caption>
+    <thead><tr><th>Customer / programme</th><th>What Optiemus builds</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">AI+ (Nxtquantum)</td><td>~3 million smartphones a year at Noida, ramping from 2026</td><td>The single biggest volume driver right now — the reason Q1 FY27 revenue doubled. Also the reason margin is under scrutiny: high-volume assembly is thin.</td></tr>
+      <tr><td class="t-strong">Nothing / CMF</td><td>Smartphone manufacturing via a reported ~$100 mn JV, export-oriented</td><td>Positions Optiemus as an <em>export</em> base, not just domestic supply — the higher-ambition, made-in-India-for-the-world play.</td></tr>
+      <tr><td class="t-strong">Quectel</td><td>Locally-made wireless / IoT modules</td><td>Higher-value, engineering-led work — a step up the ladder from phone box-build.</td></tr>
+      <tr><td class="t-strong">Noise &amp; TWS brands</td><td>True-wireless earbuds and wearables</td><td>Early domestic manufacturing relationships in a category India localised fast; smaller ticket, faster turns.</td></tr>
+      <tr><td class="t-strong">Telecom / soundbox / defence</td><td>Networking gear, payment devices, strategic electronics</td><td>The diversification that stops the company being a one-product phone assembler.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why anchor wins cut both ways</div>
+    <p>A big new customer is a genuine flywheel: volume brings scale economies, scale wins the next brand, and a growing reference list makes Optiemus a safer bet for the cautious buyer. But customer concentration is the shadow side. When one programme — AI+ — can move total revenue by half in a single quarter, it can move it the other way too if the brand's own sales stumble, a design changes, or the contract re-prices. EMS firms live and die by their anchors, and a small manufacturer leaning on a handful of them carries that risk in a concentrated form. Breadth of customers is not a nicety here; it is the difference between a durable platform and a single-order proxy.</p>
+  </div>
+</section>
+
+<!-- 05 — BESPOKE crux: the margin ladder / value migration -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The margin ladder: the one thing that decides the case</h2></div>
+  <p class="part-sub">The single most important idea in the whole primer — and it is specific to a small EMS firm trying to grow up.</p>
+
+  <p class="lead">Here is the tension that defines Optiemus, and it is not the usual "can it grow revenue?" — it plainly can. The real question is whether growth <em>lifts</em> the margin or <em>dilutes</em> it. Because in EMS, not all revenue is equal. A rupee of pure phone assembly earns a sliver; a rupee of component-making, PCBA, or ODM design earns several times more. The company's future rests entirely on <em>which kind of rupee</em> it is adding.</p>
+
+  <div class="chart">
+    <div class="c-title">Where the margin lives on a device</div>
+    <div class="c-sub">Illustrative relative value-add captured by an EMS firm at each rung — the higher the rung, the more of the price it keeps</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Box-build assembly<small>fit parts, test, pack</small></div><div class="track"><span class="fill ink" style="width:22%"></span></div><div class="bval">lowest</div></div>
+      <div class="bar-row"><div class="blab">PCBA / SMT<small>build the board</small></div><div class="track"><span class="fill wtg" style="width:48%"></span></div><div class="bval">↑</div></div>
+      <div class="bar-row"><div class="blab">Components<small>glass, casings, sub-assemblies</small></div><div class="track"><span class="fill spec" style="width:66%"></span></div><div class="bval">↑↑</div></div>
+      <div class="bar-row"><div class="blab">ODM design<small>engineer + build</small></div><div class="track"><span class="fill brand" style="width:85%"></span></div><div class="bval">↑↑↑</div></div>
+      <div class="bar-row"><div class="blab">Defence / strategic<small>certified, sticky</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">highest</div></div>
+    </div>
+    <div class="legend"><span>Illustrative, not to scale. The lesson is directional: every step up the ladder keeps more of the device's price. Optiemus's plan — Corning glass, PCBA, ODM, defence — is a deliberate climb up this chart, because staying on the bottom rung means competing purely on cost against far larger rivals.</span></div>
+  </div>
+
+  <p>Now watch what actually happened when revenue surged. In Q1 FY27, the top line more than doubled — but EBITDA margin <em>fell</em> about <strong>210 basis points to ~4.7%</strong>. That is the danger in one data point: the AI+ ramp is largely high-volume smartphone assembly, the bottom rung, so more of it made the company <em>bigger</em> without making it <em>better</em>. Revenue growth that dilutes margin is the trap the market should watch for, not celebrate.</p>
+
+  <div class="chart">
+    <div class="c-title">The margin has stayed thin — that's the whole debate</div>
+    <div class="c-sub">Approximate EBITDA / operating margin — the number the value-migration story has to move</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:71%"></span></div><div class="bval">~5%</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill wtg" style="width:86%"></span></div><div class="bval">~6%</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:86%"></span></div><div class="bval">~6%</div></div>
+      <div class="bar-row"><div class="blab">Q1 FY27<small>revenue doubled</small></div><div class="track"><span class="fill bad" style="width:67%"></span></div><div class="bval">~4.7%</div></div>
+    </div>
+    <div class="legend"><span>A margin stuck in the mid-single digits — and dipping just as volume exploded — is precisely why the ladder matters. The bull case needs this line to <em>rise</em> as component, ODM and defence work mixes in; the bear case is that scale just keeps adding thin assembly.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The test that fits only Optiemus: does the mix climb, or does volume just dilute?</div>
+    <p>Most companies you can judge by whether revenue grows. Optiemus is the rare case where <em>revenue growth can be the bear signal</em>. If the top line doubles again while EBITDA margin drifts toward 4% and below, it is proof the company is just renting out more assembly capacity at commodity rates — a bigger, no-better business. If instead revenue grows and the margin <em>climbs</em> back through 6%, 7% and up — because Corning glass, in-house PCBA, ODM design and defence orders are mixing in — then the value-migration thesis is real and the rich multiple has something to grow into. The scoreboard is not the revenue print everyone quotes; it is the EBITDA margin next to it. Watch them together, every quarter.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~6%</div><div class="msl">FY26 EBITDA margin — the number the whole story has to lift</div></div>
+    <div class="ms red"><div class="msv">−210 bps</div><div class="msl">Q1 FY27 margin fall even as revenue doubled — the dilution warning</div></div>
+    <div class="ms gold"><div class="msv">ODM + defence</div><div class="msl">The two rungs that most change the margin if Optiemus reaches them</div></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Defence &amp; strategic electronics: the highest rung</h2></div>
+  <p class="part-sub">The most-watched, least-proven leg — and the one that could re-rate the margin.</p>
+
+  <p class="lead">Of all the directions Optiemus can climb, <strong>defence and strategic electronics</strong> is the most valuable and the most talked-about. It is also the least proven in the numbers, which is exactly why it deserves careful reading rather than excitement.</p>
+
+  <p>The appeal is structural. Defence, aerospace and strategic-communications electronics are bought differently from consumer phones: on <strong>certification, security and reliability</strong>, not the lowest per-unit price. India's push to <em>indigenise</em> defence electronics — reducing imports of sensitive components and building strategic supply at home — creates demand for exactly the kind of certified, made-in-India manufacturing an EMS firm can offer. Contracts are stickier, specifications are demanding, and pricing rewards capability over cheapness. For a company fighting thin consumer-assembly margins, defensive work is the clearest path to keeping more of every rupee.</p>
+
+  <div class="plain">
+    <div class="ptag">Why defence is a different kind of revenue</div>
+    <p>Consumer EMS is a treadmill: win a phone programme, run it flat-out for a few quarters, re-bid when the contract lapses, and defend the margin against a rival with a cheaper line. Defence electronics behaves almost oppositely — qualifying to supply is slow and expensive, but once qualified, the position is defensible and the customer does not switch on price alone. That inversion is the attraction: it swaps volatile, price-shopped volume for scarcer, protected, higher-margin work. The catch is that the same barriers that keep competitors out also keep <em>Optiemus</em> out until it has cleared them — this is a build-over-years leg, not a this-quarter one.</p>
+  </div>
+
+  <div class="note gold"><b>Read this leg as optionality, not yet as earnings:</b> the manufacturing units are positioned for defence and aerospace alongside consumer and telecom work, but a small EMS firm's defence revenue is early and lumpy. Treat it as a credible, high-value <em>direction</em> that could lift the whole margin mix over time — while checking each result for whether defence and strategic orders are actually turning into disclosed, recurring revenue rather than remaining a line in the strategy deck.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>PLI, Make in India, and the China+1 tailwind</h2></div>
+  <p class="part-sub">The macro backdrop — why a small assembler even has this opportunity.</p>
+
+  <p class="lead">Optiemus is small, but it is standing in front of one of India's largest industrial pushes. Three overlapping forces — government incentives, import substitution, and the global rewiring of supply chains away from a single country — are pulling electronics manufacturing into India at scale. None of them is about Optiemus specifically; all of them widen the pond it fishes in.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What's pulling electronics manufacturing into India</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Why it helps Optiemus</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">PLI incentives</td><td>Cash subsidies on incremental production of phones, components and IT hardware, designed to make building in India economic.</td><td>Directly improves the maths of local manufacturing — and Optiemus holds a mobile-phone PLI approval, a subsidy on the very volume it is scaling.</td></tr>
+      <tr><td class="t-strong">Import substitution</td><td>A policy drive to make in India what the country used to import — phones, then components, then higher-tech parts.</td><td>Every imported device or part that shifts to domestic build is addressable work for an Indian EMS firm.</td></tr>
+      <tr><td class="t-strong">China+1</td><td>Global brands diversifying manufacturing out of a China-only base to hedge geopolitical and tariff risk.</td><td>India is a prime alternate base; export-oriented mandates like the Nothing/CMF JV are Optiemus positioning as that alternate.</td></tr>
+      <tr><td class="t-strong">Deepening localisation</td><td>The push is moving up the chain — from assembling phones to making displays, glass, boards and components at home.</td><td>This is Optiemus's ladder in policy form: the same trend that funds assembly today is meant to fund components and design tomorrow.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The insight the headlines miss</div>
+    <p>"Make in India" is usually told as a phone-assembly triumph — millions of handsets now stamped as domestically built. But assembly is the <em>shallow</em> end: it is the rung where the least value stays in the country, because the chips, displays and boards are still imported. The policy's real ambition — and the harder, more valuable phase — is pushing manufacturing <em>up the chain</em> into components and design. That is why Optiemus's Corning glass line, PCBA capability and ODM aspirations are the parts of its story that most align with where the incentives are actually headed. The tailwind rewards firms that climb, not firms that only assemble; the two are quietly different bets.</p>
+  </div>
+
+  <p>The tailwind is real, but it is not a moat. Every incentive that pulls Optiemus into a category also pulls in far larger, better-capitalised rivals chasing the same subsidies. The macro widens the opportunity for the whole industry — turning it into an Optiemus advantage still depends on execution, mix and the ladder in the previous sections.</p>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The working-capital reality</h2></div>
+  <p class="part-sub">The unglamorous constraint that governs how fast a thin-margin manufacturer can grow.</p>
+
+  <p class="lead">Thin margins and heavy volumes make EMS a <strong>working-capital-hungry</strong> business, and that constraint quietly caps how quickly a small player can scale. You buy expensive components up front, build for weeks, ship to the brand, and wait to be paid — all while your own margin on the job is only a few percent. Fund that badly and growth chokes; fund it well and you can keep saying yes to bigger orders.</p>
+
+  <p>The returns profile follows directly from the thin margin: <strong>ROE</strong> of roughly <strong>9%</strong> in the latest year (~11% on a three-year average) and <strong>ROCE</strong> near <strong>11%</strong> — respectable for contract manufacturing, but nothing like the returns of a branded consumer or design-led business. Every extra turn of the working-capital cycle is doing real work here; the returns only rise materially if the margin (the ladder) or the asset turns improve.</p>
+
+  <p>This is why the balance sheet moves — the mid-2026 warrant conversion that added ~₹38.5 Cr of equity, the reshaping of subsidiary investment plans — are not footnotes. A manufacturer doubling revenue is also doubling the inventory and receivables it must carry at any moment. If that funding is tight, a large new order becomes a cash problem rather than a windfall, and a slow-paying customer can stall the line. The equity top-ups are the company buying itself room to keep accepting the anchor mandates that are driving the top line.</p>
+
+  <div class="plain">
+    <div class="ptag">Why cash discipline is the hidden governor</div>
+    <p>Picture the mechanics: to build ₹500 Cr of AI+ phones, Optiemus must first buy hundreds of crores of chips, displays and casings — real cash out the door — then build, ship and wait to collect, all to earn a few percent. The bigger the order, the bigger that in-flight cash pile. So the company's true speed limit is not demand, which is plentiful, but how much working capital it can fund without over-stretching. That is the unglamorous reason a small EMS firm can have a full order pipeline and still have to grow carefully — and why every equity raise and every day shaved off the cash cycle matters more here than the exciting customer announcements do.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A crowded, fast-growing EMS field with one giant setting the terms.</p>
+
+  <p class="lead">Indian EMS is not a lonely business — it is a scrum of listed players racing after the same Make-in-India volumes, and it is dominated by one company many times Optiemus's size. Sizing up where a small player sits in that field is essential, because scale in contract manufacturing is a real weapon.</p>
+
+  <div class="chart">
+    <div class="c-title">Optiemus is a minnow in a field of whales</div>
+    <div class="c-sub">Approximate market capitalisation, ₹ Crore (mid-2026, illustrative) — the scale gap is the competitive backdrop</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Dixon Technologies</div><div class="track"><span class="fill om" style="width:100%"></span></div><div class="bval">~95,000</div></div>
+      <div class="bar-row"><div class="blab">Kaynes Technology</div><div class="track"><span class="fill wtg" style="width:37%"></span></div><div class="bval">~35,000</div></div>
+      <div class="bar-row"><div class="blab">Amber Enterprises</div><div class="track"><span class="fill wtg" style="width:29%"></span></div><div class="bval">~28,000</div></div>
+      <div class="bar-row"><div class="blab">Syrma SGS</div><div class="track"><span class="fill spec" style="width:12%"></span></div><div class="bval">~11,000</div></div>
+      <div class="bar-row"><div class="blab">Optiemus Infracom</div><div class="track"><span class="fill brand" style="width:6%"></span></div><div class="bval">~5,300</div></div>
+    </div>
+    <div class="legend"><span>Approximate, illustrative. Dixon — the listed EMS leader — is roughly an order of magnitude larger, giving it purchasing power, plant scale and customer breadth Optiemus cannot match. Scale lets a giant bid low on the very volume assembly Optiemus also chases, which is precisely why climbing the value ladder, not out-scaling Dixon, is the smaller firm's only sensible strategy.</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Optiemus</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Optiemus Infracom</td><td>Smaller EMS + defence-electronics player; phones, wearables, telecom, IoT, components</td><td><em>This company.</em> A distributor-turned-manufacturer trying to climb from assembly into components, ODM and defence.</td></tr>
+      <tr><td class="t-strong">Dixon Technologies</td><td>The dominant listed Indian EMS company; mobiles, appliances, and more, at massive scale</td><td>The reference point and the pressure. Far larger, broader and cheaper on volume work — the reason Optiemus can't win on scale alone.</td></tr>
+      <tr><td class="t-strong">Kaynes / Syrma SGS / Cyient DLM</td><td>Industrial, automotive and higher-mix EMS names, often at richer margins</td><td>Show what a better mix does — their higher-value, design-led work earns more than phone box-build. The model Optiemus is trying to move toward.</td></tr>
+      <tr><td class="t-strong">Amber (incl. IlJin) / VVDN</td><td>Appliance and electronics/PCBA specialists scaling components and design</td><td>Competitors in the components and networking rungs Optiemus is climbing into.</td></tr>
+      <tr><td class="t-strong">Branded electronics firms</td><td>The customers, not rivals — brands that own design and marketing</td><td>Optiemus builds <em>for</em> them; it is not one of them. Its margin is a fraction of a brand's precisely because it doesn't own the name.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two truths sit together. First, the pie is growing fast enough that many EMS players can expand at once — this is a rising-volume industry, not yet a zero-sum knife-fight, so Optiemus can scale even against a dominant Dixon. Second, scale is genuinely powerful in contract manufacturing: a bigger firm buys components cheaper, spreads plant cost over more units, and can price aggressively on the commodity assembly Optiemus also does. That combination points to one conclusion — a smaller EMS firm's edge cannot be being the cheapest assembler; it has to be a differentiated <em>mix</em> (defence, ODM, components, niche telecom) where scale matters less and capability matters more. Where Optiemus stays on the bottom rung, it competes with Dixon on Dixon's terms; where it climbs, it changes the contest.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Big, fast-growing revenue on a thin margin — priced as if the mix will improve.</p>
+
+  <p class="lead">Optiemus's financials tell a two-handed story: revenue that can double on a single anchor order, and a profit that stays small because the work is mostly thin assembly. The market has priced the growth generously; the question the numbers pose is whether the profit keeps pace.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue (₹ Crore); FY27 and FY29 are management's guided figures</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:25%"></span></div><div class="bval">~1,528</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill wtg" style="width:32%"></span></div><div class="bval">~1,890</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:29%"></span></div><div class="bval">~1,769</div></div>
+      <div class="bar-row"><div class="blab">FY27<small>guided</small></div><div class="track"><span class="fill spec" style="width:60%"></span></div><div class="bval">~3,600</div></div>
+      <div class="bar-row"><div class="blab">FY29<small>target</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~6,000</div></div>
+    </div>
+    <div class="legend"><span>FY26 revenue actually dipped ~6%, a reminder that EMS volumes are lumpy. Management then guides to roughly doubling in FY27 (~₹3,600 Cr) and ~₹6,000 Cr by FY29 — an aggressive 40–45% CAGR resting on the new anchor mandates. Treat FY27/FY29 as guidance, not results.</span></div>
+  </div>
+
+  <p>Set the profit line beside that revenue and the EMS reality jumps out. Net profit crept from ~<strong>₹57 Cr (FY24)</strong> to ~<strong>₹63 Cr (FY25)</strong> to ~<strong>₹66 Cr (FY26)</strong> even as revenue swung around above ₹1,500 Cr — the flat-profit, moving-revenue signature of thin assembly. Q1 FY27's ~₹21 Cr (up 46% year-on-year) is the encouraging counter-point; the full year has to confirm it converts into a genuine step-up in <em>annual</em> profit, not merely a big-revenue quarter.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~70×+</div><div class="msl">Trailing P/E on ~₹5,300 Cr market cap — a growth-priced multiple for a thin-margin manufacturer</div></div>
+    <div class="ms"><div class="msv">~₹66 Cr</div><div class="msl">FY26 PAT — the profit the valuation is being paid many times over</div></div>
+    <div class="ms green"><div class="msv">+46%</div><div class="msl">Q1 FY27 YoY PAT growth — the early evidence the ramp can reach earnings</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: EBITDA margin as revenue scales</div>
+    <p>At ~70×-plus earnings, Optiemus is not priced as a low-margin assembler; it is priced as a company whose <em>mix will improve</em>. So the metric that proves or breaks the case is <strong>EBITDA margin measured against the revenue ramp</strong> — read alongside <strong>gross value-add per rupee of revenue</strong> (is more of the device being kept in-house?), the <strong>share of revenue from ODM, components and defence</strong> versus pure box-build, and whether <strong>annual PAT actually steps up</strong> rather than staying flat. If revenue climbs toward ₹3,600 Cr and margin holds or rises above 6%, the multiple has a foundation and the ladder is being climbed. If revenue doubles while margin drifts toward 4%, the company is simply a larger assembler and the valuation is paying growth multiples for commodity work. The revenue number gets the headlines; the margin beside it is the verdict.</p>
+  </div>
+
+  <div class="note">The figures here are drawn from company results, third-party financial summaries and management guidance, and cross-checked across sources; several are <b>approximate</b>, the FY27/FY29 revenue figures are <b>management guidance</b> rather than audited results, and peer market caps are <b>illustrative</b>. Verify every number against the company's filings and a current data source before relying on it.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A small manufacturer in a huge tailwind — asked to prove it can earn more than an assembler's wage.</p>
+
+  <p class="lead">Optiemus enters FY27 with the wind at its back: a stack of new anchor mandates, revenue that just doubled in a quarter, and a national push pulling electronics manufacturing into India. The unresolved question is not whether it can grow — it visibly can — but whether that growth is the kind that lifts the margin or the kind that just adds more thin assembly. That distinction is the entire debate.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Structural tailwind</strong> — PLI, import substitution and China+1 pull years of electronics manufacturing into India; Optiemus is positioned across phones, wearables, telecom, IoT and defence.</li>
+        <li><strong>Anchor wins driving scale</strong> — AI+, Nothing/CMF, Quectel and others doubled Q1 FY27 revenue; guidance points to ~₹3,600 Cr in FY27 and ~₹6,000 Cr by FY29.</li>
+        <li><strong>The value ladder</strong> — Corning glass, PCBA, ODM design and defence work can each lift the margin above the assembler's floor, changing the earnings, not just the revenue.</li>
+        <li><strong>Defence &amp; export optionality</strong> — certified strategic-electronics work and an export JV are stickier, higher-value directions that a pure assembler doesn't have.</li>
+        <li><strong>Aligned owner</strong> — a ~71% promoter stake and fresh equity top-ups back the ramp with skin in the game.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Thin, diluting margins</strong> — EBITDA margin is stuck in mid-single digits and <em>fell</em> as revenue doubled; growth may be commodity assembly that never re-rates the profit.</li>
+        <li><strong>Rich valuation</strong> — ~70×-plus earnings on ~₹66 Cr of profit prices in a flawless mix-shift; any margin disappointment can de-rate the stock sharply.</li>
+        <li><strong>Customer concentration &amp; lumpiness</strong> — one programme can swing revenue by half in a quarter; a brand's stumble or a re-price hits hard.</li>
+        <li><strong>The Dixon problem</strong> — a far larger leader can undercut Optiemus on the very volume work it depends on, keeping it on the thin rung.</li>
+        <li><strong>Working-capital &amp; structure risk</strong> — scaling a thin-margin, cash-hungry business strains funding; and value sits in the OEL/Wistron JV, not wholly in the listed parent.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Optiemus Infracom is a distributor that taught itself to build, dropped into the middle of India's biggest manufacturing push at exactly the right moment. The demand is real, the anchor customers are real, and the revenue ramp is already showing up. What is unproven is the only thing that ultimately justifies a growth multiple on a contract manufacturer: that the company can earn <em>more than an assembler's wage</em> on the volume it is winning. The next several quarters answer it in a single, checkable pairing — <strong>the EBITDA margin printed next to each new revenue high</strong>. If the margin climbs as the top line scales, the ladder is being climbed and the story is intact. If it keeps slipping while revenue soars, the market has paid a designer's price for a screwdriver's job — and the correction of that mistake is the risk. Watch the two numbers side by side; they settle everything.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Optiemus Infracom Ltd — FY26 audited results and investor presentation (year ended Mar 2026), company disclosures via BSE/NSE.</li>
+    <li>Whalesbook / corporate filings — "Optiemus Infracom FY26 Revenue Declines 6.4%, Profit Edges Up to ₹66 Cr."</li>
+    <li>Business Standard — "Optiemus Infracom registers 46% YoY rise in Q1 [FY27] PAT" (revenue ~₹883 Cr).</li>
+    <li>MarketsMojo — Optiemus Infracom Q1 FY27 and Q4 FY26 result analyses (margin commentary).</li>
+    <li>Trade Brains — "Optiemus Infracom: Why This Smartphone and EMS Stock Deserves a Place on Your Watchlist"; and 3-million-smartphone order coverage.</li>
+    <li>Forbes India — "How Optiemus Electronics is rebooting by manufacturing hearable and wearable electronics."</li>
+    <li>TechRadar / Reuters — Wistron–Optiemus manufacturing pact; Nothing/CMF ~$100 mn India JV.</li>
+    <li>The Tribune — "Vaishnaw opens country's first tempered glass factory in Noida" (Corning collaboration).</li>
+    <li>BSE India — Optiemus Infracom Ltd stock page, scrip code 530135.</li>
+    <li>Screener.in — Optiemus Infracom consolidated financials, market cap, P/E and shareholding (BSE: 530135, NSE: OPTIEMUS).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026) and Q1 FY27, and may contain errors or become outdated; several forward figures (notably FY27 and FY29 revenue) are management guidance, not results, and peer market caps are illustrative. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "OPTIEMUS";
+  const COMPANY_SLUG = "optiemus-infracom";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
