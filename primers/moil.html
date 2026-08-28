@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOIL — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F4F7;
+    --paper-2:#FAFAFC;
+    --card:#FFFFFF;
+    --ink:#1E1B29;
+    --ink-soft:#5A5568;
+    --ink-faint:#8B8798;
+    --brand:#3B3A52;          /* deep ore-slate */
+    --brand-bright:#6E4E9E;   /* manganese violet accent */
+    --gold:#B5763A;           /* ore-rust amber - warmth / accent */
+    --wtg:#6E4E9E;           /* ore / mining leg */
+    --epc:#8A6FB0;           /* processing / grading */
+    --om:#2E2C42;            /* value-added / deep slate */
+    --spec:#3F7A6E;          /* teal cross accent - value-added / wind */
+    --line:#DCDAE2;
+    --line-soft:#E9E7EE;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#ECE7F5;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7F6FA;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#ECE9F1;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#3B3A52,#5E5B82);}
+  .fill.gold{background:linear-gradient(90deg,#B5763A,#D0965A);}
+  .fill.wtg{background:linear-gradient(90deg,#6E4E9E,#8A6FB0);}
+  .fill.om{background:linear-gradient(90deg,#2E2C42,#47445F);}
+  .fill.spec{background:linear-gradient(90deg,#3F7A6E,#5C9E90);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#4a4757,#6b6778);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--spec);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--spec);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EEEAF5;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Manganese &amp; steel 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What MOIL mines &amp; sells</a></li>
+    <li><a href="#p3"><span class="n">03</span> The PSU &amp; who owns it</a></li>
+    <li><a href="#p4"><span class="n">04</span> A price-taker in a cycle</a></li>
+    <li><a href="#p5"><span class="n">05</span> The volume lever: mines</a></li>
+    <li><a href="#p6"><span class="n">06</span> The fortress balance sheet</a></li>
+    <li><a href="#p7"><span class="n">07</span> Grade &amp; the value-added legs</a></li>
+    <li><a href="#p8"><span class="n">08</span> The market &amp; imports</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: MOIL · BSE: 533286</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>MOIL, <em>the manganese under India's steel</em></h1>
+  <p class="dek">A full walk through India's largest manganese-ore miner — a debt-free central-government PSU that digs the one raw material no steel mill can skip, why its profit swings on a price it does not set rather than the tonnes it hauls out of the ground, and why a company sitting on a mountain of cash lives or dies on a single blended-realisation number each quarter.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹382 <small>Cr</small></div><div class="l">Net profit (FY25)</div></div>
+    <div class="cell"><div class="v">~18.0 <small>lakh t</small></div><div class="l">Mn-ore output (FY25, record)</div></div>
+    <div class="cell"><div class="v">~45% <small>share</small></div><div class="l">India's manganese-ore output</div></div>
+    <div class="cell"><div class="v">~₹8,000 <small>Cr</small></div><div class="l">Market cap (mid-2026, approx.)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">28 Aug 2026</b> · source: FY25 results + Q1 FY27 update (Jun-2026 quarter)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY25 (year ended Mar 2025) incorporated — revenue ₹1,585 Cr (+9%), PAT ₹382 Cr (+30%), record ore production 18.03 lakh tonnes, total dividend ₹5.63/share. Added the June-2026 quarter: PAT up ~70% YoY to ~₹88 Cr on a record Q1 ore output, showing the realisation-led profit swing at work.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">MOIL Ltd — the initials stand for its old name, <strong>Manganese Ore India Limited</strong> — is a <strong>central-government mining PSU</strong> that digs one thing above all others: <strong>manganese ore</strong>. It runs a cluster of underground and opencast mines, mostly in the <strong>Nagpur–Bhandara belt of Maharashtra and the Balaghat–Chhindwara belt of Madhya Pradesh</strong>, and it is by far <strong>India's largest producer of manganese ore</strong>, accounting for roughly <strong>45% of the country's domestic output</strong>. Manganese ore is not a glamorous commodity, but it is a non-negotiable one: you cannot make steel without manganese, so MOIL sits quietly at the very bottom of the steel supply chain, selling the ore that ferro-alloy makers turn into the additives every steel mill needs.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>MOIL sells the input, not the metal.</strong> This is the first thing to get straight. MOIL is <em>not</em> a steelmaker and <em>not</em> a diversified miner — it is a near-pure manganese-ore mining company. It hews ore from the ground, grades it, and sells it to alloy producers who convert it into <strong>ferro-manganese and silico-manganese</strong>, which then go into steel. MOIL earns on the ore; the steel margin belongs to someone else entirely.</li>
+    <li><strong>Its profit swings on price, not tonnage.</strong> MOIL's ore output barely moves year to year — it produced ~17.5 lakh tonnes in FY24 and ~18.03 lakh tonnes in FY25, a ~3% rise — yet FY25 net profit jumped ~30% to <strong>₹382 Cr</strong>. Almost the entire difference is the <em>price</em> of manganese ore, a number set by global steel demand and imported-ore competition, not by MOIL. It is a textbook <strong>price-taker in a commodity cycle</strong>.</li>
+    <li><strong>It is a cash fortress.</strong> MOIL is <strong>debt-free and net-cash</strong>, sitting on a large pile of cash and investments, and it behaves like a classic PSU cash machine — consistent, generous dividends (FY25 total ₹5.63/share) topped up by periodic buybacks, with the Government of India owning roughly <strong>53%</strong>. The stock trades around <strong>20× earnings</strong> — modest for a monopoly-like resource asset, rich for a no-growth commodity.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>MOIL is best pictured as a <strong>national ore quarry with a fortress balance sheet</strong>. It owns some of the best manganese deposits in the country, it has dug them for over a century, and it prints steady cash doing so. But it controls only one of the two levers on its own profit: it decides how many tonnes to mine, and it does that reliably. What it cannot control is the <em>price</em> each tonne fetches — that is dictated by how much steel the world (and especially China) is making, and by how cheaply high-grade ore can be shipped in from South Africa and Gabon. So MOIL is a stable, cash-rich business bolted onto a volatile, imported-price-linked revenue line. The whole investment question is which of those two natures dominates in any given year.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Manganese &amp; steel 101: the ore no mill can skip</h2></div>
+  <p class="part-sub">No metallurgy degree needed — just why this grey rock is indispensable.</p>
+
+  <p class="lead">Manganese is the <strong>fourth-most-used metal on earth by tonnage</strong>, after iron, aluminium and copper — yet almost nobody outside the industry could tell you what it does. The answer is simple and it explains MOIL's entire reason to exist: <strong>you cannot make usable steel without manganese</strong>. When iron is smelted, it is contaminated with sulphur and oxygen that make the metal brittle. Manganese, added as a ferro-alloy, scavenges those impurities and, as a bonus, hardens and toughens the steel. There is no cheap substitute. Roughly <strong>90% of all manganese mined in the world ends up in steelmaking</strong>, which is why manganese-ore demand tracks steel production almost one-for-one.</p>
+
+  <div class="chart">
+    <div class="c-title">Where the world's manganese goes</div>
+    <div class="c-sub">Approximate share of global manganese consumption by end-use</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Steelmaking<small>ferro- &amp; silico-manganese</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~90%</div></div>
+      <div class="bar-row"><div class="blab">Batteries &amp; chemicals<small>EMD, cathodes, EMM</small></div><div class="track"><span class="fill spec" style="width:8%"></span></div><div class="bval">~7%</div></div>
+      <div class="bar-row"><div class="blab">Other alloys &amp; uses<small>aluminium, specialty</small></div><div class="track"><span class="fill gold" style="width:4%"></span></div><div class="bval">~3%</div></div>
+    </div>
+    <div class="legend"><span>Manganese is overwhelmingly a steel input. This is why MOIL, despite being a manganese company, effectively rents its fortunes to the global steel cycle — and why the small non-steel slice (batteries, chemicals) is where the company's own value-added ambitions live.</span></div>
+  </div>
+
+  <p>Because manganese is added to steel as an alloy rather than dropped in as raw rock, there is a step in the middle. Miners like MOIL sell <strong>manganese ore</strong>; a separate set of producers smelt that ore in electric furnaces into <strong>ferro-manganese</strong> and <strong>silico-manganese</strong> — iron-manganese and silicon-manganese alloys that steel mills actually buy. MOIL is upstream of that step: its customers are the ferro-alloy makers (and, for its own small value-added output, the alloy market directly). To follow the business you only need a handful of terms.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Manganese ore</td><td>The mined rock, priced on its <strong>manganese content (% Mn)</strong>. MOIL's core product. Higher-grade ore fetches a premium per tonne; grade is as important as tonnage.</td></tr>
+      <tr><td class="t-strong">Grade / % Mn</td><td>The manganese percentage in the ore. Indian ore is generally <strong>medium grade</strong>; the world's premium ore (South Africa, Gabon, Australia) runs richer, which matters for pricing and competition.</td></tr>
+      <tr><td class="t-strong">Ferro-manganese / silico-manganese</td><td>The alloys smelted <em>from</em> manganese ore that steel mills actually add. MOIL makes a small quantity itself (value-added), but mostly sells the ore to others who make these.</td></tr>
+      <tr><td class="t-strong">EMD</td><td>Electrolytic Manganese Dioxide — a high-purity manganese chemical used in <strong>dry-cell batteries</strong>. A niche, higher-margin product MOIL manufactures at small scale.</td></tr>
+      <tr><td class="t-strong">Realisation (₹/MT)</td><td>The average price MOIL actually gets per tonne of ore sold. Because volumes are stable, <strong>this single number drives the P&amp;L</strong> — the most important figure in the whole company.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The economics that decide everything: price per tonne</div>
+    <p>A steel mill's manganese bill is a tiny fraction of its total cost, so mills rarely haggle over manganese ore the way MOIL might wish — they simply buy the cheapest tonne of the grade they need, from wherever it is cheapest, MOIL or an importer. That leaves MOIL almost entirely a <strong>price-taker</strong>: it can decide how much to dig, but the price each tonne earns is handed to it by the global market. When Chinese steel output is roaring and imported ore is dear, MOIL's realisation and profit soar on the same tonnes. When steel slows and cheap ore floods in, the same mines earn far less. The rock in the ground never changed; the price tag on it did.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What MOIL mines and sells: one ore body, four ways to earn</h2></div>
+  <p class="part-sub">The mining model — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">MOIL operates a portfolio of around <strong>ten mines</strong> across two states — a mix of deep <strong>underground</strong> mines (some among the deepest manganese mines in the country) and shallower <strong>opencast</strong> pits. The great majority of its revenue is simply <strong>selling graded manganese ore</strong>. Around that core sit three smaller legs: value-added <strong>ferro-manganese</strong>, high-purity <strong>EMD</strong> for batteries, and a modest <strong>wind-power</strong> business. They all trace back to the same ore body.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">From ore body to steel — where MOIL sits, and where it stops</div>
+    <div class="flow-row">
+      <div class="node wtg"><div class="ntag">Stage 1 · Mine</div><div class="nname">Hew the ore</div><div class="nwho">Underground &amp; opencast mines in Maharashtra &amp; MP. MOIL's core work.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Stage 2 · Grade &amp; sell</div><div class="nname">Sell graded ore</div><div class="nwho">Screened, sized, sold by % Mn to ferro-alloy makers. The bulk of revenue.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Stage 3 · Value-add</div><div class="nname">Ferro-Mn &amp; EMD</div><div class="nwho">Small in-house conversion: ferro-manganese, EMD for batteries.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Stage 4 · Customer</div><div class="nname">Into steel</div><div class="nwho">Alloys go into every tonne of steel — but this margin is the mill's, not MOIL's.</div></div>
+    </div>
+    <div class="flow-note">MOIL earns almost everything at stages 1–2 (mining and selling ore). Stage 3 is a small value-added sideline; stage 4 is its customer's business. The single most important thing to understand: <strong>MOIL sells the input, and stops well short of the steel.</strong></div>
+  </div>
+
+  <h3>The four earning legs, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">Manganese ore (the core)</span></strong> — the overwhelming majority of revenue. MOIL sells various grades of ore, priced on manganese content, to ferro-alloy plants and, historically, to captive buyers. This is a classic mining business: dig, grade, sell, repeat. Its economics are set by tonnage (stable) × realisation (volatile).</li>
+    <li><strong><span class="chain-epc">Ferro-manganese</span></strong> — MOIL runs a modest ferro-manganese plant (at Balaghat), smelting some of its own ore into alloy. It captures a slice of the downstream conversion margin, but the scale is small next to the ore business.</li>
+    <li><strong><span class="chain-om">EMD (electrolytic manganese dioxide)</span></strong> — a high-purity manganese chemical for <strong>dry-cell batteries</strong>, produced at small scale (Dongri Buzurg). Niche and higher-margin, and a toe-hold in the manganese-for-batteries story — though today it is a rounding error in the P&amp;L.</li>
+    <li><strong><span class="chain-wtg">Wind power</span></strong> — MOIL owns a small wind-energy portfolio (around 20 MW) built years ago, largely to green its own operations and earn modest power revenue. It is peripheral, but it is why the company is not <em>only</em> a miner.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the mining model shapes the risk</div>
+    <p>A miner's cost base is largely <strong>fixed and sticky</strong>: the mines, the shafts, the workforce (MOIL is a PSU with a large, unionised, hard-to-flex headcount), and the statutory royalties are broadly there whether ore prices are high or low. Revenue, by contrast, swings with the ore price. Put a mostly fixed cost base under a volatile top line and you get <strong>operating leverage in both directions</strong>: in a strong-price year, extra revenue drops almost straight to profit; in a weak-price year, the fixed costs bite hard. That is why MOIL's earnings amplify the manganese cycle rather than smoothing it — and why a mildly better ore price can lift profit far more than the price move alone suggests.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The PSU, its history, and who controls it</h2></div>
+  <p class="part-sub">A century-old ore company, government-owned and cash-disciplined.</p>
+
+  <p class="lead">MOIL is a <strong>public-sector undertaking under the Ministry of Steel</strong>, with roots that reach back well over a century into the manganese mines of India's Central Provinces. In its modern form it was constituted as <strong>Manganese Ore (India) Limited</strong> in 1962 — a joint venture of the Government of India with the state governments of Maharashtra and Madhya Pradesh — and it was renamed <strong>MOIL Limited</strong> and listed in 2010. Ownership has always been, and remains, firmly with the state.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1890s–1962</div><div class="ev">Manganese mining in the Central Provinces (today's Maharashtra–MP belt) traces back to British-era syndicates; the mines pass through successive owners into public hands.</div></li>
+    <li class="major"><div class="yr">1962</div><div class="ev"><strong>Manganese Ore (India) Ltd</strong> incorporated — a joint venture of the Government of India with the state governments of <strong>Maharashtra and Madhya Pradesh</strong>, consolidating the region's manganese mines.</div></li>
+    <li><div class="yr">1977 onward</div><div class="ev">Becomes a Government of India company as the Centre takes a controlling stake; runs for decades as a steady, low-profile mining PSU supplying India's ferro-alloy and steel industry.</div></li>
+    <li class="major"><div class="yr">2010</div><div class="ev">Renamed <strong>MOIL Limited</strong> and <strong>listed on NSE &amp; BSE</strong> via a government disinvestment (offer for sale), bringing the ore company to public markets for the first time.</div></li>
+    <li><div class="yr">2016–2021</div><div class="ev">Successive <strong>buybacks and bonus issues</strong> return cash to shareholders (and to the Centre); MOIL cements its reputation as a debt-free, high-payout PSU.</div></li>
+    <li class="major"><div class="yr">FY25</div><div class="ev"><strong>Record ore production</strong> of 18.03 lakh tonnes; revenue ₹1,585 Cr (+9%), PAT ₹382 Cr (+30%); total dividend ₹5.63/share.</div></li>
+    <li class="major"><div class="yr">Q1 FY27 (Jun-2026)</div><div class="ev">Record first-quarter ore output (~5.08 lakh tonnes); PAT up ~<strong>70% YoY</strong> to ~₹88 Cr on firmer realisation — the price lever visibly at work.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>The controlling owner is the state.</strong> The <strong>Government of India (Ministry of Steel)</strong> holds roughly <strong>53%</strong> of MOIL, having come down from ~71% at listing through periodic offers for sale and buybacks. Because it is a majority government company, disinvestment policy, dividend expectations and the occasional OFS are structural features, not surprises.</li>
+    <li><strong>It is a Miniratna PSU.</strong> That status gives MOIL a degree of operational and investment autonomy, but it remains a government company — with the strengths (secure mining leases, a national mandate, cheap capital) and the constraints (a large fixed workforce, pricing under public scrutiny, capital-allocation choices that answer to a ministry) that come with that.</li>
+    <li><strong>Small joint ventures extend the reach.</strong> MOIL has formed JVs to move downstream and secure demand — for example ferro-alloy ventures with steel PSUs (SAIL, RINL) — and has been exploring for manganese in new states (Rajasthan, Gujarat, Odisha) to widen its resource base. These are option value, not today's earnings.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Reading a PSU miner without illusions</div>
+    <p>A government-owned resource company invites two opposite caricatures — "sleepy PSU that destroys value" and "strategic national asset you can't lose money on". MOIL fits neither. It is genuinely well-run at the mining level, has grown output to records, and is scrupulous about cash — but it is also constrained: it cannot shed labour freely, its investment choices pass through a ministry, and its share register carries a majority owner who may sell down at any time. The right lens is to bank the reliability the state ownership provides — secure leases, a fortress balance sheet, dependable payouts — while pricing in the ceiling it imposes on how nimbly the company can be run for the share price alone.</p>
+  </div>
+
+  <div class="note gold"><b>Why the ownership matters for a shareholder:</b> a government majority cuts both ways. It underwrites MOIL's mining leases, its balance-sheet conservatism and its habit of paying out cash — a genuinely shareholder-friendly trait among PSUs. But it also means a minority investor rides alongside an owner whose goals include national supply security and periodic disinvestment, not purely the share price. When the Centre chooses to sell a slice via OFS, it can cap the stock; when it wants dividends, MOIL pays them.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: the price-taker / commodity cycle -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>A price-taker in a commodity cycle</h2></div>
+  <p class="part-sub">The single most important idea in the whole case — and it is specific to a miner like this.</p>
+
+  <p class="lead">Most companies you can understand by studying what they <em>do</em>. MOIL you understand by studying what is <em>done to it</em>. It mines a roughly constant amount of ore every year — that part is well-run and predictable. Its fortunes then rise and fall on a price it has almost no power to set: the price of manganese ore, which is stitched to global steel output (above all China's, the world's dominant steel producer) and to the landed cost of high-grade ore shipped in from South Africa, Gabon and Australia. When that external price is high, MOIL is a money machine; when it is low, the same mines merely tick over.</p>
+
+  <div class="chart">
+    <div class="c-title">Volumes barely move; profit does — the price lever, quantified</div>
+    <div class="c-sub">FY24 vs FY25 (standalone) — same mines, same scale, very different profit</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Ore production<small>lakh tonnes</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">17.5 → 18.0</div></div>
+      <div class="bar-row"><div class="blab">Revenue<small>₹ Cr, +9%</small></div><div class="track"><span class="fill brand" style="width:70%"></span></div><div class="bval">1,449 → 1,585</div></div>
+      <div class="bar-row"><div class="blab">Net profit<small>₹ Cr, +30%</small></div><div class="track"><span class="fill gold" style="width:52%"></span></div><div class="bval">293 → 382</div></div>
+    </div>
+    <div class="legend"><span>Ore output rose only ~3% between FY24 and FY25, yet profit jumped ~30%. The mines did roughly the same work; realisation did the rest. This is what a price-taker's P&amp;L looks like — output steady, profit levered to a price MOIL does not control.</span></div>
+  </div>
+
+  <p>Notice what this rules out. MOIL cannot easily <em>grow its way</em> out of a weak-price year by simply digging more — mine capacity, ore grade and the market's appetite all cap how fast tonnage can rise, and flooding a soft market with extra ore would only push the price down further. Nor can it set a floor under its price the way a branded consumer company can; steel mills will always reach for the cheapest acceptable tonne. So the realistic bull-and-bear argument for MOIL is not about market share or a new product — it is a view on the <strong>manganese-ore price cycle</strong>, and on whether the next few years look like a tight, high-price market or a loose, import-flooded one.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits MOIL: same ore, different price</div>
+    <p>Test it with the numbers. Between FY24 and FY25 MOIL mined about <strong>3% more ore</strong> — a rounding difference in operational terms — and yet its net profit rose about <strong>30%</strong>, from ~₹293 Cr to ~₹382 Cr. Then look at the June-2026 quarter: a record first-quarter tonnage, but the eye-catching figure was profit up ~<strong>70% year-on-year</strong>. In both cases the mines did roughly what they always do; the swing came from the price each tonne fetched. For MOIL, the one-line summary is that <strong>the company controls the tonnes and the market controls the money</strong>. No amount of operational excellence changes that arithmetic — it only ensures MOIL is fully exposed to it, in both directions.</p>
+  </div>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What moves MOIL's ore price — and which way</caption>
+    <thead><tr><th>Force</th><th>What it does</th><th>Effect on MOIL</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Global steel output (esp. China)</td><td>Sets the world's appetite for manganese; China is the swing consumer and producer of both steel and ferro-alloys.</td><td>Strong steel demand → firm ore prices → higher realisation and profit. A Chinese slowdown does the opposite.</td></tr>
+      <tr><td class="t-strong">Imported ore (South Africa, Gabon, Australia)</td><td>High-grade seaborne ore competes directly in Indian ports; its landed cost anchors domestic prices.</td><td>Cheap, plentiful imports cap what MOIL can charge; tight seaborne supply lets domestic prices rise.</td></tr>
+      <tr><td class="t-strong">Ferro-alloy demand &amp; margins</td><td>MOIL's direct customers are alloy smelters; their profitability governs how much ore they buy and at what price.</td><td>Healthy alloy margins pull ore demand up; a squeeze there flows straight back to MOIL's order book.</td></tr>
+      <tr><td class="t-strong">MOIL's own price revisions</td><td>MOIL periodically announces ore price changes by grade — but these track, rather than defy, the market.</td><td>A price hike sticks only if the global market supports it; MOIL follows the cycle, it does not lead it.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The volume lever: mines and the growth ambition</h2></div>
+  <p class="part-sub">The one thing MOIL <em>can</em> control — and the long-running plan to push it higher.</p>
+
+  <p class="lead">If price is the lever MOIL cannot pull, <strong>tonnage is the one it can</strong> — and here the story is genuinely constructive. For years MOIL has carried an explicit ambition to raise ore production substantially, roughly toward <strong>doubling output over the long run</strong> (management has framed a target of about <strong>3 million tonnes a year</strong> against today's ~1.8 million). The lever is <strong>mine development</strong>: deepening existing underground mines, opening new ones, mechanising, and running exploration in new states. Every extra tonne MOIL commissions is a tonne of volume growth it captures whatever the price does.</p>
+
+  <div class="chart">
+    <div class="c-title">Production trajectory and the ambition</div>
+    <div class="c-sub">Manganese-ore output, lakh tonnes — recent years vs the long-run target</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:55%"></span></div><div class="bval">~17.5</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>record</small></div><div class="track"><span class="fill wtg" style="width:56%"></span></div><div class="bval">~18.0</div></div>
+      <div class="bar-row"><div class="blab">Long-run target<small>management ambition</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~30</div></div>
+    </div>
+    <div class="legend"><span>Output has climbed steadily to a record ~18 lakh tonnes in FY25. The ~30 lakh-tonne (3 MT) figure is a long-run <em>ambition</em>, not a dated commitment — treat it as the direction of travel, dependent on mine development landing on schedule.</span></div>
+  </div>
+
+  <p>Two things make the volume lever slower and harder than it sounds. First, MOIL's richest ore is <strong>underground</strong>, and deepening a shaft or sinking a new one is a multi-year, capital-and-permitting-heavy exercise — you cannot conjure tonnes on demand. Second, more tonnes only help profit if the market absorbs them without collapsing the price; pushing a lot of extra domestic ore into a soft market can be self-defeating. So the production ambition is best read as a <strong>slow, structural tailwind</strong> — real, and value-accretive if delivered, but measured in years and dependent on execution, not a switch management can flip in a weak quarter.</p>
+
+  <div class="plain">
+    <div class="ptag">Why mine development is the quiet swing factor</div>
+    <p>Here is the leverage a patient investor is really buying. MOIL's cost base is largely fixed, so each additional tonne of ore — once a mine is developed — carries a high incremental margin. If MOIL can lift sustainable output meaningfully above today's ~18 lakh tonnes, it grows earnings <em>even in a flat-price world</em>, and it compounds spectacularly in a strong-price one. The catch is the timeline: mine development is measured in years of shaft-sinking, statutory clearances and mechanisation, not quarters. The volume ambition is the part of the MOIL story that rewards patience — and punishes anyone expecting it to arrive fast.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~10</div><div class="msl">Operating mines across Maharashtra &amp; MP — the core asset base</div></div>
+    <div class="ms gold"><div class="msv">~18.0 L t</div><div class="msl">FY25 record ore output — the number to grow from</div></div>
+    <div class="ms green"><div class="msv">~3 MT</div><div class="msl">Long-run production ambition — the volume prize, if development lands</div></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The fortress balance sheet</h2></div>
+  <p class="part-sub">Debt-free, cash-rich, and disciplined about giving cash back.</p>
+
+  <p class="lead">Whatever the ore price does, one thing about MOIL rarely changes: the <strong>balance sheet is a fortress</strong>. The company carries <strong>no meaningful debt</strong>, sits on a large pile of <strong>cash and investments</strong>, and has a long record of returning that cash to owners through dividends and periodic buybacks. In a commodity business famous for boom-and-bust indebtedness, MOIL's financial conservatism is its most reliable feature — and, for a certain kind of investor, its main attraction.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~₹5.63</div><div class="msl">FY25 total dividend/share (₹4.02 interim + ₹1.61 final) — a consistent, generous payout</div></div>
+    <div class="ms green"><div class="msv">Zero</div><div class="msl">Net debt — MOIL funds capex and dividends from its own cash and investments</div></div>
+    <div class="ms"><div class="msv">Buybacks</div><div class="msl">Repeated over the past decade, topping up dividends to return cash to owners (incl. the Centre)</div></div>
+  </div>
+
+  <p>The cash pile is not idle window-dressing; it is <strong>strategic ballast</strong> for a cyclical business. When ore prices fall, MOIL does not have to slash investment or scramble for financing the way a levered miner would — it can keep developing mines, keep paying dividends, and simply wait out the down-leg of the cycle. When prices are strong, the cash builds faster and funds the next buyback or capex. In effect the balance sheet <strong>decouples MOIL's survival from the commodity cycle</strong>, even as its profit stays fully exposed to it. That combination — volatile earnings, unshakeable finances — is unusual and underpins why the market is willing to pay a resource-monopoly-like multiple for a no-growth commodity.</p>
+
+  <div class="plain">
+    <div class="ptag">Why net-cash is the shock absorber, not the story</div>
+    <p>It is tempting to value MOIL as a bond-like dividend payer because of the cash. Resist that. The cash guarantees the company will <em>endure</em> every cycle comfortably and keep paying out — but it does not drive the earnings, which still swing on the ore price. So read the fortress balance sheet as the reason MOIL is <strong>low-risk of ruin</strong>, not the reason it is high-return. The upside case rests on the ore price and on volume growth; the balance sheet simply ensures the company is still standing, cash intact, to enjoy the next up-cycle whenever it arrives.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Grade, realisation, and the value-added legs</h2></div>
+  <p class="part-sub">Why the mix — not just the tonnage — decides the price MOIL earns.</p>
+
+  <p class="lead">A tonne of manganese ore is not a tonne of manganese ore. Ore is priced on its <strong>manganese content</strong>, and MOIL sells a spread of grades — from richer metallurgical ore that commands a premium to lower-grade ore used differently. So MOIL's blended <strong>realisation</strong> depends not only on the market price but on its own <strong>grade mix</strong>: sell a richer basket and the average price per tonne rises even if the market is flat. On top of the ore, MOIL runs three small higher-value legs that nudge the mix upward — ferro-manganese, EMD and, peripherally, wind power.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>MOIL's product ladder, from raw ore to value-added</caption>
+    <thead><tr><th>Product</th><th>What it is</th><th>Role in MOIL</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Manganese ore</td><td>Graded, screened ore sold on % Mn</td><td><em>The core.</em> The overwhelming majority of revenue; volumes stable, price cyclical.</td></tr>
+      <tr><td class="t-strong">Ferro-manganese</td><td>Alloy smelted from ore for steelmakers</td><td>Small in-house conversion (Balaghat) that captures a slice of downstream margin.</td></tr>
+      <tr><td class="t-strong">EMD</td><td>High-purity manganese dioxide for dry-cell batteries</td><td>Niche, higher-margin chemical; tiny scale, but a foothold in manganese-for-batteries.</td></tr>
+      <tr><td class="t-strong">Electrolytic manganese metal / chemicals</td><td>Purified manganese products for specialty uses</td><td>Exploratory value-added; part of the long-run ambition to earn beyond raw ore.</td></tr>
+      <tr><td class="t-strong">Wind power</td><td>~20 MW captive wind capacity</td><td>Peripheral, legacy green-power leg; modest revenue, mostly self-consumption.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The strategic pull behind the value-added legs is obvious: raw-ore selling leaves MOIL fully exposed to the commodity price, so anything that moves it <strong>down the chain toward the alloy and chemical markets</strong> earns a bit more per tonne of manganese and diversifies away from the pure ore cycle. That is why MOIL keeps a ferro-manganese plant, an EMD unit, and JV ambitions in ferro-alloys. The reality, though, is that these remain <strong>small</strong> relative to the ore engine — they improve the mix at the margin rather than changing what MOIL fundamentally is.</p>
+
+  <div class="note gold"><b>A genuine surprise:</b> being India's <em>largest</em> manganese-ore producer does not make MOIL the country's <em>dominant supplier of manganese units</em>. Indian ore, MOIL's included, tends to be <strong>medium grade</strong>, while the world's richest ore comes from South Africa, Gabon and Australia. Because a ferro-alloy smelter ultimately buys manganese <em>content</em>, not rock, India still imports a large volume of high-grade ore that MOIL's medium-grade output cannot straightforwardly replace. So MOIL leads domestic <em>production</em> yet competes — on its home turf — with imports it cannot always match on grade. The "national champion" and the "price-taking importer's rival" are the same company.</div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The market, the imports, and the competition</h2></div>
+  <p class="part-sub">A dominant domestic producer that still shares its market with the sea.</p>
+
+  <p class="lead">Within India, MOIL has no true peer at scale — it produces roughly <strong>45% of the country's domestic manganese ore</strong>, dwarfing the scattered private and captive miners. But domestic production is only half the picture. India is a <strong>net importer</strong> of manganese ore, and MOIL's real competition is not another Indian miner — it is the <strong>seaborne market</strong>: high-grade ore from South Africa, Gabon and Australia landing at Indian ports, priced against MOIL's medium-grade tonnes.</p>
+
+  <div class="chart">
+    <div class="c-title">Who supplies India's manganese ore</div>
+    <div class="c-sub">Illustrative split of India's manganese-ore consumption by source</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Imports<small>South Africa, Gabon, Australia</small></div><div class="track"><span class="fill bad" style="width:100%"></span></div><div class="bval">large share</div></div>
+      <div class="bar-row"><div class="blab">MOIL<small>largest domestic producer</small></div><div class="track"><span class="fill wtg" style="width:56%"></span></div><div class="bval">~45% of domestic</div></div>
+      <div class="bar-row"><div class="blab">Other domestic<small>private &amp; captive miners</small></div><div class="track"><span class="fill ink" style="width:40%"></span></div><div class="bval">the rest</div></div>
+    </div>
+    <div class="legend"><span>MOIL leads India's <em>domestic</em> output by a wide margin, but India imports a large share of its manganese needs — chiefly high-grade seaborne ore. The importer, not the domestic miner, is MOIL's price-setting competitor.</span></div>
+  </div>
+
+  <p>This structure explains why MOIL's pricing power is real but bounded. On one hand, it is the entrenched, low-cost, always-available domestic supplier with over a century of mining behind it and secure leases — a genuinely defensible position no newcomer can easily replicate. On the other, the moment MOIL's price drifts above the landed cost of imported ore of comparable value, buyers simply switch to the sea. The <strong>import parity price is the invisible ceiling</strong> on what MOIL can charge, and it moves with global ore prices, freight and the rupee — none of which MOIL controls.</p>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>MOIL enjoys a domestic near-monopoly and a fortress balance sheet, which sounds like pricing power — but the sea keeps it honest. Its advantage is <strong>reliability and proximity</strong>: an Indian ferro-alloy plant can source MOIL ore without shipping risk, port delays or currency exposure, and MOIL's leases and scale make it the default domestic partner. Its constraint is <strong>grade and global price</strong>: for the high-manganese units a smelter sometimes needs, imports win, and MOIL's whole price grid ultimately floats on the seaborne market. The realistic view is neither "unassailable monopoly" nor "commodity pawn" — it is a dominant domestic supplier operating under an imported-price ceiling it cannot lift.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A steady miner having a good stretch — valued for the cycle to hold.</p>
+
+  <p class="lead">FY25 was a strong year for MOIL: record ore output, firm realisation, revenue up ~9% and profit up ~30%. The June-2026 quarter extended the momentum with a ~70% jump in profit on record first-quarter tonnage. The market has taken note, and the stock sits on a mid-single-digit-times-cash-flow, roughly 20× earnings valuation — comfortable for a debt-free resource asset, but a price that assumes the ore cycle stays supportive.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Standalone revenue from operations (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:70%"></span></div><div class="bval">~1,150</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:91%"></span></div><div class="bval">~1,449</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>+9% YoY</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~1,585</div></div>
+    </div>
+    <div class="legend"><span>Revenue has grown at a steady clip, driven by a mix of higher tonnage and firmer realisation. Note the scale: MOIL is a small-cap by revenue — its significance is strategic (India's manganese backbone), not its size.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Profit trajectory</div>
+    <div class="c-sub">Standalone net profit (₹ Crore) — note the amplification vs revenue</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:55%"></span></div><div class="bval">~230</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill brand" style="width:70%"></span></div><div class="bval">~293</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>+30% YoY</small></div><div class="track"><span class="fill gold" style="width:92%"></span></div><div class="bval">~382</div></div>
+      <div class="bar-row"><div class="blab">Q1 FY27<small>Jun-2026, +70% YoY</small></div><div class="track"><span class="fill spec" style="width:21%"></span></div><div class="bval">~88</div></div>
+    </div>
+    <div class="legend"><span>Profit grew ~30% in FY25 on only ~9% higher revenue — the operating leverage of a fixed-cost miner in a firm-price year. The June-2026 quarter's ~70% profit jump on record tonnage is the same effect writ large.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~20×</div><div class="msl">Trailing P/E on ~₹8,000 Cr market cap — modest for a resource monopoly, rich for no-growth commodity</div></div>
+    <div class="ms green"><div class="msv">Net cash</div><div class="msl">Debt-free with a large cash &amp; investment pile funding capex and dividends</div></div>
+    <div class="ms"><div class="msv">~24%</div><div class="msl">FY25 net margin — a high-margin, low-capital-turn miner</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: blended ore realisation (₹/MT)</div>
+    <p>Because MOIL's tonnage is stable and its cost base is largely fixed, the figure that proves or breaks the case is its <strong>blended realisation — the average rupees earned per tonne of ore sold</strong>. Read alongside <strong>ore production growth</strong> (is mine development lifting sustainable volumes?) and <strong>the net-cash and payout</strong> (is the fortress intact and returning cash?), realisation is the scoreboard: track it quarter to quarter and you know almost everything about where profit is going. If realisation holds firm — because global steel is healthy and imports stay dear — a ~20× multiple on a debt-free, dividend-paying miner is defensible. If manganese-ore prices roll over as they periodically do, the same mines earn far less, profit contracts hard on the operating leverage, and a stock priced for a good cycle re-rates to a poor one. Everything else about MOIL is stable; realisation is where the money is decided.</p>
+  </div>
+
+  <div class="note">The figures here are drawn from MOIL's standalone results and cross-checked across reports; several are <b>approximate</b> or rounded (notably the FY23 revenue/profit base, the market cap, and the illustrative supply-split and target figures). The ~3 MT production ambition is a long-run management aspiration, not a dated commitment. Verify every number against MOIL's filings before relying on it.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A cash-rich national miner, waiting on the ore price and its own shafts.</p>
+
+  <p class="lead">MOIL enters the next few years in enviable financial shape — debt-free, cash-heavy, record production behind it and a firm-price tailwind in the June-2026 quarter. The real debate is not about the company's durability, which the balance sheet settles, but about two things it half-controls: whether the manganese-ore price cycle stays supportive, and whether mine development can lift sustainable tonnage enough to grow earnings through a flat-price year.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Irreplaceable input</strong> — no steel without manganese, and India's steel output is set to keep climbing; structural, long-run demand for the ore MOIL digs.</li>
+        <li><strong>Dominant, defensible position</strong> — ~45% of domestic output, century-old leases, low cost, always available; a genuine national-champion moat within India.</li>
+        <li><strong>Fortress finances</strong> — net-cash, high-margin, consistent dividends and buybacks; endures every down-cycle and compounds cash in the up-cycle.</li>
+        <li><strong>Volume optionality</strong> — a real, if slow, ambition to grow output toward ~3 MT via mine development; high-margin incremental tonnes if delivered.</li>
+        <li><strong>Operating leverage</strong> — a fixed cost base means firm ore prices drop almost straight to profit, as FY25 and Q1 FY27 showed.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Price-taker, full stop</strong> — profit rides a manganese-ore price MOIL cannot set; a Chinese-steel slowdown or import glut hits earnings hard and fast.</li>
+        <li><strong>Grade disadvantage</strong> — medium-grade domestic ore competes with richer seaborne ore; the import-parity price is a ceiling MOIL cannot lift.</li>
+        <li><strong>Slow volume growth</strong> — the ~3 MT ambition is years of shaft-sinking and clearances away; production has grown, but the prize is far off.</li>
+        <li><strong>PSU constraints</strong> — large fixed workforce, ministry oversight, and periodic government OFS that can cap the stock.</li>
+        <li><strong>Cyclical valuation trap</strong> — ~20× earnings in a good-price stretch can look cheap at the top and dear at the bottom of the ore cycle.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>MOIL is two businesses wearing one share: a rock-solid, cash-generating national ore franchise, and a fully-exposed bet on the manganese-ore price. The first never really changes — the mines produce, the balance sheet stays a fortress, the dividend arrives. The second is what actually moves the stock, and it answers to global steel and the seaborne ore market, not to anything MOIL does in Nagpur or Balaghat. So the case turns on two checkable prints: the <strong>blended realisation per tonne each quarter</strong>, which tells you whether the cycle is with MOIL or against it, and the <strong>sustainable production run-rate as new mine development comes on</strong>, which tells you whether MOIL is quietly growing the base beneath that price. Watch those two numbers; the cash, the dividend and the domestic dominance can be taken as given.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>MOIL Limited — Q4 &amp; FY25 results (year ended Mar 2025): revenue, PAT, production and dividend, via company disclosures.</li>
+    <li>Business Standard — "MOIL Q4 results: Net profit rises 27% to Rs 116 cr on higher income" and "MOIL surges after Q4 PAT climbs 27% YoY."</li>
+    <li>Business Standard — "MOIL gains after Q3 PAT rises 18% YoY to Rs 64 cr" (Q3 FY25).</li>
+    <li>Sahi / The Hans India — MOIL Q1 (June-2026 quarter) results: PAT ~₹88 Cr (+70% YoY), record Q1 ore production ~5.08 lakh MT.</li>
+    <li>Screener.in — MOIL Ltd consolidated &amp; standalone financials, market cap, P/E and dividend history.</li>
+    <li>Goodreturns — MOIL Ltd Directors' Report: production, sales volumes and grade mix.</li>
+    <li>Allvest / Tijori Finance — MOIL company overview: India's largest manganese-ore producer, mine base and market share.</li>
+    <li>Blinkx — MOIL Ltd dividend history (interim + final per share).</li>
+    <li>BSE India — MOIL Limited stock page, scrip code 533286.</li>
+    <li>Ministry of Steel / MOIL corporate profile — ownership, Miniratna status, JVs and production ambition.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports around FY25 (year ended March 2025) with a June-2026-quarter update, and may contain errors or become outdated; the ~3 MT production figure is a long-run management ambition, not a dated target, and several base-year and market-structure figures are approximate. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "MOIL";
+  const COMPANY_SLUG = "moil";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
