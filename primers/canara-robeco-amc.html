@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canara Robeco AMC — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F5F5;
+    --paper-2:#FAFBFB;
+    --card:#FFFFFF;
+    --ink:#14201F;
+    --ink-soft:#4E5C5B;
+    --ink-faint:#84918F;
+    --brand:#0E3A46;          /* deep petrol-teal navy */
+    --brand-bright:#1C6E82;   /* asset-management teal */
+    --gold:#BE8B2C;           /* warm gold accent */
+    --red:#C0392B;            /* risk red */
+    --dep:#1C6E82;           /* equity teal */
+    --loan:#4E7A8C;          /* debt slate-blue */
+    --nim:#BE8B2C;           /* fee gold */
+    --casa:#7E6BA8;          /* hybrid violet */
+    --line:#DAE0DF;
+    --line-soft:#E7ECEB;
+    --good:#2A8359;
+    --bad:#C0392B;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4EEF0;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--gold);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  .prov{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);margin-top:14px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF3E2;border:1px solid #EEDCB6;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8f6417;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"₹";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#453310;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F6F9F8;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 86px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E7ECEB;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#0E3A46,#1C6E82);}
+  .fill.gold{background:linear-gradient(90deg,#BE8B2C,#DBAA50);}
+  .fill.dep{background:linear-gradient(90deg,#1C6E82,#3E97A9);}
+  .fill.loan{background:linear-gradient(90deg,#4E7A8C,#6F9DAE);}
+  .fill.casa{background:linear-gradient(90deg,#7E6BA8,#9B87C0);}
+  .fill.red{background:linear-gradient(90deg,#C0392B,#D85F50);}
+  .fill.ink{background:linear-gradient(90deg,#37454a,#4E5C5B);}
+  @media(max-width:560px){.bar-row{grid-template-columns:96px 1fr 60px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  /* money-flow */
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.dep{background:var(--dep);}
+  .node.casa{background:var(--casa);}
+  .node.loan{background:var(--loan);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-dep{color:var(--dep);font-weight:600;}
+  .chain-loan{color:var(--loan);font-weight:600;}
+  .chain-casa{color:var(--casa);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEDEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a2c22;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF3E2;color:#4a3712;}
+  .note.gold b{color:#8f6417;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#8f6417;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#E4EEF0;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> What an AMC sells</a></li>
+    <li><a href="#p2"><span class="n">02</span> How the money flows</a></li>
+    <li><a href="#p3"><span class="n">03</span> The company &amp; its two owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The 91%-equity tilt</a></li>
+    <li><a href="#p5"><span class="n">05</span> The SIP flywheel</a></li>
+    <li><a href="#p6"><span class="n">06</span> The Canara Bank pipe</a></li>
+    <li><a href="#p7"><span class="n">07</span> The industry &amp; rivals</a></li>
+    <li><a href="#p8"><span class="n">08</span> The fee-compression clock</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> The growth runway</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: CRAMC · BSE: 544580</span>
+    <span class="tag gold">Built for a non-specialist</span>
+  </div>
+  <h1>Canara Robeco AMC, <em>a toll on savings</em></h1>
+  <p class="dek">A complete walk through one of India's oldest mutual-fund houses, freshly listed in October 2025 — how an asset manager actually earns (it clips a fee on the money it manages, nothing more), why this one runs 91% of its book in equity when most rivals lean on debt, how the SIP habit and the Canara Bank branch network feed it, and the one slow-moving threat — falling fees — that hangs over every AMC on earth.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">₹1.07 <small>L Cr</small></div><div class="l">Total AUM (Mar 2026)</div></div>
+    <div class="cell"><div class="v">~91%</div><div class="l">AUM in equity schemes</div></div>
+    <div class="cell"><div class="v">₹204 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹5,180 <small>Cr</small></div><div class="l">Market cap (Aug '26)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">29 Aug 2026</b> · source: FY26 results (year ended Mar 2026) &amp; IPO prospectus</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>First full year as a listed company: FY26 revenue ~₹454 Cr, PAT ~₹204 Cr, AUM ~₹1.07 lakh Cr (91% equity); ROE ~30%. Added the fee-compression section and the SIP-flywheel walk-through; noted the Oct-2025 IPO was a 100% offer-for-sale by Canara Bank and ORIX.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Canara Robeco Asset Management Company is the <strong>investment manager behind Canara Robeco Mutual Fund</strong> — a fund house whose roots reach back to <strong>1987</strong>, making it one of the two oldest in India. It does one thing: it runs money for other people — equity, debt and hybrid mutual-fund schemes for roughly retail savers and institutions — and takes a small annual <strong>fee on the pool it manages</strong>. That pool, its assets under management (AUM), was about <strong>₹1.07 lakh crore</strong> at March 2026. It listed on the NSE and BSE in <strong>October 2025</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>A pure fee-on-AUM machine.</strong> Canara Robeco doesn't lend, doesn't take deposits, doesn't hold market risk on its own balance sheet the way a bank does. It earns a management fee — a fraction of a percent per year — on the money investors leave with it. FY26 revenue was about <strong>₹454 Cr</strong> and net profit about <strong>₹204 Cr</strong>, on almost no debt. The economics are simply <em>AUM × fee yield − costs</em>, and because the costs barely grow as the pool grows, it is one of the most cash-generative business models in Indian finance — <strong>~30% return on equity, ~62% operating margin</strong>.</li>
+    <li><strong>Unusually equity-heavy.</strong> About <strong>91% of its AUM sits in equity schemes</strong> — far above the industry, where a big slice of assets is low-fee debt. Equity money pays a higher fee, is stickier, and mostly arrives through monthly SIPs. That mix is the single most important thing about this AMC: it is a bet on Indian households buying equity funds, not on parking corporate cash in liquid funds.</li>
+    <li><strong>A bank-parented house that just went public.</strong> It is a joint venture between <strong>Canara Bank</strong> (a large public-sector bank) and the <strong>ORIX/Robeco</strong> group of the Netherlands. The October 2025 IPO raised no money for the company itself — it was a <strong>100% offer-for-sale</strong>, both owners trimming stakes. What the market now owns is a small, high-return, dividend-friendly asset manager riding India's savings boom — and exposed to that boom's cycles.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Canara Robeco is a <strong>tollbooth on a growing river of household savings</strong>. It doesn't own the water and doesn't take the current risk; it charges a small levy — well under 1% a year — on every rupee that flows through its funds, and keeps charging as long as the money stays. The more Indians route their savings into equity mutual funds, and the longer they leave it, the more toll it collects — for almost no extra cost. The catch, and the whole debate, is two-sided: the river rises and falls with the stock market (a bad year shrinks the pool), and the toll rate itself is being pushed down over time by regulation and cheaper index funds.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>What an asset manager actually sells</h2></div>
+  <p class="part-sub">No jargon — just the handful of numbers that decide whether an AMC prints money or not.</p>
+
+  <p class="lead">An asset management company is deceptively simple. It creates mutual-fund <strong>schemes</strong> (an equity fund, a liquid fund, a balanced fund), investors put money in, professional fund managers invest it, and the AMC deducts an annual fee from the pool for running it. The AMC never owns the investors' money — it just manages it and clips a fee. Master five terms and you understand the whole business.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only asset-management units you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and Canara Robeco's number)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">AUM</td><td><strong>Assets Under Management</strong> — the total pool of investors' money the AMC runs across all its schemes. The base everything is charged on. Canara Robeco: <strong>~₹1.07 lakh Cr</strong> (Mar 2026).</td></tr>
+      <tr><td class="t-strong">TER</td><td><strong>Total Expense Ratio</strong> — the all-in annual charge to the investor, as a % of their money, capped by regulation (roughly ~2% at the top for small equity schemes, far less for large or debt schemes). The AMC's fee is carved out of this.</td></tr>
+      <tr><td class="t-strong">Fee yield</td><td>The AMC's own <strong>revenue as a % of average AUM</strong> — what it actually keeps after paying distributors out of the TER. For an equity-heavy house this runs in the region of <strong>~0.4–0.5%</strong>; debt-heavy houses earn far less.</td></tr>
+      <tr><td class="t-strong">Equity mix</td><td>Share of AUM in <strong>equity</strong> (vs debt/liquid) schemes. Equity earns a higher fee, is stickier, and is SIP-fed. Canara Robeco: <strong>~91%</strong> — exceptionally high.</td></tr>
+      <tr><td class="t-strong">SIP book</td><td><strong>Systematic Investment Plans</strong> — investors auto-investing a fixed sum every month. Predictable, recurring inflows that keep arriving even in weak markets. Canara Robeco: SIPs are <strong>~a third of AUM</strong>, well above the industry.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The simple profit equation</div>
+    <p>Roughly: <strong>Profit ≈ (average AUM × fee yield) − fund-management &amp; distribution costs − admin</strong>. So an AMC gets richer three ways — <strong>grow the pool</strong> (net inflows plus market appreciation), <strong>improve the mix</strong> (more equity, less low-fee debt, which lifts the blended fee yield), and <strong>hold costs flat</strong> (the same fund manager can run a much bigger pool). The magic is that third lever: doubling AUM barely doubles costs, so profit grows faster than revenue. That's why a well-run AMC throws off cash and pays it out — Canara Robeco has almost no debt and a ~30% dividend payout.</p>
+  </div>
+
+  <h3>Why this is not a bank and not a broker</h3>
+  <ul class="clean">
+    <li><strong>No balance-sheet risk on customer money.</strong> A bank lends out deposits and eats the loss if a borrower defaults. An AMC never puts the investor's capital at risk on <em>its own</em> books — if a fund falls, it's the investor's loss, not the AMC's. The AMC's own capital is tiny and its risk is <em>indirect</em>: a market fall shrinks the AUM it charges on, so its fee income dips — but it can't go bust from bad loans, because it makes none.</li>
+    <li><strong>Recurring, not transactional.</strong> A stockbroker earns a fee only when someone trades; no trades, no revenue. An AMC earns every single day the money stays invested, whether or not the investor does anything. That recurring, annuity-like quality is what makes AUM so valuable — and why a rupee of sticky equity SIP money is worth far more than a rupee of hot money that leaves next quarter.</li>
+    <li><strong>Capital-light by nature.</strong> Running ₹1 lakh crore needs a few hundred people, some technology and a compliance apparatus — not factories or a giant capital base. That's why returns on equity sit near 30% and the company can distribute most of its profit.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>How the money flows: saver → scheme → fee → profit</h2></div>
+  <p class="part-sub">Read this once and the entire business — and why the equity mix matters so much — clicks into place.</p>
+
+  <p class="lead">Money enters an AMC at one end as an investor's contribution and leaves as two things: the investor's own returns (which belong to them) and a thin sliver of annual fee (which belongs to the AMC). What decides how fat that sliver is comes down to two levers — <strong>how big the pool is</strong> and <strong>what it's made of</strong>. Trace a rupee through the belt and both jump out.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The savings conveyor — contributions in, a thin annual fee harvested, the rest is the investor's</div>
+    <div class="flow-row">
+      <div class="node dep"><div class="ntag">Stage 1 · Inflow</div><div class="nname">SIP &amp; lump-sum</div><div class="nwho">Retail savers, mostly via monthly SIPs, plus some institutions.</div></div>
+      <div class="arrow">→</div>
+      <div class="node casa"><div class="ntag">Stage 2 · Pool</div><div class="nname">AUM across schemes</div><div class="nwho">~₹1.07 L Cr — 91% equity, the rest debt &amp; hybrid.</div></div>
+      <div class="arrow">→</div>
+      <div class="node loan"><div class="ntag">Stage 3 · Charge</div><div class="nname">Fee out of the TER</div><div class="nwho">A fraction of a % a year, deducted daily from the pool.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Stage 4 · Profit</div><div class="nname">Fee − costs = margin</div><div class="nwho">Costs barely move as AUM grows → ~62% operating margin.</div></div>
+    </div>
+    <div class="flow-note">The equity mix (Stage 2) is the lever most people miss: the <em>same</em> ₹100 of AUM throws off a much bigger Stage-3 fee if it sits in an equity fund than in a liquid fund. That is why 91% equity, not the headline AUM, is Canara Robeco's real edge.</div>
+  </div>
+
+  <h3>The fee yield, in one picture</h3>
+  <p>Two AMCs can each manage ₹1 lakh crore and earn wildly different revenue. A house stuffed with corporate liquid-fund money might keep only ~0.1–0.15% a year; a house full of retail equity SIPs keeps ~0.4–0.6%. Same headline AUM, three-to-four times the revenue. Canara Robeco sits firmly at the high-yield end because almost all of its money is equity. When you hear "AUM grew 20%," always ask <em>which kind</em> of AUM — because a rupee of equity AUM is worth several rupees of debt AUM to the AMC.</p>
+
+  <div class="chart">
+    <div class="c-title">Why the mix beats the size — fee yield by scheme type</div>
+    <div class="c-sub">Indicative AMC revenue kept per ₹100 of AUM, per year, by category</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Equity fund<small>SIP-fed, sticky, high fee</small></div><div class="track"><span class="fill dep" style="width:100%"></span></div><div class="bval">~₹0.55</div></div>
+      <div class="bar-row"><div class="blab">Hybrid fund<small>mix of equity &amp; debt</small></div><div class="track"><span class="fill casa" style="width:64%"></span></div><div class="bval">~₹0.35</div></div>
+      <div class="bar-row"><div class="blab">Debt fund<small>bonds, moderate fee</small></div><div class="track"><span class="fill loan" style="width:36%"></span></div><div class="bval">~₹0.20</div></div>
+      <div class="bar-row"><div class="blab">Liquid fund<small>corporate cash, wafer-thin</small></div><div class="track"><span class="fill ink" style="width:16%"></span></div><div class="bval">~₹0.09</div></div>
+    </div>
+    <div class="legend"><span>Illustrative, not Canara Robeco's exact scheme fees. The point is the ranking: equity money is several times more valuable to an AMC than liquid money. A house that is 91% equity is punching well above its AUM rank on revenue.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "sticky" money is the whole game</div>
+    <p>An AMC's nightmare is money that arrives in a bull market and flees in a crash — it swells AUM briefly, then vanishes just when markets are down and the pool is already shrinking. Equity SIP money behaves the opposite way: it drips in every month by standing instruction, and behavioural inertia keeps most of it invested for years, even through wobbles. So a high equity-and-SIP mix doesn't just earn a fatter fee — it earns a <em>more durable</em> one. Canara Robeco's ~91% equity, ~one-third-SIP profile is about as sticky as an Indian fund book gets, which is why the market pays up for its earnings despite its modest size.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company and its two owners</h2></div>
+  <p class="part-sub">A 1987 fund house, a Dutch-Japanese partner, a public-sector bank parent — and a debut on the exchanges in 2025.</p>
+
+  <p class="lead">Canara Robeco's lineage is one of the longest in Indian mutual funds. It began in <strong>1987</strong> as <strong>Canbank Mutual Fund</strong>, floated by Canara Bank in the first generation of Indian fund houses, when only a handful existed. In <strong>2007</strong>, the Dutch asset manager <strong>Robeco</strong> took a stake and the house was renamed <strong>Canara Robeco</strong>. The AMC company itself was incorporated in <strong>1993</strong>. It is run by a professional management team; neither owner runs it day-to-day.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li class="major"><div class="yr">1987</div><div class="ev"><strong>Canbank Mutual Fund launched</strong> by Canara Bank — among the very first mutual funds in India, second only to UTI in vintage.</div></li>
+    <li><div class="yr">1993</div><div class="ev">The <strong>asset management company is incorporated</strong> as the formal investment manager to the fund.</div></li>
+    <li class="major"><div class="yr">2007</div><div class="ev"><strong>Robeco joins as partner</strong>; the house is rebranded <strong>Canara Robeco</strong>, bringing global asset-management practice to a bank-sponsored fund.</div></li>
+    <li><div class="yr">2013 onward</div><div class="ev">Robeco's parentage passes through the <strong>ORIX</strong> group of Japan (via its European arm), so the foreign partner sits under ORIX Corporation Europe.</div></li>
+    <li><div class="yr">FY23–FY25</div><div class="ev">AUM compounds at roughly <strong>~29% a year</strong> to ~₹1.11 lakh Cr, on the back of a booming equity-fund market; profit more than doubles.</div></li>
+    <li class="major"><div class="yr">Oct 2025</div><div class="ev"><strong>IPO on NSE &amp; BSE</strong> — a ₹1,326 Cr issue at ₹266/share, a <strong>100% offer-for-sale</strong> by Canara Bank and ORIX; lists at a modest ~5% premium. No fresh capital raised by the company.</div></li>
+    <li><div class="yr">FY26</div><div class="ev">First full year as a listed AMC: revenue ~<strong>₹454 Cr</strong>, PAT ~<strong>₹204 Cr</strong>, AUM ~₹1.07 lakh Cr; a mid-year quarter of weak market flows reminds investors the earnings are market-linked.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; management</h3>
+  <ul class="clean">
+    <li><strong>Two promoters, a 50:50-style JV.</strong> Before the IPO, <strong>Canara Bank held 51%</strong> and the <strong>ORIX/Robeco</strong> side the balance. In the offer-for-sale, Canara Bank sold ~13% and ORIX trimmed its holding too, floating the shares now trading — but both remain the controlling promoters.</li>
+    <li><strong>The bank parent is the distribution edge.</strong> Canara Bank isn't just an owner; its thousands of branches are a captive channel that sells Canara Robeco schemes to the bank's depositors — a structural advantage most standalone AMCs would envy (covered in §06).</li>
+    <li><strong>The foreign partner brings craft, not capital.</strong> Robeco is a respected European equity-investment house; the partnership lends the fund an investment-process pedigree that underpins its equity-led, research-driven positioning.</li>
+    <li><strong>Why a pure offer-for-sale matters.</strong> Because the IPO raised no money <em>for the company</em>, nothing changed operationally on listing day — the owners simply monetised part of their stake and created a public float. The AMC didn't need the cash: it is capital-light and self-funding. What the listing did do is put a daily market price on a business whose earnings swing with the stock market.</li>
+  </ul>
+</section>
+
+<!-- 04 — BESPOKE: the defining force -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The 91%-equity tilt — the whole thesis in one number</h2></div>
+  <p class="part-sub">The single fact that separates Canara Robeco from most of its listed peers, for better and worse.</p>
+
+  <p class="lead">Line up India's asset managers and one number makes Canara Robeco stand out immediately: roughly <strong>91% of its AUM is in equity schemes</strong>. The typical large AMC carries a much heavier slug of debt and liquid funds — often 40–60% of assets — where corporate treasuries park cash for a few weeks at razor-thin fees. Canara Robeco has almost none of that. Its book is overwhelmingly <strong>retail equity money, arriving through SIPs</strong>. This one skew explains both why its returns are so high and why its earnings are so market-sensitive.</p>
+
+  <div class="chart">
+    <div class="c-title">A book made of the good stuff — Canara Robeco's AUM by type</div>
+    <div class="c-sub">Approximate share of total AUM, FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Equity schemes<small>the high-fee, sticky core</small></div><div class="track"><span class="fill dep" style="width:100%"></span></div><div class="bval">~91%</div></div>
+      <div class="bar-row"><div class="blab">Hybrid schemes<small>equity + debt blends</small></div><div class="track"><span class="fill casa" style="width:6%"></span></div><div class="bval">~5%</div></div>
+      <div class="bar-row"><div class="blab">Debt &amp; liquid<small>low-fee, institutional</small></div><div class="track"><span class="fill loan" style="width:5%"></span></div><div class="bval">~4%</div></div>
+    </div>
+    <div class="legend"><span>Approximate, from IPO-period disclosures. Most listed AMCs would show a far larger debt/liquid slice. Canara Robeco has deliberately not chased low-fee institutional cash — it lives on retail equity.</span></div>
+  </div>
+
+  <h3>Why this is a genuine advantage</h3>
+  <ul class="clean">
+    <li><strong>A premium blended fee.</strong> Because equity funds carry the highest expense ratios, an equity-dominated book earns a <em>blended</em> fee yield well above a debt-heavy rival on the same headline AUM. Canara Robeco earns more revenue per crore of AUM than its size would suggest.</li>
+    <li><strong>Stickier, longer-duration money.</strong> Equity SIP investors typically stay for years; corporate liquid money can leave on a Friday. A book of patient equity money means a more predictable, annuity-like revenue stream — the reason its earnings quality is prized.</li>
+    <li><strong>A cleaner ride on the SIP wave.</strong> The structural story in Indian savings is households moving into equity funds via SIPs. A house that is 91% equity is a nearly pure-play on exactly that trend, with none of its economics diluted by commoditised debt products.</li>
+  </ul>
+
+  <h3>And why it is also the risk</h3>
+  <p>The very concentration that makes the book valuable also makes it fragile to one thing: the stock market. Debt and liquid AUM barely move when equities fall; equity AUM falls with the index — and can fall further if nervous investors redeem. A house that is 91% equity has, in effect, <strong>geared its fee income to the equity market</strong>. In a sustained bear phase, Canara Robeco's AUM — and therefore its revenue — would contract more sharply than a diversified rival's. The FY26 mid-year quarter, when weaker flows dented profit, was a small taste of this sensitivity.</p>
+
+  <div class="plain">
+    <div class="ptag">The non-obvious way to read the mix</div>
+    <p>The equity tilt is best understood as a <strong>deliberate refusal to chase the wrong AUM</strong>. Canara Robeco could bulk up its headline assets tomorrow by courting corporate liquid-fund money — but that money pays almost nothing and flatters size without adding profit. By staying equity-concentrated, the AMC keeps its revenue-per-rupee high and its earnings clean, at the cost of a smaller, more market-exposed asset base. It has chosen <em>quality of AUM over quantity of AUM</em> — a choice that looks brilliant in a bull market and uncomfortable in a bear one.</p>
+  </div>
+
+  <div class="note gold"><b>Why this is the section that matters:</b> almost every question about Canara Robeco routes back to the 91%. Its high margins, its rich valuation, its SIP resilience — all flow from the equity tilt. So does its downside: this is not a defensive, all-weather asset manager but a <strong>leveraged play on Indian equity flows</strong>. Watch <strong>net equity inflows and AUM growth</strong> each quarter; they are the tilt's vital signs.</div>
+</section>
+
+<!-- 05 — BESPOKE -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The SIP flywheel and the financialisation of savings</h2></div>
+  <p class="part-sub">The structural tailwind lifting every equity AMC — and why Canara Robeco rides it harder than most.</p>
+
+  <p class="lead">For decades, Indian households kept their savings in gold, property and bank deposits. Over the last ten years a quiet revolution has moved a growing share into <strong>equity mutual funds, mostly via monthly SIPs</strong> — the "mutual funds sahi hai" era of financialisation. Industry-wide SIP contributions have climbed to record levels month after month, and the number of SIP accounts runs into the crores. This is the tide beneath Canara Robeco, and because its book is equity-and-SIP heavy, it catches more of the tide than a debt-heavy peer.</p>
+
+  <div class="chart">
+    <div class="c-title">SIPs are the recurring heartbeat — Canara Robeco vs the industry</div>
+    <div class="c-sub">SIP money as an approximate share of total AUM</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Canara Robeco<small>~a third of AUM is SIP</small></div><div class="track"><span class="fill dep" style="width:100%"></span></div><div class="bval">~33%</div></div>
+      <div class="bar-row"><div class="blab">Industry average<small>most houses lower</small></div><div class="track"><span class="fill ink" style="width:64%"></span></div><div class="bval">~21%</div></div>
+    </div>
+    <div class="legend"><span>A higher SIP share means a larger slice of AUM keeps growing by standing instruction regardless of market mood — the closest thing an AMC has to guaranteed monthly inflow.</span></div>
+  </div>
+
+  <h3>Why the flywheel spins faster here</h3>
+  <ul class="clean">
+    <li><strong>Retail-dominated book.</strong> Around <strong>87% of Canara Robeco's AUM is retail</strong>, not institutional — exactly the investor type that runs SIPs and stays for the long haul. Retail money is stickier and pays a fuller fee.</li>
+    <li><strong>Deep into smaller India.</strong> Roughly a quarter of its assets come from <strong>B-30 cities</strong> (beyond the top 30 towns) — the newer, fast-growing frontier of Indian fund investing, where SIP adoption is still climbing from a low base and regulation rewards fund houses for reaching.</li>
+    <li><strong>Behavioural inertia is an asset.</strong> Once a saver sets up a ₹5,000 monthly SIP, they rarely stop it — through market dips, it just keeps buying. Multiply that across lakhs of accounts and you get a revenue base that grows almost mechanically, quarter after quarter.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">The tailwind that could last a decade</div>
+    <p>India's mutual-fund AUM is still a modest fraction of GDP compared with developed markets, and equity-fund penetration among households is only beginning. As incomes rise, as more first-time investors open accounts, and as the SIP habit spreads from metros into B-30 towns, the industry pool can compound for years — and an equity-and-SIP-led house is geared to exactly that growth. The realistic frame isn't a single boom; it's a <strong>long, uneven climb in the number of Indians who invest monthly</strong>, with Canara Robeco collecting a fee on a rising share of it.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~33%</div><div class="msl">SIP share of AUM — well above the industry's ~21%</div></div>
+    <div class="ms"><div class="msv">~87%</div><div class="msl">Retail share of AUM — sticky, full-fee money</div></div>
+    <div class="ms green"><div class="msv">~24%</div><div class="msl">AUM from B-30 cities — the growth frontier</div></div>
+  </div>
+</section>
+
+<!-- 06 — BESPOKE -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The Canara Bank pipe — and the rest of the distribution engine</h2></div>
+  <p class="part-sub">How the money actually reaches the funds — and the built-in advantage of a bank parent.</p>
+
+  <p class="lead">An AMC can run money brilliantly and still starve if it can't <strong>distribute</strong> its schemes — reach investors and get them to invest. Distribution is where fund houses win or lose, and Canara Robeco has an edge few rivals share: its promoter, <strong>Canara Bank</strong>, is a large public-sector bank whose branch network can channel depositors' savings straight into Canara Robeco funds. Around that bank pipe sits the usual mix of independent advisers, national distributors and fast-growing digital platforms.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The three channels that feed the funds</caption>
+    <thead><tr><th>Channel</th><th>How it works</th><th>Why it matters here</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Canara Bank branches</td><td>Bank staff cross-sell Canara Robeco schemes to the bank's own deposit customers, especially outside big cities.</td><td>A captive, trust-rich funnel most standalone AMCs cannot replicate — and a big reason for the strong B-30 reach.</td></tr>
+      <tr><td class="t-strong">IFAs &amp; national distributors</td><td>Independent financial advisers and large distribution firms recommend and service schemes for a commission.</td><td>The backbone of Indian fund distribution; wide reach into advised retail money, though it carries commission cost.</td></tr>
+      <tr><td class="t-strong">Direct &amp; digital platforms</td><td>Investors buy commission-free "direct" plans through apps and the AMC's own channels.</td><td>The fastest-growing, lowest-cost channel — better margins for the AMC, and where younger SIP investors increasingly start.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why a bank parent is worth more than it looks</div>
+    <p>Winning a new SIP investor is expensive and slow for a standalone fund house — it must advertise, court advisers, and build trust from scratch. A bank-sponsored AMC gets a shortcut: millions of the bank's depositors already trust the brand and walk into its branches. When a Canara Bank customer is offered a Canara Robeco SIP by someone they already bank with, the acquisition cost is a fraction of what a rival pays to reach the same saver — and the reach extends naturally into the smaller towns where the bank has branches but pure fund houses don't. That embedded channel is a quiet, durable moat, particularly for gathering the sticky B-30 retail money the AMC prizes.</p>
+  </div>
+
+  <div class="note gold"><b>The flip side:</b> a bank-parented AMC's distribution edge is real but not unlimited. Canara Bank's own staff also sell rival products and its branch push is only as strong as the parent's priorities; and the industry's biggest growth is now in the <strong>direct/digital</strong> channel, where every AMC competes on brand and performance, not on a captive branch counter. The bank pipe is a head start in retail acquisition — not a monopoly on it.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A fast-growing, top-heavy market where scale and brand compound — and Canara Robeco is a mid-sized specialist.</p>
+
+  <p class="lead">The Indian mutual-fund industry manages well over ₹65 lakh crore across roughly forty fund houses, but it is <strong>concentrated</strong>: the top handful control the bulk of assets. Growth is structural and rapid, yet the competitive reality is that <strong>scale begets scale</strong> — bigger AMCs can spend more on distribution and brand, and index funds are eating share at the low-cost end. Canara Robeco sits as a respected <strong>mid-sized, equity-focused house</strong>, not a giant.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Canara Robeco</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Canara Robeco AMC</td><td>Mid-sized, ~₹1.07 lakh Cr AUM, ~91% equity</td><td><em>This company.</em> Small by AUM but high-quality, equity-and-SIP heavy, bank-distributed, high-margin.</td></tr>
+      <tr><td class="t-strong">HDFC AMC, Nippon India, ABSL</td><td>The listed large-caps of the industry</td><td>Several times larger by AUM, broader product ranges, deeper distribution; the benchmarks for scale and the clearest valuation comparables.</td></tr>
+      <tr><td class="t-strong">UTI AMC</td><td>Listed, long-established, institutional-heavy</td><td>Bigger and more diversified across debt; lower equity mix, so a lower blended fee than Canara Robeco.</td></tr>
+      <tr><td class="t-strong">SBI, ICICI Pru, Kotak (unlisted/part-listed)</td><td>The AUM heavyweights, often bank-sponsored</td><td>SBI and ICICI Pru dwarf Canara Robeco on assets; SBI shows just how powerful a large bank-distribution pipe can be at full scale.</td></tr>
+      <tr><td class="t-strong">Index/passive providers</td><td>Low-cost ETFs and index funds</td><td>Structurally cheaper; they pressure fees across the industry and nibble at the large-cap equity space where active managers struggle to out-perform.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Where Canara Robeco actually competes</div>
+    <p>Canara Robeco does not try to be the biggest — it competes on being a <strong>consistent, research-led equity manager with a bank-fed retail channel</strong>. Its edge over the giants is not scale but mix and quality: a higher equity share, a higher SIP share, and a promoter branch network reaching smaller towns. Its vulnerability is the mirror image: it lacks the sheer distribution muscle and product breadth of an SBI or HDFC AMC, so in a fee war or a passive surge, a smaller house has less room to absorb pressure. The competitive question is whether it can keep <em>growing its equity AUM faster than the market</em> — winning share of net inflows — rather than simply riding the tide up and down.</p>
+  </div>
+
+  <div class="note gold"><b>The regulatory backdrop:</b> AMCs operate under the Securities and Exchange Board of India (SEBI), which caps expense ratios (the TER), sets scheme categorisation and disclosure rules, mandates a slice of "skin in the game" and governs how commissions are paid. SEBI's long-run direction has been <strong>pro-investor and fee-reducing</strong> — periodically tightening TER caps and pushing transparency. That backdrop is a tailwind for investor trust and industry growth, and a slow headwind for AMC fee margins (see §08).</div>
+</section>
+
+<!-- 08 — BESPOKE: the structural risk section -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The fee-compression clock</h2></div>
+  <p class="part-sub">The one slow, structural force hanging over every asset manager — and how it bites an equity house like this.</p>
+
+  <p class="lead">Here is the uncomfortable truth about the whole AMC model: the fee it charges only ever tends to fall. Three forces push in the same direction — <strong>regulation</strong> (SEBI trimming TER caps), <strong>scale</strong> (rules force expense ratios down as a scheme grows), and <strong>passive competition</strong> (index funds and ETFs at a fraction of the cost). None of these moves quickly; together they act like a <strong>clock ticking down the fee yield</strong> a rupee of AUM earns, year after year. An AMC stays ahead only by growing AUM faster than its fee shrinks.</p>
+
+  <div class="chart">
+    <div class="c-title">The three hands on the fee-compression clock</div>
+    <div class="c-sub">Relative strength of the forces squeezing AMC fee yields (illustrative)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">TER slab regulation<small>caps fall as scheme grows</small></div><div class="track"><span class="fill red" style="width:100%"></span></div><div class="bval">Strong</div></div>
+      <div class="bar-row"><div class="blab">Passive / index shift<small>cheap ETFs take share</small></div><div class="track"><span class="fill red" style="width:74%"></span></div><div class="bval">Rising</div></div>
+      <div class="bar-row"><div class="blab">Direct-plan growth<small>commission-free, lower cost</small></div><div class="track"><span class="fill loan" style="width:52%"></span></div><div class="bval">Mixed</div></div>
+    </div>
+    <div class="legend"><span>Direct plans cut the distributor's cut, not always the AMC's — so it can even help AMC margins. TER slabs and passive competition, by contrast, squeeze the AMC's own take. Illustrative weighting, not a measured index.</span></div>
+  </div>
+
+  <h3>How the clock treats Canara Robeco specifically</h3>
+  <ul class="clean">
+    <li><strong>Its equity tilt is a partial shield.</strong> Fee pressure is fiercest in commoditised large-cap and passive space; Canara Robeco's active, research-led equity funds — including mid- and small-cap and thematic strategies where active management still earns its keep — command fuller fees than a plain index tracker. The more its book sits in genuinely differentiated active equity, the slower the clock ticks for it.</li>
+    <li><strong>Scale slabs cut both ways.</strong> As its popular schemes grow, regulation forces their TERs down a notch — so success itself trims the fee rate. Growing AUM is the treadmill it must keep running on: the pool has to expand faster than the per-rupee fee contracts.</li>
+    <li><strong>Passive is a real, if gradual, threat.</strong> If Indian retail follows the developed-world path toward index funds, the active-equity fee pool grows more slowly than AUM. An equity-only house has no debt franchise to fall back on if active equity fees erode — a concentration risk, not just an opportunity.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the clock is serious — but not the end of the story</div>
+    <p>The offset is arithmetic. If Canara Robeco's fee yield drifts down a little each year but its AUM compounds at a healthy double-digit rate, revenue still rises — the growing pool out-runs the shrinking rate. That has been the industry's experience for a decade: fees fell, yet AMC profits climbed, because assets grew faster. The thesis-settling question is therefore not "will fees fall?" (they will) but <strong>"can equity AUM keep compounding fast enough to more than offset it?"</strong> For an equity-and-SIP-led house with a bank distribution pipe, the honest base case is yes — as long as India's SIP wave keeps rolling. If that wave stalls while fees keep sliding, the model's shine dulls quickly.</p>
+  </div>
+
+  <div class="note"><b>The genuine surprise for a generalist:</b> the biggest risk to an AMC is not that markets crash — a crash dents one or two years and then AUM recovers with the index. The deeper risk is <strong>a permanent, quiet erosion of the fee itself</strong>, which never comes back. A great crash year is survivable; a slow leak in the fee yield is the thing that structurally re-rates an asset manager down. That is why the fee line, not the market level, is the number to watch over a decade.</div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">Small, spectacularly profitable, and priced like a quality compounder rather than a bargain.</p>
+
+  <p class="lead">Canara Robeco's financials are the picture of a well-run, capital-light AMC: fast revenue growth, very high margins, minimal debt, and a rich return on equity. It is a small company by profit — a few hundred crore — but one that keeps most of what it earns and pays a chunk out. The valuation debate is not about quality (it is high) but about how much market-linked, single-mix earnings should be worth.</p>
+
+  <div class="chart">
+    <div class="c-title">AUM trajectory — the base everything is charged on</div>
+    <div class="c-sub">Total assets under management (₹ lakh Crore, approx, year-end)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill dep" style="width:84%"></span></div><div class="bval">~0.90</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill dep" style="width:100%"></span></div><div class="bval">~1.08</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:99%"></span></div><div class="bval">~1.07</div></div>
+    </div>
+    <div class="legend"><span>From ~₹0.67 lakh Cr in FY23, AUM compounded ~29% a year to FY25 on the equity-fund boom. The near-flat FY25→FY26 reading reflects a choppier equity market — the market-sensitivity of an equity-heavy book, visible in one line.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory — the fee stream</div>
+    <div class="c-sub">Revenue from operations (₹ Crore)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill dep" style="width:70%"></span></div><div class="bval">~318</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill dep" style="width:89%"></span></div><div class="bval">~404</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~454</div></div>
+    </div>
+    <div class="legend"><span>Revenue more than doubled from ~₹205 Cr in FY23; net profit tracked it, rising from ~₹79 Cr (FY23) to ~₹151 Cr (FY24), ~₹191 Cr (FY25) and ~₹204 Cr (FY26). The gentler FY26 step — profit up only ~7% — is the flat-AUM year showing through: when the pool stops growing, so does the fee, near one-for-one.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~30%</div><div class="msl">Return on equity — top-tier for Indian finance, on almost no debt</div></div>
+    <div class="ms"><div class="msv">~40%</div><div class="msl">Return on capital employed — the capital-light fee machine</div></div>
+    <div class="ms green"><div class="msv">~62%</div><div class="msl">Operating margin — costs barely move as AUM grows</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to think about the valuation</div>
+    <p>The right yardstick for an asset manager is not price-to-earnings in isolation but <strong>market cap as a percentage of AUM</strong> — how much you pay for each rupee it manages — read against the quality of that AUM. On roughly ₹5,180 crore of market value against ~₹1.07 lakh crore of AUM, the market is capitalising the fee stream at a few percent of assets, a level that only makes sense <em>because</em> the mix is 91% equity and the returns near 30%. The thesis-settling metric is therefore <strong>net equity inflows and the AUM growth rate</strong>: at a P/E in the low-20s, the price already assumes the equity book keeps compounding at a healthy double-digit pace. If quarterly equity inflows stay strong and AUM keeps climbing, the earnings grow into that price; if inflows sputter in a flat market, a single-mix AMC's profit stalls with them — as the FY26 profit slowdown briefly showed.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The growth runway</h2></div>
+  <p class="part-sub">More SIP accounts, deeper into small-town India, and a widening equity shelf — the compounding engines.</p>
+
+  <p class="lead">Canara Robeco's growth from here is not one bet but <strong>several engines turning together</strong>, all downstream of the same tide: more Indians investing more of their savings in equity funds, more months of the year. The unlock is simply keeping its share of that rising flow — and, ideally, winning a little more of it than its size implies.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The growth engines, stacked</caption>
+    <thead><tr><th>Engine</th><th>What it adds</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">SIP account growth</td><td>New monthly investors, each a small recurring inflow</td><td>The most predictable growth lever — every new SIP is annuity-like AUM that compounds for years.</td></tr>
+      <tr><td class="t-strong">B-30 / small-town reach</td><td>Deeper penetration beyond the top 30 cities, via Canara Bank branches</td><td>The frontier of Indian fund investing; the bank pipe reaches where standalone AMCs struggle.</td></tr>
+      <tr><td class="t-strong">Product shelf expansion</td><td>New equity, thematic and passive schemes to widen the offering</td><td>More ways to capture investor money and defend against the passive shift with its own low-cost products.</td></tr>
+      <tr><td class="t-strong">Market appreciation</td><td>AUM rises with the equity market even without new inflows</td><td>Free growth in bull phases — but the double-edge that also shrinks AUM in downturns.</td></tr>
+      <tr><td class="t-strong">Mix &amp; scale economics</td><td>Costs grow far slower than AUM; margin expands with size</td><td>The capital-light flywheel — each new crore of AUM drops more to the bottom line.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <blockquote>The next chapter is less about a new strategy and more about staying on the treadmill — keep winning equity inflows, push deeper into small-town India, and let a capital-light fee machine compound as the SIP habit spreads.</blockquote>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A high-quality, high-return specialist — geared to Indian equity flows, for better and worse.</p>
+
+  <p class="lead">Canara Robeco is a genuinely high-quality asset manager: an equity-and-SIP-led book, a bank-parent distribution edge, top-tier returns on capital, and a clean, debt-free balance sheet. The investment debate is not about the quality of the machine but about <strong>the durability of the flows that feed it and the fee it can keep charging</strong> — and about paying a compounder's multiple for a small, single-mix, market-sensitive business.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Best-in-class mix</strong> — ~91% equity, ~33% SIP, ~87% retail: the highest-quality, stickiest, highest-fee kind of AUM.</li>
+        <li><strong>Capital-light, cash-rich</strong> — ~30% ROE, ~62% margins, almost no debt, ~30% dividend payout; profit compounds with AUM at little extra cost.</li>
+        <li><strong>Structural SIP tailwind</strong> — India's financialisation of savings is early; equity-fund penetration has years of runway, and Canara Robeco is a near-pure play on it.</li>
+        <li><strong>Bank distribution moat</strong> — the Canara Bank branch network is a low-cost, trust-rich funnel into sticky small-town retail money.</li>
+        <li><strong>Fee compression is out-runnable</strong> — a decade of falling fees still produced rising AMC profits, because AUM grew faster; the same maths can hold here.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Geared to the equity market</strong> — a 91%-equity book means AUM, and fee income, fall harder than a diversified rival's in a sustained bear phase.</li>
+        <li><strong>Fee-compression clock</strong> — TER cuts and the passive shift quietly erode the fee yield every year; an equity-only house has no debt franchise to lean on.</li>
+        <li><strong>Sub-scale vs the giants</strong> — a fraction of the AUM and distribution muscle of SBI, HDFC AMC or ICICI Pru; less room to absorb a fee war.</li>
+        <li><strong>Single-mix, single-country cyclicality</strong> — earnings swing with Indian equity flows; a flat market can stall profit fast, as FY26 hinted.</li>
+        <li><strong>Priced as a compounder</strong> — a low-20s P/E already assumes the equity book keeps compounding; a growth stumble re-rates it quickly.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Canara Robeco is a <strong>high-quality tollbooth on India's equity-savings flow</strong> — capital-light, high-return, and geared, deliberately, to the one trend it most wants exposure to. Its business risk is low in the sense that it can't blow up on bad loans; its earnings risk is high in the sense that they rise and fall with equity flows and a slowly falling fee. The case turns on two numbers watched every quarter: <strong>net equity inflows</strong> (is the SIP wave still lifting the pool?) and the <strong>blended fee yield</strong> (is the toll rate holding?). While Indians keep starting SIPs faster than the fee erodes, a debt-free 30%-ROE fee machine compounds nicely; if inflows stall in a flat market while fees keep sliding, the equity tilt that powers the upside becomes the drag — and the next weak-flow quarter, not any single dramatic event, is where the thesis gets tested.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Canara Robeco Asset Management Company — Red Herring Prospectus / DRHP (2025), business, AUM, scheme mix, SIP and B-30 disclosures.</li>
+    <li>Screener.in — Canara Robeco AMC (CRAMC / BSE 544580): market cap, revenue, profit, ROE ~30%, ROCE ~40%, operating margin, P/E, dividend payout.</li>
+    <li>Chittorgarh / Value Research — Canara Robeco AMC IPO: dates, ₹266 issue price, ₹1,326 Cr size, 100% offer-for-sale, listing 16 Oct 2025.</li>
+    <li>Business Standard — "Canara Robeco AMC sets IPO price band at ₹253–266; Canara Bank, ORIX to divest" (Oct 2025).</li>
+    <li>Business Standard — "Canara Robeco AMC subscribed 9.74 times" (Oct 2025).</li>
+    <li>Mint — "Canara Robeco AMC Q4 results: revenue rises 13%, PAT ₹41 crore; ₹2.5 dividend."</li>
+    <li>Business Standard — "Canara Robeco AMC stock tanks 11% after weak Q2 results; profit falls 20% QoQ" (Oct 2025).</li>
+    <li>Anand Rathi / ICICIdirect — Canara Robeco AMC IPO notes: financial history (FY23–FY25 revenue &amp; PAT), AUM CAGR ~28.6%, ~91% equity mix, ~33% SIP, ~87% retail.</li>
+    <li>SimplyWall.st — Canara Robeco Asset Management (BSE: 544580) company information (independent confirmation of BSE code).</li>
+    <li>AMFI industry data — mutual-fund industry AUM, SIP contribution trends and B-30 context (financialisation backdrop).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from the IPO prospectus, company disclosures and third-party reports around FY26 (year ended March 2026), and may contain errors or become outdated; some AUM, fee-yield and profit figures vary by source, period and accounting basis, and several fee-yield and scheme-mix numbers shown are illustrative rather than exact. Canara Robeco AMC listed only in October 2025, so its public track record is short. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "CRAMC";
+  const COMPANY_SLUG = "canara-robeco-amc";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
