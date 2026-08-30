@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Texmaco Rail — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F6;
+    --paper-2:#FAFBFC;
+    --card:#FFFFFF;
+    --ink:#171C22;
+    --ink-soft:#565F69;
+    --ink-faint:#89929B;
+    --brand:#2E4353;          /* locomotive slate */
+    --brand-bright:#3E7191;   /* steel signal-blue accent */
+    --gold:#D98A2B;           /* signal amber - accent / warmth */
+    --wtg:#3E7191;            /* freight / wagon manufacturing */
+    --epc:#5A8CA3;            /* rail EPC / erection */
+    --om:#1E3340;            /* steel foundry / castings */
+    --spec:#2C7A6E;          /* rail-infra green cross accent */
+    --line:#DADEE2;
+    --line-soft:#E7EAED;
+    --good:#2A8359;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E3ECF1;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#3a2806;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FBF1E4;border:1px solid #EFD9B9;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9a6418;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#473410;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F8F9;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E9ECEE;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#2E4353,#3E7191);}
+  .fill.gold{background:linear-gradient(90deg,#D98A2B,#E7A75C);}
+  .fill.wtg{background:linear-gradient(90deg,#3E7191,#5A8CA3);}
+  .fill.om{background:linear-gradient(90deg,#1E3340,#345166);}
+  .fill.spec{background:linear-gradient(90deg,#2C7A6E,#3EA08F);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a4650,#59636d);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FBF1E4;color:#4a3712;}
+  .note.gold b{color:#9a6418;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#9a6418;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF0F3;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Freight rail 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What Texmaco makes</a></li>
+    <li><a href="#p3"><span class="n">03</span> The Adventz group &amp; owners</a></li>
+    <li><a href="#p4"><span class="n">04</span> The wagon supercycle</a></li>
+    <li><a href="#p5"><span class="n">05</span> The wheelset dependency</a></li>
+    <li><a href="#p6"><span class="n">06</span> Buying scale: Jindal &amp; Bright Power</a></li>
+    <li><a href="#p7"><span class="n">07</span> Vision 2030: escaping the cycle</a></li>
+    <li><a href="#p8"><span class="n">08</span> The cyclicality trap</a></li>
+    <li><a href="#p9"><span class="n">09</span> The rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials, the provision &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: TEXRAIL · BSE: 533326</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Texmaco Rail, <em>India's biggest wagon-maker</em></h1>
+  <p class="dek">A full walk through the century-old engineering house of the Adventz group — how it builds the freight wagons that haul India's coal, cement and steel, why nearly every rupee it earns swings on the timing of Indian Railways' tenders, and how a company that just became the country's largest wagon producer is trying to build its way out of a business that booms and busts with the government's budget.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹4,377 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹194 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹5,408 <small>Cr</small></div><div class="l">Order book (Mar 2026)</div></div>
+    <div class="cell"><div class="v">~₹4,450 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">30 Aug 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ₹4,377 Cr (−14%), EBITDA ₹450 Cr (10.3% margin), net profit ₹194 Cr; order book down to ~₹5,408 Cr; auditors flagged a ₹700 Cr contingency provision; added the wheelset-dependency and Vision 2030 sections.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Texmaco Rail &amp; Engineering makes the unglamorous machines that make the economy move: <strong>freight wagons</strong> — the open and covered steel boxes on wheels that Indian Railways couples into mile-long rakes to haul coal, cement, steel, food grain and containers across the country. After buying a rival in 2024, Texmaco is <strong>India's single largest manufacturer of railway wagons</strong>. But it is not only a wagon shop. It runs a big <strong>steel foundry</strong> casting bogies, couplers and heavy components, and a <strong>rail-infrastructure EPC arm</strong> that electrifies track, builds bridges and steel structures, and installs signalling — including the <strong>Kavach</strong> anti-collision system. It is a roughly century-old engineering house controlled by the <strong>Adventz group</strong> of industrialist Saroj Kumar Poddar.</p>
+
+  <p>Three facts frame the whole story:</p>
+  <ul class="clean">
+    <li><strong>One customer sets the weather.</strong> The overwhelming buyer of Indian freight wagons is <strong>Indian Railways</strong> — a single government agency whose annual wagon tenders decide how busy every wagon-maker's factory is. When the Railways places a big multi-year order, the sector booms; when a tender slips or a budget tightens, factories idle. Texmaco's revenue is therefore <em>lumpy and tender-driven</em> in a way few manufacturers are. This is the master variable.</li>
+    <li><strong>FY26 was a step back after a record year.</strong> Revenue fell ~14% to <strong>₹4,377 Cr</strong> from ₹5,107 Cr, and net profit slipped ~22% to <strong>₹194 Cr</strong>. The proximate cause was almost comically specific: a <em>shortage of wheelsets</em> — the wheels-and-axles assemblies that Indian Railways itself supplies to wagon-builders — that starved the production line for months. The order book also thinned, from ~₹7,612 Cr (Dec 2024) to <strong>~₹5,408 Cr</strong> (Mar 2026), as the last mega-order wound down ahead of the next one.</li>
+    <li><strong>The strategy is to become less of a wagon company.</strong> Under a "Vision 2030" plan, Texmaco wants to double in size while leaning harder into <strong>higher-margin, less-cyclical</strong> work — signalling and Kavach, rail electrification, castings, and a nascent <strong>defence</strong> push — so that the next wagon down-cycle hurts less. It trades around <strong>₹4,450 Cr</strong> of market value on ~20× earnings — priced as a cyclical recovery, not a runaway growth stock.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Texmaco is a heavy-engineering job shop bolted to the Indian Railways' order calendar. Its factories can build a great many wagons a year, but they only run flat-out when the government has placed a large order and is supplying the parts to fill it. The company's own history is a saw-tooth of boom years and lean years that track the national rail budget rather than anything Texmaco itself controls. The current management is trying to change that: buy scale in wagons so it wins a bigger slice of each tender, then diversify into electrification, signalling and defence so that a quiet wagon year no longer empties the whole building. The tension in the stock is simple — a genuinely improving franchise, still hostage to one buyer's procurement timing.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Freight rail 101: the machines that move the economy</h2></div>
+  <p class="part-sub">No engineering degree needed — just the handful of terms that drive the whole business.</p>
+
+  <p class="lead">Railways move freight in two very different vehicles. <strong>Coaches</strong> carry people — the passenger cars and Vande Bharat trainsets you ride in. <strong>Wagons</strong> carry cargo — the plain steel boxes and flatbeds that never see a passenger. Texmaco is overwhelmingly a <em>wagon</em> company, not a coach company, and that distinction matters: coaches are mostly built inside Indian Railways' own government factories, while wagons are largely bought from private manufacturers like Texmaco. To follow the business you need five terms.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only vocabulary you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Wagon (freight car)</td><td>A single cargo vehicle — an open "hopper" for coal/ore, a covered "boxn" for cement/grain, a flat wagon for containers, a tank wagon for liquids. Texmaco's core product. A rake is a coupled train of ~40–60 such wagons.</td></tr>
+      <tr><td class="t-strong">Rolling stock</td><td>The industry word for anything that rolls on rails — wagons, coaches, locomotives. Texmaco's "Heavy Engineering / Freight Car" division is a rolling-stock maker; it builds wagons, not the engine that pulls them.</td></tr>
+      <tr><td class="t-strong">Wheelset</td><td>A pair of steel wheels pressed onto a single axle — the part the wagon rolls on. Critically, <strong>Indian Railways itself supplies wheelsets to wagon-builders</strong>. No wheelsets, no finished wagons. Remember this; it is the swing factor in section 05.</td></tr>
+      <tr><td class="t-strong">EPC</td><td>"Engineering, Procurement &amp; Construction" — turnkey infrastructure work: electrifying track (stringing overhead wires), building bridges and steel structures, laying signalling. Texmaco's second leg, beyond building wagons.</td></tr>
+      <tr><td class="t-strong">Kavach</td><td>India's home-grown <em>automatic train protection</em> system — trackside and on-board electronics that brake a train automatically to prevent collisions. A multi-year national rollout, and a growth line Texmaco is chasing inside its EPC/signalling business.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why a wagon order is a government decision, not a market</div>
+    <p>Almost all of India's freight moves for, or is regulated by, the state-owned Indian Railways, and it is by far the dominant buyer of new wagons. So the demand a wagon-maker faces is not a diffuse market of thousands of customers — it is essentially <em>one procurement department</em> deciding, tender by tender, how many wagons to buy this year and at what price. Private buyers exist and are growing — cement and steel firms, container operators and wagon-leasing companies build their own captive fleets — but the government tender still sets the tempo for the entire industry. That is why a wagon-maker's fortunes read like a chart of the national rail-capex budget: when the budget expands and a big tender lands, every factory is full; when it pauses, they all wait together.</p>
+  </div>
+
+  <h3>Who actually buys wagons</h3>
+  <ul class="clean">
+    <li><strong>Indian Railways</strong> — the anchor buyer, procuring wagons in periodic bulk tenders and allocating volumes across the approved manufacturers. The single most important customer in the whole story.</li>
+    <li><strong>Private &amp; captive buyers</strong> — cement, steel, power and mining firms that own dedicated rakes to move their own raw material and product; a growing, higher-margin slice of demand.</li>
+    <li><strong>Wagon-leasing &amp; container operators</strong> — companies that own wagons and lease them out, spurred by policies (GPWIS, private freight schemes) meant to pull private capital into freight rolling stock.</li>
+    <li><strong>Exports</strong> — overseas railways and mining operators; Texmaco has won export wagon contracts and a long-term maintenance deal in Africa, a small but strategically useful diversifier away from Indian Railways' cycle.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What Texmaco actually makes: three divisions, one railway</h2></div>
+  <p class="part-sub">The structure — read this once and the whole company clicks into place.</p>
+
+  <p class="lead">Texmaco is best understood as three engineering businesses that all sell into the railway ecosystem, each with different economics. Two of them make physical rolling stock and its parts; the third builds and wires the infrastructure that rolling stock runs on. Together they let Texmaco pitch Indian Railways and private clients on almost everything except the locomotive itself.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The railway value chain — where Texmaco's three divisions play</div>
+    <div class="flow-row">
+      <div class="node om"><div class="ntag">Div 1 · Steel Foundry</div><div class="nname">Cast the heavy metal</div><div class="nwho">Bogies, couplers, draft gear, crossings — steel castings that feed its own line and rivals.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Div 2 · Heavy Engineering</div><div class="nname">Build the wagon</div><div class="nwho">Freight cars &amp; rolling stock — the core. India's largest wagon-maker after Jindal Rail.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Div 3 · Rail EPC</div><div class="nname">Build &amp; wire the track</div><div class="nwho">Electrification, bridges, steel structures, hydro-mechanical — via Bright Power &amp; in-house.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Div 3 · Signalling</div><div class="nname">Make it safe</div><div class="nwho">Signalling, telecom &amp; Kavach — the newest, highest-value EPC line.</div></div>
+    </div>
+    <div class="flow-note">Divisions 1–2 are the cyclical, tender-driven "make-the-metal" engine tied to Indian Railways' wagon orders. Division 3 is the infrastructure/services push — steadier, project-based, and where the margin-mix story lives.</div>
+  </div>
+
+  <h3>The three businesses, decoded</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-om">Steel Foundry</span></strong> — one of India's larger steel foundries, casting the heavy components a wagon rides on: <strong>cast bogies</strong> (the wheeled frames under each end of a wagon), <strong>couplers and draft gear</strong> (the links and shock absorbers between wagons), and track castings like crossings. It supplies Texmaco's own wagon line <em>and</em> sells castings to others — a degree of vertical integration most rivals lack, and a business that can run even when new-wagon orders are thin.</li>
+    <li><strong><span class="chain-wtg">Heavy Engineering / Freight Cars</span></strong> — the core: designing and fabricating freight wagons of every type, plus increasingly higher-value rolling stock and components. This is where scale matters most, and where the 2024 acquisition of Jindal Rail vaulted Texmaco to the top of the wagon table. In a single recent quarter the division turned out <strong>~1,815 wagons and ~8,667 tonnes of components</strong> — a sense of the throughput when the line is fed.</li>
+    <li><strong><span class="chain-epc">Rail EPC &amp; Infrastructure (incl. signalling)</span></strong> — turnkey rail infrastructure: <strong>overhead electrification</strong> (through subsidiary Bright Power Projects), <strong>bridges and heavy steel structures</strong>, <strong>hydro-mechanical equipment</strong> for dams and canals, and — the growth line — <strong>signalling, telecom and Kavach</strong>. This division sells engineering and project execution rather than tonnes of steel, and it is the deliberate route to steadier, better-margin revenue.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the foundry is the quiet strategic asset</div>
+    <p>A cast steel bogie is not a commodity you can conjure overnight — a foundry that can pour, heat-treat and machine railway-grade castings to specification is a scarce, approval-gated capability. Owning one means Texmaco is not waiting on a third party for the single heaviest part of its own wagons, and it can sell that same casting capacity to competitors and to the export market. When new-wagon tenders go quiet, the foundry keeps turning — supplying spares, replacement bogies and components to the enormous installed fleet that always needs maintaining. It is the part of Texmaco least hostage to the tender calendar, and the reason the company is more than a pure assembler of other people's parts.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The company, the group, and who controls it</h2></div>
+  <p class="part-sub">A century-old Adventz-group engineering house.</p>
+
+  <p class="lead">Texmaco's roots run back to the 1930s, and the modern company is the railway-engineering flagship of the <strong>Adventz group</strong> (the industrial house that emerged from the K.K. Birla group), chaired by industrialist <strong>Saroj Kumar Poddar</strong>. The present entity, Texmaco Rail &amp; Engineering Ltd, was carved out to house the rail business and has spent the last decade bulking up its wagon and infrastructure capabilities through organic expansion and acquisitions.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1930s–1990s</div><div class="ev">Texmaco builds a long heavy-engineering pedigree across wagons, steel structures and hydro-mechanical equipment as part of the Birla industrial lineage.</div></li>
+    <li class="major"><div class="yr">2010</div><div class="ev">The rail &amp; engineering business is demerged into <strong>Texmaco Rail &amp; Engineering Ltd</strong> and listed, creating today's focused railway play under the Adventz banner.</div></li>
+    <li><div class="yr">2015–2016</div><div class="ev">Acquires a majority stake in <strong>Bright Power Projects</strong>, adding overhead-electrification EPC and pushing Texmaco beyond wagons into rail infrastructure.</div></li>
+    <li><div class="yr">2018–2019</div><div class="ev">The first modern wagon up-cycle — a wave of Indian Railways tenders lifts volumes; Texmaco expands wagon and EPC order books.</div></li>
+    <li><div class="yr">FY24</div><div class="ev">Revenue ~₹3,503 Cr, profit ~₹113 Cr, as the wagon cycle accelerates on record rail capex.</div></li>
+    <li class="major"><div class="yr">Sep 2024</div><div class="ev">Completes the <strong>₹615 Cr acquisition of Jindal Rail Infrastructure</strong>, becoming <strong>India's largest wagon manufacturer</strong> and adding a modern plant with 60+ acres of surplus land at Vadodara.</div></li>
+    <li class="major"><div class="yr">FY25</div><div class="ev">Record year: revenue ~₹5,107 Cr, profit ~₹249 Cr, order book peaking above ₹7,600 Cr as the last big wagon tender executes.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">A wheelset shortage cuts output; revenue ~₹4,377 Cr (−14%), profit ~₹194 Cr; a ₹700 Cr contingency provision draws an auditor qualification. Management sets out "Vision 2030".</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the <strong>Adventz / Poddar group</strong> holds roughly <strong>48% (approx.)</strong> — a controlling but not overwhelming stake, with promoter holding having drifted down modestly in recent years (worth tracking, alongside any pledge levels, directly in the shareholding filings). The balance sits with institutions and a broad retail base drawn in by the railway-capex theme.</li>
+    <li><strong>Group &amp; subsidiaries (worth keeping straight):</strong> <strong>Texmaco Rail &amp; Engineering (TEXRAIL)</strong> is the listed parent — wagons, foundry and EPC. <strong>Bright Power Projects</strong> is the electrification-EPC subsidiary. <strong>Jindal Rail Infrastructure</strong> is the acquired wagon-maker now folded in. Do not confuse Texmaco with the many other Indian rail names — Titagarh, Jupiter, BEML — which are separate, competing companies.</li>
+    <li><strong>Balance sheet:</strong> the business is <em>working-capital heavy</em> — long project cycles and slow-paying government customers mean cash conversion lags reported profit (operating cash flow has at times been negative even in profitable years). Managing receivables and inventory is a permanent feature, not a one-off, of a company that ships to Indian Railways.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the group matters here:</b> Texmaco is one flagship inside a diversified promoter house, run by a veteran industrialist rather than a founder-operator obsessed only with rail. That brings patient capital and a willingness to make bolt-on acquisitions like Jindal Rail — but it also means capital allocation, dividends and the pace of the Vision 2030 diversification are set with a group lens, and minority holders should watch how much of the cash the rail business throws off is reinvested in rail versus routed elsewhere.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The wagon supercycle: why the order books are full</h2></div>
+  <p class="part-sub">The structural tailwind — record rail capex and a mega-tender on the table.</p>
+
+  <p class="lead">For most of the 2010s, Indian wagon-makers lived hand-to-mouth on thin, irregular tenders. That changed with a deliberate government push to spend heavily on the railways — modernising track, building dedicated freight corridors, and buying rolling stock at a pace not seen in decades. Texmaco sits directly in the path of that spending, and the tailwind is real even after a soft FY26.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What's driving the wagon up-cycle</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Why it helps Texmaco</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Record rail capex</td><td>India's central budget has repeatedly raised railway capital spending to record levels, funding track, electrification and rolling stock.</td><td>Sets a multi-year floor under wagon and EPC demand — the government has committed the money and must convert it into hardware.</td></tr>
+      <tr><td class="t-strong">Dedicated Freight Corridors</td><td>Purpose-built high-capacity freight lines that need heavier, longer, faster wagons (including DFC-compliant designs).</td><td>Drives demand for new, higher-specification wagons — exactly the design-and-build work Texmaco does, and a chance to sell up the value chain.</td></tr>
+      <tr><td class="t-strong">The ₹40,000 Cr mega-tender</td><td>A widely reported plan for Indian Railways to procure on the order of <em>1 lakh (100,000) wagons</em> over several years in one giant programme.</td><td>A tender of that scale, spread over years, could underwrite the wagon-makers' order books well into the decade — Texmaco is one of a handful able to bid for a large slice.</td></tr>
+      <tr><td class="t-strong">Private &amp; export freight</td><td>Captive rakes for cement/steel/power, wagon-leasing schemes, and overseas orders.</td><td>Adds a growing, less-tender-bound layer of demand — often at better margins than Indian Railways' price-competitive bulk orders.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">India's wagon market — a three-firm game</div>
+    <div class="c-sub">Approximate share of private wagon manufacturing; the top three control the bulk</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Jupiter Wagons</div><div class="track"><span class="fill wtg" style="width:88%"></span></div><div class="bval">~25–30%</div></div>
+      <div class="bar-row"><div class="blab">Titagarh Rail</div><div class="track"><span class="fill brand" style="width:78%"></span></div><div class="bval">~25%</div></div>
+      <div class="bar-row"><div class="blab">Texmaco Rail<small>largest by capacity post-Jindal</small></div><div class="track"><span class="fill gold" style="width:70%"></span></div><div class="bval">~20%+</div></div>
+    </div>
+    <div class="legend"><span>Roughly 70% of India's wagon manufacturing sits with just three listed players — Jupiter, Titagarh and Texmaco. Shares shift tender by tender; Texmaco's Jindal Rail deal made it the largest by installed capacity, though allocation in any given order depends on price and delivery, not size alone.</span></div>
+  </div>
+
+  <p>The important nuance is that a full national pipeline does not mean smooth quarterly revenue for any one maker. Indian Railways allocates a big tender across the approved manufacturers, and the exact split — and the <em>timing</em> of how fast parts (especially wheelsets) are released to build against it — determines each company's actual output. A record capex budget is necessary for Texmaco to prosper; it is not sufficient. The tender has to be floated, won, and then physically fed with components before it becomes revenue.</p>
+
+  <div class="plain">
+    <div class="ptag">The distinction that separates hope from cash</div>
+    <p>There is a wide gap between an <em>announced</em> ₹40,000 Cr wagon programme and wagons rolling out of Texmaco's gate. The announcement moves the share price on the day; the cash arrives only after the tender is formally floated, Texmaco is allocated a volume at a workable price, and Indian Railways then supplies the wheelsets and clears the payments to let the line run. Every one of those steps has slipped before. So the supercycle is best read as a strong multi-year <em>backdrop</em> that raises Texmaco's floor — not a guarantee that any particular year hits the number. The order book, not the headline, is the honest gauge of what is actually contracted.</p>
+  </div>
+</section>
+
+<!-- 05 — BESPOKE crux: the wheelset dependency -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The wheelset dependency: when your customer is also your supplier</h2></div>
+  <p class="part-sub">The single most revealing idea in the whole case — and it is peculiar to Indian wagon-making.</p>
+
+  <p class="lead">Here is the structural quirk that a smart generalist almost never sees coming. Texmaco can win the order, cut the steel, weld the wagon body and cast the bogie — and still not finish a single wagon, because the one part it cannot make itself, the <strong>wheelset</strong>, is supplied by <strong>Indian Railways</strong>: the very customer that placed the order. The buyer is also the critical supplier. When the Railways' wheel plants under-deliver, wagon-builders' lines choke on half-finished wagons that cannot be shipped for want of wheels.</p>
+
+  <p>That is not a hypothetical. It is precisely what happened in FY26. A <strong>shortage of wheelsets</strong> from Indian Railways' own supply left Texmaco's line starved for months, cutting output and pushing first-quarter profit down roughly by half year-on-year before the supply normalised. A company with a healthy order book and idle capacity was held up not by demand, not by its own factory, but by a part its customer was late in handing over.</p>
+
+  <div class="chart">
+    <div class="c-title">What a wheelset shortage does to the numbers</div>
+    <div class="c-sub">Quarterly net profit through FY26 (₹ Cr) — the Q1 air-pocket and the recovery</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Q1 FY26<small>wheelset-starved</small></div><div class="track"><span class="fill bad" style="width:24%"></span></div><div class="bval">~29</div></div>
+      <div class="bar-row"><div class="blab">Q2 FY26</div><div class="track"><span class="fill wtg" style="width:53%"></span></div><div class="bval">~64</div></div>
+      <div class="bar-row"><div class="blab">Q3 FY26<small>~₹1,042 Cr revenue</small></div><div class="track"><span class="fill brand" style="width:58%"></span></div><div class="bval">~51</div></div>
+    </div>
+    <div class="legend"><span>Q1 FY26 profit fell ~51% year-on-year to ~₹29 Cr as wheelsets ran short, then recovered as supply resumed. A single missing component swung a quarter — the clearest possible illustration of the dependency.</span></div>
+  </div>
+
+  <p>Why does the buyer supply the part at all? Because wheels and axles are safety-critical, standardised assets that Indian Railways has historically produced and controlled centrally through its own wheel plants, issuing them to approved wagon-builders as "free-supply" items against orders. It keeps the Railways in command of a scarce, safety-sensitive component — but it also means a wagon-maker's throughput is only ever as fast as the wheel plants can pour and machine.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits an Indian wagon-maker</div>
+    <p>Most manufacturers you can model on demand and their own execution. Texmaco needs a third variable that sits entirely outside its control: <strong>wheelset availability from its own customer</strong>. Order book tells you demand exists; factory capacity tells you Texmaco can build; but only the wheelset flow tells you whether the wagons actually get finished this quarter. In FY26, all three had to line up and one of them — the one Texmaco doesn't own — failed. That is why the company's most strategic move now is to try to <em>internalise</em> wheels and axles: it has signed a collaboration to explore in-house wheel-and-axle capability, aiming to convert a supply it currently begs for into one it manufactures. Watch that effort closely — the day Texmaco can make its own wheelsets is the day this whole dependency loosens.</p>
+  </div>
+
+  <div class="note gold"><b>A genuine surprise:</b> the thing that broke Texmaco's FY26 was not a lost tender, a price war or a demand collapse — it was a shortage of wheels supplied by the customer that had already placed the order. A wagon company can have a full book, a modern plant and India's largest capacity, and still be throttled by a part it is not allowed to make. That single fact explains both the earnings volatility and the strategic urgency behind Texmaco's move to build wheelsets itself.</div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Buying scale and moving up: Jindal Rail and Bright Power</h2></div>
+  <p class="part-sub">How Texmaco turned itself into the biggest wagon-maker and a rail-infra contractor.</p>
+
+  <p class="lead">Texmaco has grown as much by acquisition as by building new capacity. Two deals, a near-decade apart, define what the company is today: <strong>Bright Power</strong> pushed it beyond wagons into rail-infrastructure EPC, and <strong>Jindal Rail</strong> made it the country's largest wagon producer. Understanding both explains the shape of the current business.</p>
+
+  <h3>Jindal Rail Infrastructure — the scale deal (2024)</h3>
+  <p>In September 2024 Texmaco completed the <strong>₹615 Cr acquisition of Jindal Rail Infrastructure (JRIL)</strong>, a competing rolling-stock manufacturer. Two things made it strategic. First, <strong>capacity</strong>: absorbing a rival's wagon-building lines pushed Texmaco to the top of India's wagon table by installed capacity, meaning it can credibly bid for a larger share of a mega-tender. Second, and less obvious, <strong>land and optionality</strong>: JRIL came with <strong>60-plus acres of surplus land at Vadodara</strong>, room to expand into new products — including higher-value freight <em>and</em> passenger rolling stock — without hunting for greenfield sites. In a tender-allocated industry, being the largest approved builder is a structural advantage when volumes are handed out.</p>
+
+  <h3>Bright Power Projects — the diversification deal (2015–16)</h3>
+  <p>Nearly a decade earlier, Texmaco took a majority stake in <strong>Bright Power Projects</strong>, an EPC specialist in <strong>overhead electrification (OHE)</strong> — the gantries and wires that let electric locomotives run. That deal was the company's first real step out of pure wagon-making into rail <em>infrastructure</em>, and it has since executed electrification for industrial and port-connectivity projects. Bright Power is the backbone of the EPC division that Vision 2030 now wants to grow.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">₹615 Cr</div><div class="msl">Paid for Jindal Rail (2024) — the deal that made Texmaco India's largest wagon-maker</div></div>
+    <div class="ms"><div class="msv">60+ acres</div><div class="msl">Surplus land at Vadodara from Jindal Rail — room to expand into new rolling stock</div></div>
+    <div class="ms green"><div class="msv">Since 2016</div><div class="msl">Bright Power in the fold — the entry into electrification EPC</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The logic that connects the two deals</div>
+    <p>Read together, the acquisitions describe a two-part strategy. Jindal Rail is a <em>consolidation</em> play — get bigger in the core so that when Indian Railways allocates a giant wagon order, Texmaco commands a larger slice. Bright Power is a <em>diversification</em> play — own capabilities (electrification, and by extension signalling and Kavach) that earn engineering margins and depend on a different budget line than wagon procurement. One deal deepens the cyclical core; the other builds the bridge out of it. That is the same barbell Vision 2030 formalises: be the biggest at the thing that swings with the cycle, and grow the things that don't.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Vision 2030: engineering a way out of the cycle</h2></div>
+  <p class="part-sub">The plan to double in size while depending less on wagons.</p>
+
+  <p class="lead">Management's answer to a lifetime of wagon cyclicality is a strategy it calls <strong>Vision 2030</strong>: roughly double the business by the end of the decade while shifting the <em>mix</em> toward higher-margin, less tender-dependent work. The ambition is not just to grow, but to change what kind of company Texmaco is — from a wagon shop that occasionally does infrastructure into a diversified rail-engineering group where wagons are one leg of several.</p>
+
+  <div class="chart">
+    <div class="c-title">The Vision 2030 mix-shift (directional)</div>
+    <div class="c-sub">Illustrative intent — grow the less-cyclical, higher-value lines faster than the wagon core</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Wagons / rolling stock<small>the cyclical core</small></div><div class="track"><span class="fill wtg" style="width:90%"></span></div><div class="bval">grow</div></div>
+      <div class="bar-row"><div class="blab">Rail EPC &amp; electrification</div><div class="track"><span class="fill spec" style="width:70%"></span></div><div class="bval">grow faster</div></div>
+      <div class="bar-row"><div class="blab">Signalling &amp; Kavach</div><div class="track"><span class="fill gold" style="width:58%"></span></div><div class="bval">scale up</div></div>
+      <div class="bar-row"><div class="blab">Defence &amp; new lines</div><div class="track"><span class="fill brand" style="width:38%"></span></div><div class="bval">seed</div></div>
+    </div>
+    <div class="legend"><span>The direction, not a forecast: keep growing wagons, but grow EPC, signalling/Kavach and a nascent defence line faster, so that over time a larger share of profit comes from work that earns engineering margins and doesn't rise and fall with the wagon tender.</span></div>
+  </div>
+
+  <h3>The pillars of the diversification</h3>
+  <ul class="clean">
+    <li><strong>Signalling &amp; Kavach</strong> — Texmaco is bidding for and winning signalling, telecom and Kavach contracts (for example, a signalling-and-Kavach order from South Central Railway), and has signed a technology pact with Belgium's <strong>The Signalling Company</strong> to advance Kavach and European-standard ETCS train-control solutions. As India rolls Kavach across its network, this is a large, multi-year, safety-mandated market — and a far better margin than a price-competitive wagon.</li>
+    <li><strong>Rail electrification &amp; infrastructure</strong> — deepening the Bright Power EPC franchise into electrification, bridges and steel structures, riding the same rail-capex budget but on the works side rather than rolling stock.</li>
+    <li><strong>Defence &amp; power electronics</strong> — a nascent push into defence manufacturing and traction/power-electronics (traction transformers and related equipment), aimed at long-cycle, higher-margin, indigenisation-driven demand that is uncorrelated to wagon tenders.</li>
+    <li><strong>Wheelsets &amp; components</strong> — the effort (section 05) to internalise wheels and axles and grow the castings/components business — both a margin lever and a way to de-risk the supply chain.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">Why the mix-shift is the real investment question</div>
+    <p>Anyone can grow revenue by winning more wagon tenders in an up-cycle; the hard, valuable thing is to change the <em>composition</em> of profit so the next down-cycle is survivable. If Texmaco genuinely lifts the EPC-plus-signalling-plus-defence share of its earnings, it deserves to be valued less like a pure cyclical and more like a diversified engineering contractor — a higher, steadier multiple. If those lines stay small and wagons remain 80%-plus of profit, then Vision 2030 is a slogan and the stock stays a wagon proxy. The plan is credible on paper and backed by real orders and pacts; the proof will be in the segment mix reported each year, not in the brochure.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The cyclicality trap: order books that rise and fall together</h2></div>
+  <p class="part-sub">The thing that has always defined — and limited — a wagon-maker.</p>
+
+  <p class="lead">To value Texmaco you have to respect its history, and that history is cyclical. Because a handful of firms all sell mainly to one government buyer, they boom together when a big tender lands and go quiet together when the pipeline pauses. Revenue and order books are therefore <em>lumpy</em> in a way that a consumer or services company never is — a single fat year can be followed by a lean one for reasons that have nothing to do with how well the factory is run.</p>
+
+  <div class="chart">
+    <div class="c-title">The order book, tender by tender</div>
+    <div class="c-sub">Consolidated order book (₹ Cr) at successive dates — the wind-down between big tenders</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Dec 2024</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~7,612</div></div>
+      <div class="bar-row"><div class="blab">Jun 2025</div><div class="track"><span class="fill wtg" style="width:93%"></span></div><div class="bval">~7,053</div></div>
+      <div class="bar-row"><div class="blab">Mar 2026</div><div class="track"><span class="fill gold" style="width:71%"></span></div><div class="bval">~5,408</div></div>
+    </div>
+    <div class="legend"><span>The order book thinned by roughly ₹2,200 Cr over about fifteen months as the last mega-order executed faster than new large tenders replaced it — the classic between-tenders trough that defines the wagon cycle. The next big Indian Railways tender is what refills it.</span></div>
+  </div>
+
+  <p>This is the pattern the whole sector lives with. An order book that shrinks is not necessarily a sign of a company losing — it can simply mean the last big tender is converting to revenue while the next one hasn't been awarded yet. The risk is that the gap between tenders stretches, or that a budget cycle turns cautious, and the trough deepens into a genuine down-year. Texmaco has lived through several of these, which is exactly why Vision 2030 exists.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue: the record year and the pullback</div>
+    <div class="c-sub">Consolidated revenue from operations (₹ Cr)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:69%"></span></div><div class="bval">~3,503</div></div>
+      <div class="bar-row"><div class="blab">FY25<small>record</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~5,107</div></div>
+      <div class="bar-row"><div class="blab">FY26<small>wheelset-hit</small></div><div class="track"><span class="fill gold" style="width:86%"></span></div><div class="bval">~4,377</div></div>
+    </div>
+    <div class="legend"><span>FY25 was a record on the back of strong wagon execution; FY26 fell ~14% as the wheelset shortage and a thinner order book bit. The saw-tooth is the signature of the business — the question is only how high the peaks and how shallow the troughs get as the mix diversifies.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">How to read a lumpy franchise fairly</div>
+    <p>The trap for an investor is to extrapolate either direction. Extrapolate the FY25 record and you'll overpay at the top of a tender cycle; extrapolate the FY26 dip and you'll miss the point that the demand backdrop — record capex, a possible 1-lakh-wagon programme — is intact and the stumble was a component-supply problem, not a demand collapse. The right lens is <em>across</em> a full cycle: what does Texmaco earn on average through the peaks and troughs, and is that average rising as it takes share and diversifies? Judge it on mid-cycle earning power and order-book replenishment, not on whichever single year you happen to be standing in.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The rivals: a consolidated three-firm arena</h2></div>
+  <p class="part-sub">Who else builds India's wagons — and why that shapes pricing.</p>
+
+  <p class="lead">Wagon-making in India has consolidated into a small club of scaled players, because winning Indian Railways' approval, running a foundry-to-assembly line, and financing long project cycles all favour size and track record. The listed conversation is essentially <strong>Texmaco versus Titagarh versus Jupiter</strong>, with a few state-owned units and niche builders around the edges.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Texmaco</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Texmaco Rail</td><td>India's largest wagon-maker by capacity; foundry + wagons + rail-EPC/signalling</td><td><em>This company.</em> Broadest integration (owns a big foundry); diversifying into EPC/Kavach/defence; the debate is cyclicality and cash conversion.</td></tr>
+      <tr><td class="t-strong">Titagarh Rail Systems</td><td>Major wagon-maker moving aggressively into passenger rolling stock (metro/Vande Bharat coaches)</td><td>The most direct listed twin; roughly a quarter of the wagon market and pushing hard into higher-value <em>passenger</em> trainsets — a different growth bet than Texmaco's freight-plus-infra path.</td></tr>
+      <tr><td class="t-strong">Jupiter Wagons</td><td>Fast-growing wagon and components maker; the recent share-gainer</td><td>Aggressive on capacity and private/commercial orders; roughly a quarter-plus of the market. Competes head-on for every Indian Railways wagon tender.</td></tr>
+      <tr><td class="t-strong">BEML &amp; PSU units</td><td>State-owned rolling-stock and defence-equipment maker; Indian Railways' own coach factories</td><td>Public-sector capacity — mostly in coaches, defence and specialised stock; a competitor on some tenders and a reminder that the buyer also builds in-house.</td></tr>
+      <tr><td class="t-strong">Braithwaite &amp; niche builders</td><td>Smaller / legacy wagon and structure fabricators</td><td>Fringe capacity that fills out the "others" slice of tender allocations; not a strategic threat to the top three.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two features stand out. First, this is an oligopoly feeding one dominant buyer — which cuts both ways. A rising rail-capex tide can lift all three big makers at once, so it need not be a zero-sum knife-fight while volumes grow; but with Indian Railways allocating tenders on price, the same three firms competing for one buyer's order can also compete margins away. Second, the three have chosen <em>different</em> ways to grow beyond plain freight wagons: Titagarh into passenger trainsets, Jupiter into components and commercial vehicles' adjacencies, and Texmaco into rail-infra EPC, signalling and defence. How well each diversification lands is what will separate them once the current wagon cycle matures — because being the biggest freight-wagon builder is worth less if freight wagons are where the pricing pressure concentrates.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials, the ₹700 Cr provision &amp; valuation</h2></div>
+  <p class="part-sub">A recovering cyclical — with one accounting flag worth reading carefully.</p>
+
+  <p class="lead">FY26 was a down-year in a rising decade: revenue and profit both fell as the wheelset shortage bit, even as margins held up and the demand backdrop stayed intact. Two things deserve close attention beyond the headline numbers — the <strong>margin trajectory</strong>, and a <strong>₹700 Cr contingency provision</strong> that drew a qualified opinion from the auditors.</p>
+
+  <div class="chart">
+    <div class="c-title">Profit &amp; margin, three years</div>
+    <div class="c-sub">EBITDA and net profit (₹ Cr); EBITDA margin held in the low double digits</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">EBITDA FY25<small>record</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~510</div></div>
+      <div class="bar-row"><div class="blab">EBITDA FY26<small>~10.3% margin</small></div><div class="track"><span class="fill wtg" style="width:86%"></span></div><div class="bval">~450</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY25</div><div class="track"><span class="fill spec" style="width:49%"></span></div><div class="bval">~249</div></div>
+      <div class="bar-row"><div class="blab">Net profit FY26</div><div class="track"><span class="fill gold" style="width:38%"></span></div><div class="bval">~194</div></div>
+    </div>
+    <div class="legend"><span>EBITDA fell to ~₹450 Cr (a ~10.3% margin) and net profit to ~₹194 Cr (−22%). The margin edging toward double digits — helped by a richer mix as EPC and components grow — is the more encouraging read; the profit dip is largely the wheelset-driven volume loss plus the provision below.</span></div>
+  </div>
+
+  <div class="note"><b>Read this carefully — the audit flag:</b> in FY26 Texmaco booked a <b>~₹700 Cr contingency provision</b> against geopolitical and economic risks, and the statutory auditors issued a <b>qualified opinion</b> in relation to it. A provision of that size relative to the company's profit is material, and a qualification is not something to wave away. Understand exactly what the provision relates to, whether it is a one-off balance-sheet charge or a recurring drag, and how it flows through reported versus underlying profit before relying on any single earnings figure.</div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~10.3%</div><div class="msl">FY26 EBITDA margin — inching up as mix shifts toward EPC/components</div></div>
+    <div class="ms red"><div class="msv">~20×</div><div class="msl">Trailing P/E on ~₹4,450 Cr market cap — a cyclical-recovery multiple</div></div>
+    <div class="ms"><div class="msv">~₹5,408 Cr</div><div class="msl">Order book (Mar 2026) — ~1.2× FY26 revenue; refill depends on the next tender</div></div>
+  </div>
+
+  <p>Two further balance-sheet realities matter. Texmaco is <strong>working-capital heavy</strong>: long project cycles and slow government payments mean cash conversion lags reported profit, and operating cash flow has at times gone negative even in profitable years. And the business carries <strong>the debt and integration load</strong> of the Jindal Rail acquisition. Neither is disqualifying — both are normal for a rail-EPC-plus-manufacturing group — but they mean profit alone overstates how much cash the business frees up, and receivables and working capital deserve as much attention as the P&amp;L.</p>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: mid-cycle margin on a replenished book</div>
+    <p>At ~20× trailing earnings on a down-year, Texmaco is priced as a company the market expects to grow through the wagon cycle — not as a distressed cyclical and not as a runaway compounder. So the figure that proves or breaks the case is <strong>the EBITDA margin it can sustain across a full cycle on a consistently replenished order book</strong> — specifically, whether that margin ratchets up from ~10% toward the low-to-mid teens as signalling, electrification and components take a larger share. Read it alongside <strong>order-book replenishment</strong> (does the next Indian Railways tender refill the book above ₹7,000 Cr?), <strong>the non-wagon revenue share</strong> (is Vision 2030 actually shifting the mix?), and <strong>operating cash conversion</strong> (is profit turning into cash?). If margins rise on a full book and the mix genuinely broadens, the multiple is defensible and can even expand; if margins stay pinned near 10% and the book waits on a delayed tender, the stock re-rates back down to a plain wagon cyclical. The margin-on-a-full-book, not the revenue headline, is the scoreboard.</p>
+  </div>
+
+  <div class="note gold"><b>On the figures:</b> the numbers here are drawn from FY24–FY26 consolidated results and cross-checked across screener.in and press coverage; several are <b>approx.</b> and the FY26 provision treatment in particular affects how reported profit compares year-to-year. Verify against Texmaco's own filings and the annual report before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">India's biggest wagon-maker, on a real capex wave, trying to grow past its own cycle.</p>
+
+  <p class="lead">Texmaco enters the back half of the decade in a strong strategic spot: the largest wagon capacity in the country, a diversified spread across foundry, wagons and rail-infra EPC, and a genuine national rail-capex tailwind behind it. The debate is not whether the demand exists — it plainly does — but whether Texmaco can convert a lumpy, component-constrained, government-timed order flow into steadily rising through-cycle earnings, and whether the diversification lands before the next wagon trough.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Record rail-capex backdrop</strong> — sustained government spending and a possible ~1-lakh-wagon mega-tender underwrite multi-year demand for Texmaco's core.</li>
+        <li><strong>Largest wagon capacity</strong> — the Jindal Rail deal makes Texmaco the biggest approved builder, well placed for a large slice of the next tender, with surplus land to expand.</li>
+        <li><strong>Integrated &amp; diversifying</strong> — owns a big steel foundry and a growing rail-EPC/signalling arm; Vision 2030 pushes toward higher-margin, less-cyclical revenue.</li>
+        <li><strong>Kavach &amp; defence optionality</strong> — safety-mandated Kavach rollout and a nascent defence line offer better-margin, differently-cyclical growth.</li>
+        <li><strong>Margin inching up</strong> — EBITDA margin toward double digits even in a down-year, as mix improves.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>One-buyer dependence</strong> — Indian Railways sets volumes, prices <em>and</em> supplies the wheelsets; a slow tender or a wheelset shortage (as in FY26) can gut a year.</li>
+        <li><strong>Deep cyclicality</strong> — order book already thinning between tenders; a stretched gap or a cautious budget deepens the trough.</li>
+        <li><strong>The ₹700 Cr provision &amp; audit qualification</strong> — a material charge and a qualified opinion that need to be understood before trusting reported profit.</li>
+        <li><strong>Working-capital &amp; cash conversion</strong> — slow government payments and negative operating cash flow in some years; profit overstates free cash.</li>
+        <li><strong>Diversification unproven at scale</strong> — EPC/signalling/defence are still small; if they don't grow, Texmaco stays a wagon proxy competing on price.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Texmaco has spent its recent history doing two shrewd things — buying its way to the top of the wagon table, and quietly building the foundry, electrification and signalling capabilities that a pure wagon-maker lacks. Both moves are aimed at the same weakness: a business whose fortunes swing on one buyer's procurement calendar and, astonishingly, on that buyer's willingness to hand over the wheels. FY26 was the reminder of how sharp that dependency still is. The next chapters are checkable milestones, not slogans: the <strong>floating and allocation of the next Indian Railways wagon mega-tender</strong>, the <strong>share of profit coming from signalling, EPC and defence</strong>, and any concrete progress toward <strong>making its own wheelsets</strong>. Watch those three prints. They will tell you whether Texmaco is becoming a diversified rail-engineering group that happens to lead in wagons — or is still, at heart, a wagon shop waiting on a government order and a set of wheels.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Texmaco Rail &amp; Engineering Ltd — Q4 &amp; FY26 results, investor presentation and press releases (year ended Mar 2026), via company disclosures on texmaco.in.</li>
+    <li>Screener.in — Texmaco Rail &amp; Engineering (TEXRAIL) consolidated financials, market cap, P/E and BSE code 533326.</li>
+    <li>BSE India — Texmaco Rail &amp; Engineering Ltd stock page and corporate filings, scrip code 533326.</li>
+    <li>Angel One / AlphaStreet — "Texmaco Rail Q1 FY26 earnings: ₹29 Cr PAT; ₹7,053 Cr order book" (Aug 2026).</li>
+    <li>Whalesbook / InvestyWise — "Texmaco Rail FY26 profit ₹194 Cr; ₹700 Cr provision draws auditor concern" and Vision 2030 roadmap coverage.</li>
+    <li>Business Standard — "Texmaco Rail acquires Jindal Rail Infrastructure for ₹615 crore" (Jul–Sep 2024); Q2 FY26 results.</li>
+    <li>Texmaco press release — completion of Jindal Rail Infrastructure acquisition (Sep 2024).</li>
+    <li>Business Standard / TipRanks / Whalesbook — Texmaco signalling &amp; Kavach order from South Central Railway; MoU with Belgium's The Signalling Company.</li>
+    <li>Forbes India / Business Standard / TradeBrains — Indian wagon market shares (Texmaco, Titagarh, Jupiter) and the ~₹40,000 Cr / 1-lakh-wagon tender coverage.</li>
+    <li>Texmaco Q3 FY25 press release — order book of ₹7,612 Cr as of 31 Dec 2024.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; some figures (notably segment shares and forward intentions) are estimates or management aspirations, not audited results. Note in particular the FY26 ₹700 Cr provision and the related audit qualification. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "TEXRAIL";
+  const COMPANY_SLUG = "texmaco-rail";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
