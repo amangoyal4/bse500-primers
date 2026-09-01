@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMS Info Systems — Business &amp; Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1F4F7;
+    --paper-2:#F8FAFC;
+    --card:#FFFFFF;
+    --ink:#141C24;
+    --ink-soft:#4A5765;
+    --ink-faint:#828F9C;
+    --brand:#1B3A5B;          /* deep secure navy */
+    --brand-bright:#2C6E8F;   /* the CMS accent blue */
+    --gold:#0F9488;           /* teal - accent / trust */
+    --wtg:#3E6B8B;            /* steel blue - cash mgmt */
+    --epc:#5B8CB0;            /* light steel - tech */
+    --om:#1F7A6B;            /* deep teal - managed services */
+    --spec:#2C5F8A;          /* mid blue cross accent */
+    --line:#DCE3EA;
+    --line-soft:#E8EDF2;
+    --good:#1F7A5A;
+    --bad:#B0492E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#DCEAF4;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#04302C;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#E9F3F1;border:1px solid #C4E1DC;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#0C6E66;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#173C37;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F3F7FA;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E4EAF0;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#1B3A5B,#2C5F8A);}
+  .fill.gold{background:linear-gradient(90deg,#0F9488,#3FB5AA);}
+  .fill.wtg{background:linear-gradient(90deg,#3E6B8B,#5B8CB0);}
+  .fill.om{background:linear-gradient(90deg,#1F7A6B,#2E9683);}
+  .fill.spec{background:linear-gradient(90deg,#2C5F8A,#4A80A8);}
+  .fill.bad{background:linear-gradient(90deg,#B0492E,#C9603F);}
+  .fill.ink{background:linear-gradient(90deg,#3A4653,#59677A);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#E7F4F2;color:#12433C;}
+  .note.gold b{color:#0C6E66;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#0C6E66;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#DCEAF4;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Cash logistics 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The two engines</a></li>
+    <li><a href="#p3"><span class="n">03</span> The cash paradox</a></li>
+    <li><a href="#p4"><span class="n">04</span> The company &amp; owners</a></li>
+    <li><a href="#p5"><span class="n">05</span> The route-density moat</a></li>
+    <li><a href="#p6"><span class="n">06</span> The annuity contract</a></li>
+    <li><a href="#p7"><span class="n">07</span> The managed-services pivot</a></li>
+    <li><a href="#p8"><span class="n">08</span> Rivals &amp; the barrier</a></li>
+    <li><a href="#p9"><span class="n">09</span> The FY26 wobble</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: CMSINFO · BSE: 543441</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>CMS Info Systems, <em>India's cash-logistics backbone</em></h1>
+  <p class="dek">A complete walk through the company that quietly keeps physical money moving across India — the armoured vans, the ATM refills, the cash vaults and the retail pick-ups behind the banking system. How a cash-logistics business actually earns its money, why the profit lives in route density rather than the price of a run, the counter-intuitive fact that cash keeps <em>growing</em> in a UPI nation, and how CMS is pivoting toward higher-growth managed services and banking technology.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹2,487 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹303 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~32% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹4,020 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">01 Sep 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — revenue ~₹2,487 Cr (+2.6%), EBITDA ~₹804 Cr, PAT ~₹303 Cr (−18.6% on the SBI-contract delay, off-site ATM shrinkage and larger wage hikes); ~1.53 lakh business touchpoints and 4,500+ cash vans; a ~3% buyback at ₹340/share approved and a managed-ATM acquisition set to lift the portfolio toward ~39,000 machines.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">CMS Info Systems is the largest <strong>cash-management company in India</strong> — the outsourced logistics network that physically moves and manages the country's banknotes. When an ATM is refilled overnight, when a bank's daily takings are collected in an armoured van, when a supermarket chain's cash is picked up and banked, when a currency chest is replenished — much of that plumbing, for much of the banking system, runs on CMS's fleet of <strong>4,500-plus cash vans</strong> and its network of roughly <strong>1.53 lakh business touchpoints</strong> across 97% of India's districts. It also runs a fast-growing second business: deploying and remotely managing ATMs and banking-automation technology for banks on an end-to-end outsourced basis.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It sells recurring services, not a product.</strong> CMS does not lend, take deposits or own the money it carries — it is a <em>services</em> company paid a small, contracted fee for each ATM it stocks, each cash point it services, each machine it monitors. Revenue is annuity-like and sticky: multi-year B2B contracts with banks, renewed at high rates, billed month after month. FY26 revenue was <strong>~₹2,487 Cr</strong>, split roughly <strong>60% cash management / 40% managed services &amp; technology.</strong></li>
+    <li><strong>The economics are unusually good for a "logistics" business.</strong> CMS runs an EBITDA margin near <strong>32%</strong> and a return on capital employed around <strong>17-18%</strong> — numbers a trucking company could never post. The reason is <em>route density</em>: the same van, driver and guard serving more points per route turns a fixed-cost run into pure incremental margin. Scale and coverage, not price, are the moat.</li>
+    <li><strong>FY26 was a rare stumble.</strong> Net profit fell ~18.6% to <strong>~₹303 Cr</strong> even as revenue edged up — hit by a delayed State Bank of India cash-outsourcing rollout (a ~₹150 Cr revenue drag), a shrinking off-site ATM base, a competitor's disruptive exit, and larger-than-usual wage hikes. The stock trades on a modest <strong>~13× earnings</strong>, reflecting a quality franchise caught in an off year rather than a broken one.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>India runs on cash far more than its digital-payments headlines suggest, and that cash does not move itself. Somebody has to drive it, count it, guard it, insure it and load it into tens of thousands of machines every night. CMS is that somebody, at national scale — a business-to-business services firm, not a bank and not an IT company, that gets paid a modest recurring fee to keep the physical money supply circulating reliably and securely. Its profit does not come from charging more per run; it comes from squeezing more stops onto each route and each vault, so the fixed cost of a van and a crew is spread thinner. FY26 tripped over a big contract's timing and a bruising cost year. The underlying machine — dense routes, sticky bank contracts, and a growing pile of cash to move — is intact.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Cash logistics 101: the plumbing of physical money</h2></div>
+  <p class="part-sub">No finance background needed — just the journey a banknote takes, and who is paid to carry it.</p>
+
+  <p class="lead">Every rupee note in your wallet has a physical supply chain behind it, as real as the one for petrol or parcels. Notes are printed by the RBI's presses, stored in <strong>currency chests</strong> at banks, dispatched to branches and ATMs, spent by you, collected as takings by shops and banks, sorted, and recirculated. Moving cash through that loop safely — under armed guard, fully insured, reconciled to the rupee — is a specialist job most banks would rather not do themselves. That outsourced job is the cash-management industry, and CMS is its largest Indian player. To follow the company you need five ideas.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only cash-logistics terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">ATM cash management</td><td>Forecasting how much cash each ATM will dispense, loading the right amount, and reconciling it — so a machine never runs dry and never sits over-stocked with idle cash. CMS's single largest activity, done for banks who own the ATMs but outsource the filling.</td></tr>
+      <tr><td class="t-strong">Cash-in-transit (CIT)</td><td>Armoured vans with armed guards moving cash between the RBI, banks, branches, currency chests and large customers. The visible face of the business — and the piece with the highest security, insurance and regulatory burden.</td></tr>
+      <tr><td class="t-strong">Retail cash management (RCM)</td><td>Picking up daily cash takings from retail chains, petrol pumps, e-commerce delivery and quick-commerce, then counting and banking it. A high-frequency, high-touchpoint business that grows with organised retail.</td></tr>
+      <tr><td class="t-strong">Cash vault / processing</td><td>Secure facilities where notes are counted, checked for fakes, sorted into fit/unfit and bundled for redistribution. The back-end that makes the vans efficient — the sorting hub of the network.</td></tr>
+      <tr><td class="t-strong">Managed services</td><td>Going beyond carrying cash to <em>owning the whole ATM operation</em> for a bank — deploying the machine (incl. brown-label ATMs), maintaining it, monitoring it remotely, and running banking-automation and self-service kiosks. The higher-growth, technology-led leg.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one dependency that shapes the sector: trust, licences and a fleet you cannot rent overnight</div>
+    <p>Anyone can buy a van. Almost nobody can be trusted, overnight, to move a bank's cash. This industry runs on things that take years and regulatory clearance to assemble: armoured vehicles built to RBI/Ministry-of-Home-Affairs specification, armed and vetted guards, GPS-tracked routes, cash-in-transit insurance underwritten on your track record, currency-chest access, and a spotless security record — because a single major heist or fraud can end a contract and a reputation. A bank outsources cash to a CMS precisely because assembling all of that in-house is expensive and risky. That web of licences, assets, insurance and trust is the real barrier to entry, and it is why a handful of national players — not thousands of local couriers — carry the country's cash.</p>
+  </div>
+
+  <h3>Who pays CMS, and for what</h3>
+  <ul class="clean">
+    <li><strong>Banks</strong> — the core customers. Public-sector and private banks outsource ATM replenishment, cash-in-transit and increasingly the whole managed-ATM operation. This is where customer concentration sits: a handful of large banks drive a large share of volume, so a single big contract (like SBI's) can move the numbers materially.</li>
+    <li><strong>Retailers, e-commerce &amp; enterprises</strong> — organised retail chains, fuel stations, quick-commerce and logistics firms pay CMS to collect and bank their daily cash. A faster-growing, more fragmented, higher-frequency customer base than banks.</li>
+    <li><strong>White-label / ATM operators &amp; OEMs</strong> — CMS also deploys and services machines for ATM network operators and, through its technology arm, sells banking-automation hardware and software. The customer here is the ATM ecosystem itself.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The two engines: cash management and managed services</h2></div>
+  <p class="part-sub">One mature, cash-generative core; one younger, faster-growing, technology-led leg.</p>
+
+  <p class="lead">CMS is best understood as two businesses under one roof, sharing a fleet, a network and a set of bank relationships. The larger, older engine is <strong>cash management</strong> — the vans, refills, pick-ups and vaults. The smaller, faster engine is <strong>managed services &amp; technology</strong> — running ATMs end-to-end and selling banking automation. Roughly 60% of FY26 revenue came from the first, 40% from the second, and the strategic story is the second growing faster than the first.</p>
+
+  <h3>Engine 1 — Cash Management Services</h3>
+  <p>This is the network business. It bundles four related activities that share the same vans, guards and vaults:</p>
+  <ul class="clean">
+    <li><strong><span class="chain-wtg">ATM cash management</span></strong> — the biggest single activity: forecasting demand, loading and reconciling cash for tens of thousands of bank ATMs. Sticky, recurring, priced per ATM per month.</li>
+    <li><strong><span class="chain-wtg">Cash-in-transit</span></strong> — armoured movement of cash between the RBI, banks, chests and large customers. High security, high barrier, steady.</li>
+    <li><strong><span class="chain-wtg">Retail cash management</span></strong> — daily collection and banking of retail/e-commerce takings; the fastest-growing sub-line as organised retail expands.</li>
+    <li><strong><span class="chain-wtg">Cash processing / vaulting</span></strong> — counting, authentication and sorting in secure facilities; the efficiency hub behind the fleet.</li>
+  </ul>
+
+  <h3>Engine 2 — Managed Services &amp; Technology</h3>
+  <p>This is the operate-and-automate business — CMS taking over more of the ATM value chain than just the cash inside it:</p>
+  <ul class="clean">
+    <li><strong><span class="chain-om">End-to-end / brown-label ATM management</span></strong> — CMS deploys the machine, maintains it, keeps it running and takes a per-transaction or per-ATM fee. It effectively runs the ATM channel <em>for</em> the bank.</li>
+    <li><strong><span class="chain-om">Banking automation &amp; self-service</span></strong> — supplying and servicing self-service kiosks, cash recyclers, note-sorting machines and other branch-automation hardware and software.</li>
+    <li><strong><span class="chain-om">AIoT remote monitoring</span></strong> — sensors and software that watch ATM health, uptime, cash levels and security remotely, cutting downtime and reducing needless van trips. This is the digital layer that makes the physical network smarter.</li>
+  </ul>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">The journey of a rupee note — and where CMS is paid at every stage</div>
+    <div class="flow-row">
+      <div class="node spec"><div class="ntag">Stage 1 · Source</div><div class="nname">RBI chest / bank</div><div class="nwho">Cash originates at currency chests and bank branches.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Stage 2 · Move</div><div class="nname">Armoured cash-in-transit</div><div class="nwho">CMS vans + guards carry it under insurance. Paid per run.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Stage 3 · Dispense</div><div class="nname">ATM refill &amp; manage</div><div class="nwho">CMS loads, reconciles &amp; remotely monitors the machine.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Stage 4 · Return</div><div class="nname">Retail pick-up &amp; vault</div><div class="nwho">CMS collects shop takings, counts, sorts, re-banks.</div></div>
+    </div>
+    <div class="flow-note">CMS earns a fee at more than one point on the same loop — carry it, dispense it, collect it, process it — which is why a dense network compounds: each new customer adds stops that share the vans already on the road.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the two engines belong together</div>
+    <p>The vans are the reason the technology sells, and the technology is the reason the vans run efficiently. A bank that already trusts CMS to carry its cash is the natural buyer when it wants to outsource the whole ATM operation — the relationship, the coverage and the security clearance are already in place. And AIoT monitoring feeds straight back into the cash business: knowing in real time which machines are low, or busy, or idle lets CMS route vans more intelligently and skip wasted trips. Cash management gives the company reach and trust; managed services gives it growth and a richer margin — and each makes the other harder for a rival to dislodge.</p>
+  </div>
+</section>
+
+<!-- 03 — genuine surprise: cash keeps growing -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>The cash paradox: why a UPI nation still needs more vans</h2></div>
+  <p class="part-sub">The counter-intuitive fact that decides whether this whole business has a future.</p>
+
+  <p class="lead">Here is the objection every first-timer raises, and it deserves a straight answer: "Isn't India going cashless? UPI is everywhere — surely moving physical cash is a dying trade?" The intuition is reasonable and the data flatly contradicts it. Digital payments <em>and</em> physical cash are both booming at the same time. The amount of cash in the Indian economy is not shrinking — it keeps hitting new records.</p>
+
+  <div class="chart">
+    <div class="c-title">Currency in circulation keeps climbing — even in the UPI era</div>
+    <div class="c-sub">Value of banknotes &amp; coins in circulation, ₹ lakh crore, year-end (approx.)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:77.7%"></span></div><div class="bval">~32.4</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill spec" style="width:84.5%"></span></div><div class="bval">~35.2</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill spec" style="width:89.3%"></span></div><div class="bval">~37.2</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~41.7</div></div>
+    </div>
+    <div class="legend"><span>Currency in circulation rose ~11.9% in FY26 to ~₹41.7 lakh crore — the fastest growth since the pandemic year FY21. More notes in the economy means more cash to move, load and process. Source: RBI data via press reports.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Both curves are rising — digital does not equal less cash</div>
+    <div class="c-sub">FY26 year-on-year growth, %</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">UPI transaction volume</div><div class="track"><span class="fill om" style="width:100%"></span></div><div class="bval">+30%</div></div>
+      <div class="bar-row"><div class="blab">UPI transaction value</div><div class="track"><span class="fill om" style="width:70%"></span></div><div class="bval">+21%</div></div>
+      <div class="bar-row"><div class="blab">Currency in circulation</div><div class="track"><span class="fill gold" style="width:39.7%"></span></div><div class="bval">+11.9%</div></div>
+    </div>
+    <div class="legend"><span>UPI is exploding — and cash is still growing double digits alongside it. The two are not substitutes at the level that matters for CMS: people transact digitally <em>and</em> hoard/spend cash. Growth figures approx., FY26.</span></div>
+  </div>
+
+  <p>Why does cash keep growing when UPI keeps setting records? Several forces pull in the same direction. Cash is still the default in <strong>rural and semi-urban India</strong>, among small businesses, older people and lower-income households. It carries no transaction trail, so the <strong>informal economy</strong> prefers it. It is held as a <strong>precautionary store of value</strong> — people keep notes for emergencies regardless of how they pay day to day. And the population and nominal economy keep growing, so even a falling cash-to-GDP <em>ratio</em> can sit atop a rising cash <em>pile</em>. India has around <strong>176 billion banknotes</strong> in circulation — roughly three times the number of US dollar bills — and every one of them has to be printed, distributed, dispensed, collected and recirculated.</p>
+
+  <div class="plain">
+    <div class="ptag">The surprise to sit with</div>
+    <p>The headline "India is going cashless" and the fact "India's cash in circulation just grew ~12% to an all-time high" are both true at once, and reconciling them is the whole investment case. UPI has replaced cash for a huge share of <em>transactions</em> — the ₹200 auto fare, the chai, the kirana bill — but it has not shrunk the <em>stock</em> of cash the economy holds and moves. CMS is paid on that stock and its circulation, not on the count of small digital payments. So the digital wave that looks like an existential threat has, so far, coincided with the very thing CMS needs — more physical currency to handle. The risk is real but it is <em>slow</em> and it is <em>structural</em>, not the cliff the intuition imagines. That gap between perception and data is exactly why a high-quality, high-return network can trade at a modest multiple.</p>
+  </div>
+
+  <div class="note gold"><b>The honest caveat:</b> "resilient" is not "immortal." Over a long enough horizon, rising digital adoption, RBI's push on the Digital Rupee (CBDC), and any structural fall in cash intensity could slow ATM-transaction and cash-handling volumes. The bet is not that cash lasts forever — it is that the decline, if it comes, is gradual enough that CMS can migrate its network toward managed services, retail cash and technology faster than its cash-carrying volumes fade. Watch cash-in-circulation growth and ATM-transaction trends each year; they are the sector's vital signs.</div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The company, its history, and who owns it</h2></div>
+  <p class="part-sub">A private-equity-built national champion, listed in 2021 and steadily broadening its ownership.</p>
+
+  <p class="lead">CMS is unusual among Indian listed companies in having been assembled and scaled largely under <strong>private-equity ownership</strong> before its 2021 IPO, rather than as a family promoter business. That history explains both its professional, roll-up-driven build and the steady reduction of its founding shareholder's stake since listing.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">2008–09</div><div class="ev">CMS Info Systems is established as a cash-management and technology-services business; global PE firm <strong>Blackstone</strong> becomes an early backer, consolidating a fragmented cash-logistics market.</div></li>
+    <li class="major"><div class="yr">2015</div><div class="ev"><strong>Baring Private Equity Asia</strong> (via Sion Investment Holdings) acquires CMS, continuing the build-out of the fleet, vault network and managed-services capability.</div></li>
+    <li class="major"><div class="yr">Dec 2021</div><div class="ev"><strong>IPO</strong> on NSE &amp; BSE (BSE code 543441; ISIN INE925R01014) — an offer for sale by the PE promoter, raising ~₹1,100 Cr and taking the company public.</div></li>
+    <li><div class="yr">FY22–FY24</div><div class="ev">Revenue crosses ₹2,000 Cr; the managed-services and AIoT businesses scale; the network expands past 1.3 lakh touchpoints. Baring PE Asia is absorbed into <strong>BPEA EQT / EQT</strong>.</div></li>
+    <li><div class="yr">FY25</div><div class="ev">Revenue ~₹2,425 Cr, PAT ~₹372 Cr; steady margins and returns. The PE promoter continues to sell down its post-IPO stake, broadening the float.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Revenue ~₹2,487 Cr but PAT dips ~18.6% to ~₹303 Cr on the SBI-contract delay, off-site ATM shrinkage and wage hikes; board approves a ~3% buyback at ₹340/share; a managed-ATM acquisition is set to lift the portfolio toward ~39,000 machines.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Founding shareholder:</strong> the company was controlled at IPO by <strong>Sion Investment Holdings</strong>, an affiliate of <strong>Baring Private Equity Asia</strong> (now part of the global <strong>EQT</strong> platform). Since listing, this promoter has <em>steadily sold down</em> its holding, progressively moving CMS toward a widely-held, professionally-managed, board-run company rather than a promoter-dominated one. <em>Investors should confirm the exact current promoter/founder stake in the latest shareholding filing — it has changed materially post-IPO.</em></li>
+    <li><strong>Professional management:</strong> with the PE promoter reducing, CMS increasingly resembles an ownerless, institutionally-held business — a profile that puts extra weight on the board, capital-allocation discipline and management incentives.</li>
+    <li><strong>Capital returns:</strong> the FY26 combination of a <strong>~3% share buyback at ₹340</strong> and dividends signals a management comfortable returning cash — consistent with an asset-medium, cash-generative services model that does not need to reinvest every rupee.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the ownership arc matters:</b> a departing private-equity seller can cap a stock for a while — an "overhang" of shares steadily coming to market can weigh on the price regardless of how the business performs. But the flip side is a genuinely professional, roll-up-built franchise with no single family calling the shots, and a management team returning cash via buybacks. Read the promoter-selldown pace and the buyback together: one is a headwind on the shares, the other a support.</div>
+</section>
+
+<!-- 05 — BESPOKE crux + non-transferable device: route density -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The route-density moat: where the profit actually hides</h2></div>
+  <p class="part-sub">The single most important idea in the case — and it is specific to a national cash-logistics network.</p>
+
+  <p class="lead">Most people assume a cash-logistics company makes money by charging a lot per trip. It doesn't — pricing per ATM or per pick-up is competitive and roughly known across the industry. CMS makes money by <strong>packing more stops onto each route</strong>. A van, a driver, two armed guards, fuel and insurance cost almost the same whether they service 6 points on a run or 12. The first cluster of stops on a route pays the fixed cost; every additional stop the network can add to that same run is nearly pure margin. Density, not price, is the entire game.</p>
+
+  <div class="chart">
+    <div class="c-title">The density effect — same van, same crew, twice the stops</div>
+    <div class="c-sub">Illustrative unit economics of one armoured run — the mechanism, not reported figures</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Sparse route<small>6 stops / run</small></div><div class="track"><span class="fill bad" style="width:35%"></span></div><div class="bval">thin margin</div></div>
+      <div class="bar-row"><div class="blab">Dense route<small>12 stops / run</small></div><div class="track"><span class="fill gold" style="width:82%"></span></div><div class="bval">fat margin</div></div>
+      <div class="bar-row"><div class="blab">Fixed cost of the run<small>van · fuel · 2 guards · insurance</small></div><div class="track"><span class="fill ink" style="width:40%"></span></div><div class="bval">~unchanged</div></div>
+    </div>
+    <div class="legend"><span>The fixed cost of a run barely moves with the number of stops; revenue roughly doubles when the stops do. That gap is why the market leader with the densest network earns the widest margin on the identical service. Illustrative.</span></div>
+  </div>
+
+  <p>This is why <strong>scale and coverage compound</strong> in cash logistics in a way they don't in ordinary trucking. Being present in 97% of India's districts with 4,500-plus vans means that when a new bank contract or a new retail chain comes along, most of its stops fall on routes CMS <em>already runs</em>. The incremental cost of adding those stops is small; the incremental revenue is not. A sub-scale rival, by contrast, has to add whole new routes — new vans, new crews, new insurance — to win the same customer, so its cost of that customer is far higher. The leader's network is therefore both cheaper to grow and more profitable to run. That is the moat, and it shows up directly in a ~32% EBITDA margin and ~17-18% ROCE that a pure haulage business could never reach.</p>
+
+  <div class="plain">
+    <div class="ptag">The device that only fits a national cash network: profit = stops-per-route, not price-per-stop</div>
+    <p>Forget "how much does CMS charge to fill an ATM." The number that runs this company is <strong>how many revenue-generating stops it can hang on each fixed run</strong> — and how much of the country it already blankets so that the next customer's stops land on existing routes. CMS's vans cover roughly <strong>4 lakh kilometres every single day</strong> — the equivalent of driving around the Earth about ten times, daily — carrying money for an economy that is supposedly going cashless. The profit is not in those kilometres; it is in how many paying stops share them. Double the stops on a route and the run's margin can more than double, because the diesel and the guards were already paid for. A challenger can match CMS's price on any single ATM; what it cannot cheaply match is a route that is already dense. Density is the one thing money alone cannot buy quickly — it has to be built, district by district, over years.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~1.53 L</div><div class="msl">Business touchpoints served across ~97% of India's districts (FY26)</div></div>
+    <div class="ms gold"><div class="msv">4,500+</div><div class="msl">Cash vans on the road — the fixed base that density spreads across</div></div>
+    <div class="ms green"><div class="msv">~4 L km</div><div class="msl">Distance the fleet covers <em>every day</em> — density is what makes it pay</div></div>
+  </div>
+
+  <p>The same logic governs the vaults. A cash-processing centre has a fixed cost — building, machines, staff, security — and grows more profitable the more notes flow through it. So the network has two density levers working together: denser <em>routes</em> for the vans and denser <em>throughput</em> for the vaults. Both reward the player with the most volume, which is why this industry naturally consolidates toward a few large operators rather than fragmenting into many small ones.</p>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The annuity contract: sticky, recurring, and concentrated</h2></div>
+  <p class="part-sub">Why the revenue is dependable — and where its one structural fragility sits.</p>
+
+  <p class="lead">CMS's revenue has a quality that investors prize: it is <strong>recurring and sticky</strong>. Banks sign multi-year contracts to have their ATMs filled and their cash carried, and they renew them at high rates, because switching a cash vendor is disruptive, security-sensitive and rarely worth the risk for a small price saving. That gives CMS an annuity-like income stream billed month after month. But the same customer base carries a specific fragility: it is <strong>concentrated among a relatively small number of large banks</strong>, so the timing of one big contract can swing a year — as FY26 proved.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What makes the revenue sticky — and where it is fragile</caption>
+    <thead><tr><th>Feature</th><th>Why it helps</th><th>The catch</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Multi-year bank contracts</td><td>Recurring, predictable, high renewal rates; switching costs are high for the bank.</td><td>Pricing is renegotiated at renewal; a competitive market caps how much CMS can charge per point.</td></tr>
+      <tr><td class="t-strong">Per-ATM / per-point fees</td><td>Revenue scales cleanly with the number of machines and touchpoints served.</td><td>If a bank rationalises ATMs (e.g. off-site closures), the fee base shrinks with it.</td></tr>
+      <tr><td class="t-strong">Customer concentration</td><td>Deep relationships with the largest banks bring scale and dense routes.</td><td>One big customer's decision — a delayed rollout, an insourcing, a tender loss — moves the whole number (see SBI, FY26).</td></tr>
+      <tr><td class="t-strong">Security &amp; trust lock-in</td><td>A clean record and full insurance make CMS the safe incumbent choice.</td><td>A single major heist, fraud or lapse could jeopardise a contract and the reputation behind all of them.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The pricing dynamic is worth understanding plainly. Because the service is broadly standardised and several credible national players exist, CMS competes for each contract on cost position and reliability, not on a premium price. Its edge is that its dense network lets it serve the contract <em>cheaply</em> and therefore bid competitively while still earning a good margin — the density moat again. But it means CMS is a <strong>price-taker at the contract level</strong>: it cannot simply raise fees to offset, say, a wage-inflation year. It has to claw margin back through efficiency, mix and volume instead.</p>
+
+  <div class="plain">
+    <div class="ptag">The trade-off inside a "boring, recurring" revenue stream</div>
+    <p>Recurring revenue is not the same as effortless revenue. CMS's income is dependable in aggregate — thousands of ATMs and touchpoints billed every month smooth out any single wobble — but it is dependable the way a subscription base is: it must be constantly renewed, defended on price, and grown by winning the next tender. The concentration among big banks means the business is steadier than a project company but lumpier than a mass-consumer one: most years the annuity just compounds, and then occasionally a single large contract's timing (a delay, a win, a loss) makes a whole year look good or bad regardless of the underlying network's health. That is the correct lens on FY26 — a timing dent in a sticky base, not an erosion of the base itself.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The managed-services pivot: buying growth and margin diversity</h2></div>
+  <p class="part-sub">The deliberate tilt from carrying cash toward operating and automating the ATM channel.</p>
+
+  <p class="lead">If cash management is the dependable, slow-growing core, <strong>managed services and technology</strong> is where CMS is placing its growth bet. Rather than simply filling a bank's ATMs, CMS increasingly wants to <em>run</em> them end-to-end — deploy the machine, maintain it, monitor it, and take a broader, longer, stickier fee — while selling the banking-automation and remote-monitoring technology that makes the whole network smarter. This leg grows faster than cash carrying, diversifies the revenue away from pure cash volumes, and deepens the bank relationship.</p>
+
+  <div class="chart">
+    <div class="c-title">The managed-ATM portfolio is set to jump</div>
+    <div class="c-sub">Bank ATMs managed end-to-end by CMS, approximate</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Before acquisition<small>~FY26</small></div><div class="track"><span class="fill wtg" style="width:79.5%"></span></div><div class="bval">~31,000</div></div>
+      <div class="bar-row"><div class="blab">After acquisition<small>announced 2026</small></div><div class="track"><span class="fill om" style="width:100%"></span></div><div class="bval">~39,000</div></div>
+    </div>
+    <div class="legend"><span>A managed-ATM acquisition announced in 2026 is set to lift the end-to-end portfolio from ~31,000 toward ~39,000 machines — a ~26% step up in the higher-value managed leg. Figures approximate.</span></div>
+  </div>
+
+  <p>Management is guiding to a sharp reacceleration on the back of this leg. FY27 <strong>total revenue</strong> is targeted at <strong>~₹2,800-2,900 Cr</strong> (13-17% growth) and, tellingly, <strong>services revenue</strong> at <strong>~₹2,700-2,800 Cr</strong> (17-21% growth) — the recovery from FY26's contract-timing dent, with deferred SBI volumes and the enlarged managed-ATM portfolio ramping. It is guidance, not a guarantee, but it makes explicit where management expects the growth to come from: services, not cash carrying.</p>
+
+  <p>Three reasons the pivot matters strategically. First, <strong>growth</strong>: outsourced managed ATMs and automation are penetrating faster than raw cash volumes, as banks push non-core operations to specialists. Second, <strong>margin diversity</strong>: technology and end-to-end management add fee streams that don't rise and fall purely with cash-in-transit volumes, cushioning the day cash intensity eventually softens. Third, <strong>stickiness</strong>: a bank that has handed CMS its entire ATM operation and integrated its monitoring technology is far harder to dislodge than one that merely hires it to fill machines. The pivot is, in effect, CMS using the trust and reach earned by the vans to climb into a higher, more defensible layer of the banking-outsourcing stack.</p>
+
+  <div class="plain">
+    <div class="ptag">Why this is the right hedge against the cash question</div>
+    <p>Section 03 argued that cash is resilient, not immortal. The managed-services pivot is precisely the insurance policy against the "not immortal" part. If, one day, cash-handling volumes do plateau or slowly fade, CMS wants to have already migrated a large chunk of its revenue into ATM operations, automation and monitoring — activities that persist, and even grow, as banks keep outsourcing and digitising their branch and self-service networks. The company is deliberately turning its physical, cash-era moat into a broader banking-technology-services franchise while the cash business is still healthy and funding the transition. Doing it now, from strength, is far easier than doing it later, under pressure.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The rivals and the barrier to entry</h2></div>
+  <p class="part-sub">A consolidated field of national specialists, plus the banks' own in-house option.</p>
+
+  <p class="lead">Indian cash management is a consolidated business of a few serious national players, because — as section 01 explained — the licences, armoured fleet, insurance and trust needed to carry a bank's cash take years and regulatory clearance to assemble. CMS is the largest by ATM points and touchpoints; the rest of the field competes on the same density logic, and the banks themselves are always a latent alternative.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs CMS Info Systems</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">CMS Info Systems</td><td>India's largest cash-management company by ATM points &amp; touchpoints; national fleet; growing managed-services &amp; tech leg</td><td><em>This company.</em> The scale leader — densest network, widest coverage, best margins; the debate is cash-volume durability and the managed-services ramp.</td></tr>
+      <tr><td class="t-strong">SIS / SISco (Prosegur JV)</td><td>Large cash-logistics business under the SIS security group, partnered with global cash-handling major Prosegur</td><td>A serious national rival in CIT and ATM cash, backed by global expertise; the nearest scaled competitor in cash movement.</td></tr>
+      <tr><td class="t-strong">Writer Business Services (Writer Safeguard)</td><td>Long-established cash-management and secure-logistics player</td><td>A veteran competitor with deep experience; smaller network reach than CMS but a credible incumbent in several markets.</td></tr>
+      <tr><td class="t-strong">AGS Transact Technologies</td><td>ATM deployment, managed services and payment technology; a direct rival in the managed-ATM / automation leg</td><td>Competes hardest with CMS's <em>managed-services</em> engine (ATM outsourcing, automation) rather than pure cash carrying.</td></tr>
+      <tr><td class="t-strong">Radiant Cash Management</td><td>Listed retail-cash-management specialist focused on RCM pick-ups</td><td>A focused competitor in the fast-growing retail cash niche; narrower than CMS's full-stack network.</td></tr>
+      <tr><td class="t-strong">Brink's, banks' in-house units</td><td>Global CIT major with an Indian presence; plus banks that self-manage some cash</td><td>Brink's brings global scale in pockets; the banks' own in-housing is the ever-present make-vs-buy alternative that caps industry pricing.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two things stand out. First, this is not a price war of the ordinary kind — the licences, insurance and security clearances mean only a handful of firms can credibly bid for a national bank's cash at all, and among them the one with the densest existing routes can serve the contract cheapest. Coverage <em>is</em> the competition: the leader wins the widest margin on the same standardised service. Second, the real ceiling on the whole industry is not any single rival but the <strong>banks' in-house option</strong> — a bank can always choose to run its own cash and ATMs. The industry's pitch is that outsourcing to a trusted specialist with a national network is cheaper and safer than doing it yourself, and CMS's density is what keeps that pitch true. As long as CMS is the low-cost, high-reliability operator, insourcing rarely pays.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The FY26 wobble: what actually went wrong</h2></div>
+  <p class="part-sub">A rare down year — and why its causes look like timing, not decay.</p>
+
+  <p class="lead">FY26 broke a long run of steady growth: revenue inched up ~2.6% to ~₹2,487 Cr, but net profit <em>fell</em> ~18.6% to ~₹303 Cr. For a business prized for its dependability, that is a jarring result, and it deserves a clear-eyed unpacking — because whether FY26 was a pothole or a sign of erosion is the crux of the current investment debate.</p>
+
+  <p>Walk through the causes — a handful of identifiable, largely one-off or timing-related items that took PAT from ~₹372 Cr to ~₹303 Cr, rather than any collapse in the core network's economics:</p>
+  <ul class="clean">
+    <li><strong>The SBI contract delay</strong> — a large State Bank of India cash-outsourcing rollout slipped, costing CMS an estimated <strong>~₹150 Cr of expected revenue</strong> in FY26. This is pure timing: the contract is real, the volume deferred rather than lost, and it is expected to ramp in FY27 — which is why services guidance jumps.</li>
+    <li><strong>Off-site ATM shrinkage</strong> — banks rationalised some off-site (standalone) ATMs, trimming the fee base CMS serves. A genuine structural nibble, though a modest one against the total network.</li>
+    <li><strong>A competitor's disruptive exit &amp; weaker H1</strong> — market dislocation and softer first-half consumption weighed on volumes early in the year.</li>
+    <li><strong>Larger-than-usual wage hikes &amp; Labour Codes</strong> — CMS is a people-heavy business (drivers, guards, processors); a bigger wage increase and new labour-law provisions lifted the cost base, with an incremental employee-benefit charge recognised as an exceptional item. Because CMS is a contract-level price-taker (section 06), it could not simply pass this straight through in-year.</li>
+  </ul>
+
+  <p>Crucially, the underlying network kept working: EBITDA held near <strong>~₹800 Cr</strong> and the margin stayed around <strong>32%</strong>, and Q4 PAT rose ~38% sequentially as the year closed stronger. The damage was concentrated in revenue timing and a cost spike, not in the route-density economics that make the business what it is.</p>
+
+  <div class="plain">
+    <div class="ptag">The distinction that decides the thesis</div>
+    <p>There are two very different stories that can produce a falling profit: the business is decaying, or the business hit a bad year. FY26's causes point firmly at the second. A deferred (not lost) marquee contract, a modest ATM-count trim, a one-time labour-cost step, and a soft half — these are the texture of an off year in a sticky franchise, not the signature of a network losing its density or its customers. The tell is that margins and returns barely moved: a genuinely eroding business would show its damage in the <em>margin</em>, not just the timing of revenue. FY27's guided rebound — services up 17-21% as SBI ramps — is management's wager that the wobble was exactly that. It is the number to hold them to.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A high-return services franchise, on a modest multiple, in a dip year.</p>
+
+  <p class="lead">Strip away the FY26 wobble and CMS's financial signature is attractive: high margins, high returns on capital, an asset-medium balance sheet that throws off cash, and a management returning it via buyback. The stock trades on roughly <strong>13× earnings</strong> — a low multiple for a market-leading, ~17-18% ROCE services business — which is the market pricing in FY26's stumble and the long-run cash question rather than the franchise quality. The debate is not richness of price; it is whether FY26 was the pothole management says it was.</p>
+
+  <div class="chart">
+    <div class="c-title">FY26 results — the headline scorecard</div>
+    <div class="c-sub">₹ Crore; bars scaled to revenue to show how the margin stacks up</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~2,487</div></div>
+      <div class="bar-row"><div class="blab">EBITDA</div><div class="track"><span class="fill gold" style="width:32.3%"></span></div><div class="bval">~804</div></div>
+      <div class="bar-row"><div class="blab">PBT<small>approx.</small></div><div class="track"><span class="fill spec" style="width:16.5%"></span></div><div class="bval">~410</div></div>
+      <div class="bar-row"><div class="blab">PAT</div><div class="track"><span class="fill wtg" style="width:12.2%"></span></div><div class="bval">~303</div></div>
+    </div>
+    <div class="legend"><span>Revenue +2.6%, but PAT −18.6% on the SBI delay and wage step. EBITDA stayed near ₹800 Cr — the core margin held even as profit fell. PBT approximate. Figures FY26.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">The margins and returns that define the quality</div>
+    <div class="c-sub">FY26, approximate — why the multiple looks low for what it is</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">EBITDA margin</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~32.3%</div></div>
+      <div class="bar-row"><div class="blab">Return on capital (ROCE)</div><div class="track"><span class="fill om" style="width:54.5%"></span></div><div class="bval">~17.6%</div></div>
+      <div class="bar-row"><div class="blab">Return on equity (ROE)</div><div class="track"><span class="fill spec" style="width:40.9%"></span></div><div class="bval">~13.2%</div></div>
+    </div>
+    <div class="legend"><span>A ~32% EBITDA margin and ~17-18% ROCE are strong for a logistics-flavoured business — the route-density moat in the numbers. ROE dipped with FY26's lower profit; a light balance sheet keeps capital needs modest.</span></div>
+  </div>
+
+  <p>The trajectory frames the debate. Revenue climbed steadily from <strong>~₹1,911 Cr in FY23</strong> to ~₹2,246 Cr (FY24) and ~₹2,425 Cr (FY25) before flattening to ~₹2,487 Cr in FY26 as the SBI rollout slipped — years of double-digit growth interrupted by one timing dent. The FY27 guide of ₹2,800-2,900 Cr is the bet that the climb resumes. Set against a physical-cash market that keeps expanding — India's ~176 billion banknotes are roughly three times the number of US dollar bills in circulation — the addressable base for CMS's network is not shrinking; the question is purely execution and contract timing.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~13×</div><div class="msl">Trailing P/E (mid-2026) — a modest multiple for a leader in a dip year</div></div>
+    <div class="ms"><div class="msv">~₹4,020 Cr</div><div class="msl">Market cap (mid-2026) — a small-cap by Indian large-cap standards</div></div>
+    <div class="ms green"><div class="msv">~3%</div><div class="msl">Buyback at ₹340/share approved in FY26 — management returning cash</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: FY27 services revenue, read with ROCE</div>
+    <p>At ~13× earnings, CMS does not need a re-rating to work — it needs to prove FY26 was timing, not decay. The metric that proves or breaks that is <strong>services revenue against management's FY27 guide of ~₹2,700-2,800 Cr (17-21% growth)</strong> — because that is where the deferred SBI volumes, the enlarged managed-ATM portfolio and the technology push all have to show up. Track it alongside <strong>ROCE</strong> (does the ~17-18% hold as the mix shifts to services?) and the <strong>managed-services revenue share</strong> (is the diversification actually happening?). If services rebounds into that guided range and returns stay high, the low multiple looks like a market over-reacting to one bad year. If the SBI ramp disappoints and off-site ATM shrinkage keeps nibbling while returns slide, then FY26 was the first crack, not a pothole. Services growth and ROCE, tracked together — that is the scoreboard.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results and market data cross-checked across reports; segment splits, PBT, the FY23-FY24 revenue points, per-note counts, EBITDA basis and the current promoter stake are <b>approximate</b> (derived, rounded, or definition-dependent — some sources cite a lower "services EBITDA" of ~₹600 Cr / ~24% versus the ~₹800 Cr / ~32% standardised figure used here), and market cap/P/E move daily. Verify against the company's filings, investor presentations and the latest shareholding pattern before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A high-quality network leader, in a dip year, betting it can outrun the slow cash question.</p>
+
+  <p class="lead">CMS enters FY27 with the machine intact: the densest cash network in India, a sticky bank-contract base, a growing managed-services leg, a deferred SBI contract set to ramp, and a management returning cash via buyback. What it cannot promise is the one thing every sceptic points at — that physical cash keeps circulating long enough for the pivot to higher-value services to complete. That tension frames both cases.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Cheap for the quality</strong> — ~13× earnings for a market leader with ~32% EBITDA margins and ~17-18% ROCE, priced as if FY26's dip is permanent.</li>
+        <li><strong>Cash is resilient</strong> — currency in circulation grew ~12% in FY26 to a record; the "cashless" fear runs ahead of the data, and CMS is paid on the cash stock.</li>
+        <li><strong>Density moat</strong> — a national network in 97% of districts serves the next customer at low incremental cost; sub-scale rivals cannot match its economics.</li>
+        <li><strong>Services pivot &amp; SBI ramp</strong> — managed ATMs toward ~39,000, deferred SBI volumes, and FY27 services guidance of 17-21% growth diversify and re-accelerate revenue.</li>
+        <li><strong>Cash returns</strong> — an asset-medium model funding buybacks and dividends; growth doesn't consume every rupee.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>The long cash question</strong> — over a decade, rising digital adoption, CBDC and falling cash intensity could slowly erode ATM-transaction and cash-handling volumes.</li>
+        <li><strong>Customer concentration</strong> — a few large banks drive the numbers; one delayed, insourced or lost contract swings a year, as FY26's SBI slip showed.</li>
+        <li><strong>Price-taker on cost inflation</strong> — a people-heavy business that cannot instantly pass through wage and labour-law cost spikes; margins can compress in a bad cost year.</li>
+        <li><strong>PE overhang</strong> — the founding private-equity holder selling down can cap the shares regardless of operating performance.</li>
+        <li><strong>Security tail-risk</strong> — a major heist, fraud or reputational lapse in a trust-based business could threaten contracts well beyond the incident itself.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>CMS Info Systems is the company that keeps India's physical money moving — a market-leading, high-return, cash-generative services network trading at a modest multiple because the market is fixated on a "cashless India" that the data has not yet delivered and a single off year that looks like timing. The moat is real and unusually durable: density built district by district over fifteen years, sticky bank contracts, and licences and trust that money cannot buy quickly. The genuine risk is not a sudden collapse but a slow one — and the entire strategy is a race to convert a cash-era network into a broader banking-technology-services franchise before that slow risk bites. The next test is concrete and datable: <strong>whether FY27 services revenue lands in management's guided ~₹2,700-2,800 Cr range as the delayed SBI contract ramps and the managed-ATM portfolio scales to ~39,000 machines, with ROCE holding near 17-18%.</strong> Hit that, and FY26 reads as the pothole it appears to be; miss it, and the sceptics get their first real evidence that the network's best years were behind the wheel.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>CMS Info Systems Ltd — FY26 audited results, Q4 FY26 investor presentation &amp; earnings call (year ended Mar 2026), via company disclosures (cms.com investor relations).</li>
+    <li>Screener.in — CMS Info Systems (CMSINFO) consolidated financials: FY26 revenue ~₹2,487 Cr, EBITDA ~₹804 Cr (~32%), PAT ~₹303 Cr, ROCE ~17.6%, segment split; BSE: 543441, NSE: CMSINFO, ISIN INE925R01014.</li>
+    <li>BSE India — CMS Info Systems Ltd stock page, scrip code 543441 (m.bseindia.com StockReach, scripcd=543441).</li>
+    <li>ScanX / Univest — "CMS Info Systems FY26 Results: PAT falls 18.6% to ₹303 crore, revenue up 2.6%"; buyback at ₹340/share.</li>
+    <li>TradingView / Quartr — "CMSINFO Q4 FY26: record services revenue, margin expansion, 3% buyback approval"; FY27 revenue guidance ₹2,800-2,900 Cr (services ₹2,700-2,800 Cr).</li>
+    <li>Investing.com / GuruFocus — CMS Info Systems Q4 FY26 earnings-call highlights (SBI-contract ~₹150 Cr revenue impact, off-site ATM contraction, wage hikes, Labour Codes exceptional item).</li>
+    <li>CMS Info Systems / EQT portfolio &amp; company profile — network scale: ~1.53 lakh business touchpoints, 97% of districts, 4,500+ cash vans, 240+ branches, ~4 lakh km/day; managed-ATM portfolio ~31,000 → ~39,000.</li>
+    <li>Business Standard — "Currency in circulation surged 11.9% in FY26, most in five years" (~₹41.68 lakh crore); "Why India's UPI boom has not stopped cash in circulation from rising."</li>
+    <li>The Researchers / RBI data — India ~176 billion banknotes in circulation, ~3× the number of US dollar bills; UPI FY26 value +21% to ₹314 trillion, volume +30%.</li>
+    <li>Company history — Blackstone (2009), Baring Private Equity Asia / Sion Investment Holdings (2015), December 2021 IPO; BPEA absorbed into EQT. Verify current promoter stake in the latest shareholding filing.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several figures (notably segment splits, per-tonne/per-note and unit economics, the EBITDA basis, PBT, historical revenue points and the promoter stake) are derived, rounded or definition-dependent. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "CMSINFO";
+  const COMPANY_SLUG = "cms-info-systems";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
