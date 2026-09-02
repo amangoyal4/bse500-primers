@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Anup Engineering — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F5F6;
+    --paper-2:#FAFBFC;
+    --card:#FFFFFF;
+    --ink:#161E24;
+    --ink-soft:#525E66;
+    --ink-faint:#889199;
+    --brand:#1E3A4C;          /* deep steel slate */
+    --brand-bright:#2C6E8F;   /* process blue accent */
+    --gold:#C0743A;           /* industrial copper - warmth / accent */
+    --wtg:#2C6E8F;            /* fabrication / equipment */
+    --epc:#3F91A6;            /* engineering / design */
+    --om:#12303F;            /* aftermarket / service */
+    --spec:#5A8F5A;          /* exports / green cross accent */
+    --line:#D9DEE1;
+    --line-soft:#E7EBED;
+    --good:#2E7D54;
+    --bad:#BC4630;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E4EEF3;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#33200a;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#FAF0E6;border:1px solid #EDD6BC;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8f5518;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#432f10;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F5F8F9;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E9EDEF;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#1E3A4C,#2C6E8F);}
+  .fill.gold{background:linear-gradient(90deg,#C0743A,#D69A63);}
+  .fill.wtg{background:linear-gradient(90deg,#2C6E8F,#3F91A6);}
+  .fill.om{background:linear-gradient(90deg,#12303F,#22566B);}
+  .fill.spec{background:linear-gradient(90deg,#4C824C,#6FA96F);}
+  .fill.bad{background:linear-gradient(90deg,#BC4630,#D25C44);}
+  .fill.ink{background:linear-gradient(90deg,#3a464d,#566169);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:var(--gold);}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#FAF0E6;color:#4a3712;}
+  .note.gold b{color:#8f5518;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#8f5518;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#EAF1F4;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#C0743A);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Process equipment 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> What Anup builds</a></li>
+    <li><a href="#p3"><span class="n">03</span> Out of a textile house</a></li>
+    <li><a href="#p4"><span class="n">04</span> The metallurgy moat</a></li>
+    <li><a href="#p5"><span class="n">05</span> The capex-cycle order book</a></li>
+    <li><a href="#p6"><span class="n">06</span> Kheda: the capacity bet</a></li>
+    <li><a href="#p7"><span class="n">07</span> Exports &amp; the climb up-spec</a></li>
+    <li><a href="#p8"><span class="n">08</span> The industry &amp; rivals</a></li>
+    <li><a href="#p9"><span class="n">09</span> Financials &amp; valuation</a></li>
+    <li><a href="#p10"><span class="n">10</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: ANUP · BSE: 542460</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>The Anup Engineering, <em>exotic metallurgy, made to order</em></h1>
+  <p class="dek">A ground-up walk through one of India's most respected makers of critical <em>process equipment</em> — the heat exchangers, pressure vessels, reactors and towers that live inside a refinery or a chemical plant — how a company that welds titanium and zirconium to spec earns fat margins on made-to-order steel, why the whole story turns on India's process-industry capex cycle, and how a fabricator carved out of a denim group is climbing toward cryogenic, hydrogen and nuclear work.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹822 <small>Cr</small></div><div class="l">Revenue (FY26)</div></div>
+    <div class="cell"><div class="v">~₹110 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~₹770 <small>Cr</small></div><div class="l">Order book (FY27 entry)</div></div>
+    <div class="cell"><div class="v">~₹3,600 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">2 Sep 2026</b> · source: FY26 results (year ended Mar 2026)</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 results incorporated — revenue up ~12% to ~₹822 Cr while PAT eased to ~₹110 Cr on margin/mix softness; Kheda phase-2 lifts total capacity to ~20,000 MT/yr (~₹1,200 Cr revenue potential); first nuclear-equipment order booked; export mix held near 50–60%.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">The Anup Engineering makes <strong>static process equipment</strong> — the large steel-and-alloy vessels that do the physical work inside a process plant. Its flagship product is the <strong>heat exchanger</strong> (the equipment that transfers heat between two fluids), alongside <strong>pressure vessels, reactors, columns and towers, and industrial centrifuges</strong>. These are not shelf products. Each is <strong>engineered and fabricated to order</strong> against a customer's exact specification — a specific size, a specific pressure, and very often a specific exotic metal — for refineries, petrochemical complexes, fertiliser plants, chemical makers, and pharma. It is Ahmedabad-based, and it was <strong>demerged from Arvind Ltd</strong> (the textiles group) and separately listed in 2019.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>The value is in the metallurgy, not the tonnage.</strong> Anyone can cut and weld carbon steel. Anup's reputation is for building equipment in <em>difficult</em> materials — titanium, zirconium, tantalum, nickel alloys, duplex stainless, clad plate — to tolerances that most fabricators cannot hold. That is why it earns a <strong>~20%+ EBITDA margin and ~20% return on capital</strong> on what is, on paper, a metal-bending business. The steel is a small part of the price; the engineering, the welding qualifications and the testing are the rest.</li>
+    <li><strong>It is a capex-cycle business, and the cycle is turning up.</strong> Anup only gets an order when someone builds or expands a plant. India's process industries are in a spending upswing — refinery expansions, a specialty-chemicals and China+1 capex wave, fertiliser revamps — and export demand adds to it. That is what filled the order book to roughly <strong>₹770 Cr</strong> entering FY27, on top of an enquiry pipeline management pegs near ₹1,200 Cr.</li>
+    <li><strong>It just doubled its own capacity and moved up-spec.</strong> A new greenfield plant at <strong>Kheda</strong> takes group capacity to roughly <strong>20,000 tonnes a year</strong> — enough, at full utilisation, to support well over ₹1,200 Cr of revenue versus the ~₹822 Cr done in FY26. And it is pushing into higher-complexity work — cryogenic, hydrogen-ready, and its first <strong>nuclear</strong> equipment order — that a bulk fabricator cannot touch.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>Anup is a bespoke tailor working in steel. A plant owner arrives with a blueprint and a nasty requirement — "this vessel has to hold a corrosive acid at high pressure for twenty years, so it must be made of titanium" — and Anup designs, welds, X-rays, pressure-tests and ships the finished piece. Two things make it a good business rather than a job-shop: the customer cannot afford a leak in a live plant, so they pay for a maker they trust; and the hard materials keep low-cost rivals out. The catch is that Anup does not control its own demand — it rises and falls with how much India's refiners and chemical makers decide to spend on new plants, and a made-to-order book is only worth as much as the factory's ability to execute it on time and on margin.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Process equipment 101: the machines inside the plant</h2></div>
+  <p class="part-sub">No engineering degree needed — just what these vessels do and why they are hard to make.</p>
+
+  <p class="lead">Walk into any refinery, fertiliser plant or chemical complex and most of what you see is not moving parts — it is <strong>static equipment</strong>: big steel drums, towers and coils that hold, heat, cool, mix and separate fluids under pressure. Anup makes exactly this class of hardware. Four product families cover almost the whole business, and it is worth understanding what each one does.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The equipment, in plain English</caption>
+    <thead><tr><th>Product</th><th>What it does (and why it is hard)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Heat exchanger</td><td>Transfers heat from one fluid to another without mixing them — e.g. using a hot process stream to pre-heat a cold feed, saving energy. The common "shell-and-tube" design packs hundreds of thin tubes into a shell; "air-fin coolers" reject heat to the air. Getting hundreds of tube-to-tubesheet welds leak-free is the craft. Anup's single largest product — over half of revenue.</td></tr>
+      <tr><td class="t-strong">Pressure vessel</td><td>A sealed container built to hold gas or liquid safely at high pressure — a rupture in a live plant is catastrophic, so these are code-built, X-rayed and pressure-tested. The metallurgy and weld quality are the whole game.</td></tr>
+      <tr><td class="t-strong">Reactor</td><td>The vessel where the chemical reaction actually happens — often at high temperature, high pressure and in corrosive conditions, which is why reactors frequently demand exotic alloys or metal-clad construction.</td></tr>
+      <tr><td class="t-strong">Column / tower</td><td>Tall vertical vessels used to <em>separate</em> a mixture into its parts — the distillation towers that split crude oil into fractions, for example. Large, heavy, and fabricated in sections.</td></tr>
+      <tr><td class="t-strong">Centrifuge</td><td>A rotating machine that separates solids from liquids by spinning — used heavily in chemicals and pharma. One of the few products Anup makes as a more standardised, repeat item.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why "static equipment" is a genuinely good place to sit</div>
+    <p>This equipment has three features that make it attractive to manufacture. First, it is <strong>mission-critical and safety-critical</strong> — a plant owner will not gamble on the cheapest bidder for a vessel that could fail and shut the whole complex, so track record and certifications win the order, not price alone. Second, it is <strong>custom</strong> — each piece is designed for one plant, so there is no commodity spot market beating the price down. Third, it is <strong>certification-gated</strong> — to supply an oil major or an overseas client you need approvals (ASME "U" stamps, client vendor lists, welding qualifications for exotic metals) that take years to earn and act as a moat. Anup has spent decades collecting exactly those approvals.</p>
+  </div>
+
+  <h3>Who buys this equipment</h3>
+  <ul class="clean">
+    <li><strong>Oil &amp; gas, refining &amp; petrochemicals</strong> — the biggest buyer class: refinery expansions and new petrochemical trains need columns, exchangers and vessels by the hundred.</li>
+    <li><strong>Chemicals &amp; specialty chemicals</strong> — the fast-growing driver, as India builds out specialty-chemical capacity on the back of the China+1 shift.</li>
+    <li><strong>Fertilisers</strong> — ammonia and urea plants are heat-exchanger- and vessel-heavy, and a wave of revamps has kept fertiliser demand alive.</li>
+    <li><strong>Pharma, power, water, paper &amp; pulp</strong> — a long tail of process industries, each needing the same core kit in smaller volumes.</li>
+    <li><strong>New frontiers</strong> — cryogenic (LNG / industrial gases), hydrogen, aerospace and now <strong>nuclear and defence</strong> — higher-spec, higher-value work Anup is deliberately moving into.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>What Anup actually builds — and how an order flows</h2></div>
+  <p class="part-sub">From a customer's spec to a fabricated vessel on a truck — the model in one picture.</p>
+
+  <p class="lead">Anup is not an EPC contractor that builds whole plants, and it is not a bulk steel fabricator selling by the tonne. It sits in a specific, defensible spot: it takes a <strong>customer's design specification</strong> and turns it into a finished, tested, certified piece of equipment. Understanding the flow of a single order explains why the margins look the way they do.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">How one made-to-order vessel travels through Anup</div>
+    <div class="flow-row">
+      <div class="node epc"><div class="ntag">Stage 1 · Win</div><div class="nname">Enquiry &amp; bid</div><div class="nwho">Client (or their EPC) issues a spec; Anup bids on approved vendor lists.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Stage 2 · Engineer</div><div class="nname">Design &amp; procure metal</div><div class="nwho">Detailed design; buy the right alloy — often the long-lead, costly bit.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Stage 3 · Fabricate</div><div class="nname">Cut, roll, weld, machine</div><div class="nwho">Exotic-metal welding &amp; assembly at Odhav / Kheda. The craft stage.</div></div>
+      <div class="arrow">→</div>
+      <div class="node om"><div class="ntag">Stage 4 · Prove &amp; ship</div><div class="nname">Test, certify, despatch</div><div class="nwho">X-ray, pressure test, third-party sign-off; ship to site (often for export).</div></div>
+    </div>
+    <div class="flow-note">Every stage is order-specific. There is no standard product coming off a line — which is why capacity is measured in tonnes of steel processed, not units, and why execution skill decides the margin on each job.</div>
+  </div>
+
+  <p>Because each order is engineered from scratch, the <strong>revenue mix skews to a handful of product families rather than dozens of SKUs</strong>. Heat exchangers dominate, with pressure vessels, reactors, columns and centrifuges filling out the rest.</p>
+
+  <div class="chart">
+    <div class="c-title">Product mix — heat exchangers carry the company</div>
+    <div class="c-sub">Approximate share of product revenue, FY26</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Heat exchangers<small>shell-and-tube, air-fin</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~56%</div></div>
+      <div class="bar-row"><div class="blab">Pressure vessels</div><div class="track"><span class="fill brand" style="width:34%"></span></div><div class="bval">~19%</div></div>
+      <div class="bar-row"><div class="blab">Reactors</div><div class="track"><span class="fill gold" style="width:20%"></span></div><div class="bval">~11%</div></div>
+      <div class="bar-row"><div class="blab">Columns, centrifuges &amp; other</div><div class="track"><span class="fill om" style="width:25%"></span></div><div class="bval">~14%</div></div>
+    </div>
+    <div class="legend"><span>Shares are indicative and move with the order book. The concentration in heat exchangers is a strength — it is Anup's deepest expertise and a large, steady market — and a risk if exchanger demand cools; the push into pressure vessels, reactors and higher-spec work is partly about broadening that base.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why made-to-order beats a standard product here</div>
+    <p>It sounds like a weakness that Anup builds everything bespoke — no economies of a production line, no shelf inventory to ship on demand. In this market it is the opposite. A standardised product invites price competition and cheap copies; a <strong>made-to-order</strong> vessel, engineered for one plant's exact duty and metallurgy, has no spot price to be undercut on and locks Anup into the customer's project at the design stage. The customer is not buying a catalogue item — they are buying Anup's engineering judgment on a piece they cannot afford to get wrong. That is why the diversification across oil &amp; gas, chemicals, fertiliser and pharma is real protection: a soft patch in one sector's project pipeline can be offset by a live cycle in another, and no single standardised SKU can be commoditised out from under the company.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>Out of a textile house: the demerger and who owns it</h2></div>
+  <p class="part-sub">A ninety-year-old workshop hidden inside a denim group — until 2019.</p>
+
+  <p class="lead">Here is the fact that surprises almost everyone who meets this company: a maker of titanium heat exchangers spent most of its life as a <strong>side-business of a garment company</strong>. Anup Engineering traces its roots to the Lalbhai family's <strong>Arvind</strong> group — the Ahmedabad textile house best known for denim and shirting. The engineering unit was a small, quiet, cash-generative corner of a textiles empire for decades, and only in <strong>2019</strong> was it demerged and listed as a standalone company so investors could own the process-equipment business on its own.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1962</div><div class="ev">The engineering workshop is set up under the Arvind / Lalbhai group in Ahmedabad, building fabricated equipment for local industry.</div></li>
+    <li><div class="yr">1990s–2000s</div><div class="ev">Grows into a specialist in heat exchangers and pressure vessels, earning international codes and approvals (ASME stamps, oil-major vendor listings) and a reputation for exotic-metal work.</div></li>
+    <li class="major"><div class="yr">2019</div><div class="ev"><strong>Demerged from Arvind Ltd</strong> and separately listed on NSE &amp; BSE — the process-equipment business becomes a pure-play company that investors can value on its own merits.</div></li>
+    <li><div class="yr">2020–2023</div><div class="ev">Steady margin-led growth; the Odhav (Ahmedabad) plant runs near its ceiling, and management commits to a large greenfield site to break the capacity constraint.</div></li>
+    <li class="major"><div class="yr">FY24–FY25</div><div class="ev">The <strong>Kheda</strong> plant comes on stream; revenue crosses ₹700 Cr; return ratios stay high; the order book and export mix build with the capex cycle.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Kheda <strong>phase-2</strong> lifts group capacity to ~20,000 MT/yr; first <strong>nuclear</strong>-equipment order booked; revenue ~₹822 Cr (+~12%) but PAT eases to ~₹110 Cr on margin/mix — a scale-up year with a profit wobble.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoters:</strong> the <strong>Lalbhai family</strong> and associated Arvind-group entities remain the controlling shareholders after the demerger, holding a large majority stake. This is a professionally run, long-established industrial house rather than a founder-operator startup — continuity of management and customer relationships is part of the asset.</li>
+    <li><strong>What it is <em>not</em>:</strong> do not confuse Anup with the parent <strong>Arvind Ltd</strong> (textiles) or <strong>Arvind Fashions / Arvind SmartSpaces</strong> — different listed companies from the same family tree. Anup is the standalone engineering business only.</li>
+    <li><strong>Balance sheet:</strong> conservatively financed. Borrowings are modest relative to a ~₹2,700 Cr net worth base, and the business is structurally cash-generative — high return on capital funds most of its own growth, with the Kheda capex the main recent call on cash. This is a low-leverage, high-ROCE profile, not a debt-fuelled expansion.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">What the demerger actually changed</div>
+    <p>Sitting inside Arvind, the engineering business was invisible — its profits were a rounding line in a textile company's accounts, and no textile investor was buying the stock for heat exchangers. The 2019 demerger did two useful things. It let the market <strong>value the business on its own economics</strong> — a high-return, low-debt equipment maker deserves a very different multiple from a capital-intensive textile mill, and only a standalone listing could reveal that. And it gave the unit its <strong>own balance sheet and capital-allocation freedom</strong>, which is precisely what funded the Kheda plant. A business that spent decades as someone else's footnote could finally raise capital and invest as itself.</p>
+  </div>
+
+  <div class="note gold"><b>Why the parentage still matters:</b> being carved out of a disciplined, old-economy industrial family shaped Anup's culture — patient, quality-obsessed, allergic to over-leverage. That is a genuine asset in a business where one botched weld on a live-plant vessel can cost a client a reputation and Anup a decade of approvals. But it also means Anup grows at the deliberate pace of a made-to-order engineering shop, not the explosive pace a market sometimes wants to pay for.</div>
+</section>
+
+<!-- 04 — BESPOKE crux: the metallurgy moat + revenue-per-tonne device -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The metallurgy moat: why the steel is the cheap part</h2></div>
+  <p class="part-sub">The single idea that separates Anup from a job-shop — and it is measurable.</p>
+
+  <p class="lead">The most useful way to understand Anup is to ask a blunt question: if two companies both weld steel into vessels, why does one earn a 20%+ margin and 20% return on capital while a generic fabricator scrapes single digits? The answer is that Anup barely sells steel at all. It sells <strong>the ability to build in metals that most fabricators cannot weld</strong> — and that ability shows up directly in how much revenue it extracts from each tonne of metal it processes.</p>
+
+  <div class="chart">
+    <div class="c-title">The device: revenue per tonne of steel processed</div>
+    <div class="c-sub">Illustrative realisation on a tonne of fabricated equipment — specialist vs bulk</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Exotic-alloy vessel<small>titanium / zirconium job</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">Highest</div></div>
+      <div class="bar-row"><div class="blab">Anup blended average<small>~₹822 Cr over ~capacity</small></div><div class="track"><span class="fill brand" style="width:52%"></span></div><div class="bval">~₹6 L/MT</div></div>
+      <div class="bar-row"><div class="blab">Carbon-steel fabrication<small>bulk job-shop work</small></div><div class="track"><span class="fill ink" style="width:16%"></span></div><div class="bval">Lowest</div></div>
+    </div>
+    <div class="legend"><span>Indicative, not reported line items. At ~₹822 Cr of FY26 revenue against ~20,000 MT of capacity, a fully utilised Anup realises on the order of ₹6 lakh per tonne — a large multiple of what a carbon-steel job-shop earns per tonne, because the price reflects design, exotic-metal welding and testing, not the weight of the metal.</span></div>
+  </div>
+
+  <p>Run the same question through a single job: on a titanium reactor, the raw titanium plate might be a serious cost, but the <em>reason</em> the customer pays a premium is that only a handful of shops in the country can weld titanium to code, X-ray every seam, and warrant it for twenty years of corrosive service. That skill — not the metal — is what is scarce, and scarcity is what margins are made of. A generic fabricator competing on carbon-steel tonnage is selling a commodity; Anup is selling a certified capability.</p>
+
+  <div class="plain">
+    <div class="ptag">The moat, made concrete</div>
+    <p>Three things fence out competition. <strong>Metallurgy:</strong> qualifying welders and procedures for titanium, zirconium, tantalum, nickel alloys and clad plate takes years and destructive testing — you cannot fake it, and a client will not let you learn on their reactor. <strong>Approvals:</strong> to bid for an oil major or an export order you must already be on approved vendor lists and hold the right code stamps, a paperwork moat that a new entrant cannot leap. <strong>Track record:</strong> in equipment where failure is unacceptable, a decades-long clean delivery history is itself the product. Together these mean Anup competes against a short list of credible names, not a crowd — which is why a metal-bending business earns software-like returns on capital.</p>
+  </div>
+
+  <p>There is a ladder implicit in all this. At the bottom sit commodity carbon-steel vessels that anyone can weld; in the middle, the stainless heat exchangers that are Anup's bread and butter; above them, exotic-alloy and clad reactors; and on the top rungs the frontier work — cryogenic, hydrogen-ready, and now nuclear and defence. Every rung up raises the price per tonne and shrinks the list of qualified rivals, and Anup's whole strategy is to keep migrating its mix rightward. The Kheda clean-room and that first nuclear order are the most recent steps onto the higher rungs.</p>
+
+  <div class="note gold"><b>A genuine surprise:</b> in FY26 Anup grew <em>revenue</em> by roughly 12% yet its <em>net profit slipped</em>, from about ₹118 Cr to ~₹110 Cr. For a company this profitable that is a tell worth sitting with — a made-to-order shop's margin in any given year depends on the <em>mix</em> of jobs it happened to execute and how cleanly they ran, not just on how busy it was. Record revenue with softer profit is the signature of a scale-up year where lower-margin work and start-up costs at a new plant crowded in. It is a reminder that "order book up" and "profit up" are not the same sentence here.</div>
+</section>
+
+<!-- 05 -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The order book and the capex cycle that fills it</h2></div>
+  <p class="part-sub">Anup does not control its demand — so watch what its customers are spending.</p>
+
+  <p class="lead">A made-to-order equipment maker has no demand of its own; it borrows the demand of everyone building a plant. That makes the <strong>process-industry capital-expenditure cycle</strong> the single most important thing happening outside Anup's factory gates. When refiners, chemical makers and fertiliser companies commit capital to new units, enquiries land on Anup's desk; when they pause, the order book thins. Right now the cycle is working in Anup's favour on several fronts at once.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>What is filling the order book</caption>
+    <thead><tr><th>Driver</th><th>What it is</th><th>Why it reaches Anup</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Refinery &amp; petrochem expansion</td><td>Indian refiners and petrochemical players adding capacity and complexity to meet fuel and feedstock demand.</td><td>Every new train needs columns, exchangers and vessels — Anup's core kit, by the hundred.</td></tr>
+      <tr><td class="t-strong">Specialty chemicals &amp; China+1</td><td>Global buyers diversifying supply out of China; India building specialty-chemical capacity to capture it.</td><td>The fastest-growing demand pool — new chemical plants are reactor- and exotic-metal-heavy.</td></tr>
+      <tr><td class="t-strong">Fertiliser revamps</td><td>Ammonia/urea plant expansions and modernisation.</td><td>Fertiliser units are among the most heat-exchanger-intensive plants there are.</td></tr>
+      <tr><td class="t-strong">Exports</td><td>Overseas EPCs and plant owners sourcing certified equipment from India.</td><td>Adds a second demand engine uncorrelated with the domestic cycle — roughly half of Anup's book.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Order book &amp; the enquiry pipeline behind it</div>
+    <div class="c-sub">Approximate, ₹ Crore — booked work versus the funnel of live enquiries</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Enquiry pipeline<small>live, un-booked</small></div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~1,200</div></div>
+      <div class="bar-row"><div class="blab">Order book<small>FY27 entry</small></div><div class="track"><span class="fill brand" style="width:64%"></span></div><div class="bval">~770</div></div>
+      <div class="bar-row"><div class="blab">FY26 revenue<small>for scale</small></div><div class="track"><span class="fill wtg" style="width:69%"></span></div><div class="bval">~822</div></div>
+    </div>
+    <div class="legend"><span>Order book of ~₹770 Cr is a little under a year of revenue — normal for short-to-medium-cycle equipment — with a ~₹1,200 Cr enquiry pipeline behind it. The pipeline is the leading indicator: a fat funnel today is next year's booked orders, provided the capex cycle holds.</span></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">Why the enquiry pipeline is the number to watch, not just the order book</div>
+    <p>The order book tells you what is already won; it is a lagging comfort. The <strong>enquiry pipeline</strong> — the value of live bids Anup is quoting on — is the forward signal, because it reflects how much plant-building is being <em>planned</em> right now. If the pipeline keeps widening, the order book refills as jobs are delivered and the capex cycle is intact. If the pipeline shrinks, it is the early warning that customers are deferring projects — the thing that would eventually starve the factory. For a business with no demand of its own, that funnel is the closest thing to a demand forecast you will get.</p>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~₹770 Cr</div><div class="msl">Order book entering FY27 — roughly a year of work in hand</div></div>
+    <div class="ms gold"><div class="msv">~₹1,200 Cr</div><div class="msl">Live enquiry pipeline — the leading indicator of the next order book</div></div>
+    <div class="ms green"><div class="msv">50–60%</div><div class="msl">Export share of the book — a demand engine outside the domestic cycle</div></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>Kheda: breaking the capacity ceiling</h2></div>
+  <p class="part-sub">The growth bet that has to earn its keep — a doubled factory looking for orders.</p>
+
+  <p class="lead">For years Anup's growth was capped by a very physical constraint: its original <strong>Odhav</strong> plant, hemmed in inside Ahmedabad's urban sprawl, had little room to add capacity or build the very large, very heavy vessels the market increasingly wanted. The answer was a large greenfield site at <strong>Kheda</strong>, and it is the most important capital decision Anup has made since listing.</p>
+
+  <div class="chart">
+    <div class="c-title">Capacity, before and after Kheda</div>
+    <div class="c-sub">Approximate group fabrication capacity, tonnes per year (MT/yr)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Odhav (legacy)<small>land-constrained</small></div><div class="track"><span class="fill ink" style="width:35%"></span></div><div class="bval">~7,000</div></div>
+      <div class="bar-row"><div class="blab">Kheda (new plant)<small>after phase 2</small></div><div class="track"><span class="fill wtg" style="width:65%"></span></div><div class="bval">~13,000</div></div>
+      <div class="bar-row"><div class="blab">Group total<small>post phase-2</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~20,000</div></div>
+    </div>
+    <div class="legend"><span>Approximate split. The Kheda phase-2 expansion (adding roughly 8,000 MT) roughly doubles group capacity to ~20,000 MT/yr. On management's own arithmetic, that fully-utilised capacity can support well over ₹1,200 Cr of revenue — versus ~₹822 Cr delivered in FY26.</span></div>
+  </div>
+
+  <p>Kheda is not just more of the same shed. It was built to make the equipment Odhav couldn't — <strong>larger and heavier vessels</strong>, with better logistics for moving oversized pieces, and a dedicated <strong>clean-room facility</strong> for the high-purity fabrication that pharma, electronics and frontier applications demand. In other words, the new plant simultaneously adds <em>volume</em> and pushes Anup <em>up the complexity ladder</em> — the two levers that drive this company's revenue and margin at the same time.</p>
+
+  <div class="plain">
+    <div class="ptag">The clean-room is the quiet tell</div>
+    <p>The easy way to read Kheda is "bigger shed, more tonnes." The more revealing detail is the <strong>clean-room</strong>. Building a controlled, high-purity fabrication facility is not what you do to churn out more carbon-steel drums — it is what you do to make equipment for pharma, electronics, hydrogen and the frontier applications where contamination is unacceptable. In other words, the same capital expansion that doubles volume also equips Anup to sell <em>up the ladder</em>. A management team that spends on a clean-room while doubling capacity is telling you it intends to grow revenue and mix at the same time, not just fabricate more of the same.</p>
+  </div>
+
+  <p>The gap between what the factory <em>did</em> and what it <em>could do</em> — roughly ₹822 Cr of FY26 revenue against a capacity that could support ₹1,200 Cr-plus — is the growth runway and the risk in one line. Idle capacity is expensive; the whole Kheda bet rests on the capex cycle delivering enough orders to fill it. Utilisation, not capacity, is the number that turns this plant from a cost into a compounding asset.</p>
+
+  <div class="note gold"><b>The real tension in the Kheda bet:</b> doubling capacity is only value-creating if orders arrive to fill it — a half-empty specialist plant carries fixed costs that eat the very margins that make Anup special. FY26's revenue-up-profit-down pattern is partly the fingerprint of a plant ramping ahead of its order load. The bet is sound <em>if</em> the capex cycle runs for years; it is a drag if the cycle stalls before utilisation catches up. That is why the enquiry pipeline (§5) and this plant's utilisation are two halves of the same question.</div>
+</section>
+
+<!-- 07 -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>Exports and the climb into higher-spec work</h2></div>
+  <p class="part-sub">Half the book is overseas — and the frontier segments are the optionality.</p>
+
+  <p class="lead">Two things make Anup more than a domestic capex proxy. First, roughly <strong>half its order book is exports</strong> — equipment shipped to overseas plant owners and EPC contractors who value certified Indian fabrication at competitive cost. Second, Anup is deliberately steering its mix toward <strong>higher-spec, harder-to-make</strong> equipment where the price per tonne and the barriers to entry are both highest.</p>
+
+  <p>The precise split moves quarter to quarter, but Anup consistently targets that <strong>50–60% export</strong> band. That overseas demand partly de-couples the company from the timing of India's own capex cycle — a slow domestic year can be cushioned by export orders, and a busy one runs both engines at once. It also validates the quality claim: an overseas plant owner choosing certified Indian fabrication over a local or Western OEM is a harder customer to win than a domestic one, and winning them repeatedly is its own proof of Anup's standing.</p>
+
+  <p>The move up-spec is where the optionality lives. Anup is building qualifications and reference orders in a set of frontier applications, each of which is small today but sits on the most defensible, highest-value rungs of the ladder:</p>
+
+  <ul class="clean">
+    <li><strong>Cryogenic &amp; industrial gases</strong> — equipment for LNG and air-separation duty, where sub-zero service demands specialist metallurgy and welding. A natural extension of Anup's exotic-metal expertise.</li>
+    <li><strong>Hydrogen-ready equipment</strong> — as green-hydrogen and related capex builds, the electrolyser and processing chains need vessels and exchangers rated for hydrogen service — a market that barely existed a few years ago.</li>
+    <li><strong>Nuclear</strong> — Anup booked its <strong>first nuclear-equipment order</strong> (columns and vessels) from a leading EPC player in FY26. Nuclear is the toughest qualification in the industry — long-cycle, heavily audited, and correspondingly hard for rivals to enter.</li>
+    <li><strong>Defence &amp; aerospace</strong> — specialised fabrication for defence and aerospace supply chains, another high-barrier, indigenisation-driven pool.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">How to hold the frontier segments in your head</div>
+    <p>Cryogenic, hydrogen, nuclear and defence are not yet the earnings story — they are small slivers of today's revenue. Their value is different: each is a <strong>qualification Anup is banking now</strong> that could open a large, high-margin market later, and each one a low-cost rival cannot follow it into. The correct way to weigh them is as a portfolio of hard-won entry tickets, not as a forecast — most may stay small, but the ones that scale would scale precisely because they are so hard to enter. Judge them by the reference orders and approvals Anup accumulates, not by revenue they haven't yet produced.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A short list of credible names — not a commodity scrum.</p>
+
+  <p class="lead">Because the barriers are metallurgy, approvals and track record, process-equipment fabrication in India is a <strong>concentrated field of a few reputable players</strong>, not a fragmented commodity market. Anup competes against a mix of focused specialists and the equipment arms of large engineering houses — and, in one adjacent niche, a technology it deliberately does not chase.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Anup Engineering</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Anup Engineering</td><td>Focused process-equipment specialist; heat-exchanger-led; exotic metallurgy; high ROCE, low debt</td><td><em>This company.</em> The debate is capex-cycle demand and filling Kheda, not survival or quality.</td></tr>
+      <tr><td class="t-strong">Godrej Process Equipment</td><td>The closest listed twin — a scaled, well-regarded heat-exchanger and vessel specialist</td><td>The most direct comparison; both chase the same premium, exotic-metal, export-heavy jobs. A genuine peer to benchmark margins and order book against.</td></tr>
+      <tr><td class="t-strong">L&amp;T (Heavy Engineering)</td><td>The engineering giant's process-plant and reactor arm</td><td>Vastly larger and takes the biggest, most complex packages; overlaps at the top end but is not a focused pure-play — Anup wins on nimbleness and cost for mid-sized critical equipment.</td></tr>
+      <tr><td class="t-strong">ISGEC Heavy Engineering</td><td>Diversified heavy-engineering and process-equipment maker</td><td>Broader product range across boilers, presses and equipment; competes on selected vessel and exchanger tenders.</td></tr>
+      <tr><td class="t-strong">GMM Pfaudler</td><td>The leader in <em>glass-lined</em> equipment for corrosive chemical duty</td><td>An adjacent niche, not a head-on rival — Anup's answer to corrosion is exotic metal and clad, GMM's is glass lining. They meet only at the edges of the chemical market.</td></tr>
+      <tr><td class="t-strong">Global OEMs (TEMA-standard makers)</td><td>International fabricators bidding on large export and licensor-tied packages</td><td>Technology and scale, but Indian specialists like Anup increasingly win on certified quality at competitive cost — the basis of the export story.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The margin gap between the tiers is the whole point. A focused, exotic-metal specialist like Anup earns a mid-to-high-teens-to-20s EBITDA margin — roughly double a diversified engineering house and several times a commodity fabricator — because it competes on capability, not on the price of a tonne of steel. That is the financial fingerprint of where a company sits in the pecking order, and it is why Anup guards its niche rather than chasing volume down-market.</p>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to remember</div>
+    <p>Two features define the field. First, this is a <strong>reputation oligopoly</strong>: in equipment where failure is unacceptable, buyers stick to a short approved list, so a rising capex cycle tends to lift the credible specialists together rather than trigger a price war. Second, Anup's real edge over the giants is <strong>focus</strong> — a dedicated process-equipment shop can chase the mid-sized, high-metallurgy jobs that are too fiddly for an L&amp;T-scale package and too demanding for a commodity fabricator. Its edge over the commodity crowd is simply that they cannot make what it makes. The competitive risk is not a new low-cost entrant; it is a direct specialist like Godrej out-executing it, or the capex cycle shrinking the pie for everyone.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A high-return niche compounder — priced as one, with a profit wobble to explain.</p>
+
+  <p class="lead">Anup's financial signature is the opposite of its heavy-industrial appearance: modest debt, high returns on capital, and cash generation that funds most of its own growth. FY26 was a scale-up year — revenue grew but profit dipped — so the valuation question is whether the market is paying for the through-cycle quality or for a straight-line ramp that FY26 just complicated.</p>
+
+  <div class="chart">
+    <div class="c-title">Revenue trajectory</div>
+    <div class="c-sub">Consolidated revenue, ₹ Crore (approximate)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill wtg" style="width:68%"></span></div><div class="bval">~560</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill brand" style="width:89%"></span></div><div class="bval">~733</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~822</div></div>
+    </div>
+    <div class="legend"><span>A steady, high-teens-to-20s growth path as the capex cycle and capacity both built. FY26's ~12% growth was slower than FY25's step-up — the top line kept climbing, but the pace cooled. And crucially it did <em>not</em> carry the profit line with it: PAT eased from ~₹118 Cr in FY25 to ~₹110 Cr in FY26, flat-to-down even as revenue rose, on job mix and new-plant start-up costs.</span></div>
+  </div>
+
+  <div class="chart">
+    <div class="c-title">Return ratios — the reason this is a quality name</div>
+    <div class="c-sub">Approximate FY26 return metrics, %</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">ROCE</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~21%</div></div>
+      <div class="bar-row"><div class="blab">ROE</div><div class="track"><span class="fill wtg" style="width:81%"></span></div><div class="bval">~17%</div></div>
+      <div class="bar-row"><div class="blab">EBITDA margin</div><div class="track"><span class="fill gold" style="width:100%"></span></div><div class="bval">~21%</div></div>
+    </div>
+    <div class="legend"><span>Return on capital in the low-20s on a low-debt balance sheet is what marks Anup out from a typical capital-goods fabricator. These are the ratios that justify a premium multiple — and the ratios that must hold as Kheda's capital base grows and has to be sweated.</span></div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~21%</div><div class="msl">FY26 EBITDA margin — the specialist premium over bulk fabrication</div></div>
+    <div class="ms green"><div class="msv">Low debt</div><div class="msl">Conservatively financed; growth largely self-funded from cash flow</div></div>
+    <div class="ms red"><div class="msv">~33×</div><div class="msl">Trailing P/E on ~₹3,600 Cr market cap — a quality-compounder multiple</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: Kheda utilisation and the margin it carries</div>
+    <p>At roughly 33× earnings and ~₹3,600 Cr of market value, Anup is valued as a durable, high-return compounder — not as a cheap cyclical. So the metric that will prove or break that valuation is <strong>the utilisation of the ~20,000 MT capacity and whether it is filled with margin-accretive work</strong>, read together with <strong>revenue per tonne</strong> (is the mix moving up the ladder?) and <strong>the enquiry pipeline converting to orders</strong> (is the capex cycle feeding the plant?). If Kheda fills with exotic-metal and frontier jobs, revenue re-accelerates toward the ₹1,200 Cr-plus the plant can support and the FY26 profit dip reads as a ramp blip. If the plant runs half-empty or fills with commodity work, the return ratios that justify the multiple erode — and a 33× stock does not forgive that. Utilisation-at-margin, not the order-book headline, is the scoreboard.</p>
+  </div>
+
+  <div class="note">Figures here are approximate, drawn from company results and third-party data for FY26 (year ended March 2026) and prior years, and cross-checked across sources; the year-by-year revenue and PAT bars are <b>approx.</b> reconstructions and the segment/end-market splits are <b>indicative</b>, not reported line items. Verify against the company's filings before relying on any single number.</div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A quality specialist with a doubled factory — asked to prove the cycle will fill it.</p>
+
+  <p class="lead">Anup enters FY27 as one of the best-run names in its niche: high returns, low debt, a respected metallurgy franchise, half its book overseas, a new plant that can carry far more revenue, and a foot in the door of nuclear, cryogenic and hydrogen work. The open question is no longer about quality — it is whether the process-industry capex cycle delivers enough of the <em>right</em> orders to fill the capacity it has just built, at the margins that make Anup, Anup.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>Capex-cycle tailwind</strong> — refinery, specialty-chemical/China+1 and fertiliser spending, plus exports, feed a ~₹1,200 Cr enquiry pipeline.</li>
+        <li><strong>Capacity headroom</strong> — Kheda phase-2 roughly doubles capacity to ~20,000 MT/yr and can support ₹1,200 Cr-plus of revenue as it fills.</li>
+        <li><strong>Metallurgy moat &amp; high returns</strong> — exotic-metal capability and code approvals underpin ~20% margins and ~20% ROCE that bulk rivals cannot match.</li>
+        <li><strong>Move up-spec</strong> — cryogenic, hydrogen and a first nuclear order add high-barrier, high-value optionality with a growing clean-room base.</li>
+        <li><strong>Balance-sheet quality</strong> — low debt and self-funded growth; a disciplined, old-industrial-house culture built for reliability.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>No demand of its own</strong> — a made-to-order shop is hostage to the capex cycle; a downturn in client spending thins the book directly.</li>
+        <li><strong>Utilisation risk</strong> — a doubled plant carries fixed costs; if orders lag, the very margins that define Anup get squeezed (FY26 hinted at this).</li>
+        <li><strong>Lumpy, mix-driven profit</strong> — profit swings with the jobs executed and start-up costs; revenue growth need not mean profit growth, as FY26 showed.</li>
+        <li><strong>Premium valuation</strong> — ~33× earnings prices in continued high-quality compounding; a soft cycle or margin slip can de-rate it sharply.</li>
+        <li><strong>Concentration &amp; competition</strong> — heavy reliance on heat exchangers; a capable direct peer in Godrej and the scale of L&amp;T at the top end.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Anup Engineering is a quietly excellent business doing a hard thing well: turning difficult metals into critical equipment that plant owners cannot afford to have fail, and earning specialist returns for it. What it has just done — double its capacity at Kheda and step onto the nuclear and cryogenic rungs — widens the runway but raises the stakes, because a specialist plant only compounds if it stays full of the high-value work it was built for. FY26's record revenue and softer profit is the honest preview of that tension. The next few years answer it in one checkable place: <strong>watch Kheda's utilisation and the revenue Anup wrings from each tonne of steel</strong> — if both climb as the enquiry pipeline converts, the capex cycle is doing its job and the multiple is earned; if the plant runs light or the mix drifts to commodity work, the return ratios tell you before the share price does.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>The Anup Engineering Ltd — Q4 &amp; FY26 investor presentation and results (year ended March 2026), via the company's investor-relations disclosures.</li>
+    <li>BSE India — The Anup Engineering Limited stock page, scrip code 542460 (CIN L29306GJ2017PLC099085).</li>
+    <li>Screener.in — The Anup Engineering (ANUP) consolidated financials, market cap, ROCE/ROE and P/E.</li>
+    <li>ICICI Direct — "The Anup Engineering Limited" Q3FY26 and Q4FY26 result updates and research coverage.</li>
+    <li>Yahoo Finance / GuruFocus — Anup Engineering (NSE:ANUP) Q4 FY26 earnings-call highlights and transcript.</li>
+    <li>Multibagg / MNCL Group — Anup Engineering Q2 &amp; H1 FY26 and Q4FY26 company updates (Kheda expansion, nuclear entry, export mix).</li>
+    <li>EquityBulls — "Anup Engineering reports a resilient performance amid uncertainties" (FY26 results coverage).</li>
+    <li>Business Standard — Anup Engineering corporate and expansion coverage (Kheda capacity, order book).</li>
+    <li>Company disclosures on capacity (~20,000 MT/yr post Kheda phase-2) and order book / enquiry pipeline.</li>
+    <li>Industry references on process-equipment metallurgy, ASME codes and heat-exchanger fabrication.</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026), and may contain errors or become outdated; several splits and per-tonne figures are indicative illustrations, not reported line items. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "ANUP";
+  const COMPANY_SLUG = "anup-engineering";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
