@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Enzyme Technologies — Business & Industry Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1F5F2;
+    --paper-2:#F8FBF8;
+    --card:#FFFFFF;
+    --ink:#132019;
+    --ink-soft:#4C5A52;
+    --ink-faint:#8A968E;
+    --brand:#186E54;          /* deep enzyme teal-green */
+    --brand-bright:#25946E;   /* the Advanced Enzymes accent */
+    --gold:#8AA92E;           /* bio-lime - accent / warmth */
+    --wtg:#2F8F9E;            /* healthcare / nutrition teal */
+    --epc:#5AA06A;            /* bio-processing leaf */
+    --om:#3C7D4E;            /* animal / feed green */
+    --spec:#25946E;          /* bright bio cross accent */
+    --line:#DCE6DF;
+    --line-soft:#E8F0EA;
+    --good:#2A7A4E;
+    --bad:#B0492E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,sans-serif;font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;font-weight:600;line-height:1.12;letter-spacing:-.02em;color:var(--ink);}
+  .mono{font-family:"DM Mono",ui-monospace,monospace;}
+  .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);}
+  a{color:var(--brand-bright);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .grid{display:grid;grid-template-columns:248px 1fr;gap:54px;align-items:start;}
+  @media(max-width:920px){.grid{grid-template-columns:1fr;gap:0;}}
+
+  nav.toc{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding:34px 0;}
+  nav.toc .toc-title{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;}
+  nav.toc ol{list-style:none;margin:0;padding:0;}
+  nav.toc a{display:flex;gap:10px;padding:6px 0;color:var(--ink-soft);font-size:13.5px;line-height:1.3;}
+  nav.toc a .n{font-family:"DM Mono",monospace;font-size:11px;color:var(--gold);font-weight:500;min-width:20px;}
+  nav.toc a:hover{color:var(--ink);text-decoration:none;}
+  @media(max-width:920px){nav.toc{position:static;max-height:none;border-bottom:1px solid var(--line);margin-bottom:8px;}nav.toc ol{columns:2;column-gap:22px;}}
+
+  header.cover{border-bottom:3px solid var(--ink);padding:46px 0 30px;margin-top:18px;}
+  header.cover .kicker{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px;}
+  .tag{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:20px;color:var(--ink-soft);background:var(--paper-2);}
+  .tag.solid{background:var(--brand);color:#E7F3EC;border-color:var(--brand);}
+  .tag.gold{background:var(--gold);color:#1e2c05;border-color:var(--gold);}
+  header.cover h1{font-size:clamp(33px,5.4vw,58px);font-weight:700;margin:.1em 0 .2em;letter-spacing:-.03em;}
+  header.cover h1 em{font-style:normal;color:var(--brand-bright);}
+  header.cover .dek{font-size:clamp(16px,2vw,20px);color:var(--ink-soft);max-width:64ch;line-height:1.45;}
+  header.cover .prov{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-faint);margin-top:16px;}
+
+  .stat-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:30px;background:var(--card);}
+  .stat-strip .cell{padding:16px 18px;border-right:1px solid var(--line-soft);}
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .v{font-family:"Sora",sans-serif;font-size:24px;font-weight:700;line-height:1;}
+  .stat-strip .v small{font-size:13px;color:var(--ink-faint);font-weight:500;}
+  .stat-strip .l{font-family:"DM Mono",monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px;}
+  @media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr);}.stat-strip .cell:nth-child(2){border-right:none;}}
+
+  section.part{padding:54px 0 12px;border-top:1px solid var(--line);margin-top:42px;}
+  section.part:first-of-type{border-top:none;}
+  .part-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px;}
+  .part-head .pno{font-family:"DM Mono",monospace;font-size:13px;font-weight:500;color:var(--gold);padding-top:4px;}
+  .part-head h2{font-size:clamp(24px,3.4vw,35px);font-weight:700;margin:0;letter-spacing:-.025em;}
+  .part-sub{font-size:17px;color:var(--ink-soft);margin:2px 0 26px 0;max-width:70ch;}
+
+  p{margin:0 0 16px;max-width:74ch;}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--ink);}
+  h3{font-size:20px;margin:34px 0 10px;font-weight:600;}
+  h4{font-size:16px;margin:24px 0 6px;font-weight:600;}
+
+  ul.clean{margin:4px 0 18px;padding-left:0;list-style:none;max-width:74ch;}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;background:var(--gold);border-radius:50%;}
+
+  .plain{background:#ECF6EF;border:1px solid #C9E4D3;border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:22px 0;max-width:78ch;}
+  .plain .ptag{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#1C7A54;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .plain .ptag::before{content:"✚";font-size:13px;}
+  .plain p{margin:0;font-size:15px;color:#1F3A2C;}
+  .plain p+p{margin-top:10px;}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;}
+  caption{caption-side:top;text-align:left;font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);padding:12px 16px 0;}
+  thead th{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:11px 16px;border-bottom:2px solid var(--ink);font-weight:500;vertical-align:bottom;}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F2F8F4;}
+  td.num,th.num{text-align:right;font-family:"DM Mono",monospace;font-variant-numeric:tabular-nums;}
+  .t-strong{font-weight:600;}
+
+  .chart{margin:22px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);padding:20px 22px 18px;}
+  .chart .c-title{font-family:"Sora",sans-serif;font-size:17px;font-weight:600;margin-bottom:3px;}
+  .chart .c-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+  .bars{display:flex;flex-direction:column;gap:13px;}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:12px;align-items:center;}
+  .bar-row .blab{font-size:13px;line-height:1.2;}
+  .bar-row .blab small{display:block;color:var(--ink-faint);font-size:11px;}
+  .track{height:22px;background:#E3EDE6;border-radius:3px;overflow:hidden;}
+  .fill{height:100%;border-radius:3px;display:block;}
+  .bar-row .bval{font-family:"DM Mono",monospace;font-size:12.5px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums;}
+  .fill.brand{background:linear-gradient(90deg,#186E54,#25946E);}
+  .fill.gold{background:linear-gradient(90deg,#8AA92E,#A9C455);}
+  .fill.wtg{background:linear-gradient(90deg,#2F8F9E,#4FAEBB);}
+  .fill.om{background:linear-gradient(90deg,#3C7D4E,#57996A);}
+  .fill.spec{background:linear-gradient(90deg,#25946E,#3FB089);}
+  .fill.bad{background:linear-gradient(90deg,#B0492E,#C9603F);}
+  .fill.ink{background:linear-gradient(90deg,#3f4a44,#5b675f);}
+  @media(max-width:560px){.bar-row{grid-template-columns:100px 1fr 62px;gap:8px;}.bar-row .blab{font-size:12px;}}
+
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.5px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+
+  .flow{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;}
+  .flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .node{flex:1;min-width:118px;border-radius:6px;padding:13px 13px;position:relative;color:#fff;}
+  .node .ntag{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85;margin-bottom:5px;}
+  .node .nname{font-weight:600;font-size:14px;line-height:1.15;font-family:"Sora",sans-serif;}
+  .node .nwho{font-size:10.5px;margin-top:5px;opacity:.92;line-height:1.25;}
+  .node.wtg{background:var(--wtg);}
+  .node.epc{background:var(--epc);}
+  .node.om{background:var(--om);}
+  .node.spec{background:var(--brand);}
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 6px;color:var(--ink-faint);font-size:18px;flex:0 0 auto;}
+  .flow-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  @media(max-width:760px){.flow-row{flex-direction:column;}.arrow{transform:rotate(90deg);padding:6px 0;}}
+
+  .chain-wtg{color:var(--wtg);font-weight:600;}
+  .chain-epc{color:var(--epc);font-weight:600;}
+  .chain-om{color:var(--om);font-weight:600;}
+
+  .timeline{margin:22px 0;border-left:2px solid var(--line);list-style:none;padding-left:0;}
+  .timeline li{position:relative;padding:0 0 22px 28px;}
+  .timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brand-bright);}
+  .timeline li.major::before{background:var(--gold);border-color:var(--gold);}
+  .timeline .yr{font-family:"DM Mono",monospace;font-size:12px;font-weight:500;color:var(--gold);}
+  .timeline .ev{font-size:14px;margin-top:2px;}
+
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+  @media(max-width:680px){.mini-stats{grid-template-columns:1fr;}}
+  .ms{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--card);}
+  .ms .msv{font-family:"Sora",sans-serif;font-size:25px;font-weight:700;line-height:1;color:var(--brand);}
+  .ms.gold .msv{color:#6f8a20;}
+  .ms.green .msv{color:var(--good);}
+  .ms.red .msv{color:var(--bad);}
+  .ms .msl{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.35;}
+
+  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  @media(max-width:680px){.bb{grid-template-columns:1fr;}}
+  .bb .col{border:1px solid var(--line);border-radius:6px;padding:20px 22px;background:var(--card);}
+  .bb .col.bull{border-top:3px solid var(--good);}
+  .bb .col.bear{border-top:3px solid var(--bad);}
+  .bb h4{margin-top:0;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+  .bb .col.bull h4{color:var(--good);}
+  .bb .col.bear h4{color:var(--bad);}
+  .bb .col.bear ul.clean li::before{background:var(--bad);}
+  .bb .col.bull ul.clean li::before{background:var(--good);}
+
+  .note{border:1px dashed var(--bad);background:#FBEFEB;border-radius:4px;padding:14px 18px;margin:20px 0;font-size:13.5px;color:#6a3122;max-width:78ch;}
+  .note b{color:var(--bad);}
+  .note.gold{border-color:var(--gold);background:#F0F7EA;color:#33461c;}
+  .note.gold b{color:#5f7a18;}
+
+  blockquote{margin:22px 0;padding:8px 0 8px 22px;border-left:3px solid var(--gold);font-family:"Sora",sans-serif;font-size:18px;font-weight:500;color:var(--ink);max-width:72ch;line-height:1.4;}
+
+  .refresh-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px;padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);}
+  .rb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:"DM Mono",monospace;font-size:12px;color:var(--ink-soft);}
+  .rb-status{display:inline-flex;align-items:center;gap:7px;font-weight:500;}
+  .rb-status .dot{width:8px;height:8px;border-radius:50%;background:var(--good);}
+  .rb-status.stale{color:#5f7a18;} .rb-status.stale .dot{background:var(--gold);}
+  .rb-when b{color:var(--ink);font-weight:500;}
+  .rb-btn{font-family:"DM Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--brand);background:var(--brand);color:#E7F3EC;border-radius:6px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .15s,border-color .15s;}
+  .rb-btn:hover{background:var(--brand-bright);border-color:var(--brand-bright);}
+  .rb-btn[disabled]{opacity:.6;cursor:default;}
+  .rb-btn .rbi{font-size:14px;display:inline-block;}
+  .rb-btn.spinning .rbi{animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .whatsnew{margin-top:12px;font-size:13px;color:var(--ink-soft);border-left:2px solid var(--brand-bright);padding:2px 0 2px 14px;}
+  .whatsnew b{font-family:"DM Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:3px;}
+
+  footer.src{border-top:3px solid var(--ink);margin-top:60px;padding:34px 0 80px;}
+  footer.src ol{font-size:12.5px;color:var(--ink-soft);line-height:1.5;padding-left:20px;columns:2;column-gap:40px;}
+  footer.src li{margin-bottom:7px;break-inside:avoid;}
+  .disc{font-size:12px;color:var(--ink-faint);margin-top:24px;max-width:80ch;font-style:italic;}
+</style>
+<style id="pdf-print-style">
+.dl-btn{position:fixed;top:52px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#0a0a0a;background:var(--gold,#E0913C);border:none;border-radius:20px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+.dl-btn:hover{filter:brightness(1.06);}
+.pdf-head{display:none;}
+@media print{
+  @page{margin:14mm 14mm 16mm;}
+  html,body{background:#fff !important;}
+  nav.toc,.toc,.sp-back,.refresh-bar,.whatsnew,.dl-btn,.rb-btn,#rb-refresh{display:none !important;}
+  .wrap,.grid{display:block !important;}
+  main{max-width:none !important;width:100% !important;margin:0 !important;}
+  .stat-strip .v{font-size:19px !important;white-space:nowrap;}
+  .stat-strip .cell{padding:13px 12px !important;}
+  .pdf-head{display:flex !important;align-items:center;gap:13px;padding:0 0 10px;margin:0 0 16px;border-bottom:1.5px solid #0a0a0a;}
+  .pdf-head img{height:42px;width:auto;background:#0a0a0a;border-radius:7px;padding:4px 9px;}
+  .pdf-head .ph-t{font-family:"Sora",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;color:#0a0a0a;line-height:1.15;}
+  .pdf-head .ph-s{font-family:"DM Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-top:3px;}
+  h1,h2,h3,h4{break-after:avoid;}
+  table,.tbl-wrap,.plain,.note,.bb,.flow,.chart,.mini-stats,.timeline,.timeline li,figure,.bar-row,blockquote{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+}
+</style>
+</head>
+<body>
+<button class="dl-btn" onclick="window.print()" title="Download this primer as PDF">⬇ Download PDF</button>
+<div class="pdf-head"><img src="../assets/logo.png" alt="Guardian Capital"><div><div class="ph-t">Stock Primers</div><div class="ph-s">Business &amp; Industry Primer</div></div></div>
+<a href="../index.html" class="sp-back" title="Back to Stock Primers" style="position:fixed;top:14px;right:16px;z-index:200;display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0a0a0a;border-radius:20px;padding:8px 14px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.22);">← Stock Primers</a>
+<div class="wrap">
+<div class="grid">
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#p0"><span class="n">00</span> Snapshot</a></li>
+    <li><a href="#p1"><span class="n">01</span> Enzymes 101</a></li>
+    <li><a href="#p2"><span class="n">02</span> The strain &amp; fermentation moat</a></li>
+    <li><a href="#p3"><span class="n">03</span> What it makes &amp; sells</a></li>
+    <li><a href="#p4"><span class="n">04</span> The company &amp; the Rathis</a></li>
+    <li><a href="#p5"><span class="n">05</span> The America question</a></li>
+    <li><a href="#p6"><span class="n">06</span> The small-dose economics</a></li>
+    <li><a href="#p7"><span class="n">07</span> The growth wobble</a></li>
+    <li><a href="#p8"><span class="n">08</span> The bio-replacement tailwind</a></li>
+    <li><a href="#p9"><span class="n">09</span> The industry &amp; rivals</a></li>
+    <li><a href="#p10"><span class="n">10</span> Financials &amp; valuation</a></li>
+    <li><a href="#p11"><span class="n">11</span> Future, risks, bull/bear</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover" id="top">
+  <div class="kicker">
+    <span class="tag solid">Industry &amp; Company Primer</span>
+    <span class="tag">NSE: ADVENZYMES · BSE: 540025</span>
+    <span class="tag gold">Built for a first-time reader</span>
+  </div>
+  <h1>Advanced Enzyme Technologies, <em>tiny catalysts, sticky margins</em></h1>
+  <p class="dek">A full walk through India's largest home-grown enzyme company — a maker of biological catalysts sold by the gram but designed into a customer's process for years. Why a business that ships only ~₹750 Cr of product earns gross margins a chemicals maker can only envy, why a surprising slice of its profit is made in an American supplement aisle, and why its growth has quietly stalled even as the margins stayed rich.</p>
+<div class="stat-strip">
+    <div class="cell"><div class="v">~₹746 <small>Cr</small></div><div class="l">Revenue (FY26, consol.)</div></div>
+    <div class="cell"><div class="v">~₹174 <small>Cr</small></div><div class="l">Net profit (FY26)</div></div>
+    <div class="cell"><div class="v">~31% <small>EBITDA</small></div><div class="l">Operating margin (FY26)</div></div>
+    <div class="cell"><div class="v">~₹3,300 <small>Cr</small></div><div class="l">Market cap (mid-2026)</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <div class="rb-left">
+      <span class="rb-status" id="rb-status"><span class="dot"></span> Up to date</span>
+      <span class="rb-when">Last refreshed <b id="rb-when">4 Sep 2026</b> · source: FY26 results (year ended Mar 2026) + Q1 FY27</span>
+    </div>
+    <button class="rb-btn" id="rb-refresh" onclick="requestRefresh()"><span class="rbi">⟳</span> Refresh</button>
+  </div>
+  <div class="whatsnew"><b>What's new · last refresh</b>FY26 full-year results incorporated — consolidated revenue ~₹746 Cr (+17%), EBITDA ~₹229 Cr (+18%), PAT ~₹174 Cr (+30%), exports ~33.6% of sales; added the small-dose economics section and the US healthcare-nutrition exposure. Q1 FY27 (revenue ~₹190 Cr, +2%; PAT down ~5%) and the ₹500/share buyback noted.</div>
+</header>
+
+<!-- 00 -->
+<section class="part" id="p0">
+  <div class="part-head"><span class="pno">00</span><h2>The 30-second snapshot</h2></div>
+  <p class="part-sub">What you're looking at, before we go deep.</p>
+
+  <p class="lead">Advanced Enzyme Technologies Limited (AETL) makes <strong>enzymes</strong> — biological catalysts, which are proteins that speed up a chemical or biological reaction without being consumed by it. It is <strong>India's largest enzyme company</strong> and one of only a handful of <strong>globally-integrated</strong> enzyme players, meaning it does the whole chain in-house: hunt for the right microbe, engineer and grow it in fermenters, extract and purify the enzyme, and formulate it into a finished product. Its catalogue runs to <strong>400+ proprietary products</strong> built from a library of enzymes, sold into two very different worlds — human and animal <strong>healthcare &amp; nutrition</strong>, and industrial <strong>bio-processing</strong>.</p>
+
+  <p>Three facts frame everything:</p>
+  <ul class="clean">
+    <li><strong>It sells a small-dose, high-value specialty input, not a bulk commodity.</strong> An enzyme is dosed in grams or fractions of a percent, yet it can transform a customer's entire process — making a detergent work in cold water, a loaf of bread softer, a chicken digest its feed better, or a supplement easier on the stomach. Because the enzyme is a tiny share of the customer's cost but a big share of their result, AETL earns a <strong>gross margin around 55%</strong> and an <strong>EBITDA margin near 30%</strong> — numbers that belong to a specialty ingredient, not a chemical.</li>
+    <li><strong>A surprising amount of the profit is made in America.</strong> Through its US subsidiaries, AETL is a meaningful supplier of digestive-enzyme and probiotic ingredients to the American nutraceutical/supplement industry. Exports were <strong>~33.6% of FY26 sales</strong>, and the higher-margin US healthcare business carries a disproportionate share of profit — which is why US consumer demand, customer concentration and the rupee-dollar rate matter as much here as anything Indian.</li>
+    <li><strong>The margins have held; the growth has not.</strong> FY26 was a good year — revenue up ~17% to <strong>~₹746 Cr</strong> and PAT up ~30% to <strong>~₹174 Cr</strong> — but zoom out and the five-year picture is sobering: sales compounded only <strong>~8%</strong> and profit barely <strong>~3%</strong> a year since FY21. The stock trades around <strong>21× earnings</strong>, a rating that assumes the wobble is temporary and the moat is intact.</li>
+  </ul>
+
+  <div class="plain">
+    <div class="ptag">In plain terms</div>
+    <p>An enzyme is a molecular tool. AETL's business is discovering, growing and refining those tools, then selling them to companies that quietly build them into products you already use — the bread, the beer, the animal feed, the stomach-friendly supplement. The genius of the model is leverage: the customer pays for a result worth far more than the pinch of enzyme that delivers it, so the margins are lush and the product is sticky once it is written into a formulation. The catch is that this is a slow-compounding niche, heavily tied to a demanding US supplement market, and AETL has spent the last few years proving that rich margins and fast growth do not automatically come together.</p>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="part" id="p1">
+  <div class="part-head"><span class="pno">01</span><h2>Enzymes 101: what a bio-catalyst actually does</h2></div>
+  <p class="part-sub">No biology degree needed — just what an enzyme is, and why a company can be built on one.</p>
+
+  <p class="lead">Every living thing runs on enzymes. They are <strong>proteins that act as catalysts</strong> — they make a specific reaction happen far faster (and at ordinary temperatures) than it otherwise would, and they come out the other side unchanged, ready to do it again. Your saliva contains an enzyme (amylase) that starts breaking down starch the moment you chew bread; your gut is a chemical factory run entirely by them. Industry borrows exactly this trick: instead of forcing a reaction with heat, pressure and harsh chemicals, you add a purpose-built enzyme and let biology do the work cleanly. AETL is in the business of making and selling those enzymes. To follow the company you need five terms.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The only enzyme terms you need</caption>
+    <thead><tr><th>Term</th><th>What it means (and why it matters here)</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong">Enzyme</td><td>A protein catalyst that speeds up one specific reaction. Highly selective — an enzyme that digests protein won't touch starch. This specificity is why enzymes are sold as precise, designed-for-the-job products, not generic chemicals.</td></tr>
+      <tr><td class="t-strong">Strain / microbe</td><td>Enzymes are produced by micro-organisms (bacteria, fungi, yeast). The company's crown jewel is its <em>library of strains</em> — the living cultures that secrete useful enzymes. A better strain makes more enzyme, more cheaply, and is proprietary know-how.</td></tr>
+      <tr><td class="t-strong">Fermentation</td><td>Growing the chosen microbe at scale in big steel tanks (fermenters), feeding it so it churns out the target enzyme. This is the core manufacturing step — part biology, part chemical engineering — and running it well is a genuine skill.</td></tr>
+      <tr><td class="t-strong">Formulation</td><td>Turning the raw purified enzyme into a stable, usable product — a blend, a granule, a capsule, a liquid — dosed and standardised for a specific customer application. Where a lot of the value and stickiness is added.</td></tr>
+      <tr><td class="t-strong">Probiotic</td><td>Live beneficial micro-organisms (not enzymes, but a close cousin AETL also sells) used in supplements and foods for gut health. Part of the same fermentation-and-biology toolkit and a growth adjacency in human nutrition.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one idea that makes the whole business work: leverage on the customer's result</div>
+    <p>Here is the economic heart of enzymes. The enzyme itself is a <em>tiny</em> fraction of the customer's cost — often well under a percent of the finished product. But it changes the whole outcome: it lets a detergent clean at 30°C instead of 60°C (saving energy), lets a baker get softer bread with longer shelf life, lets a feed mill squeeze more nutrition out of the same grain, lets a supplement digest without discomfort. Because the buyer is paying for a big result delivered by a small input, they are relatively insensitive to the enzyme's price — and they are extremely reluctant to switch once it is validated and written into their process. That combination, <strong>small dose, big result, high switching cost</strong>, is what lets an enzyme maker earn specialty margins. Everything else in this primer is a variation on that theme.</p>
+  </div>
+
+  <h3>Where enzymes show up (a partial list)</h3>
+  <ul class="clean">
+    <li><strong>In your body's medicine cabinet</strong> — digestive-enzyme supplements and probiotics that help break down food; enzymes used in pharma manufacturing to run cleaner reaction steps.</li>
+    <li><strong>In the food you eat</strong> — baking (softer, longer-lasting bread), brewing and malting, dairy and cheese, fruit-juice clarification, starch and sweetener processing, oils and fats.</li>
+    <li><strong>In the animal barn</strong> — feed enzymes that let poultry, swine and cattle extract more energy and protein from cheaper feed, cutting cost and waste.</li>
+    <li><strong>In the factory</strong> — textiles (softening, stone-wash effects), leather, paper and pulp, detergents and cleaning aids, biofuel/biomass, and agriculture.</li>
+  </ul>
+</section>
+
+<!-- 02 -->
+<section class="part" id="p2">
+  <div class="part-head"><span class="pno">02</span><h2>The moat: strains, patents and the fermentation you can't buy overnight</h2></div>
+  <p class="part-sub">Why the durable advantage sits in a freezer full of microbes and a wall of paperwork, not in a factory.</p>
+
+  <p class="lead">A first-time reader might assume the barrier to entry is the fermentation plant — the tanks and the capex. It isn't, mostly. The tanks can be built. What cannot be quickly replicated is the <strong>combination</strong> of three things AETL has accumulated over decades: a proprietary <strong>library of microbial strains</strong>, the <strong>know-how to ferment and purify</strong> them at commercial yield and consistency, and the <strong>regulatory approvals and customer validations</strong> that let those enzymes be sold into food, feed and supplements around the world. Together they form a moat that is deep precisely because it is boring and slow to build.</p>
+
+  <h3>The three layers of the moat</h3>
+  <ul class="clean">
+    <li><strong><span class="chain-om">Biology (the strains).</span></strong> The most valuable asset is intangible and literally alive — a collection of carefully selected and improved micro-organisms that secrete useful enzymes efficiently. Developing a superior strain takes years of screening and R&amp;D; it is protected as trade secret and patent, and it is the thing a new entrant cannot simply purchase.</li>
+    <li><strong><span class="chain-epc">Process (the fermentation &amp; purification).</span></strong> Getting a microbe to reliably churn out enzyme at high yield, batch after batch, then extracting and purifying it to a consistent specification, is craft as much as science. Small differences in process show up as big differences in cost and quality.</li>
+    <li><strong><span class="chain-wtg">Paper (approvals &amp; validation).</span></strong> Selling an enzyme into food, animal feed or a US dietary supplement requires regulatory clearances (safety, GRAS status, kosher/halal, etc.) and, crucially, <em>designed-in validation</em> at each customer. Once an enzyme is approved and locked into a customer's formulation and quality file, replacing it is a costly, risky project the customer avoids.</li>
+  </ul>
+
+  <p>The value climbs sharply as an enzyme moves up this chain. Raw fermentation broth is close to a commodity; a purified, specified enzyme is worth more; a blended, dosed, stabilised <em>formulation</em> is worth more again; and an enzyme that has been approved and <em>designed into a customer's validated process</em> is the stickiest and highest-margin of all. AETL's moat is built at the top of that ladder — not in the tank, but in the years of formulation, approval and customer validation that a rival cannot leapfrog.</p>
+
+  <div class="plain">
+    <div class="ptag">Why the moat is real but the growth is not automatic</div>
+    <p>The same features that make AETL's position defensible also make it slow to expand. A validated, designed-in enzyme is wonderfully sticky — but winning the <em>next</em> validation at the <em>next</em> customer is a long, technical sales cycle measured in years, not quarters. So the business tends to compound quietly: high retention on what it already sells, patient effort to add each new application. That is a durable model, but it is not a hyper-growth one, and mistaking the first for the second is the single most common error investors make with this company.</p>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="part" id="p3">
+  <div class="part-head"><span class="pno">03</span><h2>What it makes and sells: two worlds under one fermenter</h2></div>
+  <p class="part-sub">The same biology serves a health-and-nutrition business and an industrial business with very different economics.</p>
+
+  <p class="lead">AETL's revenue is best understood as <strong>two broad end-markets sharing one R&amp;D-and-fermentation engine</strong>. On one side sit <strong>healthcare &amp; nutrition</strong> — human digestive enzymes, probiotics, nutraceuticals and pharma-process enzymes, plus animal-nutrition feed enzymes. On the other sits <strong>bio-processing / industrial</strong> — enzymes for food processing, textiles, leather, paper, detergents, biofuel and agriculture. The company reports across segments broadly grouped as human nutrition, animal nutrition, bio-processing and specialised manufacturing.</p>
+
+  <div class="chart">
+    <div class="c-title">Rough revenue mix by end-market</div>
+    <div class="c-sub">Approximate share of sales — human nutrition dominates; industrial is the ballast</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Human nutrition<small>digestive enzymes, probiotics, nutra</small></div><div class="track"><span class="fill wtg" style="width:100%"></span></div><div class="bval">~55–65%</div></div>
+      <div class="bar-row"><div class="blab">Bio-processing<small>food, textile, paper, detergent</small></div><div class="track"><span class="fill epc" style="width:32%"></span></div><div class="bval">~18–22%</div></div>
+      <div class="bar-row"><div class="blab">Animal nutrition<small>feed enzymes</small></div><div class="track"><span class="fill om" style="width:18%"></span></div><div class="bval">~10–12%</div></div>
+      <div class="bar-row"><div class="blab">Specialised manufacturing<small>custom / other</small></div><div class="track"><span class="fill spec" style="width:14%"></span></div><div class="bval">~8–10%</div></div>
+    </div>
+    <div class="legend"><span>Shares are approximate and shift year to year. The headline is concentration: human nutrition — heavily US-linked — is the largest slice and the biggest profit driver, so the group's fortunes lean on one end-market more than the four-way split suggests.</span></div>
+  </div>
+
+  <p>The four lines grow at different speeds in different years. FY26 was unusual in that <em>every</em> segment grew — animal healthcare fastest at roughly +25%, specialised manufacturing around +23%, bio-processing near +16% and human healthcare about +15% — the broad recovery that lifted group revenue 17%. The mix matters because <strong>human nutrition, especially the US-facing part, is the highest-margin line and the profit centre</strong>, while the industrial lines are steadier but thinner. The question the rest of this primer asks is whether FY26's breadth persists, or whether the biggest, US-linked line stalls again.</p>
+
+  <div class="flow">
+    <div class="eyebrow" style="margin-bottom:14px;">From microbe to market — AETL's value chain</div>
+    <div class="flow-row">
+      <div class="node om"><div class="ntag">Stage 1 · Discover</div><div class="nname">Strain library &amp; R&amp;D</div><div class="nwho">Screen and improve microbes that secrete useful enzymes. The intangible asset.</div></div>
+      <div class="arrow">→</div>
+      <div class="node epc"><div class="ntag">Stage 2 · Ferment</div><div class="nname">Grow &amp; extract</div><div class="nwho">Scale up in fermenters; purify to a consistent specification. India + US sites.</div></div>
+      <div class="arrow">→</div>
+      <div class="node spec"><div class="ntag">Stage 3 · Formulate</div><div class="nname">Blend, dose, stabilise</div><div class="nwho">Turn enzyme into a finished, application-specific product. Where margin is added.</div></div>
+      <div class="arrow">→</div>
+      <div class="node wtg"><div class="ntag">Stage 4 · Sell &amp; validate</div><div class="nname">Two end-markets</div><div class="nwho">Health &amp; nutrition (incl. US supplements) and industrial bio-processing.</div></div>
+    </div>
+    <div class="flow-note">Because AETL does all four stages in-house — few enzyme firms do — it captures more of the value and controls quality end to end. This vertical integration is the "globally-integrated" claim in practice.</div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The distinction that separates AETL from a chemicals or an API company</div>
+    <p>It is easy to file AETL under "chemicals" or next to a pharma-API maker, and both would mislead. A bulk-chemicals company sells tonnes of a molecule at a commodity margin set by feedstock and capacity cycles; an API maker sells a regulated drug ingredient priced on process cost and competition. AETL sells neither. Its product is a <em>biological catalyst designed into someone else's process</em> — closer to a specialty ingredient or an industrial-enzyme licensor than to either. That is why its margins look nothing like a commodity chemical's, why its moat is a strain library rather than a cost curve, and why the right peers are global enzyme houses, not the chemical park down the road.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="part" id="p4">
+  <div class="part-head"><span class="pno">04</span><h2>The company, the Rathis, and who controls it</h2></div>
+  <p class="part-sub">A founder-family enzyme house with deep American roots and a moderate promoter stake.</p>
+
+  <p class="lead">Advanced Enzymes is a founder-built company. Its story runs through the <strong>Rathi family</strong> — second-generation enzymologists who turned a papain (a plant enzyme) business into India's largest enzyme maker, with a substantial American operation stitched in early. Understanding the family and the US link explains both the company's technical depth and why so much of its identity and profit is transatlantic.</p>
+
+  <h3>Timeline</h3>
+  <ul class="timeline">
+    <li><div class="yr">1978</div><div class="ev">The Rathi family's enzyme roots begin with <strong>Rathi Papains</strong>, making enzymes from papain — the seed of the eventual group.</div></li>
+    <li class="major"><div class="yr">1985</div><div class="ev"><strong>Cal-India Foods International</strong> established in the United States (later trading as Specialty Enzymes &amp; Biotechnologies) — an unusually early American footprint for an Indian enzyme business.</div></li>
+    <li class="major"><div class="yr">1989</div><div class="ev">Advanced Enzyme Technologies incorporated in India; <strong>Vasant (V. L.) Rathi</strong> becomes Chairman from March 1993. The company grows into India's largest industrial-enzyme manufacturer.</div></li>
+    <li><div class="yr">2000s–2010s</div><div class="ev">Builds out fermentation capacity in India, a widening enzyme catalogue across food, feed, human health and industrial uses, and consolidates its US subsidiaries serving the North-American supplement market.</div></li>
+    <li class="major"><div class="yr">2016</div><div class="ev"><strong>IPO</strong> — lists on NSE and BSE (BSE code 540025; ISIN INE837H01020) to a strong reception, valued as a rare listed specialty-biotech play.</div></li>
+    <li><div class="yr">FY22–FY25</div><div class="ev">A choppy stretch — US supplement-market softness, customer/inventory issues and a demand slowdown cap growth even as gross margins stay high; profit broadly flat across the period.</div></li>
+    <li class="major"><div class="yr">FY26</div><div class="ev">Recovery year: consolidated revenue ~₹746 Cr (+17%), EBITDA ~₹229 Cr (+18%), PAT ~₹174 Cr (+30%); exports ~33.6% of sales; ₹1.35/share dividend.</div></li>
+    <li><div class="yr">Q1 FY27</div><div class="ev">Soft start — revenue ~₹190 Cr (+2%), PAT down ~5% on margin pressure; board approves a <strong>share buyback at ₹500/share</strong>, signalling confidence and returning cash.</div></li>
+  </ul>
+
+  <h3>Ownership &amp; structure</h3>
+  <ul class="clean">
+    <li><strong>Promoter &amp; family:</strong> the <strong>Rathi family</strong> controls the company, with promoter holding around <strong>43% (approx., mid-2026)</strong> — a moderate stake by Indian-promoter standards, leaving a large public float. Investors should confirm the exact figure in the latest shareholding filing.</li>
+    <li><strong>The US backbone:</strong> the American operations run through <strong>Advanced Enzymes USA</strong>, whose businesses include <strong>Cal-India Foods International (Specialty Enzymes &amp; Biotechnologies)</strong> and <strong>AST Enzymes</strong>, serving North- and Latin-American nutraceutical and industrial customers. This is not a small export desk — it is a core part of the group's manufacturing and its profit.</li>
+    <li><strong>Governance texture:</strong> a founder-run, IP-heavy company with a large overseas arm and a history of buybacks. The upside is deep technical continuity; the thing to watch is capital allocation and related-party discipline across the India–US structure.</li>
+  </ul>
+
+  <div class="note gold"><b>Why the structure matters:</b> AETL is, in effect, an Indian fermentation base and R&amp;D engine bolted to an American specialty-ingredients distributor and formulator. That gives it something few Indian peers have — a direct, decades-old channel into the world's largest supplement market — but it also means US demand, US customer concentration, US regulation and the dollar sit at the centre of the investment case, not the periphery.</div>
+</section>
+
+<!-- 05 — BESPOKE crux + genuine surprise: the US -->
+<section class="part" id="p5">
+  <div class="part-head"><span class="pno">05</span><h2>The America question: why an Indian enzyme firm lives and dies by a US supplement aisle</h2></div>
+  <p class="part-sub">The defining, non-obvious fact — a big share of profit is earned in the United States, in a business more consumer-cyclical than it looks.</p>
+
+  <p class="lead">The genuine surprise about Advanced Enzymes is <em>geographic</em>. A reader expects an Indian enzyme company to be a story about Indian factories selling to Indian food and feed makers. In reality, a <strong>disproportionate share of AETL's profit is generated in the United States</strong>, selling digestive-enzyme and probiotic ingredients into the American dietary-supplement industry — a high-margin, brand-and-formulation-driven market. Exports were about <strong>one-third of FY26 revenue</strong>, and because the US healthcare/nutrition business carries richer margins than the Indian industrial lines, its weight in <em>profit</em> is heavier still.</p>
+
+  <p>The point is a <em>mismatch</em>: exports are about a third of the top line but a larger share of the bottom line, because the US supplement-ingredient business earns fatter margins than domestic industrial enzymes. Read the export line as a profit driver, not merely a revenue slice — a third of sales, but a heavier share of the profit that the market is really paying for.</p>
+
+  <p>This transatlantic profile cuts two ways. The upside is access to the deepest, highest-value enzyme end-market on earth, with an established American operation that formulates and sells locally rather than merely exporting bulk. The downside is that AETL inherits the <strong>volatility of American consumer demand</strong>: when US shoppers tighten up on discretionary supplements, or when a big supplement-brand customer de-stocks its inventory, AETL's most profitable line cools first. Management itself has flagged the US market as challenging — inflationary pressure and cautious consumer spending — and that softness is a large part of why group growth stalled in recent years.</p>
+
+  <div class="plain">
+    <div class="ptag">The dependency a first-timer never sees coming</div>
+    <p>You can do all the Indian-macro homework in the world — monsoon, feed demand, food processing — and still miss what actually moves this stock, because a decisive chunk of the profit is set by whether Americans are buying digestive-enzyme capsules this quarter and whether their supplement brands are re-stocking or working inventory down. That is an unusually <em>consumer-cyclical</em> and <em>customer-concentrated</em> exposure for what looks, from India, like a quiet industrial-ingredients firm. The enzyme science is global and durable; the near-term earnings are, to a real degree, a bet on the American supplement shelf and the dollar.</p>
+  </div>
+
+  <div class="note gold"><b>And the currency angle:</b> with a third of sales and an outsized share of profit earned abroad, the <strong>rupee-dollar rate</strong> is a live variable — a weaker rupee flatters reported earnings, a stronger one trims them, independent of how many enzymes were actually sold. When you read a given quarter, separate real volume growth from the FX tailwind or headwind riding on top of it.</div>
+</section>
+
+<!-- 06 — the small-dose economics, non-transferable device -->
+<section class="part" id="p6">
+  <div class="part-head"><span class="pno">06</span><h2>The small-dose economics: why the margins are this good</h2></div>
+  <p class="part-sub">The single most important idea in the investment case — and it is specific to a designed-in specialty enzyme.</p>
+
+  <p class="lead">The reason AETL earns a chemical-industry heretic's margins — <strong>~55% gross, ~30% EBITDA</strong> on a business shipping only ~₹750 Cr of product — is not scale, and it is not pricing power over a captive commodity. It is the <strong>economics of a small dose</strong>. Because an enzyme is a minuscule fraction of what the customer makes yet a large part of how well it works, AETL captures value wildly out of proportion to the tonnage it ships. This is the number to internalise before any valuation debate.</p>
+
+  <div class="chart">
+    <div class="c-title">The margin stack — FY26</div>
+    <div class="c-sub">How ~₹746 Cr of revenue becomes ~₹174 Cr of profit; ₹ Crore and % of sales</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue<small>FY26 consolidated</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~746</div></div>
+      <div class="bar-row"><div class="blab">Gross profit<small>~55% margin</small></div><div class="track"><span class="fill spec" style="width:55%"></span></div><div class="bval">~410</div></div>
+      <div class="bar-row"><div class="blab">EBITDA<small>~31% margin</small></div><div class="track"><span class="fill wtg" style="width:31%"></span></div><div class="bval">~229</div></div>
+      <div class="bar-row"><div class="blab">Net profit (PAT)<small>~23% margin</small></div><div class="track"><span class="fill gold" style="width:23%"></span></div><div class="bval">~174</div></div>
+    </div>
+    <div class="legend"><span>A ~23% net margin on a manufacturing business is exceptional — it exists because raw materials are a small share of a high-value product. The gap between gross and EBITDA margin is R&amp;D, quality and the US selling/formulation cost that keep the moat intact.</span></div>
+  </div>
+
+  <p>Now the device that only fits an enzyme maker. Look at the customer's arithmetic, not AETL's. A feed mill spends a rupee on enzyme to unlock several rupees of extra nutrition from grain it already bought; a baker adds a few grams of enzyme per batch to win softer bread and days of extra shelf life; a supplement brand pays cents of enzyme to make a capsule that sells for dollars. In each case the enzyme's cost is trivial against the value it releases — so the buyer will pay a rich price for the enzyme and won't risk swapping it. <strong>AETL's margin is really a small tax on someone else's much larger gain.</strong> That is why the same fermentation broth can be a commodity in one form and a 55%-gross-margin product in another: the value lives in the result, not the material.</p>
+
+  <div class="mini-stats">
+    <div class="ms"><div class="msv">~55%</div><div class="msl">Gross margin (FY26) — the signature of a small-dose, high-value input</div></div>
+    <div class="ms gold"><div class="msv">~31%</div><div class="msl">EBITDA margin (FY26) — specialty-ingredient economics, not commodity</div></div>
+    <div class="ms green"><div class="msv">~14%</div><div class="msl">ROCE — solid, though held back by cash and the recent growth lull</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The catch inside the beautiful margin</div>
+    <p>A margin this high sets a trap for the reader: it looks like pricing power, and therefore like something that should compound fast. But AETL's margin is <em>defensive</em>, not <em>expansionary</em> — it protects the profit on enzymes already designed into customers' processes, yet it does not, by itself, win the next application or the next geography. That still takes years of R&amp;D and validation. So the correct mental model is a fortress with a slow-moving drawbridge: hard to attack, but also hard to grow quickly out of. The margin tells you the business is good; it does not tell you the business is growing. Those are two different questions, and the next section is about the second one.</p>
+  </div>
+</section>
+
+<!-- 07 — the slowdown, told straight -->
+<section class="part" id="p7">
+  <div class="part-head"><span class="pno">07</span><h2>The growth wobble: rich margins, flat compounding</h2></div>
+  <p class="part-sub">The part of the story that has to be told straight — years of high profitability with very little growth to show for it.</p>
+
+  <p class="lead">FY26's ~17% revenue and ~30% profit growth is real and welcome — but it followed a stretch that any fair reading calls disappointing. Over the five years to FY26, AETL's <strong>sales compounded at only ~8% and net profit at only ~3%</strong> a year. A company with 55% gross margins that grows profit at 3% for half a decade is telling you something important: the constraint here is not profitability, it is <em>demand and execution</em> in its key markets.</p>
+
+  <div class="chart">
+    <div class="c-title">Five years of revenue — the slow-compounding reality</div>
+    <div class="c-sub">Consolidated revenue, ₹ Crore, FY21–FY26 (approx.)</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">FY21</div><div class="track"><span class="fill ink" style="width:67%"></span></div><div class="bval">~502</div></div>
+      <div class="bar-row"><div class="blab">FY22</div><div class="track"><span class="fill ink" style="width:72%"></span></div><div class="bval">~540</div></div>
+      <div class="bar-row"><div class="blab">FY23</div><div class="track"><span class="fill ink" style="width:78%"></span></div><div class="bval">~585</div></div>
+      <div class="bar-row"><div class="blab">FY24</div><div class="track"><span class="fill ink" style="width:79%"></span></div><div class="bval">~590</div></div>
+      <div class="bar-row"><div class="blab">FY25</div><div class="track"><span class="fill wtg" style="width:85%"></span></div><div class="bval">~637</div></div>
+      <div class="bar-row"><div class="blab">FY26</div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~746</div></div>
+    </div>
+    <div class="legend"><span>The line rises, but slowly and unevenly — a roughly ₹500 Cr to ₹750 Cr journey over five years (~8% CAGR). FY26's step-up is the recovery the market is now testing for durability. Annual figures approximate.</span></div>
+  </div>
+
+  <p>Profit tells the harsher version of the same story. Net profit was roughly <strong>₹151 Cr in FY21</strong>, then actually <em>fell</em> — to about ₹136 Cr, then ~₹115 Cr — before grinding back to ~₹128 Cr and ~₹134 Cr, and finally jumping to <strong>~₹174 Cr in FY26</strong>. In other words, it took five years merely to comfortably exceed the FY21 profit level. That saw-toothed path — down, then slowly back, then a jump — is the mark of a business whose earnings ride cyclical US demand and input/inventory swings, not a smooth compounder.</p>
+
+  <p>What went wrong in the lean years? The recurring culprits were <strong>US supplement-market softness and customer/inventory de-stocking</strong> in the high-margin human-nutrition line, patchy industrial demand, and the ordinary swings of input costs and product mix. None of it dented the gross margin much — the moat held — but it repeatedly capped volume growth in exactly the segment that drives profit. This is the honest core of the bear case: a wonderful margin attached to a demand base that has not, so far, compounded reliably.</p>
+
+  <div class="plain">
+    <div class="ptag">The customer-concentration wrinkle</div>
+    <p>Part of the volatility traces to <em>who</em> buys. In the US supplement-ingredient business, a meaningful share of sales can rest on a limited set of large brand customers. When one of them changes its formulation, works down inventory, or trims orders in a soft consumer quarter, the effect on AETL's most profitable line is immediate and outsized. Concentration is the flip side of being designed-in: the same stickiness that protects the margin also means a single big customer's decision can swing a quarter. Watching order patterns from key accounts is therefore not a detail — it is close to the whole near-term earnings signal.</p>
+  </div>
+</section>
+
+<!-- 08 — tailwinds -->
+<section class="part" id="p8">
+  <div class="part-head"><span class="pno">08</span><h2>The bio-replacement tailwind: why the long arc still bends AETL's way</h2></div>
+  <p class="part-sub">The structural reasons enzymes take share from chemicals and heat, decade after decade.</p>
+
+  <p class="lead">Step back from the quarterly noise and the multi-decade case for enzymes is genuinely strong. Across industry after industry, the direction of travel is toward <strong>biological processes replacing chemical and thermal ones</strong> — cleaner, cooler, more selective, less wasteful. Enzymes are the tool that makes that substitution work, and AETL sits on the supply side of a slow, broad shift.</p>
+
+  <h3>The tailwinds worth naming</h3>
+  <ul class="clean">
+    <li><strong>Green / bio-based replacement of chemicals.</strong> Enzymes let manufacturers run reactions at lower temperature and with fewer harsh chemicals — saving energy, cutting effluent, and meeting tightening environmental rules. Every such substitution is a new enzyme sale.</li>
+    <li><strong>Clean-label and natural food.</strong> Consumers and regulators push food makers toward "natural" processing aids; enzymes are the archetypal invisible, natural helper — improving texture, yield and shelf life without a scary ingredient on the label.</li>
+    <li><strong>Animal-nutrition efficiency.</strong> Feed is the biggest cost in raising livestock; feed enzymes squeeze more nutrition from cheaper grain, improving feed-conversion and cutting cost and waste — a structural driver as protein demand rises across emerging markets.</li>
+    <li><strong>Nutraceutical &amp; probiotic demand.</strong> Ageing populations and health-consciousness expand the market for digestive enzymes and probiotics — AETL's richest niche, however cyclical the US leg has proved.</li>
+    <li><strong>Biofuels &amp; biomass.</strong> Enzymes break down plant material into fermentable sugars for biofuel and bio-based chemicals — a long-dated option on the bio-economy.</li>
+  </ul>
+
+  <p>Each of these is a reason a customer switches to an enzyme — and therefore a reason the addressable market widens over time. The strongest pull is usually the plain cost-and-yield gain (more output from the same input); close behind sit energy and effluent savings from a cooler, cleaner process, and product-quality wins in texture, shelf life and purity; and the clean-label and regulatory pull is rising fastest of all. The tailwind is real and long-dated — the open question is its pace, and how much of it a mid-cap Indian player can capture against far larger global rivals.</p>
+
+  <div class="plain">
+    <div class="ptag">The real limit on the tailwind</div>
+    <p>A rising tide of enzyme adoption does not automatically lift AETL in proportion. The global enzyme market is dominated by players many times its size with deeper R&amp;D budgets, and much of the fastest growth is in engineered enzymes and large-scale industrial applications where scale tells. AETL's realistic prize is to keep winning in the niches where its strain library, formulation skill and cost base give it an edge — digestive enzymes and probiotics, feed, and selected food and industrial uses — rather than to out-muscle the majors across the board. The tailwind is the reason to be patient; it is not, on its own, a promise of fast growth.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="part" id="p9">
+  <div class="part-head"><span class="pno">09</span><h2>The industry and the rivals</h2></div>
+  <p class="part-sub">A global market ruled by a few giants, with AETL a focused specialist in the niches that suit it.</p>
+
+  <p class="lead">The world enzyme industry is concentrated at the top around a handful of very large players, with a long tail of regional and application specialists. AETL is a leader <em>in India</em> and a credible integrated player globally, but it is a fraction of the size of the majors. Its game is not to beat them everywhere — it is to be the sharper, better-integrated choice in the niches it targets.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <caption>The competitive landscape</caption>
+    <thead><tr><th>Player</th><th>Position</th><th>Vs Advanced Enzymes</th></tr></thead>
+    <tbody>
+      <tr><td class="t-strong" style="color:var(--brand)">Advanced Enzymes</td><td>India's largest enzyme company; globally-integrated; strong in digestive enzymes, probiotics and feed, with a big US health/nutrition arm</td><td><em>This company.</em> A high-margin specialist; the debate is whether it can convert a durable moat into faster, steadier growth.</td></tr>
+      <tr><td class="t-strong">Novonesis (Novozymes + Chr. Hansen)</td><td>The global enzyme and biosolutions leader, many times AETL's size, with deep R&amp;D and dominant industrial-enzyme share</td><td>The benchmark and the 800-pound gorilla — sets the technology frontier in industrial and engineered enzymes. AETL competes by focus, not scale.</td></tr>
+      <tr><td class="t-strong">DSM-Firmenich</td><td>Global nutrition, health and bioscience major with a large enzyme and feed-additive presence</td><td>A far larger, diversified rival in feed and nutrition enzymes; deep pockets and global reach AETL cannot match head-on.</td></tr>
+      <tr><td class="t-strong">IFF (incl. former DuPont enzymes / Danisco)</td><td>Global ingredients giant with a major industrial and food-enzyme business</td><td>Another scale competitor across food and industrial enzymes; AETL differentiates on integration and niche formulation.</td></tr>
+      <tr><td class="t-strong">AB Enzymes, Amano, and Chinese makers</td><td>Mid-size and regional specialists; low-cost Chinese fermentation capacity rising in commodity enzymes</td><td>Direct competition in specific applications; Chinese cost pressure is the structural threat at the commoditising end of the range.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The competitive shape to hold in mind</div>
+    <p>Two forces define AETL's position. Above it sit global giants whose R&amp;D and scale it will never out-spend — so in the biggest, most technical industrial markets it is a follower, not a leader. Below and beside it, low-cost fermentation capacity (increasingly Chinese) presses on the more commodity-like enzymes, threatening price where the product is less differentiated. AETL's safe ground is the <strong>middle</strong>: specialty, formulated, designed-in, approval-heavy niches — digestive enzymes, probiotics, feed, selected food and industrial uses — where being integrated, nimble and cost-efficient beats being merely large. Its long-term health depends on staying in that defensible middle and out of the commoditising bottom.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part" id="p10">
+  <div class="part-head"><span class="pno">10</span><h2>Financials &amp; valuation</h2></div>
+  <p class="part-sub">A high-quality balance sheet and rich margins, rated for a recovery the numbers must now deliver.</p>
+
+  <p class="lead">On quality of earnings, AETL scores well: high gross and operating margins, healthy return on capital, low debt, and a cash-rich balance sheet that funds buybacks and dividends. On growth, as section 07 showed, the record is mixed. The stock's ~21× earnings multiple is not demanding for a moaty specialty business — but it does price in the assumption that FY26's revival is the start of a durable re-acceleration rather than one good year in a choppy series.</p>
+
+  <div class="chart">
+    <div class="c-title">FY26 results — the headline scorecard</div>
+    <div class="c-sub">Consolidated, year-on-year; ₹ Crore</div>
+    <div class="bars">
+      <div class="bar-row"><div class="blab">Revenue<small>+17%</small></div><div class="track"><span class="fill brand" style="width:100%"></span></div><div class="bval">~746</div></div>
+      <div class="bar-row"><div class="blab">EBITDA<small>+18%</small></div><div class="track"><span class="fill spec" style="width:31%"></span></div><div class="bval">~229</div></div>
+      <div class="bar-row"><div class="blab">PBT<small>approx.</small></div><div class="track"><span class="fill wtg" style="width:31%"></span></div><div class="bval">~230</div></div>
+      <div class="bar-row"><div class="blab">PAT<small>+30%</small></div><div class="track"><span class="fill gold" style="width:23%"></span></div><div class="bval">~174</div></div>
+    </div>
+    <div class="legend"><span>Profit grew faster than revenue as the mix and margin improved — the recovery the market wanted. Bars are scaled to the top line to show how thick the margins are relative to a commodity manufacturer.</span></div>
+  </div>
+
+  <p>The offshore weight shows up cleanly in the gap between the two sets of accounts. On a <strong>standalone (India-only)</strong> basis FY26 revenue was about <strong>₹453 Cr</strong> with profit near <strong>₹132 Cr</strong>; on a <strong>consolidated</strong> basis those become <strong>~₹746 Cr</strong> and <strong>~₹174 Cr</strong>. That means roughly ₹290 Cr of revenue and ₹40-odd Cr of profit sit <em>outside</em> the Indian standalone entity — overwhelmingly the US and other international operations. It is a standing reminder to read the consolidated numbers and to keep in mind how much of the story is made abroad.</p>
+
+  <div class="mini-stats">
+    <div class="ms gold"><div class="msv">~21×</div><div class="msl">Trailing P/E (mid-2026) — full but not extreme for a moaty specialty maker</div></div>
+    <div class="ms"><div class="msv">~10%</div><div class="msl">ROE — decent, but dragged by a cash-heavy, under-leveraged balance sheet</div></div>
+    <div class="ms green"><div class="msv">₹500</div><div class="msl">Buyback price/share approved Q1 FY27 — cash returned, confidence signalled</div></div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The one number that settles the thesis: human-nutrition revenue growth</div>
+    <p>At ~21× earnings, the margins and the moat are not in doubt — the market has already paid for them. What it has <em>not</em> resolved is whether AETL can grow. So the metric that proves or breaks the case is the <strong>growth rate of the human-nutrition segment</strong> — the high-margin, US-heavy profit engine — tracked quarter after quarter, read alongside two companions: <strong>gross margin</strong> (is the moat holding as Chinese cost pressure builds?) and the <strong>order pattern of key US customers</strong> (is demand re-stocking or de-stocking?). If human nutrition compounds at a healthy double-digit pace for several quarters as it did in FY26, the low-teens history was the trough and the multiple is fair. If it sags back toward flat while margins slip, FY26 will read as a cyclical bounce and the rating will look generous. Segment growth times a held margin — that is the scoreboard.</p>
+  </div>
+
+  <div class="note">Figures here are drawn from FY26 results and market data cross-checked across reports; segment shares, per-segment growth, the standalone/consolidated split, PBT, ROE/ROCE and the ~43% promoter stake are <b>approx.</b> (derived or rounded), and market cap/P/E move daily. Verify against the company's filings and the latest shareholding pattern before relying on any single number.</div>
+</section>
+
+<!-- 11 -->
+<section class="part" id="p11">
+  <div class="part-head"><span class="pno">11</span><h2>The future, the risks, and the bull/bear</h2></div>
+  <p class="part-sub">A high-margin niche champion asked the one question its margins can't answer — can it grow?</p>
+
+  <p class="lead">Advanced Enzymes enters FY27 with its strengths intact: a deep strain library, rich margins, a debt-light balance sheet, a genuine American franchise, and a long structural tailwind toward bio-based processing. The FY26 recovery and the ₹500/share buyback say management believes the lean years are behind it. What the company must still prove is that its wonderful economics can finally be matched with durable growth — the missing half of the story for half a decade.</p>
+
+  <div class="bb">
+    <div class="col bull">
+      <h4>The bull case</h4>
+      <ul class="clean">
+        <li><strong>A genuine specialty moat</strong> — strain library, fermentation know-how and designed-in, approval-heavy products deliver ~55% gross margins few can touch.</li>
+        <li><strong>FY26 inflection</strong> — all four segments grew, revenue +17% and profit +30%; if it holds, the trough is behind and the multiple is fair.</li>
+        <li><strong>US franchise, not just exports</strong> — a decades-old American formulate-and-sell operation into the world's largest supplement market.</li>
+        <li><strong>Long structural tailwind</strong> — green chemistry, clean-label food, feed efficiency and nutraceuticals all widen the addressable market over time.</li>
+        <li><strong>Fortress balance sheet</strong> — low debt, strong cash generation, buybacks and dividends; capacity to invest and reward shareholders through the cycle.</li>
+      </ul>
+    </div>
+    <div class="col bear">
+      <h4>The bear case</h4>
+      <ul class="clean">
+        <li><strong>Growth has stalled</strong> — ~8% sales and ~3% profit CAGR over five years; the margin is not the problem, demand and execution are.</li>
+        <li><strong>US demand &amp; customer concentration</strong> — the most profitable line rides American consumer spending and a limited set of big brand customers; de-stocking hits fast.</li>
+        <li><strong>FX exposure</strong> — a third of sales and more of profit is offshore; the rupee-dollar rate swings reported earnings independent of volume.</li>
+        <li><strong>Scale disadvantage</strong> — Novonesis, DSM-Firmenich and IFF out-spend it many times over; Chinese cost pressure squeezes the commodity end.</li>
+        <li><strong>Full valuation on a bounce</strong> — ~21× earnings already assumes durable re-acceleration the recent record has not reliably shown.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plain">
+    <div class="ptag">The bottom line</div>
+    <p>Advanced Enzymes is a rare thing on the Indian market — a genuine, home-grown specialty-biotech with a real moat and margins to prove it, quietly supplying the enzymes inside bread, feed, detergent and the American supplement aisle. The quality is not in question; the growth is. For five years the company earned lush margins on a demand base that would not compound, and FY26 is the first clean sign that the human-nutrition engine may be firing again. The next test is concrete and datable: <strong>whether the human-nutrition segment can string together several quarters of healthy double-digit growth through FY27 as US supplement demand normalises and the new capacity is put to work</strong>. Deliver that, and a debt-light 55%-gross-margin business at ~21× looks under-appreciated; miss it, and the market will conclude, again, that this is a beautifully profitable company that simply does not grow very fast.</p>
+  </div>
+</section>
+
+<footer class="src">
+  <div class="eyebrow" style="margin-bottom:14px;">Sources &amp; further reading</div>
+  <ol>
+    <li>Advanced Enzyme Technologies Ltd — FY26 audited results, annual report &amp; press release (year ended Mar 2026), via company disclosures and IndiaIPO / ScanX / Whalesbook coverage.</li>
+    <li>Free Press Journal / Whalesbook — "Advanced Enzyme Technologies Reports Strong FY26 Results: Revenue Up 17%, PAT Jumps 30%," dividend ₹1.35/share.</li>
+    <li>ScanX / Business Standard — Advanced Enzyme FY26 annual report, exports at 33.58% of FY26 sales, segment-wise growth commentary.</li>
+    <li>Investing.com / Yahoo Finance — Q4 FY26 and Q1 FY27 earnings-call highlights (record annual revenue; soft Q1 FY27; margin pressure).</li>
+    <li>Whalesbook / ScanX — "Advanced Enzyme Q1 FY27 Revenue Rises 2% to ₹189.8 Cr, Profit Falls 5%"; share buyback approved at ₹500/share.</li>
+    <li>Screener.in — Advanced Enzyme Technologies (consolidated): BSE 540025, market cap, TTM revenue/PAT, margins, ROCE ~14%, ROE ~10%, P/E ~21×, promoter ~43%, 5-yr growth.</li>
+    <li>HDFC Securities — Advanced Enzyme Technologies stock note (segment mix, US subsidiaries, business overview).</li>
+    <li>Advanced Enzymes (company site) — group companies: Advanced Enzymes USA, Cal-India Foods International (Specialty Enzymes &amp; Biotechnologies), AST Enzymes; product and application range.</li>
+    <li>BSE India — Advanced Enzyme Technologies Ltd stock page, scrip code 540025 (ISIN INE837H01020); NSE symbol ADVENZYMES.</li>
+    <li>Simply Wall St / Trendlyne / Business Standard — market data, promoter holding and price history (mid-2026).</li>
+  </ol>
+  <p class="disc">This primer is an educational, plain-English explainer compiled from public sources and is <strong>not investment advice, a recommendation, or a solicitation</strong> to buy or sell any security. Figures are approximate, drawn from company disclosures and third-party reports as of FY26 (year ended March 2026) and Q1 FY27, and may contain errors or become outdated; several figures (notably segment shares and growth, the standalone/consolidated split, PBT, ROE/ROCE and the promoter stake) are derived or rounded. Verify all numbers against primary sources before relying on them. The author holds no position and expresses no view on the stock's suitability for any investor.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+  /* On-demand refresh wiring.
+     The page holds NO secrets. The button POSTs the company symbol to a free
+     Cloudflare Worker, which (server-side, with a scoped token) triggers the
+     GitHub Action that regenerates ONLY this company — incremental, on demand. */
+  const REFRESH_ENDPOINT = ""; // <- set to your Worker URL once deployed, e.g. https://bse500-refresh.<you>.workers.dev
+  const COMPANY_SYMBOL = "ADVENZYMES";
+  const COMPANY_SLUG = "advanced-enzymes";
+
+  async function requestRefresh(){
+    const btn = document.getElementById('rb-refresh');
+    if(!REFRESH_ENDPOINT){
+      alert("Live refresh isn't enabled on this copy of the page yet.");
+      return;
+    }
+    let pw = sessionStorage.getItem('gc_refresh_pw');
+    if(!pw){ pw = prompt('Refresh password:'); if(!pw) return; }
+    btn.classList.add('spinning'); btn.disabled = true;
+    try{
+      const r = await fetch(REFRESH_ENDPOINT, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ slug: COMPANY_SLUG, symbol: COMPANY_SYMBOL, password: pw })
+      });
+      if(r.status === 401){ sessionStorage.removeItem('gc_refresh_pw'); throw new Error('wrong password'); }
+      if(!r.ok) throw new Error('status '+r.status);
+      sessionStorage.setItem('gc_refresh_pw', pw);
+      btn.innerHTML = '<span class="rbi">✓</span> Queued';
+      setTimeout(function(){ btn.classList.remove('spinning'); btn.disabled=false; btn.innerHTML='<span class="rbi">⟳</span> Refresh'; }, 6000);
+    }catch(e){
+      btn.classList.remove('spinning'); btn.disabled=false;
+      btn.innerHTML = '<span class="rbi">⟳</span> Refresh';
+      alert('Refresh request failed: '+e.message);
+    }
+  }
+</script>
+</body>
+</html>
